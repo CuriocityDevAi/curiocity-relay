@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // K0-0914-AR-A · relay build-index · prompts/<hub>/*.md + <hub>/*-report.md frontmatter 집계.
+// K1-0914-A · checks/<hub>/<ID>.md (Kyu 실기 항목 파일) 집계 편입 · schema_version 2 · v1 호환.
 //
 // 뿌리 (Kyu 원문 09-14 정본):
 //   포털 프로덕션 = GitHub API 디렉터리 listing 의존 = GITHUB_TOKEN secret 부재 시 fail ·
@@ -7,7 +8,13 @@
 //   포털은 raw.githubusercontent 에서 1회 fetch (무제한 · 무인증).
 //
 // 실행 = `.github/workflows/build-index.yml` (main push 트리거) 또는 로컬 (`node scripts/build-index.mjs`).
-// 출력 = `index.json` (repo 루트) · frontmatter 집계 · schema_version 1.
+// 출력 = `index.json` (repo 루트) · frontmatter 집계 · schema_version 2.
+//
+// checks 규약 (K1-0914-A 정본 · Kyu K1-0914-B 회신):
+//   - `checks/<hub>/<ID>.md` = Kyu 실기 항목 파일 (판정 상태 원장 아님 · 상태는 D1 case_state 정본)
+//   - frontmatter: id · hub · pr · issued_at · author
+//   - items[] = 각 원소 = JSON 문자열 (필드: device · title · ok · ng · est_min · deep_link?)
+//   - relay checks = Kyu 실기 항목 · GitHub Checks API = kyu-gate 도장 (정본 분리)
 
 import { readdir, readFile, writeFile, stat } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
@@ -16,7 +23,7 @@ import { fileURLToPath } from 'node:url';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
 
-const HUBS = ['k0', 'n0', 't0', 'm0'];
+const HUBS = ['k0', 'n0', 't0', 'm0', 'k1'];
 
 /**
  * YAML frontmatter 관대 파서 (test-portal src/lib/relay.ts 정합 · 라이브러리 의존 회피).
@@ -131,18 +138,59 @@ async function collectReports() {
 	return out;
 }
 
+async function collectChecks() {
+	const out = [];
+	for (const hub of HUBS) {
+		const hubDir = resolve(REPO_ROOT, 'checks', hub);
+		if (!(await fileExists(hubDir))) continue;
+		const files = await safeReaddir(hubDir);
+		for (const name of files) {
+			if (!name.endsWith('.md') || name === 'README.md') continue;
+			const path = `checks/${hub}/${name}`;
+			const src = await readFile(resolve(REPO_ROOT, path), 'utf8');
+			const fm = parseFrontmatter(src);
+			if (!fm || typeof fm.id !== 'string' || typeof fm.hub !== 'string') continue;
+			// items[] = 각 원소 = JSON 문자열 · JSON.parse 후 object 로 저장 · 실패 시 원문 유지
+			const rawItems = Array.isArray(fm.items) ? fm.items : [];
+			const items = [];
+			for (const raw of rawItems) {
+				if (typeof raw !== 'string') continue;
+				try {
+					const obj = JSON.parse(raw);
+					if (obj && typeof obj === 'object') items.push(obj);
+				} catch {
+					items.push({ _raw: raw, _parse_error: true });
+				}
+			}
+			out.push({
+				path,
+				id: fm.id,
+				hub: fm.hub,
+				pr: typeof fm.pr === 'string' ? fm.pr : '',
+				issued_at: typeof fm.issued_at === 'string' ? fm.issued_at : '',
+				author: typeof fm.author === 'string' ? fm.author : '',
+				items,
+				summary: extractSummary(src)
+			});
+		}
+	}
+	return out;
+}
+
 async function main() {
 	const prompts = await collectPrompts();
 	const reports = await collectReports();
+	const checks = await collectChecks();
 	const index = {
-		schema_version: 1,
+		schema_version: 2,
 		built_at: new Date().toISOString(),
 		prompts,
-		reports
+		reports,
+		checks
 	};
 	const outPath = resolve(REPO_ROOT, 'index.json');
 	await writeFile(outPath, JSON.stringify(index, null, 2) + '\n', 'utf8');
-	console.log(`✓ index.json · prompts=${prompts.length} · reports=${reports.length}`);
+	console.log(`✓ index.json · prompts=${prompts.length} · reports=${reports.length} · checks=${checks.length}`);
 }
 
 main().catch((err) => {

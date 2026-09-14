@@ -1,8 +1,9 @@
 # curiocity-relay
 
-**목적**: CurioCity 오케스트레이터 ↔ 각 허브 (K0 test-portal · T0 todoboss · N0 grownest · M0 storeport) 리포트 게시판. 챗 게시 대체 · 완료/상태 텍스트만.
+**목적**: CurioCity 오케스트레이터 ↔ 각 허브 (K0 test-portal 소스 UI · **K1 test-portal 배관** · T0 todoboss · N0 grownest · M0 storeport) 리포트 게시판. 챗 게시 대체 · 완료/상태 텍스트만.
 
 **개통**: K0-0806-A · 2026-08-06
+**K1 배관 편입**: K1-0914-A · 2026-09-14 (`checks/` 규약 신설 · schema_version 2)
 
 ---
 
@@ -33,13 +34,62 @@
 
 ```
 curiocity-relay/
-├─ README.md          (이 파일 · 철칙 · 청소)
-├─ n0/                (N0 · grownest 허브)
-├─ t0/                (T0 · todoboss 허브)
-├─ m0/                (M0 · storeport 허브)
-├─ k0/                (K0 · test-portal 허브)
-└─ prompts/           (오케스트레이터 프롬프트 큐)
+├─ README.md          (이 파일 · 철칙 · 청소 · checks 규약)
+├─ index.json         (build-index.mjs 자동 생성 · schema_version 2)
+├─ n0/                (N0 · grownest 허브 · 리포트)
+├─ t0/                (T0 · todoboss 허브 · 리포트)
+├─ m0/                (M0 · storeport 허브 · 리포트)
+├─ k0/                (K0 · test-portal 소스 UI 허브 · 리포트)
+├─ k1/                (K1 · test-portal 배관 허브 · 리포트 · K1-0914-A 재정의)
+├─ prompts/           (오케스트레이터 프롬프트 큐)
+├─ checks/            (Kyu 실기 항목 파일 · K1-0914-A 신설 · § checks 규약)
+│   ├─ k0/            (K0 라운드 실기 항목)
+│   ├─ k1/            (K1 라운드 실기 항목)
+│   └─ ...
+└─ scripts/           (build-index.mjs · index.json 생성)
 ```
+
+---
+
+## [checks 규약] (K1-0914-A 신설 · 2026-09-14)
+
+**목적**: 각 라운드마다 Kyu 가 실 브라우저·기기에서 확인해야 할 항목 (`items[]`) 을 정본 게시. **판정 상태 원장 아님** (상태는 test-portal D1 `case_state` 정본 · GitHub Checks API `kyu-gate` 도장 별건).
+
+**파일 경로**: `checks/<hub>/<ROUND-ID>.md` (예: `checks/k0/K0-0914-AU.md`, `checks/k1/K1-0914-A.md`)
+
+**frontmatter (필수)**:
+```yaml
+---
+id: <ROUND-ID>              # 예: K0-0914-AU · K1-0914-A
+hub: <hub>                  # 예: k0 · k1 · n0 · t0 · m0
+pr: <full github pr url>    # 예: https://github.com/CuriocityDevAi/test-portal/pull/92
+issued_at: <ISO 8601>       # 예: 2026-09-14T12:00:00Z
+author: <name>              # 예: orchestrator · k1 · kyu
+items:
+  - '{"device":"phone","title":"...","ok":"이러면 ✓","ng":"이러면 ✗","est_min":1}'
+  - '{"device":"desktop","title":"...","ok":"...","ng":"...","est_min":2,"deep_link":"https://..."}'
+---
+
+## 요지
+<한 문장 요약>
+```
+
+**items[] 각 원소 = JSON 문자열** · 아래 필드 (K0-AU 정본):
+
+| 필드 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| `device` | `phone` \| `tablet` \| `desktop` \| `expo` \| `any` | ✓ | 실기 기기 종류 |
+| `title` | string | ✓ | 확인 항목 제목 (사람 말) |
+| `ok` | string | ✓ | 통과 조건 ("이러면 ✓") |
+| `ng` | string | ✓ | 실패 조건 ("이러면 ✗") |
+| `est_min` | number | ✓ | 예상 소요 분 |
+| `deep_link` | string \| null | ✗ | 실기 진입 URL (있으면) |
+
+**규범**:
+- **상태 전이 없음** (파일 자체 = 항목 목록 만 · 통과/실패 상태는 D1 case_state).
+- **relay checks vs GitHub Checks API**: relay checks = **Kyu 실기 항목 목록** · GitHub Checks API = **kyu-gate 도장** (판정 · P3 정본). 정본 분리.
+- 파서: `scripts/build-index.mjs` · `collectChecks()` · `index.json.checks[]` 로 집계 (schema_version 2 · v1 호환).
+- 실기 후 판정 회수 = test-portal 상세 화면 (D1 case_state · POST `/api/case-state`).
 
 ---
 

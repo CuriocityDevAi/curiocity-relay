@@ -1,6 +1,6 @@
 {
-  "schema_version": 1,
-  "built_at": "2026-09-14T09:47:03.547Z",
+  "schema_version": 2,
+  "built_at": "2026-09-14T09:54:23.533Z",
   "prompts": [
     {
       "path": "prompts/k0/K0-0911-AQ-test.md",
@@ -194,6 +194,202 @@
       "pr": "storeport#104",
       "outcome": "reactivation-audit",
       "kyu_checks": []
+    },
+    {
+      "path": "k1/K1-0914-A-report.md",
+      "round": "K1-0914-A",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/94",
+      "outcome": "자기 검증 통과 (960 unit + check 0 err + build done · 실 exp:// 캡처 + 5 secret 편입) · Kyu 프로덕션 실기 확증 대기 (아이폰 PWA 설치 → 알림 켜기 → 실 알림 1건)",
+      "kyu_checks": [
+        "아이폰 Safari → test.curiocity.company → 홈 화면 추가 → PWA 아이콘 실행 → [⚙] → [알림 켜기] ON → 시스템 팝업 허용 → 조작 시 실 알림 1건 수신",
+        "맥 Chrome/Safari/Firefox → 즉시 알림 허용 → 조작 시 실 알림 수신 (PWA 설치 불요)",
+        "포털 홈 → agilo-medusa-pos-fork PR 상세 → [폰에서 열기] 큰 버튼 노출 → 탭 → exp://<subdomain>.exp.direct 응답 → Expo Go 앱 로드"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "path": "checks/k0/K0-0914-AU.md",
+      "id": "K0-0914-AU",
+      "hub": "k0",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/92",
+      "issued_at": "2026-09-14T12:00:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "phone",
+          "title": "홈 맨 위에 파란 테두리 카드 \"지금 내 차례\"가 있다",
+          "ok": "카드 안에 PR 줄이 있고 초록 점·\"기계 N 통과 · 내 확인 N건 · 약 N분\"·기기 표시가 보인다",
+          "ng": "카드가 없거나 예전처럼 \"할 일\" 카드가 맨 위다",
+          "est_min": 1
+        },
+        {
+          "device": "phone",
+          "title": "카드 맨 아래 큰 파란 버튼 [실기 시작 · …]이 하나 있다",
+          "ok": "누르면 그 PR 상세로 바로 간다",
+          "ng": "버튼이 작거나 없거나 눌러도 안 간다",
+          "est_min": 1
+        },
+        {
+          "device": "phone",
+          "title": "상세 맨 위에 기계 판정 띠가 있다",
+          "ok": "회색 \"기계 확인 없음\" 또는 초록 \"모두 통과\" 띠가 보인다 (지금은 회색이 정상)",
+          "ng": "띠 자체가 없다",
+          "est_min": 1
+        },
+        {
+          "device": "phone",
+          "title": "큰 버튼 [테스트 열기 · 이 폰에서]와 그 아래 \"로그인까지 자동\" 문구가 있다",
+          "ok": "버튼이 손가락 높이만큼 크고 문구가 한 줄 보인다",
+          "ng": "버튼이 작거나 \"이 폰에서\"가 아니라 다른 기기명이 붙어 있다",
+          "est_min": 1
+        },
+        {
+          "device": "phone",
+          "title": "\"내가 확인할 것 · 폰 N건\" 목록이 있고 다른 기기 항목은 접혀 있다",
+          "ok": "폰 항목만 펼쳐져 있고 아래에 \"다른 기기 N건 · 기계가 이미 확인한 N건\" 접힘 줄이 있다",
+          "ng": "모든 기기 항목이 섞여 보인다",
+          "est_min": 2
+        },
+        {
+          "device": "phone",
+          "title": "판정 버튼 세 개(성공·실패·보류)가 크고 [실패]를 누르면 사유가 자동으로 채워진다",
+          "ok": "버튼이 세로로 크고, 실패를 누르면 사유 칸에 \"✗ …\" 줄이 생긴다 (기계 실패가 없으면 빈칸이 정상)",
+          "ng": "버튼이 작다",
+          "est_min": 1
+        },
+        {
+          "device": "tablet",
+          "title": "아이패드에서 왼쪽 메뉴 없이 두 칸(목록 · 상세)으로 보인다",
+          "ok": "왼쪽에 메뉴 열이 없고 목록과 상세 두 칸",
+          "ng": "폰처럼 한 칸이거나 맥처럼 세 칸",
+          "est_min": 1
+        },
+        {
+          "device": "tablet",
+          "title": "아이패드 상세의 큰 버튼이 [테스트 열기 · 이 태블릿에서]다",
+          "ok": "\"태블릿\"이라는 단어가 보인다",
+          "ng": "\"폰\" 또는 \"데스크톱\"으로 나온다",
+          "est_min": 1
+        },
+        {
+          "device": "desktop",
+          "title": "맥에서 왼쪽 메뉴 \"내 차례\" 옆에 숫자 배지가 있다",
+          "ok": "파란 숫자 배지가 붙어 있고 누르면 가운데 목록이 내 차례로 바뀐다",
+          "ng": "배지가 없거나 누르면 페이지가 통째로 바뀐다",
+          "est_min": 1
+        },
+        {
+          "device": "desktop",
+          "title": "맥 왼쪽 메뉴 아래에 작은 허브 상태판(N0/T0/M0/K0)이 있다",
+          "ok": "네 줄이 점 색과 함께 보인다",
+          "ng": "없다",
+          "est_min": 1
+        },
+        {
+          "device": "any",
+          "title": "새 착지 모달이 뜰 때 \"띵\" 소리가 한 번 난다",
+          "ok": "모달과 함께 짧은 소리 1회, 같은 PR은 다시 안 남",
+          "ng": "소리가 없거나 반복해서 난다",
+          "est_min": 1
+        },
+        {
+          "device": "any",
+          "title": "톱니 → 설정에 \"소리 알림\" 스위치가 있고 끄면 소리가 안 난다",
+          "ok": "스위치가 보이고 끈 뒤엔 조용하다",
+          "ng": "스위치가 없다",
+          "est_min": 1
+        }
+      ],
+      "summary": "K0-0914-AU 포털 v2 화면 · Kyu 실기 12건 (폰 6 · 아이패드 2 · 맥 2 · 공통 2). 기계 판정 띠는 아직 실데이터 없음 → 회색이 정상."
+    },
+    {
+      "path": "checks/k1/K1-0914-A.md",
+      "id": "K1-0914-A",
+      "hub": "k1",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/94",
+      "issued_at": "2026-09-14T18:00:00Z",
+      "author": "k1",
+      "items": [
+        {
+          "device": "phone",
+          "title": "아이폰 Safari로 test.curiocity.company 접속 → 로그인 (Access OTP) 후 화면이 뜬다",
+          "ok": "홈이 뜨고 상단 로그인 프롬프트가 사라진다",
+          "ng": "로그인 화면에서 안 넘어간다",
+          "est_min": 2
+        },
+        {
+          "device": "phone",
+          "title": "아이폰 하단 [공유] → [홈 화면에 추가] 완료 · 홈에 아이콘이 생긴다",
+          "ok": "홈 화면에 test-portal 아이콘이 있고 이름이 test-portal",
+          "ng": "아이콘이 안 생기거나 Safari 아이콘으로만 나온다",
+          "est_min": 2
+        },
+        {
+          "device": "phone",
+          "title": "홈 아이콘을 탭하면 브라우저 주소창 없는 PWA 모드로 뜬다",
+          "ok": "주소창 · 하단 툴바 없이 전체 화면",
+          "ng": "Safari 안에서 열린다",
+          "est_min": 1
+        },
+        {
+          "device": "phone",
+          "title": "우상단 [⚙] 톱니 탭 → 시트 안 [알림 켜기] 스위치가 있다",
+          "ok": "[알림 켜기] 스위치가 보이고 OFF 상태",
+          "ng": "스위치가 없거나 [VAPID public key 미배포] 문구",
+          "est_min": 1
+        },
+        {
+          "device": "phone",
+          "title": "[알림 켜기] ON → iOS 시스템 팝업 [알림 허용?] → [허용]",
+          "ok": "스위치가 ON 상태로 남고 시트에 에러 없음",
+          "ng": "팝업이 안 뜨거나 스위치가 다시 OFF로 돌아간다",
+          "est_min": 1
+        },
+        {
+          "device": "phone",
+          "title": "오케 실 조작 (다른 세션 상태 변화) 이 발생하면 폰에 알림 배너 1건이 뜬다",
+          "ok": "알림 소리 + 배너 · 탭하면 관련 화면으로 이동",
+          "ng": "알림이 아예 안 뜬다 (30초 대기 후에도)",
+          "est_min": 3
+        },
+        {
+          "device": "desktop",
+          "title": "맥 Chrome/Safari/Firefox 로 test.curiocity.company 접속 · [⚙] → [알림 켜기] ON",
+          "ok": "브라우저 팝업 [알림 허용?] → 허용 → 스위치 ON 유지",
+          "ng": "권한 팝업이 안 뜨거나 스위치 OFF로 돌아간다",
+          "est_min": 2
+        },
+        {
+          "device": "desktop",
+          "title": "맥에서도 같은 오케 조작이 알림 배너로 온다 (PWA 설치 없이)",
+          "ok": "macOS 알림 센터에 test-portal 배너",
+          "ng": "안 온다",
+          "est_min": 2
+        },
+        {
+          "device": "expo",
+          "title": "포털 홈 → agilo-medusa-pos-fork PR 상세 진입",
+          "ok": "상세 화면 상단에 [폰에서 열기] 큰 파란 버튼",
+          "ng": "버튼이 없거나 [환경 열기]만 있다",
+          "est_min": 1
+        },
+        {
+          "device": "expo",
+          "title": "[폰에서 열기] 탭 → kyu-bridge 응답 · exp:// URL 성공",
+          "ok": "화면에 exp:// URL 표시 또는 자동으로 Expo Go 앱으로 이동",
+          "ng": "에러 · unknown_slug · timeout",
+          "est_min": 2
+        },
+        {
+          "device": "any",
+          "title": "설정 시트에 K0-0914-AR-B2 절차 안내 링크가 있다",
+          "ok": "[알림 켜기] 옆에 iOS PWA 필수 안내 1줄 또는 docs 링크",
+          "ng": "안내 없어서 iOS Safari 브라우저에서 실패 원인 불명",
+          "est_min": 1
+        }
+      ],
+      "summary": "K1-0914-A 배관 허브 첫 실기 · Kyu 실 알림 수신 1건 (아이폰 PWA 필수 · 맥 브라우저 즉시) + agilo Expo tunnel · 총 11 항목 (폰 6 · 데스크톱 2 · Expo 2 · 공통 1). PR merge 후 auto-deploy 완료 시점부터 진입."
     }
   ]
 }
