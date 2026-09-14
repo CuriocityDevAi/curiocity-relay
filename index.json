@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-09-14T08:22:39.815Z",
+  "prompts": [
+    {
+      "path": "prompts/k0/K0-0911-AQ-test.md",
+      "id": "K0-0911-AQ-test",
+      "hub": "k0",
+      "issued_at": "2026-09-11T22:55:00Z",
+      "status": "pending",
+      "summary": "K0-0911-AQ 자동 발부 v2 흐름 테스트 · 포털 카드 노출 · [투입]/[프롬프트 복사] · 데몬 dispatch 실측 대상."
+    }
+  ],
+  "reports": [
+    {
+      "path": "k0/K0-0907-AN-report.md",
+      "round": "K0-0907-AN",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/87",
+      "outcome": "자기 검증 통과 · Kyu 실기 확증 대기",
+      "kyu_checks": []
+    },
+    {
+      "path": "k0/K0-0907-AO-report.md",
+      "round": "K0-0907-AO",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/88",
+      "outcome": "자기 검증 통과 · Kyu 폰 실기 확증 대기",
+      "kyu_checks": []
+    },
+    {
+      "path": "k0/K0-0909-AP-report.md",
+      "round": "K0-0909-AP",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/89",
+      "outcome": "자기 검증 통과 (Playwright 14 pass · 폰+데스크톱 실 브라우저) · Kyu 실기 확증 대기",
+      "kyu_checks": [
+        "폰: A 카드 3개 노출 + 허브 hidden + push 전환 관찰 + 56px 판정/버튼 + DirtyGuard + 스크롤 복원 + PR 케이스 렌더",
+        "데스크톱: 3단 grid + 사이드바 4 링크 + 상세 안내 + 2단 반응형"
+      ]
+    },
+    {
+      "path": "k0/K0-0911-AQ-report.md",
+      "round": "K0-0911-AQ",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/90",
+      "outcome": "자기 검증 통과 (Playwright 18 pass · relay 관통 15 · K1 정본 4조건 pass · claude -p 실 실험 성공) · Kyu 실기 확증 대기",
+      "kyu_checks": [
+        "폰: DirtyGuard iOS 엣지 스와이프 (좌측 → 우측) → 다이얼로그 노출 + URL 불변 + [여기 남기]/[그래도 나가기]",
+        "폰: 허브 카드 부활 (N0/T0/M0/K0 4행 · 상태·마지막 ID·경과)",
+        "폰: 홈 A 카드 4개 (할 일·최근 활동·프로젝트·허브)",
+        "데스크톱: 사이드바 4링크 클릭 = 목록 열만 교체 · URL 불변 · 3열 grid 유지 · nav-link active",
+        "데스크톱: [설정] 링크 → 시트 열림 (우측)",
+        "AQ 흐름: 오케 relay push → 30초 안 \"발부 대기 · k0-K0-XXX\" 카드 → [투입] → dispatched → 착지 → landed 카드",
+        "프로젝트 카드에 agilo-medusa-pos-fork 노출 (M0 PR 폴링 대상 편입)"
+      ]
+    },
+    {
+      "path": "n0/N0-0907-J-report.md",
+      "round": "N0-0907-J",
+      "pr": "https://github.com/CuriocityDevAi/grownest/pull/288",
+      "outcome": "landed",
+      "kyu_checks": [
+        "가로 재발화 음수 · 하강음 완주 후 스트림 비행 (세로와 동일 순서)",
+        "라쳇 꼬리 · 1·2·3휠 전부 시각 정지 시점에 즉시 stop"
+      ]
+    },
+    {
+      "path": "n0/N0-0909-B-report.md",
+      "round": "N0-0909-B",
+      "pr": "289",
+      "outcome": "landed",
+      "kyu_checks": [
+        "OO 강제 착지 · wheel 자연 회전·감속·정지 · toast '룰렛 2회 찬스' · 멀티스핀 2 wheels",
+        "OOO 강제 착지 · wheel 자연 회전 · OOO 정지 · toast '룰렛 3회 찬스' · 멀티스핀 3 wheels",
+        "JACKPOT 강제 착지 · wheel 회전 · JACKPOT 정지 · 팡파르 + 폭죽 + 스트림 fly + twinkle + 카운트업"
+      ]
+    },
+    {
+      "path": "n0/N0-0910-A-report.md",
+      "round": "N0-0910-A",
+      "pr": "289",
+      "outcome": "landed",
+      "kyu_checks": [
+        "풀 0 + JACKPOT 강제 착지 · 팡파르 + 폭죽만 · 지갑 애니·소리·카운트업 없음",
+        "잭팟 풀 +1000 주입 후 JACKPOT 강제 착지 · 하트 스트림 fly + twinkle + 카운트업",
+        "OO+보조 JACKPOT 강제 · 숫자 스트림 완료 → 잭팟 세레모니 순차 발화"
+      ]
+    },
+    {
+      "path": "n0/N0-0910-B-report.md",
+      "round": "N0-0910-B",
+      "pr": "289",
+      "outcome": "landed",
+      "kyu_checks": [
+        "풀 1000 + JACKPOT 강제 착지 · 하트 스트림 좌상단 잭팟 통에서 출발",
+        "풀 0 + JACKPOT 강제 착지 · 폭죽 후 결과 창 '잭팟에 하트포인트가 없습니다.' + [확인] · 하강 2음 · 모달 닫힘"
+      ]
+    },
+    {
+      "path": "t0/T0-0909-A-report.md",
+      "round": "T0-0909-A",
+      "pr": "https://github.com/CuriocityDevAi/todoboss/pull/21",
+      "outcome": "5/5 fix + 재발 방지 3장치 + Playwright 4/4 pass",
+      "kyu_checks": []
+    },
+    {
+      "path": "t0/T0-0910-B-report.md",
+      "round": "T0-0910-B",
+      "pr": "https://github.com/CuriocityDevAi/todoboss/pull/22",
+      "outcome": "6/6 이슈 완료 · Playwright 5/5 pass · 단위 테스트 16 case",
+      "kyu_checks": []
+    },
+    {
+      "path": "t0/T0-0910-C-report.md",
+      "round": "T0-0910-C",
+      "pr": "https://github.com/CuriocityDevAi/todoboss/pull/22",
+      "outcome": "결함 3 + B 미이행 4 = 7 이슈 완료 · Playwright 5/5 pass · 이연 0",
+      "kyu_checks": []
+    },
+    {
+      "path": "t0/T0-0911-A-report.md",
+      "round": "T0-0911-A",
+      "pr": "https://github.com/CuriocityDevAi/todoboss/pull/23",
+      "outcome": "5/5 이슈 · backend 완결 · Playwright 부분 검증 (UI 캐시 별건)",
+      "kyu_checks": []
+    },
+    {
+      "path": "t0/T0-0911-B-report.md",
+      "round": "T0-0911-B",
+      "pr": "https://github.com/CuriocityDevAi/todoboss/pull/23",
+      "outcome": "6 이슈 완결 · Playwright 8/8 pass · A 라운드 이연 0",
+      "kyu_checks": []
+    },
+    {
+      "path": "m0/M0-0909-A-report.md",
+      "round": "M0-0909-A",
+      "pr": "storeport#104",
+      "outcome": "reactivation-audit",
+      "kyu_checks": []
+    }
+  ]
+}

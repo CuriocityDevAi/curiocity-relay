@@ -1,0 +1,69 @@
+# K0-0914-AR-A · relay index.json 자동 생성 · push 트리거 (main branch).
+#
+# 뿌리 (Kyu 원문 09-14): 포털 프로덕션 = GitHub API 디렉터리 listing 의존 = 토큰 부재 시
+# fail · 비인증 60/h rate limit. 정본 = 이 Action 이 main push 마다 index.json 생성 · 커밋 ·
+# 포털은 raw.githubusercontent 에서 1회 fetch (무제한 · 무인증).
+#
+# 부수 목적 (Kyu 원문 B2): index 갱신 시 포털 /api/push/notify webhook 호출 → Web Push 발송.
+
+name: build-index
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'prompts/**'
+      - 'k0/**'
+      - 'n0/**'
+      - 't0/**'
+      - 'm0/**'
+      - 'scripts/build-index.mjs'
+      - '.github/workflows/build-index.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-index
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build index.json
+        run: node scripts/build-index.mjs
+
+      - name: Commit index.json (auto)
+        run: |
+          if [ -n "$(git status --porcelain index.json)" ]; then
+            git config user.name "curiocity-relay-index"
+            git config user.email "curiocity.dev.ai+relay-index@gmail.com"
+            git add index.json
+            git commit -m "chore(index): auto-rebuild (K0-0914-AR-A)"
+            git push
+          else
+            echo "index.json unchanged · skip commit"
+          fi
+
+      - name: Notify portal (Web Push webhook · K0-0914-AR-B2)
+        if: env.PORTAL_PUSH_WEBHOOK != ''
+        env:
+          PORTAL_PUSH_WEBHOOK: ${{ secrets.PORTAL_PUSH_WEBHOOK }}
+          PORTAL_PUSH_TOKEN: ${{ secrets.PORTAL_PUSH_TOKEN }}
+        run: |
+          curl -sS -X POST "$PORTAL_PUSH_WEBHOOK" \
+            -H "content-type: application/json" \
+            -H "authorization: Bearer $PORTAL_PUSH_TOKEN" \
+            -d '{"event":"index.rebuilt","source":"curiocity-relay","commit":"'"${GITHUB_SHA}"'"}' \
+            || echo "webhook failed · non-blocking"
