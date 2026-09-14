@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-09-14T09:09:54.080Z",
+  "built_at": "2026-09-14T09:47:03.547Z",
   "prompts": [
     {
       "path": "prompts/k0/K0-0911-AQ-test.md",
@@ -80,6 +80,21 @@
         "맥 (1280): 3단 · 사이드바 [내 차례] 배지 + 미니 허브 (N0/T0/M0/K0)",
         "착지 모달 노출 시 \"띵\" 1회 · 설정 시트 소리 ON/OFF · 같은 PR 재알림 없음",
         "checks/k0/K0-0914-AU.md 상세 화면에서 렌더 (index 갱신 후)"
+      ]
+    },
+    {
+      "path": "k0/K0-0914-AV-report.md",
+      "round": "K0-0914-AV",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/93",
+      "outcome": "자기 검증 통과 (Playwright 29 pass · 파일 경계 준수 · 7 항목 전량 소화 · \"별건\" 이연 금지) · Kyu 실기 확증 대기",
+      "kyu_checks": [
+        "폰: 환경 없는 프로젝트 = [테스트 열기] 배포 URL 새 탭 or disabled + 이유",
+        "폰: checks 없는 PR 상세 = \"터미널이 쓴 항목입니다\" 안내 + 원문 그대로",
+        "폰: 종합 판정 카드 = 헤더 \"종합 판정\" + 케이스별 P/F 시각 구분",
+        "폰: 이미 merged/closed PR = 지금 내 차례에서 사라짐 · 착지 카드 사라짐",
+        "폰: 기계 판정 띠 = 초록/빨강/회색 (GitHub check-runs 실 데이터)",
+        "폰/맥: 사이드바 미니 허브 = config/projects.json hub 필드 파생 (하드코딩 없음)",
+        "iOS (홈 화면 미설치): [알림 켜기] disabled + 배너 + 3줄 절차"
       ]
     },
     {
