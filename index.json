@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-09-14T08:23:09.198Z",
+  "built_at": "2026-09-14T08:39:57.943Z",
   "prompts": [
     {
       "path": "prompts/k0/K0-0911-AQ-test.md",
@@ -49,6 +49,22 @@
         "데스크톱: [설정] 링크 → 시트 열림 (우측)",
         "AQ 흐름: 오케 relay push → 30초 안 \"발부 대기 · k0-K0-XXX\" 카드 → [투입] → dispatched → 착지 → landed 카드",
         "프로젝트 카드에 agilo-medusa-pos-fork 노출 (M0 PR 폴링 대상 편입)"
+      ]
+    },
+    {
+      "path": "k0/K0-0914-AR-report.md",
+      "round": "K0-0914-AR",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/91",
+      "outcome": "자기 검증 통과 (Playwright 18 pass · production curl 실측 index.json 200 · pnpm test 948 · 코드 뿌리 규명 파일:줄 확증) · Kyu 프로덕션 실기 확증 대기 (카드 노출 스샷 + 푸시 실 알림 + Expo tunnel 로그)",
+      "kyu_checks": [
+        "프로덕션: curl raw.githubusercontent index.json = 200 (무인증 · 60/h 회피)",
+        "프로덕션: test.curiocity.company 홈 = \"발부 대기 · k0-K0-0911-AQ-test\" 카드 실측",
+        "프로덕션: 허브 K0 = \"발부 대기\" 상태 (동면 → 활성 전환)",
+        "프로덕션: relay 읽기 실패 시 = 허브 카드 아래 \"⚠ 사유\" 표시 (에러 삼킴 없음)",
+        "폰 (아이폰 PWA 홈 설치): [⚙] → [알림 켜기] → iOS 시스템 허용 → 착지 모달 자동 노출",
+        "폰: [나중에] 클릭 후 반짝 배지 + 세션 내 재팝업 금지",
+        "맥: [알림 켜기] → 브라우저 실 알림 스샷 (별건 라운드 실 발송 후)",
+        "Expo (M0): agilo PR 상세 = [폰에서 열기] 버튼 노출 · 데몬 확장 후 실 exp:// URL 캡처"
       ]
     },
     {
