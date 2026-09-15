@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "built_at": "2026-09-15T08:48:16.406Z",
+  "built_at": "2026-09-15T09:17:24.592Z",
   "prompts": [
     {
       "path": "prompts/k0/K0-0911-AQ-test.md",
@@ -211,14 +211,18 @@
       "kyu_checks": []
     },
     {
-      "path": "k1/K1-0914-A-report.md",
-      "round": "K1-0914-A",
-      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/94",
-      "outcome": "MERGED (SHA 20de580 · K1-0914-C 충돌 해소 → squash 머지) · Kyu 프로덕션 실기 확증 대기 (아이폰 PWA 설치 → 알림 켜기 → 실 알림 1건)",
+      "path": "k1/K1-0915-A-report.md",
+      "round": "K1-0915-A",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/97",
+      "outcome": "자기 검증 통과 (todoboss PR#23 실 실행 · TODOBOSS Admin 서명 확증 · pnpm test 987 · check 0 err · build done · SPEC v1.64 · docs/env-recipes.md 신설) · Kyu 프로덕션 실기 확증 대기",
       "kyu_checks": [
-        "아이폰 Safari → test.curiocity.company → 홈 화면 추가 → PWA 아이콘 실행 → [⚙] → [알림 켜기] ON → 시스템 팝업 허용 → 조작 시 실 알림 1건 수신",
-        "맥 Chrome/Safari/Firefox → 즉시 알림 허용 → 조작 시 실 알림 수신 (PWA 설치 불요)",
-        "포털 홈 → agilo-medusa-pos-fork PR 상세 → [폰에서 열기] 큰 버튼 노출 → 탭 → exp://<subdomain>.exp.direct 응답 → Expo Go 앱 로드"
+        "포털 상세 [테스트 열기] 탭 → SSE 스트림 (준비 중·설치 중·서버 기동·준비됨) 순차 관측",
+        "todoboss PR#23 열기 → 새 Chrome 창 (임시 프로필) + http://127.0.0.1:4321/?test=1&autologin=admin (TODOBOSS Admin 자동 로그인 화면)",
+        "grownest PR 열기 → \"수동 로그인\" 배지 노출 · localhost:3000 · 수동 로그인",
+        "agilo (Expo · PR#5 or main) → exp:// tunnel + Expo Go 로드",
+        "환경 종료 (DELETE /env/stop) → 서버 kill + /tmp/kyu-chrome-* 삭제",
+        "kyu-bridge 재기동 시 orphan Chrome 프로필 (6시간+ stale) 자동 청소",
+        "test-portal PR body frontmatter + outcome 자기 검증 = k1-auto-selfcheck-merge 자동 squash"
       ]
     }
   ],
