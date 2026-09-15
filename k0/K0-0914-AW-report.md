@@ -199,6 +199,69 @@ pnpm build         → adapter-cloudflare · done
 - 브랜치: `feat/k0-0914-aw-portal-v3`
 - PR: [#95](https://github.com/CuriocityDevAi/test-portal/pull/95)
 
+## 충돌 해소 (K0-0915-A · 2026-09-15 · 착지 보고 직전 base 추격)
+
+### 뿌리
+
+Kyu 원문 (K0-0915-A) = "알바 허브가 먼저 머지될 수 있음". PR#94 (K1-0914-A · 배관 허브) 가
+2026-09-15 사이 병합됨 · PR#95 (K0-0914-AW · main@4290369 상 push 완료) 뒤에서 origin/main
+이 `20de580` 로 앞서감 → PR#95 자동 병합 충돌 발생.
+
+### 절차 (Kyu K0-0915-A 규약 · CLAUDE.md § 5.18 신설)
+
+```bash
+$ git fetch origin
+$ git merge origin/main --no-edit
+Auto-merging EPIC-STATE.md
+Auto-merging docs/SPEC.md
+CONFLICT (content): Merge conflict in docs/SPEC.md
+Auto-merging docs/requirements-tracking.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+### 파일별 충돌 명세 (Kyu 원문 = "양쪽 보존 · K1/K2 항목 삭제 금지")
+
+- **EPIC-STATE.md**: Auto-merge 성공 · K1 배관 (K1-0914-A) Active 항목 편입 유지 · K0-0914-AW
+  항목 유지 · **양쪽 보존 확증**.
+- **docs/requirements-tracking.md**: Auto-merge 성공 · K1 항목 · K100 (K0-0914-AW) 편입 유지.
+- **docs/SPEC.md § 11 changelog**: 충돌 (v1.62 라벨 중복):
+  - HEAD (K0) = K0-0914-AW · v1.62
+  - origin/main (K1 병합 후) = K0-0914-AV · v1.62 (K1 이 갱신)
+  - **해소 정본** = K0-0914-AW → **v1.63 승격** (K1 이후 상위) · K0-0914-AV → v1.62 유지
+    (origin/main 존중). 두 항목 전량 보존 · K1 편입 절 삭제 없음.
+- **K1 소유 파일** (`docs/audits/K1-0914-A-ci-audit.md` · `src/lib/webpush.ts/.test.ts` ·
+  `src/routes/api/push/notify/+server.ts` · `tools/kyu-bridge/**`): 자동 병합 성공 · K1 편입
+  전량 유지 (K0 자체 편집 없음).
+
+### 커밋 · push
+
+- Merge 커밋: `5e42087` "Merge origin/main into feat/k0-0914-aw-portal-v3 (K0-0915-A · PR#95 충돌 해소)"
+- 코드 변경 0 (Kyu 원문) · SPEC changelog 라벨 v1.62 → v1.63 편입 1건만
+
+### PR#95 mergeable 실측
+
+```bash
+$ gh pr view 95 --repo CuriocityDevAi/test-portal --json mergeable,mergeStateStatus,state
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","state":"OPEN"}
+```
+
+- `mergeable: MERGEABLE` = **코드 충돌 없음 확증** (Kyu 원문 조건 만족)
+- `mergeStateStatus: UNSTABLE` = required check 미완 (예상 · CI/CD 진행 중) · 코드 정합 무관
+
+### 규약 편입 (CLAUDE.md § 5.18 신설)
+
+**병행 허브 (K0/K1/K2) · 착지 보고 직전 `git merge origin/main` 재실행 후 push 규약**:
+
+- 착지 보고 직전 (relay report push · PR body 갱신 前) 반드시 `git fetch origin && git merge
+  origin/main` 재실행 후 push
+- 알바 허브가 먼저 머지되어도 K0 브랜치가 늘 최신 base 위에 유지
+- 양쪽 보존 · K1/K2 항목 삭제 절대 금지
+- SPEC changelog v번호 충돌 시 = K0 차기 라운드 = 상위 v번호 승격
+- K1/K2 소유 파일 read-only (origin/main 쪽 보존)
+- **DF-H 등재 대상**: 착지 보고 게시 前 `git merge origin/main` 재실행 누락
+
+**적용 시점**: 2026-09-15 K0-0915-A 부트스트랩 커밋부터 유효 · 모든 K0 라운드 상주 규약.
+
 ---
 
-*정본 · K0-0914-AW-report · Kyu 실기 확증 대기 · K1 병행 = relay checks ok/ng · build-index · notify-portal · Expo. K2 별건.*
+*정본 · K0-0914-AW-report · Kyu 실기 확증 대기 · K1 병행 = relay checks ok/ng · build-index · notify-portal · Expo. K2 별건. K0-0915-A 충돌 해소 · SPEC v1.63 · PR#95 MERGEABLE.*
