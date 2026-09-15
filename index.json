@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "built_at": "2026-09-14T09:54:48.991Z",
+  "built_at": "2026-09-15T02:44:26.578Z",
   "prompts": [
     {
       "path": "prompts/k0/K0-0911-AQ-test.md",
@@ -95,6 +95,21 @@
         "폰: 기계 판정 띠 = 초록/빨강/회색 (GitHub check-runs 실 데이터)",
         "폰/맥: 사이드바 미니 허브 = config/projects.json hub 필드 파생 (하드코딩 없음)",
         "iOS (홈 화면 미설치): [알림 켜기] disabled + 배너 + 3줄 절차"
+      ]
+    },
+    {
+      "path": "k0/K0-0914-AW-report.md",
+      "round": "K0-0914-AW",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/95",
+      "outcome": "자기 검증 통과 (Playwright 23 pass 14 skip · pnpm test 948 · pnpm check 0 err) · Kyu 실기 확증 대기 (v3 화면 + 진행 띠 + ok/ng 렌더)",
+      "kyu_checks": [
+        "폰: 상단 탭 3 (실기·허브·이력) · 하단 탭 없음 · 사이드바 없음",
+        "폰: 실기 탭 첫 줄 파란 테두리 · 큰 버튼 없음 · empty 큰 ✓",
+        "폰: 허브 탭 인라인 [투입] 56px · 실행 실패 [다시 시도]/[멈춰두기]",
+        "폰: 이력 탭 행위 중심 (성공 판정 · 자동 승인 · 실패 사유)",
+        "폰/맥: 판정 후 5 단계 진행 띠 (제출→머지 요청→머지됨 보라→배포→완료 초록) + [실기 시작]",
+        "폰: 상세 확인 항목 ok/ng 두 줄 렌더",
+        "맥 (≥1024): 사이드바 없음 · 2열 grid (목록 | 상세)"
       ]
     },
     {
