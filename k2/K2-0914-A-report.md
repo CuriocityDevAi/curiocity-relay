@@ -236,3 +236,101 @@ curl -sS -X POST "https://test.curiocity.company/api/env/seed-reset" \
 ---
 
 *K2-0914-A · 부트스트랩 완결 · 2026-09-15*
+
+---
+
+## § C · K2-0914-C 마감 (Kyu 클릭 0 · K2 직접 실행 · 2026-09-15)
+
+**라운드**: K2-0914-C (마감 · A 라운드 인수 완결). 코드 변경 = **1건 (K0 al1 unblock · 3줄)** 외 zero.
+
+### C.1 충돌 해소 (요구 § 1)
+
+- `git fetch origin` → PR#95 (K0-AW · commit `543db7a`) + PR#97 (K1-0915-A · commit `f91fcb3`) main 반영 확증.
+- `git merge origin/main` → EPIC-STATE.md 충돌 → **K0/K1/K2 3항목 병존** (K0/K1 항목 삭제 없음 · Kyu 요구 정합).
+- SPEC / requirements-tracking auto-merge 성공 (충돌 마커 0).
+- push (`9e2950f`) → `gh pr view 96 --json mergeable` = **MERGEABLE** 회복.
+
+### C.2 K0 al1 unblock (파일 경계 minimum 위배 · 명시)
+
+**뿌리**: K0-AW (PR#95 · `543db7a`) 편입 시 `src/routes/pr/[owner]/[repo]/[id]/+page.svelte:3316-3320` 안 raw hex `#8250df` 3줄 등장. `al1-token-no-raw-hex` 어설션 (K2 소유) fail. 회귀 뿌리 = K0 파일이지만 K2 마감 blocking.
+
+**해소**: 3줄 → `var(--hold)` (기존 semantic var `--primer-purple-500` alias · 동일 값). commit `dffa872` · prefix `fix(k0-al1)` · body 안 파일 경계 위배 이유 명시. K0 라운드에 raw hex 재도입 방지 lint 강화 회부.
+
+### C.3 secret + D1 K2 직접 편입 (요구 § 2)
+
+**Cloudflare (wrangler OAuth `l.youngkyu@gmail.com`)**:
+
+- `openssl rand -base64 48` → 48 byte token (값 미기재 · 리포트 규약).
+- `npx wrangler versions secret put REG_INGEST_TOKEN` → **version `50863e0c` 생성** (secret 편입) · auto-deploy 다음 배포 시 자동 상속 (CLAUDE.md § 5.11 정합).
+- `npx wrangler d1 migrations apply approvals-db --remote` → **`0006_test_runs.sql = ✅`** 원격 반영 (before: `🕒` 대기, after: `✅` 적용).
+
+**GitHub (gh CLI `CuriocityDevAi`)**:
+
+- `gh variable set REG_API_BASE --body "https://test.curiocity.company"` → 편입 확증 (`gh variable list` 표시).
+- `gh secret set REG_INGEST_TOKEN --body "$(cat /tmp/reg-ingest-token)"` → 편입 확증 (`gh secret list` 표시).
+
+**Kyu 클릭 = 0**.
+
+### C.4 curl 5 실측 (요구 § 3 · localhost 8794 wrangler dev --remote 프록시 소비)
+
+**전제**: 프로덕션 `test.curiocity.company` = Cloudflare Access 로그인 게이트 (모든 요청 302 redirect). K1 `/api/push/notify` webhook 도 동일 302 (relay Action 실측 = fallback 삼킴). **Access 우회 = 별건 Kyu 클릭** (Access 서비스 토큰 or bypass 정책). 이번 라운드 = wrangler dev --remote (로컬 프록시 · 원격 D1 소비 · 원격 secret 접근) 로 배포된 코드 실측.
+
+**주소**: `http://localhost:8794` (wrangler dev · Version `b5a00346` = merge 후 자동 배포 코드).
+
+| # | 요청 | HTTP | 응답 정합 |
+|---|---|---|---|
+| 1 | POST /api/runs (Bearer valid) | **200** | `{ok:true, run:{run_id, repo, pr_number:96, sha:"k2-0914-c-curl-1", suite:"regression", status:"pass", ...}}` |
+| 2 | GET /api/runs?repo=test-portal&pr=96 (no JWT) | **401** | `{error:"missing_header", message:"Cf-Access-Jwt-Assertion header absent"}` **정본 · Access-gated** (production edge auto-inject) |
+| 3 | GET /api/gate/CuriocityDevAi/test-portal/96 (no JWT) | **401** | `{error:"missing_header"}` 정본 · Access-gated 정합 |
+| 4 | POST /api/env/seed-reset (Bearer · empty) | **200** | `{ok:true, snapshot_id:"empty-...", rows_affected:1, note:"test_runs (repo=test-portal) 만 삭제 ..."}` |
+| 5 | POST /api/env/seed-reset (Bearer · grownest) | **422** | `{error:"not_owned", message:"repo=grownest 시드는 이 포털이 담당 안 함 ...", contract_ref:"docs/testing/seed-contract.md"}` |
+
+**보너스 확증 (Bearer edge)**:
+- POST /api/env/seed-reset (Bearer · sample-pr) = **200 · rows_affected:3** (샘플 fixture 3건 편입 확증)
+- POST /api/runs (Bearer 잘못) = **401 token_mismatch** (Web Crypto constant-time 정합)
+- POST /api/runs (Bearer 부재) = **401 bearer_missing** (헤더 검증 정합)
+
+**결론**: 8건 전량 정합 (5 요구 + 3 보너스). Access-gated GET 은 401 정본 · production Access edge 안 Cf-Access-Jwt-Assertion 자동 주입 시 200 예상.
+
+### C.5 workflow_dispatch auto-cron (main 반영 후)
+
+- **run**: https://github.com/CuriocityDevAi/test-portal/actions/runs/34977186198
+- **event**: workflow_dispatch · **repo=test-portal · mode=auto-cron**
+- **branch**: **main** (K2 코드 반영 후)
+- **jobs**: `matrix-run(test-portal) = success · matrix-run(todoboss) = success · gate=skipped · retires-check=skipped`
+- **status**: **SUCCESS** (전량 초록 · schedule 대체 확증 완결).
+
+**실 schedule cron `0 15 * * *` UTC (KST 자정)** = 다음 라운드 회수 (Kyu 승인 C1 (가) 정합).
+
+### C.6 PR#96 착지
+
+- **merge commit**: `feedf533ecc69828deb28adc25afe152a9bdfd29`
+- **mergedAt**: 2026-09-15T13:40:05Z
+- **state**: MERGED · squash · delete-branch
+- **statusCheckRollup (merge 시점)**: matrix-run(test-portal · todoboss) + retires-check + Workers Builds = **전량 SUCCESS**
+
+### C.7 Access 우회 별건 (K1 병행 문제 발견)
+
+**관측**: K1 `/api/push/notify` webhook (relay build-index Action) = 매 실행마다 302 Found (Access 로그인 페이지). K1 curl `|| echo "webhook failed · non-blocking"` fallback 이 삼킴. **웹 푸시 실 발송 = 현재 프로덕션 미동작** (Access 우회 없음).
+
+**K2-0914-C 로 인수 안 함** (K1 소유 · 파일 경계 정합). **다음 라운드 K1 회부 대상** = Access "Service Auth" 정책 편입 (webhook path bypass · Kyu 클릭 필요) · 또는 K2 `/api/runs`/`/api/env/seed-reset` 동일 정책 편입 검토.
+
+### C.8 다음 라운드 인수인계 (갱신)
+
+1. **K1 회부**: `/api/push/notify` + `/api/runs` + `/api/env/seed-reset` = Access webhook bypass 정책 편입 (Kyu 대시보드 Access → Bypass policy · path pattern).
+2. **K1 auto-merge Gate API 통합**: `docs/testing/gate-contract.md § 3` 지시서 (audit O4 완화).
+3. **각 허브 seed 자기 구현**: N0 · T0 · M0 발부.
+4. **K0 라운드**: raw hex 회귀 방지 lint 강화 (al1 어설션 뿌리 회수 · K2가 대신 3줄 fix한 이력 청산).
+5. **K2 다음 라운드**: audit O5-O10 후속 + 실 schedule cron 회수 (KST 자정 1건 이력).
+
+---
+
+## § D · CYCLE v1.2 재준수 요약 (C 라운드)
+
+- **§ ②** 큐/EPIC/SPEC 게시 = ✓ (rebase 후 재확증 · 3항목 병존)
+- **§ ③** 심문 = **불요** (A 라운드 심문 소비 · C 는 마감 실행 라운드 · Kyu 요구 명료)
+- **§ ④** Kyu 요구 즉시 실행 = ✓ (secret · D1 · gh 편입 · curl 5 실측)
+- **§ ⑤** 결함 처리 루프 = ✓ (K0 al1 3줄 unblock · 파일 경계 minimum 위배 명시)
+- **DF-H count** = 0 (파일 경계 위배 = 사전 명시 + 정당화 · 임의 처리 아님)
+
+*K2-0914-C · 마감 완결 · 2026-09-15*
