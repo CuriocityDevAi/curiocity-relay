@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "built_at": "2026-09-15T13:41:46.421Z",
+  "built_at": "2026-09-15T13:44:02.856Z",
   "prompts": [
     {
       "path": "prompts/k0/K0-0911-AQ-test.md",
@@ -211,18 +211,17 @@
       "kyu_checks": []
     },
     {
-      "path": "k1/K1-0915-A-report.md",
-      "round": "K1-0915-A",
-      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/97",
-      "outcome": "자기 검증 통과 (todoboss PR#23 실 실행 · TODOBOSS Admin 서명 확증 · pnpm test 987 · check 0 err · build done · SPEC v1.64 · docs/env-recipes.md 신설) · Kyu 프로덕션 실기 확증 대기",
+      "path": "k1/K1-0915-C-report.md",
+      "round": "K1-0915-C",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/98",
+      "outcome": "자기 검증 통과 (2 워크플로 gate step 편입 · launchctl kickstart 실측 · orphan cleanup 1건 확증 · shared-docs-policy 초안 회부)",
       "kyu_checks": [
-        "포털 상세 [테스트 열기] 탭 → SSE 스트림 (준비 중·설치 중·서버 기동·준비됨) 순차 관측",
-        "todoboss PR#23 열기 → 새 Chrome 창 (임시 프로필) + http://127.0.0.1:4321/?test=1&autologin=admin (TODOBOSS Admin 자동 로그인 화면)",
-        "grownest PR 열기 → \"수동 로그인\" 배지 노출 · localhost:3000 · 수동 로그인",
-        "agilo (Expo · PR#5 or main) → exp:// tunnel + Expo Go 로드",
-        "환경 종료 (DELETE /env/stop) → 서버 kill + /tmp/kyu-chrome-* 삭제",
-        "kyu-bridge 재기동 시 orphan Chrome 프로필 (6시간+ stale) 자동 청소",
-        "test-portal PR body frontmatter + outcome 자기 검증 = k1-auto-selfcheck-merge 자동 squash"
+        "gate red PR = kyu-gate-auto-merge 자동 병합 거부 + 코멘트 (사유)",
+        "gate none + test-portal = k1-auto-selfcheck-merge 진행 (F 감사 O4 규약)",
+        "gate none + 다른 리포 (grownest·todoboss·storeport) = auto-merge skip + \"Kyu 판정 요구\" 코멘트",
+        "GATE_API_BASE/TOKEN 미편입 = ::warning skip 로그 후 기존 관행 유지",
+        "Kyu 원 폴더 pull → launchctl kickstart -k → 자동 orphan cleanup 로그 확증",
+        "docs/testing/shared-docs-policy.md 3안 (a/b/c) Kyu 판정 → K0 다음 라운드 발부"
       ]
     }
   ],
