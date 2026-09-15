@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "built_at": "2026-09-15T14:23:05.665Z",
+  "built_at": "2026-09-15T14:28:47.499Z",
   "prompts": [
     {
       "path": "prompts/k0/K0-0911-AQ-test.md",
@@ -238,17 +238,18 @@
       "kyu_checks": []
     },
     {
-      "path": "k1/K1-0915-C-report.md",
-      "round": "K1-0915-C",
-      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/98",
-      "outcome": "자기 검증 통과 (2 워크플로 gate step 편입 · launchctl kickstart 실측 · orphan cleanup 1건 확증 · shared-docs-policy 초안 회부)",
+      "path": "k1/K1-0915-D-report.md",
+      "round": "K1-0915-D",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/100",
+      "outcome": "자기 검증 통과 (GATE_API_BASE 편입 · 데몬 전용 clone v0.5.0 실 실행 · status/hubs.json 실 push 확증 · 앱 협력 지시서 편입)",
       "kyu_checks": [
-        "gate red PR = kyu-gate-auto-merge 자동 병합 거부 + 코멘트 (사유)",
-        "gate none + test-portal = k1-auto-selfcheck-merge 진행 (F 감사 O4 규약)",
-        "gate none + 다른 리포 (grownest·todoboss·storeport) = auto-merge skip + \"Kyu 판정 요구\" 코멘트",
-        "GATE_API_BASE/TOKEN 미편입 = ::warning skip 로그 후 기존 관행 유지",
-        "Kyu 원 폴더 pull → launchctl kickstart -k → 자동 orphan cleanup 로그 확증",
-        "docs/testing/shared-docs-policy.md 3안 (a/b/c) Kyu 판정 → K0 다음 라운드 발부"
+        "gh variable list = GATE_API_BASE 편입 확증",
+        "Cloudflare Access Service Token 발급 (Kyu 클릭 회부) → GATE_ACCESS_TOKEN 편입 → 다음 PR gate step 실 verdict 로그",
+        "launchctl print = WorkingDirectory ~/projects/.kyu-env/test-portal-main · v0.5.0",
+        "Kyu 원 폴더 (~/projects/test-portal) 미변경 · pull 불요",
+        "launchd 로그 = fetch-reset + orphan cleanup + status-watcher tick 3종 모두 노출",
+        "relay status/hubs.json 60초 갱신 관측 (raw.githubusercontent.com)",
+        "N0/M0 라운드 발부 시 env-recipes.md § 앱 협력 지시서 인용 확증"
       ]
     }
   ],
