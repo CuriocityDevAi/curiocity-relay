@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "built_at": "2026-09-15T08:43:41.930Z",
+  "built_at": "2026-09-15T08:48:16.406Z",
   "prompts": [
     {
       "path": "prompts/k0/K0-0911-AQ-test.md",
@@ -377,6 +377,67 @@
         }
       ],
       "summary": "K0-0914-AV · AU 실기 결함 7건 회수. 폰 6 · 공통 1."
+    },
+    {
+      "path": "checks/t0/T0-0911-B.md",
+      "id": "T0-0911-B",
+      "hub": "t0",
+      "pr": "https://github.com/CuriocityDevAi/todoboss/pull/23",
+      "issued_at": "2026-09-15T09:00:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "desktop",
+          "title": "헤더의 \"지각 48\"을 누르면 표에 48줄이 남는다",
+          "ok": "필터 칩에 \"종류 지각\"이 뜨고 줄 수가 48",
+          "ng": "줄 수가 다르거나 필터가 안 걸림",
+          "est_min": 1,
+          "deep_link": "/payroll/run?use_pcon_engine=1"
+        },
+        {
+          "device": "desktop",
+          "title": "\"결근 2\"를 누르면 두 줄만 남고 출근·퇴근 칸이 비어 있다",
+          "ok": "두 줄 · 출퇴근 빈칸 · 근무조(Shift)는 채워짐 · 상태 \"결근\"",
+          "ng": "다른 상태의 줄이 섞이거나 출퇴근 시간이 있음",
+          "est_min": 1
+        },
+        {
+          "device": "desktop",
+          "title": "\"추가근무 4\"를 누르면 Kayla Shafa 5/1이 있고 근무조가 N/A, 상세가 \"로테이션 미편성\"이다",
+          "ok": "상태 \"추가 근무\" · 근무조 N/A 또는 Day Off · 상세 문구 있음",
+          "ng": "\"기준 없음\"이 아직 보임",
+          "est_min": 1
+        },
+        {
+          "device": "desktop",
+          "title": "\"출근기록없음 2\"를 누르면 Fiqoh와 Rihan의 5/22 두 줄이다",
+          "ok": "두 사람 · 출근 칸 빈칸 · 퇴근만 있음",
+          "ng": "다른 사람이거나 0줄",
+          "est_min": 1
+        },
+        {
+          "device": "desktop",
+          "title": "\"제외 4\"를 누르면 4줄이 남는다",
+          "ok": "출근기록없음 2 + 퇴근기록없음 2",
+          "ng": "0줄",
+          "est_min": 1
+        },
+        {
+          "device": "desktop",
+          "title": "Step #5 [실행]을 누르면 팝업이 뜨고 목록이 기록 없음 4건뿐이다",
+          "ok": "결근·추가근무는 목록에 없음 · 사유 없이는 진행 버튼 회색",
+          "ng": "7건이 뜨거나 팝업 없이 실행됨",
+          "est_min": 2
+        },
+        {
+          "device": "desktop",
+          "title": "Step #5 표에 \"결근횟수\" 열이 있고 숫자를 누르면 필터가 걸린다",
+          "ok": "열이 보이고 클릭 시 Step #3·#4가 그 직원 결근으로 필터",
+          "ng": "열이 없음",
+          "est_min": 1
+        }
+      ],
+      "summary": "T0-0911-B · Step #4 판정 체계 확장 실기 7건 (맥). 사전: `gh pr checkout 23` · backend·web-admin 기동 · 5월 · 자동 재판정 5초."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
