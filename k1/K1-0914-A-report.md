@@ -1,7 +1,7 @@
 ---
 round: K1-0914-A
 pr: https://github.com/CuriocityDevAi/test-portal/pull/94
-outcome: 자기 검증 통과 (960 unit + check 0 err + build done · 실 exp:// 캡처 + 5 secret 편입) · Kyu 프로덕션 실기 확증 대기 (아이폰 PWA 설치 → 알림 켜기 → 실 알림 1건)
+outcome: MERGED (SHA 20de580 · K1-0914-C 충돌 해소 → squash 머지) · Kyu 프로덕션 실기 확증 대기 (아이폰 PWA 설치 → 알림 켜기 → 실 알림 1건)
 kyu_checks:
   - 아이폰 Safari → test.curiocity.company → 홈 화면 추가 → PWA 아이콘 실행 → [⚙] → [알림 켜기] ON → 시스템 팝업 허용 → 조작 시 실 알림 1건 수신
   - 맥 Chrome/Safari/Firefox → 즉시 알림 허용 → 조작 시 실 알림 수신 (PWA 설치 불요)
@@ -182,4 +182,83 @@ $ pnpm build   →  ✔ done · @sveltejs/adapter-cloudflare
 - **Kyu 프로덕션 실기 대기** = 아이폰 PWA 설치 → 알림 켜기 → 실 알림 1건 수신 (처음 하는 사람 기준)
 - **PR** = https://github.com/CuriocityDevAi/test-portal/pull/94
 
-*K1-0914-A · 2026-09-14 · K1 배관 허브 재정의 첫 라운드*
+---
+
+## C. 마감 (K1-0914-C · 2026-09-15)
+
+**Kyu 지시** = PR#94 충돌 해소만 · 코드 변경 없음 · kyu-gate 자동 머지 관찰 · 안 되면 squash 머지.
+
+### C.1 충돌 해소
+
+`git fetch origin && git merge origin/main` → K0-0914-AV 착지 (main SHA c58d5d1) 와 K1-0914-A (본 브랜치) 병렬 진행 · **SPEC v1.61 중복 청구** 뿌리.
+
+**충돌 파일 3건** (다른 허브 항목 삭제 없음 · 양쪽 보존):
+
+| 파일 | 충돌 성격 | 해소 |
+| --- | --- | --- |
+| `docs/SPEC.md` | K0-0914-AV v1.61 · K1-0914-A v1.61 (동시 청구) | **K0-0914-AV → v1.62 (chronological 최신) · K1-0914-A → v1.61 유지** · 양쪽 절 전량 보존 |
+| `docs/requirements-tracking.md` | K71 (K1-0914-A) · K80 (K0-0914-AV) 이연 요약 겹침 | K80 SPEC 참조 v1.61→v1.62 정정 · "AV · K1 병행" 후속을 K71 착지 참조로 정정 · 양쪽 행 유지 |
+| `EPIC-STATE.md` | Active § K1 배관 (본 브랜치) · Active § 포털 v2 정본 AU (main) | git 자동 병합 (충돌 없음 · 양쪽 추가) |
+
+병합 후 검증:
+- `pnpm check` = 0 err · `pnpm test src/lib/webpush.test.ts tools/kyu-bridge/test/expo.test.mjs` = 12 pass
+- 코드 변경 0 (문서만)
+
+**병합 커밋** = `1c97121` (feat/k1-0914-a-push-bridge)
+- 메시지 = `K1-0914-C · merge origin/main · SPEC/tracking 충돌 해소 (양쪽 보존)`
+- push = `fdfbd28..1c97121  feat/k1-0914-a-push-bridge -> feat/k1-0914-a-push-bridge`
+
+### C.2 mergeable 확증
+
+```
+$ gh pr view 94 --json mergeable,mergeStateStatus,statusCheckRollup
+{
+  "state": "OPEN",
+  "mergeable": "MERGEABLE",
+  "mergeStateStatus": "UNSTABLE",
+  "statusCheckRollup": [
+    {"name": "matrix-run (test-portal)", "conclusion": "FAILURE"},
+    {"name": "matrix-run (todoboss)",   "conclusion": "SUCCESS"},
+    {"name": "gate",                     "conclusion": "SKIPPED"},
+    {"name": "Workers Builds: test-portal", "conclusion": "SUCCESS"}
+  ]
+}
+```
+
+- **`mergeable: MERGEABLE`** ✅ (충돌 해소 확증)
+- `mergeStateStatus: UNSTABLE` = matrix-run (test-portal) FAILURE 잔존 (**F 감사 O1/O4 정본** · main 브랜치 어설션 stale al2-tabs-three-rendered + ao4-pr-body-checklist · REG 무력화 상태 유지). K0-0914-AR (K59) · K0-0914-AU (K70) 도 동일 상태로 auto-merge 통과 관행.
+- **kyu-gate = 미도장** (새 SHA `1c97121` 대해 재도장 필요 · Kyu app 재트리거 대기).
+
+### C.3 auto-merge 관찰 → 머지 갇힘 우회 규약 발동
+
+- kyu-gate 미도장 · Workers Builds SUCCESS 만으로는 auto-merge 조건 미충족.
+- Kyu 지시 = "안 되면 `gh pr merge 94 --squash`" 정본대로 즉시 진행.
+
+**squash 머지 실행**:
+```
+$ gh pr merge 94 -R CuriocityDevAi/test-portal --squash --delete-branch
+```
+
+**결과 확증** (`gh pr view 94 --json state,mergeCommit,mergedAt`):
+```json
+{
+  "state": "MERGED",
+  "mergeCommit": {"oid": "20de580b9cd5e8b2b8ec4060fd34b64cda7b87b8"},
+  "mergedAt": "2026-09-15T08:08:14Z"
+}
+```
+
+**main SHA** = `20de580b9cd5e8b2b8ec4060fd34b64cda7b87b8`
+**브랜치** = `feat/k1-0914-a-push-bridge` 자동 삭제 완료
+
+### C.4 후속 (Cloudflare Workers Builds auto-deploy)
+
+- main SHA `20de580` = Cloudflare Workers Builds 자동 트리거 대상 (CLAUDE.md § 9.5 정합 · 통상 1~3분).
+- Workers secret 5종 (VAPID_PUBLIC/PRIVATE_KEY · PUSH_WEBHOOK_TOKEN · relay PORTAL_PUSH_WEBHOOK/TOKEN) = K1-0914-A 라운드에서 K1 직접 편입 완료 · auto-deploy 새 version 이 자동 상속 (CLAUDE.md § 5.11).
+- **Kyu 실기 진입 준비 완료** (arrival 조건 = 배포 완료 후 · § kyu_checks 3항 정본).
+
+*K1-0914-C · 2026-09-15 · PR#94 마감 · 충돌 해소 + squash 머지*
+
+---
+
+*K1-0914-A · 2026-09-14 · K1 배관 허브 재정의 첫 라운드 · K1-0914-C 로 마감*
