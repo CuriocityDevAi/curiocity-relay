@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "built_at": "2026-09-15T13:45:25.263Z",
+  "built_at": "2026-09-15T14:15:40.952Z",
   "prompts": [
     {
       "path": "prompts/k0/K0-0911-AQ-test.md",
@@ -110,6 +110,19 @@
         "폰/맥: 판정 후 5 단계 진행 띠 (제출→머지 요청→머지됨 보라→배포→완료 초록) + [실기 시작]",
         "폰: 상세 확인 항목 ok/ng 두 줄 렌더",
         "맥 (≥1024): 사이드바 없음 · 2열 grid (목록 | 상세)"
+      ]
+    },
+    {
+      "path": "k0/K0-0915-B-report.md",
+      "round": "K0-0915-B",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/99",
+      "outcome": "자기 검증 통과 (pnpm test 987 · Playwright 23 pass 14 skip · check 0 err · docs 재편 착지) · Kyu 실기 확증 대기",
+      "kyu_checks": [
+        "폰: 상세 기계 판정 띠 = /api/gate 우선 · reasons 사람 말 · pr-checks 폴백",
+        "폰: 이력 접힘 = /api/runs 최근 5건 (K2 부재 시 미노출)",
+        "폰: [테스트 열기] = K1 /env/open SSE 4 단계 · 자동 로그인 배지 · [실기 시작] 활성",
+        "맥: 허브 탭·미니 허브에 K0/K1/K2 3 행 노출 (test-portal.hubs = k0/k1/k2)",
+        "공용 문서: docs/state/k0.md·k1.md·k2.md 신설 · EPIC-STATE.md 인덱스화 · SPEC v1.K0-0915-B"
       ]
     },
     {
