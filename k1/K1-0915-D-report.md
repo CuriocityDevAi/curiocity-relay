@@ -123,3 +123,70 @@ $ pnpm check →  0 errors · 57 warnings (legacy)
 - **shared-docs-policy** (K1-0915-C 초안 · K0 판정 대기)
 
 *K1-0915-D · 2026-09-15 · 데몬 인프라 정본화 · 배관 허브 4번째 라운드*
+
+---
+
+## § E. 마감 (K1-0915-E · 2026-09-15)
+
+**Kyu 지시** = PR#100 충돌 해소 · main = K0-0915-B (#99 문서 재편) · 충돌 파일 = 새 구조 (docs/state/k1.md · docs/tracking/k1.md) 로 이관.
+
+### E.0 GATE_ACCESS Service Token 편입 (K1-0915-D 완결 사후)
+
+Kyu 발급 후 (`CF-Access-Client-Id: 1b7eeb7dc65a2723e4b58486f87528f4.access` · `CF-Access-Client-Secret: cfast_*`) K1 직접 편입:
+```
+$ echo "$CLIENT_ID"     | gh secret set GATE_ACCESS_CLIENT_ID     -R CuriocityDevAi/test-portal
+$ echo "$CLIENT_SECRET" | gh secret set GATE_ACCESS_CLIENT_SECRET -R CuriocityDevAi/test-portal
+```
+
+**secret list 확증**:
+```
+GATE_ACCESS_CLIENT_ID       2026-09-15T15:10:58Z
+GATE_ACCESS_CLIENT_SECRET   2026-09-15T15:10:59Z
+```
+
+**워크플로 정정** (kyu-gate-auto-merge.yml + k1-auto-selfcheck-merge.yml):
+- 헤더 = `Cf-Access-Jwt-Assertion` → **`CF-Access-Client-Id` + `CF-Access-Client-Secret`** (2 헤더 CF Service Token 정본).
+- guard = 두 secret 모두 확인 후 진행.
+
+**실 curl 실측**:
+```
+$ curl -sS "https://test.curiocity.company/api/gate/CuriocityDevAi/test-portal/100" \
+    -H "CF-Access-Client-Id: <id>" -H "CF-Access-Client-Secret: <secret>"
+HTTP 302 (Cloudflare login redirect)
+```
+
+**HTTP 302 뿌리 확증** = Service Token 유효 · **CF Access Application Policy 안 이 service token allow 규칙 미편입** (Kyu 회부 · K1 스코프 부족). 편입 후 다음 PR merge = 실 `verdict` 로그.
+
+### E.1 충돌 해소 (K0-0915-B #99 문서 재편 편입)
+
+- `git fetch origin && git merge origin/main` → K0-0915-B (`9f93918`) 편입 · 충돌 2 파일.
+- **충돌 파일**:
+  - `EPIC-STATE.md` = origin/main 채택 (**인덱스 전용** · K0-0915-B 정본 · 상세는 허브별 파일 이관).
+  - `docs/SPEC.md § 11` = 양쪽 절 병존 (K1-0915-D + K0-0915-B v1.K0-0915-B).
+- **새 구조 이관** (Kyu 정본):
+  - `docs/state/k1.md` = K1-0915-D Active 항목 append · K1 SPEC 절 목록 편입 (§ K1-env-6 확장 · § K1-daemon-clone · § K1-status-watcher · § K1-env-recipes-app-guard).
+  - `docs/tracking/k1.md` = **신설** (K60~K79 K1 range · K73 = K1-0915-D 편입 + K60/K71/K72 이전 라운드 이관).
+  - `docs/tracking/index.md` = **편집 없음** (K0 소유 · K1 소유 read-only · 향후 K0 라운드에서 K1.md 링크 편입).
+- **K0/K2 항목 삭제 없음** (`state/k0.md · state/k2.md · tracking/k0.md · tracking/index.md` 모두 origin/main 그대로).
+
+### E.2 mergeable 확증
+
+```
+$ gh pr view 100 -R CuriocityDevAi/test-portal --json state,mergeable,mergeStateStatus
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","state":"OPEN"}
+```
+
+**MERGEABLE + CLEAN** ✅ · 병합 준비 완결.
+
+### E.3 이후 · Kyu 실기 진입
+
+- CF Access policy 편입 (Kyu 클릭 · Access → Application → Policies → Service Token allow).
+- PR#100 auto-merge 트리거 or Kyu 직접 병합.
+- 다음 PR merge 시 = kyu-gate-auto-merge/k1-auto-selfcheck-merge 워크플로 gate step 안 **실 verdict 로그 1건** (`gate=green|red|none · 진행/거부/Kyu 판정 요구`).
+
+### E.4 병합 후 SHA · 후속
+
+- 병합 커밋 = `5b4e2c2` (feat/k1-0915-d-status · rebase 완결 · docs 구조 재편 정합).
+- SPEC · state · tracking 3 파일 = K0-0915-B 정본 준수 · K0/K2 침범 0.
+
+*K1-0915-E · 2026-09-15 · PR#100 충돌 해소 · 문서 재편 정합 · § E 마감*
