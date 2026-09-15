@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "built_at": "2026-09-15T14:15:40.952Z",
+  "built_at": "2026-09-15T14:23:05.665Z",
   "prompts": [
     {
       "path": "prompts/k0/K0-0911-AQ-test.md",
@@ -228,6 +228,13 @@
       "round": "M0-0909-A",
       "pr": "storeport#104",
       "outcome": "reactivation-audit",
+      "kyu_checks": []
+    },
+    {
+      "path": "m0/M0-0915-A-report.md",
+      "round": "M0-0915-A",
+      "pr": "agilo-medusa-pos-fork#6",
+      "outcome": "sdk57-upgrade",
       "kyu_checks": []
     },
     {
@@ -528,6 +535,80 @@
         }
       ],
       "summary": "M0-0909-A · Anchor POS 하루 사이클 실기 8건 (폰 Expo Go). 사전: 포크 브랜치 feat/m0-0729-ao-payment-methods · `npx expo start --tunnel --clear` · QR."
+    },
+    {
+      "path": "checks/m0/M0-0915-A.md",
+      "id": "M0-0915-A",
+      "hub": "m0",
+      "pr": "https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/6",
+      "issued_at": "2026-09-15T14:00:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "expo",
+          "title": "K0 SDK 57 로드 확인 · fork feat/m0-0915-a-sdk57 · npx expo start --tunnel --clear · QR → Expo Go 스캔 → 로그인 화면 도달",
+          "ok": "5-10초 안에 로그인 화면",
+          "ng": "Incompatible SDK 안내 or 빈 화면",
+          "est_min": 2
+        },
+        {
+          "device": "expo",
+          "title": "K1 로그인 · Shop URL storeport-production.up.railway.app · 매장 마법사 Default→Indonesia→Soopsok Store Jakarta",
+          "ok": "상품 목록 화면이 뜬다",
+          "ng": "로그인 실패 또는 빈 화면",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K2 상단 \"미개점\" 배지 → 시재 500000 개점 → 상품 1개 → 결제 → 현금 → 완료",
+          "ok": "완료 후 배지가 개점 상태",
+          "ng": "결제수단 화면이 안 뜸",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K3 카드 판매 · 승인번호 TEST-CARD-001 · 그리고 승인번호 비운 채 완료 시도",
+          "ok": "번호 있으면 완료 · 비우면 막힘",
+          "ng": "비워도 통과",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K4 QRIS 판매 · TEST-QRIS-001 → Orders 화면",
+          "ok": "3건 모두 Fulfilled",
+          "ng": "Pending이 남음",
+          "est_min": 2
+        },
+        {
+          "device": "expo",
+          "title": "K5 [수금] 100000 · 수금자 아내",
+          "ok": "서랍 잔액이 10만 줄어듦",
+          "ng": "잔액 변화 없음",
+          "est_min": 1
+        },
+        {
+          "device": "expo",
+          "title": "K6 [마감] · Expected = 500000 + 현금 판매액 − 100000 · Counted 일부러 다르게",
+          "ok": "카드·QRIS 미포함 · 비고 없이는 마감 막힘 · 비고 입력 후 마감",
+          "ng": "카드가 Expected에 섞임 또는 비고 없이 마감됨",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K7 Z 리포트에 현금/카드/QRIS 세 줄 + 건수",
+          "ok": "세 줄과 건수가 보인다",
+          "ng": "합계만 있음",
+          "est_min": 1
+        },
+        {
+          "device": "expo",
+          "title": "K8 [WA 복사] → WhatsApp 붙여넣기",
+          "ok": "텍스트가 온전히 들어온다",
+          "ng": "빈 클립보드 또는 깨짐",
+          "est_min": 1
+        }
+      ],
+      "summary": "M0-0915-A · Anchor POS 하루 사이클 실기 8건 (폰 Expo Go SDK 57). **선행 K0 신설** = SDK 57 로드 물꼬 확인 (M0-0909-A 대비 delta)."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
