@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "built_at": "2026-09-16T08:56:12.309Z",
+  "built_at": "2026-09-16T09:02:36.478Z",
   "prompts": [],
   "reports": [
     {
@@ -126,9 +126,9 @@
       "ledger_events": []
     },
     {
-      "path": "k0/K0-0916-E-report.md",
-      "round": "K0-0916-E",
-      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/107",
+      "path": "k0/K0-0916-F-report.md",
+      "round": "K0-0916-F",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/109",
       "outcome": "",
       "kyu_checks": [],
       "ledger_events": []
@@ -2037,6 +2037,311 @@
         }
       },
       "note": ""
+    },
+    {
+      "id": "R029",
+      "text": "허브 상태 watcher 정밀화(프로세스 존재≠실행 중)",
+      "title": "허브 상태 watcher 정밀화(프로세스 존재≠실행 중)",
+      "project": "test-portal",
+      "project_slug": "test-portal",
+      "hub": "k1",
+      "priority": "P2",
+      "size": "S",
+      "status": "filed",
+      "column": "waiting",
+      "issued_id": null,
+      "issue_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-09-15",
+      "age_days": 1,
+      "next": false,
+      "conflict_with": [
+        "R012"
+      ],
+      "blocked_by": null,
+      "trace5": {
+        "read": {
+          "seen": true,
+          "last_ts": "2026-09-16T02:16:33.304Z"
+        },
+        "reconcile": {
+          "seen": true,
+          "last_ts": "2026-09-16T08:27:18.205Z"
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-14T09:51:49.027Z"
+        }
+      },
+      "note": "R012(허브판 무의미)와 상충 → 삭제 제안 대상"
+    },
+    {
+      "id": "R101",
+      "text": "P2.2 GitHub API 소비자 · Access JWT + Workers secret + Octokit",
+      "title": "P2.2 GitHub API 소비자 · Access JWT + Workers secret + Octokit",
+      "project": "test-portal",
+      "project_slug": "test-portal",
+      "hub": "k0",
+      "priority": "P2",
+      "size": "S",
+      "status": "filed",
+      "column": "waiting",
+      "issued_id": null,
+      "issue_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-07-24",
+      "age_days": 54,
+      "next": true,
+      "conflict_with": [],
+      "blocked_by": null,
+      "trace5": {
+        "read": {
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
+        },
+        "reconcile": {
+          "seen": true,
+          "last_ts": "2026-09-16T08:37:18.918Z"
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-16T08:42:24.263Z"
+        }
+      },
+      "note": "K0-0916-F 이관 · 원본 dispatch 파일 삭제 (relay 원장 = 유일 큐)"
+    },
+    {
+      "id": "R102",
+      "text": "P2.3 판정 폼 + 스크린샷 (Cases · 체크리스트 · 이미지 첨부)",
+      "title": "P2.3 판정 폼 + 스크린샷 (Cases · 체크리스트 · 이미지 첨부)",
+      "project": "test-portal",
+      "project_slug": "test-portal",
+      "hub": "k0",
+      "priority": "P2",
+      "size": "S",
+      "status": "filed",
+      "column": "waiting",
+      "issued_id": null,
+      "issue_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-07-24",
+      "age_days": 54,
+      "next": false,
+      "conflict_with": [],
+      "blocked_by": null,
+      "trace5": {
+        "read": {
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
+        },
+        "reconcile": {
+          "seen": true,
+          "last_ts": "2026-09-16T08:37:18.918Z"
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-16T08:42:24.263Z"
+        }
+      },
+      "note": "K0-0916-F 이관"
+    },
+    {
+      "id": "R103",
+      "text": "P2.4 제출 파이프라인 (Kyu 판정 → GitHub PR 코멘트 · checks API)",
+      "title": "P2.4 제출 파이프라인 (Kyu 판정 → GitHub PR 코멘트 · checks API)",
+      "project": "test-portal",
+      "project_slug": "test-portal",
+      "hub": "k0",
+      "priority": "P2",
+      "size": "S",
+      "status": "filed",
+      "column": "waiting",
+      "issued_id": null,
+      "issue_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-07-24",
+      "age_days": 54,
+      "next": false,
+      "conflict_with": [],
+      "blocked_by": null,
+      "trace5": {
+        "read": {
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
+        },
+        "reconcile": {
+          "seen": true,
+          "last_ts": "2026-09-16T08:37:18.918Z"
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-16T08:42:24.263Z"
+        }
+      },
+      "note": "K0-0916-F 이관"
+    },
+    {
+      "id": "R104",
+      "text": "P2.5 PWA + Cloudflare Access 마감 (매니페스트 · SW · 로그인)",
+      "title": "P2.5 PWA + Cloudflare Access 마감 (매니페스트 · SW · 로그인)",
+      "project": "test-portal",
+      "project_slug": "test-portal",
+      "hub": "k0",
+      "priority": "P2",
+      "size": "S",
+      "status": "filed",
+      "column": "waiting",
+      "issued_id": null,
+      "issue_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-07-24",
+      "age_days": 54,
+      "next": false,
+      "conflict_with": [],
+      "blocked_by": null,
+      "trace5": {
+        "read": {
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
+        },
+        "reconcile": {
+          "seen": true,
+          "last_ts": "2026-09-16T08:37:18.918Z"
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-16T08:42:24.263Z"
+        }
+      },
+      "note": "K0-0916-F 이관"
+    },
+    {
+      "id": "R105",
+      "text": "P2.6 설정 CRUD UI (프로젝트 · 케이스 · 사용자 · 감사)",
+      "title": "P2.6 설정 CRUD UI (프로젝트 · 케이스 · 사용자 · 감사)",
+      "project": "test-portal",
+      "project_slug": "test-portal",
+      "hub": "k0",
+      "priority": "P2",
+      "size": "S",
+      "status": "filed",
+      "column": "waiting",
+      "issued_id": null,
+      "issue_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-07-26",
+      "age_days": 52,
+      "next": false,
+      "conflict_with": [
+        "R104"
+      ],
+      "blocked_by": null,
+      "trace5": {
+        "read": {
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
+        },
+        "reconcile": {
+          "seen": true,
+          "last_ts": "2026-09-16T08:37:18.918Z"
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-16T08:42:24.263Z"
+        }
+      },
+      "note": "K0-0916-F 이관 · R104 (PWA 마감) 과 UI 마감 중복 · 오케 판정 대기"
+    },
+    {
+      "id": "R106",
+      "text": "P5 리포 런처 스크립트 (grownest · storeport · todoboss 각 반나절)",
+      "title": "P5 리포 런처 스크립트 (grownest · storeport · todoboss 각 반나절)",
+      "project": "test-portal",
+      "project_slug": "test-portal",
+      "hub": "k0",
+      "priority": "P2",
+      "size": "S",
+      "status": "filed",
+      "column": "waiting",
+      "issued_id": null,
+      "issue_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-07-29",
+      "age_days": 49,
+      "next": false,
+      "conflict_with": [],
+      "blocked_by": null,
+      "trace5": {
+        "read": {
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
+        },
+        "reconcile": {
+          "seen": true,
+          "last_ts": "2026-09-16T08:37:18.918Z"
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-16T08:42:24.263Z"
+        }
+      },
+      "note": "K0-0916-F 이관 · P3 후 · P5 완결"
     }
   ],
   "events": [
@@ -2527,8 +2832,8 @@
   "mismatches": [],
   "warnings": [],
   "rollup": {
-    "filed_count": 13,
-    "max_age_days": 27,
+    "filed_count": 20,
+    "max_age_days": 54,
     "red_count": 2
   }
 }
