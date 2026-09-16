@@ -1,17 +1,7 @@
 {
   "schema_version": 3,
-  "built_at": "2026-09-16T08:24:15.355Z",
-  "prompts": [
-    {
-      "path": "prompts/k0/K0-0911-AQ-test.md",
-      "id": "K0-0911-AQ-test",
-      "hub": "k0",
-      "issued_at": "2026-09-11T22:55:00Z",
-      "status": "pending",
-      "req_ids": [],
-      "summary": "K0-0911-AQ 자동 발부 v2 흐름 테스트 · 포털 카드 노출 · [투입]/[프롬프트 복사] · 데몬 dispatch 실측 대상."
-    }
-  ],
+  "built_at": "2026-09-16T08:26:25.710Z",
+  "prompts": [],
   "reports": [
     {
       "path": "k0/K0-0907-AN-report.md",
@@ -1845,13 +1835,7 @@
   ],
   "events": [],
   "mismatches": [],
-  "warnings": [
-    {
-      "type": "prompt_missing_req_ids",
-      "path": "prompts/k0/K0-0911-AQ-test.md",
-      "id": "K0-0911-AQ-test"
-    }
-  ],
+  "warnings": [],
   "rollup": {
     "filed_count": 13,
     "max_age_days": 27,
