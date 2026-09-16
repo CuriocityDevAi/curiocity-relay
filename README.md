@@ -84,12 +84,29 @@ items:
 | `ng` | string | ✓ | 실패 조건 ("이러면 ✗") |
 | `est_min` | number | ✓ | 예상 소요 분 |
 | `deep_link` | string \| null | ✗ | 실기 진입 URL (있으면) |
+| `auto` | `machine` \| `human` | ✗ | **K2-0916-A 신설** · 자동 회귀 대상 여부 (미지정 = K2 분류기 제안) |
+| `assertion_id` | string | ✗ | **K2-0916-A 신설** · machine 항목의 어설션 파일명 (`assertions/<repo>/<assertion_id>.mjs`) |
+| `req_id` | string[] | ✗ | **K2-0915-B 신설** · 요구사항 매핑 (traceability.md § 1) |
 
 **규범**:
 - **상태 전이 없음** (파일 자체 = 항목 목록 만 · 통과/실패 상태는 D1 case_state).
 - **relay checks vs GitHub Checks API**: relay checks = **Kyu 실기 항목 목록** · GitHub Checks API = **kyu-gate 도장** (판정 · P3 정본). 정본 분리.
 - 파서: `scripts/build-index.mjs` · `collectChecks()` · `index.json.checks[]` 로 집계 (schema_version 2 · v1 호환).
 - 실기 후 판정 회수 = test-portal 상세 화면 (D1 case_state · POST `/api/case-state`).
+
+**K2-0916-A · auto-from-checks 규약** (`test-portal/docs/testing/auto-from-checks.md` 정본):
+- **`auto: machine`** = 숫자·문구·행수·DOM 판정 가능 → **`assertion_id` + 어설션 파일 필수** (전환 파이프라인).
+- **`auto: human`** = 소리·감각·디자인 (영원히 사람) → assertion_id 없음.
+- **미지정** = K2 분류기가 제안 (`test-portal/tools/regression-runner/bin/classify-checks --relay-root <path>`).
+- **강제화 로드맵**: K2-0916-A (옵셔널) → K2-0916-B (auto 필수) → K2-0917 (machine 어설션 필수) → K2-0918 (coverage < 70% CI fail).
+
+**예시** (K2-0916-A 이후 정본):
+
+```yaml
+items:
+  - '{"device":"phone","title":"홈 파란 카드 있다","ok":"카드 보임","ng":"카드 없음","est_min":1,"auto":"machine","assertion_id":"aw-1-home-blue-card","req_id":["K100"]}'
+  - '{"device":"phone","title":"착지 소리 딩 한번","ok":"딩 들림","ng":"소리 없음","est_min":1,"auto":"human"}'
+```
 
 ---
 
