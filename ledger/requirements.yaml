@@ -1,0 +1,289 @@
+# CurioCity 요구 원장 (정본 · 오케 유지 · Kyu 원문)
+# status: filed(등재·미발부) | issued(발부·구현 중) | landed(착지·실기 대기) | verified(실기 통과) | done
+# priority: P0(지금) | P1(다음) | P2(나중)
+# repeat_count: Kyu 재언급 횟수 (>=2 → 🔴)
+
+- id: R001
+  text: "테스트 케이스들을 모았다가, 나중에 자동 테스트한다"
+  text_full: "Kyu가 ✓✗ 찍은 실기 항목 중 기계 판정 가능한 것은 어설션으로 전환·축적 → 스케줄(PR마다·야간)로 자동 실행 → 다음 라운드부터 사람은 소리·감각만"
+  project: test-portal
+  hub: k2
+  priority: P0
+  filed_at: 2026-07-28
+  status: issued
+  issued_id: K2-0916-A
+  repeat_count: 3
+  note: "07-28~09-14 소유 허브 부재로 미발부 · 09-16 🔴 등재"
+
+- id: R002
+  text: "내가 한번 이야기한것이 저장이 되어있어서, 차례대로 구현이 되고, 오랫동안 우선순위에서 밀려서 큐에 쌓여있는건은 따로 나에게 알려주면"
+  text_full: "요구 원장 탭(칸반: 등재·발부·착지·✅ · 원문·허브·우선순위·경과일·🔴) + 월요일 밀림 푸시 + 발부 시 원장 대사"
+  project: test-portal
+  hub: k0
+  priority: P0
+  filed_at: 2026-09-16
+  status: issued
+  issued_id: K0-0916-C
+  repeat_count: 1
+
+- id: R003
+  text: "테스트 브라우저 열기 버튼을 누르면 최신 소스를 받고, 새 브라우저를 열고, 로그인 등 기본을 다 하고, 필요한 위치까지 가서 나의 테스트를 기다리게"
+  project: test-portal
+  hub: k1
+  priority: P0
+  filed_at: 2026-09-14
+  status: landed
+  issued_id: K1-0915-A
+  repeat_count: 1
+  note: "마일스톤 1에서 Kyu 확인"
+
+- id: R004
+  text: "test-portal이 알려주는 테스트 안내가 너(클로드)와 같거나 더 쉬워야 해"
+  project: test-portal
+  hub: k0
+  priority: P0
+  filed_at: 2026-09-14
+  status: landed
+  issued_id: K0-0914-AU
+  repeat_count: 1
+
+- id: R005
+  text: "모바일·데스크톱·아이패드에서 테스트할 것 같아 · 더 편리한 방법"
+  text_full: "기기 태그 · 현재 기기 항목 우선 · P/F 이어 찍기 · 전 기기 동시 푸시"
+  project: test-portal
+  hub: k0
+  priority: P1
+  filed_at: 2026-09-14
+  status: landed
+  issued_id: K0-0916-A
+  repeat_count: 1
+
+- id: R006
+  text: "알림은 바이브레이션이나 소리까지(띵) 났으면"
+  project: test-portal
+  hub: k1
+  priority: P1
+  filed_at: 2026-09-14
+  status: landed
+  issued_id: K1-0914-A
+  repeat_count: 1
+  note: "OS 기본음+진동 · 포털 열림 시 띵 · Kyu 알림 실기 미완"
+
+- id: R007
+  text: "성공 판정을 한 PR이 실제 머지가 완료되었는지 · 그 화면에서 눈에 띄게 업데이트(보라색)"
+  project: test-portal
+  hub: k0
+  priority: P1
+  filed_at: 2026-09-14
+  status: landed
+  issued_id: K0-0914-AW
+  repeat_count: 1
+
+- id: R008
+  text: "탭 위치를 아래가 아니라 화면 상단으로"
+  project: test-portal
+  hub: k0
+  priority: P1
+  filed_at: 2026-09-14
+  status: landed
+  issued_id: K0-0914-AW
+  repeat_count: 1
+
+- id: R009
+  text: "새로운 프로젝트가 추가되더라도 괜찮아? 범용적일 것 · 회사 직원들도 써야"
+  text_full: "허브·프로젝트·타입·시드 전부 projects.json 파생 · 새 프로젝트 = JSON 한 줄 · 데몬 타입 범용화"
+  project: test-portal
+  hub: k0
+  priority: P1
+  filed_at: 2026-09-14
+  status: filed
+  repeat_count: 1
+  note: "허브 파생은 AV에서 완료 · 타입·시드 범용화 잔여"
+
+- id: R010
+  text: "테스트 체계 — 환경 파일 · 정답 · 실패 규정 · 재활용 · 요구 변경 시 관리"
+  text_full: "수용 기준 코드 전 · 층 배치 · 환경 동일성 · 게이트 · 이력 · 소유 + Kyu 5항"
+  project: test-portal
+  hub: k2
+  priority: P1
+  filed_at: 2026-09-14
+  status: landed
+  issued_id: K2-0914-A
+  repeat_count: 1
+
+- id: R011
+  text: "사람 판정은 최소로 · 백엔드만 수정이면 테스트하라고 하면 안 됨 · 사람 없이 배포해도 되는 기준"
+  project: test-portal
+  hub: k1
+  priority: P0
+  filed_at: 2026-09-14
+  status: landed
+  issued_id: K1-0915-A
+  repeat_count: 1
+  note: "test-portal 자기검증 auto-merge 가동 · 제품 리포는 Kyu 판정 유지"
+
+- id: R012
+  text: "허브 상태판은 별로 의미 없음(cmux) · 1번(맥 자동화)이 가장 의미"
+  project: test-portal
+  hub: k0
+  priority: P1
+  filed_at: 2026-09-16
+  status: issued
+  issued_id: K0-0916-C
+  repeat_count: 1
+  note: "허브 탭 → 요구 탭으로 교체"
+
+- id: R013
+  text: "큐를 만들어뒀는데 왜 동작 안 하나 — ops/dispatch inbox 7건 · relay prompts 통합"
+  project: test-portal
+  hub: k0
+  priority: P1
+  filed_at: 2026-09-16
+  status: issued
+  issued_id: K0-0916-C
+  repeat_count: 1
+
+- id: R014
+  text: "GrowNest·StorePort 앱에 dev 자동 로그인 한 줄"
+  project: grownest
+  hub: n0
+  priority: P2
+  filed_at: 2026-09-15
+  status: filed
+  repeat_count: 1
+  note: "docs/env-recipes.md § 앱 협력 · M0도 동일"
+
+- id: R015
+  text: "각 리포별 CI · docs/testing.md · 시드 고정"
+  project: all
+  hub: t0
+  priority: P2
+  filed_at: 2026-09-14
+  status: filed
+  repeat_count: 1
+
+- id: R016
+  text: "챗 분리 · 프로젝트 1 + 챗 2(포털/제품)"
+  project: orchestration
+  hub: oke
+  priority: P1
+  filed_at: 2026-09-16
+  status: filed
+  repeat_count: 1
+  note: "마일스톤 1 후"
+
+- id: R017
+  text: "GitHub 앱이 더 안정적이고 빠르겠다 — A(포털) vs B(GitHub+PR 프리뷰) 비교"
+  project: test-portal
+  hub: oke
+  priority: P1
+  filed_at: 2026-09-16
+  status: filed
+  repeat_count: 1
+  note: "조금만 더 가보자 · 마일스톤 1 결과로 판단"
+
+- id: R018
+  text: "orphan 4건 클릭 시 필터 · 판정불가 4(출근 2·퇴근 2) 표기 · 돌아가기 → 판정불가 필터 · 출근/퇴근 시각 직접 입력"
+  project: todoboss
+  hub: t0
+  priority: P0
+  filed_at: 2026-09-15
+  status: landed
+  issued_id: T0-0915-A
+  repeat_count: 1
+
+- id: R019
+  text: "시각 직접 입력 → 재판정(지각/야근 자동 산출)"
+  project: todoboss
+  hub: t0
+  priority: P0
+  filed_at: 2026-09-11
+  status: landed
+  issued_id: T0-0915-A
+  repeat_count: 2
+  note: "B에서 이연됐다가 A에서 회수 · 재언급 2회"
+
+- id: R020
+  text: "Todoboss 이연: 파라미터화 · Finalize · Payslip · Work Rotation 편성"
+  project: todoboss
+  hub: t0
+  priority: P2
+  filed_at: 2026-08-20
+  status: filed
+  repeat_count: 1
+
+- id: R021
+  text: "M0 POS 하루 사이클 실기 K1~K8"
+  project: storeport
+  hub: m0
+  priority: P0
+  filed_at: 2026-08-10
+  status: landed
+  issued_id: M0-0915-A
+  repeat_count: 1
+  note: "SDK 57 승격 완료 · Kyu 폰 실기 대기"
+
+- id: R022
+  text: "목표 (가) Kyu 혼자 써보는 수준 · Metabase 선행 — 결정"
+  project: storeport
+  hub: m0
+  priority: P1
+  filed_at: 2026-09-09
+  status: filed
+  repeat_count: 1
+  note: "Kyu 결정 대기"
+
+- id: R023
+  text: "반품·환불·취소 · 할인 적용 · 바코드(카메라) — POS 화면 갭"
+  project: storeport
+  hub: m0
+  priority: P1
+  filed_at: 2026-09-12
+  status: filed
+  repeat_count: 1
+
+- id: R024
+  text: "EAS dev build(Android APK) + Xantri BT-58D 블루투스 인쇄 + 서랍"
+  project: storeport
+  hub: m0
+  priority: P2
+  filed_at: 2026-09-14
+  status: filed
+  repeat_count: 1
+
+- id: R025
+  text: "Meta WhatsApp 번호 · Midtrans/Xendit 머천트 외부 신청"
+  project: storeport
+  hub: kyu
+  priority: P2
+  filed_at: 2026-09-09
+  status: filed
+  repeat_count: 1
+
+- id: R026
+  text: "코어 중심 ADR 명문화 · Wing 정본 정정(Starter) · Admin 실기 절차"
+  project: storeport
+  hub: m0
+  priority: P1
+  filed_at: 2026-09-09
+  status: filed
+  repeat_count: 1
+
+- id: R027
+  text: "이연 16(AgentsPay 제약) 봉인 유지"
+  project: storeport
+  hub: m0
+  priority: P2
+  filed_at: 2026-08-24
+  status: filed
+  repeat_count: 1
+
+- id: R028
+  text: "GrowNest 카운트업 스케일 일반 스핀 적용 여부"
+  project: grownest
+  hub: n0
+  priority: P2
+  filed_at: 2026-09-10
+  status: filed
+  repeat_count: 1
+  note: "현행 유지 · 동면"
