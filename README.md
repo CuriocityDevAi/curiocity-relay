@@ -106,6 +106,22 @@ req_ids:                    # ★ 필수 · 발부 대상 R-id 배열 · 부재 
 
 ---
 
+## [requirements yaml 필드 규약] (K0-0916-E-BA 신설 · 2026-09-16)
+
+**목적**: K0 흐름판 (docs/spec/k0.md § K0-BA-8) 소비 정본. `index.json.requirements[]` 필드 스키마.
+
+**신설 필드** (Kyu 원문 K0-0916-E · v3 와이어프레임 정본):
+- **`size`**: `S` | `M` | `L` | `Epic` — 카드 크기 배지 (K0-BA-4 정합).
+- **`next`**: boolean — 대기 열 맨 위 점선 카드 (다음 발부 예정 · 허브 당 최대 1건).
+- **`conflict_with`**: string[] — 상충 R-id 배열 · 점선 빨강 + [삭제]/[유지] 버튼 노출.
+- **`blocked_by`**: `'kyu'` | string — 파란 태그 "Kyu 결정이 막고 있음" (kyu 값) or 다른 R-id.
+
+**기존 필드** (K0-BA-8 참조): id · hub · column · title · priority · age_days · repeat_count · issue_id · landed_pr · gate_result · drill_pass · drill_total · drill_defer_count · my_turn · needs_decision · merged · version_deployed.
+
+**소비**: `src/lib/ui/flow-data.ts` `FlowRequirement` 인터페이스 정본 · K1 build-index.mjs 집계 시 이 스키마 준수.
+
+---
+
 ## [checks 규약] (K1-0914-A 신설 · 2026-09-14)
 
 **목적**: 각 라운드마다 Kyu 가 실 브라우저·기기에서 확인해야 할 항목 (`items[]`) 을 정본 게시. **판정 상태 원장 아님** (상태는 test-portal D1 `case_state` 정본 · GitHub Checks API `kyu-gate` 도장 별건).
