@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "built_at": "2026-09-16T08:30:07.455Z",
+  "built_at": "2026-09-16T08:38:34.219Z",
   "prompts": [],
   "reports": [
     {
@@ -260,18 +260,34 @@
       "ledger_events": []
     },
     {
-      "path": "k1/K1-0916-A-report.md",
-      "round": "K1-0916-A",
-      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/102",
-      "outcome": "자기 검증 통과 (A1 notify 실 fire status=200 · A2 verdict=red 실 응답 · A3 exp tunnel URL 캡처 정본 + QR)",
+      "path": "k1/K1-0916-B-report.md",
+      "round": "K1-0916-B",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/106",
+      "outcome": "자기 검증 통과 (192 이벤트 실 감지 · relay events 배관 · build-index schema v3 · 밀림 push cron · 5분 배치 · trace5 · rollup 정본)",
       "kyu_checks": [
-        "새 심문 파일 relay push 후 60초 이내 kyu-bridge 로그에 `[status-watcher] notify <hub>/<file> · status=200`",
-        "아이폰 PWA subscribe 후 실 심문 파일 발생 시 알림 배너 수신 (K1 자체 브라우저 없음 · Kyu 실기)",
-        "CF Access Application Policy 안 GATE service token allow 편입 확증 (Kyu 클릭 완료)",
-        "kyu-gate 도장 후 (또는 check_suite 자연 트리거) 두 워크플로 gate step 실 verdict 로그",
-        "포털 상세 [테스트 열기] agilo PR#6 → SSE `step:tunnel` 이벤트 노출 · exp:// URL + QR SVG · Expo Go 앱 로드"
+        "데몬 재기동 후 5분 이내 relay events/<hub>/<date>.ndjson 파일 자동 생성 · line 증가",
+        "relay index.json.rollup 정본 (filed_count · max_age_days · red_count)",
+        "다음 월요일 09:00 WIB (UTC 02:00) 자동 backlog push · 문구 \"미발부 N · 최장 N일 · 🔴 N\"",
+        "reports[].ledger_events frontmatter 편입 · build-index reports 안 캡처",
+        "prompts/k0/K0-0911-AQ-test.md 삭제 확증 · 새 프롬프트 파일은 req_ids 필수"
       ],
-      "ledger_events": []
+      "ledger_events": [
+        {
+          "id": "R002",
+          "action": "consume",
+          "note": "이벤트 소스 · 이 라운드 착지"
+        },
+        {
+          "id": "R013",
+          "action": "consume",
+          "note": "큐 통합 · relay prompts 규약 재정의 + K0-0911-AQ-test 삭제"
+        },
+        {
+          "id": "R006",
+          "action": "defer",
+          "note": "알림 실기 = 마일스톤 대기"
+        }
+      ]
     }
   ],
   "checks": [
@@ -874,12 +890,12 @@
       "age_days": 0,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
         },
         "reconcile": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T01:40:06.748Z"
         },
         "priority": {
           "seen": false,
@@ -890,8 +906,8 @@
           "last_ts": "2026-09-16"
         },
         "landed": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T04:21:55.772Z"
         }
       },
       "note": "이벤트 소스 = K1-0916-B · 지표 = K2-0916-B"
@@ -910,12 +926,12 @@
       "age_days": 2,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T02:16:33.304Z"
         },
         "reconcile": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T08:27:18.205Z"
         },
         "priority": {
           "seen": false,
@@ -927,7 +943,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-14"
+          "last_ts": "2026-09-14T09:51:49.027Z"
         }
       },
       "note": "마일스톤 1에서 Kyu 확인"
@@ -946,12 +962,12 @@
       "age_days": 2,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
         },
         "reconcile": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T01:40:06.748Z"
         },
         "priority": {
           "seen": false,
@@ -963,7 +979,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-14"
+          "last_ts": "2026-09-16T04:21:55.772Z"
         }
       },
       "note": ""
@@ -982,12 +998,12 @@
       "age_days": 2,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
         },
         "reconcile": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T01:40:06.748Z"
         },
         "priority": {
           "seen": false,
@@ -999,7 +1015,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-14"
+          "last_ts": "2026-09-16T04:21:55.772Z"
         }
       },
       "note": ""
@@ -1018,12 +1034,12 @@
       "age_days": 2,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T02:16:33.304Z"
         },
         "reconcile": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T08:27:18.205Z"
         },
         "priority": {
           "seen": false,
@@ -1035,7 +1051,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-14"
+          "last_ts": "2026-09-14T09:51:49.027Z"
         }
       },
       "note": "OS 기본음+진동 · 포털 열림 시 띵 · Kyu 알림 실기 미완"
@@ -1054,12 +1070,12 @@
       "age_days": 2,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
         },
         "reconcile": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T01:40:06.748Z"
         },
         "priority": {
           "seen": false,
@@ -1071,7 +1087,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-14"
+          "last_ts": "2026-09-16T04:21:55.772Z"
         }
       },
       "note": ""
@@ -1090,12 +1106,12 @@
       "age_days": 2,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
         },
         "reconcile": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T01:40:06.748Z"
         },
         "priority": {
           "seen": false,
@@ -1107,7 +1123,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-14"
+          "last_ts": "2026-09-16T04:21:55.772Z"
         }
       },
       "note": ""
@@ -1126,12 +1142,12 @@
       "age_days": 2,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
         },
         "reconcile": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T01:40:06.748Z"
         },
         "priority": {
           "seen": false,
@@ -1142,8 +1158,8 @@
           "last_ts": null
         },
         "landed": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T04:21:55.772Z"
         }
       },
       "note": "허브 파생은 AV에서 완료 · 타입·시드 범용화 잔여"
@@ -1198,12 +1214,12 @@
       "age_days": 2,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T02:16:33.304Z"
         },
         "reconcile": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T08:27:18.205Z"
         },
         "priority": {
           "seen": false,
@@ -1215,7 +1231,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-14"
+          "last_ts": "2026-09-14T09:51:49.027Z"
         }
       },
       "note": ""
@@ -1234,12 +1250,12 @@
       "age_days": 0,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
         },
         "reconcile": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T01:40:06.748Z"
         },
         "priority": {
           "seen": false,
@@ -1250,8 +1266,8 @@
           "last_ts": "2026-09-16"
         },
         "landed": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T04:21:55.772Z"
         }
       },
       "note": ""
@@ -1270,12 +1286,12 @@
       "age_days": 0,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:07:28.064Z"
         },
         "reconcile": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T01:40:06.748Z"
         },
         "priority": {
           "seen": false,
@@ -1286,8 +1302,8 @@
           "last_ts": "2026-09-16"
         },
         "landed": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-16T04:21:55.772Z"
         }
       },
       "note": ""
@@ -1306,8 +1322,8 @@
       "age_days": 1,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-14T06:59:52.361Z"
         },
         "reconcile": {
           "seen": false,
@@ -1558,8 +1574,8 @@
       "age_days": 37,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:18:22.364Z"
         },
         "reconcile": {
           "seen": false,
@@ -1594,8 +1610,8 @@
       "age_days": 7,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:18:22.364Z"
         },
         "reconcile": {
           "seen": false,
@@ -1630,8 +1646,8 @@
       "age_days": 4,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:18:22.364Z"
         },
         "reconcile": {
           "seen": false,
@@ -1666,8 +1682,8 @@
       "age_days": 2,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:18:22.364Z"
         },
         "reconcile": {
           "seen": false,
@@ -1738,8 +1754,8 @@
       "age_days": 7,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:18:22.364Z"
         },
         "reconcile": {
           "seen": false,
@@ -1774,8 +1790,8 @@
       "age_days": 23,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-15T14:18:22.364Z"
         },
         "reconcile": {
           "seen": false,
@@ -1810,8 +1826,8 @@
       "age_days": 6,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-14T06:59:52.361Z"
         },
         "reconcile": {
           "seen": false,
@@ -1833,7 +1849,463 @@
       "note": ""
     }
   ],
-  "events": [],
+  "events": [
+    {
+      "ts": "2026-08-24T07:49:59.013Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay-k0-0824-ab/k0/K0-0824-AB-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-08-24T08:03:04.533Z",
+      "hub": "k0",
+      "type": "inquiry-push",
+      "target": "/tmp/curiocity-relay-ac-inq/k0/K0-0824-AC-inquiry.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-08-24T08:30:31.795Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay-ac-report/k0/K0-0824-AC-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-02T05:36:42.234Z",
+      "hub": "k0",
+      "type": "inquiry-push",
+      "target": "/tmp/curiocity-relay-ad-inq/k0/K0-0902-AD-inquiry.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-02T08:50:23.311Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay-ad-report/k0/K0-0902-AD-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-02T09:23:15.217Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay-ae-report/k0/K0-0902-AE-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-03T03:54:38.280Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay-af-report/k0/K0-0902-AF-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-03T07:49:40.728Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay-ag-report/k0/K0-0903-AG-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-03T08:26:02.071Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay-ah-report/k0/K0-0903-AH-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-04T04:15:55.092Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay-ai-report/k0/K0-0904-AI-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-04T06:43:35.618Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay-aj-report/k0/K0-0904-AJ-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-04T08:11:11.311Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay-ak/k0/K0-0904-AK-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-04T09:00:30.153Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay-al/k0/K0-0904-AL-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-04T09:59:12.981Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay-am/k0/K0-0904-AM-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-07T04:14:48.080Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0907-AN-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-07T06:24:46.079Z",
+      "hub": "k0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal/EPIC-STATE.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-07T06:30:02.935Z",
+      "hub": "k0",
+      "type": "inquiry-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0907-AO-inquiry.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-07T07:00:50.996Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0907-AO-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-09T09:47:22.745Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0909-AP-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-11T23:01:00.181Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0911-AQ-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-14T08:39:39.984Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0914-AR-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-14T09:09:35.572Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0914-AU-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-14T09:46:45.533Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0914-AV-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-14T08:51:36.690Z",
+      "hub": "k0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal/EPIC-STATE.md",
+      "session": "45b7a3f4-263c-44fa-b953-6ccecaf52602"
+    },
+    {
+      "ts": "2026-09-15T02:44:08.754Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0914-AW-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-15T08:42:50.449Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0914-AW-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-15T14:06:34.612Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-15T14:06:51.732Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k1.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-15T14:07:04.110Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k2.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-15T14:07:28.064Z",
+      "hub": "k0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal/EPIC-STATE.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-15T14:08:02.455Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/index.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-15T14:08:33.366Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-15T14:15:23.008Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0915-B-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-16T01:39:38.857Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-16T01:39:42.806Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-16T01:40:06.748Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-16T01:44:09.204Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0916-A-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-16T04:21:55.772Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0916-A-report.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-10T06:54:57.757Z",
+      "hub": "n0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/grownest/EPIC-STATE.md",
+      "session": "a8a3cd12-48de-4be4-b601-d7bbf9e3cfaa"
+    },
+    {
+      "ts": "2026-09-10T08:43:28.200Z",
+      "hub": "n0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/grownest/EPIC-STATE.md",
+      "session": "a8a3cd12-48de-4be4-b601-d7bbf9e3cfaa"
+    },
+    {
+      "ts": "2026-09-14T04:10:51.892Z",
+      "hub": "n0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/grownest/EPIC-STATE.md",
+      "session": "a8a3cd12-48de-4be4-b601-d7bbf9e3cfaa"
+    },
+    {
+      "ts": "2026-09-14T06:59:52.361Z",
+      "hub": "n0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/grownest/EPIC-STATE.md",
+      "session": "a8a3cd12-48de-4be4-b601-d7bbf9e3cfaa"
+    },
+    {
+      "ts": "2026-09-15T14:15:42.702Z",
+      "hub": "m0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/storeport/EPIC-STATE.md",
+      "session": "ff78185b-5009-4901-945a-88e553ce26b8"
+    },
+    {
+      "ts": "2026-09-15T14:18:22.364Z",
+      "hub": "m0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/storeport/EPIC-STATE.md",
+      "session": "ff78185b-5009-4901-945a-88e553ce26b8"
+    },
+    {
+      "ts": "2026-09-02T09:10:59.995Z",
+      "hub": "k1",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/EPIC-STATE.md",
+      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
+    },
+    {
+      "ts": "2026-09-02T09:18:18.022Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay/k1/K1-0902-A-report.md",
+      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
+    },
+    {
+      "ts": "2026-09-02T09:52:53.802Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay/k1/K1-0902-B-report.md",
+      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
+    },
+    {
+      "ts": "2026-09-03T01:42:37.993Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay/k1/K1-0902-C-report.md",
+      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
+    },
+    {
+      "ts": "2026-09-03T04:23:45.434Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay/k1/K1-0903-D-report.md",
+      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
+    },
+    {
+      "ts": "2026-09-14T09:00:00.239Z",
+      "hub": "k1",
+      "type": "inquiry-push",
+      "target": "/tmp/curiocity-relay-k1/k1/K1-0914-A-inquiry.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-14T09:47:04.356Z",
+      "hub": "k1",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/EPIC-STATE.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-14T09:51:49.027Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/relay-final/k1/K1-0914-A-report.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-15T09:07:15.209Z",
+      "hub": "k1",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/EPIC-STATE.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-15T15:19:53.585Z",
+      "hub": "k1",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-15T15:20:17.413Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-15T15:20:47.364Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-15T15:20:54.620Z",
+      "hub": "k1",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/index.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-15T15:21:02.378Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/index.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-15T15:21:14.030Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/index.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-16T02:16:17.623Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-16T02:16:27.275Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-16T02:16:33.304Z",
+      "hub": "k1",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-16T02:16:52.907Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-16T08:27:09.190Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-16T08:27:18.205Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    }
+  ],
   "mismatches": [],
   "warnings": [],
   "rollup": {
