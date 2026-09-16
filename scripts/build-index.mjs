@@ -164,11 +164,11 @@ async function collectReports() {
 }
 
 /**
- * K1-0916-B/C · YAML requirements.yaml parser (deps 0 · list of R00x items).
+ * K1-0916-B/C · K1-0916-D · YAML requirements.yaml parser (deps 0).
+ * K1-0916-D 확장 = conflict_with (스칼라/comma 배열 정합) · blocked_by · next boolean · size.
  */
 function parseRequirementsYaml(src) {
 	const items = [];
-	// 각 - id: R00x 블록 파싱
 	const blockRegex = /^- id: (R\d+)\n([\s\S]*?)(?=\n- id:|\n\n[A-Z#]|\Z)/gm;
 	let m;
 	while ((m = blockRegex.exec(src)) !== null) {
@@ -183,11 +183,29 @@ function parseRequirementsYaml(src) {
 			if (!val) continue;
 			if (k === 'repeat_count') item[k] = parseInt(val, 10);
 			else if (k === 'next') item[k] = val === 'true';
-			else item[k] = val;
+			else if (k === 'conflict_with') {
+				// K1-0916-D · 스칼라 (R012) 또는 comma 배열 (R012, R013) 정합
+				item[k] = val.split(',').map((s) => s.trim()).filter(Boolean);
+			} else item[k] = val;
 		}
 		items.push(item);
 	}
 	return items;
+}
+
+/**
+ * K1-0916-D · requirement status → K0 5열 mapping (src/lib/ui/flow-data.ts 정합).
+ * filed→waiting · issued→implementing · landed→drilling · verified/done→merged.
+ */
+function statusToColumn(status) {
+	switch (status) {
+		case 'filed': return 'waiting';
+		case 'issued': return 'implementing';
+		case 'landed': return 'drilling';
+		case 'verified': return 'merged';
+		case 'done': return 'merged';
+		default: return 'waiting';
+	}
 }
 
 /**
@@ -228,15 +246,23 @@ async function collectRequirements(events) {
 		return {
 			id: r.id,
 			text: r.text ?? '',
+			title: r.text ?? '', // K0 FlowRequirement.title = 원문 첫 줄 (별칭 · K0 소비 정본)
 			project: r.project ?? '',
+			project_slug: r.project ?? null,
 			hub: r.hub ?? '',
 			priority: r.priority ?? '',
 			size: r.size ?? '',
 			status: r.status ?? '',
+			column: statusToColumn(r.status), // K1-0916-D · K0 5열 mapping
 			issued_id: r.issued_id ?? null,
+			issue_id: r.issued_id ?? null, // K0 alias
 			repeat_count: r.repeat_count ?? 0,
 			filed_at: r.filed_at ?? null,
 			age_days,
+			// K1-0916-D · yaml 확장 필드 (K0 소비 계약)
+			next: r.next === true,
+			conflict_with: Array.isArray(r.conflict_with) ? r.conflict_with : [],
+			blocked_by: r.blocked_by ?? null,
 			trace5: {
 				read: { seen: !!readTs, last_ts: readTs },
 				reconcile: { seen: !!reconcileTs, last_ts: reconcileTs },
