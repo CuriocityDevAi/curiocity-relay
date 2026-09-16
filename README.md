@@ -106,6 +106,12 @@ req_ids:                    # ★ 필수 · 발부 대상 R-id 배열 · 부재 
 
 ---
 
+## [feature-map 링크] (K0-0916-G · 2026-09-16)
+
+**정본 규약**: `docs/feature-map-convention.md` (오케 · 이 리포 상주). K0 test-portal 초판 소비 = `docs/feature-map.yaml` + `scripts/feature-map-check.mjs` + CI + FeatureMap.svelte 지도 탭.
+
+---
+
 ## [requirements yaml 필드 규약] (K0-0916-E-BA 신설 · 2026-09-16)
 
 **목적**: K0 흐름판 (docs/spec/k0.md § K0-BA-8) 소비 정본. `index.json.requirements[]` 필드 스키마.
