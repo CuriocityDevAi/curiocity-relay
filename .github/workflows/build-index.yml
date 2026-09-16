@@ -59,13 +59,20 @@ jobs:
             echo "index.json unchanged · skip commit"
           fi
 
-      - name: Notify portal (Web Push webhook · K0-0914-AR-B2)
+      - name: Notify portal (Web Push webhook · K0-0914-AR-B2 · K1-0916-A CF Access)
         if: env.PORTAL_PUSH_WEBHOOK != ''
         env:
           PORTAL_PUSH_WEBHOOK: ${{ secrets.PORTAL_PUSH_WEBHOOK }}
           PORTAL_PUSH_TOKEN: ${{ secrets.PORTAL_PUSH_TOKEN }}
+          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
         run: |
-          curl -sS -X POST "$PORTAL_PUSH_WEBHOOK" \
+          # K1-0916-A · CF Access Service Token 헤더 편입 (notify endpoint 는 Access 뒤 · Bearer 만으로는 302)
+          CF_ARGS=""
+          if [ -n "${CF_ACCESS_CLIENT_ID:-}" ] && [ -n "${CF_ACCESS_CLIENT_SECRET:-}" ]; then
+            CF_ARGS="-H CF-Access-Client-Id:${CF_ACCESS_CLIENT_ID} -H CF-Access-Client-Secret:${CF_ACCESS_CLIENT_SECRET}"
+          fi
+          curl -sS -X POST "$PORTAL_PUSH_WEBHOOK" $CF_ARGS \
             -H "content-type: application/json" \
             -H "authorization: Bearer $PORTAL_PUSH_TOKEN" \
             -d '{"event":"index.rebuilt","source":"curiocity-relay","commit":"'"${GITHUB_SHA}"'"}' \
