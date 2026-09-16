@@ -324,3 +324,91 @@
   conflict_with: R012
   repeat_count: 1
   note: "R012(허브판 무의미)와 상충 → 삭제 제안 대상"
+
+# K0-0916-F 이관 등재 (ops/dispatch/inbox 7건 → R101~R107 · Kyu 원문 09-16 승인)
+- id: R101
+  text: "P2.2 GitHub API 소비자 · Access JWT + Workers secret + Octokit"
+  project: test-portal
+  hub: k0
+  priority: P2
+  size: S
+  filed_at: 2026-07-24
+  status: filed
+  next: true
+  repeat_count: 1
+  origin: ops/dispatch/inbox/20260724-1702-p2-2-github-api-consumer.md
+  note: "K0-0916-F 이관 · 원본 dispatch 파일 삭제 (relay 원장 = 유일 큐)"
+
+- id: R102
+  text: "P2.3 판정 폼 + 스크린샷 (Cases · 체크리스트 · 이미지 첨부)"
+  project: test-portal
+  hub: k0
+  priority: P2
+  size: S
+  filed_at: 2026-07-24
+  status: filed
+  repeat_count: 1
+  origin: ops/dispatch/inbox/20260724-1703-p2-3-case-form-and-screenshots.md
+  note: "K0-0916-F 이관"
+
+- id: R103
+  text: "P2.4 제출 파이프라인 (Kyu 판정 → GitHub PR 코멘트 · checks API)"
+  project: test-portal
+  hub: k0
+  priority: P2
+  size: S
+  filed_at: 2026-07-24
+  status: filed
+  repeat_count: 1
+  origin: ops/dispatch/inbox/20260724-1704-p2-4-submit-pipeline.md
+  note: "K0-0916-F 이관"
+
+- id: R104
+  text: "P2.5 PWA + Cloudflare Access 마감 (매니페스트 · SW · 로그인)"
+  project: test-portal
+  hub: k0
+  priority: P2
+  size: S
+  filed_at: 2026-07-24
+  status: filed
+  repeat_count: 1
+  origin: ops/dispatch/inbox/20260724-1705-p2-5-pwa-and-access-finalize.md
+  note: "K0-0916-F 이관"
+
+- id: R105
+  text: "P2.6 설정 CRUD UI (프로젝트 · 케이스 · 사용자 · 감사)"
+  project: test-portal
+  hub: k0
+  priority: P2
+  size: S
+  filed_at: 2026-07-26
+  status: filed
+  conflict_with: R104
+  repeat_count: 1
+  origin: ops/dispatch/inbox/20260726-0600-p2-6-settings-crud-ui.md
+  note: "K0-0916-F 이관 · R104 (PWA 마감) 과 UI 마감 중복 · 오케 판정 대기"
+
+- id: R106
+  text: "P5 리포 런처 스크립트 (grownest · storeport · todoboss 각 반나절)"
+  project: test-portal
+  hub: k0
+  priority: P2
+  size: S
+  filed_at: 2026-07-29
+  status: filed
+  repeat_count: 1
+  origin: ops/dispatch/inbox/20260729-p5-repo-launcher-scripts.md
+  note: "K0-0916-F 이관 · P3 후 · P5 완결"
+
+- id: R107
+  text: "todoboss 딥링크 (T0 콘솔 v2 완결 후 발부)"
+  project: todoboss
+  hub: t0
+  priority: P2
+  size: M
+  filed_at: 2026-08-05
+  status: filed
+  blocked_by: hub:t0
+  repeat_count: 1
+  origin: ops/dispatch/inbox/20260805-deeplink-todoboss.md
+  note: "K0-0916-F 이관 · T0 콘솔 AO 완결 후 발부 대기"
