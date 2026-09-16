@@ -3,10 +3,11 @@ round: K0-0916-A
 hub: k0
 pr: https://github.com/CuriocityDevAi/test-portal/pull/103
 base: fe6e96c
-head: bc9c866
+head: dbeef2f
 spec_bump: v1.K0-0916-A
 req: [K0-AY-1, K0-AY-2, K0-AY-3, K0-AY-4, K0-AY-5]
 finished_at: 2026-09-16
+sections: [A, B]
 ---
 
 # K0-0916-A · AY 마일스톤 실기 준비 + 허브 실상태 소비 (착지 리포트)
@@ -14,9 +15,9 @@ finished_at: 2026-09-16
 **Kyu 원문 (2026-09-16)**: "AY = 마일스톤 실기 준비 + 허브 실상태 소비" · 5 항목 지시.
 
 **base** = main@fe6e96c (K2-0915-B 오케 머지 후 · PR#99·100·101 병합됨).
-**head** = feat/k0-0916-a-ay-milestone @ bc9c866.
+**head** = feat/k0-0916-a-ay-milestone @ dbeef2f (B 라운드 재병합 후).
 **PR** = #103 · https://github.com/CuriocityDevAi/test-portal/pull/103.
-**착지 직전 origin/main 재병합** = Already up to date.
+**착지 직전 origin/main 재병합** = A 라운드 Already up to date · B 라운드 K1-0916-A (#102 · main@ddde380) 병합 · SPEC.md 양쪽 보존.
 
 ## 파일 경계 준수
 
@@ -96,3 +97,27 @@ K1/K2 소유 (`api/`·`kyu-bridge`·`.github`·`tools/regression-runner`·`migra
 - **M** `docs/SPEC.md` (§ K0-AY-1~5 · v1.K0-0916-A)
 - **M** `docs/state/k0.md` (AY Active 편입)
 - **M** `docs/tracking/k0.md` (K101 편입)
+
+---
+
+## § B · K0-0916-B · PR#103 충돌 해소 (2026-09-16)
+
+**Kyu 원문 (K0-0916-B · 2026-09-16)**: "PR#103 충돌 해소만. git fetch && git merge origin/main(#102 포함) → docs/SPEC.md 양쪽 보존 → push → mergeable=MERGEABLE. 다음 라운드부터 SPEC.md 는 허브별 절 파일 (docs/spec/<hub>.md) 로 분리 제안 1줄 (구현은 마일스톤 후)."
+
+### 작업 실측
+
+1. **git fetch origin** = `fe6e96c..ddde380 main -> origin/main` (K1-0916-A #102 반영).
+2. **git merge origin/main** = `docs/SPEC.md` 충돌 1건. 기타 K1 소유 파일 (`docs/audits/K1-0916-A-*` · `docs/state/k1.md` · `docs/tracking/k1.md` · `tools/kyu-bridge/**`) = 자동 병합 성공.
+3. **양쪽 보존** = SPEC.md § 11 안 K0-0916-A 절 + K1-0916-A 절 나란히 편입 (K0 위 · K1 아래). K1 항목 삭제 절대 금지 규약 (CLAUDE.md § 5.18) 준수.
+4. **merge commit** = `dbeef2f` (merge commit · default 메시지).
+5. **push** = `bc9c866..dbeef2f feat/k0-0916-a-ay-milestone`.
+6. **gh pr view 103 --json mergeable,mergeStateStatus,state** = `{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","state":"OPEN"}` **확증**.
+
+### 착지 요건 정합
+
+- **파일 경계** (Kyu 09-15 · § 5.19 정본) = K1 소유 파일 read-only 접근만 · 병합 시 origin/main 쪽 보존. **K1 항목 삭제 없음** (원문 그대로 편입).
+- **레거시 마커** = `<<<<<<< HEAD` · `=======` · `>>>>>>> origin/main` 잔재 0건 확증.
+
+### 다음 라운드 회부 (제안 1줄)
+
+- **SPEC.md 허브별 절 파일 분리 제안** (Kyu K0-0916-B 원문 · 마일스톤 후 구현): 단일 `docs/SPEC.md` → `docs/spec/k0.md · k1.md · k2.md` 로 분리 · 루트 `docs/SPEC.md` = 인덱스 (state/`<hub>`.md 정본 재사용) · 병행 라운드 changelog 충돌 뿌리 회수 · **마일스톤 실기 후 라운드 편입**.
