@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "built_at": "2026-09-16T08:51:36.939Z",
+  "built_at": "2026-09-16T08:56:12.309Z",
   "prompts": [],
   "reports": [
     {
@@ -260,32 +260,26 @@
       "ledger_events": []
     },
     {
-      "path": "k1/K1-0916-B-report.md",
-      "round": "K1-0916-B",
-      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/106",
-      "outcome": "자기 검증 통과 (192 이벤트 실 감지 · relay events 배관 · build-index schema v3 · 밀림 push cron · 5분 배치 · trace5 · rollup 정본)",
+      "path": "k1/K1-0916-D-report.md",
+      "round": "K1-0916-D",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/108",
+      "outcome": "자기 검증 통과 (build-index 20필드 K0 계약 정합 · pnpm test 987/987 · 데몬 재기동 실 로그 · events 69건 실 push · 3 항 전량 확증)",
       "kyu_checks": [
-        "데몬 재기동 후 5분 이내 relay events/<hub>/<date>.ndjson 파일 자동 생성 · line 증가",
-        "relay index.json.rollup 정본 (filed_count · max_age_days · red_count)",
-        "다음 월요일 09:00 WIB (UTC 02:00) 자동 backlog push · 문구 \"미발부 N · 최장 N일 · 🔴 N\"",
-        "reports[].ledger_events frontmatter 편입 · build-index reports 안 캡처",
-        "prompts/k0/K0-0911-AQ-test.md 삭제 확증 · 새 프롬프트 파일은 req_ids 필수"
+        "포털 홈 흐름판 = index.json.requirements[] 자동 소비 · 5열 · size · next · conflict · blocked 카드 표시",
+        "pnpm test = 987/987 pass · session-manager-ab.test 포함 fail 없음",
+        "데몬 재기동 후 launchd log [events-watcher] flush · N files 노출",
+        "relay events/k1/2026-09-16.ndjson 3+ line 실 이벤트 확증"
       ],
       "ledger_events": [
         {
           "id": "R002",
           "action": "consume",
-          "note": "이벤트 소스 · 이 라운드 착지"
-        },
-        {
-          "id": "R013",
-          "action": "consume",
-          "note": "큐 통합 · relay prompts 규약 재정의 + K0-0911-AQ-test 삭제"
+          "note": "events 집계 마감 · K0 소비 계약 정합 완결"
         },
         {
           "id": "R006",
           "action": "defer",
-          "note": "알림 실기 = 마일스톤 대기"
+          "note": "알림 실기 = 마일스톤 대기 유지"
         }
       ]
     }
