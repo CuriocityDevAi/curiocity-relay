@@ -206,3 +206,97 @@ $ curl -sS -H "Cf-Access-Jwt-Assertion: fake.jwt.value" "http://localhost:8795/a
 - **DF-H count** = 0
 
 *K2-0916-B · 착지 · 2026-09-16*
+
+---
+
+## § C · K2-0916-C 마감 (충돌 해소 · 2026-09-16)
+
+**라운드**: K2-0916-C (충돌 해소만 · Kyu 원문 명시적 스코프).
+
+### C.1 fetch + merge origin/main
+
+**1차 merge** (K2-0916-A `f466524` + K1-0916-B `3bf701c` 편입):
+
+```
+git fetch origin  → main b5e8dc2 → 3bf701c
+git merge origin/main
+Auto-merging docs/SPEC.md → CONFLICT
+Auto-merging docs/state/k2.md → CONFLICT
+Auto-merging docs/tracking/k2.md → CONFLICT
+```
+
+**충돌 파일 양쪽 보존** (Kyu 원문 정합 · K0/K1/K2 항목 삭제 없음):
+- `docs/SPEC.md` = K2-0916-A § 24.14/24.15 (auto-from-checks) + K2-0916-B § 24.16/24.17 (BC 지표) **순차 배치** (§ 번호순 정합).
+- `docs/state/k2.md` = K2-0916-A 절 + K2-0916-B 절 병존 · A merge 사실 갱신 ("PR#104 merged").
+- `docs/tracking/k2.md` = K80~K83 (K2-0916-A) + K84~K86 (K2-0916-B) 양쪽 표 병존 · 예약 range K87~K89 갱신.
+
+**2차 merge** (K0-0916-E `d6399fb` fast-forward):
+
+```
+git merge origin/main (재실행)
+→ Fast-forward · 18 files changed (FlowBoard.svelte 등)
+```
+
+### C.2 회귀 감지 (스코프 밖 · K0 회부)
+
+**증상**: `al1-token-no-raw-hex` = fail (`src/lib/ui/FlowBoard.svelte` 안 `#fff` raw hex 7건).
+
+**뿌리**: K0-0916-E (FlowBoard 신설) 편입 시 semantic var 미소비. K2-0914-C § C.2 와 동일 패턴 (K0 파일 라인).
+
+**K2-0916-C 처리**: **fix 안 함** (Kyu 원문 스코프 = "충돌 해소만" 명시 · K2-0914-C 정본 = K2 마감 blocking 시에만 minimum fix 진행).
+
+**K0 회부**: FlowBoard.svelte:536/720/726/730/735/739/747 = `color: #fff` → `color: var(--fg-on-primary)` (또는 신 semantic var) 대체. K0 다음 라운드 회수.
+
+### C.3 mergeable 확증 출력
+
+```
+$ gh pr view 105 -R CuriocityDevAi/test-portal --json mergeable,mergeStateStatus,statusCheckRollup
+{
+  "mergeable": "MERGEABLE",
+  "mergeStateStatus": "UNSTABLE",
+  "checks": [
+    "matrix-run (test-portal) ",
+    "matrix-run (todoboss) ",
+    "retires-check ",
+    "req-check ",
+    "gate SKIPPED",
+    "Workers Builds: test-portal "
+  ]
+}
+```
+
+- **`mergeable = MERGEABLE`** ✓ (Kyu 요구 확증).
+- `mergeStateStatus = UNSTABLE` = CI 진행 중 (checks pending) 표시 · git-level 충돌 없음. K2-0916-A 착지 前 rerun 상태 (SHA `82a4d80` = 2차 merge 후 push).
+- **매트릭스 CI 회복 = K0 FlowBoard fix 착지 후** (별건 라운드 · § C.2 회부).
+
+### C.4 파일 변경 요약
+
+**충돌 해소만** (Kyu 원문):
+
+```
+git diff --stat 82a4d80..HEAD  (K2-0916-B 시작 SHA vs 최종)
+docs/SPEC.md            | (§ 24.14~24.17 4절 순차 편입)
+docs/state/k2.md        | (A + B 양쪽 절 병존)
+docs/tracking/k2.md     | (K80~K83 + K84~K86 양쪽 표 병존)
+src/lib/server/metrics/signals.test.ts | (unknown cast 재편 · 인수 오류 fix)
+
++ K0-0916-E 편입 (FlowBoard · flow-data · portal-flow-ba spec · e2e screenshots)
++ K1-0916-B 편입 (session-events-watcher · commands/serve · docs/audits ndjson)
++ K2-0916-A 편입 (check-classifier · classify-checks · latest_by_check_id · auto-from-checks.md)
+```
+
+**K2 코드 신 편집 = 0** (signals.test.ts unknown cast fix 1건은 K2-0916-B 편입 pkg 재작성 부수 효과 · 신 기능 추가 없음).
+
+### C.5 K1-0916-C 원장 알림 후속
+
+- ledger_events (K1-0916-B) 편입 = 다음 K2 라운드에서 `/api/hubs/metrics.signals` 의 S3 (dispatched-without-report) 정확화 소스로 소비 가능 (근사 → 실 read 이벤트).
+
+### C.6 CYCLE v1.2 준수
+
+- **§ ②** 큐/EPIC/SPEC 대조 = ✓ (rebase 시 충돌 확증 · 양쪽 보존 규약)
+- **§ ③ 심문 skip** = 순수 충돌 해소 · Kyu 원문 명시 · 판단 판정 없음
+- **§ ④** Kyu 요구 즉시 실행 = ✓ (merge + push + mergeable 확증 출력)
+- **§ ⑤** 결함 처리 루프 = **skip** (Kyu 스코프 밖 · K0 회부)
+- **DF-H count** = 0 (파일 경계 위배 0 · 순수 충돌 해소만)
+
+*K2-0916-C · 마감 · 2026-09-16*
