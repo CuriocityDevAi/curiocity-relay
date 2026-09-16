@@ -34,20 +34,75 @@
 
 ```
 curiocity-relay/
-├─ README.md          (이 파일 · 철칙 · 청소 · checks 규약)
-├─ index.json         (build-index.mjs 자동 생성 · schema_version 2)
+├─ README.md          (이 파일 · 철칙 · 청소 · checks · events · prompts 규약)
+├─ index.json         (build-index.mjs 자동 생성 · schema_version 3)
 ├─ n0/                (N0 · grownest 허브 · 리포트)
 ├─ t0/                (T0 · todoboss 허브 · 리포트)
 ├─ m0/                (M0 · storeport 허브 · 리포트)
 ├─ k0/                (K0 · test-portal 소스 UI 허브 · 리포트)
 ├─ k1/                (K1 · test-portal 배관 허브 · 리포트 · K1-0914-A 재정의)
-├─ prompts/           (오케스트레이터 프롬프트 큐)
-├─ checks/            (Kyu 실기 항목 파일 · K1-0914-A 신설 · § checks 규약)
-│   ├─ k0/            (K0 라운드 실기 항목)
-│   ├─ k1/            (K1 라운드 실기 항목)
-│   └─ ...
+├─ k2/                (K2 · 테스트 체계 허브 · 리포트 · K2-0914-A 신설)
+├─ prompts/           (오케 프롬프트 큐 · req_ids 필수 · K1-0916-B 정본)
+├─ checks/            (Kyu 실기 항목 파일 · K1-0914-A 신설)
+├─ status/            (허브 상태판 · hubs.json · K1-0915-D 신설)
+├─ events/            (K1-0916-B 신설 · <hub>/<YYYY-MM-DD>.ndjson · 세션 관측 이벤트)
+├─ ledger/            (오케 원장 · requirements.yaml + open-requirements.md)
 └─ scripts/           (build-index.mjs · index.json 생성)
 ```
+
+---
+
+## [prompts 규약] (K1-0916-B 정본 · 2026-09-16)
+
+**목적**: 오케 프롬프트 큐. 각 프롬프트 파일 = 라운드 발부 대상 정본.
+
+**파일 경로**: `prompts/<hub>/<ROUND-ID>.md` (예: `prompts/k0/K0-0916-E.md`)
+
+**frontmatter (필수)**:
+```yaml
+---
+id: <ROUND-ID>              # 예: K0-0916-E
+hub: <hub>                  # 예: k0 · k1 · k2
+issued_at: <ISO 8601>       # 예: 2026-09-16T00:00:00Z
+status: pending             # pending | dispatched | landed
+req_ids:                    # ★ 필수 · 발부 대상 R-id 배열 · 부재 = warnings 편입
+  - R002
+  - R013
+---
+
+## 요지
+<한 문장 요약>
+```
+
+**규범**:
+- `req_ids` = **반드시 편입** (K1-0916-B 정본 · Kyu 회신 Q5). 부재 시 build-index 안 `warnings[]` 편입.
+- R-id 는 `ledger/requirements.yaml` 안 정의된 R-id 만 참조. 원장 부재 R-id 는 mismatch 대상.
+- 소비 = 각 허브 데몬 (kyu-bridge session-events-watcher) 이 세션 안 tool_use 로 감지 → events 로 기록.
+
+---
+
+## [events 규약] (K1-0916-B 신설 · 2026-09-16)
+
+**목적**: 요구 트레이스 이벤트 소스 (터미널 자기 보고 의존 없이 관측). Kyu 원문 R002 정본.
+
+**파일 경로**: `events/<hub>/<YYYY-MM-DD>.ndjson` (매일 자정 UTC 회전 · D3 정본)
+
+**line 스키마** (NDJSON · 각 line JSON):
+```json
+{"ts":"2026-09-16T07:02:51Z","hub":"k1","type":"read","target":"/abs/path or URL","session":"<jsonl-basename-uuid>","req_ids":["R002"]}
+```
+
+**type 8종** (Kyu K1-0916-C Q1):
+- `read` = 원장/EPIC-STATE/tracking/state 읽기
+- `reconcile` = /docs/tracking/* · /docs/state/* 편집 (재정합)
+- `dispatch` = 프롬프트 투입 (ops/dispatch/inbox/**)
+- `report-push` = relay `<hub>/*-report.md` push
+- `inquiry-push` = relay `<hub>/*-inquiry.md` push
+- `priority` = 원장 우선순위 변경 (ledger/requirements.yaml 편집)
+- `consume` = 발부된 R-id 구현 착수
+- `mismatch` = 리포트 주장 vs 세션 관측 불일치 (build-index 파생)
+
+**소비**: `scripts/build-index.mjs` → `index.json.events[]` (최근 30일). `index.json.requirements[].trace5` 파생.
 
 ---
 

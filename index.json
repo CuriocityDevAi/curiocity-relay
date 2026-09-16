@@ -1,6 +1,6 @@
 {
-  "schema_version": 2,
-  "built_at": "2026-09-16T08:17:54.640Z",
+  "schema_version": 3,
+  "built_at": "2026-09-16T08:24:15.355Z",
   "prompts": [
     {
       "path": "prompts/k0/K0-0911-AQ-test.md",
@@ -8,6 +8,7 @@
       "hub": "k0",
       "issued_at": "2026-09-11T22:55:00Z",
       "status": "pending",
+      "req_ids": [],
       "summary": "K0-0911-AQ 자동 발부 v2 흐름 테스트 · 포털 카드 노출 · [투입]/[프롬프트 복사] · 데몬 dispatch 실측 대상."
     }
   ],
@@ -17,14 +18,16 @@
       "round": "K0-0907-AN",
       "pr": "https://github.com/CuriocityDevAi/test-portal/pull/87",
       "outcome": "자기 검증 통과 · Kyu 실기 확증 대기",
-      "kyu_checks": []
+      "kyu_checks": [],
+      "ledger_events": []
     },
     {
       "path": "k0/K0-0907-AO-report.md",
       "round": "K0-0907-AO",
       "pr": "https://github.com/CuriocityDevAi/test-portal/pull/88",
       "outcome": "자기 검증 통과 · Kyu 폰 실기 확증 대기",
-      "kyu_checks": []
+      "kyu_checks": [],
+      "ledger_events": []
     },
     {
       "path": "k0/K0-0909-AP-report.md",
@@ -34,7 +37,8 @@
       "kyu_checks": [
         "폰: A 카드 3개 노출 + 허브 hidden + push 전환 관찰 + 56px 판정/버튼 + DirtyGuard + 스크롤 복원 + PR 케이스 렌더",
         "데스크톱: 3단 grid + 사이드바 4 링크 + 상세 안내 + 2단 반응형"
-      ]
+      ],
+      "ledger_events": []
     },
     {
       "path": "k0/K0-0911-AQ-report.md",
@@ -49,7 +53,8 @@
         "데스크톱: [설정] 링크 → 시트 열림 (우측)",
         "AQ 흐름: 오케 relay push → 30초 안 \"발부 대기 · k0-K0-XXX\" 카드 → [투입] → dispatched → 착지 → landed 카드",
         "프로젝트 카드에 agilo-medusa-pos-fork 노출 (M0 PR 폴링 대상 편입)"
-      ]
+      ],
+      "ledger_events": []
     },
     {
       "path": "k0/K0-0914-AR-report.md",
@@ -65,7 +70,8 @@
         "폰: [나중에] 클릭 후 반짝 배지 + 세션 내 재팝업 금지",
         "맥: [알림 켜기] → 브라우저 실 알림 스샷 (별건 라운드 실 발송 후)",
         "Expo (M0): agilo PR 상세 = [폰에서 열기] 버튼 노출 · 데몬 확장 후 실 exp:// URL 캡처"
-      ]
+      ],
+      "ledger_events": []
     },
     {
       "path": "k0/K0-0914-AU-report.md",
@@ -80,7 +86,8 @@
         "맥 (1280): 3단 · 사이드바 [내 차례] 배지 + 미니 허브 (N0/T0/M0/K0)",
         "착지 모달 노출 시 \"띵\" 1회 · 설정 시트 소리 ON/OFF · 같은 PR 재알림 없음",
         "checks/k0/K0-0914-AU.md 상세 화면에서 렌더 (index 갱신 후)"
-      ]
+      ],
+      "ledger_events": []
     },
     {
       "path": "k0/K0-0914-AV-report.md",
@@ -95,7 +102,8 @@
         "폰: 기계 판정 띠 = 초록/빨강/회색 (GitHub check-runs 실 데이터)",
         "폰/맥: 사이드바 미니 허브 = config/projects.json hub 필드 파생 (하드코딩 없음)",
         "iOS (홈 화면 미설치): [알림 켜기] disabled + 배너 + 3줄 절차"
-      ]
+      ],
+      "ledger_events": []
     },
     {
       "path": "k0/K0-0914-AW-report.md",
@@ -110,7 +118,8 @@
         "폰/맥: 판정 후 5 단계 진행 띠 (제출→머지 요청→머지됨 보라→배포→완료 초록) + [실기 시작]",
         "폰: 상세 확인 항목 ok/ng 두 줄 렌더",
         "맥 (≥1024): 사이드바 없음 · 2열 grid (목록 | 상세)"
-      ]
+      ],
+      "ledger_events": []
     },
     {
       "path": "k0/K0-0915-B-report.md",
@@ -123,14 +132,16 @@
         "폰: [테스트 열기] = K1 /env/open SSE 4 단계 · 자동 로그인 배지 · [실기 시작] 활성",
         "맥: 허브 탭·미니 허브에 K0/K1/K2 3 행 노출 (test-portal.hubs = k0/k1/k2)",
         "공용 문서: docs/state/k0.md·k1.md·k2.md 신설 · EPIC-STATE.md 인덱스화 · SPEC v1.K0-0915-B"
-      ]
+      ],
+      "ledger_events": []
     },
     {
       "path": "k0/K0-0916-A-report.md",
       "round": "K0-0916-A",
       "pr": "https://github.com/CuriocityDevAi/test-portal/pull/103",
       "outcome": "",
-      "kyu_checks": []
+      "kyu_checks": [],
+      "ledger_events": []
     },
     {
       "path": "n0/N0-0907-J-report.md",
@@ -140,7 +151,8 @@
       "kyu_checks": [
         "가로 재발화 음수 · 하강음 완주 후 스트림 비행 (세로와 동일 순서)",
         "라쳇 꼬리 · 1·2·3휠 전부 시각 정지 시점에 즉시 stop"
-      ]
+      ],
+      "ledger_events": []
     },
     {
       "path": "n0/N0-0909-B-report.md",
@@ -151,7 +163,8 @@
         "OO 강제 착지 · wheel 자연 회전·감속·정지 · toast '룰렛 2회 찬스' · 멀티스핀 2 wheels",
         "OOO 강제 착지 · wheel 자연 회전 · OOO 정지 · toast '룰렛 3회 찬스' · 멀티스핀 3 wheels",
         "JACKPOT 강제 착지 · wheel 회전 · JACKPOT 정지 · 팡파르 + 폭죽 + 스트림 fly + twinkle + 카운트업"
-      ]
+      ],
+      "ledger_events": []
     },
     {
       "path": "n0/N0-0910-A-report.md",
@@ -162,7 +175,8 @@
         "풀 0 + JACKPOT 강제 착지 · 팡파르 + 폭죽만 · 지갑 애니·소리·카운트업 없음",
         "잭팟 풀 +1000 주입 후 JACKPOT 강제 착지 · 하트 스트림 fly + twinkle + 카운트업",
         "OO+보조 JACKPOT 강제 · 숫자 스트림 완료 → 잭팟 세레모니 순차 발화"
-      ]
+      ],
+      "ledger_events": []
     },
     {
       "path": "n0/N0-0910-B-report.md",
@@ -172,77 +186,88 @@
       "kyu_checks": [
         "풀 1000 + JACKPOT 강제 착지 · 하트 스트림 좌상단 잭팟 통에서 출발",
         "풀 0 + JACKPOT 강제 착지 · 폭죽 후 결과 창 '잭팟에 하트포인트가 없습니다.' + [확인] · 하강 2음 · 모달 닫힘"
-      ]
+      ],
+      "ledger_events": []
     },
     {
       "path": "n0/N0-0914-A-report.md",
       "round": "N0-0914-A",
       "pr": "290",
       "outcome": "landed",
-      "kyu_checks": []
+      "kyu_checks": [],
+      "ledger_events": []
     },
     {
       "path": "n0/N0-0914-C-report.md",
       "round": "N0-0914-C",
       "pr": "290",
       "outcome": "landed",
-      "kyu_checks": []
+      "kyu_checks": [],
+      "ledger_events": []
     },
     {
       "path": "t0/T0-0909-A-report.md",
       "round": "T0-0909-A",
       "pr": "https://github.com/CuriocityDevAi/todoboss/pull/21",
       "outcome": "5/5 fix + 재발 방지 3장치 + Playwright 4/4 pass",
-      "kyu_checks": []
+      "kyu_checks": [],
+      "ledger_events": []
     },
     {
       "path": "t0/T0-0910-B-report.md",
       "round": "T0-0910-B",
       "pr": "https://github.com/CuriocityDevAi/todoboss/pull/22",
       "outcome": "6/6 이슈 완료 · Playwright 5/5 pass · 단위 테스트 16 case",
-      "kyu_checks": []
+      "kyu_checks": [],
+      "ledger_events": []
     },
     {
       "path": "t0/T0-0910-C-report.md",
       "round": "T0-0910-C",
       "pr": "https://github.com/CuriocityDevAi/todoboss/pull/22",
       "outcome": "결함 3 + B 미이행 4 = 7 이슈 완료 · Playwright 5/5 pass · 이연 0",
-      "kyu_checks": []
+      "kyu_checks": [],
+      "ledger_events": []
     },
     {
       "path": "t0/T0-0911-A-report.md",
       "round": "T0-0911-A",
       "pr": "https://github.com/CuriocityDevAi/todoboss/pull/23",
       "outcome": "5/5 이슈 · backend 완결 · Playwright 부분 검증 (UI 캐시 별건)",
-      "kyu_checks": []
+      "kyu_checks": [],
+      "ledger_events": []
     },
     {
       "path": "t0/T0-0911-B-report.md",
       "round": "T0-0911-B",
       "pr": "https://github.com/CuriocityDevAi/todoboss/pull/23",
       "outcome": "6 이슈 완결 · Playwright 8/8 pass · A 라운드 이연 0",
-      "kyu_checks": []
+      "kyu_checks": [],
+      "ledger_events": []
     },
     {
       "path": "t0/T0-0915-A-report.md",
       "round": "T0-0915-A",
       "pr": "https://github.com/CuriocityDevAi/todoboss/pull/23",
       "outcome": "4 결함 완결 · Playwright 5/5 pass · 이연 0",
-      "kyu_checks": []
+      "kyu_checks": [],
+      "ledger_events": []
     },
     {
       "path": "m0/M0-0909-A-report.md",
       "round": "M0-0909-A",
       "pr": "storeport#104",
       "outcome": "reactivation-audit",
-      "kyu_checks": []
+      "kyu_checks": [],
+      "ledger_events": []
     },
     {
       "path": "m0/M0-0915-A-report.md",
       "round": "M0-0915-A",
       "pr": "agilo-medusa-pos-fork#6",
       "outcome": "sdk57-upgrade",
-      "kyu_checks": []
+      "kyu_checks": [],
+      "ledger_events": []
     },
     {
       "path": "k1/K1-0916-A-report.md",
@@ -255,7 +280,8 @@
         "CF Access Application Policy 안 GATE service token allow 편입 확증 (Kyu 클릭 완료)",
         "kyu-gate 도장 후 (또는 check_suite 자연 트리거) 두 워크플로 gate step 실 verdict 로그",
         "포털 상세 [테스트 열기] agilo PR#6 → SSE `step:tunnel` 이벤트 노출 · exp:// URL + QR SVG · Expo Go 앱 로드"
-      ]
+      ],
+      "ledger_events": []
     }
   ],
   "checks": [
@@ -806,5 +832,1029 @@
       ],
       "summary": "K1-0914-A 배관 허브 첫 실기 · Kyu 실 알림 수신 1건 (아이폰 PWA 필수 · 맥 브라우저 즉시) + agilo Expo tunnel · 총 11 항목 (폰 6 · 데스크톱 2 · Expo 2 · 공통 1). PR merge 후 auto-deploy 완료 시점부터 진입."
     }
-  ]
+  ],
+  "requirements": [
+    {
+      "id": "R001",
+      "text": "테스트 케이스들을 모았다가, 나중에 자동 테스트한다",
+      "project": "test-portal",
+      "hub": "k2",
+      "priority": "P0",
+      "size": "Epic",
+      "status": "issued",
+      "issued_id": "K2-0916-A",
+      "repeat_count": 3,
+      "filed_at": "2026-07-28",
+      "age_days": 50,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-07-28"
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": "07-28~09-14 소유 허브 부재로 미발부 · 09-16 🔴 등재"
+    },
+    {
+      "id": "R002",
+      "text": "내가 한번 이야기한것이 저장이 되어있어서, 차례대로 구현이 되고, 오랫동안 우선순위에서 밀려서 큐에 쌓여있는건은 따로 나에게 알려주면",
+      "project": "test-portal",
+      "hub": "k0",
+      "priority": "P0",
+      "size": "L",
+      "status": "issued",
+      "issued_id": "K0-0916-E",
+      "repeat_count": 1,
+      "filed_at": "2026-09-16",
+      "age_days": 0,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-16"
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": "이벤트 소스 = K1-0916-B · 지표 = K2-0916-B"
+    },
+    {
+      "id": "R003",
+      "text": "테스트 브라우저 열기 버튼을 누르면 최신 소스를 받고, 새 브라우저를 열고, 로그인 등 기본을 다 하고, 필요한 위치까지 가서 나의 테스트를 기다리게",
+      "project": "test-portal",
+      "hub": "k1",
+      "priority": "P0",
+      "size": "L",
+      "status": "landed",
+      "issued_id": "K1-0915-A",
+      "repeat_count": 1,
+      "filed_at": "2026-09-14",
+      "age_days": 2,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        }
+      },
+      "note": "마일스톤 1에서 Kyu 확인"
+    },
+    {
+      "id": "R004",
+      "text": "test-portal이 알려주는 테스트 안내가 너(클로드)와 같거나 더 쉬워야 해",
+      "project": "test-portal",
+      "hub": "k0",
+      "priority": "P0",
+      "size": "M",
+      "status": "landed",
+      "issued_id": "K0-0914-AU",
+      "repeat_count": 1,
+      "filed_at": "2026-09-14",
+      "age_days": 2,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R005",
+      "text": "모바일·데스크톱·아이패드에서 테스트할 것 같아 · 더 편리한 방법",
+      "project": "test-portal",
+      "hub": "k0",
+      "priority": "P1",
+      "size": "M",
+      "status": "landed",
+      "issued_id": "K0-0916-A",
+      "repeat_count": 1,
+      "filed_at": "2026-09-14",
+      "age_days": 2,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R006",
+      "text": "알림은 바이브레이션이나 소리까지(띵) 났으면",
+      "project": "test-portal",
+      "hub": "k1",
+      "priority": "P1",
+      "size": "S",
+      "status": "landed",
+      "issued_id": "K1-0914-A",
+      "repeat_count": 1,
+      "filed_at": "2026-09-14",
+      "age_days": 2,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        }
+      },
+      "note": "OS 기본음+진동 · 포털 열림 시 띵 · Kyu 알림 실기 미완"
+    },
+    {
+      "id": "R007",
+      "text": "성공 판정을 한 PR이 실제 머지가 완료되었는지 · 그 화면에서 눈에 띄게 업데이트(보라색)",
+      "project": "test-portal",
+      "hub": "k0",
+      "priority": "P1",
+      "size": "M",
+      "status": "landed",
+      "issued_id": "K0-0914-AW",
+      "repeat_count": 1,
+      "filed_at": "2026-09-14",
+      "age_days": 2,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R008",
+      "text": "탭 위치를 아래가 아니라 화면 상단으로",
+      "project": "test-portal",
+      "hub": "k0",
+      "priority": "P1",
+      "size": "S",
+      "status": "landed",
+      "issued_id": "K0-0914-AW",
+      "repeat_count": 1,
+      "filed_at": "2026-09-14",
+      "age_days": 2,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R009",
+      "text": "새로운 프로젝트가 추가되더라도 괜찮아? 범용적일 것 · 회사 직원들도 써야",
+      "project": "test-portal",
+      "hub": "k0",
+      "priority": "P1",
+      "size": "M",
+      "status": "filed",
+      "issued_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-09-14",
+      "age_days": 2,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": "허브 파생은 AV에서 완료 · 타입·시드 범용화 잔여"
+    },
+    {
+      "id": "R010",
+      "text": "테스트 체계 — 환경 파일 · 정답 · 실패 규정 · 재활용 · 요구 변경 시 관리",
+      "project": "test-portal",
+      "hub": "k2",
+      "priority": "P1",
+      "size": "L",
+      "status": "landed",
+      "issued_id": "K2-0914-A",
+      "repeat_count": 1,
+      "filed_at": "2026-09-14",
+      "age_days": 2,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R011",
+      "text": "사람 판정은 최소로 · 백엔드만 수정이면 테스트하라고 하면 안 됨 · 사람 없이 배포해도 되는 기준",
+      "project": "test-portal",
+      "hub": "k1",
+      "priority": "P0",
+      "size": "M",
+      "status": "landed",
+      "issued_id": "K1-0915-A",
+      "repeat_count": 1,
+      "filed_at": "2026-09-14",
+      "age_days": 2,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-14"
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R012",
+      "text": "허브 상태판은 별로 의미 없음(cmux) · 1번(맥 자동화)이 가장 의미",
+      "project": "test-portal",
+      "hub": "k0",
+      "priority": "P1",
+      "size": "S",
+      "status": "issued",
+      "issued_id": "K0-0916-E",
+      "repeat_count": 1,
+      "filed_at": "2026-09-16",
+      "age_days": 0,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-16"
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R013",
+      "text": "큐를 만들어뒀는데 왜 동작 안 하나 — ops/dispatch inbox 7건 · relay prompts 통합",
+      "project": "test-portal",
+      "hub": "k0",
+      "priority": "P1",
+      "size": "S",
+      "status": "issued",
+      "issued_id": "K0-0916-E",
+      "repeat_count": 1,
+      "filed_at": "2026-09-16",
+      "age_days": 0,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-16"
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R014",
+      "text": "GrowNest·StorePort 앱에 dev 자동 로그인 한 줄",
+      "project": "grownest",
+      "hub": "n0",
+      "priority": "P2",
+      "size": "S",
+      "status": "filed",
+      "issued_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-09-15",
+      "age_days": 1,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R015",
+      "text": "각 리포별 CI · docs/testing.md · 시드 고정",
+      "project": "all",
+      "hub": "t0",
+      "priority": "P2",
+      "size": "M",
+      "status": "filed",
+      "issued_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-09-14",
+      "age_days": 2,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R016",
+      "text": "챗 분리 · 프로젝트 1 + 챗 2(포털/제품)",
+      "project": "orchestration",
+      "hub": "oke",
+      "priority": "P1",
+      "size": "S",
+      "status": "filed",
+      "issued_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-09-16",
+      "age_days": 0,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R017",
+      "text": "GitHub 앱이 더 안정적이고 빠르겠다 — A(포털) vs B(GitHub+PR 프리뷰) 비교",
+      "project": "test-portal",
+      "hub": "oke",
+      "priority": "P1",
+      "size": "M",
+      "status": "filed",
+      "issued_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-09-16",
+      "age_days": 0,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R018",
+      "text": "orphan 4건 클릭 시 필터 · 판정불가 4(출근 2·퇴근 2) 표기 · 돌아가기 → 판정불가 필터 · 출근/퇴근 시각 직접 입력",
+      "project": "todoboss",
+      "hub": "t0",
+      "priority": "P0",
+      "size": "M",
+      "status": "landed",
+      "issued_id": "T0-0915-A",
+      "repeat_count": 1,
+      "filed_at": "2026-09-15",
+      "age_days": 1,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-15"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-15"
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R019",
+      "text": "시각 직접 입력 → 재판정(지각/야근 자동 산출)",
+      "project": "todoboss",
+      "hub": "t0",
+      "priority": "P0",
+      "size": "S",
+      "status": "landed",
+      "issued_id": "T0-0915-A",
+      "repeat_count": 2,
+      "filed_at": "2026-09-11",
+      "age_days": 5,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-11"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-11"
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R020",
+      "text": "Todoboss 이연: 파라미터화 · Finalize · Payslip · Work Rotation 편성",
+      "project": "todoboss",
+      "hub": "t0",
+      "priority": "P2",
+      "size": "Epic",
+      "status": "filed",
+      "issued_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-08-20",
+      "age_days": 27,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R021",
+      "text": "M0 POS 하루 사이클 실기 K1~K8",
+      "project": "storeport",
+      "hub": "m0",
+      "priority": "P0",
+      "size": "M",
+      "status": "landed",
+      "issued_id": "M0-0915-A",
+      "repeat_count": 1,
+      "filed_at": "2026-08-10",
+      "age_days": 37,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-08-10"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-08-10"
+        }
+      },
+      "note": "실기 3회 밀림"
+    },
+    {
+      "id": "R022",
+      "text": "목표 (가) Kyu 혼자 써보는 수준 · Metabase 선행 — 결정",
+      "project": "storeport",
+      "hub": "m0",
+      "priority": "P1",
+      "size": "S",
+      "status": "filed",
+      "issued_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-09-09",
+      "age_days": 7,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R023",
+      "text": "반품·환불·취소 · 할인 적용 · 바코드(카메라) — POS 화면 갭",
+      "project": "storeport",
+      "hub": "m0",
+      "priority": "P1",
+      "size": "L",
+      "status": "filed",
+      "issued_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-09-12",
+      "age_days": 4,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R024",
+      "text": "EAS dev build(Android APK) + Xantri BT-58D 블루투스 인쇄 + 서랍",
+      "project": "storeport",
+      "hub": "m0",
+      "priority": "P2",
+      "size": "L",
+      "status": "filed",
+      "issued_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-09-14",
+      "age_days": 2,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R025",
+      "text": "Meta WhatsApp 번호 · Midtrans/Xendit 머천트 외부 신청",
+      "project": "storeport",
+      "hub": "kyu",
+      "priority": "P2",
+      "size": "S",
+      "status": "filed",
+      "issued_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-09-09",
+      "age_days": 7,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R026",
+      "text": "코어 중심 ADR 명문화 · Wing 정본 정정(Starter) · Admin 실기 절차",
+      "project": "storeport",
+      "hub": "m0",
+      "priority": "P1",
+      "size": "M",
+      "status": "filed",
+      "issued_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-09-09",
+      "age_days": 7,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R027",
+      "text": "이연 16(AgentsPay 제약) 봉인 유지",
+      "project": "storeport",
+      "hub": "m0",
+      "priority": "P2",
+      "size": "Epic",
+      "status": "filed",
+      "issued_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-08-24",
+      "age_days": 23,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "id": "R028",
+      "text": "GrowNest 카운트업 스케일 일반 스핀 적용 여부",
+      "project": "grownest",
+      "hub": "n0",
+      "priority": "P2",
+      "size": "S",
+      "status": "filed",
+      "issued_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-09-10",
+      "age_days": 6,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": ""
+    }
+  ],
+  "events": [],
+  "mismatches": [],
+  "warnings": [
+    {
+      "type": "prompt_missing_req_ids",
+      "path": "prompts/k0/K0-0911-AQ-test.md",
+      "id": "K0-0911-AQ-test"
+    }
+  ],
+  "rollup": {
+    "filed_count": 13,
+    "max_age_days": 27,
+    "red_count": 2
+  }
 }

@@ -16,13 +16,24 @@ on:
       - 'prompts/**'
       - 'k0/**'
       - 'k1/**'
+      - 'k2/**'
       - 'n0/**'
       - 't0/**'
       - 'm0/**'
       - 'checks/**'
+      - 'events/**'
+      - 'ledger/**'
       - 'scripts/build-index.mjs'
       - '.github/workflows/build-index.yml'
+  schedule:
+    # K1-0916-B/C · A5 · 월요일 09:00 WIB (UTC+7) = 02:00 UTC · 밀림 푸시
+    - cron: '0 2 * * 1'
   workflow_dispatch:
+    inputs:
+      backlog_notify:
+        description: '월요일 밀림 푸시 강제 실행 (미발부/최장/🔴)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -60,7 +71,7 @@ jobs:
           fi
 
       - name: Notify portal (Web Push webhook · K0-0914-AR-B2 · K1-0916-A CF Access)
-        if: env.PORTAL_PUSH_WEBHOOK != ''
+        if: env.PORTAL_PUSH_WEBHOOK != '' && github.event_name == 'push'
         env:
           PORTAL_PUSH_WEBHOOK: ${{ secrets.PORTAL_PUSH_WEBHOOK }}
           PORTAL_PUSH_TOKEN: ${{ secrets.PORTAL_PUSH_TOKEN }}
@@ -77,3 +88,30 @@ jobs:
             -H "authorization: Bearer $PORTAL_PUSH_TOKEN" \
             -d '{"event":"index.rebuilt","source":"curiocity-relay","commit":"'"${GITHUB_SHA}"'"}' \
             || echo "webhook failed · non-blocking"
+
+      # K1-0916-B/C · A5 · 월요일 09:00 WIB 밀림 푸시 (cron 또는 수동 dispatch)
+      - name: Backlog push (월요일 09:00 WIB · schedule 또는 강제 dispatch)
+        if: env.PORTAL_PUSH_WEBHOOK != '' && (github.event_name == 'schedule' || inputs.backlog_notify == true)
+        env:
+          PORTAL_PUSH_WEBHOOK: ${{ secrets.PORTAL_PUSH_WEBHOOK }}
+          PORTAL_PUSH_TOKEN: ${{ secrets.PORTAL_PUSH_TOKEN }}
+          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+        run: |
+          # index.json.rollup 파싱 · "미발부 N · 최장 N일 · 🔴 N" 메시지 조립
+          FILED=$(jq -r '.rollup.filed_count // 0' index.json)
+          MAX_AGE=$(jq -r '.rollup.max_age_days // 0' index.json)
+          RED=$(jq -r '.rollup.red_count // 0' index.json)
+          MSG="미발부 ${FILED} · 최장 ${MAX_AGE}일 · 🔴 ${RED}"
+          echo "backlog push · $MSG"
+          CF_ARGS=""
+          if [ -n "${CF_ACCESS_CLIENT_ID:-}" ] && [ -n "${CF_ACCESS_CLIENT_SECRET:-}" ]; then
+            CF_ARGS="-H CF-Access-Client-Id:${CF_ACCESS_CLIENT_ID} -H CF-Access-Client-Secret:${CF_ACCESS_CLIENT_SECRET}"
+          fi
+          # K1-0916-B/C · Kyu 원문 정본 문구
+          PAYLOAD=$(jq -n --arg title "요구 밀림" --arg body "$MSG" --arg url "https://test.curiocity.company/" '{event:"backlog.weekly",title:$title,body:$body,url:$url}')
+          curl -sS -X POST "$PORTAL_PUSH_WEBHOOK" $CF_ARGS \
+            -H "content-type: application/json" \
+            -H "authorization: Bearer $PORTAL_PUSH_TOKEN" \
+            -d "$PAYLOAD" \
+            || echo "backlog webhook failed · non-blocking"
