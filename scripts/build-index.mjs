@@ -348,6 +348,135 @@ function detectMismatches(reports, events, requirements) {
 	return mismatches;
 }
 
+/**
+ * K1-0917-B · collectFeatureMaps · R030 정본.
+ * 각 리포 main branch 의 docs/feature-map.yaml 을 GitHub API 로 fetch → index.json.feature_maps[].
+ * StorePort/agilo-fork = storeport 리포 파일 안 fork: 접두 처리 (convention.md § 파일 위치).
+ *
+ * 열린 PR files 매칭 (building 계산) = 포털 측 소비 · build-index 는 파일 패턴만 전달.
+ * schema = docs/feature-map-convention.md.
+ *
+ * @param {string} ghToken - GH_TOKEN (build-index.yml workflow 에서 secrets.GITHUB_TOKEN 소비)
+ */
+async function collectFeatureMaps(ghToken) {
+	const REPOS = [
+		'CuriocityDevAi/test-portal',
+		'CuriocityDevAi/todoboss',
+		'CuriocityDevAi/grownest',
+		'CuriocityDevAi/storeport'
+		// agilo-medusa-pos-fork = storeport 리포 fork: 접두 파일 소비 (별건 fetch 안 함)
+	];
+	const out = [];
+	const headers = {
+		Accept: 'application/vnd.github.raw',
+		'User-Agent': 'curiocity-relay-build-index/1.0',
+		'X-GitHub-Api-Version': '2022-11-28'
+	};
+	if (ghToken) headers.Authorization = `Bearer ${ghToken}`;
+	for (const repo of REPOS) {
+		const url = `https://api.github.com/repos/${repo}/contents/docs/feature-map.yaml?ref=main`;
+		try {
+			const res = await fetch(url, { headers });
+			if (!res.ok) {
+				console.log(`[feature-maps] skip ${repo}: HTTP ${res.status}`);
+				continue;
+			}
+			const yamlText = await res.text();
+			// 관대 파서 (라이브러리 의존 회피 · build-index.mjs 정합)
+			const parsed = parseFeatureMapYaml(yamlText);
+			if (!parsed || !parsed.project) {
+				console.warn(`[feature-maps] parse fail ${repo}: no project field`);
+				continue;
+			}
+			out.push({
+				repo,
+				project: parsed.project,
+				version: parsed.version ?? 1,
+				areas: parsed.areas ?? [],
+				fetched_at: new Date().toISOString()
+			});
+		} catch (err) {
+			console.warn(`[feature-maps] fetch fail ${repo}:`, err instanceof Error ? err.message : String(err));
+		}
+	}
+	return out;
+}
+
+/**
+ * feature-map.yaml 관대 파서 (project · version · areas[].processes[].files[]).
+ * 라이브러리 의존 회피 (relay = deps 0 원칙).
+ */
+function parseFeatureMapYaml(text) {
+	const lines = text.split('\n');
+	const out = { areas: [] };
+	let currentArea = null;
+	let currentProcess = null;
+	let inFilesArray = false;
+	let filesIndent = 0;
+	for (let i = 0; i < lines.length; i++) {
+		const line = lines[i];
+		const trimmed = line.trim();
+		if (!trimmed || trimmed.startsWith('#')) continue;
+		// top-level fields
+		const topMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_-]*)\s*:\s*(.*)$/);
+		if (topMatch && !line.startsWith(' ')) {
+			const [, k, v] = topMatch;
+			inFilesArray = false;
+			if (k === 'areas') continue;
+			out[k] = stripQuotes(v.trim());
+			continue;
+		}
+		// area entry
+		const areaMatch = line.match(/^\s{0,2}-\s+id:\s*(.+)$/);
+		if (areaMatch && line.match(/^  -/)) {
+			currentArea = { id: stripQuotes(areaMatch[1].trim()), processes: [] };
+			currentProcess = null;
+			out.areas.push(currentArea);
+			inFilesArray = false;
+			continue;
+		}
+		// process entry (deeper)
+		const procMatch = line.match(/^\s{4,6}-\s+id:\s*(.+)$/);
+		if (procMatch) {
+			currentProcess = { id: stripQuotes(procMatch[1].trim()), files: [] };
+			if (currentArea) currentArea.processes.push(currentProcess);
+			inFilesArray = false;
+			continue;
+		}
+		// files array
+		if (line.match(/^\s{6,8}files:\s*/)) {
+			inFilesArray = true;
+			filesIndent = line.search(/\S/);
+			// inline array `files: [a, b]`?
+			const inlineMatch = line.match(/files:\s*\[([^\]]*)\]/);
+			if (inlineMatch && currentProcess) {
+				currentProcess.files = inlineMatch[1].split(',').map((s) => stripQuotes(s.trim())).filter(Boolean);
+				inFilesArray = false;
+			}
+			continue;
+		}
+		if (inFilesArray) {
+			const fileItem = line.match(/^\s+-\s+(.+)$/);
+			if (fileItem && currentProcess) {
+				currentProcess.files.push(stripQuotes(fileItem[1].trim()));
+				continue;
+			}
+			// not a file line = end of files array
+			inFilesArray = false;
+		}
+		// process/area other fields (name/summary/status/spec)
+		const fieldMatch = line.match(/^\s+([a-zA-Z_][a-zA-Z0-9_-]*)\s*:\s*(.+)$/);
+		if (fieldMatch && currentProcess) {
+			const [, k, v] = fieldMatch;
+			if (k !== 'files') currentProcess[k] = stripQuotes(v.trim());
+		} else if (fieldMatch && currentArea && !currentProcess) {
+			const [, k, v] = fieldMatch;
+			currentArea[k] = stripQuotes(v.trim());
+		}
+	}
+	return out;
+}
+
 async function collectChecks() {
 	const out = [];
 	for (const hub of HUBS) {
@@ -388,11 +517,16 @@ async function collectChecks() {
 }
 
 async function main() {
+	const ghToken = process.env.GH_TOKEN || process.env.GITHUB_TOKEN || '';
 	const prompts = await collectPrompts();
 	const reports = await collectReports();
 	const checks = await collectChecks();
 	const events = await collectEvents();
 	const requirements = await collectRequirements(events);
+	// K1-0917-B · R030 · 각 리포 main docs/feature-map.yaml 집계 (파일 패턴 · areas)
+	const featureMaps = await collectFeatureMaps(ghToken);
+	// K1-0917-B · R011 · 허브별 최근 활동 요약 (last_action · files_touched · tests_touched · 최근 24h)
+	const hubs = computeHubActivity(events);
 	// K1-0916-B/C · prompts req_ids warnings (A4 · Kyu Q5)
 	const warnings = [];
 	for (const p of prompts) {
@@ -408,7 +542,7 @@ async function main() {
 		.reduce((max, r) => Math.max(max, r.age_days), 0);
 	const red_count = requirements.filter((r) => (r.repeat_count ?? 0) >= 2).length;
 	const index = {
-		schema_version: 3,
+		schema_version: 4, // K1-0917-B · +hubs +feature_maps (v3 호환 · 기존 필드 유지)
 		built_at: new Date().toISOString(),
 		prompts,
 		reports,
@@ -417,6 +551,8 @@ async function main() {
 		events,
 		mismatches,
 		warnings,
+		hubs,
+		feature_maps: featureMaps,
 		rollup: { filed_count, max_age_days, red_count }
 	};
 	const outPath = resolve(REPO_ROOT, 'index.json');
@@ -424,8 +560,82 @@ async function main() {
 	console.log(
 		`✓ index.json · prompts=${prompts.length} · reports=${reports.length} · checks=${checks.length}` +
 			` · requirements=${requirements.length} · events=${events.length} · mismatches=${mismatches.length}` +
-			` · warnings=${warnings.length} · rollup=(filed=${filed_count}, max_age=${max_age_days}d, 🔴=${red_count})`
+			` · warnings=${warnings.length} · hubs=${Object.keys(hubs).length}` +
+			` · feature_maps=${featureMaps.length}` +
+			` · rollup=(filed=${filed_count}, max_age=${max_age_days}d, 🔴=${red_count})`
 	);
+}
+
+/**
+ * K1-0917-B · R011 · 허브별 최근 24h 활동 집계.
+ * flow-data.ts (K0 소비) 계약 = hubs[hub] = {last_action, files_touched, tests_touched, updated_at}.
+ *
+ * - last_action = 최근 report-push/inquiry-push/dispatch 이벤트 target basename (문장 요약)
+ * - files_touched = 24h 안 유일 target 파일 수 (read/reconcile/dispatch/mismatch 포함 · 모든 tool_use 소비)
+ * - tests_touched = files_touched 중 `.test.` 또는 `/test/` 경로 매치 수
+ * - updated_at = 최근 event ts
+ *
+ * @param {any[]} events - collectEvents() 결과 (최근 30일)
+ */
+function computeHubActivity(events) {
+	const HUBS_LIST = ['k0', 'k1', 'k2', 'n0', 't0', 'm0'];
+	const nowMs = Date.now();
+	const CUTOFF_MS = nowMs - 24 * 60 * 60 * 1000;
+	const out = {};
+	for (const hub of HUBS_LIST) {
+		out[hub] = { last_action: null, files_touched: 0, tests_touched: 0, updated_at: null };
+	}
+	// 그룹핑
+	const byHub = new Map();
+	for (const e of events) {
+		if (!e.hub || !e.ts) continue;
+		const t = new Date(e.ts).getTime();
+		if (isNaN(t) || t < CUTOFF_MS) continue;
+		if (!byHub.has(e.hub)) byHub.set(e.hub, []);
+		byHub.get(e.hub).push(e);
+	}
+	for (const [hub, evs] of byHub) {
+		if (!out[hub]) out[hub] = { last_action: null, files_touched: 0, tests_touched: 0, updated_at: null };
+		evs.sort((a, b) => a.ts.localeCompare(b.ts));
+		// last_action = 최근 report-push/inquiry-push/dispatch 문장 (target basename)
+		const meaningful = evs.filter((e) =>
+			e.type === 'report-push' || e.type === 'inquiry-push' || e.type === 'dispatch' || e.type === 'priority'
+		);
+		const lastMeaningful = meaningful.length > 0 ? meaningful[meaningful.length - 1] : evs[evs.length - 1];
+		if (lastMeaningful) {
+			const targetBase = (lastMeaningful.target || '').split('/').pop() || lastMeaningful.type;
+			out[hub].last_action = `${labelForKind(lastMeaningful.type)}: ${targetBase}`;
+			out[hub].updated_at = lastMeaningful.ts;
+		}
+		// files_touched · tests_touched (유일 target 파일)
+		const files = new Set();
+		const tests = new Set();
+		for (const e of evs) {
+			const target = e.target || '';
+			if (!target || !target.includes('/')) continue;
+			files.add(target);
+			if (target.includes('.test.') || target.includes('/test/') || target.includes('/tests/')) {
+				tests.add(target);
+			}
+		}
+		out[hub].files_touched = files.size;
+		out[hub].tests_touched = tests.size;
+	}
+	return out;
+}
+
+function labelForKind(kind) {
+	const map = {
+		'report-push': '리포트',
+		'inquiry-push': '심문',
+		'dispatch': '태스크',
+		'priority': '원장 편집',
+		'read': '읽음',
+		'reconcile': '대사',
+		'mismatch': '불일치',
+		'consume': '소비'
+	};
+	return map[kind] || kind;
 }
 
 main().catch((err) => {
