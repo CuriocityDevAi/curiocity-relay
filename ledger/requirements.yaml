@@ -3,375 +3,464 @@
 # priority: P0(ì§€ê¸ˆ) | P1(ë‹¤ìŒ) | P2(ë‚˜ì¤‘)   size: S | M | L | Epic (ì˜¤ì¼€ ì¶”ì •)
 # repeat_count: Kyu ì¬ì–¸ê¸‰ íšŸìˆ˜ (>=2 â†’ ğŸ”´)   next: true = ë‹¤ìŒ ë°œë¶€ ì˜ˆì •
 # conflict_with: ìƒì¶© ì˜ì‹¬ R-id (â†’ ì‚­ì œ ì œì•ˆ)   blocked_by: kyu | external | hub:<id>
+# 2026-09-17 ë³µêµ¬: K1-0917-C PATCH curl ì‹¤ì¸¡(0899a17)ì´ íŒŒì¼ì„ ë¹„UTF-8ë¡œ ê¹¨ëœ¨ë ¤ e623b18 ê¸°ì¤€ ë³µì› Â· R029 priority P2 ì›ë³µ
+
 - id: R001
-  text: "í\N\x8Cì\x8A¤í\x8A¸ ì¼\x80ì\x9D´ì\x8A¤ë\x93¤ì\x9D\x84 ëª¨ì\x95\x98ë\x8B¤ê°\x80, ë\x82\x98ì¤\x91ì\x97\x90 ì\x9E\x90ë\x8F\x99 í\N\x8Cì\x8A¤í\x8A¸í\x95\x9Cë\x8B¤"
-  text_full: "Kyuê°\x80 â\x9C\x93â\x9C\x97 ì°\x8Dì\x9D\x80 ì\x8B¤ê¸° í\x95­ëª© ì¤\x91 ê¸°ê³\x84 í\x8C\x90ì\_\x95 ê°\x80ë\x8A¥í\x95\x9C ê²\x83ì\x9D\x80 ì\x96´ì\x84¤ì\N\x98ì\x9C¼ë¡\x9C ì\_\x84í\x99\x98Â·ì¶\x95ì\_\x81 â\x86\x92 ì\x8A¤ì¼\x80ì¤\x84(PRë§\x88ë\x8B¤Â·ì\x95¼ê°\x84)ë¡\x9C ì\x9E\x90ë\x8F\x99 ì\x8B¤í\x96\x89 â\x86\x92 ë\x8B¤ì\x9D\x8C ë\x9D¼ì\x9A´ë\x93\x9Cë¶\x80í\x84° ì\x82¬ë\x9E\x8Cì\x9D\x80 ì\x86\x8Cë¦¬Â·ê°\x90ê°\x81ë§\x8C"
+  text: "í…ŒìŠ¤íŠ¸ ì¼€ì´ìŠ¤ë“¤ì„ ëª¨ì•˜ë‹¤ê°€, ë‚˜ì¤‘ì— ìë™ í…ŒìŠ¤íŠ¸í•œë‹¤"
+  text_full: "Kyuê°€ âœ“âœ— ì°ì€ ì‹¤ê¸° í•­ëª© ì¤‘ ê¸°ê³„ íŒì • ê°€ëŠ¥í•œ ê²ƒì€ ì–´ì„¤ì…˜ìœ¼ë¡œ ì „í™˜Â·ì¶•ì  â†’ ìŠ¤ì¼€ì¤„(PRë§ˆë‹¤Â·ì•¼ê°„)ë¡œ ìë™ ì‹¤í–‰ â†’ ë‹¤ìŒ ë¼ìš´ë“œë¶€í„° ì‚¬ëŒì€ ì†Œë¦¬Â·ê°ê°ë§Œ"
   project: test-portal
   hub: k2
   priority: P0
   size: Epic
-  filed_at: '2026-07-28'
-  status: issued
+  filed_at: 2026-07-28
+  status: landed
   issued_id: K2-0916-A
   repeat_count: 3
-  note: "07-28~09-14 ì\x86\x8Cì\x9C\_ í\x97\x88ë¸\x8C ë¶\x80ì\x9E¬ë¡\x9C ë¯¸ë°\x9Cë¶\x80 Â· 09-16 ğ\x9F\x94´ ë\x93±ì\x9E¬"
+  note: "07-28~09-14 ì†Œìœ  í—ˆë¸Œ ë¶€ì¬ë¡œ ë¯¸ë°œë¶€ Â· 09-16 ğŸ”´ ë“±ì¬ Â· K2-0916-A ì°©ì§€(PR#104 ë¨¸ì§€)"
+
 - id: R002
-  text: "ë\x82´ê°\x80 í\x95\x9Cë²\x88 ì\x9D´ì\x95¼ê¸°í\x95\x9Cê²\x83ì\x9D´ ì\_\x80ì\x9E¥ì\x9D´ ë\x90\x98ì\x96´ì\x9E\x88ì\x96´ì\x84\x9C, ì°¨ë¡\x80ë\x8C\x80ë¡\x9C êµ¬í\x98\x84ì\x9D´ ë\x90\x98ê³\_, ì\x98¤ë\x9E«ë\x8F\x99ì\x95\x88 ì\x9A°ì\x84\_ì\x88\x9Cì\x9C\x84ì\x97\x90ì\x84\x9C ë°\x80ë\_¤ì\x84\x9C í\x81\x90ì\x97\x90 ì\x8C\x93ì\x97¬ì\x9E\x88ë\x8A\x94ê±´ì\x9D\x80 ë\x94°ë¡\x9C ë\x82\x98ì\x97\x90ê²\x8C ì\x95\x8Cë\_¤ì£¼ë©´"
-  text_full: "í\x9D\x90ë¦\x84í\x8C\x90(í\x96\x89=í\x97\x88ë¸\x8C Â· 5ì\x97´ Â· ì¹´ë\x93\x9C ì\x9B\x90ë¬¸Â·PÂ·í\x81¬ê¸°Â·ê²½ê³¼Â·ğ\x9F\x94´Â·ì\x83\x81ì¶© Â· ì\x8B\x9Cí\x8A¸ 3ì¢\N Â· ë\x82´ ì°¨ë¡\x80 ë\x9D\_ Â· ë\x8B¤ì\x9D\x8C ë°\x9Cë¶\x80 ì\x98\x88ê³\_) + ì\x9B\x94ì\x9A\x94ì\x9D¼ ë°\x80ë¦¼ í\x91¸ì\x8B\x9C + ë°\x9Cë¶\x80 ì\x8B\x9C ì\x9B\x90ì\x9E¥ ë\x8C\x80ì\x82¬"
+  text: "ë‚´ê°€ í•œë²ˆ ì´ì•¼ê¸°í•œê²ƒì´ ì €ì¥ì´ ë˜ì–´ìˆì–´ì„œ, ì°¨ë¡€ëŒ€ë¡œ êµ¬í˜„ì´ ë˜ê³ , ì˜¤ë«ë™ì•ˆ ìš°ì„ ìˆœìœ„ì—ì„œ ë°€ë ¤ì„œ íì— ìŒ“ì—¬ìˆëŠ”ê±´ì€ ë”°ë¡œ ë‚˜ì—ê²Œ ì•Œë ¤ì£¼ë©´"
+  text_full: "íë¦„íŒ(í–‰=í—ˆë¸Œ Â· 5ì—´ Â· ì¹´ë“œ ì›ë¬¸Â·PÂ·í¬ê¸°Â·ê²½ê³¼Â·ğŸ”´Â·ìƒì¶© Â· ì‹œíŠ¸ 3ì¢… Â· ë‚´ ì°¨ë¡€ ë  Â· ë‹¤ìŒ ë°œë¶€ ì˜ˆê³ ) + ì›”ìš”ì¼ ë°€ë¦¼ í‘¸ì‹œ + ë°œë¶€ ì‹œ ì›ì¥ ëŒ€ì‚¬"
   project: test-portal
   hub: k0
   priority: P0
   size: L
-  filed_at: '2026-09-16'
-  status: issued
-  issued_id: K0-0916-E
+  filed_at: 2026-09-16
+  status: landed
+  issued_id: K0-0917-D
   repeat_count: 1
-  note: "ì\x9D´ë²¤í\x8A¸ ì\x86\x8Cì\x8A¤ = K1-0916-B Â· ì§\x80í\x91\x9C = K2-0916-B"
+  note: "í´ì½” í—ˆë¸Œ íƒ­ Â· ì´ë²¤íŠ¸ ì†ŒìŠ¤ K1 Â· ì§€í‘œ K2 Â· ë§ˆì¼ìŠ¤í†¤ 1ì—ì„œ Kyu í™•ì¸"
+
 - id: R003
-  text: "í\N\x8Cì\x8A¤í\x8A¸ ë¸\x8Cë\x9D¼ì\x9A°ì\_\x80 ì\x97´ê¸° ë²\x84í\x8A¼ì\x9D\x84 ë\x88\x84ë¥´ë©´ ìµ\x9Cì\x8B\_ ì\x86\x8Cì\x8A¤ë¥¼ ë°\x9Bê³\_, ì\x83\x88 ë¸\x8Cë\x9D¼ì\x9A°ì\_\x80ë¥¼ ì\x97´ê³\_, ë¡\x9Cê·¸ì\x9D¸ ë\x93± ê¸°ë³¸ì\x9D\x84 ë\x8B¤ í\x95\x98ê³\_, í\x95\x84ì\x9A\x94í\x95\x9C ì\x9C\x84ì¹\x98ê¹\x8Cì§\x80 ê°\x80ì\x84\x9C ë\x82\x98ì\x9D\x98 í\N\x8Cì\x8A¤í\x8A¸ë¥¼ ê¸°ë\x8B¤ë¦¬ê²\x8C"
+  text: "í…ŒìŠ¤íŠ¸ ë¸Œë¼ìš°ì € ì—´ê¸° ë²„íŠ¼ì„ ëˆ„ë¥´ë©´ ìµœì‹  ì†ŒìŠ¤ë¥¼ ë°›ê³ , ìƒˆ ë¸Œë¼ìš°ì €ë¥¼ ì—´ê³ , ë¡œê·¸ì¸ ë“± ê¸°ë³¸ì„ ë‹¤ í•˜ê³ , í•„ìš”í•œ ìœ„ì¹˜ê¹Œì§€ ê°€ì„œ ë‚˜ì˜ í…ŒìŠ¤íŠ¸ë¥¼ ê¸°ë‹¤ë¦¬ê²Œ"
   project: test-portal
   hub: k1
   priority: P0
   size: L
-  filed_at: '2026-09-14'
+  filed_at: 2026-09-14
   status: landed
   issued_id: K1-0915-A
   repeat_count: 1
-  note: "ë§\x88ì\x9D¼ì\x8A¤í\x86¤ 1ì\x97\x90ì\x84\x9C Kyu í\x99\x95ì\x9D¸"
+  note: "Kyu ë§¥ ë°ëª¬ 500Â·SSE ì‹¤íŒ¨(09-17) â†’ K1 ë‹¤ìŒ ë¼ìš´ë“œ"
+
 - id: R004
-  text: "test-portalì\x9D´ ì\x95\x8Cë\_¤ì£¼ë\x8A\x94 í\N\x8Cì\x8A¤í\x8A¸ ì\x95\x88ë\x82´ê°\x80 ë\x84\x88(í\x81´ë¡\x9Cë\x93\x9C)ì\x99\x80 ê°\x99ê±°ë\x82\x98 ë\x8D\x94 ì\x89¬ì\x9B\x8Cì\x95¼ í\x95´"
+  text: "test-portalì´ ì•Œë ¤ì£¼ëŠ” í…ŒìŠ¤íŠ¸ ì•ˆë‚´ê°€ ë„ˆ(í´ë¡œë“œ)ì™€ ê°™ê±°ë‚˜ ë” ì‰¬ì›Œì•¼ í•´"
   project: test-portal
   hub: k0
   priority: P0
   size: M
-  filed_at: '2026-09-14'
+  filed_at: 2026-09-14
   status: landed
   issued_id: K0-0914-AU
   repeat_count: 1
+
 - id: R005
-  text: "ëª¨ë°\x94ì\x9D¼Â·ë\x8D°ì\x8A¤í\x81¬í\x86±Â·ì\x95\x84ì\x9D´í\x8C¨ë\x93\x9Cì\x97\x90ì\x84\x9C í\N\x8Cì\x8A¤í\x8A¸í\x95\_ ê²\x83 ê°\x99ì\x95\x84 Â· ë\x8D\x94 í\x8E¸ë¦¬í\x95\x9C ë°©ë²\x95"
+  text: "ëª¨ë°”ì¼Â·ë°ìŠ¤í¬í†±Â·ì•„ì´íŒ¨ë“œì—ì„œ í…ŒìŠ¤íŠ¸í•  ê²ƒ ê°™ì•„ Â· ë” í¸ë¦¬í•œ ë°©ë²•"
   project: test-portal
   hub: k0
   priority: P1
   size: M
-  filed_at: '2026-09-14'
+  filed_at: 2026-09-14
   status: landed
   issued_id: K0-0916-A
   repeat_count: 1
+
 - id: R006
-  text: "ì\x95\x8Cë¦¼ì\x9D\x80 ë°\x94ì\x9D´ë¸\x8Cë\_\x88ì\x9D´ì\N\x98ì\x9D´ë\x82\x98 ì\x86\x8Cë¦¬ê¹\x8Cì§\x80(ë\x9Dµ) ë\x82¬ì\x9C¼ë©´"
+  text: "ì•Œë¦¼ì€ ë°”ì´ë¸Œë ˆì´ì…˜ì´ë‚˜ ì†Œë¦¬ê¹Œì§€(ëµ) ë‚¬ìœ¼ë©´"
   project: test-portal
   hub: k1
   priority: P1
   size: S
-  filed_at: '2026-09-14'
+  filed_at: 2026-09-14
   status: landed
   issued_id: K1-0914-A
   repeat_count: 1
-  note: "OS ê¸°ë³¸ì\x9D\x8C+ì§\x84ë\x8F\x99 Â· í\x8F¬í\x84¸ ì\x97´ë¦¼ ì\x8B\x9C ë\x9Dµ Â· Kyu ì\x95\x8Cë¦¼ ì\x8B¤ê¸° ë¯¸ì\x99\x84"
+  note: "OS ê¸°ë³¸ìŒ+ì§„ë™ Â· í¬í„¸ ì—´ë¦¼ ì‹œ ëµ Â· Kyu ì•Œë¦¼ ì‹¤ê¸° ë¯¸ì™„"
+
 - id: R007
-  text: "ì\x84±ê³µ í\x8C\x90ì\_\x95ì\x9D\x84 í\x95\x9C PRì\x9D´ ì\x8B¤ì\_\x9C ë¨¸ì§\x80ê°\x80 ì\x99\x84ë£\x8Cë\x90\x98ì\x97\x88ë\x8A\x94ì§\x80 Â· ê·¸ í\x99\x94ë©´ì\x97\x90ì\x84\x9C ë\x88\x88ì\x97\x90 ë\x9D\x84ê²\x8C ì\x97\Në\x8D°ì\x9D´í\x8A¸(ë³´ë\x9D¼ì\x83\x89)"
+  text: "ì„±ê³µ íŒì •ì„ í•œ PRì´ ì‹¤ì œ ë¨¸ì§€ê°€ ì™„ë£Œë˜ì—ˆëŠ”ì§€ Â· ê·¸ í™”ë©´ì—ì„œ ëˆˆì— ë„ê²Œ ì—…ë°ì´íŠ¸(ë³´ë¼ìƒ‰)"
   project: test-portal
   hub: k0
   priority: P1
   size: M
-  filed_at: '2026-09-14'
+  filed_at: 2026-09-14
   status: landed
   issued_id: K0-0914-AW
   repeat_count: 1
+
 - id: R008
-  text: "í\x83­ ì\x9C\x84ì¹\x98ë¥¼ ì\x95\x84ë\x9E\x98ê°\x80 ì\x95\x84ë\x8B\x88ë\x9D¼ í\x99\x94ë©´ ì\x83\x81ë\x8B¨ì\x9C¼ë¡\x9C"
+  text: "íƒ­ ìœ„ì¹˜ë¥¼ ì•„ë˜ê°€ ì•„ë‹ˆë¼ í™”ë©´ ìƒë‹¨ìœ¼ë¡œ"
   project: test-portal
   hub: k0
   priority: P1
   size: S
-  filed_at: '2026-09-14'
-  status: landed
+  filed_at: 2026-09-14
+  status: verified
   issued_id: K0-0914-AW
   repeat_count: 1
+
 - id: R009
-  text: "ì\x83\x88ë¡\x9Cì\x9A´ í\x94\x84ë¡\x9Cì\_\x9Dí\x8A¸ê°\x80 ì¶\x94ê°\x80ë\x90\x98ë\x8D\x94ë\x9D¼ë\x8F\x84 ê´\x9Cì°®ì\x95\x84? ë²\x94ì\x9A©ì\_\x81ì\x9D¼ ê²\x83 Â· í\x9A\x8Cì\x82¬ ì§\x81ì\x9B\x90ë\x93¤ë\x8F\x84 ì\x8D¨ì\x95¼"
-  text_full: "í\x97\x88ë¸\x8CÂ·í\x94\x84ë¡\x9Cì\_\x9Dí\x8A¸Â·í\x83\x80ì\x9E\NÂ·ì\x8B\x9Cë\x93\x9C ì\_\x84ë¶\x80 projects.json í\x8C\x8Cì\x83\x9D Â· ì\x83\x88 í\x94\x84ë¡\x9Cì\_\x9Dí\x8A¸ = JSON í\x95\x9C ì¤\x84 Â· ë\x8D°ëª¬ í\x83\x80ì\x9E\N ë²\x94ì\x9A©í\x99\x94"
+  text: "ìƒˆë¡œìš´ í”„ë¡œì íŠ¸ê°€ ì¶”ê°€ë˜ë”ë¼ë„ ê´œì°®ì•„? ë²”ìš©ì ì¼ ê²ƒ Â· íšŒì‚¬ ì§ì›ë“¤ë„ ì¨ì•¼"
+  text_full: "í—ˆë¸ŒÂ·í”„ë¡œì íŠ¸Â·íƒ€ì…Â·ì‹œë“œ ì „ë¶€ projects.json íŒŒìƒ Â· ìƒˆ í”„ë¡œì íŠ¸ = JSON í•œ ì¤„ Â· ë°ëª¬ íƒ€ì… ë²”ìš©í™”"
   project: test-portal
   hub: k0
   priority: P1
   size: M
-  filed_at: '2026-09-14'
+  filed_at: 2026-09-14
   status: filed
   next: true
   repeat_count: 1
-  note: "í\x97\x88ë¸\x8C í\x8C\x8Cì\x83\x9Dì\x9D\x80 AVì\x97\x90ì\x84\x9C ì\x99\x84ë£\x8C Â· í\x83\x80ì\x9E\NÂ·ì\x8B\x9Cë\x93\x9C ë²\x94ì\x9A©í\x99\x94 ì\x9E\x94ì\x97¬"
+  note: "í—ˆë¸Œ íŒŒìƒì€ AVì—ì„œ ì™„ë£Œ Â· íƒ€ì…Â·ì‹œë“œ ë²”ìš©í™” ì”ì—¬"
+
 - id: R010
-  text: "í\N\x8Cì\x8A¤í\x8A¸ ì²´ê³\x84 â\x80\x94 í\x99\x98ê²½ í\x8C\x8Cì\x9D¼ Â· ì\_\x95ë\x8Bµ Â· ì\x8B¤í\x8C¨ ê·\x9Cì\_\x95 Â· ì\x9E¬í\x99\x9Cì\x9A© Â· ì\x9A\x94êµ¬ ë³\x80ê²½ ì\x8B\x9C ê´\x80ë¦¬"
+  text: "í…ŒìŠ¤íŠ¸ ì²´ê³„ â€” í™˜ê²½ íŒŒì¼ Â· ì •ë‹µ Â· ì‹¤íŒ¨ ê·œì • Â· ì¬í™œìš© Â· ìš”êµ¬ ë³€ê²½ ì‹œ ê´€ë¦¬"
   project: test-portal
-  hub: k2
+  hub: k1
   priority: P1
   size: L
-  filed_at: '2026-09-14'
+  filed_at: 2026-09-14
   status: landed
   issued_id: K2-0914-A
   repeat_count: 1
+  note: "K2 íì‡„(09-16) Â· ì†Œìœ  K1 ìŠ¹ê³„"
+
 - id: R011
-  text: "ì\x82¬ë\x9E\x8C í\x8C\x90ì\_\x95ì\x9D\x80 ìµ\x9Cì\x86\x8Cë¡\x9C Â· ë°±ì\x97\x94ë\x93\x9Cë§\x8C ì\x88\x98ì\_\x95ì\x9D´ë©´ í\N\x8Cì\x8A¤í\x8A¸í\x95\x98ë\x9D¼ê³\_ í\x95\x98ë©´ ì\x95\x88 ë\x90¨ Â· ì\x82¬ë\x9E\x8C ì\x97\x86ì\x9D´ ë°°í\x8F¬í\x95´ë\x8F\x84 ë\x90\x98ë\x8A\x94 ê¸°ì¤\x80"
+  text: "ì‚¬ëŒ íŒì •ì€ ìµœì†Œë¡œ Â· ë°±ì—”ë“œë§Œ ìˆ˜ì •ì´ë©´ í…ŒìŠ¤íŠ¸í•˜ë¼ê³  í•˜ë©´ ì•ˆ ë¨ Â· ì‚¬ëŒ ì—†ì´ ë°°í¬í•´ë„ ë˜ëŠ” ê¸°ì¤€"
   project: test-portal
   hub: k1
   priority: P0
   size: M
-  filed_at: '2026-09-14'
+  filed_at: 2026-09-14
   status: landed
   issued_id: K1-0915-A
   repeat_count: 1
+
 - id: R012
-  text: "í\x97\x88ë¸\x8C ì\x83\x81í\x83\x9Cí\x8C\x90ì\x9D\x80 ë³\x84ë¡\x9C ì\x9D\x98ë¯¸ ì\x97\x86ì\x9D\x8C(cmux) Â· 1ë²\x88(ë§¥ ì\x9E\x90ë\x8F\x99í\x99\x94)ì\x9D´ ê°\x80ì\x9E¥ ì\x9D\x98ë¯¸"
+  text: "í—ˆë¸Œ ìƒíƒœíŒì€ ë³„ë¡œ ì˜ë¯¸ ì—†ìŒ(cmux) Â· 1ë²ˆ(ë§¥ ìë™í™”)ì´ ê°€ì¥ ì˜ë¯¸"
   project: test-portal
   hub: k0
   priority: P1
   size: S
-  filed_at: '2026-09-16'
-  status: issued
+  filed_at: 2026-09-16
+  status: landed
   issued_id: K0-0916-E
   repeat_count: 1
+
 - id: R013
-  text: "í\x81\x90ë¥¼ ë§\x8Cë\x93¤ì\x96´ë\x92\x80ë\x8A\x94ë\x8D° ì\x99\x9C ë\x8F\x99ì\x9E\x91 ì\x95\x88 í\x95\x98ë\x82\x98 â\x80\x94 ops/dispatch inbox 7ê±´ Â· relay prompts í\x86µí\x95©"
+  text: "íë¥¼ ë§Œë“¤ì–´ë’€ëŠ”ë° ì™œ ë™ì‘ ì•ˆ í•˜ë‚˜ â€” ops/dispatch inbox 7ê±´ Â· relay prompts í†µí•©"
   project: test-portal
   hub: k0
   priority: P1
   size: S
-  filed_at: '2026-09-16'
-  status: issued
-  issued_id: K0-0916-E
+  filed_at: 2026-09-16
+  status: done
+  issued_id: K0-0916-F
   repeat_count: 1
+  note: "inbox 7ê±´ â†’ R101~R107 ì´ê´€ Â· í´ë” ì‚­ì œ Â· relay ì›ì¥ = ìœ ì¼ í"
+
 - id: R014
-  text: "GrowNestÂ·StorePort ì\x95±ì\x97\x90 dev ì\x9E\x90ë\x8F\x99 ë¡\x9Cê·¸ì\x9D¸ í\x95\x9C ì¤\x84"
+  text: "GrowNestÂ·StorePort ì•±ì— dev ìë™ ë¡œê·¸ì¸ í•œ ì¤„"
   project: grownest
   hub: n0
   priority: P2
   size: S
-  filed_at: '2026-09-15'
+  filed_at: 2026-09-15
   status: filed
   repeat_count: 1
+
 - id: R015
-  text: "ê°\x81 ë¦¬í\x8F¬ë³\x84 CI Â· docs/testing.md Â· ì\x8B\x9Cë\x93\x9C ê³\_ì\_\x95"
+  text: "ê° ë¦¬í¬ë³„ CI Â· docs/testing.md Â· ì‹œë“œ ê³ ì •"
   project: all
   hub: t0
   priority: P2
   size: M
-  filed_at: '2026-09-14'
+  filed_at: 2026-09-14
   status: filed
   repeat_count: 1
+
 - id: R016
-  text: "ì±\x97 ë¶\x84ë¦¬ Â· í\x94\x84ë¡\x9Cì\_\x9Dí\x8A¸ 1 + ì±\x97 2(í\x8F¬í\x84¸/ì\_\x9Cí\x92\x88)"
+  text: "ì±— ë¶„ë¦¬ Â· í”„ë¡œì íŠ¸ 1 + ì±— 2(í¬í„¸/ì œí’ˆ)"
   project: orchestration
   hub: oke
   priority: P1
   size: S
-  filed_at: '2026-09-16'
+  filed_at: 2026-09-16
   status: filed
-  blocked_by: "ë§\x88ì\x9D¼ì\x8A¤í\x86¤ 1"
+  blocked_by: "ë§ˆì¼ìŠ¤í†¤ 1"
   repeat_count: 1
+
 - id: R017
-  text: "GitHub ì\x95±ì\x9D´ ë\x8D\x94 ì\x95\x88ì\_\x95ì\_\x81ì\x9D´ê³\_ ë¹\_ë¥´ê²\_ë\x8B¤ â\x80\x94 A(í\x8F¬í\x84¸) vs B(GitHub+PR í\x94\x84ë¦¬ë·°) ë¹\x84êµ\x90"
+  text: "GitHub ì•±ì´ ë” ì•ˆì •ì ì´ê³  ë¹ ë¥´ê² ë‹¤ â€” A(í¬í„¸) vs B(GitHub+PR í”„ë¦¬ë·°) ë¹„êµ"
   project: test-portal
   hub: oke
   priority: P1
   size: M
-  filed_at: '2026-09-16'
+  filed_at: 2026-09-16
   status: filed
-  blocked_by: "ë§\x88ì\x9D¼ì\x8A¤í\x86¤ 1"
+  blocked_by: "ë§ˆì¼ìŠ¤í†¤ 1"
   repeat_count: 1
+
 - id: R018
-  text: "orphan 4ê±´ í\x81´ë¦­ ì\x8B\x9C í\x95\x84í\x84° Â· í\x8C\x90ì\_\x95ë¶\x88ê°\x80 4(ì¶\x9Cê·¼ 2Â·í\x87´ê·¼ 2) í\x91\x9Cê¸° Â· ë\x8F\x8Cì\x95\x84ê°\x80ê¸° â\x86\x92 í\x8C\x90ì\_\x95ë¶\x88ê°\x80 í\x95\x84í\x84° Â· ì¶\x9Cê·¼/í\x87´ê·¼ ì\x8B\x9Cê°\x81 ì§\x81ì\_\x91 ì\x9E\Në\_¥"
+  text: "orphan 4ê±´ í´ë¦­ ì‹œ í•„í„° Â· íŒì •ë¶ˆê°€ 4(ì¶œê·¼ 2Â·í‡´ê·¼ 2) í‘œê¸° Â· ëŒì•„ê°€ê¸° â†’ íŒì •ë¶ˆê°€ í•„í„° Â· ì¶œê·¼/í‡´ê·¼ ì‹œê° ì§ì ‘ ì…ë ¥"
   project: todoboss
   hub: t0
   priority: P0
   size: M
-  filed_at: '2026-09-15'
+  filed_at: 2026-09-15
   status: landed
   issued_id: T0-0915-A
   repeat_count: 1
+
 - id: R019
-  text: "ì\x8B\x9Cê°\x81 ì§\x81ì\_\x91 ì\x9E\Në\_¥ â\x86\x92 ì\x9E¬í\x8C\x90ì\_\x95(ì§\x80ê°\x81/ì\x95¼ê·¼ ì\x9E\x90ë\x8F\x99 ì\x82°ì¶\x9C)"
+  text: "ì‹œê° ì§ì ‘ ì…ë ¥ â†’ ì¬íŒì •(ì§€ê°/ì•¼ê·¼ ìë™ ì‚°ì¶œ)"
   project: todoboss
   hub: t0
   priority: P0
   size: S
-  filed_at: '2026-09-11'
-  status: landed
-  issued_id: T0-0915-A
+  filed_at: 2026-09-11
+  status: issued
+  issued_id: T0-0917-B
   repeat_count: 2
+  note: "09-17 ì‹¤ê¸°: ì¡°ì • ë²”ìœ„ ì˜¤ì—¼(ë‹¤ë¥¸ ì„¸ì…˜ê¹Œì§€ ë³€ê²½ Â· ì›” ì§‘ê³„ ê¸‰ë³€) â†’ Bì—ì„œ íšŒìˆ˜"
+
 - id: R020
-  text: "Todoboss ì\x9D´ì\x97°: í\x8C\x8Cë\x9D¼ë¯¸í\x84°í\x99\x94 Â· Finalize Â· Payslip Â· Work Rotation í\x8E¸ì\x84±"
+  text: "Todoboss ì´ì—°: íŒŒë¼ë¯¸í„°í™” Â· Finalize Â· Payslip Â· Work Rotation í¸ì„±"
   project: todoboss
   hub: t0
   priority: P2
   size: Epic
-  filed_at: '2026-08-20'
+  filed_at: 2026-08-20
   status: filed
   repeat_count: 1
+
 - id: R021
-  text: "M0 POS í\x95\x98ë£¨ ì\x82¬ì\x9D´í\x81´ ì\x8B¤ê¸° K1~K8"
+  text: "M0 POS í•˜ë£¨ ì‚¬ì´í´ ì‹¤ê¸° K1~K8"
   project: storeport
   hub: m0
   priority: P0
   size: M
-  filed_at: '2026-08-10'
+  filed_at: 2026-08-10
   status: landed
   issued_id: M0-0915-A
   repeat_count: 1
-  note: "ì\x8B¤ê¸° 3í\x9A\x8C ë°\x80ë¦¼"
+  note: "SDK 57 ìŠ¹ê²© Â· ì‹¤ê¸° 3íšŒ ë°€ë¦¼"
+
 - id: R022
-  text: "ëª©í\x91\x9C (ê°\x80) Kyu í\x98¼ì\x9E\x90 ì\x8D¨ë³´ë\x8A\x94 ì\x88\x98ì¤\x80 Â· Metabase ì\x84\_í\x96\x89 â\x80\x94 ê²°ì\_\x95"
+  text: "ëª©í‘œ (ê°€) Kyu í˜¼ì ì¨ë³´ëŠ” ìˆ˜ì¤€ Â· Metabase ì„ í–‰ â€” ê²°ì •"
   project: storeport
   hub: m0
   priority: P1
   size: S
-  filed_at: '2026-09-09'
+  filed_at: 2026-09-09
   status: filed
   blocked_by: kyu
   repeat_count: 1
+
 - id: R023
-  text: "ë°\x98í\x92\x88Â·í\x99\x98ë¶\x88Â·ì·¨ì\x86\x8C Â· í\x95\_ì\x9D¸ ì\_\x81ì\x9A© Â· ë°\x94ì½\x94ë\x93\x9C(ì¹´ë©\x94ë\x9D¼) â\x80\x94 POS í\x99\x94ë©´ ê°­"
+  text: "ë°˜í’ˆÂ·í™˜ë¶ˆÂ·ì·¨ì†Œ Â· í• ì¸ ì ìš© Â· ë°”ì½”ë“œ(ì¹´ë©”ë¼) â€” POS í™”ë©´ ê°­"
   project: storeport
   hub: m0
   priority: P1
   size: L
-  filed_at: '2026-09-12'
+  filed_at: 2026-09-12
   status: filed
   repeat_count: 1
+
 - id: R024
-  text: "EAS dev build(Android APK) + Xantri BT-58D ë¸\x94ë£¨í\x88¬ì\x8A¤ ì\x9D¸ì\x87\x84 + ì\x84\x9Cë\x9E\x8D"
+  text: "EAS dev build(Android APK) + Xantri BT-58D ë¸”ë£¨íˆ¬ìŠ¤ ì¸ì‡„ + ì„œë"
   project: storeport
   hub: m0
   priority: P2
   size: L
-  filed_at: '2026-09-14'
+  filed_at: 2026-09-14
   status: filed
   repeat_count: 1
+
 - id: R025
-  text: "Meta WhatsApp ë²\x88í\x98¸ Â· Midtrans/Xendit ë¨¸ì²\x9Cí\x8A¸ ì\x99¸ë¶\x80 ì\x8B\_ì²­"
+  text: "Meta WhatsApp ë²ˆí˜¸ Â· Midtrans/Xendit ë¨¸ì²œíŠ¸ ì™¸ë¶€ ì‹ ì²­"
   project: storeport
   hub: kyu
   priority: P2
   size: S
-  filed_at: '2026-09-09'
+  filed_at: 2026-09-09
   status: filed
   blocked_by: kyu
   repeat_count: 1
+
 - id: R026
-  text: "ì½\x94ì\x96´ ì¤\x91ì\x8B¬ ADR ëª\Në¬¸í\x99\x94 Â· Wing ì\_\x95ë³¸ ì\_\x95ì\_\x95(Starter) Â· Admin ì\x8B¤ê¸° ì\_\x88ì°¨"
+  text: "ì½”ì–´ ì¤‘ì‹¬ ADR ëª…ë¬¸í™” Â· Wing ì •ë³¸ ì •ì •(Starter) Â· Admin ì‹¤ê¸° ì ˆì°¨"
   project: storeport
   hub: m0
   priority: P1
   size: M
-  filed_at: '2026-09-09'
+  filed_at: 2026-09-09
   status: filed
   repeat_count: 1
+
 - id: R027
-  text: "ì\x9D´ì\x97° 16(AgentsPay ì\_\x9Cì\x95½) ë´\x89ì\x9D¸ ì\x9C\_ì§\x80"
+  text: "ì´ì—° 16(AgentsPay ì œì•½) ë´‰ì¸ ìœ ì§€"
   project: storeport
   hub: m0
   priority: P2
   size: Epic
-  filed_at: '2026-08-24'
+  filed_at: 2026-08-24
   status: filed
   repeat_count: 1
+
 - id: R028
-  text: "GrowNest ì¹´ì\x9A´í\x8A¸ì\x97\N ì\x8A¤ì¼\x80ì\x9D¼ ì\x9D¼ë°\x98 ì\x8A¤í\x95\x80 ì\_\x81ì\x9A© ì\x97¬ë¶\x80"
+  text: "GrowNest ì¹´ìš´íŠ¸ì—… ìŠ¤ì¼€ì¼ ì¼ë°˜ ìŠ¤í•€ ì ìš© ì—¬ë¶€"
   project: grownest
   hub: n0
   priority: P2
   size: S
-  filed_at: '2026-09-10'
+  filed_at: 2026-09-10
   status: filed
   repeat_count: 1
+
 - id: R029
-  text: "í\x97\x88ë¸\x8C ì\x83\x81í\x83\x9C watcher ì\_\x95ë°\x80í\x99\x94(í\x94\x84ë¡\x9Cì\x84¸ì\x8A¤ ì¡´ì\x9E¬â\x89\_ì\x8B¤í\x96\x89 ì¤\x91)"
+  text: "í—ˆë¸Œ ìƒíƒœ watcher ì •ë°€í™”(í”„ë¡œì„¸ìŠ¤ ì¡´ì¬â‰ ì‹¤í–‰ ì¤‘)"
   project: test-portal
   hub: k1
-  priority: P0
+  priority: P2
   size: S
-  filed_at: '2026-09-15'
+  filed_at: 2026-09-15
   status: filed
   conflict_with: R012
   repeat_count: 1
-  note: "R012(í\x97\x88ë¸\x8Cí\x8C\x90 ë¬´ì\x9D\x98ë¯¸)ì\x99\x80 ì\x83\x81ì¶© â\x86\x92 ì\x82­ì\_\x9C ì\_\x9Cì\x95\x88 ë\x8C\x80ì\x83\x81"
+  note: "R012(í—ˆë¸ŒíŒ ë¬´ì˜ë¯¸)ì™€ ìƒì¶© â†’ ì‚­ì œ ì œì•ˆ ëŒ€ìƒ Â· K1-0916-Eì—ì„œ 4ìƒíƒœ ìµœì†Œ ì •ë°€í™”ëŠ” ì™„ë£Œ"
+
+- id: R030
+  text: "ì „ì²´ ê¸°ëŠ¥ êµ¬ì¡°ë„ê°€ ë§ˆì¸ë“œë§µìœ¼ë¡œ ë³´ì´ê³ , 100ê°œ ì¤‘ 3ê°œê°€ ë³€ê²½ ì¤‘ì´ë©´ ìƒ‰ì´ ë‹¤ë¥´ê³ , í„°ì¹˜í•˜ë©´ ê°œê´„Â·í˜„ì¬ ìƒíƒœÂ·ë³€ê²½ íˆìŠ¤í† ë¦¬"
+  text_full: "feature-map.yaml v2(L3 areaÂ·L2 processÂ·L1 children) Â· ì§€ë„ íƒ­ 3ë‹¨ê³„ Â· ë³€ê²½ ì¤‘ = PR diff ë§¤ì¹­ Â· íˆìŠ¤í† ë¦¬ = git log"
+  project: all
+  hub: k0
+  priority: P0
+  size: L
+  filed_at: 2026-09-16
+  status: landed
+  issued_id: K0-0917-D
+  repeat_count: 1
+  note: "ì´ˆíŒ: test-portal(K0-G) Â· todoboss(T0-0916-A PR#24) Â· storeport(M0-0916-A PR#113) Â· L1 ë³´ê°• = T0/M0-0917-A"
+
+- id: R031
+  text: "test-portal ì‹¤ê¸° ê²°í•¨ â€” ì£½ì€ ë²„íŠ¼ Â· ë‘ ì—´ Â· ì‹œíŠ¸ ë°˜ì¯¤ ê±¸ë¦¼ Â· ì‹¤ê¸° ëª©ë¡ í†µì¼ Â· ì¹´ë“œ í­ Â· ìš°ì„ ìˆœìœ„ í•„í„° Â· â‹¯ ë©”ë‰´ Â· PATCH 403 Â· ë¬´ë°˜ì‘ ë²„íŠ¼"
+  project: test-portal
+  hub: k0
+  priority: P0
+  size: M
+  filed_at: 2026-09-16
+  status: landed
+  issued_id: K0-0917-D
+  repeat_count: 2
+  note: "09-16 ê²°í•¨ 7(K0-H) Â· 09-17 ê²°í•¨ 9(K0-BÂ·D) Â· ë¸Œë¦¬ì§€ 500Â·SSE ì‹¤íŒ¨ëŠ” K1"
+
+- id: R032
+  text: "íŠ¹ì • taskì˜ ì˜í–¥ë„ë¥¼ ì´ëŸ° ì‹ìœ¼ë¡œ(Tickat ë±) ë¹„ì£¼ì–¼ì ìœ¼ë¡œ ëˆˆì— ì˜ ë„ë„ë¡ Â· í•˜ì´ë ˆë²¨ â†’ í´ë¦­ í™•ëŒ€ â†’ ì„œë¸Œ â†’ ìƒì„¸ Â· L3/L2/L1 ë³´ê¸° í† ê¸€"
+  text_full: "curiocity-kit ImpactFlow(SVG+SMIL Â· 3ë‹¨ê³„ í™•ëŒ€ Â· ìƒ‰ 5ì¢… Â· ìº¡ì…˜ Â· reduced-motion) Â· í¬í„¸ 3 ì§„ì…ì  Â· í´ì½” í—ˆë¸Œ ì‹œíŠ¸ [ìì„¸íˆ ë³´ê¸°] ëª¨ë‹¬"
+  project: test-portal
+  hub: k0
+  priority: P0
+  size: L
+  filed_at: 2026-09-17
+  status: landed
+  issued_id: K0-0917-D
+  repeat_count: 1
+  note: "kit PR#1 ë¨¸ì§€ Â· ê¸°ì¡´ ì œí’ˆ ë°˜ì˜ ì•„ì´ë””ì–´ëŠ” ì˜¤ì¼€ê°€ ë³„ë„ ì œì•ˆ ì˜ˆì •"
+
+- id: R033
+  text: "ì¡°ì •ì€ ê·¸ ë ˆì½”ë“œë§Œ Â· ì¡°ì • í‘œì‹œ(ì—†ìŒâ†’18:00 ë°‘ì¤„ ì‚¬ìœ ) Â· ëª¨ë“  í–‰ì— [ì¡°ì •](íšŒìƒ‰/ì£¼í™©) Â· Step #4 [ì¬ì‹¤í–‰] Â· ì§‘ê³„ì— 'ì¡°ì • N'"
+  project: todoboss
+  hub: t0
+  priority: P0
+  size: M
+  filed_at: 2026-09-17
+  status: issued
+  issued_id: T0-0917-B
+  repeat_count: 1
+  note: "Kyu 09-17 ì‹¤ê¸° Â· ì›” ì§‘ê³„ ê¸‰ë³€(117â†’82 ë“±) ë¿Œë¦¬ ê·œëª… í¬í•¨"
+
+# K0-0916-F ì´ê´€ ë“±ì¬ (ops/dispatch/inbox 7ê±´ â†’ R101~R107 Â· Kyu ì›ë¬¸ 09-16 ìŠ¹ì¸)
 - id: R101
-  text: "P2.2 GitHub API ì\x86\x8Cë¹\x84ì\x9E\x90 Â· Access JWT + Workers secret + Octokit"
+  text: "P2.2 GitHub API ì†Œë¹„ì Â· Access JWT + Workers secret + Octokit"
   project: test-portal
   hub: k0
   priority: P2
   size: S
-  filed_at: '2026-07-24'
-  status: filed
-  next: true
+  filed_at: 2026-07-24
+  status: done
   repeat_count: 1
   origin: ops/dispatch/inbox/20260724-1702-p2-2-github-api-consumer.md
-  note: "K0-0916-F ì\x9D´ê´\x80 Â· ì\x9B\x90ë³¸ dispatch í\x8C\x8Cì\x9D¼ ì\x82­ì\_\x9C (relay ì\x9B\x90ì\x9E¥ = ì\x9C\_ì\x9D¼ í\x81\x90)"
+  note: "K0-0916-F ì´ê´€ Â· AV~Dì—ì„œ ì‚¬ì‹¤ìƒ ì™„ë£Œ(gateÂ·runsÂ·PR API ì†Œë¹„)"
+
 - id: R102
-  text: "P2.3 í\x8C\x90ì\_\x95 í\x8F¼ + ì\x8A¤í\x81¬ë¦°ì\x83· (Cases Â· ì²´í\x81¬ë¦¬ì\x8A¤í\x8A¸ Â· ì\x9D´ë¯¸ì§\x80 ì²¨ë¶\x80)"
+  text: "P2.3 íŒì • í¼ + ìŠ¤í¬ë¦°ìƒ· (Cases Â· ì²´í¬ë¦¬ìŠ¤íŠ¸ Â· ì´ë¯¸ì§€ ì²¨ë¶€)"
   project: test-portal
   hub: k0
   priority: P2
   size: S
-  filed_at: '2026-07-24'
-  status: filed
+  filed_at: 2026-07-24
+  status: done
   repeat_count: 1
   origin: ops/dispatch/inbox/20260724-1703-p2-3-case-form-and-screenshots.md
-  note: "K0-0916-F ì\x9D´ê´\x80"
+  note: "K0-0916-F ì´ê´€ Â· AU/AWì—ì„œ ì™„ë£Œ"
+
 - id: R103
-  text: "P2.4 ì\_\x9Cì¶\x9C í\x8C\x8Cì\x9D´í\x94\x84ë\x9D¼ì\x9D¸ (Kyu í\x8C\x90ì\_\x95 â\x86\x92 GitHub PR ì½\x94ë©\x98í\x8A¸ Â· checks API)"
+  text: "P2.4 ì œì¶œ íŒŒì´í”„ë¼ì¸ (Kyu íŒì • â†’ GitHub PR ì½”ë©˜íŠ¸ Â· checks API)"
   project: test-portal
   hub: k0
   priority: P2
   size: S
-  filed_at: '2026-07-24'
-  status: filed
+  filed_at: 2026-07-24
+  status: done
   repeat_count: 1
   origin: ops/dispatch/inbox/20260724-1704-p2-4-submit-pipeline.md
-  note: "K0-0916-F ì\x9D´ê´\x80"
+  note: "K0-0916-F ì´ê´€ Â· kyu-gate ë„ì¥Â·auto-mergeë¡œ ì™„ë£Œ"
+
 - id: R104
-  text: "P2.5 PWA + Cloudflare Access ë§\x88ê°\x90 (ë§¤ë\x8B\x88í\x8E\x98ì\x8A¤í\x8A¸ Â· SW Â· ë¡\x9Cê·¸ì\x9D¸)"
+  text: "P2.5 PWA + Cloudflare Access ë§ˆê° (ë§¤ë‹ˆí˜ìŠ¤íŠ¸ Â· SW Â· ë¡œê·¸ì¸)"
   project: test-portal
   hub: k0
   priority: P2
   size: S
-  filed_at: '2026-07-24'
-  status: filed
+  filed_at: 2026-07-24
+  status: landed
   repeat_count: 1
   origin: ops/dispatch/inbox/20260724-1705-p2-5-pwa-and-access-finalize.md
-  note: "K0-0916-F ì\x9D´ê´\x80"
+  note: "K0-0916-F ì´ê´€ Â· iOS PWA ì•ˆë‚´(AV) Â· ë§ˆì¼ìŠ¤í†¤ 1ì—ì„œ í™•ì¸"
+
 - id: R105
-  text: "P2.6 ì\x84¤ì\_\x95 CRUD UI (í\x94\x84ë¡\x9Cì\_\x9Dí\x8A¸ Â· ì¼\x80ì\x9D´ì\x8A¤ Â· ì\x82¬ì\x9A©ì\x9E\x90 Â· ê°\x90ì\x82¬)"
+  text: "P2.6 ì„¤ì • CRUD UI (í”„ë¡œì íŠ¸ Â· ì¼€ì´ìŠ¤ Â· ì‚¬ìš©ì Â· ê°ì‚¬)"
   project: test-portal
   hub: k0
   priority: P2
   size: S
-  filed_at: '2026-07-26'
+  filed_at: 2026-07-26
   status: filed
-  conflict_with: R104
   repeat_count: 1
   origin: ops/dispatch/inbox/20260726-0600-p2-6-settings-crud-ui.md
-  note: "K0-0916-F ì\x9D´ê´\x80 Â· R104 (PWA ë§\x88ê°\x90) ê³¼ UI ë§\x88ê°\x90 ì¤\x91ë³µ Â· ì\x98¤ì¼\x80 í\x8C\x90ì\_\x95 ë\x8C\x80ê¸°"
+  note: "K0-0916-F ì´ê´€ Â· R009 ë²”ìš©í™”ì™€ í•©ì³ ì²˜ë¦¬"
+
 - id: R106
-  text: "P5 ë¦¬í\x8F¬ ë\x9F°ì²\x98 ì\x8A¤í\x81¬ë¦½í\x8A¸ (grownest Â· storeport Â· todoboss ê°\x81 ë°\x98ë\x82\x98ì\_\x88)"
+  text: "P5 ë¦¬í¬ ëŸ°ì²˜ ìŠ¤í¬ë¦½íŠ¸ (grownest Â· storeport Â· todoboss ê° ë°˜ë‚˜ì ˆ)"
   project: test-portal
-  hub: k0
+  hub: k1
   priority: P2
   size: S
-  filed_at: '2026-07-29'
-  status: filed
+  filed_at: 2026-07-29
+  status: done
   repeat_count: 1
   origin: ops/dispatch/inbox/20260729-p5-repo-launcher-scripts.md
-  note: "K0-0916-F ì\x9D´ê´\x80 Â· P3 í\x9B\x84 Â· P5 ì\x99\x84ê²°"
+  note: "K0-0916-F ì´ê´€ Â· env v2 ë ˆì‹œí”¼(K1-0915-A)ë¡œ ì™„ë£Œ"
+
 - id: R107
-  text: "todoboss ë\x94¥ë§\x81í\x81¬ (T0 ì½\x98ì\x86\x94 v2 ì\x99\x84ê²° í\x9B\x84 ë°\x9Cë¶\x80)"
+  text: "todoboss ë”¥ë§í¬ (T0 ì½˜ì†” v2 ì™„ê²° í›„ ë°œë¶€)"
   project: todoboss
   hub: t0
   priority: P2
   size: M
-  filed_at: '2026-08-05'
+  filed_at: 2026-08-05
   status: filed
   blocked_by: hub:t0
   repeat_count: 1
   origin: ops/dispatch/inbox/20260805-deeplink-todoboss.md
-  note: "K0-0916-F ì\x9D´ê´\x80 Â· T0 ì½\x98ì\x86\x94 AO ì\x99\x84ê²° í\x9B\x84 ë°\x9Cë¶\x80 ë\x8C\x80ê¸°"
+  note: "K0-0916-F ì´ê´€ Â· checks deep_link ê·œì•½ìœ¼ë¡œ ëŒ€ì²´ ê°€ëŠ¥ Â· ì˜¤ì¼€ íŒì • ëŒ€ê¸°"
