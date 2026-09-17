@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T14:30:51.591Z",
+  "built_at": "2026-09-17T14:34:41.589Z",
   "prompts": [],
   "reports": [
     {
@@ -1064,7 +1064,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T14:06:43.242Z"
+          "last_ts": "2026-09-17T14:30:36.762Z"
         }
       },
       "note": "Kyu 맥 데몬 500·SSE 실패(09-17) → K1 다음 라운드"
@@ -1193,7 +1193,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T14:06:43.242Z"
+          "last_ts": "2026-09-17T14:30:36.762Z"
         }
       },
       "note": "OS 기본음+진동 · 포털 열림 시 띵 · Kyu 알림 실기 미완"
@@ -1365,7 +1365,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T14:06:43.242Z"
+          "last_ts": "2026-09-17T14:30:36.762Z"
         }
       },
       "note": "K2 폐쇄(09-16) · 소유 K1 승계"
@@ -1408,7 +1408,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T14:06:43.242Z"
+          "last_ts": "2026-09-17T14:30:36.762Z"
         }
       },
       "note": ""
@@ -2184,7 +2184,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T14:06:43.242Z"
+          "last_ts": "2026-09-17T14:30:36.762Z"
         }
       },
       "note": "R012(허브판 무의미)와 상충 → 삭제 제안 대상 · K1-0916-E에서 4상태 최소 정밀화는 완료"
@@ -2614,7 +2614,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T14:06:43.242Z"
+          "last_ts": "2026-09-17T14:30:36.762Z"
         }
       },
       "note": "K0-0916-F 이관 · env v2 레시피(K1-0915-A)로 완료"
@@ -5485,6 +5485,14 @@
       "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
     },
     {
+      "ts": "2026-09-17T14:30:36.762Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/relay-K1IR/k1/K1-0917-I-report.md",
+      "label": "K1-0917-I 리포트",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
       "ts": "2026-09-17T15:38:47+07:00",
       "hub": "m0",
       "type": "ledger",
@@ -5506,10 +5514,10 @@
       "updated_at": "2026-09-17T08:56:38.281Z"
     },
     "k1": {
-      "last_action": "K1-0917-H 리포트",
-      "files_touched": 10,
+      "last_action": "K1-0917-I 리포트",
+      "files_touched": 11,
       "tests_touched": 0,
-      "updated_at": "2026-09-17T14:06:43.242Z"
+      "updated_at": "2026-09-17T14:30:36.762Z"
     },
     "k2": {
       "last_action": "R001 note 갱신: 07-28~09-14 소유 허브 부재로 미발부 · 09-16 🔴 등재 · K2-0916-A 착지(PR#10…",
@@ -6064,7 +6072,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T14:30:51.051Z"
+      "fetched_at": "2026-09-17T14:34:41.057Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -7283,7 +7291,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T14:30:51.306Z"
+      "fetched_at": "2026-09-17T14:34:41.301Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -7816,7 +7824,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-17T14:30:51.590Z"
+      "fetched_at": "2026-09-17T14:34:41.588Z"
     }
   ],
   "rollup": {
