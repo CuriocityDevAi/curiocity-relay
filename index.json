@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T07:00:23.358Z",
+  "built_at": "2026-09-17T07:01:25.429Z",
   "prompts": [],
   "reports": [
     {
@@ -284,25 +284,25 @@
       "ledger_events": []
     },
     {
-      "path": "k1/K1-0917-E-report.md",
-      "round": "K1-0917-E",
-      "pr": "123",
+      "path": "k1/K1-0917-F-report.md",
+      "round": "K1-0917-F",
+      "pr": "124",
       "outcome": "landed",
       "kyu_checks": [
-        "Kyu 맥 test.curiocity.company/pr/CuriocityDevAi/todoboss/23 [테스트 열기] 4단계 완주 스샷",
-        "헤더 /health 초록 dot (60s poll · 마지막 응답 N초 전)",
-        "dual auth 실측 (헤더/쿼리 각 200/401)"
+        "Kyu 맥 test.curiocity.company/pr/CuriocityDevAi/todoboss/23 [테스트 열기] Chrome 실 완주 스샷",
+        "알 수 없는 프로젝트 400 사람 문장 UI 노출 확증",
+        "contract-portal.test.mjs CI 필수 편입 (K0 변경 자동 감시)"
       ],
       "ledger_events": [
         {
           "id": "R003",
           "action": "consume",
-          "note": "Kyu 맥 SSE 401 뿌리 완결 · dual auth (Bearer + ?token=) · GET /env/open alias · timingSafeEqual · CORS 다중 · 실 GET SSE 4단계 완주 22.0s"
+          "note": "[테스트 열기] 400 뿌리 완결 · repo 3형식 (short/owner-name/case-insensitive) · 사람 문장 400 · 실 SSE short name repo=todoboss 4단계 완주 elapsed=3.3s"
         },
         {
           "id": "R031",
           "action": "consume",
-          "note": "EventSource 계약 정합 · GET alias · branch 자동 조회 · K0-F 소비 코드와 파라미터 이름 일치 (repo·pr_id·token)"
+          "note": "K0/K1 계약 mismatch 3회째 → src/lib/kyu-bridge-env-open.ts K0/K1 공유 모듈 + K0-F refactor + contract-portal.test.mjs 8 case CI 필수 재발 방지"
         }
       ]
     }
@@ -4099,7 +4099,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T07:00:22.670Z"
+      "fetched_at": "2026-09-17T07:01:25.045Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5318,7 +5318,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T07:00:23.005Z"
+      "fetched_at": "2026-09-17T07:01:25.225Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -5851,7 +5851,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-17T07:00:23.343Z"
+      "fetched_at": "2026-09-17T07:01:25.413Z"
     }
   ],
   "rollup": {
