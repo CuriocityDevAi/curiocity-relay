@@ -26,6 +26,8 @@
 import { readdir, readFile, writeFile, stat } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+// K1-0917-G · A1 · git 이력 파싱 (ledger/requirements.yaml diff → R-id 이벤트)
+import { spawnSync } from 'node:child_process';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
@@ -139,13 +141,20 @@ async function collectReports() {
 				? fm.kyu_checks.filter((v) => typeof v === 'string')
 				: [];
 			// K1-0916-B · ledger_events (frontmatter 안 JSON 문자열 배열)
+			// K1-0917-G · A2 · action 별 사람 문장 label 부여 (K0 UI 소비 정본)
 			const rawLedger = Array.isArray(fm.ledger_events) ? fm.ledger_events : [];
 			const ledger_events = [];
 			for (const raw of rawLedger) {
 				if (typeof raw !== 'string') continue;
 				try {
 					const obj = JSON.parse(raw);
-					if (obj && typeof obj === 'object') ledger_events.push(obj);
+					if (obj && typeof obj === 'object') {
+						// K1-0917-G · label 자동 부여 (없으면 action 별 기본 문장)
+						if (!obj.label) {
+							obj.label = labelForReportAction(obj.id, obj.action, obj.note);
+						}
+						ledger_events.push(obj);
+					}
 				} catch {
 					// parse 실패 · skip
 				}
@@ -567,7 +576,15 @@ async function main() {
 	const prompts = await collectPrompts();
 	const reports = await collectReports();
 	const checks = await collectChecks();
-	const events = await collectEvents();
+	const sessionEvents = await collectEvents();
+	// K1-0917-G · A1 · ledger git 이력 events 합류 (type=ledger · R-id 별 사람 문장)
+	const ledgerEvents = collectLedgerEvents();
+	// K1-0917-G · A2 · 데몬 원시 read 이벤트 = raw:true 플래그 (K0 접힘 표시)
+	const RAW_TYPES = new Set(['read', 'reconcile']);
+	const events = [...sessionEvents, ...ledgerEvents].map((e) => {
+		if (RAW_TYPES.has(e.type) && e.raw !== true) return { ...e, raw: true };
+		return e;
+	}).sort((a, b) => (a.ts || '').localeCompare(b.ts || ''));
 	const requirements = await collectRequirements(events);
 	// K1-0917-B · R030 · 각 리포 main docs/feature-map.yaml 집계 (파일 패턴 · areas)
 	const featureMaps = await collectFeatureMaps(ghToken);
@@ -684,9 +701,170 @@ function labelForKind(kind) {
 		'read': '읽음',
 		'reconcile': '대사',
 		'mismatch': '불일치',
-		'consume': '소비'
+		'consume': '소비',
+		'ledger': '원장'
 	};
 	return map[kind] || kind;
+}
+
+/**
+ * K1-0917-G · A2 · reports.ledger_events[i].label 자동 부여 (action 별 사람 문장).
+ * Kyu 원문 = "read/reconcile/defer/conflict 도 문장 label 부여".
+ * @param {string} id R-id
+ * @param {string} action read | reconcile | defer | conflict | consume | priority | ...
+ * @param {string} [note] 이벤트 note (있으면 라벨에 편입)
+ */
+function labelForReportAction(id, action, note) {
+	const noteStr = note ? ` (${String(note).slice(0, 60)})` : '';
+	const actionMap = {
+		read: `${id} 읽음`,
+		reconcile: `${id} 대사`,
+		defer: `${id} 이연`,
+		conflict: `${id} 상충 해소`,
+		consume: `${id} 착지`,
+		priority: `${id} 우선순위 변경`,
+		filed: `${id} 등재`
+	};
+	return (actionMap[action] || `${id} ${action}`) + noteStr;
+}
+
+/**
+ * K1-0917-G · A1 · 원장 git 이력 → R-id 이벤트 추출 (ledger/requirements.yaml diff).
+ * Kyu 원문 = "등재 filed · priority 변경 전→후 · status 변경 · note 변경 · 커밋 시각·작성자 · 사람 문장 label".
+ *
+ * 방식:
+ *   1. git log --pretty='%H|%aI|%an' -- ledger/requirements.yaml → 커밋 목록 (최신 → 오래된)
+ *   2. 각 커밋: git show <sha>:ledger/requirements.yaml = 그 시점 파일 · 파싱 = R-id별 필드 map
+ *   3. 이전 시점과 diff: 신 R-id = filed · 필드 변경 = 이벤트
+ *   4. events[i] = {ts, hub, type:'ledger', target:'ledger/requirements.yaml', label, req_ids:[id], author}
+ *
+ * 성능: 최근 30일 커밋만 (오래된 이력 skip · index.json 크기 회피).
+ */
+function collectLedgerEvents() {
+	const REPO_ROOT_LOCAL = REPO_ROOT;
+	const LEDGER = 'ledger/requirements.yaml';
+	// git log 커밋 목록 (최근 30일)
+	const logRes = spawnSync(
+		'git',
+		['log', '--since=30 days ago', '--pretty=format:%H|%aI|%an', '--reverse', '--', LEDGER],
+		{ cwd: REPO_ROOT_LOCAL, encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 }
+	);
+	if (logRes.status !== 0) {
+		console.warn('[ledger-events] git log 실패 (skip):', (logRes.stderr || '').slice(0, 200));
+		return [];
+	}
+	const commits = logRes.stdout
+		.trim()
+		.split('\n')
+		.filter(Boolean)
+		.map((line) => {
+			const [sha, ts, author] = line.split('|');
+			return { sha, ts, author };
+		});
+	if (commits.length === 0) return [];
+
+	// 각 커밋 시점 파일 파싱 → R-id 별 필드 map
+	// 성능 회피: 파일 파싱 함수 = parseRequirementsYaml (line 파서 · deps 0 · 재사용)
+	function fileAtCommit(sha) {
+		const res = spawnSync('git', ['show', `${sha}:${LEDGER}`], {
+			cwd: REPO_ROOT_LOCAL,
+			encoding: 'utf8',
+			maxBuffer: 8 * 1024 * 1024
+		});
+		if (res.status !== 0) return null;
+		return parseRequirementsYaml(res.stdout);
+	}
+
+	// 이전 커밋 파일 = null (첫 커밋 · 모든 R-id = filed)
+	let prevMap = new Map();
+	const events = [];
+	// 최근 30일 이전 상태 확보 = 시작 이전 커밋
+	const before = spawnSync(
+		'git',
+		['log', '--since=60 days ago', '--until=30 days ago', '-1', '--pretty=format:%H', '--', LEDGER],
+		{ cwd: REPO_ROOT_LOCAL, encoding: 'utf8' }
+	);
+	if (before.status === 0 && before.stdout.trim()) {
+		const baseline = fileAtCommit(before.stdout.trim());
+		if (baseline) {
+			for (const item of baseline) prevMap.set(item.id, item);
+		}
+	}
+
+	for (const c of commits) {
+		const items = fileAtCommit(c.sha);
+		if (!items) continue;
+		const currMap = new Map(items.map((it) => [it.id, it]));
+
+		// 신 R-id = filed 이벤트
+		for (const [id, item] of currMap) {
+			if (!prevMap.has(id)) {
+				events.push({
+					ts: c.ts,
+					hub: item.hub || 'k0',
+					type: 'ledger',
+					target: LEDGER,
+					label: `${id} 등재됨 (${item.priority || 'P?'} · ${item.hub || '?'})`,
+					req_ids: [id],
+					author: c.author
+				});
+				continue;
+			}
+			// 필드 변경 감지
+			const prev = prevMap.get(id);
+			// priority 변경
+			if (prev.priority !== item.priority && item.priority) {
+				events.push({
+					ts: c.ts,
+					hub: item.hub || 'k0',
+					type: 'ledger',
+					target: LEDGER,
+					label: `${id} 우선순위 ${prev.priority || 'P?'}→${item.priority}`,
+					req_ids: [id],
+					author: c.author
+				});
+			}
+			// status 변경
+			if (prev.status !== item.status && item.status) {
+				const statusLabelMap = {
+					filed: '등재',
+					issued: '발부',
+					landed: '착지',
+					verified: '실기 통과',
+					done: '완결',
+					deleted: '삭제'
+				};
+				const before = statusLabelMap[prev.status] || prev.status || '?';
+				const after = statusLabelMap[item.status] || item.status;
+				events.push({
+					ts: c.ts,
+					hub: item.hub || 'k0',
+					type: 'ledger',
+					target: LEDGER,
+					label: `${id} 상태 ${before}→${after}`,
+					req_ids: [id],
+					author: c.author
+				});
+			}
+			// note 변경 (텍스트 diff · 첫 60자 preview)
+			if ((prev.note || '') !== (item.note || '') && item.note) {
+				const noteShort = String(item.note).slice(0, 60);
+				events.push({
+					ts: c.ts,
+					hub: item.hub || 'k0',
+					type: 'ledger',
+					target: LEDGER,
+					label: `${id} note 갱신: ${noteShort}${item.note.length > 60 ? '…' : ''}`,
+					req_ids: [id],
+					author: c.author
+				});
+			}
+		}
+		prevMap = currMap;
+	}
+
+	console.log(`[ledger-events] 파싱 완료 · commits=${commits.length} · events=${events.length}`);
+	return events;
 }
 
 main().catch((err) => {
