@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T08:38:56.790Z",
+  "built_at": "2026-09-17T08:43:42.082Z",
   "prompts": [],
   "reports": [
     {
@@ -305,12 +305,14 @@
         {
           "id": "R003",
           "action": "consume",
-          "note": "[테스트 열기] 400 뿌리 완결 · repo 3형식 (short/owner-name/case-insensitive) · 사람 문장 400 · 실 SSE short name repo=todoboss 4단계 완주 elapsed=3.3s"
+          "note": "[테스트 열기] 400 뿌리 완결 · repo 3형식 (short/owner-name/case-insensitive) · 사람 문장 400 · 실 SSE short name repo=todoboss 4단계 완주 elapsed=3.3s",
+          "label": "R003 착지 ([테스트 열기] 400 뿌리 완결 · repo 3형식 (short/owner-name/case-insensi)"
         },
         {
           "id": "R031",
           "action": "consume",
-          "note": "K0/K1 계약 mismatch 3회째 → src/lib/kyu-bridge-env-open.ts K0/K1 공유 모듈 + K0-F refactor + contract-portal.test.mjs 8 case CI 필수 재발 방지"
+          "note": "K0/K1 계약 mismatch 3회째 → src/lib/kyu-bridge-env-open.ts K0/K1 공유 모듈 + K0-F refactor + contract-portal.test.mjs 8 case CI 필수 재발 방지",
+          "label": "R031 착지 (K0/K1 계약 mismatch 3회째 → src/lib/kyu-bridge-env-open.ts K0/K1)"
         }
       ]
     }
@@ -2654,6 +2656,21 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-02T09:10:59.995Z",
+      "hub": "k1",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/EPIC-STATE.md",
+      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-02T09:18:18.022Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay/k1/K1-0902-A-report.md",
+      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
+    },
+    {
       "ts": "2026-09-02T09:23:15.217Z",
       "hub": "k0",
       "type": "report-push",
@@ -2661,11 +2678,32 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-02T09:52:53.802Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay/k1/K1-0902-B-report.md",
+      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
+    },
+    {
+      "ts": "2026-09-03T01:42:37.993Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay/k1/K1-0902-C-report.md",
+      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
+    },
+    {
       "ts": "2026-09-03T03:54:38.280Z",
       "hub": "k0",
       "type": "report-push",
       "target": "/tmp/curiocity-relay-af-report/k0/K0-0902-AF-report.md",
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-03T04:23:45.434Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/curiocity-relay/k1/K1-0903-D-report.md",
+      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
     },
     {
       "ts": "2026-09-03T07:49:40.728Z",
@@ -2728,7 +2766,8 @@
       "hub": "k0",
       "type": "read",
       "target": "/Users/kyu.lee/projects/test-portal/EPIC-STATE.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-07T06:30:02.935Z",
@@ -2752,6 +2791,22 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-10T06:54:57.757Z",
+      "hub": "n0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/grownest/EPIC-STATE.md",
+      "session": "a8a3cd12-48de-4be4-b601-d7bbf9e3cfaa",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-10T08:43:28.200Z",
+      "hub": "n0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/grownest/EPIC-STATE.md",
+      "session": "a8a3cd12-48de-4be4-b601-d7bbf9e3cfaa",
+      "raw": true
+    },
+    {
       "ts": "2026-09-11T23:01:00.181Z",
       "hub": "k0",
       "type": "report-push",
@@ -2759,11 +2814,42 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-14T04:10:51.892Z",
+      "hub": "n0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/grownest/EPIC-STATE.md",
+      "session": "a8a3cd12-48de-4be4-b601-d7bbf9e3cfaa",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-14T06:59:52.361Z",
+      "hub": "n0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/grownest/EPIC-STATE.md",
+      "session": "a8a3cd12-48de-4be4-b601-d7bbf9e3cfaa",
+      "raw": true
+    },
+    {
       "ts": "2026-09-14T08:39:39.984Z",
       "hub": "k0",
       "type": "report-push",
       "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0914-AR-report.md",
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-14T08:51:36.690Z",
+      "hub": "k0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal/EPIC-STATE.md",
+      "session": "45b7a3f4-263c-44fa-b953-6ccecaf52602",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-14T09:00:00.239Z",
+      "hub": "k1",
+      "type": "inquiry-push",
+      "target": "/tmp/curiocity-relay-k1/k1/K1-0914-A-inquiry.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
     },
     {
       "ts": "2026-09-14T09:09:35.572Z",
@@ -2780,11 +2866,19 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
-      "ts": "2026-09-14T08:51:36.690Z",
-      "hub": "k0",
+      "ts": "2026-09-14T09:47:04.356Z",
+      "hub": "k1",
       "type": "read",
-      "target": "/Users/kyu.lee/projects/test-portal/EPIC-STATE.md",
-      "session": "45b7a3f4-263c-44fa-b953-6ccecaf52602"
+      "target": "/Users/kyu.lee/projects/test-portal-k1/EPIC-STATE.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-14T09:51:49.027Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/relay-final/k1/K1-0914-A-report.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
     },
     {
       "ts": "2026-09-15T02:44:08.754Z",
@@ -2801,46 +2895,60 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-15T09:07:15.209Z",
+      "hub": "k1",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/EPIC-STATE.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
       "ts": "2026-09-15T14:06:34.612Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-15T14:06:51.732Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k1.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-15T14:07:04.110Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k2.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-15T14:07:28.064Z",
       "hub": "k0",
       "type": "read",
       "target": "/Users/kyu.lee/projects/test-portal/EPIC-STATE.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-15T14:08:02.455Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/index.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-15T14:08:33.366Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-15T14:15:23.008Z",
@@ -2850,25 +2958,92 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-15T14:15:42.702Z",
+      "hub": "m0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/storeport/EPIC-STATE.md",
+      "session": "ff78185b-5009-4901-945a-88e553ce26b8",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-15T14:18:22.364Z",
+      "hub": "m0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/storeport/EPIC-STATE.md",
+      "session": "ff78185b-5009-4901-945a-88e553ce26b8",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-15T15:19:53.585Z",
+      "hub": "k1",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-15T15:20:17.413Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-15T15:20:47.364Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-15T15:20:54.620Z",
+      "hub": "k1",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/index.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-15T15:21:02.378Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/index.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-15T15:21:14.030Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/index.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
       "ts": "2026-09-16T01:39:38.857Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T01:39:42.806Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T01:40:06.748Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T01:44:09.204Z",
@@ -2878,6 +3053,38 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-16T02:16:17.623Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-16T02:16:27.275Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-16T02:16:33.304Z",
+      "hub": "k1",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-16T02:16:52.907Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
       "ts": "2026-09-16T04:21:55.772Z",
       "hub": "k0",
       "type": "report-push",
@@ -2885,25 +3092,44 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-16T08:27:09.190Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-16T08:27:18.205Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
       "ts": "2026-09-16T08:36:55.365Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T08:37:01.026Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T08:37:18.918Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T08:42:24.263Z",
@@ -2913,25 +3139,44 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-16T08:53:02.124Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-16T08:53:11.027Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
       "ts": "2026-09-16T08:57:14.693Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T08:57:20.780Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T08:57:34.260Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T09:02:10.707Z",
@@ -2945,49 +3190,56 @@
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T09:21:13.719Z",
       "hub": "k0",
       "type": "read",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T09:21:27.541Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T09:21:33.041Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T09:21:47.612Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T09:21:55.720Z",
       "hub": "k0",
       "type": "read",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T09:22:07.893Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T09:24:21.886Z",
@@ -2997,25 +3249,44 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-16T10:05:40.611Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-16T10:05:50.475Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
       "ts": "2026-09-16T10:14:35.604Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T10:14:42.317Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T10:14:57.904Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T10:18:16.710Z",
@@ -3029,21 +3300,24 @@
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T10:22:39.014Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-16T10:22:48.764Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-17T02:13:54.828Z",
@@ -3057,14 +3331,16 @@
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-17T02:58:26.434Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-17T03:01:53.072Z",
@@ -3074,18 +3350,66 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-17T03:06:39.645Z",
+      "hub": "k1",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T03:07:02.187Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T03:07:19.230Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T03:07:25.243Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T03:14:44.644Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/relay-K1R/k1/K1-0917-B-report.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T03:14:44.644Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/relay-K1R/k1/K1-0917-B-report.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
       "ts": "2026-09-17T03:44:43.611Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-17T03:44:55.168Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-17T03:49:06.083Z",
@@ -3099,14 +3423,16 @@
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-17T03:59:46.875Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-17T04:03:08.132Z",
@@ -3116,12 +3442,79 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-17T04:03:13.697Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T04:03:30.491Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T04:03:36.038Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T04:15:56.252Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/relay-K1CR/k1/K1-0917-C-report.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T04:42:05.177Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "label": "트래킹 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T04:42:25.403Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "label": "상태 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T04:42:31.699Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "label": "상태 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T04:56:25.013Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/relay-K1DR/k1/K1-0917-D-report.md",
+      "label": "K1-0917-D 리포트",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
       "ts": "2026-09-17T06:20:24.125Z",
       "hub": "k0",
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
       "label": "상태 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-17T06:20:35.945Z",
@@ -3129,7 +3522,8 @@
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
       "label": "트래킹 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-17T06:23:38.952Z",
@@ -3145,7 +3539,8 @@
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
       "label": "상태 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
     },
     {
       "ts": "2026-09-17T06:43:59.377Z",
@@ -3153,7 +3548,35 @@
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
       "label": "트래킹 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T06:45:52.586Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "label": "트래킹 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T06:46:08.014Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "label": "상태 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T06:46:13.988Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "label": "상태 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
     },
     {
       "ts": "2026-09-17T06:46:45.759Z",
@@ -3162,493 +3585,6 @@
       "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0917-G-report.md",
       "label": "K0-0917-G 리포트",
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:05:56.009Z",
-      "hub": "k0",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "label": "상태 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:06:08.716Z",
-      "hub": "k0",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "label": "트래킹 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:09:43.704Z",
-      "hub": "k0",
-      "type": "report-push",
-      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0917-H-report.md",
-      "label": "K0-0917-H 리포트",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:22:10.236Z",
-      "hub": "k0",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "label": "상태 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:22:20.395Z",
-      "hub": "k0",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "label": "상태 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:22:33.489Z",
-      "hub": "k0",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "label": "트래킹 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:23:04.226Z",
-      "hub": "k0",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "label": "상태 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:24:26.174Z",
-      "hub": "k0",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "label": "트래킹 읽음: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:24:42.953Z",
-      "hub": "k0",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "label": "트래킹 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:27:37.105Z",
-      "hub": "k0",
-      "type": "report-push",
-      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0917-I-report.md",
-      "label": "K0-0917-I 리포트",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:41:54.851Z",
-      "hub": "k0",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "label": "상태 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:41:57.134Z",
-      "hub": "k0",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "label": "상태 읽음: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:42:03.058Z",
-      "hub": "k0",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "label": "상태 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:42:12.164Z",
-      "hub": "k0",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
-      "label": "상태 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:42:30.927Z",
-      "hub": "k0",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "label": "트래킹 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:42:33.821Z",
-      "hub": "k0",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "label": "트래킹 읽음: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:42:51.012Z",
-      "hub": "k0",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
-      "label": "트래킹 대사: k0.md",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-17T07:45:35.953Z",
-      "hub": "k0",
-      "type": "report-push",
-      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0917-J-report.md",
-      "label": "K0-0917-J 리포트",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
-    },
-    {
-      "ts": "2026-09-10T06:54:57.757Z",
-      "hub": "n0",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/grownest/EPIC-STATE.md",
-      "session": "a8a3cd12-48de-4be4-b601-d7bbf9e3cfaa"
-    },
-    {
-      "ts": "2026-09-10T08:43:28.200Z",
-      "hub": "n0",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/grownest/EPIC-STATE.md",
-      "session": "a8a3cd12-48de-4be4-b601-d7bbf9e3cfaa"
-    },
-    {
-      "ts": "2026-09-14T04:10:51.892Z",
-      "hub": "n0",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/grownest/EPIC-STATE.md",
-      "session": "a8a3cd12-48de-4be4-b601-d7bbf9e3cfaa"
-    },
-    {
-      "ts": "2026-09-14T06:59:52.361Z",
-      "hub": "n0",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/grownest/EPIC-STATE.md",
-      "session": "a8a3cd12-48de-4be4-b601-d7bbf9e3cfaa"
-    },
-    {
-      "ts": "2026-09-15T14:15:42.702Z",
-      "hub": "m0",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/storeport/EPIC-STATE.md",
-      "session": "ff78185b-5009-4901-945a-88e553ce26b8"
-    },
-    {
-      "ts": "2026-09-15T14:18:22.364Z",
-      "hub": "m0",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/storeport/EPIC-STATE.md",
-      "session": "ff78185b-5009-4901-945a-88e553ce26b8"
-    },
-    {
-      "ts": "2026-09-02T09:10:59.995Z",
-      "hub": "k1",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/EPIC-STATE.md",
-      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
-    },
-    {
-      "ts": "2026-09-02T09:18:18.022Z",
-      "hub": "k1",
-      "type": "report-push",
-      "target": "/tmp/curiocity-relay/k1/K1-0902-A-report.md",
-      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
-    },
-    {
-      "ts": "2026-09-02T09:52:53.802Z",
-      "hub": "k1",
-      "type": "report-push",
-      "target": "/tmp/curiocity-relay/k1/K1-0902-B-report.md",
-      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
-    },
-    {
-      "ts": "2026-09-03T01:42:37.993Z",
-      "hub": "k1",
-      "type": "report-push",
-      "target": "/tmp/curiocity-relay/k1/K1-0902-C-report.md",
-      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
-    },
-    {
-      "ts": "2026-09-03T04:23:45.434Z",
-      "hub": "k1",
-      "type": "report-push",
-      "target": "/tmp/curiocity-relay/k1/K1-0903-D-report.md",
-      "session": "95e44ca2-bad9-4ce4-aaee-c5a7fc70f312"
-    },
-    {
-      "ts": "2026-09-14T09:00:00.239Z",
-      "hub": "k1",
-      "type": "inquiry-push",
-      "target": "/tmp/curiocity-relay-k1/k1/K1-0914-A-inquiry.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-14T09:47:04.356Z",
-      "hub": "k1",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/EPIC-STATE.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-14T09:51:49.027Z",
-      "hub": "k1",
-      "type": "report-push",
-      "target": "/tmp/relay-final/k1/K1-0914-A-report.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-15T09:07:15.209Z",
-      "hub": "k1",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/EPIC-STATE.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-15T15:19:53.585Z",
-      "hub": "k1",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-15T15:20:17.413Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-15T15:20:47.364Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-15T15:20:54.620Z",
-      "hub": "k1",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/index.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-15T15:21:02.378Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/index.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-15T15:21:14.030Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/index.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-16T02:16:17.623Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-16T02:16:27.275Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-16T02:16:33.304Z",
-      "hub": "k1",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-16T02:16:52.907Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-16T08:27:09.190Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-16T08:27:18.205Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-16T08:53:02.124Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-16T08:53:11.027Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-16T10:05:40.611Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-16T10:05:50.475Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T03:06:39.645Z",
-      "hub": "k1",
-      "type": "read",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T03:07:02.187Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T03:07:19.230Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T03:07:25.243Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T03:14:44.644Z",
-      "hub": "k1",
-      "type": "report-push",
-      "target": "/tmp/relay-K1R/k1/K1-0917-B-report.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T03:14:44.644Z",
-      "hub": "k1",
-      "type": "report-push",
-      "target": "/tmp/relay-K1R/k1/K1-0917-B-report.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T04:03:13.697Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T04:03:30.491Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T04:03:36.038Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T04:15:56.252Z",
-      "hub": "k1",
-      "type": "report-push",
-      "target": "/tmp/relay-K1CR/k1/K1-0917-C-report.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T04:42:05.177Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
-      "label": "트래킹 대사: k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T04:42:25.403Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "label": "상태 대사: k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T04:42:31.699Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "label": "상태 대사: k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T04:56:25.013Z",
-      "hub": "k1",
-      "type": "report-push",
-      "target": "/tmp/relay-K1DR/k1/K1-0917-D-report.md",
-      "label": "K1-0917-D 리포트",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T06:45:52.586Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
-      "label": "트래킹 대사: k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T06:46:08.014Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "label": "상태 대사: k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
-    },
-    {
-      "ts": "2026-09-17T06:46:13.988Z",
-      "hub": "k1",
-      "type": "reconcile",
-      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
-      "label": "상태 대사: k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
     },
     {
       "ts": "2026-09-17T06:48:50.179Z",
@@ -3664,7 +3600,8 @@
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
       "label": "트래킹 대사: k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
     },
     {
       "ts": "2026-09-17T06:58:37.352Z",
@@ -3672,7 +3609,8 @@
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
       "label": "상태 대사: k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
     },
     {
       "ts": "2026-09-17T06:58:42.215Z",
@@ -3680,7 +3618,8 @@
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
       "label": "상태 대사: k1.md",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
     },
     {
       "ts": "2026-09-17T07:01:12.739Z",
@@ -3689,6 +3628,594 @@
       "target": "/tmp/relay-K1FR/k1/K1-0917-F-report.md",
       "label": "K1-0917-F 리포트",
       "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T07:05:56.009Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
+      "label": "상태 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:06:08.716Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
+      "label": "트래킹 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:09:43.704Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0917-H-report.md",
+      "label": "K0-0917-H 리포트",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-17T07:22:10.236Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
+      "label": "상태 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:22:20.395Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
+      "label": "상태 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:22:33.489Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
+      "label": "트래킹 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:23:04.226Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
+      "label": "상태 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:24:26.174Z",
+      "hub": "k0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
+      "label": "트래킹 읽음: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:24:42.953Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
+      "label": "트래킹 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:27:37.105Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0917-I-report.md",
+      "label": "K0-0917-I 리포트",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-17T07:41:54.851Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
+      "label": "상태 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:41:57.134Z",
+      "hub": "k0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
+      "label": "상태 읽음: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:42:03.058Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
+      "label": "상태 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:42:12.164Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
+      "label": "상태 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:42:30.927Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
+      "label": "트래킹 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:42:33.821Z",
+      "hub": "k0",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
+      "label": "트래킹 읽음: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:42:51.012Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
+      "label": "트래킹 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-17T07:45:35.953Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0917-J-report.md",
+      "label": "K0-0917-J 리포트",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k2",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R001 등재됨 (P0 · k2)",
+      "req_ids": [
+        "R001"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R002 등재됨 (P0 · k0)",
+      "req_ids": [
+        "R002"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k1",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R003 등재됨 (P0 · k1)",
+      "req_ids": [
+        "R003"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R004 등재됨 (P0 · k0)",
+      "req_ids": [
+        "R004"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R005 등재됨 (P1 · k0)",
+      "req_ids": [
+        "R005"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k1",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R006 등재됨 (P1 · k1)",
+      "req_ids": [
+        "R006"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R007 등재됨 (P1 · k0)",
+      "req_ids": [
+        "R007"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R008 등재됨 (P1 · k0)",
+      "req_ids": [
+        "R008"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R009 등재됨 (P1 · k0)",
+      "req_ids": [
+        "R009"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k1",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R010 등재됨 (P1 · k1)",
+      "req_ids": [
+        "R010"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k1",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R011 등재됨 (P0 · k1)",
+      "req_ids": [
+        "R011"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R012 등재됨 (P1 · k0)",
+      "req_ids": [
+        "R012"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R013 등재됨 (P1 · k0)",
+      "req_ids": [
+        "R013"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "n0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R014 등재됨 (P2 · n0)",
+      "req_ids": [
+        "R014"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "t0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R015 등재됨 (P2 · t0)",
+      "req_ids": [
+        "R015"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "oke",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R016 등재됨 (P1 · oke)",
+      "req_ids": [
+        "R016"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "oke",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R017 등재됨 (P1 · oke)",
+      "req_ids": [
+        "R017"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "t0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R018 등재됨 (P0 · t0)",
+      "req_ids": [
+        "R018"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "t0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R019 등재됨 (P0 · t0)",
+      "req_ids": [
+        "R019"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "t0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R020 등재됨 (P2 · t0)",
+      "req_ids": [
+        "R020"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "m0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R021 등재됨 (P1 · m0)",
+      "req_ids": [
+        "R021"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "m0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R022 등재됨 (P1 · m0)",
+      "req_ids": [
+        "R022"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "m0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R023 등재됨 (P1 · m0)",
+      "req_ids": [
+        "R023"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "m0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R024 등재됨 (P2 · m0)",
+      "req_ids": [
+        "R024"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "kyu",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R025 등재됨 (P2 · kyu)",
+      "req_ids": [
+        "R025"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "m0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R026 등재됨 (P1 · m0)",
+      "req_ids": [
+        "R026"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "m0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R027 등재됨 (P2 · m0)",
+      "req_ids": [
+        "R027"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "n0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R028 등재됨 (P2 · n0)",
+      "req_ids": [
+        "R028"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k1",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R029 등재됨 (P1 · k1)",
+      "req_ids": [
+        "R029"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R030 등재됨 (P0 · k0)",
+      "req_ids": [
+        "R030"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R031 등재됨 (P0 · k0)",
+      "req_ids": [
+        "R031"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R032 등재됨 (P0 · k0)",
+      "req_ids": [
+        "R032"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "t0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R033 등재됨 (P0 · t0)",
+      "req_ids": [
+        "R033"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R101 등재됨 (P2 · k0)",
+      "req_ids": [
+        "R101"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R102 등재됨 (P2 · k0)",
+      "req_ids": [
+        "R102"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R103 등재됨 (P2 · k0)",
+      "req_ids": [
+        "R103"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R104 등재됨 (P2 · k0)",
+      "req_ids": [
+        "R104"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k0",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R105 등재됨 (P2 · k0)",
+      "req_ids": [
+        "R105"
+      ],
+      "author": "K1 Hub"
+    },
+    {
+      "ts": "2026-09-17T15:43:30+07:00",
+      "hub": "k1",
+      "type": "ledger",
+      "target": "ledger/requirements.yaml",
+      "label": "R106 등재됨 (P2 · k1)",
+      "req_ids": [
+        "R106"
+      ],
+      "author": "K1 Hub"
     }
   ],
   "mismatches": [],
@@ -3702,33 +4229,45 @@
     },
     "k1": {
       "last_action": "K1-0917-F 리포트",
-      "files_touched": 7,
+      "files_touched": 8,
       "tests_touched": 0,
       "updated_at": "2026-09-17T07:01:12.739Z"
     },
     "k2": {
-      "last_action": null,
-      "files_touched": 0,
+      "last_action": "R001 등재됨 (P0 · k2)",
+      "files_touched": 1,
       "tests_touched": 0,
-      "updated_at": null
+      "updated_at": "2026-09-17T15:43:30+07:00"
     },
     "n0": {
-      "last_action": null,
-      "files_touched": 0,
+      "last_action": "R028 등재됨 (P2 · n0)",
+      "files_touched": 1,
       "tests_touched": 0,
-      "updated_at": null
+      "updated_at": "2026-09-17T15:43:30+07:00"
     },
     "t0": {
-      "last_action": null,
-      "files_touched": 0,
+      "last_action": "R033 등재됨 (P0 · t0)",
+      "files_touched": 1,
       "tests_touched": 0,
-      "updated_at": null
+      "updated_at": "2026-09-17T15:43:30+07:00"
     },
     "m0": {
-      "last_action": null,
-      "files_touched": 0,
+      "last_action": "R027 등재됨 (P2 · m0)",
+      "files_touched": 1,
       "tests_touched": 0,
-      "updated_at": null
+      "updated_at": "2026-09-17T15:43:30+07:00"
+    },
+    "oke": {
+      "last_action": "R017 등재됨 (P1 · oke)",
+      "files_touched": 1,
+      "tests_touched": 0,
+      "updated_at": "2026-09-17T15:43:30+07:00"
+    },
+    "kyu": {
+      "last_action": "R025 등재됨 (P2 · kyu)",
+      "files_touched": 1,
+      "tests_touched": 0,
+      "updated_at": "2026-09-17T15:43:30+07:00"
     }
   },
   "feature_maps": [
@@ -4259,7 +4798,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T08:38:56.020Z"
+      "fetched_at": "2026-09-17T08:43:41.603Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5478,7 +6017,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T08:38:56.303Z"
+      "fetched_at": "2026-09-17T08:43:41.826Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6011,7 +6550,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-17T08:38:56.776Z"
+      "fetched_at": "2026-09-17T08:43:42.081Z"
     }
   ],
   "rollup": {
