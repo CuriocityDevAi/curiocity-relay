@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T04:54:38.175Z",
+  "built_at": "2026-09-17T04:56:39.710Z",
   "prompts": [],
   "reports": [
     {
@@ -284,25 +284,31 @@
       "ledger_events": []
     },
     {
-      "path": "k1/K1-0917-C-report.md",
-      "round": "K1-0917-C",
-      "pr": "117",
+      "path": "k1/K1-0917-D-report.md",
+      "round": "K1-0917-D",
+      "pr": "119,120",
       "outcome": "landed",
       "kyu_checks": [
-        "relay 커밋 0899a17 열람 · R029 priority P2→P0 diff 확인 · Kyu 판단 (원복 or 유지)",
-        "CROSS_REPO_READ_TOKEN + LEDGER_GITHUB_TOKEN 봇 토큰 교체 (지금 K1 shell PAT 임시)",
-        "흐름판 이벤트 label 실 문장 노출 (daemon 재기동 후 신 이벤트)"
+        "Kyu 맥 브라우저 [준비+열기 Chrome]·[테스트 열기] 500 재발 없음 실기",
+        "relay commit b29c090 열람 · R029 priority 1-line 교체 정합 확인",
+        "test-portal feature_maps processes=37 (index.json) 실측",
+        "봇 계정 3줄 절차 (Kyu 실기 · docs/kyu-clicks/K1-0917-D-bot-account-token.md)"
       ],
       "ledger_events": [
         {
+          "id": "R003",
+          "action": "consume",
+          "note": "Kyu 맥 데몬 500·SSE 실패 규명 완결 · env.mjs serverProc error guard · Todoboss PR#23 실 완주 32.3s"
+        },
+        {
           "id": "R031",
           "action": "consume",
-          "note": "/api/ledger/patch 403 규명 완결 · curl POST 실측 · relay 커밋 0899a17"
+          "note": "PATCH UTF-8 한글 손상 재발 방지 · base64-utf8 fatal + ledger-patch 라인 단위 · 실측 diff 1-line (relay commit b29c090)"
         },
         {
           "id": "R030",
           "action": "consume",
-          "note": "feature_maps 3리포 CI 실측 확증 (test-portal 10 · todoboss 128 · storeport 43)"
+          "note": "test-portal nested processes=37 실측 (기존 K1-0917-C=0 · Kyu 요구 10+ 대폭 초과)"
         }
       ]
     }
@@ -3987,7 +3993,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T04:54:37.797Z"
+      "fetched_at": "2026-09-17T04:56:39.004Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5206,7 +5212,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T04:54:37.965Z"
+      "fetched_at": "2026-09-17T04:56:39.288Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -5739,7 +5745,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-17T04:54:38.155Z"
+      "fetched_at": "2026-09-17T04:56:39.687Z"
     }
   ],
   "rollup": {
