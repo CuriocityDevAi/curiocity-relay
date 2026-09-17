@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T03:02:57.992Z",
+  "built_at": "2026-09-17T03:07:55.323Z",
   "prompts": [],
   "reports": [
     {
@@ -978,11 +978,11 @@
       "trace5": {
         "read": {
           "seen": true,
-          "last_ts": "2026-09-16T02:16:33.304Z"
+          "last_ts": "2026-09-17T03:06:39.645Z"
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-16T10:05:50.475Z"
+          "last_ts": "2026-09-17T03:07:02.187Z"
         },
         "priority": {
           "seen": false,
@@ -1107,11 +1107,11 @@
       "trace5": {
         "read": {
           "seen": true,
-          "last_ts": "2026-09-16T02:16:33.304Z"
+          "last_ts": "2026-09-17T03:06:39.645Z"
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-16T10:05:50.475Z"
+          "last_ts": "2026-09-17T03:07:02.187Z"
         },
         "priority": {
           "seen": false,
@@ -1322,11 +1322,11 @@
       "trace5": {
         "read": {
           "seen": true,
-          "last_ts": "2026-09-16T02:16:33.304Z"
+          "last_ts": "2026-09-17T03:06:39.645Z"
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-16T10:05:50.475Z"
+          "last_ts": "2026-09-17T03:07:02.187Z"
         },
         "priority": {
           "seen": false,
@@ -2098,11 +2098,11 @@
       "trace5": {
         "read": {
           "seen": true,
-          "last_ts": "2026-09-16T02:16:33.304Z"
+          "last_ts": "2026-09-17T03:06:39.645Z"
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-16T10:05:50.475Z"
+          "last_ts": "2026-09-17T03:07:02.187Z"
         },
         "priority": {
           "seen": false,
@@ -3052,6 +3052,20 @@
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
       "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T03:06:39.645Z",
+      "hub": "k1",
+      "type": "read",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T03:07:02.187Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
     }
   ],
   "mismatches": [],
@@ -3065,9 +3079,9 @@
     },
     "k1": {
       "last_action": "대사: k1.md",
-      "files_touched": 1,
+      "files_touched": 2,
       "tests_touched": 0,
-      "updated_at": "2026-09-16T10:05:50.475Z"
+      "updated_at": "2026-09-17T03:07:02.187Z"
     },
     "k2": {
       "last_action": null,
