@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T04:45:37.181Z",
+  "built_at": "2026-09-17T04:46:02.719Z",
   "prompts": [],
   "reports": [
     {
@@ -1041,7 +1041,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T04:03:36.038Z"
+          "last_ts": "2026-09-17T04:42:31.699Z"
         },
         "priority": {
           "seen": false,
@@ -1170,7 +1170,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T04:03:36.038Z"
+          "last_ts": "2026-09-17T04:42:31.699Z"
         },
         "priority": {
           "seen": false,
@@ -1342,7 +1342,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T04:03:36.038Z"
+          "last_ts": "2026-09-17T04:42:31.699Z"
         },
         "priority": {
           "seen": false,
@@ -1385,7 +1385,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T04:03:36.038Z"
+          "last_ts": "2026-09-17T04:42:31.699Z"
         },
         "priority": {
           "seen": false,
@@ -2161,7 +2161,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T04:03:36.038Z"
+          "last_ts": "2026-09-17T04:42:31.699Z"
         },
         "priority": {
           "seen": false,
@@ -2591,7 +2591,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T04:03:36.038Z"
+          "last_ts": "2026-09-17T04:42:31.699Z"
         },
         "priority": {
           "seen": false,
@@ -3393,6 +3393,30 @@
       "type": "report-push",
       "target": "/tmp/relay-K1CR/k1/K1-0917-C-report.md",
       "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T04:42:05.177Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "label": "트래킹 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T04:42:25.403Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "label": "상태 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T04:42:31.699Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "label": "상태 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
     }
   ],
   "mismatches": [],
@@ -3963,7 +3987,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T04:45:36.716Z"
+      "fetched_at": "2026-09-17T04:46:02.280Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5182,7 +5206,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T04:45:36.850Z"
+      "fetched_at": "2026-09-17T04:46:02.467Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -5715,7 +5739,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-17T04:45:37.048Z"
+      "fetched_at": "2026-09-17T04:46:02.699Z"
     }
   ],
   "rollup": {
