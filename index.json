@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T04:16:11.275Z",
+  "built_at": "2026-09-17T04:19:23.095Z",
   "prompts": [],
   "reports": [
     {
@@ -1053,7 +1053,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T03:14:44.644Z"
+          "last_ts": "2026-09-17T04:15:56.252Z"
         }
       },
       "note": "�\\x88�\\x9D��\\x8A��\\x86� 1�\\x97\\x90�\\x84\\x9C Kyu �\\x99\\x95�\\x9D�"
@@ -1182,7 +1182,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T03:14:44.644Z"
+          "last_ts": "2026-09-17T04:15:56.252Z"
         }
       },
       "note": "OS 기본�\\x9D\\x8C+�\\x84�\\x8F\\x99 · �\\x8F��\\x84� �\\x97�림 �\\x8B\\x9C �\\x9D� · Kyu �\\x95\\x8C림 �\\x8B�기 미�\\x99\\x84"
@@ -1397,7 +1397,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T03:14:44.644Z"
+          "last_ts": "2026-09-17T04:15:56.252Z"
         }
       },
       "note": ""
@@ -2173,7 +2173,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T03:14:44.644Z"
+          "last_ts": "2026-09-17T04:15:56.252Z"
         }
       },
       "note": "R012(�\\x97\\x88�\\x8C�\\x8C\\x90 무�\\x9D\\x98미)�\\x99\\x80 �\\x83\\x81충 �\\x86\\x92 �\\x82��\\_\\x9C �\\_\\x9C�\\x95\\x88 �\\x8C\\x80�\\x83\\x81"
@@ -3216,6 +3216,13 @@
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
       "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T04:15:56.252Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/relay-K1CR/k1/K1-0917-C-report.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
     }
   ],
   "mismatches": [
@@ -3243,10 +3250,10 @@
       "updated_at": "2026-09-17T04:03:08.132Z"
     },
     "k1": {
-      "last_action": "리포트: K1-0917-B-report.md",
-      "files_touched": 3,
+      "last_action": "리포트: K1-0917-C-report.md",
+      "files_touched": 4,
       "tests_touched": 0,
-      "updated_at": "2026-09-17T03:14:44.644Z"
+      "updated_at": "2026-09-17T04:15:56.252Z"
     },
     "k2": {
       "last_action": null,
@@ -3407,7 +3414,7 @@
         }
       ],
       "processes": [],
-      "fetched_at": "2026-09-17T04:16:10.698Z"
+      "fetched_at": "2026-09-17T04:19:22.625Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -4626,7 +4633,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T04:16:10.907Z"
+      "fetched_at": "2026-09-17T04:19:22.807Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -5159,7 +5166,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-17T04:16:11.137Z"
+      "fetched_at": "2026-09-17T04:19:23.083Z"
     }
   ],
   "rollup": {
