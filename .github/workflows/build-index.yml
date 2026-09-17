@@ -56,6 +56,9 @@ jobs:
           node-version: '22'
 
       - name: Build index.json
+        # K1-0917-B · collectFeatureMaps 는 각 리포 main docs/feature-map.yaml fetch · GITHUB_TOKEN 필요 (Rate 5000/h · private repo access).
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/build-index.mjs
 
       - name: Commit index.json (auto)
