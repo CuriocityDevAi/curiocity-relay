@@ -367,12 +367,19 @@ async function collectFeatureMaps(ghToken) {
 		// agilo-medusa-pos-fork = storeport 리포 fork: 접두 파일 소비 (별건 fetch 안 함)
 	];
 	const out = [];
-	// K1-0917-B · raw.githubusercontent 소비 (공개 리포 · 인증 불요 · CI Actions GITHUB_TOKEN scope 밖 리포도 접근).
-	// 사설 리포 (있으면) 는 별건 · 지금 CuriocityDevAi 4 리포 모두 public 정본.
-	const headers = { 'User-Agent': 'curiocity-relay-build-index/1.0' };
-	if (ghToken) headers.Authorization = `Bearer ${ghToken}`; // rate limit 완화 · 없으면 anon (60/h public)
+	// K1-0917-C · PRIVATE 리포 지원 = API contents 소비 (raw.githubusercontent 는 PRIVATE 404).
+	// - Accept: raw → 응답 body = 파일 원문 (base64 아님)
+	// - Authorization: Bearer <token> · 토큰이 리포 read 권한 있어야 함
+	// - Actions default GITHUB_TOKEN 은 current 리포 (curiocity-relay) 만 접근 · 다른 CuriocityDevAi 리포는 별건 PAT (CROSS_REPO_READ_TOKEN 신설) 필요
+	// K1-0917-B 초기 raw URL 소비 = 404 (test-portal PRIVATE) · 이 라운드 정정.
+	const headers = {
+		'User-Agent': 'curiocity-relay-build-index/1.0',
+		Accept: 'application/vnd.github.raw',
+		'X-GitHub-Api-Version': '2022-11-28'
+	};
+	if (ghToken) headers.Authorization = `Bearer ${ghToken}`;
 	for (const repo of REPOS) {
-		const url = `https://raw.githubusercontent.com/${repo}/main/docs/feature-map.yaml`;
+		const url = `https://api.github.com/repos/${repo}/contents/docs/feature-map.yaml?ref=main`;
 		try {
 			const res = await fetch(url, { headers });
 			if (!res.ok) {
@@ -382,15 +389,19 @@ async function collectFeatureMaps(ghToken) {
 			const yamlText = await res.text();
 			// 관대 파서 (라이브러리 의존 회피 · build-index.mjs 정합)
 			const parsed = parseFeatureMapYaml(yamlText);
-			if (!parsed || !parsed.project) {
-				console.warn(`[feature-maps] parse fail ${repo}: no project field`);
+			if (!parsed) {
+				console.warn(`[feature-maps] parse fail ${repo}: null result`);
 				continue;
 			}
+			// K1-0917-C · project 필드 부재 = repo slug 파생 (todoboss/storeport 실 스키마 정합).
+			const projectSlug = parsed.project ?? repo.split('/').pop();
+			// K1-0917-C · 실 스키마 (todoboss/storeport) = top-level processes[] + area FK. convention.md v1 = nested. 두 방식 모두 정합 (area 병합 pass).
 			out.push({
 				repo,
-				project: parsed.project,
+				project: projectSlug,
 				version: parsed.version ?? 1,
 				areas: parsed.areas ?? [],
+				processes: parsed.processes ?? [], // K1-0917-C · top-level processes[] 지원
 				fetched_at: new Date().toISOString()
 			});
 		} catch (err) {
@@ -405,71 +416,68 @@ async function collectFeatureMaps(ghToken) {
  * 라이브러리 의존 회피 (relay = deps 0 원칙).
  */
 function parseFeatureMapYaml(text) {
+	// K1-0917-C · 두 스키마 정합:
+	//   (a) convention.md v1 = areas nested (areas[].processes[])
+	//   (b) 실 리포 (todoboss/storeport) = top-level processes[] with area FK
+	// 파서 = 두 방식 모두 감지 · areas[]와 processes[] 병렬 저장 · 소비 (K0) 정본은 processes[] 배열 우선.
 	const lines = text.split('\n');
-	const out = { areas: [] };
-	let currentArea = null;
-	let currentProcess = null;
+	const out = { areas: [], processes: [] };
+	let currentContainer = null; // 'areas' | 'processes' | null (top-level scalar)
+	let currentEntry = null; // areas 또는 processes 안 현재 처리 중인 entry
 	let inFilesArray = false;
-	let filesIndent = 0;
 	for (let i = 0; i < lines.length; i++) {
 		const line = lines[i];
 		const trimmed = line.trim();
 		if (!trimmed || trimmed.startsWith('#')) continue;
-		// top-level fields
+		// top-level scalar (project · version · generated_at · round · etc)
 		const topMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_-]*)\s*:\s*(.*)$/);
 		if (topMatch && !line.startsWith(' ')) {
 			const [, k, v] = topMatch;
 			inFilesArray = false;
-			if (k === 'areas') continue;
+			currentEntry = null;
+			if (k === 'areas' || k === 'processes') {
+				currentContainer = k;
+				continue;
+			}
+			currentContainer = null;
 			out[k] = stripQuotes(v.trim());
 			continue;
 		}
-		// area entry
-		const areaMatch = line.match(/^\s{0,2}-\s+id:\s*(.+)$/);
-		if (areaMatch && line.match(/^  -/)) {
-			currentArea = { id: stripQuotes(areaMatch[1].trim()), processes: [] };
-			currentProcess = null;
-			out.areas.push(currentArea);
+		// entry ("  - id: ...") 안 areas or processes container
+		const entryMatch = line.match(/^\s{2}-\s+id:\s*(.+)$/);
+		if (entryMatch && currentContainer) {
+			currentEntry = { id: stripQuotes(entryMatch[1].trim()) };
+			if (currentContainer === 'processes') currentEntry.files = [];
+			out[currentContainer].push(currentEntry);
 			inFilesArray = false;
 			continue;
 		}
-		// process entry (deeper)
-		const procMatch = line.match(/^\s{4,6}-\s+id:\s*(.+)$/);
-		if (procMatch) {
-			currentProcess = { id: stripQuotes(procMatch[1].trim()), files: [] };
-			if (currentArea) currentArea.processes.push(currentProcess);
-			inFilesArray = false;
-			continue;
-		}
-		// files array
-		if (line.match(/^\s{6,8}files:\s*/)) {
-			inFilesArray = true;
-			filesIndent = line.search(/\S/);
+		// files array (processes 안 nested files)
+		if (currentEntry && line.match(/^\s{4,}files:\s*/)) {
 			// inline array `files: [a, b]`?
 			const inlineMatch = line.match(/files:\s*\[([^\]]*)\]/);
-			if (inlineMatch && currentProcess) {
-				currentProcess.files = inlineMatch[1].split(',').map((s) => stripQuotes(s.trim())).filter(Boolean);
+			if (inlineMatch) {
+				currentEntry.files = inlineMatch[1].split(',').map((s) => stripQuotes(s.trim())).filter(Boolean);
 				inFilesArray = false;
+			} else {
+				currentEntry.files = currentEntry.files ?? [];
+				inFilesArray = true;
 			}
 			continue;
 		}
 		if (inFilesArray) {
 			const fileItem = line.match(/^\s+-\s+(.+)$/);
-			if (fileItem && currentProcess) {
-				currentProcess.files.push(stripQuotes(fileItem[1].trim()));
+			if (fileItem) {
+				currentEntry.files.push(stripQuotes(fileItem[1].trim()));
 				continue;
 			}
-			// not a file line = end of files array
 			inFilesArray = false;
 		}
-		// process/area other fields (name/summary/status/spec)
+		// entry 안 다른 필드 (area/label/name/summary/status/spec 등)
 		const fieldMatch = line.match(/^\s+([a-zA-Z_][a-zA-Z0-9_-]*)\s*:\s*(.+)$/);
-		if (fieldMatch && currentProcess) {
+		if (fieldMatch && currentEntry) {
 			const [, k, v] = fieldMatch;
-			if (k !== 'files') currentProcess[k] = stripQuotes(v.trim());
-		} else if (fieldMatch && currentArea && !currentProcess) {
-			const [, k, v] = fieldMatch;
-			currentArea[k] = stripQuotes(v.trim());
+			if (k !== 'files') currentEntry[k] = stripQuotes(v.trim());
 		}
 	}
 	return out;
@@ -601,8 +609,13 @@ function computeHubActivity(events) {
 		);
 		const lastMeaningful = meaningful.length > 0 ? meaningful[meaningful.length - 1] : evs[evs.length - 1];
 		if (lastMeaningful) {
-			const targetBase = (lastMeaningful.target || '').split('/').pop() || lastMeaningful.type;
-			out[hub].last_action = `${labelForKind(lastMeaningful.type)}: ${targetBase}`;
+			// K1-0917-C · event.label 우선 (문장화 계약 · Kyu 원문 정본) · 부재 시 fallback = "{kind}: {basename}"
+			if (lastMeaningful.label) {
+				out[hub].last_action = lastMeaningful.label;
+			} else {
+				const targetBase = (lastMeaningful.target || '').split('/').pop() || lastMeaningful.type;
+				out[hub].last_action = `${labelForKind(lastMeaningful.type)}: ${targetBase}`;
+			}
 			out[hub].updated_at = lastMeaningful.ts;
 		}
 		// files_touched · tests_touched (유일 target 파일)
