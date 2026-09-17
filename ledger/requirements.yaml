@@ -4,463 +4,422 @@
 # repeat_count: Kyu 재언급 횟수 (>=2 → 🔴)   next: true = 다음 발부 예정
 # conflict_with: 상충 의심 R-id (→ 삭제 제안)   blocked_by: kyu | external | hub:<id>
 # 2026-09-17 복구: K1-0917-C PATCH curl 실측(0899a17)이 파일을 비UTF-8로 깨뜨려 e623b18 기준 복원 · R029 priority P2 원복
-
 - id: R001
-  text: "테스트 케이스들을 모았다가, 나중에 자동 테스트한다"
-  text_full: "Kyu가 ✓✗ 찍은 실기 항목 중 기계 판정 가능한 것은 어설션으로 전환·축적 → 스케줄(PR마다·야간)로 자동 실행 → 다음 라운드부터 사람은 소리·감각만"
+  text: 테스트 케이스들을 모았다가, 나중에 자동 테스트한다
+  text_full: Kyu가 ✓✗ 찍은 실기 항목 중 기계 판정 가능한 것은 어설션으로 전환·축적 → 스케줄(PR마다·야간)로 자동 실행 → 다음 라운드부터 사람은 소리·감각만
   project: test-portal
   hub: k2
   priority: P0
   size: Epic
-  filed_at: 2026-07-28
+  filed_at: '2026-07-28'
   status: landed
   issued_id: K2-0916-A
   repeat_count: 3
-  note: "07-28~09-14 소유 허브 부재로 미발부 · 09-16 🔴 등재 · K2-0916-A 착지(PR#104 머지)"
-
+  note: 07-28~09-14 소유 허브 부재로 미발부 · 09-16 🔴 등재 · K2-0916-A 착지(PR#104 머지)
 - id: R002
-  text: "내가 한번 이야기한것이 저장이 되어있어서, 차례대로 구현이 되고, 오랫동안 우선순위에서 밀려서 큐에 쌓여있는건은 따로 나에게 알려주면"
-  text_full: "흐름판(행=허브 · 5열 · 카드 원문·P·크기·경과·🔴·상충 · 시트 3종 · 내 차례 띠 · 다음 발부 예고) + 월요일 밀림 푸시 + 발부 시 원장 대사"
+  text: 내가 한번 이야기한것이 저장이 되어있어서, 차례대로 구현이 되고, 오랫동안 우선순위에서 밀려서 큐에 쌓여있는건은 따로 나에게 알려주면
+  text_full: 흐름판(행=허브 · 5열 · 카드 원문·P·크기·경과·🔴·상충 · 시트 3종 · 내 차례 띠 · 다음 발부 예고) + 월요일 밀림 푸시 + 발부 시 원장 대사
   project: test-portal
   hub: k0
   priority: P0
   size: L
-  filed_at: 2026-09-16
+  filed_at: '2026-09-16'
   status: landed
   issued_id: K0-0917-D
   repeat_count: 1
-  note: "클코 허브 탭 · 이벤트 소스 K1 · 지표 K2 · 마일스톤 1에서 Kyu 확인"
-
+  note: 클코 허브 탭 · 이벤트 소스 K1 · 지표 K2 · 마일스톤 1에서 Kyu 확인
 - id: R003
-  text: "테스트 브라우저 열기 버튼을 누르면 최신 소스를 받고, 새 브라우저를 열고, 로그인 등 기본을 다 하고, 필요한 위치까지 가서 나의 테스트를 기다리게"
+  text: 테스트 브라우저 열기 버튼을 누르면 최신 소스를 받고, 새 브라우저를 열고, 로그인 등 기본을 다 하고, 필요한 위치까지 가서 나의 테스트를 기다리게
   project: test-portal
   hub: k1
   priority: P0
   size: L
-  filed_at: 2026-09-14
+  filed_at: '2026-09-14'
   status: landed
   issued_id: K1-0915-A
   repeat_count: 1
-  note: "Kyu 맥 데몬 500·SSE 실패(09-17) → K1 다음 라운드"
-
+  note: Kyu 맥 데몬 500·SSE 실패(09-17) → K1 다음 라운드
 - id: R004
-  text: "test-portal이 알려주는 테스트 안내가 너(클로드)와 같거나 더 쉬워야 해"
+  text: test-portal이 알려주는 테스트 안내가 너(클로드)와 같거나 더 쉬워야 해
   project: test-portal
   hub: k0
   priority: P0
   size: M
-  filed_at: 2026-09-14
+  filed_at: '2026-09-14'
   status: landed
   issued_id: K0-0914-AU
   repeat_count: 1
-
 - id: R005
-  text: "모바일·데스크톱·아이패드에서 테스트할 것 같아 · 더 편리한 방법"
+  text: 모바일·데스크톱·아이패드에서 테스트할 것 같아 · 더 편리한 방법
   project: test-portal
   hub: k0
   priority: P1
   size: M
-  filed_at: 2026-09-14
+  filed_at: '2026-09-14'
   status: landed
   issued_id: K0-0916-A
   repeat_count: 1
-
 - id: R006
-  text: "알림은 바이브레이션이나 소리까지(띵) 났으면"
+  text: 알림은 바이브레이션이나 소리까지(띵) 났으면
   project: test-portal
   hub: k1
   priority: P1
   size: S
-  filed_at: 2026-09-14
+  filed_at: '2026-09-14'
   status: landed
   issued_id: K1-0914-A
   repeat_count: 1
-  note: "OS 기본음+진동 · 포털 열림 시 띵 · Kyu 알림 실기 미완"
-
+  note: OS 기본음+진동 · 포털 열림 시 띵 · Kyu 알림 실기 미완
 - id: R007
-  text: "성공 판정을 한 PR이 실제 머지가 완료되었는지 · 그 화면에서 눈에 띄게 업데이트(보라색)"
+  text: 성공 판정을 한 PR이 실제 머지가 완료되었는지 · 그 화면에서 눈에 띄게 업데이트(보라색)
   project: test-portal
   hub: k0
   priority: P1
   size: M
-  filed_at: 2026-09-14
+  filed_at: '2026-09-14'
   status: landed
   issued_id: K0-0914-AW
   repeat_count: 1
-
 - id: R008
-  text: "탭 위치를 아래가 아니라 화면 상단으로"
+  text: 탭 위치를 아래가 아니라 화면 상단으로
   project: test-portal
   hub: k0
   priority: P1
   size: S
-  filed_at: 2026-09-14
+  filed_at: '2026-09-14'
   status: verified
   issued_id: K0-0914-AW
   repeat_count: 1
-
 - id: R009
-  text: "새로운 프로젝트가 추가되더라도 괜찮아? 범용적일 것 · 회사 직원들도 써야"
-  text_full: "허브·프로젝트·타입·시드 전부 projects.json 파생 · 새 프로젝트 = JSON 한 줄 · 데몬 타입 범용화"
+  text: 새로운 프로젝트가 추가되더라도 괜찮아? 범용적일 것 · 회사 직원들도 써야
+  text_full: 허브·프로젝트·타입·시드 전부 projects.json 파생 · 새 프로젝트 = JSON 한 줄 · 데몬 타입 범용화
   project: test-portal
   hub: k0
   priority: P1
   size: M
-  filed_at: 2026-09-14
+  filed_at: '2026-09-14'
   status: filed
   next: true
   repeat_count: 1
-  note: "허브 파생은 AV에서 완료 · 타입·시드 범용화 잔여"
-
+  note: 허브 파생은 AV에서 완료 · 타입·시드 범용화 잔여
 - id: R010
-  text: "테스트 체계 — 환경 파일 · 정답 · 실패 규정 · 재활용 · 요구 변경 시 관리"
+  text: 테스트 체계 — 환경 파일 · 정답 · 실패 규정 · 재활용 · 요구 변경 시 관리
   project: test-portal
   hub: k1
   priority: P1
   size: L
-  filed_at: 2026-09-14
+  filed_at: '2026-09-14'
   status: landed
   issued_id: K2-0914-A
   repeat_count: 1
-  note: "K2 폐쇄(09-16) · 소유 K1 승계"
-
+  note: K2 폐쇄(09-16) · 소유 K1 승계
 - id: R011
-  text: "사람 판정은 최소로 · 백엔드만 수정이면 테스트하라고 하면 안 됨 · 사람 없이 배포해도 되는 기준"
+  text: 사람 판정은 최소로 · 백엔드만 수정이면 테스트하라고 하면 안 됨 · 사람 없이 배포해도 되는 기준
   project: test-portal
   hub: k1
   priority: P0
   size: M
-  filed_at: 2026-09-14
+  filed_at: '2026-09-14'
   status: landed
   issued_id: K1-0915-A
   repeat_count: 1
-
 - id: R012
-  text: "허브 상태판은 별로 의미 없음(cmux) · 1번(맥 자동화)이 가장 의미"
+  text: 허브 상태판은 별로 의미 없음(cmux) · 1번(맥 자동화)이 가장 의미
   project: test-portal
   hub: k0
   priority: P1
   size: S
-  filed_at: 2026-09-16
+  filed_at: '2026-09-16'
   status: landed
   issued_id: K0-0916-E
   repeat_count: 1
-
 - id: R013
-  text: "큐를 만들어뒀는데 왜 동작 안 하나 — ops/dispatch inbox 7건 · relay prompts 통합"
+  text: 큐를 만들어뒀는데 왜 동작 안 하나 — ops/dispatch inbox 7건 · relay prompts 통합
   project: test-portal
   hub: k0
   priority: P1
   size: S
-  filed_at: 2026-09-16
+  filed_at: '2026-09-16'
   status: done
   issued_id: K0-0916-F
   repeat_count: 1
-  note: "inbox 7건 → R101~R107 이관 · 폴더 삭제 · relay 원장 = 유일 큐"
-
+  note: inbox 7건 → R101~R107 이관 · 폴더 삭제 · relay 원장 = 유일 큐
 - id: R014
-  text: "GrowNest·StorePort 앱에 dev 자동 로그인 한 줄"
+  text: GrowNest·StorePort 앱에 dev 자동 로그인 한 줄
   project: grownest
   hub: n0
   priority: P2
   size: S
-  filed_at: 2026-09-15
+  filed_at: '2026-09-15'
   status: filed
   repeat_count: 1
-
 - id: R015
-  text: "각 리포별 CI · docs/testing.md · 시드 고정"
+  text: 각 리포별 CI · docs/testing.md · 시드 고정
   project: all
   hub: t0
   priority: P2
   size: M
-  filed_at: 2026-09-14
+  filed_at: '2026-09-14'
   status: filed
   repeat_count: 1
-
 - id: R016
-  text: "챗 분리 · 프로젝트 1 + 챗 2(포털/제품)"
+  text: 챗 분리 · 프로젝트 1 + 챗 2(포털/제품)
   project: orchestration
   hub: oke
   priority: P1
   size: S
-  filed_at: 2026-09-16
+  filed_at: '2026-09-16'
   status: filed
-  blocked_by: "마일스톤 1"
+  blocked_by: 마일스톤 1
   repeat_count: 1
-
 - id: R017
-  text: "GitHub 앱이 더 안정적이고 빠르겠다 — A(포털) vs B(GitHub+PR 프리뷰) 비교"
+  text: GitHub 앱이 더 안정적이고 빠르겠다 — A(포털) vs B(GitHub+PR 프리뷰) 비교
   project: test-portal
   hub: oke
   priority: P1
   size: M
-  filed_at: 2026-09-16
+  filed_at: '2026-09-16'
   status: filed
-  blocked_by: "마일스톤 1"
+  blocked_by: 마일스톤 1
   repeat_count: 1
-
 - id: R018
-  text: "orphan 4건 클릭 시 필터 · 판정불가 4(출근 2·퇴근 2) 표기 · 돌아가기 → 판정불가 필터 · 출근/퇴근 시각 직접 입력"
+  text: orphan 4건 클릭 시 필터 · 판정불가 4(출근 2·퇴근 2) 표기 · 돌아가기 → 판정불가 필터 · 출근/퇴근 시각 직접 입력
   project: todoboss
   hub: t0
   priority: P0
   size: M
-  filed_at: 2026-09-15
+  filed_at: '2026-09-15'
   status: landed
   issued_id: T0-0915-A
   repeat_count: 1
-
 - id: R019
-  text: "시각 직접 입력 → 재판정(지각/야근 자동 산출)"
+  text: 시각 직접 입력 → 재판정(지각/야근 자동 산출)
   project: todoboss
   hub: t0
   priority: P0
   size: S
-  filed_at: 2026-09-11
+  filed_at: '2026-09-11'
   status: issued
   issued_id: T0-0917-B
   repeat_count: 2
-  note: "09-17 실기: 조정 범위 오염(다른 세션까지 변경 · 월 집계 급변) → B에서 회수"
-
+  note: '09-17 실기: 조정 범위 오염(다른 세션까지 변경 · 월 집계 급변) → B에서 회수'
 - id: R020
-  text: "Todoboss 이연: 파라미터화 · Finalize · Payslip · Work Rotation 편성"
+  text: 'Todoboss 이연: 파라미터화 · Finalize · Payslip · Work Rotation 편성'
   project: todoboss
   hub: t0
   priority: P2
   size: Epic
-  filed_at: 2026-08-20
+  filed_at: '2026-08-20'
   status: filed
   repeat_count: 1
-
 - id: R021
-  text: "M0 POS 하루 사이클 실기 K1~K8"
+  text: M0 POS 하루 사이클 실기 K1~K8
   project: storeport
   hub: m0
   priority: P0
   size: M
-  filed_at: 2026-08-10
+  filed_at: '2026-08-10'
   status: landed
   issued_id: M0-0915-A
   repeat_count: 1
-  note: "SDK 57 승격 · 실기 3회 밀림"
-
+  note: SDK 57 승격 · 실기 3회 밀림
 - id: R022
-  text: "목표 (가) Kyu 혼자 써보는 수준 · Metabase 선행 — 결정"
+  text: 목표 (가) Kyu 혼자 써보는 수준 · Metabase 선행 — 결정
   project: storeport
   hub: m0
   priority: P1
   size: S
-  filed_at: 2026-09-09
+  filed_at: '2026-09-09'
   status: filed
   blocked_by: kyu
   repeat_count: 1
-
 - id: R023
-  text: "반품·환불·취소 · 할인 적용 · 바코드(카메라) — POS 화면 갭"
+  text: 반품·환불·취소 · 할인 적용 · 바코드(카메라) — POS 화면 갭
   project: storeport
   hub: m0
   priority: P1
   size: L
-  filed_at: 2026-09-12
+  filed_at: '2026-09-12'
   status: filed
   repeat_count: 1
-
 - id: R024
-  text: "EAS dev build(Android APK) + Xantri BT-58D 블루투스 인쇄 + 서랍"
+  text: EAS dev build(Android APK) + Xantri BT-58D 블루투스 인쇄 + 서랍
   project: storeport
   hub: m0
   priority: P2
   size: L
-  filed_at: 2026-09-14
+  filed_at: '2026-09-14'
   status: filed
   repeat_count: 1
-
 - id: R025
-  text: "Meta WhatsApp 번호 · Midtrans/Xendit 머천트 외부 신청"
+  text: Meta WhatsApp 번호 · Midtrans/Xendit 머천트 외부 신청
   project: storeport
   hub: kyu
   priority: P2
   size: S
-  filed_at: 2026-09-09
+  filed_at: '2026-09-09'
   status: filed
   blocked_by: kyu
   repeat_count: 1
-
 - id: R026
-  text: "코어 중심 ADR 명문화 · Wing 정본 정정(Starter) · Admin 실기 절차"
+  text: 코어 중심 ADR 명문화 · Wing 정본 정정(Starter) · Admin 실기 절차
   project: storeport
   hub: m0
   priority: P1
   size: M
-  filed_at: 2026-09-09
+  filed_at: '2026-09-09'
   status: filed
   repeat_count: 1
-
 - id: R027
-  text: "이연 16(AgentsPay 제약) 봉인 유지"
+  text: 이연 16(AgentsPay 제약) 봉인 유지
   project: storeport
   hub: m0
   priority: P2
   size: Epic
-  filed_at: 2026-08-24
+  filed_at: '2026-08-24'
   status: filed
   repeat_count: 1
-
 - id: R028
-  text: "GrowNest 카운트업 스케일 일반 스핀 적용 여부"
+  text: GrowNest 카운트업 스케일 일반 스핀 적용 여부
   project: grownest
   hub: n0
   priority: P2
   size: S
-  filed_at: 2026-09-10
+  filed_at: '2026-09-10'
   status: filed
   repeat_count: 1
-
 - id: R029
-  text: "허브 상태 watcher 정밀화(프로세스 존재≠실행 중)"
+  text: 허브 상태 watcher 정밀화(프로세스 존재≠실행 중)
   project: test-portal
   hub: k1
-  priority: P2
+  priority: P0
   size: S
-  filed_at: 2026-09-15
+  filed_at: '2026-09-15'
   status: filed
   conflict_with: R012
   repeat_count: 1
-  note: "R012(허브판 무의미)와 상충 → 삭제 제안 대상 · K1-0916-E에서 4상태 최소 정밀화는 완료"
-
+  note: R012(허브판 무의미)와 상충 → 삭제 제안 대상 · K1-0916-E에서 4상태 최소 정밀화는 완료
 - id: R030
-  text: "전체 기능 구조도가 마인드맵으로 보이고, 100개 중 3개가 변경 중이면 색이 다르고, 터치하면 개괄·현재 상태·변경 히스토리"
-  text_full: "feature-map.yaml v2(L3 area·L2 process·L1 children) · 지도 탭 3단계 · 변경 중 = PR diff 매칭 · 히스토리 = git log"
+  text: 전체 기능 구조도가 마인드맵으로 보이고, 100개 중 3개가 변경 중이면 색이 다르고, 터치하면 개괄·현재 상태·변경 히스토리
+  text_full: feature-map.yaml v2(L3 area·L2 process·L1 children) · 지도 탭 3단계 · 변경 중 = PR diff 매칭 · 히스토리 = git log
   project: all
   hub: k0
   priority: P0
   size: L
-  filed_at: 2026-09-16
+  filed_at: '2026-09-16'
   status: landed
   issued_id: K0-0917-D
   repeat_count: 1
-  note: "초판: test-portal(K0-G) · todoboss(T0-0916-A PR#24) · storeport(M0-0916-A PR#113) · L1 보강 = T0/M0-0917-A"
-
+  note: '초판: test-portal(K0-G) · todoboss(T0-0916-A PR#24) · storeport(M0-0916-A PR#113) · L1 보강 = T0/M0-0917-A'
 - id: R031
-  text: "test-portal 실기 결함 — 죽은 버튼 · 두 열 · 시트 반쯤 걸림 · 실기 목록 통일 · 카드 폭 · 우선순위 필터 · ⋯ 메뉴 · PATCH 403 · 무반응 버튼"
+  text: test-portal 실기 결함 — 죽은 버튼 · 두 열 · 시트 반쯤 걸림 · 실기 목록 통일 · 카드 폭 · 우선순위 필터 · ⋯ 메뉴 · PATCH 403 · 무반응 버튼
   project: test-portal
   hub: k0
   priority: P0
   size: M
-  filed_at: 2026-09-16
+  filed_at: '2026-09-16'
   status: landed
   issued_id: K0-0917-D
   repeat_count: 2
-  note: "09-16 결함 7(K0-H) · 09-17 결함 9(K0-B·D) · 브리지 500·SSE 실패는 K1"
-
+  note: 09-16 결함 7(K0-H) · 09-17 결함 9(K0-B·D) · 브리지 500·SSE 실패는 K1
 - id: R032
-  text: "특정 task의 영향도를 이런 식으로(Tickat 덱) 비주얼적으로 눈에 잘 띄도록 · 하이레벨 → 클릭 확대 → 서브 → 상세 · L3/L2/L1 보기 토글"
-  text_full: "curiocity-kit ImpactFlow(SVG+SMIL · 3단계 확대 · 색 5종 · 캡션 · reduced-motion) · 포털 3 진입점 · 클코 허브 시트 [자세히 보기] 모달"
+  text: 특정 task의 영향도를 이런 식으로(Tickat 덱) 비주얼적으로 눈에 잘 띄도록 · 하이레벨 → 클릭 확대 → 서브 → 상세 · L3/L2/L1 보기 토글
+  text_full: curiocity-kit ImpactFlow(SVG+SMIL · 3단계 확대 · 색 5종 · 캡션 · reduced-motion) · 포털 3 진입점 · 클코 허브 시트 [자세히 보기] 모달
   project: test-portal
   hub: k0
   priority: P0
   size: L
-  filed_at: 2026-09-17
+  filed_at: '2026-09-17'
   status: landed
   issued_id: K0-0917-D
   repeat_count: 1
-  note: "kit PR#1 머지 · 기존 제품 반영 아이디어는 오케가 별도 제안 예정"
-
+  note: kit PR#1 머지 · 기존 제품 반영 아이디어는 오케가 별도 제안 예정
 - id: R033
-  text: "조정은 그 레코드만 · 조정 표시(없음→18:00 밑줄 사유) · 모든 행에 [조정](회색/주황) · Step #4 [재실행] · 집계에 '조정 N'"
+  text: '조정은 그 레코드만 · 조정 표시(없음→18:00 밑줄 사유) · 모든 행에 [조정](회색/주황) · Step #4 [재실행] · 집계에 ''조정 N'''
   project: todoboss
   hub: t0
   priority: P0
   size: M
-  filed_at: 2026-09-17
+  filed_at: '2026-09-17'
   status: issued
   issued_id: T0-0917-B
   repeat_count: 1
-  note: "Kyu 09-17 실기 · 월 집계 급변(117→82 등) 뿌리 규명 포함"
-
-# K0-0916-F 이관 등재 (ops/dispatch/inbox 7건 → R101~R107 · Kyu 원문 09-16 승인)
+  note: Kyu 09-17 실기 · 월 집계 급변(117→82 등) 뿌리 규명 포함
 - id: R101
-  text: "P2.2 GitHub API 소비자 · Access JWT + Workers secret + Octokit"
+  text: P2.2 GitHub API 소비자 · Access JWT + Workers secret + Octokit
   project: test-portal
   hub: k0
   priority: P2
   size: S
-  filed_at: 2026-07-24
+  filed_at: '2026-07-24'
   status: done
   repeat_count: 1
   origin: ops/dispatch/inbox/20260724-1702-p2-2-github-api-consumer.md
-  note: "K0-0916-F 이관 · AV~D에서 사실상 완료(gate·runs·PR API 소비)"
-
+  note: K0-0916-F 이관 · AV~D에서 사실상 완료(gate·runs·PR API 소비)
 - id: R102
-  text: "P2.3 판정 폼 + 스크린샷 (Cases · 체크리스트 · 이미지 첨부)"
+  text: P2.3 판정 폼 + 스크린샷 (Cases · 체크리스트 · 이미지 첨부)
   project: test-portal
   hub: k0
   priority: P2
   size: S
-  filed_at: 2026-07-24
+  filed_at: '2026-07-24'
   status: done
   repeat_count: 1
   origin: ops/dispatch/inbox/20260724-1703-p2-3-case-form-and-screenshots.md
-  note: "K0-0916-F 이관 · AU/AW에서 완료"
-
+  note: K0-0916-F 이관 · AU/AW에서 완료
 - id: R103
-  text: "P2.4 제출 파이프라인 (Kyu 판정 → GitHub PR 코멘트 · checks API)"
+  text: P2.4 제출 파이프라인 (Kyu 판정 → GitHub PR 코멘트 · checks API)
   project: test-portal
   hub: k0
   priority: P2
   size: S
-  filed_at: 2026-07-24
+  filed_at: '2026-07-24'
   status: done
   repeat_count: 1
   origin: ops/dispatch/inbox/20260724-1704-p2-4-submit-pipeline.md
-  note: "K0-0916-F 이관 · kyu-gate 도장·auto-merge로 완료"
-
+  note: K0-0916-F 이관 · kyu-gate 도장·auto-merge로 완료
 - id: R104
-  text: "P2.5 PWA + Cloudflare Access 마감 (매니페스트 · SW · 로그인)"
+  text: P2.5 PWA + Cloudflare Access 마감 (매니페스트 · SW · 로그인)
   project: test-portal
   hub: k0
   priority: P2
   size: S
-  filed_at: 2026-07-24
+  filed_at: '2026-07-24'
   status: landed
   repeat_count: 1
   origin: ops/dispatch/inbox/20260724-1705-p2-5-pwa-and-access-finalize.md
-  note: "K0-0916-F 이관 · iOS PWA 안내(AV) · 마일스톤 1에서 확인"
-
+  note: K0-0916-F 이관 · iOS PWA 안내(AV) · 마일스톤 1에서 확인
 - id: R105
-  text: "P2.6 설정 CRUD UI (프로젝트 · 케이스 · 사용자 · 감사)"
+  text: P2.6 설정 CRUD UI (프로젝트 · 케이스 · 사용자 · 감사)
   project: test-portal
   hub: k0
   priority: P2
   size: S
-  filed_at: 2026-07-26
+  filed_at: '2026-07-26'
   status: filed
   repeat_count: 1
   origin: ops/dispatch/inbox/20260726-0600-p2-6-settings-crud-ui.md
-  note: "K0-0916-F 이관 · R009 범용화와 합쳐 처리"
-
+  note: K0-0916-F 이관 · R009 범용화와 합쳐 처리
 - id: R106
-  text: "P5 리포 런처 스크립트 (grownest · storeport · todoboss 각 반나절)"
+  text: P5 리포 런처 스크립트 (grownest · storeport · todoboss 각 반나절)
   project: test-portal
   hub: k1
   priority: P2
   size: S
-  filed_at: 2026-07-29
+  filed_at: '2026-07-29'
   status: done
   repeat_count: 1
   origin: ops/dispatch/inbox/20260729-p5-repo-launcher-scripts.md
-  note: "K0-0916-F 이관 · env v2 레시피(K1-0915-A)로 완료"
-
+  note: K0-0916-F 이관 · env v2 레시피(K1-0915-A)로 완료
 - id: R107
-  text: "todoboss 딥링크 (T0 콘솔 v2 완결 후 발부)"
+  text: todoboss 딥링크 (T0 콘솔 v2 완결 후 발부)
   project: todoboss
   hub: t0
   priority: P2
   size: M
-  filed_at: 2026-08-05
+  filed_at: '2026-08-05'
   status: filed
   blocked_by: hub:t0
   repeat_count: 1
   origin: ops/dispatch/inbox/20260805-deeplink-todoboss.md
-  note: "K0-0916-F 이관 · checks deep_link 규약으로 대체 가능 · 오케 판정 대기"
+  note: K0-0916-F 이관 · checks deep_link 규약으로 대체 가능 · 오케 판정 대기
