@@ -1,12 +1,12 @@
-# CurioCity ìš”êµ¬ ì›ì¥ (ì •ë³¸ Â· ì˜¤ì¼€ ìœ ì§€ Â· Kyu ì›ë¬¸)
-# status: filed(ë“±ì¬Â·ë¯¸ë°œë¶€) | issued(ë°œë¶€Â·êµ¬í˜„ ì¤‘) | landed(ì°©ì§€Â·ì‹¤ê¸° ëŒ€ê¸°) | verified(ì‹¤ê¸° í†µê³¼) | done
-# priority: P0(ì§€ê¸ˆ) | P1(ë‹¤ìŒ) | P2(ë‚˜ì¤‘)   size: S | M | L | Epic (ì˜¤ì¼€ ì¶”ì •)
-# repeat_count: Kyu ì¬ì–¸ê¸‰ íšŸìˆ˜ (>=2 â†’ ğŸ”´)   next: true = ë‹¤ìŒ ë°œë¶€ ì˜ˆì •
-# conflict_with: ìƒì¶© ì˜ì‹¬ R-id (â†’ ì‚­ì œ ì œì•ˆ)   blocked_by: kyu | external | hub:<id>
-# 2026-09-17 ë³µêµ¬: K1-0917-C PATCH curl ì‹¤ì¸¡(0899a17)ì´ íŒŒì¼ì„ ë¹„UTF-8ë¡œ ê¹¨ëœ¨ë ¤ e623b18 ê¸°ì¤€ ë³µì› Â· R029 priority P2 ì›ë³µ
+# CurioCity Ã¬Å¡â€ÃªÂµÂ¬ Ã¬â€ºÂÃ¬Å¾Â¥ (Ã¬Â â€¢Ã«Â³Â¸ Ã‚Â· Ã¬ËœÂ¤Ã¬Â¼â‚¬ Ã¬Å“Â Ã¬Â§â‚¬ Ã‚Â· Kyu Ã¬â€ºÂÃ«Â¬Â¸)
+# status: filed(Ã«â€œÂ±Ã¬Å¾Â¬Ã‚Â·Ã«Â¯Â¸Ã«Â°Å“Ã«Â¶â‚¬) | issued(Ã«Â°Å“Ã«Â¶â‚¬Ã‚Â·ÃªÂµÂ¬Ã­Ëœâ€ Ã¬Â¤â€˜) | landed(Ã¬Â°Â©Ã¬Â§â‚¬Ã‚Â·Ã¬â€¹Â¤ÃªÂ¸Â° Ã«Å’â‚¬ÃªÂ¸Â°) | verified(Ã¬â€¹Â¤ÃªÂ¸Â° Ã­â€ ÂµÃªÂ³Â¼) | done
+# priority: P0(Ã¬Â§â‚¬ÃªÂ¸Ë†) | P1(Ã«â€¹Â¤Ã¬ÂÅ’) | P2(Ã«â€šËœÃ¬Â¤â€˜)   size: S | M | L | Epic (Ã¬ËœÂ¤Ã¬Â¼â‚¬ Ã¬Â¶â€Ã¬Â â€¢)
+# repeat_count: Kyu Ã¬Å¾Â¬Ã¬â€“Â¸ÃªÂ¸â€° Ã­Å¡Å¸Ã¬Ë†Ëœ (>=2 Ã¢â€ â€™ Ã°Å¸â€Â´)   next: true = Ã«â€¹Â¤Ã¬ÂÅ’ Ã«Â°Å“Ã«Â¶â‚¬ Ã¬ËœË†Ã¬Â â€¢
+# conflict_with: Ã¬Æ’ÂÃ¬Â¶Â© Ã¬ÂËœÃ¬â€¹Â¬ R-id (Ã¢â€ â€™ Ã¬â€šÂ­Ã¬Â Å“ Ã¬Â Å“Ã¬â€¢Ë†)   blocked_by: kyu | external | hub:<id>
+# 2026-09-17 Ã«Â³ÂµÃªÂµÂ¬: K1-0917-C PATCH curl Ã¬â€¹Â¤Ã¬Â¸Â¡(0899a17)Ã¬ÂÂ´ Ã­Å’Å’Ã¬ÂÂ¼Ã¬Ââ€ Ã«Â¹â€UTF-8Ã«Â¡Å“ ÃªÂ¹Â¨Ã«Å“Â¨Ã«Â Â¤ e623b18 ÃªÂ¸Â°Ã¬Â¤â‚¬ Ã«Â³ÂµÃ¬â€ºÂ Ã‚Â· R029 priority P2 Ã¬â€ºÂÃ«Â³Âµ
 - id: R001
-  text: "í\N\x8Cì\x8A¤í\x8A¸ ì¼\x80ì\x9D´ì\x8A¤ë\x93¤ì\x9D\x84 ëª¨ì\x95\x98ë\x8B¤ê°\x80, ë\x82\x98ì¤\x91ì\x97\x90 ì\x9E\x90ë\x8F\x99 í\N\x8Cì\x8A¤í\x8A¸í\x95\x9Cë\x8B¤"
-  text_full: "Kyuê°\x80 â\x9C\x93â\x9C\x97 ì°\x8Dì\x9D\x80 ì\x8B¤ê¸° í\x95­ëª© ì¤\x91 ê¸°ê³\x84 í\x8C\x90ì\_\x95 ê°\x80ë\x8A¥í\x95\x9C ê²\x83ì\x9D\x80 ì\x96´ì\x84¤ì\N\x98ì\x9C¼ë¡\x9C ì\_\x84í\x99\x98Â·ì¶\x95ì\_\x81 â\x86\x92 ì\x8A¤ì¼\x80ì¤\x84(PRë§\x88ë\x8B¤Â·ì\x95¼ê°\x84)ë¡\x9C ì\x9E\x90ë\x8F\x99 ì\x8B¤í\x96\x89 â\x86\x92 ë\x8B¤ì\x9D\x8C ë\x9D¼ì\x9A´ë\x93\x9Cë¶\x80í\x84° ì\x82¬ë\x9E\x8Cì\x9D\x80 ì\x86\x8Cë¦¬Â·ê°\x90ê°\x81ë§\x8C"
+  text: "Ã­\N\x8CÃ¬\x8AÂ¤Ã­\x8AÂ¸ Ã¬Â¼\x80Ã¬\x9DÂ´Ã¬\x8AÂ¤Ã«\x93Â¤Ã¬\x9D\x84 Ã«ÂªÂ¨Ã¬\x95\x98Ã«\x8BÂ¤ÃªÂ°\x80, Ã«\x82\x98Ã¬Â¤\x91Ã¬\x97\x90 Ã¬\x9E\x90Ã«\x8F\x99 Ã­\N\x8CÃ¬\x8AÂ¤Ã­\x8AÂ¸Ã­\x95\x9CÃ«\x8BÂ¤"
+  text_full: "KyuÃªÂ°\x80 Ã¢\x9C\x93Ã¢\x9C\x97 Ã¬Â°\x8DÃ¬\x9D\x80 Ã¬\x8BÂ¤ÃªÂ¸Â° Ã­\x95Â­Ã«ÂªÂ© Ã¬Â¤\x91 ÃªÂ¸Â°ÃªÂ³\x84 Ã­\x8C\x90Ã¬\_\x95 ÃªÂ°\x80Ã«\x8AÂ¥Ã­\x95\x9C ÃªÂ²\x83Ã¬\x9D\x80 Ã¬\x96Â´Ã¬\x84Â¤Ã¬\N\x98Ã¬\x9CÂ¼Ã«Â¡\x9C Ã¬\_\x84Ã­\x99\x98Ã\x82Â·Ã¬Â¶\x95Ã¬\_\x81 Ã¢\x86\x92 Ã¬\x8AÂ¤Ã¬Â¼\x80Ã¬Â¤\x84(PRÃ«Â§\x88Ã«\x8BÂ¤Ã\x82Â·Ã¬\x95Â¼ÃªÂ°\x84)Ã«Â¡\x9C Ã¬\x9E\x90Ã«\x8F\x99 Ã¬\x8BÂ¤Ã­\x96\x89 Ã¢\x86\x92 Ã«\x8BÂ¤Ã¬\x9D\x8C Ã«\x9DÂ¼Ã¬\x9AÂ´Ã«\x93\x9CÃ«Â¶\x80Ã­\x84Â° Ã¬\x82Â¬Ã«\x9E\x8CÃ¬\x9D\x80 Ã¬\x86\x8CÃ«Â¦Â¬Ã\x82Â·ÃªÂ°\x90ÃªÂ°\x81Ã«Â§\x8C"
   project: test-portal
   hub: k2
   priority: P0
@@ -15,10 +15,10 @@
   status: landed
   issued_id: K2-0916-A
   repeat_count: 3
-  note: "07-28~09-14 ì\x86\x8Cì\x9C\_ í\x97\x88ë¸\x8C ë¶\x80ì\x9E¬ë¡\x9C ë¯¸ë°\x9Cë¶\x80 Â· 09-16 ğ\x9F\x94´ ë\x93±ì\x9E¬ Â· K2-0916-A ì°©ì§\x80(PR#104 ë¨¸ì§\x80)"
+  note: "07-28~09-14 Ã¬\x86\x8CÃ¬\x9C\_ Ã­\x97\x88Ã«Â¸\x8C Ã«Â¶\x80Ã¬\x9EÂ¬Ã«Â¡\x9C Ã«Â¯Â¸Ã«Â°\x9CÃ«Â¶\x80 Ã\x82Â· 09-16 Ã°\x9F\x94Â´ Ã«\x93Â±Ã¬\x9EÂ¬ Ã\x82Â· K2-0916-A Ã¬Â°Â©Ã¬Â§\x80(PR#104 Ã«Â¨Â¸Ã¬Â§\x80)"
 - id: R002
-  text: "ë\x82´ê°\x80 í\x95\x9Cë²\x88 ì\x9D´ì\x95¼ê¸°í\x95\x9Cê²\x83ì\x9D´ ì\_\x80ì\x9E¥ì\x9D´ ë\x90\x98ì\x96´ì\x9E\x88ì\x96´ì\x84\x9C, ì°¨ë¡\x80ë\x8C\x80ë¡\x9C êµ¬í\x98\x84ì\x9D´ ë\x90\x98ê³\_, ì\x98¤ë\x9E«ë\x8F\x99ì\x95\x88 ì\x9A°ì\x84\_ì\x88\x9Cì\x9C\x84ì\x97\x90ì\x84\x9C ë°\x80ë\_¤ì\x84\x9C í\x81\x90ì\x97\x90 ì\x8C\x93ì\x97¬ì\x9E\x88ë\x8A\x94ê±´ì\x9D\x80 ë\x94°ë¡\x9C ë\x82\x98ì\x97\x90ê²\x8C ì\x95\x8Cë\_¤ì£¼ë©´"
-  text_full: "í\x9D\x90ë¦\x84í\x8C\x90(í\x96\x89=í\x97\x88ë¸\x8C Â· 5ì\x97´ Â· ì¹´ë\x93\x9C ì\x9B\x90ë¬¸Â·PÂ·í\x81¬ê¸°Â·ê²½ê³¼Â·ğ\x9F\x94´Â·ì\x83\x81ì¶© Â· ì\x8B\x9Cí\x8A¸ 3ì¢\N Â· ë\x82´ ì°¨ë¡\x80 ë\x9D\_ Â· ë\x8B¤ì\x9D\x8C ë°\x9Cë¶\x80 ì\x98\x88ê³\_) + ì\x9B\x94ì\x9A\x94ì\x9D¼ ë°\x80ë¦¼ í\x91¸ì\x8B\x9C + ë°\x9Cë¶\x80 ì\x8B\x9C ì\x9B\x90ì\x9E¥ ë\x8C\x80ì\x82¬"
+  text: "Ã«\x82Â´ÃªÂ°\x80 Ã­\x95\x9CÃ«Â²\x88 Ã¬\x9DÂ´Ã¬\x95Â¼ÃªÂ¸Â°Ã­\x95\x9CÃªÂ²\x83Ã¬\x9DÂ´ Ã¬\_\x80Ã¬\x9EÂ¥Ã¬\x9DÂ´ Ã«\x90\x98Ã¬\x96Â´Ã¬\x9E\x88Ã¬\x96Â´Ã¬\x84\x9C, Ã¬Â°Â¨Ã«Â¡\x80Ã«\x8C\x80Ã«Â¡\x9C ÃªÂµÂ¬Ã­\x98\x84Ã¬\x9DÂ´ Ã«\x90\x98ÃªÂ³\_, Ã¬\x98Â¤Ã«\x9EÂ«Ã«\x8F\x99Ã¬\x95\x88 Ã¬\x9AÂ°Ã¬\x84\_Ã¬\x88\x9CÃ¬\x9C\x84Ã¬\x97\x90Ã¬\x84\x9C Ã«Â°\x80Ã«\_Â¤Ã¬\x84\x9C Ã­\x81\x90Ã¬\x97\x90 Ã¬\x8C\x93Ã¬\x97Â¬Ã¬\x9E\x88Ã«\x8A\x94ÃªÂ±Â´Ã¬\x9D\x80 Ã«\x94Â°Ã«Â¡\x9C Ã«\x82\x98Ã¬\x97\x90ÃªÂ²\x8C Ã¬\x95\x8CÃ«\_Â¤Ã¬Â£Â¼Ã«Â©Â´"
+  text_full: "Ã­\x9D\x90Ã«Â¦\x84Ã­\x8C\x90(Ã­\x96\x89=Ã­\x97\x88Ã«Â¸\x8C Ã\x82Â· 5Ã¬\x97Â´ Ã\x82Â· Ã¬Â¹Â´Ã«\x93\x9C Ã¬\x9B\x90Ã«Â¬Â¸Ã\x82Â·PÃ\x82Â·Ã­\x81Â¬ÃªÂ¸Â°Ã\x82Â·ÃªÂ²Â½ÃªÂ³Â¼Ã\x82Â·Ã°\x9F\x94Â´Ã\x82Â·Ã¬\x83\x81Ã¬Â¶Â© Ã\x82Â· Ã¬\x8B\x9CÃ­\x8AÂ¸ 3Ã¬Â¢\N Ã\x82Â· Ã«\x82Â´ Ã¬Â°Â¨Ã«Â¡\x80 Ã«\x9D\_ Ã\x82Â· Ã«\x8BÂ¤Ã¬\x9D\x8C Ã«Â°\x9CÃ«Â¶\x80 Ã¬\x98\x88ÃªÂ³\_) + Ã¬\x9B\x94Ã¬\x9A\x94Ã¬\x9DÂ¼ Ã«Â°\x80Ã«Â¦Â¼ Ã­\x91Â¸Ã¬\x8B\x9C + Ã«Â°\x9CÃ«Â¶\x80 Ã¬\x8B\x9C Ã¬\x9B\x90Ã¬\x9EÂ¥ Ã«\x8C\x80Ã¬\x82Â¬"
   project: test-portal
   hub: k0
   priority: P0
@@ -27,9 +27,9 @@
   status: landed
   issued_id: K0-0917-D
   repeat_count: 1
-  note: "í\x81´ì½\x94 í\x97\x88ë¸\x8C í\x83­ Â· ì\x9D´ë²¤í\x8A¸ ì\x86\x8Cì\x8A¤ K1 Â· ì§\x80í\x91\x9C K2 Â· ë§\x88ì\x9D¼ì\x8A¤í\x86¤ 1ì\x97\x90ì\x84\x9C Kyu í\x99\x95ì\x9D¸"
+  note: "Ã­\x81Â´Ã¬Â½\x94 Ã­\x97\x88Ã«Â¸\x8C Ã­\x83Â­ Ã\x82Â· Ã¬\x9DÂ´Ã«Â²Â¤Ã­\x8AÂ¸ Ã¬\x86\x8CÃ¬\x8AÂ¤ K1 Ã\x82Â· Ã¬Â§\x80Ã­\x91\x9C K2 Ã\x82Â· Ã«Â§\x88Ã¬\x9DÂ¼Ã¬\x8AÂ¤Ã­\x86Â¤ 1Ã¬\x97\x90Ã¬\x84\x9C Kyu Ã­\x99\x95Ã¬\x9DÂ¸"
 - id: R003
-  text: "í\N\x8Cì\x8A¤í\x8A¸ ë¸\x8Cë\x9D¼ì\x9A°ì\_\x80 ì\x97´ê¸° ë²\x84í\x8A¼ì\x9D\x84 ë\x88\x84ë¥´ë©´ ìµ\x9Cì\x8B\_ ì\x86\x8Cì\x8A¤ë¥¼ ë°\x9Bê³\_, ì\x83\x88 ë¸\x8Cë\x9D¼ì\x9A°ì\_\x80ë¥¼ ì\x97´ê³\_, ë¡\x9Cê·¸ì\x9D¸ ë\x93± ê¸°ë³¸ì\x9D\x84 ë\x8B¤ í\x95\x98ê³\_, í\x95\x84ì\x9A\x94í\x95\x9C ì\x9C\x84ì¹\x98ê¹\x8Cì§\x80 ê°\x80ì\x84\x9C ë\x82\x98ì\x9D\x98 í\N\x8Cì\x8A¤í\x8A¸ë¥¼ ê¸°ë\x8B¤ë¦¬ê²\x8C"
+  text: "Ã­\N\x8CÃ¬\x8AÂ¤Ã­\x8AÂ¸ Ã«Â¸\x8CÃ«\x9DÂ¼Ã¬\x9AÂ°Ã¬\_\x80 Ã¬\x97Â´ÃªÂ¸Â° Ã«Â²\x84Ã­\x8AÂ¼Ã¬\x9D\x84 Ã«\x88\x84Ã«Â¥Â´Ã«Â©Â´ Ã¬Âµ\x9CÃ¬\x8B\_ Ã¬\x86\x8CÃ¬\x8AÂ¤Ã«Â¥Â¼ Ã«Â°\x9BÃªÂ³\_, Ã¬\x83\x88 Ã«Â¸\x8CÃ«\x9DÂ¼Ã¬\x9AÂ°Ã¬\_\x80Ã«Â¥Â¼ Ã¬\x97Â´ÃªÂ³\_, Ã«Â¡\x9CÃªÂ·Â¸Ã¬\x9DÂ¸ Ã«\x93Â± ÃªÂ¸Â°Ã«Â³Â¸Ã¬\x9D\x84 Ã«\x8BÂ¤ Ã­\x95\x98ÃªÂ³\_, Ã­\x95\x84Ã¬\x9A\x94Ã­\x95\x9C Ã¬\x9C\x84Ã¬Â¹\x98ÃªÂ¹\x8CÃ¬Â§\x80 ÃªÂ°\x80Ã¬\x84\x9C Ã«\x82\x98Ã¬\x9D\x98 Ã­\N\x8CÃ¬\x8AÂ¤Ã­\x8AÂ¸Ã«Â¥Â¼ ÃªÂ¸Â°Ã«\x8BÂ¤Ã«Â¦Â¬ÃªÂ²\x8C"
   project: test-portal
   hub: k1
   priority: P0
@@ -38,9 +38,9 @@
   status: landed
   issued_id: K1-0915-A
   repeat_count: 1
-  note: "Kyu ë§¥ ë\x8D°ëª¬ 500Â·SSE ì\x8B¤í\x8C¨(09-17) â\x86\x92 K1 ë\x8B¤ì\x9D\x8C ë\x9D¼ì\x9A´ë\x93\x9C"
+  note: "Kyu Ã«Â§Â¥ Ã«\x8DÂ°Ã«ÂªÂ¬ 500Ã\x82Â·SSE Ã¬\x8BÂ¤Ã­\x8CÂ¨(09-17) Ã¢\x86\x92 K1 Ã«\x8BÂ¤Ã¬\x9D\x8C Ã«\x9DÂ¼Ã¬\x9AÂ´Ã«\x93\x9C"
 - id: R004
-  text: "test-portalì\x9D´ ì\x95\x8Cë\_¤ì£¼ë\x8A\x94 í\N\x8Cì\x8A¤í\x8A¸ ì\x95\x88ë\x82´ê°\x80 ë\x84\x88(í\x81´ë¡\x9Cë\x93\x9C)ì\x99\x80 ê°\x99ê±°ë\x82\x98 ë\x8D\x94 ì\x89¬ì\x9B\x8Cì\x95¼ í\x95´"
+  text: "test-portalÃ¬\x9DÂ´ Ã¬\x95\x8CÃ«\_Â¤Ã¬Â£Â¼Ã«\x8A\x94 Ã­\N\x8CÃ¬\x8AÂ¤Ã­\x8AÂ¸ Ã¬\x95\x88Ã«\x82Â´ÃªÂ°\x80 Ã«\x84\x88(Ã­\x81Â´Ã«Â¡\x9CÃ«\x93\x9C)Ã¬\x99\x80 ÃªÂ°\x99ÃªÂ±Â°Ã«\x82\x98 Ã«\x8D\x94 Ã¬\x89Â¬Ã¬\x9B\x8CÃ¬\x95Â¼ Ã­\x95Â´"
   project: test-portal
   hub: k0
   priority: P0
@@ -50,7 +50,7 @@
   issued_id: K0-0914-AU
   repeat_count: 1
 - id: R005
-  text: "ëª¨ë°\x94ì\x9D¼Â·ë\x8D°ì\x8A¤í\x81¬í\x86±Â·ì\x95\x84ì\x9D´í\x8C¨ë\x93\x9Cì\x97\x90ì\x84\x9C í\N\x8Cì\x8A¤í\x8A¸í\x95\_ ê²\x83 ê°\x99ì\x95\x84 Â· ë\x8D\x94 í\x8E¸ë¦¬í\x95\x9C ë°©ë²\x95"
+  text: "Ã«ÂªÂ¨Ã«Â°\x94Ã¬\x9DÂ¼Ã\x82Â·Ã«\x8DÂ°Ã¬\x8AÂ¤Ã­\x81Â¬Ã­\x86Â±Ã\x82Â·Ã¬\x95\x84Ã¬\x9DÂ´Ã­\x8CÂ¨Ã«\x93\x9CÃ¬\x97\x90Ã¬\x84\x9C Ã­\N\x8CÃ¬\x8AÂ¤Ã­\x8AÂ¸Ã­\x95\_ ÃªÂ²\x83 ÃªÂ°\x99Ã¬\x95\x84 Ã\x82Â· Ã«\x8D\x94 Ã­\x8EÂ¸Ã«Â¦Â¬Ã­\x95\x9C Ã«Â°Â©Ã«Â²\x95"
   project: test-portal
   hub: k0
   priority: P1
@@ -60,7 +60,7 @@
   issued_id: K0-0916-A
   repeat_count: 1
 - id: R006
-  text: "ì\x95\x8Cë¦¼ì\x9D\x80 ë°\x94ì\x9D´ë¸\x8Cë\_\x88ì\x9D´ì\N\x98ì\x9D´ë\x82\x98 ì\x86\x8Cë¦¬ê¹\x8Cì§\x80(ë\x9Dµ) ë\x82¬ì\x9C¼ë©´"
+  text: "Ã¬\x95\x8CÃ«Â¦Â¼Ã¬\x9D\x80 Ã«Â°\x94Ã¬\x9DÂ´Ã«Â¸\x8CÃ«\_\x88Ã¬\x9DÂ´Ã¬\N\x98Ã¬\x9DÂ´Ã«\x82\x98 Ã¬\x86\x8CÃ«Â¦Â¬ÃªÂ¹\x8CÃ¬Â§\x80(Ã«\x9DÂµ) Ã«\x82Â¬Ã¬\x9CÂ¼Ã«Â©Â´"
   project: test-portal
   hub: k1
   priority: P1
@@ -69,9 +69,9 @@
   status: landed
   issued_id: K1-0914-A
   repeat_count: 1
-  note: "OS ê¸°ë³¸ì\x9D\x8C+ì§\x84ë\x8F\x99 Â· í\x8F¬í\x84¸ ì\x97´ë¦¼ ì\x8B\x9C ë\x9Dµ Â· Kyu ì\x95\x8Cë¦¼ ì\x8B¤ê¸° ë¯¸ì\x99\x84"
+  note: "OS ÃªÂ¸Â°Ã«Â³Â¸Ã¬\x9D\x8C+Ã¬Â§\x84Ã«\x8F\x99 Ã\x82Â· Ã­\x8FÂ¬Ã­\x84Â¸ Ã¬\x97Â´Ã«Â¦Â¼ Ã¬\x8B\x9C Ã«\x9DÂµ Ã\x82Â· Kyu Ã¬\x95\x8CÃ«Â¦Â¼ Ã¬\x8BÂ¤ÃªÂ¸Â° Ã«Â¯Â¸Ã¬\x99\x84"
 - id: R007
-  text: "ì\x84±ê³µ í\x8C\x90ì\_\x95ì\x9D\x84 í\x95\x9C PRì\x9D´ ì\x8B¤ì\_\x9C ë¨¸ì§\x80ê°\x80 ì\x99\x84ë£\x8Cë\x90\x98ì\x97\x88ë\x8A\x94ì§\x80 Â· ê·¸ í\x99\x94ë©´ì\x97\x90ì\x84\x9C ë\x88\x88ì\x97\x90 ë\x9D\x84ê²\x8C ì\x97\Në\x8D°ì\x9D´í\x8A¸(ë³´ë\x9D¼ì\x83\x89)"
+  text: "Ã¬\x84Â±ÃªÂ³Âµ Ã­\x8C\x90Ã¬\_\x95Ã¬\x9D\x84 Ã­\x95\x9C PRÃ¬\x9DÂ´ Ã¬\x8BÂ¤Ã¬\_\x9C Ã«Â¨Â¸Ã¬Â§\x80ÃªÂ°\x80 Ã¬\x99\x84Ã«Â£\x8CÃ«\x90\x98Ã¬\x97\x88Ã«\x8A\x94Ã¬Â§\x80 Ã\x82Â· ÃªÂ·Â¸ Ã­\x99\x94Ã«Â©Â´Ã¬\x97\x90Ã¬\x84\x9C Ã«\x88\x88Ã¬\x97\x90 Ã«\x9D\x84ÃªÂ²\x8C Ã¬\x97\NÃ«\x8DÂ°Ã¬\x9DÂ´Ã­\x8AÂ¸(Ã«Â³Â´Ã«\x9DÂ¼Ã¬\x83\x89)"
   project: test-portal
   hub: k0
   priority: P1
@@ -81,7 +81,7 @@
   issued_id: K0-0914-AW
   repeat_count: 1
 - id: R008
-  text: "í\x83­ ì\x9C\x84ì¹\x98ë¥¼ ì\x95\x84ë\x9E\x98ê°\x80 ì\x95\x84ë\x8B\x88ë\x9D¼ í\x99\x94ë©´ ì\x83\x81ë\x8B¨ì\x9C¼ë¡\x9C"
+  text: "Ã­\x83Â­ Ã¬\x9C\x84Ã¬Â¹\x98Ã«Â¥Â¼ Ã¬\x95\x84Ã«\x9E\x98ÃªÂ°\x80 Ã¬\x95\x84Ã«\x8B\x88Ã«\x9DÂ¼ Ã­\x99\x94Ã«Â©Â´ Ã¬\x83\x81Ã«\x8BÂ¨Ã¬\x9CÂ¼Ã«Â¡\x9C"
   project: test-portal
   hub: k0
   priority: P1
@@ -91,8 +91,8 @@
   issued_id: K0-0914-AW
   repeat_count: 1
 - id: R009
-  text: "ì\x83\x88ë¡\x9Cì\x9A´ í\x94\x84ë¡\x9Cì\_\x9Dí\x8A¸ê°\x80 ì¶\x94ê°\x80ë\x90\x98ë\x8D\x94ë\x9D¼ë\x8F\x84 ê´\x9Cì°®ì\x95\x84? ë²\x94ì\x9A©ì\_\x81ì\x9D¼ ê²\x83 Â· í\x9A\x8Cì\x82¬ ì§\x81ì\x9B\x90ë\x93¤ë\x8F\x84 ì\x8D¨ì\x95¼"
-  text_full: "í\x97\x88ë¸\x8CÂ·í\x94\x84ë¡\x9Cì\_\x9Dí\x8A¸Â·í\x83\x80ì\x9E\NÂ·ì\x8B\x9Cë\x93\x9C ì\_\x84ë¶\x80 projects.json í\x8C\x8Cì\x83\x9D Â· ì\x83\x88 í\x94\x84ë¡\x9Cì\_\x9Dí\x8A¸ = JSON í\x95\x9C ì¤\x84 Â· ë\x8D°ëª¬ í\x83\x80ì\x9E\N ë²\x94ì\x9A©í\x99\x94"
+  text: "Ã¬\x83\x88Ã«Â¡\x9CÃ¬\x9AÂ´ Ã­\x94\x84Ã«Â¡\x9CÃ¬\_\x9DÃ­\x8AÂ¸ÃªÂ°\x80 Ã¬Â¶\x94ÃªÂ°\x80Ã«\x90\x98Ã«\x8D\x94Ã«\x9DÂ¼Ã«\x8F\x84 ÃªÂ´\x9CÃ¬Â°Â®Ã¬\x95\x84? Ã«Â²\x94Ã¬\x9AÂ©Ã¬\_\x81Ã¬\x9DÂ¼ ÃªÂ²\x83 Ã\x82Â· Ã­\x9A\x8CÃ¬\x82Â¬ Ã¬Â§\x81Ã¬\x9B\x90Ã«\x93Â¤Ã«\x8F\x84 Ã¬\x8DÂ¨Ã¬\x95Â¼"
+  text_full: "Ã­\x97\x88Ã«Â¸\x8CÃ\x82Â·Ã­\x94\x84Ã«Â¡\x9CÃ¬\_\x9DÃ­\x8AÂ¸Ã\x82Â·Ã­\x83\x80Ã¬\x9E\NÃ\x82Â·Ã¬\x8B\x9CÃ«\x93\x9C Ã¬\_\x84Ã«Â¶\x80 projects.json Ã­\x8C\x8CÃ¬\x83\x9D Ã\x82Â· Ã¬\x83\x88 Ã­\x94\x84Ã«Â¡\x9CÃ¬\_\x9DÃ­\x8AÂ¸ = JSON Ã­\x95\x9C Ã¬Â¤\x84 Ã\x82Â· Ã«\x8DÂ°Ã«ÂªÂ¬ Ã­\x83\x80Ã¬\x9E\N Ã«Â²\x94Ã¬\x9AÂ©Ã­\x99\x94"
   project: test-portal
   hub: k0
   priority: P1
@@ -101,9 +101,9 @@
   status: filed
   next: true
   repeat_count: 1
-  note: "í\x97\x88ë¸\x8C í\x8C\x8Cì\x83\x9Dì\x9D\x80 AVì\x97\x90ì\x84\x9C ì\x99\x84ë£\x8C Â· í\x83\x80ì\x9E\NÂ·ì\x8B\x9Cë\x93\x9C ë²\x94ì\x9A©í\x99\x94 ì\x9E\x94ì\x97¬"
+  note: "Ã­\x97\x88Ã«Â¸\x8C Ã­\x8C\x8CÃ¬\x83\x9DÃ¬\x9D\x80 AVÃ¬\x97\x90Ã¬\x84\x9C Ã¬\x99\x84Ã«Â£\x8C Ã\x82Â· Ã­\x83\x80Ã¬\x9E\NÃ\x82Â·Ã¬\x8B\x9CÃ«\x93\x9C Ã«Â²\x94Ã¬\x9AÂ©Ã­\x99\x94 Ã¬\x9E\x94Ã¬\x97Â¬"
 - id: R010
-  text: "í\N\x8Cì\x8A¤í\x8A¸ ì²´ê³\x84 â\x80\x94 í\x99\x98ê²½ í\x8C\x8Cì\x9D¼ Â· ì\_\x95ë\x8Bµ Â· ì\x8B¤í\x8C¨ ê·\x9Cì\_\x95 Â· ì\x9E¬í\x99\x9Cì\x9A© Â· ì\x9A\x94êµ¬ ë³\x80ê²½ ì\x8B\x9C ê´\x80ë¦¬"
+  text: "Ã­\N\x8CÃ¬\x8AÂ¤Ã­\x8AÂ¸ Ã¬Â²Â´ÃªÂ³\x84 Ã¢\x80\x94 Ã­\x99\x98ÃªÂ²Â½ Ã­\x8C\x8CÃ¬\x9DÂ¼ Ã\x82Â· Ã¬\_\x95Ã«\x8BÂµ Ã\x82Â· Ã¬\x8BÂ¤Ã­\x8CÂ¨ ÃªÂ·\x9CÃ¬\_\x95 Ã\x82Â· Ã¬\x9EÂ¬Ã­\x99\x9CÃ¬\x9AÂ© Ã\x82Â· Ã¬\x9A\x94ÃªÂµÂ¬ Ã«Â³\x80ÃªÂ²Â½ Ã¬\x8B\x9C ÃªÂ´\x80Ã«Â¦Â¬"
   project: test-portal
   hub: k1
   priority: P1
@@ -112,9 +112,9 @@
   status: landed
   issued_id: K2-0914-A
   repeat_count: 1
-  note: "K2 í\x8F\x90ì\x87\x84(09-16) Â· ì\x86\x8Cì\x9C\_ K1 ì\x8A¹ê³\x84"
+  note: "K2 Ã­\x8F\x90Ã¬\x87\x84(09-16) Ã\x82Â· Ã¬\x86\x8CÃ¬\x9C\_ K1 Ã¬\x8AÂ¹ÃªÂ³\x84"
 - id: R011
-  text: "ì\x82¬ë\x9E\x8C í\x8C\x90ì\_\x95ì\x9D\x80 ìµ\x9Cì\x86\x8Cë¡\x9C Â· ë°±ì\x97\x94ë\x93\x9Cë§\x8C ì\x88\x98ì\_\x95ì\x9D´ë©´ í\N\x8Cì\x8A¤í\x8A¸í\x95\x98ë\x9D¼ê³\_ í\x95\x98ë©´ ì\x95\x88 ë\x90¨ Â· ì\x82¬ë\x9E\x8C ì\x97\x86ì\x9D´ ë°°í\x8F¬í\x95´ë\x8F\x84 ë\x90\x98ë\x8A\x94 ê¸°ì¤\x80"
+  text: "Ã¬\x82Â¬Ã«\x9E\x8C Ã­\x8C\x90Ã¬\_\x95Ã¬\x9D\x80 Ã¬Âµ\x9CÃ¬\x86\x8CÃ«Â¡\x9C Ã\x82Â· Ã«Â°Â±Ã¬\x97\x94Ã«\x93\x9CÃ«Â§\x8C Ã¬\x88\x98Ã¬\_\x95Ã¬\x9DÂ´Ã«Â©Â´ Ã­\N\x8CÃ¬\x8AÂ¤Ã­\x8AÂ¸Ã­\x95\x98Ã«\x9DÂ¼ÃªÂ³\_ Ã­\x95\x98Ã«Â©Â´ Ã¬\x95\x88 Ã«\x90Â¨ Ã\x82Â· Ã¬\x82Â¬Ã«\x9E\x8C Ã¬\x97\x86Ã¬\x9DÂ´ Ã«Â°Â°Ã­\x8FÂ¬Ã­\x95Â´Ã«\x8F\x84 Ã«\x90\x98Ã«\x8A\x94 ÃªÂ¸Â°Ã¬Â¤\x80"
   project: test-portal
   hub: k1
   priority: P0
@@ -124,7 +124,7 @@
   issued_id: K1-0915-A
   repeat_count: 1
 - id: R012
-  text: "í\x97\x88ë¸\x8C ì\x83\x81í\x83\x9Cí\x8C\x90ì\x9D\x80 ë³\x84ë¡\x9C ì\x9D\x98ë¯¸ ì\x97\x86ì\x9D\x8C(cmux) Â· 1ë²\x88(ë§¥ ì\x9E\x90ë\x8F\x99í\x99\x94)ì\x9D´ ê°\x80ì\x9E¥ ì\x9D\x98ë¯¸"
+  text: "Ã­\x97\x88Ã«Â¸\x8C Ã¬\x83\x81Ã­\x83\x9CÃ­\x8C\x90Ã¬\x9D\x80 Ã«Â³\x84Ã«Â¡\x9C Ã¬\x9D\x98Ã«Â¯Â¸ Ã¬\x97\x86Ã¬\x9D\x8C(cmux) Ã\x82Â· 1Ã«Â²\x88(Ã«Â§Â¥ Ã¬\x9E\x90Ã«\x8F\x99Ã­\x99\x94)Ã¬\x9DÂ´ ÃªÂ°\x80Ã¬\x9EÂ¥ Ã¬\x9D\x98Ã«Â¯Â¸"
   project: test-portal
   hub: k0
   priority: P1
@@ -134,7 +134,7 @@
   issued_id: K0-0916-E
   repeat_count: 1
 - id: R013
-  text: "í\x81\x90ë¥¼ ë§\x8Cë\x93¤ì\x96´ë\x92\x80ë\x8A\x94ë\x8D° ì\x99\x9C ë\x8F\x99ì\x9E\x91 ì\x95\x88 í\x95\x98ë\x82\x98 â\x80\x94 ops/dispatch inbox 7ê±´ Â· relay prompts í\x86µí\x95©"
+  text: "Ã­\x81\x90Ã«Â¥Â¼ Ã«Â§\x8CÃ«\x93Â¤Ã¬\x96Â´Ã«\x92\x80Ã«\x8A\x94Ã«\x8DÂ° Ã¬\x99\x9C Ã«\x8F\x99Ã¬\x9E\x91 Ã¬\x95\x88 Ã­\x95\x98Ã«\x82\x98 Ã¢\x80\x94 ops/dispatch inbox 7ÃªÂ±Â´ Ã\x82Â· relay prompts Ã­\x86ÂµÃ­\x95Â©"
   project: test-portal
   hub: k0
   priority: P1
@@ -143,9 +143,9 @@
   status: done
   issued_id: K0-0916-F
   repeat_count: 1
-  note: "inbox 7ê±´ â\x86\x92 R101~R107 ì\x9D´ê´\x80 Â· í\x8F´ë\x8D\x94 ì\x82­ì\_\x9C Â· relay ì\x9B\x90ì\x9E¥ = ì\x9C\_ì\x9D¼ í\x81\x90"
+  note: "inbox 7ÃªÂ±Â´ Ã¢\x86\x92 R101~R107 Ã¬\x9DÂ´ÃªÂ´\x80 Ã\x82Â· Ã­\x8FÂ´Ã«\x8D\x94 Ã¬\x82Â­Ã¬\_\x9C Ã\x82Â· relay Ã¬\x9B\x90Ã¬\x9EÂ¥ = Ã¬\x9C\_Ã¬\x9DÂ¼ Ã­\x81\x90"
 - id: R014
-  text: "GrowNestÂ·StorePort ì\x95±ì\x97\x90 dev ì\x9E\x90ë\x8F\x99 ë¡\x9Cê·¸ì\x9D¸ í\x95\x9C ì¤\x84"
+  text: "GrowNestÃ\x82Â·StorePort Ã¬\x95Â±Ã¬\x97\x90 dev Ã¬\x9E\x90Ã«\x8F\x99 Ã«Â¡\x9CÃªÂ·Â¸Ã¬\x9DÂ¸ Ã­\x95\x9C Ã¬Â¤\x84"
   project: grownest
   hub: n0
   priority: P2
@@ -154,7 +154,7 @@
   status: filed
   repeat_count: 1
 - id: R015
-  text: "ê°\x81 ë¦¬í\x8F¬ë³\x84 CI Â· docs/testing.md Â· ì\x8B\x9Cë\x93\x9C ê³\_ì\_\x95"
+  text: "ÃªÂ°\x81 Ã«Â¦Â¬Ã­\x8FÂ¬Ã«Â³\x84 CI Ã\x82Â· docs/testing.md Ã\x82Â· Ã¬\x8B\x9CÃ«\x93\x9C ÃªÂ³\_Ã¬\_\x95"
   project: all
   hub: t0
   priority: P2
@@ -163,27 +163,27 @@
   status: filed
   repeat_count: 1
 - id: R016
-  text: "ì±\x97 ë¶\x84ë¦¬ Â· í\x94\x84ë¡\x9Cì\_\x9Dí\x8A¸ 1 + ì±\x97 2(í\x8F¬í\x84¸/ì\_\x9Cí\x92\x88)"
+  text: "Ã¬Â±\x97 Ã«Â¶\x84Ã«Â¦Â¬ Ã\x82Â· Ã­\x94\x84Ã«Â¡\x9CÃ¬\_\x9DÃ­\x8AÂ¸ 1 + Ã¬Â±\x97 2(Ã­\x8FÂ¬Ã­\x84Â¸/Ã¬\_\x9CÃ­\x92\x88)"
   project: orchestration
   hub: oke
   priority: P1
   size: S
   filed_at: '2026-09-16'
   status: filed
-  blocked_by: "ë§\x88ì\x9D¼ì\x8A¤í\x86¤ 1"
+  blocked_by: "Ã«Â§\x88Ã¬\x9DÂ¼Ã¬\x8AÂ¤Ã­\x86Â¤ 1"
   repeat_count: 1
 - id: R017
-  text: "GitHub ì\x95±ì\x9D´ ë\x8D\x94 ì\x95\x88ì\_\x95ì\_\x81ì\x9D´ê³\_ ë¹\_ë¥´ê²\_ë\x8B¤ â\x80\x94 A(í\x8F¬í\x84¸) vs B(GitHub+PR í\x94\x84ë¦¬ë·°) ë¹\x84êµ\x90"
+  text: "GitHub Ã¬\x95Â±Ã¬\x9DÂ´ Ã«\x8D\x94 Ã¬\x95\x88Ã¬\_\x95Ã¬\_\x81Ã¬\x9DÂ´ÃªÂ³\_ Ã«Â¹\_Ã«Â¥Â´ÃªÂ²\_Ã«\x8BÂ¤ Ã¢\x80\x94 A(Ã­\x8FÂ¬Ã­\x84Â¸) vs B(GitHub+PR Ã­\x94\x84Ã«Â¦Â¬Ã«Â·Â°) Ã«Â¹\x84ÃªÂµ\x90"
   project: test-portal
   hub: oke
   priority: P1
   size: M
   filed_at: '2026-09-16'
   status: filed
-  blocked_by: "ë§\x88ì\x9D¼ì\x8A¤í\x86¤ 1"
+  blocked_by: "Ã«Â§\x88Ã¬\x9DÂ¼Ã¬\x8AÂ¤Ã­\x86Â¤ 1"
   repeat_count: 1
 - id: R018
-  text: "orphan 4ê±´ í\x81´ë¦­ ì\x8B\x9C í\x95\x84í\x84° Â· í\x8C\x90ì\_\x95ë¶\x88ê°\x80 4(ì¶\x9Cê·¼ 2Â·í\x87´ê·¼ 2) í\x91\x9Cê¸° Â· ë\x8F\x8Cì\x95\x84ê°\x80ê¸° â\x86\x92 í\x8C\x90ì\_\x95ë¶\x88ê°\x80 í\x95\x84í\x84° Â· ì¶\x9Cê·¼/í\x87´ê·¼ ì\x8B\x9Cê°\x81 ì§\x81ì\_\x91 ì\x9E\Në\_¥"
+  text: "orphan 4ÃªÂ±Â´ Ã­\x81Â´Ã«Â¦Â­ Ã¬\x8B\x9C Ã­\x95\x84Ã­\x84Â° Ã\x82Â· Ã­\x8C\x90Ã¬\_\x95Ã«Â¶\x88ÃªÂ°\x80 4(Ã¬Â¶\x9CÃªÂ·Â¼ 2Ã\x82Â·Ã­\x87Â´ÃªÂ·Â¼ 2) Ã­\x91\x9CÃªÂ¸Â° Ã\x82Â· Ã«\x8F\x8CÃ¬\x95\x84ÃªÂ°\x80ÃªÂ¸Â° Ã¢\x86\x92 Ã­\x8C\x90Ã¬\_\x95Ã«Â¶\x88ÃªÂ°\x80 Ã­\x95\x84Ã­\x84Â° Ã\x82Â· Ã¬Â¶\x9CÃªÂ·Â¼/Ã­\x87Â´ÃªÂ·Â¼ Ã¬\x8B\x9CÃªÂ°\x81 Ã¬Â§\x81Ã¬\_\x91 Ã¬\x9E\NÃ«\_Â¥"
   project: todoboss
   hub: t0
   priority: P0
@@ -193,7 +193,7 @@
   issued_id: T0-0915-A
   repeat_count: 1
 - id: R019
-  text: "ì\x8B\x9Cê°\x81 ì§\x81ì\_\x91 ì\x9E\Në\_¥ â\x86\x92 ì\x9E¬í\x8C\x90ì\_\x95(ì§\x80ê°\x81/ì\x95¼ê·¼ ì\x9E\x90ë\x8F\x99 ì\x82°ì¶\x9C)"
+  text: "Ã¬\x8B\x9CÃªÂ°\x81 Ã¬Â§\x81Ã¬\_\x91 Ã¬\x9E\NÃ«\_Â¥ Ã¢\x86\x92 Ã¬\x9EÂ¬Ã­\x8C\x90Ã¬\_\x95(Ã¬Â§\x80ÃªÂ°\x81/Ã¬\x95Â¼ÃªÂ·Â¼ Ã¬\x9E\x90Ã«\x8F\x99 Ã¬\x82Â°Ã¬Â¶\x9C)"
   project: todoboss
   hub: t0
   priority: P0
@@ -202,9 +202,9 @@
   status: issued
   issued_id: T0-0917-B
   repeat_count: 2
-  note: "09-17 ì\x8B¤ê¸°: ì¡°ì\_\x95 ë²\x94ì\x9C\x84 ì\x98¤ì\x97¼(ë\x8B¤ë¥¸ ì\x84¸ì\N\x98ê¹\x8Cì§\x80 ë³\x80ê²½ Â· ì\x9B\x94 ì§\x91ê³\x84 ê¸\x89ë³\x80) â\x86\x92 Bì\x97\x90ì\x84\x9C í\x9A\x8Cì\x88\x98"
+  note: "09-17 Ã¬\x8BÂ¤ÃªÂ¸Â°: Ã¬Â¡Â°Ã¬\_\x95 Ã«Â²\x94Ã¬\x9C\x84 Ã¬\x98Â¤Ã¬\x97Â¼(Ã«\x8BÂ¤Ã«Â¥Â¸ Ã¬\x84Â¸Ã¬\N\x98ÃªÂ¹\x8CÃ¬Â§\x80 Ã«Â³\x80ÃªÂ²Â½ Ã\x82Â· Ã¬\x9B\x94 Ã¬Â§\x91ÃªÂ³\x84 ÃªÂ¸\x89Ã«Â³\x80) Ã¢\x86\x92 BÃ¬\x97\x90Ã¬\x84\x9C Ã­\x9A\x8CÃ¬\x88\x98"
 - id: R020
-  text: "Todoboss ì\x9D´ì\x97°: í\x8C\x8Cë\x9D¼ë¯¸í\x84°í\x99\x94 Â· Finalize Â· Payslip Â· Work Rotation í\x8E¸ì\x84±"
+  text: "Todoboss Ã¬\x9DÂ´Ã¬\x97Â°: Ã­\x8C\x8CÃ«\x9DÂ¼Ã«Â¯Â¸Ã­\x84Â°Ã­\x99\x94 Ã\x82Â· Finalize Ã\x82Â· Payslip Ã\x82Â· Work Rotation Ã­\x8EÂ¸Ã¬\x84Â±"
   project: todoboss
   hub: t0
   priority: P2
@@ -213,7 +213,7 @@
   status: filed
   repeat_count: 1
 - id: R021
-  text: "M0 POS í\x95\x98ë£¨ ì\x82¬ì\x9D´í\x81´ ì\x8B¤ê¸° K1~K8"
+  text: "M0 POS Ã­\x95\x98Ã«Â£Â¨ Ã¬\x82Â¬Ã¬\x9DÂ´Ã­\x81Â´ Ã¬\x8BÂ¤ÃªÂ¸Â° K1~K8"
   project: storeport
   hub: m0
   priority: P0
@@ -222,9 +222,9 @@
   status: landed
   issued_id: M0-0915-A
   repeat_count: 1
-  note: "SDK 57 ì\x8A¹ê²© Â· ì\x8B¤ê¸° 3í\x9A\x8C ë°\x80ë¦¼"
+  note: "SDK 57 Ã¬\x8AÂ¹ÃªÂ²Â© Ã\x82Â· Ã¬\x8BÂ¤ÃªÂ¸Â° 3Ã­\x9A\x8C Ã«Â°\x80Ã«Â¦Â¼"
 - id: R022
-  text: "ëª©í\x91\x9C (ê°\x80) Kyu í\x98¼ì\x9E\x90 ì\x8D¨ë³´ë\x8A\x94 ì\x88\x98ì¤\x80 Â· Metabase ì\x84\_í\x96\x89 â\x80\x94 ê²°ì\_\x95"
+  text: "Ã«ÂªÂ©Ã­\x91\x9C (ÃªÂ°\x80) Kyu Ã­\x98Â¼Ã¬\x9E\x90 Ã¬\x8DÂ¨Ã«Â³Â´Ã«\x8A\x94 Ã¬\x88\x98Ã¬Â¤\x80 Ã\x82Â· Metabase Ã¬\x84\_Ã­\x96\x89 Ã¢\x80\x94 ÃªÂ²Â°Ã¬\_\x95"
   project: storeport
   hub: m0
   priority: P1
@@ -234,7 +234,7 @@
   blocked_by: kyu
   repeat_count: 1
 - id: R023
-  text: "ë°\x98í\x92\x88Â·í\x99\x98ë¶\x88Â·ì·¨ì\x86\x8C Â· í\x95\_ì\x9D¸ ì\_\x81ì\x9A© Â· ë°\x94ì½\x94ë\x93\x9C(ì¹´ë©\x94ë\x9D¼) â\x80\x94 POS í\x99\x94ë©´ ê°­"
+  text: "Ã«Â°\x98Ã­\x92\x88Ã\x82Â·Ã­\x99\x98Ã«Â¶\x88Ã\x82Â·Ã¬Â·Â¨Ã¬\x86\x8C Ã\x82Â· Ã­\x95\_Ã¬\x9DÂ¸ Ã¬\_\x81Ã¬\x9AÂ© Ã\x82Â· Ã«Â°\x94Ã¬Â½\x94Ã«\x93\x9C(Ã¬Â¹Â´Ã«Â©\x94Ã«\x9DÂ¼) Ã¢\x80\x94 POS Ã­\x99\x94Ã«Â©Â´ ÃªÂ°Â­"
   project: storeport
   hub: m0
   priority: P1
@@ -243,7 +243,7 @@
   status: filed
   repeat_count: 1
 - id: R024
-  text: "EAS dev build(Android APK) + Xantri BT-58D ë¸\x94ë£¨í\x88¬ì\x8A¤ ì\x9D¸ì\x87\x84 + ì\x84\x9Cë\x9E\x8D"
+  text: "EAS dev build(Android APK) + Xantri BT-58D Ã«Â¸\x94Ã«Â£Â¨Ã­\x88Â¬Ã¬\x8AÂ¤ Ã¬\x9DÂ¸Ã¬\x87\x84 + Ã¬\x84\x9CÃ«\x9E\x8D"
   project: storeport
   hub: m0
   priority: P2
@@ -252,7 +252,7 @@
   status: filed
   repeat_count: 1
 - id: R025
-  text: "Meta WhatsApp ë²\x88í\x98¸ Â· Midtrans/Xendit ë¨¸ì²\x9Cí\x8A¸ ì\x99¸ë¶\x80 ì\x8B\_ì²­"
+  text: "Meta WhatsApp Ã«Â²\x88Ã­\x98Â¸ Ã\x82Â· Midtrans/Xendit Ã«Â¨Â¸Ã¬Â²\x9CÃ­\x8AÂ¸ Ã¬\x99Â¸Ã«Â¶\x80 Ã¬\x8B\_Ã¬Â²Â­"
   project: storeport
   hub: kyu
   priority: P2
@@ -262,7 +262,7 @@
   blocked_by: kyu
   repeat_count: 1
 - id: R026
-  text: "ì½\x94ì\x96´ ì¤\x91ì\x8B¬ ADR ëª\Në¬¸í\x99\x94 Â· Wing ì\_\x95ë³¸ ì\_\x95ì\_\x95(Starter) Â· Admin ì\x8B¤ê¸° ì\_\x88ì°¨"
+  text: "Ã¬Â½\x94Ã¬\x96Â´ Ã¬Â¤\x91Ã¬\x8BÂ¬ ADR Ã«Âª\NÃ«Â¬Â¸Ã­\x99\x94 Ã\x82Â· Wing Ã¬\_\x95Ã«Â³Â¸ Ã¬\_\x95Ã¬\_\x95(Starter) Ã\x82Â· Admin Ã¬\x8BÂ¤ÃªÂ¸Â° Ã¬\_\x88Ã¬Â°Â¨"
   project: storeport
   hub: m0
   priority: P1
@@ -271,7 +271,7 @@
   status: filed
   repeat_count: 1
 - id: R027
-  text: "ì\x9D´ì\x97° 16(AgentsPay ì\_\x9Cì\x95½) ë´\x89ì\x9D¸ ì\x9C\_ì§\x80"
+  text: "Ã¬\x9DÂ´Ã¬\x97Â° 16(AgentsPay Ã¬\_\x9CÃ¬\x95Â½) Ã«Â´\x89Ã¬\x9DÂ¸ Ã¬\x9C\_Ã¬Â§\x80"
   project: storeport
   hub: m0
   priority: P2
@@ -280,7 +280,7 @@
   status: filed
   repeat_count: 1
 - id: R028
-  text: "GrowNest ì¹´ì\x9A´í\x8A¸ì\x97\N ì\x8A¤ì¼\x80ì\x9D¼ ì\x9D¼ë°\x98 ì\x8A¤í\x95\x80 ì\_\x81ì\x9A© ì\x97¬ë¶\x80"
+  text: "GrowNest Ã¬Â¹Â´Ã¬\x9AÂ´Ã­\x8AÂ¸Ã¬\x97\N Ã¬\x8AÂ¤Ã¬Â¼\x80Ã¬\x9DÂ¼ Ã¬\x9DÂ¼Ã«Â°\x98 Ã¬\x8AÂ¤Ã­\x95\x80 Ã¬\_\x81Ã¬\x9AÂ© Ã¬\x97Â¬Ã«Â¶\x80"
   project: grownest
   hub: n0
   priority: P2
@@ -289,19 +289,19 @@
   status: filed
   repeat_count: 1
 - id: R029
-  text: "í\x97\x88ë¸\x8C ì\x83\x81í\x83\x9C watcher ì\_\x95ë°\x80í\x99\x94(í\x94\x84ë¡\x9Cì\x84¸ì\x8A¤ ì¡´ì\x9E¬â\x89\_ì\x8B¤í\x96\x89 ì¤\x91)"
+  text: "Ã­\x97\x88Ã«Â¸\x8C Ã¬\x83\x81Ã­\x83\x9C watcher Ã¬\_\x95Ã«Â°\x80Ã­\x99\x94(Ã­\x94\x84Ã«Â¡\x9CÃ¬\x84Â¸Ã¬\x8AÂ¤ Ã¬Â¡Â´Ã¬\x9EÂ¬Ã¢\x89\_Ã¬\x8BÂ¤Ã­\x96\x89 Ã¬Â¤\x91)"
   project: test-portal
   hub: k1
-  priority: P1
+  priority: P2
   size: S
   filed_at: '2026-09-15'
   status: filed
   conflict_with: R012
   repeat_count: 1
-  note: "R012(í\x97\x88ë¸\x8Cí\x8C\x90 ë¬´ì\x9D\x98ë¯¸)ì\x99\x80 ì\x83\x81ì¶© â\x86\x92 ì\x82­ì\_\x9C ì\_\x9Cì\x95\x88 ë\x8C\x80ì\x83\x81 Â· K1-0916-Eì\x97\x90ì\x84\x9C 4ì\x83\x81í\x83\x9C ìµ\x9Cì\x86\x8C ì\_\x95ë°\x80í\x99\x94ë\x8A\x94 ì\x99\x84ë£\x8C"
+  note: "R012(Ã­\x97\x88Ã«Â¸\x8CÃ­\x8C\x90 Ã«Â¬Â´Ã¬\x9D\x98Ã«Â¯Â¸)Ã¬\x99\x80 Ã¬\x83\x81Ã¬Â¶Â© Ã¢\x86\x92 Ã¬\x82Â­Ã¬\_\x9C Ã¬\_\x9CÃ¬\x95\x88 Ã«\x8C\x80Ã¬\x83\x81 Ã\x82Â· K1-0916-EÃ¬\x97\x90Ã¬\x84\x9C 4Ã¬\x83\x81Ã­\x83\x9C Ã¬Âµ\x9CÃ¬\x86\x8C Ã¬\_\x95Ã«Â°\x80Ã­\x99\x94Ã«\x8A\x94 Ã¬\x99\x84Ã«Â£\x8C"
 - id: R030
-  text: "ì\_\x84ì²´ ê¸°ë\x8A¥ êµ¬ì¡°ë\x8F\x84ê°\x80 ë§\x88ì\x9D¸ë\x93\x9Cë§µì\x9C¼ë¡\x9C ë³´ì\x9D´ê³\_, 100ê°\x9C ì¤\x91 3ê°\x9Cê°\x80 ë³\x80ê²½ ì¤\x91ì\x9D´ë©´ ì\x83\x89ì\x9D´ ë\x8B¤ë¥´ê³\_, í\x84°ì¹\x98í\x95\x98ë©´ ê°\x9Cê´\x84Â·í\x98\x84ì\x9E¬ ì\x83\x81í\x83\x9CÂ·ë³\x80ê²½ í\x9E\x88ì\x8A¤í\x86\_ë¦¬"
-  text_full: "feature-map.yaml v2(L3 areaÂ·L2 processÂ·L1 children) Â· ì§\x80ë\x8F\x84 í\x83­ 3ë\x8B¨ê³\x84 Â· ë³\x80ê²½ ì¤\x91 = PR diff ë§¤ì¹­ Â· í\x9E\x88ì\x8A¤í\x86\_ë¦¬ = git log"
+  text: "Ã¬\_\x84Ã¬Â²Â´ ÃªÂ¸Â°Ã«\x8AÂ¥ ÃªÂµÂ¬Ã¬Â¡Â°Ã«\x8F\x84ÃªÂ°\x80 Ã«Â§\x88Ã¬\x9DÂ¸Ã«\x93\x9CÃ«Â§ÂµÃ¬\x9CÂ¼Ã«Â¡\x9C Ã«Â³Â´Ã¬\x9DÂ´ÃªÂ³\_, 100ÃªÂ°\x9C Ã¬Â¤\x91 3ÃªÂ°\x9CÃªÂ°\x80 Ã«Â³\x80ÃªÂ²Â½ Ã¬Â¤\x91Ã¬\x9DÂ´Ã«Â©Â´ Ã¬\x83\x89Ã¬\x9DÂ´ Ã«\x8BÂ¤Ã«Â¥Â´ÃªÂ³\_, Ã­\x84Â°Ã¬Â¹\x98Ã­\x95\x98Ã«Â©Â´ ÃªÂ°\x9CÃªÂ´\x84Ã\x82Â·Ã­\x98\x84Ã¬\x9EÂ¬ Ã¬\x83\x81Ã­\x83\x9CÃ\x82Â·Ã«Â³\x80ÃªÂ²Â½ Ã­\x9E\x88Ã¬\x8AÂ¤Ã­\x86\_Ã«Â¦Â¬"
+  text_full: "feature-map.yaml v2(L3 areaÃ\x82Â·L2 processÃ\x82Â·L1 children) Ã\x82Â· Ã¬Â§\x80Ã«\x8F\x84 Ã­\x83Â­ 3Ã«\x8BÂ¨ÃªÂ³\x84 Ã\x82Â· Ã«Â³\x80ÃªÂ²Â½ Ã¬Â¤\x91 = PR diff Ã«Â§Â¤Ã¬Â¹Â­ Ã\x82Â· Ã­\x9E\x88Ã¬\x8AÂ¤Ã­\x86\_Ã«Â¦Â¬ = git log"
   project: all
   hub: k0
   priority: P0
@@ -310,9 +310,9 @@
   status: landed
   issued_id: K0-0917-D
   repeat_count: 1
-  note: "ì´\x88í\x8C\x90: test-portal(K0-G) Â· todoboss(T0-0916-A PR#24) Â· storeport(M0-0916-A PR#113) Â· L1 ë³´ê°\x95 = T0/M0-0917-A"
+  note: "Ã¬Â´\x88Ã­\x8C\x90: test-portal(K0-G) Ã\x82Â· todoboss(T0-0916-A PR#24) Ã\x82Â· storeport(M0-0916-A PR#113) Ã\x82Â· L1 Ã«Â³Â´ÃªÂ°\x95 = T0/M0-0917-A"
 - id: R031
-  text: "test-portal ì\x8B¤ê¸° ê²°í\x95¨ â\x80\x94 ì£½ì\x9D\x80 ë²\x84í\x8A¼ Â· ë\x91\x90 ì\x97´ Â· ì\x8B\x9Cí\x8A¸ ë°\x98ì¯¤ ê±¸ë¦¼ Â· ì\x8B¤ê¸° ëª©ë¡\x9D í\x86µì\x9D¼ Â· ì¹´ë\x93\x9C í\x8F­ Â· ì\x9A°ì\x84\_ì\x88\x9Cì\x9C\x84 í\x95\x84í\x84° Â· â\x8B¯ ë©\x94ë\x89´ Â· PATCH 403 Â· ë¬´ë°\x98ì\x9D\x91 ë²\x84í\x8A¼"
+  text: "test-portal Ã¬\x8BÂ¤ÃªÂ¸Â° ÃªÂ²Â°Ã­\x95Â¨ Ã¢\x80\x94 Ã¬Â£Â½Ã¬\x9D\x80 Ã«Â²\x84Ã­\x8AÂ¼ Ã\x82Â· Ã«\x91\x90 Ã¬\x97Â´ Ã\x82Â· Ã¬\x8B\x9CÃ­\x8AÂ¸ Ã«Â°\x98Ã¬Â¯Â¤ ÃªÂ±Â¸Ã«Â¦Â¼ Ã\x82Â· Ã¬\x8BÂ¤ÃªÂ¸Â° Ã«ÂªÂ©Ã«Â¡\x9D Ã­\x86ÂµÃ¬\x9DÂ¼ Ã\x82Â· Ã¬Â¹Â´Ã«\x93\x9C Ã­\x8FÂ­ Ã\x82Â· Ã¬\x9AÂ°Ã¬\x84\_Ã¬\x88\x9CÃ¬\x9C\x84 Ã­\x95\x84Ã­\x84Â° Ã\x82Â· Ã¢\x8BÂ¯ Ã«Â©\x94Ã«\x89Â´ Ã\x82Â· PATCH 403 Ã\x82Â· Ã«Â¬Â´Ã«Â°\x98Ã¬\x9D\x91 Ã«Â²\x84Ã­\x8AÂ¼"
   project: test-portal
   hub: k0
   priority: P0
@@ -321,10 +321,10 @@
   status: landed
   issued_id: K0-0917-D
   repeat_count: 2
-  note: "09-16 ê²°í\x95¨ 7(K0-H) Â· 09-17 ê²°í\x95¨ 9(K0-BÂ·D) Â· ë¸\x8Cë¦¬ì§\x80 500Â·SSE ì\x8B¤í\x8C¨ë\x8A\x94 K1"
+  note: "09-16 ÃªÂ²Â°Ã­\x95Â¨ 7(K0-H) Ã\x82Â· 09-17 ÃªÂ²Â°Ã­\x95Â¨ 9(K0-BÃ\x82Â·D) Ã\x82Â· Ã«Â¸\x8CÃ«Â¦Â¬Ã¬Â§\x80 500Ã\x82Â·SSE Ã¬\x8BÂ¤Ã­\x8CÂ¨Ã«\x8A\x94 K1"
 - id: R032
-  text: "í\x8A¹ì\_\x95 taskì\x9D\x98 ì\x98\x81í\x96¥ë\x8F\x84ë¥¼ ì\x9D´ë\x9F° ì\x8B\x9Dì\x9C¼ë¡\x9C(Tickat ë\x8D±) ë¹\x84ì£¼ì\x96¼ì\_\x81ì\x9C¼ë¡\x9C ë\x88\x88ì\x97\x90 ì\x9E\x98 ë\x9D\x84ë\x8F\x84ë¡\x9D Â· í\x95\x98ì\x9D´ë\_\x88ë²¨ â\x86\x92 í\x81´ë¦­ í\x99\x95ë\x8C\x80 â\x86\x92 ì\x84\x9Cë¸\x8C â\x86\x92 ì\x83\x81ì\x84¸ Â· L3/L2/L1 ë³´ê¸° í\x86\_ê¸\x80"
-  text_full: "curiocity-kit ImpactFlow(SVG+SMIL Â· 3ë\x8B¨ê³\x84 í\x99\x95ë\x8C\x80 Â· ì\x83\x89 5ì¢\N Â· ìº¡ì\N\x98 Â· reduced-motion) Â· í\x8F¬í\x84¸ 3 ì§\x84ì\x9E\Nì\_\x90 Â· í\x81´ì½\x94 í\x97\x88ë¸\x8C ì\x8B\x9Cí\x8A¸ [ì\x9E\x90ì\x84¸í\x9E\x88 ë³´ê¸°] ëª¨ë\x8B¬"
+  text: "Ã­\x8AÂ¹Ã¬\_\x95 taskÃ¬\x9D\x98 Ã¬\x98\x81Ã­\x96Â¥Ã«\x8F\x84Ã«Â¥Â¼ Ã¬\x9DÂ´Ã«\x9FÂ° Ã¬\x8B\x9DÃ¬\x9CÂ¼Ã«Â¡\x9C(Tickat Ã«\x8DÂ±) Ã«Â¹\x84Ã¬Â£Â¼Ã¬\x96Â¼Ã¬\_\x81Ã¬\x9CÂ¼Ã«Â¡\x9C Ã«\x88\x88Ã¬\x97\x90 Ã¬\x9E\x98 Ã«\x9D\x84Ã«\x8F\x84Ã«Â¡\x9D Ã\x82Â· Ã­\x95\x98Ã¬\x9DÂ´Ã«\_\x88Ã«Â²Â¨ Ã¢\x86\x92 Ã­\x81Â´Ã«Â¦Â­ Ã­\x99\x95Ã«\x8C\x80 Ã¢\x86\x92 Ã¬\x84\x9CÃ«Â¸\x8C Ã¢\x86\x92 Ã¬\x83\x81Ã¬\x84Â¸ Ã\x82Â· L3/L2/L1 Ã«Â³Â´ÃªÂ¸Â° Ã­\x86\_ÃªÂ¸\x80"
+  text_full: "curiocity-kit ImpactFlow(SVG+SMIL Ã\x82Â· 3Ã«\x8BÂ¨ÃªÂ³\x84 Ã­\x99\x95Ã«\x8C\x80 Ã\x82Â· Ã¬\x83\x89 5Ã¬Â¢\N Ã\x82Â· Ã¬ÂºÂ¡Ã¬\N\x98 Ã\x82Â· reduced-motion) Ã\x82Â· Ã­\x8FÂ¬Ã­\x84Â¸ 3 Ã¬Â§\x84Ã¬\x9E\NÃ¬\_\x90 Ã\x82Â· Ã­\x81Â´Ã¬Â½\x94 Ã­\x97\x88Ã«Â¸\x8C Ã¬\x8B\x9CÃ­\x8AÂ¸ [Ã¬\x9E\x90Ã¬\x84Â¸Ã­\x9E\x88 Ã«Â³Â´ÃªÂ¸Â°] Ã«ÂªÂ¨Ã«\x8BÂ¬"
   project: test-portal
   hub: k0
   priority: P0
@@ -333,9 +333,9 @@
   status: landed
   issued_id: K0-0917-D
   repeat_count: 1
-  note: "kit PR#1 ë¨¸ì§\x80 Â· ê¸°ì¡´ ì\_\x9Cí\x92\x88 ë°\x98ì\x98\x81 ì\x95\x84ì\x9D´ë\x94\x94ì\x96´ë\x8A\x94 ì\x98¤ì¼\x80ê°\x80 ë³\x84ë\x8F\x84 ì\_\x9Cì\x95\x88 ì\x98\x88ì\_\x95"
+  note: "kit PR#1 Ã«Â¨Â¸Ã¬Â§\x80 Ã\x82Â· ÃªÂ¸Â°Ã¬Â¡Â´ Ã¬\_\x9CÃ­\x92\x88 Ã«Â°\x98Ã¬\x98\x81 Ã¬\x95\x84Ã¬\x9DÂ´Ã«\x94\x94Ã¬\x96Â´Ã«\x8A\x94 Ã¬\x98Â¤Ã¬Â¼\x80ÃªÂ°\x80 Ã«Â³\x84Ã«\x8F\x84 Ã¬\_\x9CÃ¬\x95\x88 Ã¬\x98\x88Ã¬\_\x95"
 - id: R033
-  text: "ì¡°ì\_\x95ì\x9D\x80 ê·¸ ë\_\x88ì½\x94ë\x93\x9Cë§\x8C Â· ì¡°ì\_\x95 í\x91\x9Cì\x8B\x9C(ì\x97\x86ì\x9D\x8Câ\x86\x9218:00 ë°\x91ì¤\x84 ì\x82¬ì\x9C\_) Â· ëª¨ë\x93\_ í\x96\x89ì\x97\x90 [ì¡°ì\_\x95](í\x9A\x8Cì\x83\x89/ì£¼í\x99©) Â· Step #4 [ì\x9E¬ì\x8B¤í\x96\x89] Â· ì§\x91ê³\x84ì\x97\x90 'ì¡°ì\_\x95 N'"
+  text: "Ã¬Â¡Â°Ã¬\_\x95Ã¬\x9D\x80 ÃªÂ·Â¸ Ã«\_\x88Ã¬Â½\x94Ã«\x93\x9CÃ«Â§\x8C Ã\x82Â· Ã¬Â¡Â°Ã¬\_\x95 Ã­\x91\x9CÃ¬\x8B\x9C(Ã¬\x97\x86Ã¬\x9D\x8CÃ¢\x86\x9218:00 Ã«Â°\x91Ã¬Â¤\x84 Ã¬\x82Â¬Ã¬\x9C\_) Ã\x82Â· Ã«ÂªÂ¨Ã«\x93\_ Ã­\x96\x89Ã¬\x97\x90 [Ã¬Â¡Â°Ã¬\_\x95](Ã­\x9A\x8CÃ¬\x83\x89/Ã¬Â£Â¼Ã­\x99Â©) Ã\x82Â· Step #4 [Ã¬\x9EÂ¬Ã¬\x8BÂ¤Ã­\x96\x89] Ã\x82Â· Ã¬Â§\x91ÃªÂ³\x84Ã¬\x97\x90 'Ã¬Â¡Â°Ã¬\_\x95 N'"
   project: todoboss
   hub: t0
   priority: P0
@@ -344,9 +344,9 @@
   status: issued
   issued_id: T0-0917-B
   repeat_count: 1
-  note: "Kyu 09-17 ì\x8B¤ê¸° Â· ì\x9B\x94 ì§\x91ê³\x84 ê¸\x89ë³\x80(117â\x86\x9282 ë\x93±) ë¿\x8Cë¦¬ ê·\x9Cëª\N í\x8F¬í\x95¨"
+  note: "Kyu 09-17 Ã¬\x8BÂ¤ÃªÂ¸Â° Ã\x82Â· Ã¬\x9B\x94 Ã¬Â§\x91ÃªÂ³\x84 ÃªÂ¸\x89Ã«Â³\x80(117Ã¢\x86\x9282 Ã«\x93Â±) Ã«Â¿\x8CÃ«Â¦Â¬ ÃªÂ·\x9CÃ«Âª\N Ã­\x8FÂ¬Ã­\x95Â¨"
 - id: R101
-  text: "P2.2 GitHub API ì\x86\x8Cë¹\x84ì\x9E\x90 Â· Access JWT + Workers secret + Octokit"
+  text: "P2.2 GitHub API Ã¬\x86\x8CÃ«Â¹\x84Ã¬\x9E\x90 Ã\x82Â· Access JWT + Workers secret + Octokit"
   project: test-portal
   hub: k0
   priority: P2
@@ -355,9 +355,9 @@
   status: done
   repeat_count: 1
   origin: ops/dispatch/inbox/20260724-1702-p2-2-github-api-consumer.md
-  note: "K0-0916-F ì\x9D´ê´\x80 Â· AV~Dì\x97\x90ì\x84\x9C ì\x82¬ì\x8B¤ì\x83\x81 ì\x99\x84ë£\x8C(gateÂ·runsÂ·PR API ì\x86\x8Cë¹\x84)"
+  note: "K0-0916-F Ã¬\x9DÂ´ÃªÂ´\x80 Ã\x82Â· AV~DÃ¬\x97\x90Ã¬\x84\x9C Ã¬\x82Â¬Ã¬\x8BÂ¤Ã¬\x83\x81 Ã¬\x99\x84Ã«Â£\x8C(gateÃ\x82Â·runsÃ\x82Â·PR API Ã¬\x86\x8CÃ«Â¹\x84)"
 - id: R102
-  text: "P2.3 í\x8C\x90ì\_\x95 í\x8F¼ + ì\x8A¤í\x81¬ë¦°ì\x83· (Cases Â· ì²´í\x81¬ë¦¬ì\x8A¤í\x8A¸ Â· ì\x9D´ë¯¸ì§\x80 ì²¨ë¶\x80)"
+  text: "P2.3 Ã­\x8C\x90Ã¬\_\x95 Ã­\x8FÂ¼ + Ã¬\x8AÂ¤Ã­\x81Â¬Ã«Â¦Â°Ã¬\x83Â· (Cases Ã\x82Â· Ã¬Â²Â´Ã­\x81Â¬Ã«Â¦Â¬Ã¬\x8AÂ¤Ã­\x8AÂ¸ Ã\x82Â· Ã¬\x9DÂ´Ã«Â¯Â¸Ã¬Â§\x80 Ã¬Â²Â¨Ã«Â¶\x80)"
   project: test-portal
   hub: k0
   priority: P2
@@ -366,9 +366,9 @@
   status: done
   repeat_count: 1
   origin: ops/dispatch/inbox/20260724-1703-p2-3-case-form-and-screenshots.md
-  note: "K0-0916-F ì\x9D´ê´\x80 Â· AU/AWì\x97\x90ì\x84\x9C ì\x99\x84ë£\x8C"
+  note: "K0-0916-F Ã¬\x9DÂ´ÃªÂ´\x80 Ã\x82Â· AU/AWÃ¬\x97\x90Ã¬\x84\x9C Ã¬\x99\x84Ã«Â£\x8C"
 - id: R103
-  text: "P2.4 ì\_\x9Cì¶\x9C í\x8C\x8Cì\x9D´í\x94\x84ë\x9D¼ì\x9D¸ (Kyu í\x8C\x90ì\_\x95 â\x86\x92 GitHub PR ì½\x94ë©\x98í\x8A¸ Â· checks API)"
+  text: "P2.4 Ã¬\_\x9CÃ¬Â¶\x9C Ã­\x8C\x8CÃ¬\x9DÂ´Ã­\x94\x84Ã«\x9DÂ¼Ã¬\x9DÂ¸ (Kyu Ã­\x8C\x90Ã¬\_\x95 Ã¢\x86\x92 GitHub PR Ã¬Â½\x94Ã«Â©\x98Ã­\x8AÂ¸ Ã\x82Â· checks API)"
   project: test-portal
   hub: k0
   priority: P2
@@ -377,9 +377,9 @@
   status: done
   repeat_count: 1
   origin: ops/dispatch/inbox/20260724-1704-p2-4-submit-pipeline.md
-  note: "K0-0916-F ì\x9D´ê´\x80 Â· kyu-gate ë\x8F\x84ì\x9E¥Â·auto-mergeë¡\x9C ì\x99\x84ë£\x8C"
+  note: "K0-0916-F Ã¬\x9DÂ´ÃªÂ´\x80 Ã\x82Â· kyu-gate Ã«\x8F\x84Ã¬\x9EÂ¥Ã\x82Â·auto-mergeÃ«Â¡\x9C Ã¬\x99\x84Ã«Â£\x8C"
 - id: R104
-  text: "P2.5 PWA + Cloudflare Access ë§\x88ê°\x90 (ë§¤ë\x8B\x88í\x8E\x98ì\x8A¤í\x8A¸ Â· SW Â· ë¡\x9Cê·¸ì\x9D¸)"
+  text: "P2.5 PWA + Cloudflare Access Ã«Â§\x88ÃªÂ°\x90 (Ã«Â§Â¤Ã«\x8B\x88Ã­\x8E\x98Ã¬\x8AÂ¤Ã­\x8AÂ¸ Ã\x82Â· SW Ã\x82Â· Ã«Â¡\x9CÃªÂ·Â¸Ã¬\x9DÂ¸)"
   project: test-portal
   hub: k0
   priority: P2
@@ -388,9 +388,9 @@
   status: landed
   repeat_count: 1
   origin: ops/dispatch/inbox/20260724-1705-p2-5-pwa-and-access-finalize.md
-  note: "K0-0916-F ì\x9D´ê´\x80 Â· iOS PWA ì\x95\x88ë\x82´(AV) Â· ë§\x88ì\x9D¼ì\x8A¤í\x86¤ 1ì\x97\x90ì\x84\x9C í\x99\x95ì\x9D¸"
+  note: "K0-0916-F Ã¬\x9DÂ´ÃªÂ´\x80 Ã\x82Â· iOS PWA Ã¬\x95\x88Ã«\x82Â´(AV) Ã\x82Â· Ã«Â§\x88Ã¬\x9DÂ¼Ã¬\x8AÂ¤Ã­\x86Â¤ 1Ã¬\x97\x90Ã¬\x84\x9C Ã­\x99\x95Ã¬\x9DÂ¸"
 - id: R105
-  text: "P2.6 ì\x84¤ì\_\x95 CRUD UI (í\x94\x84ë¡\x9Cì\_\x9Dí\x8A¸ Â· ì¼\x80ì\x9D´ì\x8A¤ Â· ì\x82¬ì\x9A©ì\x9E\x90 Â· ê°\x90ì\x82¬)"
+  text: "P2.6 Ã¬\x84Â¤Ã¬\_\x95 CRUD UI (Ã­\x94\x84Ã«Â¡\x9CÃ¬\_\x9DÃ­\x8AÂ¸ Ã\x82Â· Ã¬Â¼\x80Ã¬\x9DÂ´Ã¬\x8AÂ¤ Ã\x82Â· Ã¬\x82Â¬Ã¬\x9AÂ©Ã¬\x9E\x90 Ã\x82Â· ÃªÂ°\x90Ã¬\x82Â¬)"
   project: test-portal
   hub: k0
   priority: P2
@@ -399,9 +399,9 @@
   status: filed
   repeat_count: 1
   origin: ops/dispatch/inbox/20260726-0600-p2-6-settings-crud-ui.md
-  note: "K0-0916-F ì\x9D´ê´\x80 Â· R009 ë²\x94ì\x9A©í\x99\x94ì\x99\x80 í\x95©ì³\x90 ì²\x98ë¦¬"
+  note: "K0-0916-F Ã¬\x9DÂ´ÃªÂ´\x80 Ã\x82Â· R009 Ã«Â²\x94Ã¬\x9AÂ©Ã­\x99\x94Ã¬\x99\x80 Ã­\x95Â©Ã¬Â³\x90 Ã¬Â²\x98Ã«Â¦Â¬"
 - id: R106
-  text: "P5 ë¦¬í\x8F¬ ë\x9F°ì²\x98 ì\x8A¤í\x81¬ë¦½í\x8A¸ (grownest Â· storeport Â· todoboss ê°\x81 ë°\x98ë\x82\x98ì\_\x88)"
+  text: "P5 Ã«Â¦Â¬Ã­\x8FÂ¬ Ã«\x9FÂ°Ã¬Â²\x98 Ã¬\x8AÂ¤Ã­\x81Â¬Ã«Â¦Â½Ã­\x8AÂ¸ (grownest Ã\x82Â· storeport Ã\x82Â· todoboss ÃªÂ°\x81 Ã«Â°\x98Ã«\x82\x98Ã¬\_\x88)"
   project: test-portal
   hub: k1
   priority: P2
@@ -410,9 +410,9 @@
   status: done
   repeat_count: 1
   origin: ops/dispatch/inbox/20260729-p5-repo-launcher-scripts.md
-  note: "K0-0916-F ì\x9D´ê´\x80 Â· env v2 ë\_\x88ì\x8B\x9Cí\x94¼(K1-0915-A)ë¡\x9C ì\x99\x84ë£\x8C"
+  note: "K0-0916-F Ã¬\x9DÂ´ÃªÂ´\x80 Ã\x82Â· env v2 Ã«\_\x88Ã¬\x8B\x9CÃ­\x94Â¼(K1-0915-A)Ã«Â¡\x9C Ã¬\x99\x84Ã«Â£\x8C"
 - id: R107
-  text: "todoboss ë\x94¥ë§\x81í\x81¬ (T0 ì½\x98ì\x86\x94 v2 ì\x99\x84ê²° í\x9B\x84 ë°\x9Cë¶\x80)"
+  text: "todoboss Ã«\x94Â¥Ã«Â§\x81Ã­\x81Â¬ (T0 Ã¬Â½\x98Ã¬\x86\x94 v2 Ã¬\x99\x84ÃªÂ²Â° Ã­\x9B\x84 Ã«Â°\x9CÃ«Â¶\x80)"
   project: todoboss
   hub: t0
   priority: P2
@@ -422,4 +422,4 @@
   blocked_by: hub:t0
   repeat_count: 1
   origin: ops/dispatch/inbox/20260805-deeplink-todoboss.md
-  note: "K0-0916-F ì\x9D´ê´\x80 Â· checks deep_link ê·\x9Cì\x95½ì\x9C¼ë¡\x9C ë\x8C\x80ì²´ ê°\x80ë\x8A¥ Â· ì\x98¤ì¼\x80 í\x8C\x90ì\_\x95 ë\x8C\x80ê¸°"
+  note: "K0-0916-F Ã¬\x9DÂ´ÃªÂ´\x80 Ã\x82Â· checks deep_link ÃªÂ·\x9CÃ¬\x95Â½Ã¬\x9CÂ¼Ã«Â¡\x9C Ã«\x8C\x80Ã¬Â²Â´ ÃªÂ°\x80Ã«\x8AÂ¥ Ã\x82Â· Ã¬\x98Â¤Ã¬Â¼\x80 Ã­\x8C\x90Ã¬\_\x95 Ã«\x8C\x80ÃªÂ¸Â°"
