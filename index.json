@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T04:01:23.143Z",
+  "built_at": "2026-09-17T04:02:20.301Z",
   "prompts": [],
   "reports": [
     {
@@ -583,6 +583,57 @@
         }
       ],
       "summary": "마일스톤 실기 1회차 · 포털 한 바퀴 (Todoboss #23으로) · 폰 8 + 맥 6. 전제 = 맥 데몬 켜짐(자동) · PR#109 배포됨 · 흐름판 실데이터."
+    },
+    {
+      "path": "checks/t0/T0-0910-B.md",
+      "id": "T0-0910-B",
+      "hub": "t0",
+      "pr": "https://github.com/CuriocityDevAi/todoboss/pull/22",
+      "issued_at": "2026-09-17T04:30:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "desktop",
+          "title": "Step #5 표에서 Amel의 \"지각횟수\" 숫자를 누르면 Step #3·#4 두 표가 같이 필터된다",
+          "ok": "두 표 위에 \"필터 · 직원 Amel · 종류 지각\" 칩 · Step #3는 Amel 전체 세션 · Step #4는 Amel 지각만 · [해제]로 풀림",
+          "ng": "한 표만 바뀌거나 Step #3가 0행",
+          "est_min": 2,
+          "auto": "machine"
+        },
+        {
+          "device": "desktop",
+          "title": "주소창에 pcf_eid·pcf_kind가 붙고 새로고침해도 필터가 유지된다",
+          "ok": "새로고침 후 칩 그대로",
+          "ng": "새로고침하면 풀림",
+          "est_min": 1,
+          "auto": "machine"
+        },
+        {
+          "device": "desktop",
+          "title": "Step #4 헤더의 \"판정불가 N\"을 누르면 바로 아래 인라인 목록이 열리고, 목록의 날짜 하나를 누르면 두 표가 그 직원·그 날짜 1행만 남는다",
+          "ok": "인라인 목록 + 1행 필터 · 주소창 pcf_eid가 0이 아닌 숫자",
+          "ng": "목록이 안 열리거나 눌러도 변화 없음",
+          "est_min": 2,
+          "auto": "machine"
+        },
+        {
+          "device": "desktop",
+          "title": "Step #3 표에 마우스를 올려도 편집 버튼이 안 뜬다 (원본은 읽기 전용)",
+          "ok": "편집 버튼 없음 · 다른 스텝엔 있음",
+          "ng": "Step #3에도 편집 버튼",
+          "est_min": 1,
+          "auto": "machine"
+        },
+        {
+          "device": "desktop",
+          "title": "스텝 헤더의 글자·숫자 영역을 눌러도 표가 접히지 않고, 오른쪽 [접기]를 누르면 약 1초 부드럽게 접힌다",
+          "ok": "글자 클릭 = 안 접힘 · [접기] = 부드럽게",
+          "ng": "글자 클릭에 접히거나 즉시 툭 접힘",
+          "est_min": 1,
+          "auto": "human"
+        }
+      ],
+      "summary": "T0-0910-B/C · 스텝 간 필터·판정불가 인라인·Step #3 읽기 전용·접기 규칙 5건. PR#23 브랜치에 포함되어 있으므로 #23 실기 환경에서 함께 확인."
     },
     {
       "path": "checks/t0/T0-0911-B.md",
@@ -3312,7 +3363,7 @@
         }
       ],
       "processes": [],
-      "fetched_at": "2026-09-17T04:01:22.737Z"
+      "fetched_at": "2026-09-17T04:02:19.664Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -4531,7 +4582,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T04:01:22.881Z"
+      "fetched_at": "2026-09-17T04:02:19.993Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -5064,7 +5115,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-17T04:01:23.124Z"
+      "fetched_at": "2026-09-17T04:02:20.289Z"
     }
   ],
   "rollup": {
