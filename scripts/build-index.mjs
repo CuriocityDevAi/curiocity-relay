@@ -367,14 +367,12 @@ async function collectFeatureMaps(ghToken) {
 		// agilo-medusa-pos-fork = storeport 리포 fork: 접두 파일 소비 (별건 fetch 안 함)
 	];
 	const out = [];
-	const headers = {
-		Accept: 'application/vnd.github.raw',
-		'User-Agent': 'curiocity-relay-build-index/1.0',
-		'X-GitHub-Api-Version': '2022-11-28'
-	};
-	if (ghToken) headers.Authorization = `Bearer ${ghToken}`;
+	// K1-0917-B · raw.githubusercontent 소비 (공개 리포 · 인증 불요 · CI Actions GITHUB_TOKEN scope 밖 리포도 접근).
+	// 사설 리포 (있으면) 는 별건 · 지금 CuriocityDevAi 4 리포 모두 public 정본.
+	const headers = { 'User-Agent': 'curiocity-relay-build-index/1.0' };
+	if (ghToken) headers.Authorization = `Bearer ${ghToken}`; // rate limit 완화 · 없으면 anon (60/h public)
 	for (const repo of REPOS) {
-		const url = `https://api.github.com/repos/${repo}/contents/docs/feature-map.yaml?ref=main`;
+		const url = `https://raw.githubusercontent.com/${repo}/main/docs/feature-map.yaml`;
 		try {
 			const res = await fetch(url, { headers });
 			if (!res.ok) {
