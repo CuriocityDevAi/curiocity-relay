@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T03:11:35.826Z",
+  "built_at": "2026-09-17T03:13:06.259Z",
   "prompts": [],
   "reports": [
     {
@@ -982,7 +982,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:07:02.187Z"
+          "last_ts": "2026-09-17T03:07:25.243Z"
         },
         "priority": {
           "seen": false,
@@ -1111,7 +1111,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:07:02.187Z"
+          "last_ts": "2026-09-17T03:07:25.243Z"
         },
         "priority": {
           "seen": false,
@@ -1326,7 +1326,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:07:02.187Z"
+          "last_ts": "2026-09-17T03:07:25.243Z"
         },
         "priority": {
           "seen": false,
@@ -2102,7 +2102,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:07:02.187Z"
+          "last_ts": "2026-09-17T03:07:25.243Z"
         },
         "priority": {
           "seen": false,
@@ -3066,6 +3066,20 @@
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
       "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T03:07:19.230Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T03:07:25.243Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
     }
   ],
   "mismatches": [],
@@ -3081,7 +3095,7 @@
       "last_action": "대사: k1.md",
       "files_touched": 2,
       "tests_touched": 0,
-      "updated_at": "2026-09-17T03:07:02.187Z"
+      "updated_at": "2026-09-17T03:07:25.243Z"
     },
     "k2": {
       "last_action": null,
