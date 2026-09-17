@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T04:02:20.301Z",
+  "built_at": "2026-09-17T04:03:34.318Z",
   "prompts": [],
   "reports": [
     {
@@ -134,9 +134,9 @@
       "ledger_events": []
     },
     {
-      "path": "k0/K0-0917-C-report.md",
-      "round": "K0-0917-C",
-      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/115",
+      "path": "k0/K0-0917-D-report.md",
+      "round": "K0-0917-D",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/116",
       "outcome": "",
       "kyu_checks": [],
       "ledger_events": []
@@ -996,7 +996,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -1082,7 +1082,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -1125,7 +1125,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -1211,7 +1211,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -1254,7 +1254,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -1297,7 +1297,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -1426,7 +1426,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -1469,7 +1469,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -2202,7 +2202,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -2245,7 +2245,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -2288,7 +2288,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -2331,7 +2331,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -2376,7 +2376,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -2419,7 +2419,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T03:44:55.168Z"
+          "last_ts": "2026-09-17T03:59:46.875Z"
         },
         "priority": {
           "seen": false,
@@ -2915,6 +2915,20 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-17T03:59:35.291Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-17T03:59:46.875Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
       "ts": "2026-09-10T06:54:57.757Z",
       "hub": "n0",
       "type": "read",
@@ -3363,7 +3377,7 @@
         }
       ],
       "processes": [],
-      "fetched_at": "2026-09-17T04:02:19.664Z"
+      "fetched_at": "2026-09-17T04:03:33.885Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -4582,7 +4596,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T04:02:19.993Z"
+      "fetched_at": "2026-09-17T04:03:34.067Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -5115,7 +5129,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-17T04:02:20.289Z"
+      "fetched_at": "2026-09-17T04:03:34.300Z"
     }
   ],
   "rollup": {
