@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T06:47:02.734Z",
+  "built_at": "2026-09-17T06:49:14.518Z",
   "prompts": [],
   "reports": [
     {
@@ -284,31 +284,25 @@
       "ledger_events": []
     },
     {
-      "path": "k1/K1-0917-D-report.md",
-      "round": "K1-0917-D",
-      "pr": "119,120",
+      "path": "k1/K1-0917-E-report.md",
+      "round": "K1-0917-E",
+      "pr": "123",
       "outcome": "landed",
       "kyu_checks": [
-        "Kyu 맥 브라우저 [준비+열기 Chrome]·[테스트 열기] 500 재발 없음 실기",
-        "relay commit b29c090 열람 · R029 priority 1-line 교체 정합 확인",
-        "test-portal feature_maps processes=37 (index.json) 실측",
-        "봇 계정 3줄 절차 (Kyu 실기 · docs/kyu-clicks/K1-0917-D-bot-account-token.md)"
+        "Kyu 맥 test.curiocity.company/pr/CuriocityDevAi/todoboss/23 [테스트 열기] 4단계 완주 스샷",
+        "헤더 /health 초록 dot (60s poll · 마지막 응답 N초 전)",
+        "dual auth 실측 (헤더/쿼리 각 200/401)"
       ],
       "ledger_events": [
         {
           "id": "R003",
           "action": "consume",
-          "note": "Kyu 맥 데몬 500·SSE 실패 규명 완결 · env.mjs serverProc error guard · Todoboss PR#23 실 완주 32.3s"
+          "note": "Kyu 맥 SSE 401 뿌리 완결 · dual auth (Bearer + ?token=) · GET /env/open alias · timingSafeEqual · CORS 다중 · 실 GET SSE 4단계 완주 22.0s"
         },
         {
           "id": "R031",
           "action": "consume",
-          "note": "PATCH UTF-8 한글 손상 재발 방지 · base64-utf8 fatal + ledger-patch 라인 단위 · 실측 diff 1-line (relay commit b29c090)"
-        },
-        {
-          "id": "R030",
-          "action": "consume",
-          "note": "test-portal nested processes=37 실측 (기존 K1-0917-C=0 · Kyu 요구 10+ 대폭 초과)"
+          "note": "EventSource 계약 정합 · GET alias · branch 자동 조회 · K0-F 소비 코드와 파라미터 이름 일치 (repo·pr_id·token)"
         }
       ]
     }
@@ -1004,7 +998,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -1016,7 +1010,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": "클코 허브 탭 · 이벤트 소스 K1 · 지표 K2 · 마일스톤 1에서 Kyu 확인"
@@ -1047,7 +1041,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T04:42:31.699Z"
+          "last_ts": "2026-09-17T06:46:13.988Z"
         },
         "priority": {
           "seen": false,
@@ -1090,7 +1084,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -1102,7 +1096,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": ""
@@ -1133,7 +1127,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -1145,7 +1139,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": ""
@@ -1176,7 +1170,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T04:42:31.699Z"
+          "last_ts": "2026-09-17T06:46:13.988Z"
         },
         "priority": {
           "seen": false,
@@ -1219,7 +1213,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -1231,7 +1225,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": ""
@@ -1262,7 +1256,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -1274,7 +1268,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": ""
@@ -1305,7 +1299,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -1317,7 +1311,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": "허브 파생은 AV에서 완료 · 타입·시드 범용화 잔여"
@@ -1348,7 +1342,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T04:42:31.699Z"
+          "last_ts": "2026-09-17T06:46:13.988Z"
         },
         "priority": {
           "seen": false,
@@ -1391,7 +1385,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T04:42:31.699Z"
+          "last_ts": "2026-09-17T06:46:13.988Z"
         },
         "priority": {
           "seen": false,
@@ -1434,7 +1428,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -1446,7 +1440,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": ""
@@ -1477,7 +1471,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -1489,7 +1483,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": "inbox 7건 → R101~R107 이관 · 폴더 삭제 · relay 원장 = 유일 큐"
@@ -2167,7 +2161,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T04:42:31.699Z"
+          "last_ts": "2026-09-17T06:46:13.988Z"
         },
         "priority": {
           "seen": false,
@@ -2210,7 +2204,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -2222,7 +2216,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": "초판: test-portal(K0-G) · todoboss(T0-0916-A PR#24) · storeport(M0-0916-A PR#113) · L1 보강 = T0/M0-0917-A"
@@ -2253,7 +2247,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -2265,7 +2259,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": "09-16 결함 7(K0-H) · 09-17 결함 9(K0-B·D) · 브리지 500·SSE 실패는 K1"
@@ -2296,7 +2290,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -2308,7 +2302,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": "kit PR#1 머지 · 기존 제품 반영 아이디어는 오케가 별도 제안 예정"
@@ -2382,7 +2376,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -2394,7 +2388,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": "K0-0916-F 이관 · AV~D에서 사실상 완료(gate·runs·PR API 소비)"
@@ -2425,7 +2419,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -2437,7 +2431,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": "K0-0916-F 이관 · AU/AW에서 완료"
@@ -2468,7 +2462,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -2480,7 +2474,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": "K0-0916-F 이관 · kyu-gate 도장·auto-merge로 완료"
@@ -2511,7 +2505,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -2523,7 +2517,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": "K0-0916-F 이관 · iOS PWA 안내(AV) · 마일스톤 1에서 확인"
@@ -2554,7 +2548,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T06:20:35.945Z"
+          "last_ts": "2026-09-17T06:43:59.377Z"
         },
         "priority": {
           "seen": false,
@@ -2566,7 +2560,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-17T06:23:38.952Z"
+          "last_ts": "2026-09-17T06:46:45.759Z"
         }
       },
       "note": "K0-0916-F 이관 · R009 범용화와 합쳐 처리"
@@ -2597,7 +2591,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T04:42:31.699Z"
+          "last_ts": "2026-09-17T06:46:13.988Z"
         },
         "priority": {
           "seen": false,
@@ -3138,6 +3132,30 @@
       "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
     },
     {
+      "ts": "2026-09-17T06:43:51.186Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/state/k0.md",
+      "label": "상태 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-17T06:43:59.377Z",
+      "hub": "k0",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal/docs/tracking/k0.md",
+      "label": "트래킹 대사: k0.md",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
+      "ts": "2026-09-17T06:46:45.759Z",
+      "hub": "k0",
+      "type": "report-push",
+      "target": "/Users/kyu.lee/projects/curiocity-relay/k0/K0-0917-G-report.md",
+      "label": "K0-0917-G 리포트",
+      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47"
+    },
+    {
       "ts": "2026-09-10T06:54:57.757Z",
       "hub": "n0",
       "type": "read",
@@ -3455,16 +3473,40 @@
       "target": "/tmp/relay-K1DR/k1/K1-0917-D-report.md",
       "label": "K1-0917-D 리포트",
       "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T06:45:52.586Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "label": "트래킹 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T06:46:08.014Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "label": "상태 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T06:46:13.988Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "label": "상태 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
     }
   ],
   "mismatches": [],
   "warnings": [],
   "hubs": {
     "k0": {
-      "last_action": "K0-0917-F 리포트",
-      "files_touched": 10,
+      "last_action": "K0-0917-G 리포트",
+      "files_touched": 11,
       "tests_touched": 0,
-      "updated_at": "2026-09-17T06:23:38.952Z"
+      "updated_at": "2026-09-17T06:46:45.759Z"
     },
     "k1": {
       "last_action": "K1-0917-D 리포트",
@@ -4025,7 +4067,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T06:47:02.161Z"
+      "fetched_at": "2026-09-17T06:49:14.180Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5244,7 +5286,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T06:47:02.387Z"
+      "fetched_at": "2026-09-17T06:49:14.298Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -5777,7 +5819,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-17T06:47:02.720Z"
+      "fetched_at": "2026-09-17T06:49:14.499Z"
     }
   ],
   "rollup": {
