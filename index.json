@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T03:14:55.856Z",
+  "built_at": "2026-09-17T03:18:45.636Z",
   "prompts": [],
   "reports": [
     {
@@ -1000,7 +1000,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-14T09:51:49.027Z"
+          "last_ts": "2026-09-17T03:14:44.644Z"
         }
       },
       "note": "마일스톤 1에서 Kyu 확인"
@@ -1129,7 +1129,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-14T09:51:49.027Z"
+          "last_ts": "2026-09-17T03:14:44.644Z"
         }
       },
       "note": "OS 기본음+진동 · 포털 열림 시 띵 · Kyu 알림 실기 미완"
@@ -1344,7 +1344,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-14T09:51:49.027Z"
+          "last_ts": "2026-09-17T03:14:44.644Z"
         }
       },
       "note": ""
@@ -2120,7 +2120,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-14T09:51:49.027Z"
+          "last_ts": "2026-09-17T03:14:44.644Z"
         }
       },
       "note": "R012(허브판 무의미)와 상충 → 삭제 제안 대상"
@@ -3086,6 +3086,20 @@
       "type": "reconcile",
       "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
       "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T03:14:44.644Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/relay-K1R/k1/K1-0917-B-report.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-17T03:14:44.644Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/relay-K1R/k1/K1-0917-B-report.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
     }
   ],
   "mismatches": [
@@ -3113,10 +3127,10 @@
       "updated_at": "2026-09-17T03:01:53.072Z"
     },
     "k1": {
-      "last_action": "대사: k1.md",
-      "files_touched": 2,
+      "last_action": "리포트: K1-0917-B-report.md",
+      "files_touched": 3,
       "tests_touched": 0,
-      "updated_at": "2026-09-17T03:07:25.243Z"
+      "updated_at": "2026-09-17T03:14:44.644Z"
     },
     "k2": {
       "last_action": null,
