@@ -416,25 +416,34 @@ async function collectFeatureMaps(ghToken) {
  * 라이브러리 의존 회피 (relay = deps 0 원칙).
  */
 function parseFeatureMapYaml(text) {
-	// K1-0917-C · 두 스키마 정합:
-	//   (a) convention.md v1 = areas nested (areas[].processes[])
-	//   (b) 실 리포 (todoboss/storeport) = top-level processes[] with area FK
-	// 파서 = 두 방식 모두 감지 · areas[]와 processes[] 병렬 저장 · 소비 (K0) 정본은 processes[] 배열 우선.
+	// K1-0917-D · 3 스키마 정합 (nested + top-level + processes 안 area):
+	//   (a) convention.md v1 = areas[].processes[] · nested (test-portal)
+	//   (b) 실 리포 (todoboss/storeport) = top-level processes[] with `area:` FK
+	//   (c) 혼합: top-level areas[] + top-level processes[] 병렬 (todoboss/storeport 정합)
+	// 정본:
+	//   - areas[] = 그대로 저장 (area 정의)
+	//   - processes[] = FLATTEN · nested (test-portal) 는 area FK 자동 주입
+	//   - K0 소비 정본 = processes[] 배열 (area 는 정의만)
 	const lines = text.split('\n');
 	const out = { areas: [], processes: [] };
-	let currentContainer = null; // 'areas' | 'processes' | null (top-level scalar)
-	let currentEntry = null; // areas 또는 processes 안 현재 처리 중인 entry
+	let currentContainer = null; // 'areas' | 'processes' | null
+	let currentArea = null; // K1-0917-D · nested processes 안 area FK 자동 주입
+	let currentEntry = null;
 	let inFilesArray = false;
+	let inAreaProcesses = false; // K1-0917-D · areas[].processes: nested 블록 안?
 	for (let i = 0; i < lines.length; i++) {
 		const line = lines[i];
 		const trimmed = line.trim();
 		if (!trimmed || trimmed.startsWith('#')) continue;
+
 		// top-level scalar (project · version · generated_at · round · etc)
 		const topMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_-]*)\s*:\s*(.*)$/);
 		if (topMatch && !line.startsWith(' ')) {
 			const [, k, v] = topMatch;
 			inFilesArray = false;
+			inAreaProcesses = false;
 			currentEntry = null;
+			currentArea = null;
 			if (k === 'areas' || k === 'processes') {
 				currentContainer = k;
 				continue;
@@ -443,18 +452,48 @@ function parseFeatureMapYaml(text) {
 			out[k] = stripQuotes(v.trim());
 			continue;
 		}
-		// entry ("  - id: ...") 안 areas or processes container
+
+		// K1-0917-D · areas[] 안 nested `processes:` 감지 (4-space indent)
+		if (currentArea && line.match(/^\s{4}processes:\s*$/)) {
+			inAreaProcesses = true;
+			inFilesArray = false;
+			currentEntry = null;
+			continue;
+		}
+
+		// K1-0917-D · nested process entry (6-space indent = area.processes[])
+		if (inAreaProcesses && currentArea) {
+			const nestedProcMatch = line.match(/^\s{6}-\s+id:\s*(.+)$/);
+			if (nestedProcMatch) {
+				currentEntry = {
+					id: stripQuotes(nestedProcMatch[1].trim()),
+					area: currentArea.id, // K1-0917-D · nested → top-level flatten · area FK 자동 주입
+					files: []
+				};
+				out.processes.push(currentEntry);
+				inFilesArray = false;
+				continue;
+			}
+			// nested process 안 필드 (8-space indent) 는 아래 fieldMatch 로 처리 (currentEntry 유지)
+		}
+
+		// top-level entry ("  - id: ..." · 2-space indent) 안 areas or processes container
 		const entryMatch = line.match(/^\s{2}-\s+id:\s*(.+)$/);
 		if (entryMatch && currentContainer) {
 			currentEntry = { id: stripQuotes(entryMatch[1].trim()) };
-			if (currentContainer === 'processes') currentEntry.files = [];
+			if (currentContainer === 'areas') {
+				currentArea = currentEntry;
+				inAreaProcesses = false;
+			} else if (currentContainer === 'processes') {
+				currentEntry.files = [];
+			}
 			out[currentContainer].push(currentEntry);
 			inFilesArray = false;
 			continue;
 		}
-		// files array (processes 안 nested files)
+
+		// files array (processes 안 nested files · inline or multiline)
 		if (currentEntry && line.match(/^\s{4,}files:\s*/)) {
-			// inline array `files: [a, b]`?
 			const inlineMatch = line.match(/files:\s*\[([^\]]*)\]/);
 			if (inlineMatch) {
 				currentEntry.files = inlineMatch[1].split(',').map((s) => stripQuotes(s.trim())).filter(Boolean);
@@ -473,11 +512,12 @@ function parseFeatureMapYaml(text) {
 			}
 			inFilesArray = false;
 		}
+
 		// entry 안 다른 필드 (area/label/name/summary/status/spec 등)
 		const fieldMatch = line.match(/^\s+([a-zA-Z_][a-zA-Z0-9_-]*)\s*:\s*(.+)$/);
 		if (fieldMatch && currentEntry) {
 			const [, k, v] = fieldMatch;
-			if (k !== 'files') currentEntry[k] = stripQuotes(v.trim());
+			if (k !== 'files' && k !== 'processes') currentEntry[k] = stripQuotes(v.trim());
 		}
 	}
 	return out;
