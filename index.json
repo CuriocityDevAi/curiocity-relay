@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T04:40:12.994Z",
+  "built_at": "2026-09-17T04:41:32.782Z",
   "prompts": [],
   "reports": [
     {
@@ -3443,83 +3443,451 @@
       "areas": [
         {
           "id": "training",
-          "name": "진행 띠",
-          "summary": "판정 후 오케 검토·머지·배포까지 어디쯤인지 5단계로 보여주는 위쪽 줄",
+          "name": "실기"
+        },
+        {
+          "id": "flow-board",
+          "name": "흐름판"
+        },
+        {
+          "id": "history",
+          "name": "이력"
+        },
+        {
+          "id": "environment",
+          "name": "환경"
+        },
+        {
+          "id": "notifications",
+          "name": "알림"
+        },
+        {
+          "id": "gates-metrics",
+          "name": "게이트·지표"
+        },
+        {
+          "id": "relay",
+          "name": "relay 소비"
+        },
+        {
+          "id": "infrastructure",
+          "name": "인프라"
+        },
+        {
+          "id": "feature-map",
+          "name": "기능 지도 (이번 신설)"
+        },
+        {
+          "id": "documentation",
+          "name": "문서"
+        }
+      ],
+      "processes": [
+        {
+          "id": "my-turn-list",
+          "area": "training",
+          "files": [
+            "src/routes/+page.svelte",
+            "src/lib/PrList.svelte",
+            "src/lib/pr-lookup.ts",
+            "src/lib/pr-cache.ts",
+            "src/lib/inbox.ts",
+            "src/lib/inbox.test.ts",
+            "src/lib/pr-lookup.test.ts",
+            "src/lib/pr-cache.test.ts"
+          ],
+          "name": "내 차례 목록",
+          "summary": "지금 사용자가 판정해야 할 실기 항목을 리스트로 모으는 화면 영역",
+          "spec": "docs/SPEC.md#K0-AU",
+          "status": "live"
+        },
+        {
+          "id": "pr-detail-view",
+          "area": "training",
+          "files": [
+            "src/routes/pr/**",
+            "src/routes/prs/**"
+          ],
+          "name": "PR 상세 화면",
+          "summary": "특정 PR 하나를 열어 케이스별 체크와 종합 판정을 하는 큰 화면",
+          "spec": "docs/SPEC.md#K0-AV",
+          "status": "live"
+        },
+        {
+          "id": "checks-render",
+          "area": "training",
+          "files": [
+            "src/lib/parser/**/*.ts",
+            "src/routes/pr/**/+page.svelte",
+            "src/lib/checks.ts",
+            "src/lib/checks.test.ts",
+            "src/routes/api/pr-cases/+server.ts",
+            "src/routes/api/pr-checks/+server.ts",
+            "src/routes/api/pr-status/**/*.ts"
+          ],
+          "name": "체크 목록 렌더",
+          "summary": "PR 본문에서 뽑은 실기 항목들을 카드로 그려내는 부분",
+          "spec": "docs/SPEC.md#K0-AU-C",
+          "status": "live"
+        },
+        {
+          "id": "verdict-submit",
+          "area": "training",
+          "files": [
+            "src/routes/api/submit/**",
+            "src/lib/submit.ts",
+            "src/lib/draft.ts",
+            "src/routes/api/case-state/+server.ts",
+            "src/routes/api/case-run/+server.ts",
+            "src/routes/api/approvals/**",
+            "src/routes/api/case-catalog/+server.ts",
+            "src/lib/approvals-store.ts",
+            "src/lib/case-state-store.ts",
+            "src/lib/case-catalog-store.ts",
+            "src/lib/case-run-store.ts",
+            "src/lib/auto-approve.ts",
+            "src/routes/api/kyu-gate-stamp/+server.ts",
+            "src/lib/draft.test.ts",
+            "src/lib/submit.test.ts",
+            "src/lib/regression-assertions.ts"
+          ],
+          "name": "판정 제출",
+          "summary": "실기 결과를 서버로 보내 GitHub PR 코멘트와 케이스 상태를 남기는 흐름",
+          "spec": "docs/SPEC.md#K0-AR",
+          "status": "live"
+        },
+        {
+          "id": "progress-band",
+          "area": "training",
           "files": [
             "src/routes/+page.svelte",
             "src/routes/pr/**/+page.svelte"
           ],
+          "name": "진행 띠",
+          "summary": "판정 후 오케 검토·머지·배포까지 어디쯤인지 5단계로 보여주는 위쪽 줄",
           "spec": "docs/SPEC.md#K0-AW-A",
           "status": "live"
         },
         {
-          "id": "flow-board",
-          "name": "요구 원장 편집",
-          "summary": "우선순위 바꾸기·상충 삭제·차단 해제를 서버로 보내는 흐름",
+          "id": "flow-topbar",
+          "area": "flow-board",
+          "files": [
+            "src/lib/ui/FlowBoard.svelte"
+          ],
+          "name": "상단 띠",
+          "summary": "흐름 탭 위쪽 · 내 차례·결정·실기 세 개 칩 그리고 이번 주 요약과 위험 표시",
+          "spec": "docs/spec/k0.md#K0-BA-1",
+          "status": "live"
+        },
+        {
+          "id": "flow-grid",
+          "area": "flow-board",
+          "files": [
+            "src/lib/ui/FlowBoard.svelte"
+          ],
+          "name": "허브 행 · 5 열 표",
+          "summary": "허브별로 한 줄씩 · 대기부터 머지·배포까지 5칸으로 나눈 표",
+          "spec": "docs/spec/k0.md#K0-BA-2",
+          "status": "live"
+        },
+        {
+          "id": "flow-card",
+          "area": "flow-board",
+          "files": [
+            "src/lib/ui/FlowBoard.svelte",
+            "src/lib/ui/flow-data.ts"
+          ],
+          "name": "카드",
+          "summary": "요구 원문 첫 줄 · 크기·우선순위·상충 표시가 든 작은 사각형",
+          "spec": "docs/spec/k0.md#K0-BA-4",
+          "status": "live"
+        },
+        {
+          "id": "flow-sheets",
+          "area": "flow-board",
+          "files": [
+            "src/lib/ui/FlowBoard.svelte",
+            "src/lib/BottomSheet.svelte"
+          ],
+          "name": "시트 3종",
+          "summary": "카드·허브·실기 각각 아래에서 올라오는 작은 창",
+          "spec": "docs/spec/k0.md#K0-BA-5",
+          "status": "live"
+        },
+        {
+          "id": "ledger-patch",
+          "area": "flow-board",
           "files": [
             "src/routes/api/ledger/patch/+server.ts",
             "src/lib/ui/FlowBoard.svelte"
           ],
+          "name": "요구 원장 편집",
+          "summary": "우선순위 바꾸기·상충 삭제·차단 해제를 서버로 보내는 흐름",
           "spec": "docs/spec/k0.md#K0-BB-1",
           "status": "live"
         },
         {
-          "id": "history",
-          "name": "설정 시트",
-          "summary": "톱니바퀴 버튼을 눌러 여는 아래 설정 창 (알림 켜기·프로젝트 등)",
+          "id": "history-list",
+          "area": "history",
+          "files": [
+            "src/routes/+page.svelte",
+            "src/routes/hub/**/*.svelte"
+          ],
+          "name": "이력 목록",
+          "summary": "이전 라운드 결과를 시간순으로 보여주는 화면 영역",
+          "spec": "docs/SPEC.md#K0-AW-D",
+          "status": "live"
+        },
+        {
+          "id": "settings-sheet",
+          "area": "history",
           "files": [
             "src/lib/SettingsSheet.svelte",
             "src/routes/settings/**/*.svelte"
           ],
+          "name": "설정 시트",
+          "summary": "톱니바퀴 버튼을 눌러 여는 아래 설정 창 (알림 켜기·프로젝트 등)",
           "spec": "docs/SPEC.md#K0-AO",
           "status": "live"
         },
         {
-          "id": "environment",
-          "name": "Expo 터널",
-          "summary": "폰에서 열 수 있게 QR 코드 만드는 방식 (모바일 앱 프로젝트용)",
+          "id": "env-open-sse",
+          "area": "environment",
+          "files": [
+            "src/routes/api/env/**/*.ts",
+            "src/lib/kyu-bridge-client.ts",
+            "src/lib/bridge-commands.ts"
+          ],
+          "name": "환경 열기 실시간 로그",
+          "summary": "[테스트 열기]를 눌렀을 때 4단계 준비 진행을 실시간 줄로 받아 보여주는 흐름",
+          "spec": "docs/SPEC.md#K0-AX-3",
+          "status": "live"
+        },
+        {
+          "id": "devenv-recipe",
+          "area": "environment",
+          "files": [
+            "config/**"
+          ],
+          "name": "개발환경 레시피",
+          "summary": "각 프로젝트마다 어떻게 서버를 켤지 (설치·마이그레이션·시드·시작 명령) 적어둔 규격",
+          "spec": "docs/env-recipes.md",
+          "status": "live"
+        },
+        {
+          "id": "expo-tunnel",
+          "area": "environment",
           "files": [
             "src/routes/api/expo/**/*.ts"
           ],
+          "name": "Expo 터널",
+          "summary": "폰에서 열 수 있게 QR 코드 만드는 방식 (모바일 앱 프로젝트용)",
           "spec": "docs/SPEC.md#K1-env-expo-tunnel-capture",
           "status": "live"
         },
         {
-          "id": "notifications",
-          "name": "소리 알림",
-          "summary": "새 카드가 뜰 때 짧게 나는 띵 소리",
+          "id": "web-push",
+          "area": "notifications",
+          "files": [
+            "src/routes/api/push/**",
+            "src/lib/push-client.ts",
+            "src/lib/webpush.ts"
+          ],
+          "name": "브라우저 알림",
+          "summary": "판정 결과가 다른 기기로 도착하면 폰 잠금 화면에 뜨는 알림",
+          "spec": "docs/SPEC.md#K1-A",
+          "status": "live"
+        },
+        {
+          "id": "landing-modal",
+          "area": "notifications",
+          "files": [
+            "src/routes/+page.svelte",
+            "src/lib/InstallPrompt.svelte",
+            "src/lib/PushPage.svelte",
+            "src/lib/SheetPush.svelte"
+          ],
+          "name": "착지 모달",
+          "summary": "새 PR이 배포 완료됐을 때 앱을 열자마자 뜨는 큰 창",
+          "spec": "docs/SPEC.md#K0-AR-B1",
+          "status": "live"
+        },
+        {
+          "id": "sound-ding",
+          "area": "notifications",
           "files": [
             "src/lib/ui/sound.ts",
             "src/lib/ui/device.ts",
             "src/lib/ui/pwa-context.ts"
           ],
+          "name": "소리 알림",
+          "summary": "새 카드가 뜰 때 짧게 나는 띵 소리",
           "spec": "docs/SPEC.md#K0-AU-G",
           "status": "live"
         },
         {
-          "id": "gates-metrics",
-          "name": "회귀 러너",
-          "summary": "케이스별로 자동 어설션을 돌려 통과·실패를 기록하는 도구 (K2 관리)",
+          "id": "gate-verdict",
+          "area": "gates-metrics",
+          "files": [
+            "src/routes/api/gate/**/+server.ts"
+          ],
+          "name": "게이트 판정",
+          "summary": "PR이 자동 검사를 통과했는지 초록/빨강/회색으로 알려주는 부분",
+          "spec": "docs/SPEC.md#K1-gate-verified",
+          "status": "live"
+        },
+        {
+          "id": "runs-history",
+          "area": "gates-metrics",
+          "files": [
+            "src/routes/api/runs/**/*.ts",
+            "src/lib/server/runs/**/*.ts"
+          ],
+          "name": "실행 이력",
+          "summary": "이 PR에서 지금까지 회귀 테스트가 몇 번 · 얼마나 성공했는지 최근 5건",
+          "spec": "docs/SPEC.md#K0-AX-1",
+          "status": "live"
+        },
+        {
+          "id": "hubs-metrics",
+          "area": "gates-metrics",
+          "files": [
+            "src/routes/api/hubs/metrics/**/*.ts",
+            "src/lib/server/metrics/**/*.ts"
+          ],
+          "name": "허브 지표",
+          "summary": "각 허브가 오늘 얼마나 일했는지 (파일 · 테스트 · 마지막 행동) 숫자",
+          "spec": "docs/spec/k0.md#K0-BA-2",
+          "status": "live"
+        },
+        {
+          "id": "weekly-summary",
+          "area": "gates-metrics",
+          "files": [
+            "src/routes/api/ledger/weekly/+server.ts"
+          ],
+          "name": "이번 주 요약",
+          "summary": "이번 주 착지·머지·밀림 숫자 (흐름판 위쪽 요약)",
+          "spec": "docs/spec/k0.md#K0-BA-1",
+          "status": "live"
+        },
+        {
+          "id": "regression-runner",
+          "area": "gates-metrics",
           "files": [
             "tools/regression-runner/**"
           ],
+          "name": "회귀 러너",
+          "summary": "케이스별로 자동 어설션을 돌려 통과·실패를 기록하는 도구 (K2 관리)",
           "spec": "docs/testing/regression-runner.md",
           "status": "live"
         },
         {
-          "id": "relay",
-          "name": "허브 상태 감지",
-          "summary": "각 허브 터미널이 지금 실행 중인지 · 심문 대기인지 60초마다 상태를 오케 리포에 남기고 흐름판이 소비",
+          "id": "relay-index",
+          "area": "relay",
+          "files": [
+            "src/lib/ui/flow-data.ts"
+          ],
+          "name": "요구 원장 index",
+          "summary": "오케 리포에 있는 요구 원장을 통째로 받아와 흐름판이 카드로 그리는 흐름",
+          "spec": "docs/spec/k0.md#K0-BB-2",
+          "status": "live"
+        },
+        {
+          "id": "relay-events",
+          "area": "relay",
+          "files": [
+            "src/lib/ui/flow-data.ts",
+            "src/lib/ui/FlowBoard.svelte"
+          ],
+          "name": "이벤트 소비",
+          "summary": "각 허브가 무엇을 읽고 편집했는지 시간순 이벤트를 태스크 시트에 보여줌",
+          "spec": "docs/spec/k0.md#K0-BB-3",
+          "status": "live"
+        },
+        {
+          "id": "relay-checks",
+          "area": "relay",
+          "files": [
+            "src/routes/api/pr-checks/+server.ts",
+            "src/lib/checks.ts"
+          ],
+          "name": "실기 체크리스트 저장소",
+          "summary": "각 PR 라운드의 실기 항목을 오케 리포에서 미리 받아 상세 화면에 뿌리는 흐름",
+          "spec": "docs/SPEC.md#K1-A",
+          "status": "live"
+        },
+        {
+          "id": "relay-status",
+          "area": "relay",
           "files": [
             "src/lib/ui/FlowBoard.svelte"
           ],
+          "name": "허브 상태 감지",
+          "summary": "각 허브 터미널이 지금 실행 중인지 · 심문 대기인지 60초마다 상태를 오케 리포에 남기고 흐름판이 소비",
           "spec": "docs/SPEC.md#K1-status-watcher",
           "status": "live"
         },
         {
-          "id": "infrastructure",
-          "name": "공통 유틸",
-          "summary": "여러 화면·API가 함께 쓰는 작은 도우미 (레지스트리·github 클라이언트·릴레이 유틸)",
+          "id": "auto-merge",
+          "area": "infrastructure",
+          "files": [
+            ".github/workflows/*.yml"
+          ],
+          "name": "자동 병합",
+          "summary": "터미널 자기 검사와 CI가 모두 초록이면 자동으로 main에 병합해주는 CI",
+          "spec": "docs/SPEC.md#K1-env-5",
+          "status": "live"
+        },
+        {
+          "id": "ci-check",
+          "area": "infrastructure",
+          "files": [
+            ".github/workflows/*.yml"
+          ],
+          "name": "CI 검사",
+          "summary": "PR마다 타입 검사·테스트·빌드가 초록인지 확인하는 CI",
+          "spec": "docs/SPEC.md#K1-A",
+          "status": "live"
+        },
+        {
+          "id": "d1-approvals",
+          "area": "infrastructure",
+          "files": [
+            "migrations/**"
+          ],
+          "name": "판정 저장소 D1",
+          "summary": "케이스별 판정 결과를 Cloudflare D1 데이터베이스에 저장",
+          "spec": "docs/SPEC.md#K0-0807-U",
+          "status": "live"
+        },
+        {
+          "id": "kyu-bridge",
+          "area": "infrastructure",
+          "files": [
+            "tools/kyu-bridge/**",
+            "tools/kyu-devenv/**"
+          ],
+          "name": "허브 데몬 (kyu-bridge)",
+          "summary": "터미널 상주 · 환경 열기 · 심문 알림 · 세션 로그를 오케 리포에 넘기는 데몬",
+          "spec": "docs/SPEC.md#K1-daemon-clone",
+          "status": "live"
+        },
+        {
+          "id": "e2e-tests",
+          "area": "infrastructure",
+          "files": [
+            "e2e/**",
+            "playwright.config.ts"
+          ],
+          "name": "E2E 테스트",
+          "summary": "브라우저에서 실제 화면을 눌러 회귀 검증하는 Playwright 테스트",
+          "spec": "docs/SPEC.md#K0-AL-4",
+          "status": "live"
+        },
+        {
+          "id": "common-utils",
+          "area": "infrastructure",
           "files": [
             "src/lib/*.ts",
             "src/lib/*.svelte",
@@ -3541,35 +3909,61 @@
             "src/app.html",
             "src/lib/assets/**"
           ],
+          "name": "공통 유틸",
+          "summary": "여러 화면·API가 함께 쓰는 작은 도우미 (레지스트리·github 클라이언트·릴레이 유틸)",
           "spec": "docs/spec/k0.md#common",
           "status": "live"
         },
         {
-          "id": "feature-map",
-          "name": "지도 탭 화면",
-          "summary": "위 정보를 트리맵으로 그려서 어디가 지금 변경 중인지 색으로 보여주는 화면 탭",
+          "id": "feature-map-yaml",
+          "area": "feature-map",
+          "files": [
+            "docs/feature-map.yaml"
+          ],
+          "name": "기능 지도 원본",
+          "summary": "이 파일 자체 (각 프로세스와 담당 파일 목록)",
+          "spec": "docs/spec/k0.md#K0-BC-1",
+          "status": "live"
+        },
+        {
+          "id": "feature-map-check",
+          "area": "feature-map",
+          "files": [
+            "scripts/**",
+            ".github/workflows/feature-map-check.yml"
+          ],
+          "name": "지도 검증 스크립트",
+          "summary": "이 파일 안 files 패턴이 실제 파일과 맞는지 확인하는 스크립트와 CI",
+          "spec": "docs/spec/k0.md#K0-BC-2",
+          "status": "live"
+        },
+        {
+          "id": "feature-map-view",
+          "area": "feature-map",
           "files": [
             "src/lib/ui/FeatureMap.svelte",
             "src/lib/ui/feature-map-data.ts"
           ],
+          "name": "지도 탭 화면",
+          "summary": "위 정보를 트리맵으로 그려서 어디가 지금 변경 중인지 색으로 보여주는 화면 탭",
           "spec": "docs/spec/k0.md#K0-BC-3",
           "status": "live"
         },
         {
-          "id": "documentation",
-          "name": "동결 스펙 및 절",
-          "summary": "SPEC.md 정본과 허브별 절 파일 (docs/spec/k0.md 등) · 원장 · 상태",
+          "id": "spec-docs",
+          "area": "documentation",
           "files": [
             "docs/**",
             "CLAUDE.md",
             "EPIC-STATE.md"
           ],
+          "name": "동결 스펙 및 절",
+          "summary": "SPEC.md 정본과 허브별 절 파일 (docs/spec/k0.md 등) · 원장 · 상태",
           "spec": "docs/SPEC.md",
           "status": "live"
         }
       ],
-      "processes": [],
-      "fetched_at": "2026-09-17T04:40:12.386Z"
+      "fetched_at": "2026-09-17T04:41:32.412Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -4788,7 +5182,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T04:40:12.699Z"
+      "fetched_at": "2026-09-17T04:41:32.556Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -5321,7 +5715,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-17T04:40:12.978Z"
+      "fetched_at": "2026-09-17T04:41:32.766Z"
     }
   ],
   "rollup": {
