@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T14:10:37.006Z",
+  "built_at": "2026-09-17T14:30:51.591Z",
   "prompts": [],
   "reports": [
     {
@@ -300,20 +300,20 @@
       "ledger_events": []
     },
     {
-      "path": "k1/K1-0917-H-report.md",
-      "round": "K1-0917-H",
-      "pr": "130",
+      "path": "k1/K1-0917-I-report.md",
+      "round": "K1-0917-I",
+      "pr": "131",
       "outcome": "landed",
       "kyu_checks": [
-        "K0 UI [테스트 열기] · base_url·home·port 3 필드 소비 · 폴백 없이 직접 열림 스샷",
-        "contract-portal.test.mjs CI 필수 · K0/K1 계약 자동 감시"
+        "Kyu 맥 브라우저 [테스트 열기] · 환영 화면 0 · localhost:4321 바로 열림 스샷",
+        "K0 UI 진행 로그 = 사람 문장 노출 확증 (설치 중 · 서버 시작 중 등)"
       ],
       "ledger_events": [
         {
           "id": "R003",
           "action": "consume",
-          "note": "SSE ready payload · base_url·home·port 3 필드 편입 · K0-K 리포트 회부 · K0 폴백 없이 직접 열림 · 실 SSE ready 실측 완료",
-          "label": "R003 착지 (SSE ready payload · base_url·home·port 3 필드 편입 · K0-K 리포트 회부)"
+          "note": "Chrome 환영 화면 억제 (3 플래그 + First Run 마커) · progress label 13종 · 실 SSE progress label 5종 노출 확증",
+          "label": "R003 착지 (Chrome 환영 화면 억제 (3 플래그 + First Run 마커) · progress label 13종 )"
         }
       ]
     }
@@ -6064,7 +6064,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T14:10:36.584Z"
+      "fetched_at": "2026-09-17T14:30:51.051Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -7283,7 +7283,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T14:10:36.741Z"
+      "fetched_at": "2026-09-17T14:30:51.306Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -7816,7 +7816,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-17T14:10:37.005Z"
+      "fetched_at": "2026-09-17T14:30:51.590Z"
     }
   ],
   "rollup": {
