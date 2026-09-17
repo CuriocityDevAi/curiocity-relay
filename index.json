@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T09:00:22.057Z",
+  "built_at": "2026-09-17T14:07:00.602Z",
   "prompts": [],
   "reports": [
     {
@@ -300,27 +300,20 @@
       "ledger_events": []
     },
     {
-      "path": "k1/K1-0917-G-report.md",
-      "round": "K1-0917-G",
-      "pr": "128",
+      "path": "k1/K1-0917-H-report.md",
+      "round": "K1-0917-H",
+      "pr": "130",
       "outcome": "landed",
       "kyu_checks": [
-        "K0 흐름판 이력 탭 · 원장 편집 사람 문장 노출 확증 (등재·우선순위·상태·note)",
-        "session read/reconcile raw:true 접힘 실 노출",
-        "agilo /api/prs 200 실측 (배포 후)"
+        "K0 UI [테스트 열기] · base_url·home·port 3 필드 소비 · 폴백 없이 직접 열림 스샷",
+        "contract-portal.test.mjs CI 필수 · K0/K1 계약 자동 감시"
       ],
       "ledger_events": [
         {
-          "id": "R002",
+          "id": "R003",
           "action": "consume",
-          "note": "태스크 처리 이력 원천 완결 · relay ledger git 이력 148 events 파싱 (등재 39 · 우선순위 7 · 상태 13 · note 89) · 사람 문장 label · type=ledger",
-          "label": "R002 착지 (태스크 처리 이력 원천 완결 · relay ledger git 이력 148 events 파싱 (등재 39 ·)"
-        },
-        {
-          "id": "R031",
-          "action": "consume",
-          "note": "agilo-medusa-pos-fork hidden false 원복 · CROSS_REPO_READ_TOKEN 포크 포함 확증",
-          "label": "R031 착지 (agilo-medusa-pos-fork hidden false 원복 · CROSS_REPO_READ_TOKE)"
+          "note": "SSE ready payload · base_url·home·port 3 필드 편입 · K0-K 리포트 회부 · K0 폴백 없이 직접 열림 · 실 SSE ready 실측 완료",
+          "label": "R003 착지 (SSE ready payload · base_url·home·port 3 필드 편입 · K0-K 리포트 회부)"
         }
       ]
     }
@@ -5500,7 +5493,7 @@
   "hubs": {
     "k0": {
       "last_action": "K0-0917-K 리포트",
-      "files_touched": 15,
+      "files_touched": 13,
       "tests_touched": 0,
       "updated_at": "2026-09-17T08:56:38.281Z"
     },
@@ -6063,7 +6056,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T09:00:21.419Z"
+      "fetched_at": "2026-09-17T14:06:59.824Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -7282,7 +7275,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T09:00:21.649Z"
+      "fetched_at": "2026-09-17T14:07:00.055Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -7815,7 +7808,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-17T09:00:22.056Z"
+      "fetched_at": "2026-09-17T14:07:00.601Z"
     }
   ],
   "rollup": {
