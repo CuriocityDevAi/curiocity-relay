@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T04:19:23.095Z",
+  "built_at": "2026-09-17T04:40:12.994Z",
   "prompts": [],
   "reports": [
     {
@@ -134,9 +134,9 @@
       "ledger_events": []
     },
     {
-      "path": "k0/K0-0917-D-report.md",
-      "round": "K0-0917-D",
-      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/116",
+      "path": "k0/K0-0917-E-report.md",
+      "round": "K0-0917-E",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/118",
       "outcome": "",
       "kyu_checks": [],
       "ledger_events": []
@@ -931,15 +931,15 @@
   "requirements": [
     {
       "id": "R001",
-      "text": "�\\N\\x8C�\\x8A��\\x8A� �\\x80�\\x9D��\\x8A��\\x93��\\x9D\\x84 모�\\x95\\x98�\\x8B��\\x80, �\\x82\\x98�\\x91�\\x97\\x90 �\\x9E\\x90�\\x8F\\x99 �\\N\\x8C�\\x8A��\\x8A��\\x95\\x9C�\\x8B�",
-      "title": "�\\N\\x8C�\\x8A��\\x8A� �\\x80�\\x9D��\\x8A��\\x93��\\x9D\\x84 모�\\x95\\x98�\\x8B��\\x80, �\\x82\\x98�\\x91�\\x97\\x90 �\\x9E\\x90�\\x8F\\x99 �\\N\\x8C�\\x8A��\\x8A��\\x95\\x9C�\\x8B�",
+      "text": "테스트 케이스들을 모았다가, 나중에 자동 테스트한다",
+      "title": "테스트 케이스들을 모았다가, 나중에 자동 테스트한다",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k2",
       "priority": "P0",
       "size": "Epic",
-      "status": "issued",
-      "column": "implementing",
+      "status": "landed",
+      "column": "drilling",
       "issued_id": "K2-0916-A",
       "issue_id": "K2-0916-A",
       "repeat_count": 3,
@@ -966,25 +966,25 @@
           "last_ts": "2026-07-28"
         },
         "landed": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-07-28"
         }
       },
-      "note": "07-28~09-14 �\\x86\\x8C�\\x9C\\_ �\\x97\\x88�\\x8C �\\x80�\\x9E��\\x9C 미�\\x9C�\\x80 · 09-16 �\\x9F\\x94� �\\x93��\\x9E�"
+      "note": "07-28~09-14 소유 허브 부재로 미발부 · 09-16 🔴 등재 · K2-0916-A 착지(PR#104 머지)"
     },
     {
       "id": "R002",
-      "text": "�\\x82��\\x80 �\\x95\\x9C�\\x88 �\\x9D��\\x95�기�\\x95\\x9C�\\x83�\\x9D� �\\_\\x80�\\x9E��\\x9D� �\\x90\\x98�\\x96��\\x9E\\x88�\\x96��\\x84\\x9C, 차�\\x80�\\x8C\\x80�\\x9C 구�\\x98\\x84�\\x9D� �\\x90\\x98�\\_, �\\x98��\\x9E��\\x8F\\x99�\\x95\\x88 �\\x9A��\\x84\\_�\\x88\\x9C�\\x9C\\x84�\\x97\\x90�\\x84\\x9C �\\x80�\\_��\\x84\\x9C �\\x81\\x90�\\x97\\x90 �\\x8C\\x93�\\x97��\\x9E\\x88�\\x8A\\x94건�\\x9D\\x80 �\\x94��\\x9C �\\x82\\x98�\\x97\\x90�\\x8C �\\x95\\x8C�\\_�주면",
-      "title": "�\\x82��\\x80 �\\x95\\x9C�\\x88 �\\x9D��\\x95�기�\\x95\\x9C�\\x83�\\x9D� �\\_\\x80�\\x9E��\\x9D� �\\x90\\x98�\\x96��\\x9E\\x88�\\x96��\\x84\\x9C, 차�\\x80�\\x8C\\x80�\\x9C 구�\\x98\\x84�\\x9D� �\\x90\\x98�\\_, �\\x98��\\x9E��\\x8F\\x99�\\x95\\x88 �\\x9A��\\x84\\_�\\x88\\x9C�\\x9C\\x84�\\x97\\x90�\\x84\\x9C �\\x80�\\_��\\x84\\x9C �\\x81\\x90�\\x97\\x90 �\\x8C\\x93�\\x97��\\x9E\\x88�\\x8A\\x94건�\\x9D\\x80 �\\x94��\\x9C �\\x82\\x98�\\x97\\x90�\\x8C �\\x95\\x8C�\\_�주면",
+      "text": "내가 한번 이야기한것이 저장이 되어있어서, 차례대로 구현이 되고, 오랫동안 우선순위에서 밀려서 큐에 쌓여있는건은 따로 나에게 알려주면",
+      "title": "내가 한번 이야기한것이 저장이 되어있어서, 차례대로 구현이 되고, 오랫동안 우선순위에서 밀려서 큐에 쌓여있는건은 따로 나에게 알려주면",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k0",
       "priority": "P0",
       "size": "L",
-      "status": "issued",
-      "column": "implementing",
-      "issued_id": "K0-0916-E",
-      "issue_id": "K0-0916-E",
+      "status": "landed",
+      "column": "drilling",
+      "issued_id": "K0-0917-D",
+      "issue_id": "K0-0917-D",
       "repeat_count": 1,
       "filed_at": "2026-09-16",
       "age_days": 1,
@@ -1013,12 +1013,12 @@
           "last_ts": "2026-09-17T04:03:08.132Z"
         }
       },
-      "note": "�\\x9D�벤�\\x8A� �\\x86\\x8C�\\x8A� = K1-0916-B · �\\x80�\\x91\\x9C = K2-0916-B"
+      "note": "클코 허브 탭 · 이벤트 소스 K1 · 지표 K2 · 마일스톤 1에서 Kyu 확인"
     },
     {
       "id": "R003",
-      "text": "�\\N\\x8C�\\x8A��\\x8A� �\\x8C�\\x9D��\\x9A��\\_\\x80 �\\x97�기 �\\x84�\\x8A��\\x9D\\x84 �\\x88\\x84르면 �\\x9C�\\x8B\\_ �\\x86\\x8C�\\x8A�를 �\\x9B�\\_, �\\x83\\x88 �\\x8C�\\x9D��\\x9A��\\_\\x80를 �\\x97��\\_, �\\x9C그�\\x9D� �\\x93� 기본�\\x9D\\x84 �\\x8B� �\\x95\\x98�\\_, �\\x95\\x84�\\x9A\\x94�\\x95\\x9C �\\x9C\\x84�\\x98�\\x8C�\\x80 �\\x80�\\x84\\x9C �\\x82\\x98�\\x9D\\x98 �\\N\\x8C�\\x8A��\\x8A�를 기�\\x8B�리�\\x8C",
-      "title": "�\\N\\x8C�\\x8A��\\x8A� �\\x8C�\\x9D��\\x9A��\\_\\x80 �\\x97�기 �\\x84�\\x8A��\\x9D\\x84 �\\x88\\x84르면 �\\x9C�\\x8B\\_ �\\x86\\x8C�\\x8A�를 �\\x9B�\\_, �\\x83\\x88 �\\x8C�\\x9D��\\x9A��\\_\\x80를 �\\x97��\\_, �\\x9C그�\\x9D� �\\x93� 기본�\\x9D\\x84 �\\x8B� �\\x95\\x98�\\_, �\\x95\\x84�\\x9A\\x94�\\x95\\x9C �\\x9C\\x84�\\x98�\\x8C�\\x80 �\\x80�\\x84\\x9C �\\x82\\x98�\\x9D\\x98 �\\N\\x8C�\\x8A��\\x8A�를 기�\\x8B�리�\\x8C",
+      "text": "테스트 브라우저 열기 버튼을 누르면 최신 소스를 받고, 새 브라우저를 열고, 로그인 등 기본을 다 하고, 필요한 위치까지 가서 나의 테스트를 기다리게",
+      "title": "테스트 브라우저 열기 버튼을 누르면 최신 소스를 받고, 새 브라우저를 열고, 로그인 등 기본을 다 하고, 필요한 위치까지 가서 나의 테스트를 기다리게",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k1",
@@ -1056,12 +1056,12 @@
           "last_ts": "2026-09-17T04:15:56.252Z"
         }
       },
-      "note": "�\\x88�\\x9D��\\x8A��\\x86� 1�\\x97\\x90�\\x84\\x9C Kyu �\\x99\\x95�\\x9D�"
+      "note": "Kyu 맥 데몬 500·SSE 실패(09-17) → K1 다음 라운드"
     },
     {
       "id": "R004",
-      "text": "test-portal�\\x9D� �\\x95\\x8C�\\_�주�\\x8A\\x94 �\\N\\x8C�\\x8A��\\x8A� �\\x95\\x88�\\x82��\\x80 �\\x84\\x88(�\\x81��\\x9C�\\x93\\x9C)�\\x99\\x80 �\\x99거�\\x82\\x98 �\\x8D\\x94 �\\x89��\\x9B\\x8C�\\x95� �\\x95�",
-      "title": "test-portal�\\x9D� �\\x95\\x8C�\\_�주�\\x8A\\x94 �\\N\\x8C�\\x8A��\\x8A� �\\x95\\x88�\\x82��\\x80 �\\x84\\x88(�\\x81��\\x9C�\\x93\\x9C)�\\x99\\x80 �\\x99거�\\x82\\x98 �\\x8D\\x94 �\\x89��\\x9B\\x8C�\\x95� �\\x95�",
+      "text": "test-portal이 알려주는 테스트 안내가 너(클로드)와 같거나 더 쉬워야 해",
+      "title": "test-portal이 알려주는 테스트 안내가 너(클로드)와 같거나 더 쉬워야 해",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k0",
@@ -1103,8 +1103,8 @@
     },
     {
       "id": "R005",
-      "text": "모�\\x94�\\x9D�·�\\x8D��\\x8A��\\x81��\\x86�·�\\x95\\x84�\\x9D��\\x8C��\\x93\\x9C�\\x97\\x90�\\x84\\x9C �\\N\\x8C�\\x8A��\\x8A��\\x95\\_ �\\x83 �\\x99�\\x95\\x84 · �\\x8D\\x94 �\\x8E�리�\\x95\\x9C 방�\\x95",
-      "title": "모�\\x94�\\x9D�·�\\x8D��\\x8A��\\x81��\\x86�·�\\x95\\x84�\\x9D��\\x8C��\\x93\\x9C�\\x97\\x90�\\x84\\x9C �\\N\\x8C�\\x8A��\\x8A��\\x95\\_ �\\x83 �\\x99�\\x95\\x84 · �\\x8D\\x94 �\\x8E�리�\\x95\\x9C 방�\\x95",
+      "text": "모바일·데스크톱·아이패드에서 테스트할 것 같아 · 더 편리한 방법",
+      "title": "모바일·데스크톱·아이패드에서 테스트할 것 같아 · 더 편리한 방법",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k0",
@@ -1146,8 +1146,8 @@
     },
     {
       "id": "R006",
-      "text": "�\\x95\\x8C림�\\x9D\\x80 �\\x94�\\x9D��\\x8C�\\_\\x88�\\x9D��\\N\\x98�\\x9D��\\x82\\x98 �\\x86\\x8C리�\\x8C�\\x80(�\\x9D�) �\\x82��\\x9C�면",
-      "title": "�\\x95\\x8C림�\\x9D\\x80 �\\x94�\\x9D��\\x8C�\\_\\x88�\\x9D��\\N\\x98�\\x9D��\\x82\\x98 �\\x86\\x8C리�\\x8C�\\x80(�\\x9D�) �\\x82��\\x9C�면",
+      "text": "알림은 바이브레이션이나 소리까지(띵) 났으면",
+      "title": "알림은 바이브레이션이나 소리까지(띵) 났으면",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k1",
@@ -1185,12 +1185,12 @@
           "last_ts": "2026-09-17T04:15:56.252Z"
         }
       },
-      "note": "OS 기본�\\x9D\\x8C+�\\x84�\\x8F\\x99 · �\\x8F��\\x84� �\\x97�림 �\\x8B\\x9C �\\x9D� · Kyu �\\x95\\x8C림 �\\x8B�기 미�\\x99\\x84"
+      "note": "OS 기본음+진동 · 포털 열림 시 띵 · Kyu 알림 실기 미완"
     },
     {
       "id": "R007",
-      "text": "�\\x84�공 �\\x8C\\x90�\\_\\x95�\\x9D\\x84 �\\x95\\x9C PR�\\x9D� �\\x8B��\\_\\x9C 머�\\x80�\\x80 �\\x99\\x84�\\x8C�\\x90\\x98�\\x97\\x88�\\x8A\\x94�\\x80 · 그 �\\x99\\x94면�\\x97\\x90�\\x84\\x9C �\\x88\\x88�\\x97\\x90 �\\x9D\\x84�\\x8C �\\x97\\N�\\x8D��\\x9D��\\x8A�(보�\\x9D��\\x83\\x89)",
-      "title": "�\\x84�공 �\\x8C\\x90�\\_\\x95�\\x9D\\x84 �\\x95\\x9C PR�\\x9D� �\\x8B��\\_\\x9C 머�\\x80�\\x80 �\\x99\\x84�\\x8C�\\x90\\x98�\\x97\\x88�\\x8A\\x94�\\x80 · 그 �\\x99\\x94면�\\x97\\x90�\\x84\\x9C �\\x88\\x88�\\x97\\x90 �\\x9D\\x84�\\x8C �\\x97\\N�\\x8D��\\x9D��\\x8A�(보�\\x9D��\\x83\\x89)",
+      "text": "성공 판정을 한 PR이 실제 머지가 완료되었는지 · 그 화면에서 눈에 띄게 업데이트(보라색)",
+      "title": "성공 판정을 한 PR이 실제 머지가 완료되었는지 · 그 화면에서 눈에 띄게 업데이트(보라색)",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k0",
@@ -1232,15 +1232,15 @@
     },
     {
       "id": "R008",
-      "text": "�\\x83� �\\x9C\\x84�\\x98를 �\\x95\\x84�\\x9E\\x98�\\x80 �\\x95\\x84�\\x8B\\x88�\\x9D� �\\x99\\x94면 �\\x83\\x81�\\x8B��\\x9C��\\x9C",
-      "title": "�\\x83� �\\x9C\\x84�\\x98를 �\\x95\\x84�\\x9E\\x98�\\x80 �\\x95\\x84�\\x8B\\x88�\\x9D� �\\x99\\x94면 �\\x83\\x81�\\x8B��\\x9C��\\x9C",
+      "text": "탭 위치를 아래가 아니라 화면 상단으로",
+      "title": "탭 위치를 아래가 아니라 화면 상단으로",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k0",
       "priority": "P1",
       "size": "S",
-      "status": "landed",
-      "column": "drilling",
+      "status": "verified",
+      "column": "merged",
       "issued_id": "K0-0914-AW",
       "issue_id": "K0-0914-AW",
       "repeat_count": 1,
@@ -1275,8 +1275,8 @@
     },
     {
       "id": "R009",
-      "text": "�\\x83\\x88�\\x9C�\\x9A� �\\x94\\x84�\\x9C�\\_\\x9D�\\x8A��\\x80 �\\x94�\\x80�\\x90\\x98�\\x8D\\x94�\\x9D��\\x8F\\x84 �\\x9C찮�\\x95\\x84? �\\x94�\\x9A��\\_\\x81�\\x9D� �\\x83 · �\\x9A\\x8C�\\x82� �\\x81�\\x9B\\x90�\\x93��\\x8F\\x84 �\\x8D��\\x95�",
-      "title": "�\\x83\\x88�\\x9C�\\x9A� �\\x94\\x84�\\x9C�\\_\\x9D�\\x8A��\\x80 �\\x94�\\x80�\\x90\\x98�\\x8D\\x94�\\x9D��\\x8F\\x84 �\\x9C찮�\\x95\\x84? �\\x94�\\x9A��\\_\\x81�\\x9D� �\\x83 · �\\x9A\\x8C�\\x82� �\\x81�\\x9B\\x90�\\x93��\\x8F\\x84 �\\x8D��\\x95�",
+      "text": "새로운 프로젝트가 추가되더라도 괜찮아? 범용적일 것 · 회사 직원들도 써야",
+      "title": "새로운 프로젝트가 추가되더라도 괜찮아? 범용적일 것 · 회사 직원들도 써야",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k0",
@@ -1314,15 +1314,15 @@
           "last_ts": "2026-09-17T04:03:08.132Z"
         }
       },
-      "note": "�\\x97\\x88�\\x8C �\\x8C\\x8C�\\x83\\x9D�\\x9D\\x80 AV�\\x97\\x90�\\x84\\x9C �\\x99\\x84�\\x8C · �\\x83\\x80�\\x9E\\N·�\\x8B\\x9C�\\x93\\x9C �\\x94�\\x9A��\\x99\\x94 �\\x9E\\x94�\\x97�"
+      "note": "허브 파생은 AV에서 완료 · 타입·시드 범용화 잔여"
     },
     {
       "id": "R010",
-      "text": "�\\N\\x8C�\\x8A��\\x8A� 체�\\x84 �\\x80\\x94 �\\x99\\x98경 �\\x8C\\x8C�\\x9D� · �\\_\\x95�\\x8B� · �\\x8B��\\x8C� �\\x9C�\\_\\x95 · �\\x9E��\\x99\\x9C�\\x9A� · �\\x9A\\x94구 �\\x80경 �\\x8B\\x9C �\\x80리",
-      "title": "�\\N\\x8C�\\x8A��\\x8A� 체�\\x84 �\\x80\\x94 �\\x99\\x98경 �\\x8C\\x8C�\\x9D� · �\\_\\x95�\\x8B� · �\\x8B��\\x8C� �\\x9C�\\_\\x95 · �\\x9E��\\x99\\x9C�\\x9A� · �\\x9A\\x94구 �\\x80경 �\\x8B\\x9C �\\x80리",
+      "text": "테스트 체계 — 환경 파일 · 정답 · 실패 규정 · 재활용 · 요구 변경 시 관리",
+      "title": "테스트 체계 — 환경 파일 · 정답 · 실패 규정 · 재활용 · 요구 변경 시 관리",
       "project": "test-portal",
       "project_slug": "test-portal",
-      "hub": "k2",
+      "hub": "k1",
       "priority": "P1",
       "size": "L",
       "status": "landed",
@@ -1337,12 +1337,12 @@
       "blocked_by": null,
       "trace5": {
         "read": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-17T03:06:39.645Z"
         },
         "reconcile": {
-          "seen": false,
-          "last_ts": null
+          "seen": true,
+          "last_ts": "2026-09-17T04:03:36.038Z"
         },
         "priority": {
           "seen": false,
@@ -1354,15 +1354,15 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-14"
+          "last_ts": "2026-09-17T04:15:56.252Z"
         }
       },
-      "note": ""
+      "note": "K2 폐쇄(09-16) · 소유 K1 승계"
     },
     {
       "id": "R011",
-      "text": "�\\x82��\\x9E\\x8C �\\x8C\\x90�\\_\\x95�\\x9D\\x80 �\\x9C�\\x86\\x8C�\\x9C · 백�\\x97\\x94�\\x93\\x9C�\\x8C �\\x88\\x98�\\_\\x95�\\x9D�면 �\\N\\x8C�\\x8A��\\x8A��\\x95\\x98�\\x9D��\\_ �\\x95\\x98면 �\\x95\\x88 �\\x90� · �\\x82��\\x9E\\x8C �\\x97\\x86�\\x9D� 배�\\x8F��\\x95��\\x8F\\x84 �\\x90\\x98�\\x8A\\x94 기�\\x80",
-      "title": "�\\x82��\\x9E\\x8C �\\x8C\\x90�\\_\\x95�\\x9D\\x80 �\\x9C�\\x86\\x8C�\\x9C · 백�\\x97\\x94�\\x93\\x9C�\\x8C �\\x88\\x98�\\_\\x95�\\x9D�면 �\\N\\x8C�\\x8A��\\x8A��\\x95\\x98�\\x9D��\\_ �\\x95\\x98면 �\\x95\\x88 �\\x90� · �\\x82��\\x9E\\x8C �\\x97\\x86�\\x9D� 배�\\x8F��\\x95��\\x8F\\x84 �\\x90\\x98�\\x8A\\x94 기�\\x80",
+      "text": "사람 판정은 최소로 · 백엔드만 수정이면 테스트하라고 하면 안 됨 · 사람 없이 배포해도 되는 기준",
+      "title": "사람 판정은 최소로 · 백엔드만 수정이면 테스트하라고 하면 안 됨 · 사람 없이 배포해도 되는 기준",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k1",
@@ -1404,15 +1404,15 @@
     },
     {
       "id": "R012",
-      "text": "�\\x97\\x88�\\x8C �\\x83\\x81�\\x83\\x9C�\\x8C\\x90�\\x9D\\x80 �\\x84�\\x9C �\\x9D\\x98미 �\\x97\\x86�\\x9D\\x8C(cmux) · 1�\\x88(맥 �\\x9E\\x90�\\x8F\\x99�\\x99\\x94)�\\x9D� �\\x80�\\x9E� �\\x9D\\x98미",
-      "title": "�\\x97\\x88�\\x8C �\\x83\\x81�\\x83\\x9C�\\x8C\\x90�\\x9D\\x80 �\\x84�\\x9C �\\x9D\\x98미 �\\x97\\x86�\\x9D\\x8C(cmux) · 1�\\x88(맥 �\\x9E\\x90�\\x8F\\x99�\\x99\\x94)�\\x9D� �\\x80�\\x9E� �\\x9D\\x98미",
+      "text": "허브 상태판은 별로 의미 없음(cmux) · 1번(맥 자동화)이 가장 의미",
+      "title": "허브 상태판은 별로 의미 없음(cmux) · 1번(맥 자동화)이 가장 의미",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k0",
       "priority": "P1",
       "size": "S",
-      "status": "issued",
-      "column": "implementing",
+      "status": "landed",
+      "column": "drilling",
       "issued_id": "K0-0916-E",
       "issue_id": "K0-0916-E",
       "repeat_count": 1,
@@ -1447,17 +1447,17 @@
     },
     {
       "id": "R013",
-      "text": "�\\x81\\x90를 �\\x8C�\\x93��\\x96��\\x92\\x80�\\x8A\\x94�\\x8D� �\\x99\\x9C �\\x8F\\x99�\\x9E\\x91 �\\x95\\x88 �\\x95\\x98�\\x82\\x98 �\\x80\\x94 ops/dispatch inbox 7건 · relay prompts �\\x86��\\x95�",
-      "title": "�\\x81\\x90를 �\\x8C�\\x93��\\x96��\\x92\\x80�\\x8A\\x94�\\x8D� �\\x99\\x9C �\\x8F\\x99�\\x9E\\x91 �\\x95\\x88 �\\x95\\x98�\\x82\\x98 �\\x80\\x94 ops/dispatch inbox 7건 · relay prompts �\\x86��\\x95�",
+      "text": "큐를 만들어뒀는데 왜 동작 안 하나 — ops/dispatch inbox 7건 · relay prompts 통합",
+      "title": "큐를 만들어뒀는데 왜 동작 안 하나 — ops/dispatch inbox 7건 · relay prompts 통합",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k0",
       "priority": "P1",
       "size": "S",
-      "status": "issued",
-      "column": "implementing",
-      "issued_id": "K0-0916-E",
-      "issue_id": "K0-0916-E",
+      "status": "done",
+      "column": "merged",
+      "issued_id": "K0-0916-F",
+      "issue_id": "K0-0916-F",
       "repeat_count": 1,
       "filed_at": "2026-09-16",
       "age_days": 1,
@@ -1486,12 +1486,12 @@
           "last_ts": "2026-09-17T04:03:08.132Z"
         }
       },
-      "note": ""
+      "note": "inbox 7건 → R101~R107 이관 · 폴더 삭제 · relay 원장 = 유일 큐"
     },
     {
       "id": "R014",
-      "text": "GrowNest·StorePort �\\x95��\\x97\\x90 dev �\\x9E\\x90�\\x8F\\x99 �\\x9C그�\\x9D� �\\x95\\x9C �\\x84",
-      "title": "GrowNest·StorePort �\\x95��\\x97\\x90 dev �\\x9E\\x90�\\x8F\\x99 �\\x9C그�\\x9D� �\\x95\\x9C �\\x84",
+      "text": "GrowNest·StorePort 앱에 dev 자동 로그인 한 줄",
+      "title": "GrowNest·StorePort 앱에 dev 자동 로그인 한 줄",
       "project": "grownest",
       "project_slug": "grownest",
       "hub": "n0",
@@ -1533,8 +1533,8 @@
     },
     {
       "id": "R015",
-      "text": "�\\x81 리�\\x8F��\\x84 CI · docs/testing.md · �\\x8B\\x9C�\\x93\\x9C �\\_�\\_\\x95",
-      "title": "�\\x81 리�\\x8F��\\x84 CI · docs/testing.md · �\\x8B\\x9C�\\x93\\x9C �\\_�\\_\\x95",
+      "text": "각 리포별 CI · docs/testing.md · 시드 고정",
+      "title": "각 리포별 CI · docs/testing.md · 시드 고정",
       "project": "all",
       "project_slug": "all",
       "hub": "t0",
@@ -1576,8 +1576,8 @@
     },
     {
       "id": "R016",
-      "text": "�\\x97 �\\x84리 · �\\x94\\x84�\\x9C�\\_\\x9D�\\x8A� 1 + �\\x97 2(�\\x8F��\\x84�/�\\_\\x9C�\\x92\\x88)",
-      "title": "�\\x97 �\\x84리 · �\\x94\\x84�\\x9C�\\_\\x9D�\\x8A� 1 + �\\x97 2(�\\x8F��\\x84�/�\\_\\x9C�\\x92\\x88)",
+      "text": "챗 분리 · 프로젝트 1 + 챗 2(포털/제품)",
+      "title": "챗 분리 · 프로젝트 1 + 챗 2(포털/제품)",
       "project": "orchestration",
       "project_slug": "orchestration",
       "hub": "oke",
@@ -1592,7 +1592,7 @@
       "age_days": 1,
       "next": false,
       "conflict_with": [],
-      "blocked_by": "�\\x88�\\x9D��\\x8A��\\x86� 1",
+      "blocked_by": "마일스톤 1",
       "trace5": {
         "read": {
           "seen": false,
@@ -1619,8 +1619,8 @@
     },
     {
       "id": "R017",
-      "text": "GitHub �\\x95��\\x9D� �\\x8D\\x94 �\\x95\\x88�\\_\\x95�\\_\\x81�\\x9D��\\_ �\\_르�\\_�\\x8B� �\\x80\\x94 A(�\\x8F��\\x84�) vs B(GitHub+PR �\\x94\\x84리뷰) �\\x84�\\x90",
-      "title": "GitHub �\\x95��\\x9D� �\\x8D\\x94 �\\x95\\x88�\\_\\x95�\\_\\x81�\\x9D��\\_ �\\_르�\\_�\\x8B� �\\x80\\x94 A(�\\x8F��\\x84�) vs B(GitHub+PR �\\x94\\x84리뷰) �\\x84�\\x90",
+      "text": "GitHub 앱이 더 안정적이고 빠르겠다 — A(포털) vs B(GitHub+PR 프리뷰) 비교",
+      "title": "GitHub 앱이 더 안정적이고 빠르겠다 — A(포털) vs B(GitHub+PR 프리뷰) 비교",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "oke",
@@ -1635,7 +1635,7 @@
       "age_days": 1,
       "next": false,
       "conflict_with": [],
-      "blocked_by": "�\\x88�\\x9D��\\x8A��\\x86� 1",
+      "blocked_by": "마일스톤 1",
       "trace5": {
         "read": {
           "seen": false,
@@ -1662,8 +1662,8 @@
     },
     {
       "id": "R018",
-      "text": "orphan 4건 �\\x81�릭 �\\x8B\\x9C �\\x95\\x84�\\x84� · �\\x8C\\x90�\\_\\x95�\\x88�\\x80 4(�\\x9C근 2·�\\x87�근 2) �\\x91\\x9C기 · �\\x8F\\x8C�\\x95\\x84�\\x80기 �\\x86\\x92 �\\x8C\\x90�\\_\\x95�\\x88�\\x80 �\\x95\\x84�\\x84� · �\\x9C근/�\\x87�근 �\\x8B\\x9C�\\x81 �\\x81�\\_\\x91 �\\x9E\\N�\\_�",
-      "title": "orphan 4건 �\\x81�릭 �\\x8B\\x9C �\\x95\\x84�\\x84� · �\\x8C\\x90�\\_\\x95�\\x88�\\x80 4(�\\x9C근 2·�\\x87�근 2) �\\x91\\x9C기 · �\\x8F\\x8C�\\x95\\x84�\\x80기 �\\x86\\x92 �\\x8C\\x90�\\_\\x95�\\x88�\\x80 �\\x95\\x84�\\x84� · �\\x9C근/�\\x87�근 �\\x8B\\x9C�\\x81 �\\x81�\\_\\x91 �\\x9E\\N�\\_�",
+      "text": "orphan 4건 클릭 시 필터 · 판정불가 4(출근 2·퇴근 2) 표기 · 돌아가기 → 판정불가 필터 · 출근/퇴근 시각 직접 입력",
+      "title": "orphan 4건 클릭 시 필터 · 판정불가 4(출근 2·퇴근 2) 표기 · 돌아가기 → 판정불가 필터 · 출근/퇴근 시각 직접 입력",
       "project": "todoboss",
       "project_slug": "todoboss",
       "hub": "t0",
@@ -1705,17 +1705,17 @@
     },
     {
       "id": "R019",
-      "text": "�\\x8B\\x9C�\\x81 �\\x81�\\_\\x91 �\\x9E\\N�\\_� �\\x86\\x92 �\\x9E��\\x8C\\x90�\\_\\x95(�\\x80�\\x81/�\\x95�근 �\\x9E\\x90�\\x8F\\x99 �\\x82��\\x9C)",
-      "title": "�\\x8B\\x9C�\\x81 �\\x81�\\_\\x91 �\\x9E\\N�\\_� �\\x86\\x92 �\\x9E��\\x8C\\x90�\\_\\x95(�\\x80�\\x81/�\\x95�근 �\\x9E\\x90�\\x8F\\x99 �\\x82��\\x9C)",
+      "text": "시각 직접 입력 → 재판정(지각/야근 자동 산출)",
+      "title": "시각 직접 입력 → 재판정(지각/야근 자동 산출)",
       "project": "todoboss",
       "project_slug": "todoboss",
       "hub": "t0",
       "priority": "P0",
       "size": "S",
-      "status": "landed",
-      "column": "drilling",
-      "issued_id": "T0-0915-A",
-      "issue_id": "T0-0915-A",
+      "status": "issued",
+      "column": "implementing",
+      "issued_id": "T0-0917-B",
+      "issue_id": "T0-0917-B",
       "repeat_count": 2,
       "filed_at": "2026-09-11",
       "age_days": 6,
@@ -1740,16 +1740,16 @@
           "last_ts": "2026-09-11"
         },
         "landed": {
-          "seen": true,
-          "last_ts": "2026-09-11"
+          "seen": false,
+          "last_ts": null
         }
       },
-      "note": ""
+      "note": "09-17 실기: 조정 범위 오염(다른 세션까지 변경 · 월 집계 급변) → B에서 회수"
     },
     {
       "id": "R020",
-      "text": "Todoboss �\\x9D��\\x97�: �\\x8C\\x8C�\\x9D�미�\\x84��\\x99\\x94 · Finalize · Payslip · Work Rotation �\\x8E��\\x84�",
-      "title": "Todoboss �\\x9D��\\x97�: �\\x8C\\x8C�\\x9D�미�\\x84��\\x99\\x94 · Finalize · Payslip · Work Rotation �\\x8E��\\x84�",
+      "text": "Todoboss 이연: 파라미터화 · Finalize · Payslip · Work Rotation 편성",
+      "title": "Todoboss 이연: 파라미터화 · Finalize · Payslip · Work Rotation 편성",
       "project": "todoboss",
       "project_slug": "todoboss",
       "hub": "t0",
@@ -1791,8 +1791,8 @@
     },
     {
       "id": "R021",
-      "text": "M0 POS �\\x95\\x98루 �\\x82��\\x9D��\\x81� �\\x8B�기 K1~K8",
-      "title": "M0 POS �\\x95\\x98루 �\\x82��\\x9D��\\x81� �\\x8B�기 K1~K8",
+      "text": "M0 POS 하루 사이클 실기 K1~K8",
+      "title": "M0 POS 하루 사이클 실기 K1~K8",
       "project": "storeport",
       "project_slug": "storeport",
       "hub": "m0",
@@ -1830,12 +1830,12 @@
           "last_ts": "2026-08-10"
         }
       },
-      "note": "�\\x8B�기 3�\\x9A\\x8C �\\x80림"
+      "note": "SDK 57 승격 · 실기 3회 밀림"
     },
     {
       "id": "R022",
-      "text": "목�\\x91\\x9C (�\\x80) Kyu �\\x98��\\x9E\\x90 �\\x8D�보�\\x8A\\x94 �\\x88\\x98�\\x80 · Metabase �\\x84\\_�\\x96\\x89 �\\x80\\x94 결�\\_\\x95",
-      "title": "목�\\x91\\x9C (�\\x80) Kyu �\\x98��\\x9E\\x90 �\\x8D�보�\\x8A\\x94 �\\x88\\x98�\\x80 · Metabase �\\x84\\_�\\x96\\x89 �\\x80\\x94 결�\\_\\x95",
+      "text": "목표 (가) Kyu 혼자 써보는 수준 · Metabase 선행 — 결정",
+      "title": "목표 (가) Kyu 혼자 써보는 수준 · Metabase 선행 — 결정",
       "project": "storeport",
       "project_slug": "storeport",
       "hub": "m0",
@@ -1877,8 +1877,8 @@
     },
     {
       "id": "R023",
-      "text": "�\\x98�\\x92\\x88·�\\x99\\x98�\\x88·취�\\x86\\x8C · �\\x95\\_�\\x9D� �\\_\\x81�\\x9A� · �\\x94�\\x94�\\x93\\x9C(카�\\x94�\\x9D�) �\\x80\\x94 POS �\\x99\\x94면 갭",
-      "title": "�\\x98�\\x92\\x88·�\\x99\\x98�\\x88·취�\\x86\\x8C · �\\x95\\_�\\x9D� �\\_\\x81�\\x9A� · �\\x94�\\x94�\\x93\\x9C(카�\\x94�\\x9D�) �\\x80\\x94 POS �\\x99\\x94면 갭",
+      "text": "반품·환불·취소 · 할인 적용 · 바코드(카메라) — POS 화면 갭",
+      "title": "반품·환불·취소 · 할인 적용 · 바코드(카메라) — POS 화면 갭",
       "project": "storeport",
       "project_slug": "storeport",
       "hub": "m0",
@@ -1920,8 +1920,8 @@
     },
     {
       "id": "R024",
-      "text": "EAS dev build(Android APK) + Xantri BT-58D �\\x94루�\\x88��\\x8A� �\\x9D��\\x87\\x84 + �\\x84\\x9C�\\x9E\\x8D",
-      "title": "EAS dev build(Android APK) + Xantri BT-58D �\\x94루�\\x88��\\x8A� �\\x9D��\\x87\\x84 + �\\x84\\x9C�\\x9E\\x8D",
+      "text": "EAS dev build(Android APK) + Xantri BT-58D 블루투스 인쇄 + 서랍",
+      "title": "EAS dev build(Android APK) + Xantri BT-58D 블루투스 인쇄 + 서랍",
       "project": "storeport",
       "project_slug": "storeport",
       "hub": "m0",
@@ -1963,8 +1963,8 @@
     },
     {
       "id": "R025",
-      "text": "Meta WhatsApp �\\x88�\\x98� · Midtrans/Xendit 머�\\x9C�\\x8A� �\\x99��\\x80 �\\x8B\\_청",
-      "title": "Meta WhatsApp �\\x88�\\x98� · Midtrans/Xendit 머�\\x9C�\\x8A� �\\x99��\\x80 �\\x8B\\_청",
+      "text": "Meta WhatsApp 번호 · Midtrans/Xendit 머천트 외부 신청",
+      "title": "Meta WhatsApp 번호 · Midtrans/Xendit 머천트 외부 신청",
       "project": "storeport",
       "project_slug": "storeport",
       "hub": "kyu",
@@ -2006,8 +2006,8 @@
     },
     {
       "id": "R026",
-      "text": "�\\x94�\\x96� �\\x91�\\x8B� ADR �\\N문�\\x99\\x94 · Wing �\\_\\x95본 �\\_\\x95�\\_\\x95(Starter) · Admin �\\x8B�기 �\\_\\x88차",
-      "title": "�\\x94�\\x96� �\\x91�\\x8B� ADR �\\N문�\\x99\\x94 · Wing �\\_\\x95본 �\\_\\x95�\\_\\x95(Starter) · Admin �\\x8B�기 �\\_\\x88차",
+      "text": "코어 중심 ADR 명문화 · Wing 정본 정정(Starter) · Admin 실기 절차",
+      "title": "코어 중심 ADR 명문화 · Wing 정본 정정(Starter) · Admin 실기 절차",
       "project": "storeport",
       "project_slug": "storeport",
       "hub": "m0",
@@ -2049,8 +2049,8 @@
     },
     {
       "id": "R027",
-      "text": "�\\x9D��\\x97� 16(AgentsPay �\\_\\x9C�\\x95�) �\\x89�\\x9D� �\\x9C\\_�\\x80",
-      "title": "�\\x9D��\\x97� 16(AgentsPay �\\_\\x9C�\\x95�) �\\x89�\\x9D� �\\x9C\\_�\\x80",
+      "text": "이연 16(AgentsPay 제약) 봉인 유지",
+      "title": "이연 16(AgentsPay 제약) 봉인 유지",
       "project": "storeport",
       "project_slug": "storeport",
       "hub": "m0",
@@ -2092,8 +2092,8 @@
     },
     {
       "id": "R028",
-      "text": "GrowNest 카�\\x9A��\\x8A��\\x97\\N �\\x8A��\\x80�\\x9D� �\\x9D��\\x98 �\\x8A��\\x95\\x80 �\\_\\x81�\\x9A� �\\x97��\\x80",
-      "title": "GrowNest 카�\\x9A��\\x8A��\\x97\\N �\\x8A��\\x80�\\x9D� �\\x9D��\\x98 �\\x8A��\\x95\\x80 �\\_\\x81�\\x9A� �\\x97��\\x80",
+      "text": "GrowNest 카운트업 스케일 일반 스핀 적용 여부",
+      "title": "GrowNest 카운트업 스케일 일반 스핀 적용 여부",
       "project": "grownest",
       "project_slug": "grownest",
       "hub": "n0",
@@ -2135,12 +2135,12 @@
     },
     {
       "id": "R029",
-      "text": "�\\x97\\x88�\\x8C �\\x83\\x81�\\x83\\x9C watcher �\\_\\x95�\\x80�\\x99\\x94(�\\x94\\x84�\\x9C�\\x84��\\x8A� 존�\\x9E��\\x89\\_�\\x8B��\\x96\\x89 �\\x91)",
-      "title": "�\\x97\\x88�\\x8C �\\x83\\x81�\\x83\\x9C watcher �\\_\\x95�\\x80�\\x99\\x94(�\\x94\\x84�\\x9C�\\x84��\\x8A� 존�\\x9E��\\x89\\_�\\x8B��\\x96\\x89 �\\x91)",
+      "text": "허브 상태 watcher 정밀화(프로세스 존재≠실행 중)",
+      "title": "허브 상태 watcher 정밀화(프로세스 존재≠실행 중)",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k1",
-      "priority": "P0",
+      "priority": "P2",
       "size": "S",
       "status": "filed",
       "column": "waiting",
@@ -2176,25 +2176,197 @@
           "last_ts": "2026-09-17T04:15:56.252Z"
         }
       },
-      "note": "R012(�\\x97\\x88�\\x8C�\\x8C\\x90 무�\\x9D\\x98미)�\\x99\\x80 �\\x83\\x81충 �\\x86\\x92 �\\x82��\\_\\x9C �\\_\\x9C�\\x95\\x88 �\\x8C\\x80�\\x83\\x81"
+      "note": "R012(허브판 무의미)와 상충 → 삭제 제안 대상 · K1-0916-E에서 4상태 최소 정밀화는 완료"
+    },
+    {
+      "id": "R030",
+      "text": "전체 기능 구조도가 마인드맵으로 보이고, 100개 중 3개가 변경 중이면 색이 다르고, 터치하면 개괄·현재 상태·변경 히스토리",
+      "title": "전체 기능 구조도가 마인드맵으로 보이고, 100개 중 3개가 변경 중이면 색이 다르고, 터치하면 개괄·현재 상태·변경 히스토리",
+      "project": "all",
+      "project_slug": "all",
+      "hub": "k0",
+      "priority": "P0",
+      "size": "L",
+      "status": "landed",
+      "column": "drilling",
+      "issued_id": "K0-0917-D",
+      "issue_id": "K0-0917-D",
+      "repeat_count": 1,
+      "filed_at": "2026-09-16",
+      "age_days": 1,
+      "next": false,
+      "conflict_with": [],
+      "blocked_by": null,
+      "trace5": {
+        "read": {
+          "seen": true,
+          "last_ts": "2026-09-16T09:21:55.720Z"
+        },
+        "reconcile": {
+          "seen": true,
+          "last_ts": "2026-09-17T03:59:46.875Z"
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-16"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-17T04:03:08.132Z"
+        }
+      },
+      "note": "초판: test-portal(K0-G) · todoboss(T0-0916-A PR#24) · storeport(M0-0916-A PR#113) · L1 보강 = T0/M0-0917-A"
+    },
+    {
+      "id": "R031",
+      "text": "test-portal 실기 결함 — 죽은 버튼 · 두 열 · 시트 반쯤 걸림 · 실기 목록 통일 · 카드 폭 · 우선순위 필터 · ⋯ 메뉴 · PATCH 403 · 무반응 버튼",
+      "title": "test-portal 실기 결함 — 죽은 버튼 · 두 열 · 시트 반쯤 걸림 · 실기 목록 통일 · 카드 폭 · 우선순위 필터 · ⋯ 메뉴 · PATCH 403 · 무반응 버튼",
+      "project": "test-portal",
+      "project_slug": "test-portal",
+      "hub": "k0",
+      "priority": "P0",
+      "size": "M",
+      "status": "landed",
+      "column": "drilling",
+      "issued_id": "K0-0917-D",
+      "issue_id": "K0-0917-D",
+      "repeat_count": 2,
+      "filed_at": "2026-09-16",
+      "age_days": 1,
+      "next": false,
+      "conflict_with": [],
+      "blocked_by": null,
+      "trace5": {
+        "read": {
+          "seen": true,
+          "last_ts": "2026-09-16T09:21:55.720Z"
+        },
+        "reconcile": {
+          "seen": true,
+          "last_ts": "2026-09-17T03:59:46.875Z"
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-16"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-17T04:03:08.132Z"
+        }
+      },
+      "note": "09-16 결함 7(K0-H) · 09-17 결함 9(K0-B·D) · 브리지 500·SSE 실패는 K1"
+    },
+    {
+      "id": "R032",
+      "text": "특정 task의 영향도를 이런 식으로(Tickat 덱) 비주얼적으로 눈에 잘 띄도록 · 하이레벨 → 클릭 확대 → 서브 → 상세 · L3/L2/L1 보기 토글",
+      "title": "특정 task의 영향도를 이런 식으로(Tickat 덱) 비주얼적으로 눈에 잘 띄도록 · 하이레벨 → 클릭 확대 → 서브 → 상세 · L3/L2/L1 보기 토글",
+      "project": "test-portal",
+      "project_slug": "test-portal",
+      "hub": "k0",
+      "priority": "P0",
+      "size": "L",
+      "status": "landed",
+      "column": "drilling",
+      "issued_id": "K0-0917-D",
+      "issue_id": "K0-0917-D",
+      "repeat_count": 1,
+      "filed_at": "2026-09-17",
+      "age_days": 0,
+      "next": false,
+      "conflict_with": [],
+      "blocked_by": null,
+      "trace5": {
+        "read": {
+          "seen": true,
+          "last_ts": "2026-09-16T09:21:55.720Z"
+        },
+        "reconcile": {
+          "seen": true,
+          "last_ts": "2026-09-17T03:59:46.875Z"
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-17"
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-17T04:03:08.132Z"
+        }
+      },
+      "note": "kit PR#1 머지 · 기존 제품 반영 아이디어는 오케가 별도 제안 예정"
+    },
+    {
+      "id": "R033",
+      "text": "조정은 그 레코드만 · 조정 표시(없음→18:00 밑줄 사유) · 모든 행에 [조정](회색/주황) · Step #4 [재실행] · 집계에 '조정 N'",
+      "title": "조정은 그 레코드만 · 조정 표시(없음→18:00 밑줄 사유) · 모든 행에 [조정](회색/주황) · Step #4 [재실행] · 집계에 '조정 N'",
+      "project": "todoboss",
+      "project_slug": "todoboss",
+      "hub": "t0",
+      "priority": "P0",
+      "size": "M",
+      "status": "issued",
+      "column": "implementing",
+      "issued_id": "T0-0917-B",
+      "issue_id": "T0-0917-B",
+      "repeat_count": 1,
+      "filed_at": "2026-09-17",
+      "age_days": 0,
+      "next": false,
+      "conflict_with": [],
+      "blocked_by": null,
+      "trace5": {
+        "read": {
+          "seen": false,
+          "last_ts": null
+        },
+        "reconcile": {
+          "seen": false,
+          "last_ts": null
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": true,
+          "last_ts": "2026-09-17"
+        },
+        "landed": {
+          "seen": false,
+          "last_ts": null
+        }
+      },
+      "note": "Kyu 09-17 실기 · 월 집계 급변(117→82 등) 뿌리 규명 포함"
     },
     {
       "id": "R101",
-      "text": "P2.2 GitHub API �\\x86\\x8C�\\x84�\\x9E\\x90 · Access JWT + Workers secret + Octokit",
-      "title": "P2.2 GitHub API �\\x86\\x8C�\\x84�\\x9E\\x90 · Access JWT + Workers secret + Octokit",
+      "text": "P2.2 GitHub API 소비자 · Access JWT + Workers secret + Octokit",
+      "title": "P2.2 GitHub API 소비자 · Access JWT + Workers secret + Octokit",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k0",
       "priority": "P2",
       "size": "S",
-      "status": "filed",
-      "column": "waiting",
+      "status": "done",
+      "column": "merged",
       "issued_id": null,
       "issue_id": null,
       "repeat_count": 1,
       "filed_at": "2026-07-24",
       "age_days": 55,
-      "next": true,
+      "next": false,
       "conflict_with": [],
       "blocked_by": null,
       "trace5": {
@@ -2219,19 +2391,19 @@
           "last_ts": "2026-09-17T04:03:08.132Z"
         }
       },
-      "note": "K0-0916-F �\\x9D��\\x80 · �\\x9B\\x90본 dispatch �\\x8C\\x8C�\\x9D� �\\x82��\\_\\x9C (relay �\\x9B\\x90�\\x9E� = �\\x9C\\_�\\x9D� �\\x81\\x90)"
+      "note": "K0-0916-F 이관 · AV~D에서 사실상 완료(gate·runs·PR API 소비)"
     },
     {
       "id": "R102",
-      "text": "P2.3 �\\x8C\\x90�\\_\\x95 �\\x8F� + �\\x8A��\\x81�린�\\x83� (Cases · 체�\\x81�리�\\x8A��\\x8A� · �\\x9D�미�\\x80 첨�\\x80)",
-      "title": "P2.3 �\\x8C\\x90�\\_\\x95 �\\x8F� + �\\x8A��\\x81�린�\\x83� (Cases · 체�\\x81�리�\\x8A��\\x8A� · �\\x9D�미�\\x80 첨�\\x80)",
+      "text": "P2.3 판정 폼 + 스크린샷 (Cases · 체크리스트 · 이미지 첨부)",
+      "title": "P2.3 판정 폼 + 스크린샷 (Cases · 체크리스트 · 이미지 첨부)",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k0",
       "priority": "P2",
       "size": "S",
-      "status": "filed",
-      "column": "waiting",
+      "status": "done",
+      "column": "merged",
       "issued_id": null,
       "issue_id": null,
       "repeat_count": 1,
@@ -2262,19 +2434,19 @@
           "last_ts": "2026-09-17T04:03:08.132Z"
         }
       },
-      "note": "K0-0916-F �\\x9D��\\x80"
+      "note": "K0-0916-F 이관 · AU/AW에서 완료"
     },
     {
       "id": "R103",
-      "text": "P2.4 �\\_\\x9C�\\x9C �\\x8C\\x8C�\\x9D��\\x94\\x84�\\x9D��\\x9D� (Kyu �\\x8C\\x90�\\_\\x95 �\\x86\\x92 GitHub PR �\\x94�\\x98�\\x8A� · checks API)",
-      "title": "P2.4 �\\_\\x9C�\\x9C �\\x8C\\x8C�\\x9D��\\x94\\x84�\\x9D��\\x9D� (Kyu �\\x8C\\x90�\\_\\x95 �\\x86\\x92 GitHub PR �\\x94�\\x98�\\x8A� · checks API)",
+      "text": "P2.4 제출 파이프라인 (Kyu 판정 → GitHub PR 코멘트 · checks API)",
+      "title": "P2.4 제출 파이프라인 (Kyu 판정 → GitHub PR 코멘트 · checks API)",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k0",
       "priority": "P2",
       "size": "S",
-      "status": "filed",
-      "column": "waiting",
+      "status": "done",
+      "column": "merged",
       "issued_id": null,
       "issue_id": null,
       "repeat_count": 1,
@@ -2305,19 +2477,19 @@
           "last_ts": "2026-09-17T04:03:08.132Z"
         }
       },
-      "note": "K0-0916-F �\\x9D��\\x80"
+      "note": "K0-0916-F 이관 · kyu-gate 도장·auto-merge로 완료"
     },
     {
       "id": "R104",
-      "text": "P2.5 PWA + Cloudflare Access �\\x88�\\x90 (매�\\x8B\\x88�\\x8E\\x98�\\x8A��\\x8A� · SW · �\\x9C그�\\x9D�)",
-      "title": "P2.5 PWA + Cloudflare Access �\\x88�\\x90 (매�\\x8B\\x88�\\x8E\\x98�\\x8A��\\x8A� · SW · �\\x9C그�\\x9D�)",
+      "text": "P2.5 PWA + Cloudflare Access 마감 (매니페스트 · SW · 로그인)",
+      "title": "P2.5 PWA + Cloudflare Access 마감 (매니페스트 · SW · 로그인)",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k0",
       "priority": "P2",
       "size": "S",
-      "status": "filed",
-      "column": "waiting",
+      "status": "landed",
+      "column": "drilling",
       "issued_id": null,
       "issue_id": null,
       "repeat_count": 1,
@@ -2348,12 +2520,12 @@
           "last_ts": "2026-09-17T04:03:08.132Z"
         }
       },
-      "note": "K0-0916-F �\\x9D��\\x80"
+      "note": "K0-0916-F 이관 · iOS PWA 안내(AV) · 마일스톤 1에서 확인"
     },
     {
       "id": "R105",
-      "text": "P2.6 �\\x84��\\_\\x95 CRUD UI (�\\x94\\x84�\\x9C�\\_\\x9D�\\x8A� · �\\x80�\\x9D��\\x8A� · �\\x82��\\x9A��\\x9E\\x90 · �\\x90�\\x82�)",
-      "title": "P2.6 �\\x84��\\_\\x95 CRUD UI (�\\x94\\x84�\\x9C�\\_\\x9D�\\x8A� · �\\x80�\\x9D��\\x8A� · �\\x82��\\x9A��\\x9E\\x90 · �\\x90�\\x82�)",
+      "text": "P2.6 설정 CRUD UI (프로젝트 · 케이스 · 사용자 · 감사)",
+      "title": "P2.6 설정 CRUD UI (프로젝트 · 케이스 · 사용자 · 감사)",
       "project": "test-portal",
       "project_slug": "test-portal",
       "hub": "k0",
@@ -2367,51 +2539,6 @@
       "filed_at": "2026-07-26",
       "age_days": 53,
       "next": false,
-      "conflict_with": [
-        "R104"
-      ],
-      "blocked_by": null,
-      "trace5": {
-        "read": {
-          "seen": true,
-          "last_ts": "2026-09-16T09:21:55.720Z"
-        },
-        "reconcile": {
-          "seen": true,
-          "last_ts": "2026-09-17T03:59:46.875Z"
-        },
-        "priority": {
-          "seen": false,
-          "last_ts": null
-        },
-        "issued": {
-          "seen": false,
-          "last_ts": null
-        },
-        "landed": {
-          "seen": true,
-          "last_ts": "2026-09-17T04:03:08.132Z"
-        }
-      },
-      "note": "K0-0916-F �\\x9D��\\x80 · R104 (PWA �\\x88�\\x90) 과 UI �\\x88�\\x90 �\\x91복 · �\\x98��\\x80 �\\x8C\\x90�\\_\\x95 �\\x8C\\x80기"
-    },
-    {
-      "id": "R106",
-      "text": "P5 리�\\x8F� �\\x9F��\\x98 �\\x8A��\\x81�립�\\x8A� (grownest · storeport · todoboss �\\x81 �\\x98�\\x82\\x98�\\_\\x88)",
-      "title": "P5 리�\\x8F� �\\x9F��\\x98 �\\x8A��\\x81�립�\\x8A� (grownest · storeport · todoboss �\\x81 �\\x98�\\x82\\x98�\\_\\x88)",
-      "project": "test-portal",
-      "project_slug": "test-portal",
-      "hub": "k0",
-      "priority": "P2",
-      "size": "S",
-      "status": "filed",
-      "column": "waiting",
-      "issued_id": null,
-      "issue_id": null,
-      "repeat_count": 1,
-      "filed_at": "2026-07-29",
-      "age_days": 50,
-      "next": false,
       "conflict_with": [],
       "blocked_by": null,
       "trace5": {
@@ -2436,7 +2563,50 @@
           "last_ts": "2026-09-17T04:03:08.132Z"
         }
       },
-      "note": "K0-0916-F �\\x9D��\\x80 · P3 �\\x9B\\x84 · P5 �\\x99\\x84결"
+      "note": "K0-0916-F 이관 · R009 범용화와 합쳐 처리"
+    },
+    {
+      "id": "R106",
+      "text": "P5 리포 런처 스크립트 (grownest · storeport · todoboss 각 반나절)",
+      "title": "P5 리포 런처 스크립트 (grownest · storeport · todoboss 각 반나절)",
+      "project": "test-portal",
+      "project_slug": "test-portal",
+      "hub": "k1",
+      "priority": "P2",
+      "size": "S",
+      "status": "done",
+      "column": "merged",
+      "issued_id": null,
+      "issue_id": null,
+      "repeat_count": 1,
+      "filed_at": "2026-07-29",
+      "age_days": 50,
+      "next": false,
+      "conflict_with": [],
+      "blocked_by": null,
+      "trace5": {
+        "read": {
+          "seen": true,
+          "last_ts": "2026-09-17T03:06:39.645Z"
+        },
+        "reconcile": {
+          "seen": true,
+          "last_ts": "2026-09-17T04:03:36.038Z"
+        },
+        "priority": {
+          "seen": false,
+          "last_ts": null
+        },
+        "issued": {
+          "seen": false,
+          "last_ts": null
+        },
+        "landed": {
+          "seen": true,
+          "last_ts": "2026-09-17T04:15:56.252Z"
+        }
+      },
+      "note": "K0-0916-F 이관 · env v2 레시피(K1-0915-A)로 완료"
     }
   ],
   "events": [
@@ -3225,27 +3395,12 @@
       "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
     }
   ],
-  "mismatches": [
-    {
-      "type": "mismatch",
-      "report": "k1/K1-0917-C-report.md",
-      "reason": "R-id not in ledger",
-      "id": "R031",
-      "action": "consume"
-    },
-    {
-      "type": "mismatch",
-      "report": "k1/K1-0917-C-report.md",
-      "reason": "R-id not in ledger",
-      "id": "R030",
-      "action": "consume"
-    }
-  ],
+  "mismatches": [],
   "warnings": [],
   "hubs": {
     "k0": {
       "last_action": "리포트: K0-0917-D-report.md",
-      "files_touched": 10,
+      "files_touched": 9,
       "tests_touched": 0,
       "updated_at": "2026-09-17T04:03:08.132Z"
     },
@@ -3414,7 +3569,7 @@
         }
       ],
       "processes": [],
-      "fetched_at": "2026-09-17T04:19:22.625Z"
+      "fetched_at": "2026-09-17T04:40:12.386Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -4633,7 +4788,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-17T04:19:22.807Z"
+      "fetched_at": "2026-09-17T04:40:12.699Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -5166,12 +5321,12 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-17T04:19:23.083Z"
+      "fetched_at": "2026-09-17T04:40:12.978Z"
     }
   ],
   "rollup": {
-    "filed_count": 20,
-    "max_age_days": 55,
-    "red_count": 2
+    "filed_count": 15,
+    "max_age_days": 53,
+    "red_count": 3
   }
 }
