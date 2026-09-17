@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-17T03:13:06.259Z",
+  "built_at": "2026-09-17T03:14:55.856Z",
   "prompts": [],
   "reports": [
     {
@@ -276,25 +276,31 @@
       "ledger_events": []
     },
     {
-      "path": "k1/K1-0916-E-report.md",
-      "round": "K1-0916-E",
-      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/111",
-      "outcome": "자기 검증 통과 (프로덕션 실측 curl · status-watcher 4상태 정본 · 실 last_activity 정합 · 24h events ndjson 5 hubs · pnpm test 1000 pass · R029 정밀화 착지)",
+      "path": "k1/K1-0917-B-report.md",
+      "round": "K1-0917-B",
+      "pr": "114",
+      "outcome": "landed",
       "kyu_checks": [
-        "포털 홈 흐름판 = 4상태 정확 표시 (k0/k1 running · 나머지 idle · 각 last_activity 시각)",
-        "24h events ndjson 5 hubs 실 파일 확증 (raw.githubusercontent 3+ line)",
-        "status/hubs.json curl fresh = built_at 최근 · state=running 만 최근 5분 활동"
+        "배포 후 curl PR#23 verdict=none · reason=required check 정의 없음",
+        "Todoboss SSE 4단계 실 완주 로그 확증 (63 lines)",
+        "relay index.json schema_version=4 · hubs 실 데이터 노출",
+        "K0 흐름판 허브 카드 last_action 실 문장 노출 (배포 후)"
       ],
       "ledger_events": [
         {
-          "id": "R002",
+          "id": "R031",
           "action": "consume",
-          "note": "실데이터 확증 · index.json events=69 · requirements=35 · status 4상태 실 push"
+          "note": "게이트 오판·SSE 실패 규명+수정 착지"
         },
         {
-          "id": "R029",
+          "id": "R030",
           "action": "consume",
-          "note": "watcher 정밀화 최소 착지 · 4상태 정본 · dormant 필드 신설 대비"
+          "note": "feature_maps 집계 편입 (스키마 v4)"
+        },
+        {
+          "id": "R011",
+          "action": "consume",
+          "note": "허브 카드 last_action/files/tests 배관 완결"
         }
       ]
     }
@@ -3082,7 +3088,22 @@
       "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
     }
   ],
-  "mismatches": [],
+  "mismatches": [
+    {
+      "type": "mismatch",
+      "report": "k1/K1-0917-B-report.md",
+      "reason": "R-id not in ledger",
+      "id": "R031",
+      "action": "consume"
+    },
+    {
+      "type": "mismatch",
+      "report": "k1/K1-0917-B-report.md",
+      "reason": "R-id not in ledger",
+      "id": "R030",
+      "action": "consume"
+    }
+  ],
   "warnings": [],
   "hubs": {
     "k0": {
