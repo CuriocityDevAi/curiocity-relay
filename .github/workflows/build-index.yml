@@ -48,7 +48,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          # K1-0917-G · A1 · ledger/requirements.yaml git 이력 파싱 (최근 30일 커밋 diff)
+          # 0 = 전체 히스토리 (shallow clone = 1 커밋 만 · 이력 diff 불가)
+          fetch-depth: 0
 
       - name: Set up Node 22
         uses: actions/setup-node@v4
