@@ -1,27 +1,32 @@
 {
   "schema_version": 1,
-  "built_at": "2026-09-17T02:43:17.356Z",
+  "built_at": "2026-09-17T02:53:03.194Z",
   "hubs": {
     "n0": {
-      "state": "idle",
-      "last_activity": "2026-09-14T07:04:41.842Z",
-      "updated_at": "2026-09-17T02:43:12.026Z"
+      "state": "running",
+      "pid": 19458,
+      "cwd": "/Users/kyu.lee/projects/grownest",
+      "inquiry_files": [],
+      "updated_at": "2026-09-17T02:53:00.319Z"
     },
     "t0": {
-      "state": "idle",
-      "last_activity": "2026-09-16T09:17:08.849Z",
-      "updated_at": "2026-09-17T02:43:12.026Z"
+      "state": "running",
+      "pid": 21385,
+      "cwd": "/Users/kyu.lee/projects/todoboss",
+      "inquiry_files": [],
+      "updated_at": "2026-09-17T02:53:00.319Z"
     },
     "m0": {
-      "state": "idle",
-      "last_activity": "2026-09-16T09:13:09.783Z",
-      "updated_at": "2026-09-17T02:43:12.026Z"
+      "state": "running",
+      "pid": 53804,
+      "cwd": "/Users/kyu.lee/projects/agilo-medusa-pos-fork",
+      "inquiry_files": [],
+      "updated_at": "2026-09-17T02:53:00.319Z"
     },
     "k0": {
       "state": "running",
-      "last_activity": "2026-09-17T02:43:08.109Z",
-      "session": "28235c5e-6058-472f-bbc9-4c3d8447dc47",
-      "updated_at": "2026-09-17T02:43:12.026Z",
+      "pid": 21667,
+      "cwd": "/Users/kyu.lee/projects/test-portal",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -29,18 +34,19 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "updated_at": "2026-09-17T02:53:00.319Z"
     },
     "k1": {
       "state": "running",
-      "last_activity": "2026-09-17T02:43:08.260Z",
-      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
-      "updated_at": "2026-09-17T02:43:12.026Z"
+      "pid": 200,
+      "cwd": "/Users/kyu.lee/projects/test-portal-k1",
+      "inquiry_files": [],
+      "updated_at": "2026-09-17T02:53:00.319Z"
     },
     "k2": {
       "state": "idle",
-      "last_activity": "2026-09-16T08:51:26.461Z",
-      "updated_at": "2026-09-17T02:43:12.026Z"
+      "updated_at": "2026-09-17T02:53:00.319Z"
     }
   }
 }
