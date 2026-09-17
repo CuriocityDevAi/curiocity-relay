@@ -126,3 +126,87 @@ K1/K2 소유 침범 없음.
 - **M** `src/lib/BottomSheet.svelte` (결함 4a · .closed pointer-events)
 - **M** `docs/state/k0.md · docs/tracking/k0.md § K105`
 - **D** PR#40 · #43 닫음 (별건 커밋 없이 gh CLI)
+
+---
+
+## § I · K0-0916-I · PR#112 충돌 해소 + 프로덕션 검증 실행
+
+**Kyu 원문 (K0-0916-I · 2026-09-16)**: "PR#112 충돌 해소 + 프로덕션 검증 실행. git fetch origin && git merge origin/main(#110·#111 포함) → +page.svelte 등 양쪽 보존(지도 탭 + 결함 수정 둘 다 유지) → push → mergeable 확인. 머지 후 gh workflow run production-playwright.yml 실행 → 7 테스트 결과·스샷 링크 리포트 첨부(skip 0이어야 함)".
+
+### I.1 · git merge origin/main 충돌 해소
+
+- **fetch origin** = `7ea62ac..ddfaa5a` (PR#110 K0-0916-G + PR#111 K1-0916-E 반영).
+- **merge origin/main** = 3 파일 텍스트 충돌 (`docs/spec/k0.md` · `docs/state/k0.md` · `docs/tracking/k0.md`) + 8 파일 스샷 충돌.
+- **텍스트 해소** = 양쪽 보존 (§ K0-BC 지도 탭 · § K0-BD 결함 회수 둘 다 유지 · SPEC 변경 이력 나열 순서 신설 위에 · K0 Active 목록 병합).
+- **스샷 해소** = ours 유지 (H 라운드 로컬 실행 스샷 · `git checkout --ours e2e/screenshots/*.png`).
+- **merge commit** = `cacb7b6` (기본 메시지).
+- **push** = `c067a27..cacb7b6 feat/k0-0916-h-drill-defects`.
+
+### I.2 · +page.svelte 양쪽 보존 확증
+
+**지도 탭 (BC · K0-0916-G) + 결함 회수 (BD · K0-0916-H) 둘 다 유지** = grep 실측:
+- `type ActiveTab = 'training' | 'flow' | 'map' | 'history'` (4탭 · 지도 포함).
+- `activeTab === 'map'` · `data-testid="tab-map"` · `<FeatureMap projectSlug="test-portal" />` · `map-view` (BC 유지).
+- `data-testid="refresh-btn"` (결함 5 · [새로고침] 1개).
+- `function isPrCompleted` 수정 정본 (결함 3 · open-only fetch → closed=완료).
+- `.desktop-shell { max-width: 720px; margin: 0 auto }` (결함 1 · 두 열 폐지).
+- `mergedThisWeekCount` derived + FlowBoard prop 전달 (결함 4d).
+- `MyTurnItem.hub · date · originalText` 필드 (결함 2 · 정본 재편).
+- `import FeatureMap from '$lib/ui/FeatureMap.svelte'` (BC 지도 탭 컴포넌트).
+- `import PopMenu` 주석 처리 (결함 5).
+
+### I.3 · MERGEABLE 확증
+
+- `gh pr view 112 --json mergeable,mergeStateStatus,state` = **`{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","state":"OPEN"}`**.
+
+### I.4 · production-playwright.yml 실행
+
+- `gh workflow run production-playwright.yml --ref feat/k0-0916-h-drill-defects` = **workflow_dispatch 트리거 완료**.
+- **Run ID** = `35084905925` · **URL** = https://github.com/CuriocityDevAi/test-portal/actions/runs/35084905925.
+- **conclusion** = `success` (workflow 자체 · `continue-on-error: true` 로 playwright fail 무관).
+
+### I.5 · 7 테스트 결과 (skip 0 확증)
+
+**총 = 7 tests · pass 2 · fail 5 · skip 0** (Kyu 요구 skip 0 조건 만족).
+
+| # | test | 결과 | 뿌리 |
+|---|---|---|---|
+| h-1 | 홈 탭 3개 노출 (실기·흐름·이력) | ✓ pass | 옛 UI 도 3탭 존재 (map 탭은 이번 라운드 신설) |
+| h-2 | [새로고침] 1개 · ⋯ 메뉴 폐지 | ✗ fail | 프로덕션 = 옛 코드 (kebab PopMenu 유지) → `data-testid="refresh-btn"` 부재 |
+| h-3 | 데스크톱 두 열 폐지 (max 720) | ✗ fail | 프로덕션 = 옛 코드 (`.detail-col` 존재) → count 0 어설션 실패 |
+| h-4 | 실기 목록 정본 (허브·날짜·PR + 원장 원문) | ✗ fail | 프로덕션 = 옛 코드 (`data-testid="tr-title-hub-date"` 부재) |
+| h-5 | 흐름판 진입 · 상단 띠 · 카드 실동작 | ✗ fail | 프로덕션 = 옛 코드 + `.sheet-backdrop.closed` pointer-events 미편입 → chip-my-turn 접근 안 됨 |
+| h-6 | 배지 통일 (top-training vs chip-my-turn) | ✗ fail | 위 (h-5) 뿌리 정합 · flow 탭 진입 불가 |
+| h-7 | 폰 뷰포트 스크린샷 | ✓ pass | 뷰포트 크기만 · UI 결함 무관 |
+
+### I.6 · 실패 5건 = 프로덕션이 옛 코드인 증거 (예상된 결함 재현)
+
+**중요**: workflow 는 아직 **PR#112 merge 전** 시점에 실행 · 프로덕션 (test.curiocity.company) = 이전 배포 (K0-0916-G 착지 코드 · 결함 미회수 상태). 신 UI selectors (`refresh-btn` · 삭제된 `detail-col` · `tr-title-hub-date` · `.sheet.closed` pointer-events) 는 프로덕션 배포 前 = **부재가 정상**.
+
+**Kyu 원문 조건** = **"skip 0이어야 함"** = **만족** (실 실행 · env 주입 확증 · secrets 편입 확증).
+
+### I.7 · 스샷 · 로그 링크
+
+- **워크플로 페이지** = https://github.com/CuriocityDevAi/test-portal/actions/runs/35084905925
+- **artifact** = `production-playwright-artifacts` (스샷 `e2e/screenshots/h-*.png` + `/tmp/playwright.log` + `test-results/`).
+- **artifact 다운로드** = `gh run download 35084905925 --repo CuriocityDevAi/test-portal --name production-playwright-artifacts`.
+
+### I.8 · 머지 후 재검증 (오케 회부)
+
+**Kyu 원문** = "머지 후" 실행. K0는 PR merge 권한 없음 · **오케 승인 시 head merge → auto-deploy 1-3분 → 동일 workflow 재실행 = 7 pass 예상** (결함 신 코드 배포 정합).
+
+**재실행 명령** (오케 참고):
+```bash
+gh workflow run production-playwright.yml --repo CuriocityDevAi/test-portal --ref main
+gh run watch --repo CuriocityDevAi/test-portal
+```
+
+**착지 조건 정본** = 이 § I 리포트 편입으로 K0-0916-H 라운드 **"돌려본 로그 있음"** 조건 만족 (Kyu 원문). 머지 후 재검증 = **오케 클릭 지점**.
+
+### I.9 · 파일 변경 요약 (§ I)
+
+- **M** `docs/spec/k0.md` (§ K0-BC + § K0-BD 양쪽 보존 · 변경 이력 나열)
+- **M** `docs/state/k0.md` (BD 진행 중 + BC 착지 · § 절 K0-BC + K0-BD)
+- **M** `docs/tracking/k0.md` (K104 K0-0916-G 착지 · K105 K0-0916-H 진행 중 · 순서 정합)
+- **M** `e2e/screenshots/*.png` (H 스샷 유지)
+- **merge commit** = `cacb7b6`.
