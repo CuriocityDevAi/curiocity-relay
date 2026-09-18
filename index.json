@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T08:21:45.171Z",
+  "built_at": "2026-09-18T08:44:53.494Z",
   "prompts": [],
   "reports": [
     {
@@ -316,26 +316,26 @@
       "ledger_events": []
     },
     {
-      "path": "k1/K1-0918-C-report.md",
-      "round": "K1-0918-C",
-      "pr": "136",
+      "path": "k1/K1-0918-D-report.md",
+      "round": "K1-0918-D",
+      "pr": "137",
       "outcome": "landed",
       "kyu_checks": [
-        "Kyu 맥 [테스트 열기] · Todoboss 로그인 후 5월 데이터 (백엔드 4000 + web-admin 4321) 실 스샷",
-        "SSE 로그 [web-admin] · [backend] prefix + HTTP 200 확증"
+        "Kyu 맥 rm -rf clone → [테스트 열기] · SSE 완주 · Todoboss 5월 데이터 스샷 (안정 네트워크 조건)",
+        "backend env.PORT=4000 명시 · ensure-single-dev.sh DEV_PORT 오판 회수"
       ],
       "ledger_events": [
         {
           "id": "R003",
           "action": "consume",
-          "note": "병렬 서버 (backend+web-admin) · 두 host 헬스 · lsof 정본 · 다중 .env · 실 SSE 6.6s HTTP 200 확증",
-          "label": "R003 착지 (병렬 서버 (backend+web-admin) · 두 host 헬스 · lsof 정본 · 다중 .env · )"
+          "note": "서버별 install (backend node_modules 자동) · backend PORT=4000 env 전달 · failedServer 사람 문장 · Fresh clone SSE 서버별 install 실 실행 확증",
+          "label": "R003 착지 (서버별 install (backend node_modules 자동) · backend PORT=4000 en)"
         },
         {
-          "id": "R031",
+          "id": "R009",
           "action": "consume",
-          "note": "lsof -nP -sTCP:LISTEN 정본 · 오판 회수 · envCwds 배열",
-          "label": "R031 착지 (lsof -nP -sTCP:LISTEN 정본 · 오판 회수 · envCwds 배열)"
+          "note": "레시피 = 프로젝트 구조 aware · additionalServers[i].install/env 각각 · lockfile 해시 skip · 새 프로젝트 한 줄 편성",
+          "label": "R009 착지 (레시피 = 프로젝트 구조 aware · additionalServers[i].install/env 각각 · )"
         }
       ]
     }
@@ -5929,10 +5929,10 @@
       "updated_at": null
     },
     "m0": {
-      "last_action": "R021 우선순위 P0→P1",
-      "files_touched": 1,
+      "last_action": null,
+      "files_touched": 0,
       "tests_touched": 0,
-      "updated_at": "2026-09-17T15:38:47+07:00"
+      "updated_at": null
     }
   },
   "feature_maps": [
@@ -6463,7 +6463,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T08:21:44.503Z"
+      "fetched_at": "2026-09-18T08:44:52.835Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -7682,7 +7682,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T08:21:44.659Z"
+      "fetched_at": "2026-09-18T08:44:53.110Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -7902,7 +7902,9 @@
           "id": "r2-images",
           "area": "commerce-core",
           "files": [
-            "apps/commerce-core/src/modules/r2_file/**"
+            "docs/runbooks/r2-setup.md",
+            "docs/runbooks/speed-measurement-plan.md",
+            "docs/runbooks/singapore-migration-plan.md"
           ],
           "name": "손님 사진 저장소",
           "summary": "상품 사진을 클라우드플레어 R2 에 올려 앱에서 빠르게 보여 준다.",
@@ -8301,7 +8303,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-18T08:21:45.170Z"
+      "fetched_at": "2026-09-18T08:44:53.493Z"
     }
   ],
   "rollup": {
