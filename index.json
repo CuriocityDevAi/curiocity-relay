@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T04:18:38.949Z",
+  "built_at": "2026-09-18T04:30:57.952Z",
   "prompts": [],
   "reports": [
     {
@@ -316,26 +316,27 @@
       "ledger_events": []
     },
     {
-      "path": "k1/K1-0918-A-report.md",
-      "round": "K1-0918-A",
-      "pr": "132",
+      "path": "k1/K1-0918-B-report.md",
+      "round": "K1-0918-B",
+      "pr": "135",
       "outcome": "landed",
       "kyu_checks": [
-        "Kyu 맥 [테스트 열기] · prepare 단계 로그 노출 (환경 준비 중) · localhost:4321 로그인 화면 스샷",
-        "봇 토큰 절차 (docs/kyu-clicks/K1-0917-D 유지) 실기"
+        "Kyu 맥 [테스트 열기] · Todoboss 로그인 화면 (localhost:4321 HTTP 200) 실 스샷",
+        "포털 헤더 헬스 초록 dot 스샷",
+        "install 재실행 · config.json.bak 자동 생성 확증"
       ],
       "ledger_events": [
         {
           "id": "R003",
           "action": "consume",
-          "note": "env.prepare 단계 계약 신설 · defaultPrepare 폴백 (.env 복사 + 포트 kill) · Kyu 어제 함정 3 자동 처리 · 실 SSE prepare 실 실측 확증",
-          "label": "R003 착지 (env.prepare 단계 계약 신설 · defaultPrepare 폴백 (.env 복사 + 포트 kill))"
+          "note": "HTTP health check 200 후 ready · 서버 미기동 오탐 회수 · fetch failed 시 사람 문장 error emit 확증",
+          "label": "R003 착지 (HTTP health check 200 후 ready · 서버 미기동 오탐 회수 · fetch failed )"
         },
         {
-          "id": "R009",
+          "id": "R031",
           "action": "consume",
-          "note": "범용화 · 새 프로젝트 = env.prepare 한 줄 편성 · defaultPrepare 폴백으로 4 프로젝트 무해 동작",
-          "label": "R009 착지 (범용화 · 새 프로젝트 = env.prepare 한 줄 편성 · defaultPrepare 폴백으로 4 프로)"
+          "note": "헬스 dot 진단 로그 · daemon crash 무재발 · install config.json.bak 자동 백업·복원 · Kyu 매번 재설정 반복 회수",
+          "label": "R031 착지 (헬스 dot 진단 로그 · daemon crash 무재발 · install config.json.bak 자동)"
         }
       ]
     }
@@ -938,6 +939,73 @@
         }
       ],
       "summary": "M0-0917-C · Anchor POS 하루 사이클 실기 8건 재실기 (폰 Expo Go SDK 57 · SVG % 뿌리 해소 후)."
+    },
+    {
+      "path": "checks/m0/M0-0918-A.md",
+      "id": "M0-0918-A",
+      "hub": "m0",
+      "pr": "",
+      "issued_at": "2026-09-18T15:00:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "expo",
+          "title": "K1 Login (SDK 57 + SVG fix 정합) · Shop URL storeport-production.up.railway.app",
+          "ok": "로그인 성공 · 상품 목록 or 매장 마법사 도달",
+          "ng": "transform.js:361 크래시 또는 로그인 실패",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K2 상단 미개점 배지 → 시재 500000 개점 (서버 POST /admin/register-sessions 활성화 확진)",
+          "ok": "완료 후 배지가 개점 상태 · not found 없음",
+          "ng": "이전 M0-0917-C 시점처럼 not found · 500",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K3 카드 판매 · 승인번호 TEST-CARD-001 · 그리고 승인번호 비운 채 완료 시도",
+          "ok": "번호 있으면 완료 · 비우면 막힘",
+          "ng": "비워도 통과",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K4 QRIS 판매 · TEST-QRIS-001 → Orders 화면",
+          "ok": "3건 모두 Fulfilled",
+          "ng": "Pending이 남음",
+          "est_min": 2
+        },
+        {
+          "device": "expo",
+          "title": "K5 [수금] 100000 · 수금자 아내",
+          "ok": "서랍 잔액이 10만 줄어듦",
+          "ng": "잔액 변화 없음",
+          "est_min": 1
+        },
+        {
+          "device": "expo",
+          "title": "K6 [마감] · Expected = 500000 + 현금 판매액 − 100000 · Counted 일부러 다르게",
+          "ok": "카드·QRIS 미포함 · 비고 없이는 마감 막힘 · 비고 입력 후 마감",
+          "ng": "카드가 Expected에 섞임 또는 비고 없이 마감됨",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K7 Z 리포트에 현금/카드/QRIS 세 줄 + 건수",
+          "ok": "세 줄과 건수가 보인다",
+          "ng": "합계만 있음",
+          "est_min": 1
+        },
+        {
+          "device": "expo",
+          "title": "K8 [WA 복사] → WhatsApp 붙여넣기",
+          "ok": "텍스트가 온전히 들어온다",
+          "ng": "빈 클립보드 또는 깨짐",
+          "est_min": 1
+        }
+      ],
+      "summary": "M0-0918-A · Anchor POS 하루 사이클 실기 8건 재실기 (폰 Expo Go SDK 57 · storeport PR #118 병합 후 서버 register_session 라우트 활성화 확진)."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
@@ -6177,7 +6245,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T04:18:38.605Z"
+      "fetched_at": "2026-09-18T04:30:57.612Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -7396,7 +7464,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T04:18:38.730Z"
+      "fetched_at": "2026-09-18T04:30:57.753Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -7929,7 +7997,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-18T04:18:38.948Z"
+      "fetched_at": "2026-09-18T04:30:57.951Z"
     }
   ],
   "rollup": {
