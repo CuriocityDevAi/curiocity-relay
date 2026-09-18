@@ -423,3 +423,109 @@
   repeat_count: 1
   origin: ops/dispatch/inbox/20260805-deeplink-todoboss.md
   note: K0-0916-F 이관 · checks deep_link 규약으로 대체 가능 · 오케 판정 대기
+- id: R034
+  text: 초기화 후 집계가 09-15와 다르다 — 집계 정본 재확인
+  project: todoboss
+  hub: t0
+  priority: P0
+  size: S
+  filed_at: '2026-09-17'
+  status: landed
+  issued_id: T0-0918-D
+  repeat_count: 1
+  note: '정본 = 시드 기준 정상 118·결근 2·지각 48·야근 121·조퇴 6·추가근무 2·판정불가 4 (Kayla_PS 매핑 후)'
+- id: R035
+  text: 실기 목록 필터 — 허브 선택 · PR 번호 입력 (+상태·프로젝트·기기·검색)
+  project: test-portal
+  hub: k0
+  priority: P1
+  size: M
+  filed_at: '2026-09-17'
+  status: landed
+  issued_id: K0-0917-G
+  repeat_count: 1
+- id: R036
+  text: 포털 반응 속도가 느리고 답답하다
+  project: test-portal
+  hub: k0
+  priority: P0
+  size: M
+  filed_at: '2026-09-17'
+  status: verified
+  issued_id: K0-0917-J
+  repeat_count: 1
+  note: 4왕복→서버 캐시 1회 · Kyu 빨라짐 확인
+- id: R037
+  text: STEP N 데이터는 실행/재실행 때만 STEP N+1에 영향 · STEP N+1은 절대 STEP N을 바꾸지 못한다 (프로세스 콘솔 전체 룰)
+  project: todoboss
+  hub: t0
+  priority: P0
+  size: M
+  filed_at: '2026-09-18'
+  status: landed
+  issued_id: T0-0918-A
+  repeat_count: 1
+- id: R038
+  text: 클코 허브에도 텍스트 검색(매칭 문자열 하일라이트 · Ctrl+F식)과 PR# 필터(해당 허브 카드 전부 표시 · 그 PR 카드만 강조)
+  project: test-portal
+  hub: k0
+  priority: P1
+  size: M
+  filed_at: '2026-09-18'
+  status: landed
+  issued_id: K0-0918-B
+  repeat_count: 1
+- id: R039
+  text: POS 앱이 느리다 · 상품 사진이 안 뜬다 (R2 스토리지 · 리전 싱가포르 · LAN/EAS)
+  project: storeport
+  hub: m0
+  priority: P1
+  size: M
+  filed_at: '2026-09-18'
+  status: landed
+  issued_id: M0-0918-G
+  repeat_count: 1
+- id: R040
+  text: 이행(Fulfilled)은 상품 종류·채널에 따라 자동/수기 — POS+기성품만 결제와 동시 자동, 프리오더·주문생산·온라인은 픽업/배송 후 수기
+  project: storeport
+  hub: m0
+  priority: P0
+  size: M
+  filed_at: '2026-09-18'
+  status: landed
+  issued_id: M0-0918-C
+  repeat_count: 1
+  note: 'fulfillment_policy immediate|deferred · ADR-0013'
+- id: R041
+  text: POS 앱 전부 영어로 · 한글 미지원 · 폰트·사이즈 통일
+  project: storeport
+  hub: m0
+  priority: P1
+  size: M
+  filed_at: '2026-09-18'
+  status: issued
+  issued_id: M0-0918-D
+  repeat_count: 1
+  note: '잔여 = 라운드 D'
+- id: R042
+  text: 있는 기능은 다 쓰고 새로 만들지 않기 — Medusa 코어 vs POS 앱 갭 대사표 · 굵직한 것 먼저, 소소한 것 나중
+  project: storeport
+  hub: m0
+  priority: P0
+  size: L
+  filed_at: '2026-09-18'
+  status: landed
+  issued_id: M0-0918-I
+  repeat_count: 2
+  note: '코어 우회 0 확진 · 갭 12도메인 설계(#125) · 라운드 Z→A→B→C→D Kyu 동의'
+- id: R043
+  text: 고객 로열티 — 고객 그룹 실버/골드/플래티늄 · 등급별 포인트 적립률 · 쉬운 포인트 사용 · 고객 프로필(전화번호 키) — 스토어 크레딧을 포인트로
+  project: storeport
+  hub: m0
+  priority: P1
+  size: L
+  filed_at: '2026-09-18'
+  status: filed
+  next: true
+  repeat_count: 1
+  note: '고객 모듈 + 고객 그룹 + 스토어 크레딧 위 적립 규칙 · 라운드 C 설계 편입 · Kyu 결정 = 적립률 기본값 · 전화번호 수집 동의 문구(PDP)'

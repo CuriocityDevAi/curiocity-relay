@@ -175,14 +175,20 @@ async function collectReports() {
 /**
  * K1-0916-B/C · K1-0916-D · YAML requirements.yaml parser (deps 0).
  * K1-0916-D 확장 = conflict_with (스칼라/comma 배열 정합) · blocked_by · next boolean · size.
+ * K1-0918-H 정정 = 이전 regex 안 `\Z` = JS 지원 안 함 (literal Z) · 파일 끝 마지막 엔트리 silently drop
+ *   (R107 · R043 등 실측 확증). split 기반으로 재작성 · 모든 엔트리 확실히 캡처.
  */
 function parseRequirementsYaml(src) {
 	const items = [];
-	const blockRegex = /^- id: (R\d+)\n([\s\S]*?)(?=\n- id:|\n\n[A-Z#]|\Z)/gm;
-	let m;
-	while ((m = blockRegex.exec(src)) !== null) {
-		const id = m[1];
-		const body = m[2];
+	// K1-0918-H · split 기반 파서 · 마지막 엔트리 drop 회피.
+	const chunks = src.split(/^- id: /m).slice(1); // 첫 chunk = 헤더 (drop)
+	for (const chunk of chunks) {
+		const idMatch = chunk.match(/^(R\d+)\n/);
+		if (!idMatch) continue;
+		const id = idMatch[1];
+		// 다음 top-level heading 앞까지 body (안전 · 이후 non-yaml 섹션 대비)
+		const nextHeading = chunk.search(/\n\n[A-Z#]/);
+		const body = nextHeading > 0 ? chunk.slice(idMatch[0].length, nextHeading) : chunk.slice(idMatch[0].length);
 		const item = { id };
 		for (const line of body.split('\n')) {
 			const kv = line.match(/^\s*([a-zA-Z_][a-zA-Z0-9_-]*)\s*:\s*(.*)$/);
