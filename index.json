@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T08:48:37.296Z",
+  "built_at": "2026-09-18T09:05:28.580Z",
   "prompts": [],
   "reports": [
     {
@@ -169,6 +169,14 @@
       "path": "k0/K0-0918-B-report.md",
       "round": "K0-0918-B",
       "pr": "https://github.com/CuriocityDevAi/test-portal/pull/134",
+      "outcome": "",
+      "kyu_checks": [],
+      "ledger_events": []
+    },
+    {
+      "path": "k0/K0-0918-C-report.md",
+      "round": "K0-0918-C",
+      "pr": "https://github.com/CuriocityDevAi/test-portal/pull/138",
       "outcome": "",
       "kyu_checks": [],
       "ledger_events": []
@@ -5983,13 +5991,13 @@
   "hubs": {
     "k0": {
       "last_action": "K0-0918-A 리포트",
-      "files_touched": 4,
+      "files_touched": 1,
       "tests_touched": 0,
       "updated_at": "2026-09-18T03:47:23.813Z"
     },
     "k1": {
       "last_action": "K1-0918-D 리포트",
-      "files_touched": 9,
+      "files_touched": 8,
       "tests_touched": 0,
       "updated_at": "2026-09-18T08:44:38.447Z"
     },
@@ -6546,7 +6554,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T08:48:36.742Z"
+      "fetched_at": "2026-09-18T09:05:28.184Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -7765,7 +7773,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T08:48:36.955Z"
+      "fetched_at": "2026-09-18T09:05:28.379Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -8386,7 +8394,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-18T08:48:37.295Z"
+      "fetched_at": "2026-09-18T09:05:28.580Z"
     }
   ],
   "rollup": {
