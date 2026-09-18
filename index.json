@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T09:14:56.320Z",
+  "built_at": "2026-09-18T09:51:35.770Z",
   "prompts": [],
   "reports": [
     {
@@ -324,26 +324,20 @@
       "ledger_events": []
     },
     {
-      "path": "k1/K1-0918-D-report.md",
-      "round": "K1-0918-D",
-      "pr": "137",
+      "path": "k1/K1-0918-E-report.md",
+      "round": "K1-0918-E",
+      "pr": "139",
       "outcome": "landed",
       "kyu_checks": [
-        "Kyu 맥 rm -rf clone → [테스트 열기] · SSE 완주 · Todoboss 5월 데이터 스샷 (안정 네트워크 조건)",
-        "backend env.PORT=4000 명시 · ensure-single-dev.sh DEV_PORT 오판 회수"
+        "포털 홈 · agilo 프로젝트 탭 노출 · PR 상세 열림 스샷",
+        "Kyu 봇 계정 정본화 (선택 · K1-0917-D docs 유지)"
       ],
       "ledger_events": [
         {
-          "id": "R003",
+          "id": "R031",
           "action": "consume",
-          "note": "서버별 install (backend node_modules 자동) · backend PORT=4000 env 전달 · failedServer 사람 문장 · Fresh clone SSE 서버별 install 실 실행 확증",
-          "label": "R003 착지 (서버별 install (backend node_modules 자동) · backend PORT=4000 en)"
-        },
-        {
-          "id": "R009",
-          "action": "consume",
-          "note": "레시피 = 프로젝트 구조 aware · additionalServers[i].install/env 각각 · lockfile 해시 skip · 새 프로젝트 한 줄 편성",
-          "label": "R009 착지 (레시피 = 프로젝트 구조 aware · additionalServers[i].install/env 각각 · )"
+          "note": "agilo 404 뿌리 규명 = Workers GITHUB_TOKEN scope 밖 (CROSS_REPO_READ_TOKEN 은 relay CI 만) · K1 shell PAT 갱신 · auto-deploy 후 /api/prs 200 · source:live · 7 PRs 실측 완결",
+          "label": "R031 착지 (agilo 404 뿌리 규명 = Workers GITHUB_TOKEN scope 밖 (CROSS_REPO_R)"
         }
       ]
     }
@@ -6869,7 +6863,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T09:14:55.707Z"
+      "fetched_at": "2026-09-18T09:51:35.032Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -8088,7 +8082,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T09:14:55.921Z"
+      "fetched_at": "2026-09-18T09:51:35.406Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -8709,7 +8703,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-18T09:14:56.319Z"
+      "fetched_at": "2026-09-18T09:51:35.769Z"
     }
   ],
   "rollup": {
