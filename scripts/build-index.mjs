@@ -203,30 +203,48 @@ function parseRequirementsYaml(src) {
 }
 
 /**
- * K1-0916-D · requirement status → K0 5열 mapping (src/lib/ui/flow-data.ts 정합).
- * filed→waiting · issued→implementing · landed→drilling · verified/done→merged.
+ * K1-0918-G · 정본 계산기 · status → K0 5열 통일 정본 (K1-0918-F 진단 #3 회수).
+ * **뿌리 정정** (이전 K1-0916-D 는 landed→drilling · verified→merged 이었음 · K0 정본 불일치):
+ *   filed→waiting · issued→implementing · landed→landing · verified→drilling · done→merged
+ * K0 flow-data.ts:statusToColumn = 이 값 그대로 소비 · **자체 재계산 폐기** (docs/contract/index-json.md 정본).
  */
 function statusToColumn(status) {
 	switch (status) {
 		case 'filed': return 'waiting';
 		case 'issued': return 'implementing';
-		case 'landed': return 'drilling';
-		case 'verified': return 'merged';
+		case 'landed': return 'landing';
+		case 'verified': return 'drilling';
 		case 'done': return 'merged';
+		case 'deleted': return null;
 		default: return 'waiting';
 	}
 }
 
 /**
- * K1-0916-B/C · collectRequirements = requirements.yaml + events[] 합류 + trace5 + age_days.
+ * K1-0918-G · A1 · 정본 계산기 · collectRequirements 확장.
+ * 각 R-id 에 통일 정본 필드 편입 (docs/contract/index-json.md § requirements[]):
+ *   - column = statusToColumn (K0 정본 · K0 flow-data 자체 재계산 폐기 대상)
+ *   - my_turn = 열린 PR + kyu_checks ≥1 + 미판정 (실기 탭 정의)
+ *   - pr = repo/# (issued_id 소유 reports.pr URL 파생)
+ *   - merged = GitHub PR merged (state=closed + merged_at 존재 · reports 부재 시에도)
+ *   - hub_state = hubs[hub].state (running/idle · optional · 지금은 hubs 없으므로 null)
  * @param {any[]} events
+ * @param {any[]} reports
+ * @param {any[]} allPRs - GitHub API 실 PR (repo/#pr → {state, merged}) map (선택 · 없으면 skip)
  */
-async function collectRequirements(events) {
+async function collectRequirements(events, reports, allPRs) {
 	const path = resolve(REPO_ROOT, 'ledger', 'requirements.yaml');
 	if (!(await fileExists(path))) return [];
 	const src = await readFile(path, 'utf8');
 	const items = parseRequirementsYaml(src);
 	const now = new Date();
+	// K1-0918-G · reports 인덱싱 (round → pr URL · pr merged)
+	const reportByRound = new Map();
+	for (const rp of (reports ?? [])) {
+		if (rp.round) reportByRound.set(rp.round, rp);
+	}
+	// K1-0918-G · PR merged 집합 (repo/#N → boolean)
+	const prMerged = allPRs ?? new Map();
 	return items.map((r) => {
 		// age_days = today - filed_at
 		let age_days = null;
@@ -252,23 +270,53 @@ async function collectRequirements(events) {
 		const priorityTs = lastOf((e) => e.type === 'priority');
 		const issuedTs = lastOf((e) => e.type === 'dispatch' || e.type === 'consume') || (r.issued_id ? r.filed_at ?? null : null);
 		const landedTs = lastOf((e) => e.type === 'report-push') || (['landed', 'verified', 'done'].includes(r.status) ? r.filed_at ?? null : null);
+		// K1-0918-G · A1 · 정본 계산기
+		let column = statusToColumn(r.status);
+		let pr = null;
+		let merged = false;
+		let my_turn = false;
+		if (r.issued_id) {
+			const rp = reportByRound.get(r.issued_id);
+			if (rp && rp.pr) {
+				pr = rp.pr;
+				// PR URL → owner/repo/#N key
+				const m = String(rp.pr).match(/github\.com\/([^/]+\/[^/]+)\/pull\/(\d+)/);
+				if (m) {
+					const prKey = `${m[1]}/${m[2]}`;
+					const prInfo = prMerged.get(prKey);
+					if (prInfo && prInfo.merged) {
+						merged = true;
+						// K1-0918-F 진단 #3 · 원장 상태 landed 인데 실 PR merged = column 강등 (merged 열)
+						if (column === 'landing' || column === 'drilling') column = 'merged';
+					}
+					// K1-0918-G · my_turn = 열린 PR + kyu_checks ≥1 + 미판정 (실기 탭 정의 통일)
+					if (prInfo && prInfo.state === 'open' && !prInfo.merged) {
+						const kyuChecksCount = Array.isArray(rp.kyu_checks) ? rp.kyu_checks.length : 0;
+						if (kyuChecksCount > 0) my_turn = true;
+					}
+				}
+			}
+		}
+		// K1-0918-G · deleted = null · UI 소비 skip (기존 filter(null))
 		return {
 			id: r.id,
 			text: r.text ?? '',
-			title: r.text ?? '', // K0 FlowRequirement.title = 원문 첫 줄 (별칭 · K0 소비 정본)
+			title: r.text ?? '',
 			project: r.project ?? '',
 			project_slug: r.project ?? null,
 			hub: r.hub ?? '',
 			priority: r.priority ?? '',
 			size: r.size ?? '',
 			status: r.status ?? '',
-			column: statusToColumn(r.status), // K1-0916-D · K0 5열 mapping
+			column, // K1-0918-G · 통일 정본 · K0 자체 재계산 폐기 대상
 			issued_id: r.issued_id ?? null,
-			issue_id: r.issued_id ?? null, // K0 alias
+			issue_id: r.issued_id ?? null,
+			pr, // K1-0918-G · reports.pr URL (issued_id 매칭)
+			merged, // K1-0918-G · GitHub PR merged 실측 (relay 리포트 부재해도)
+			my_turn, // K1-0918-G · 열린 PR + kyu_checks ≥1 + 미판정 (실기 탭 정의)
 			repeat_count: r.repeat_count ?? 0,
 			filed_at: r.filed_at ?? null,
 			age_days,
-			// K1-0916-D · yaml 확장 필드 (K0 소비 계약)
 			next: r.next === true,
 			conflict_with: Array.isArray(r.conflict_with) ? r.conflict_with : [],
 			blocked_by: r.blocked_by ?? null,
@@ -282,6 +330,55 @@ async function collectRequirements(events) {
 			note: r.note ?? ''
 		};
 	});
+}
+
+/**
+ * K1-0918-G · A1 · GitHub PR merged/state 실측 · reports 안 pr URL 목록 fetch.
+ * @param {any[]} reports
+ * @param {string} ghToken
+ * @returns {Promise<Map<string, {state:string, merged:boolean, merged_at:string|null}>>}
+ */
+async function fetchPRStates(reports, ghToken) {
+	const out = new Map();
+	if (!Array.isArray(reports) || !ghToken) return out;
+	// 유일 PR URL 만 (여러 R-id 가 같은 PR 참조 시 중복 fetch 회피)
+	const uniqPRs = new Set();
+	for (const rp of reports) {
+		if (!rp.pr) continue;
+		const m = String(rp.pr).match(/github\.com\/([^/]+\/[^/]+)\/pull\/(\d+)/);
+		if (m) uniqPRs.add(`${m[1]}/${m[2]}`);
+	}
+	const headers = {
+		Authorization: `Bearer ${ghToken}`,
+		Accept: 'application/vnd.github+json',
+		'User-Agent': 'curiocity-relay-build-index/1.0',
+		'X-GitHub-Api-Version': '2022-11-28'
+	};
+	let count = 0;
+	for (const prKey of uniqPRs) {
+		const [owner, repo, , n] = prKey.split('/');
+		// prKey = "owner/repo/N" 파싱 재정정
+		const parts = prKey.split('/');
+		const prNum = parts[parts.length - 1];
+		const ownerRepo = parts.slice(0, -1).join('/');
+		try {
+			const res = await fetch(`https://api.github.com/repos/${ownerRepo}/pulls/${prNum}`, { headers });
+			if (!res.ok) continue;
+			const body = await res.json();
+			out.set(prKey, {
+				state: body.state,
+				merged: !!body.merged,
+				merged_at: body.merged_at ?? null
+			});
+			count++;
+			// K1-0918-G · rate limit 방어 (100 안에 batch)
+			if (count > 60) break;
+		} catch {
+			// skip
+		}
+	}
+	console.log(`[pr-states] fetched=${count} · uniq=${uniqPRs.size}`);
+	return out;
 }
 
 /**
@@ -404,13 +501,15 @@ async function collectFeatureMaps(ghToken) {
 			}
 			// K1-0917-C · project 필드 부재 = repo slug 파생 (todoboss/storeport 실 스키마 정합).
 			const projectSlug = parsed.project ?? repo.split('/').pop();
-			// K1-0917-C · 실 스키마 (todoboss/storeport) = top-level processes[] + area FK. convention.md v1 = nested. 두 방식 모두 정합 (area 병합 pass).
+			// K1-0918-G · A1 · feature_maps 스키마 통일 정본 = area.processes nested 로 재-nest (K1-0918-F 진단 #8 회수).
+			//   실 리포 (todoboss/storeport) = top-level processes[] with area FK → area.processes 로 그룹핑 후 저장
+			//   K0 UI (FeatureMap.svelte:337) 는 area.processes 소비 · 이 형태로 통일.
+			const nestedAreas = mergeProcessesIntoAreas(parsed.areas ?? [], parsed.processes ?? []);
 			out.push({
 				repo,
 				project: projectSlug,
 				version: parsed.version ?? 1,
-				areas: parsed.areas ?? [],
-				processes: parsed.processes ?? [], // K1-0917-C · top-level processes[] 지원
+				areas: nestedAreas, // K1-0918-G · nested 정본 (K0 소비 · docs/contract/index-json.md § feature_maps)
 				fetched_at: new Date().toISOString()
 			});
 		} catch (err) {
@@ -418,6 +517,43 @@ async function collectFeatureMaps(ghToken) {
 		}
 	}
 	return out;
+}
+
+/**
+ * K1-0918-G · A1 · feature_maps 스키마 통일 (top-level processes[] with area FK → area.processes nested).
+ * K1-0918-F 진단 #8 회수 · K0 FeatureMap.svelte 는 area.processes 만 소비 · 이 형태로 저장.
+ * 이미 nested (area.processes 있음) 이면 그대로 유지.
+ * @param {any[]} areas
+ * @param {any[]} topProcesses
+ */
+function mergeProcessesIntoAreas(areas, topProcesses) {
+	const areaMap = new Map();
+	for (const a of areas) {
+		areaMap.set(a.id, {
+			id: a.id,
+			name: a.name ?? a.label ?? a.id,
+			label: a.label,
+			processes: Array.isArray(a.processes) ? [...a.processes] : []
+		});
+	}
+	// top-level processes 를 area FK 로 그룹핑 (already nested = skip)
+	for (const p of topProcesses) {
+		const areaId = p.area;
+		if (!areaId) continue;
+		if (!areaMap.has(areaId)) {
+			// area 미존재 · 신규 생성
+			areaMap.set(areaId, { id: areaId, name: areaId, label: areaId, processes: [] });
+		}
+		areaMap.get(areaId).processes.push({
+			id: p.id,
+			name: p.name ?? p.id,
+			summary: p.summary ?? '',
+			files: Array.isArray(p.files) ? p.files : [],
+			spec: p.spec,
+			status: p.status ?? 'live'
+		});
+	}
+	return Array.from(areaMap.values());
 }
 
 /**
@@ -585,7 +721,9 @@ async function main() {
 		if (RAW_TYPES.has(e.type) && e.raw !== true) return { ...e, raw: true };
 		return e;
 	}).sort((a, b) => (a.ts || '').localeCompare(b.ts || ''));
-	const requirements = await collectRequirements(events);
+	// K1-0918-G · A1 · GitHub PR merged 실측 (reports 안 pr URL) + collectRequirements 확장
+	const prStates = await fetchPRStates(reports, ghToken);
+	const requirements = await collectRequirements(events, reports, prStates);
 	// K1-0917-B · R030 · 각 리포 main docs/feature-map.yaml 집계 (파일 패턴 · areas)
 	const featureMaps = await collectFeatureMaps(ghToken);
 	// K1-0917-B · R011 · 허브별 최근 활동 요약 (last_action · files_touched · tests_touched · 최근 24h)
