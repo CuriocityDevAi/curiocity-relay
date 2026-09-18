@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T08:21:01.295Z",
+  "built_at": "2026-09-18T08:21:45.171Z",
   "prompts": [],
   "reports": [
     {
@@ -1072,6 +1072,59 @@
         }
       ],
       "summary": "M0-0918-C · Anchor POS 하루 사이클 실기 8건 (폰 Expo Go SDK 57 · fork PR #6 + PR #7 병합 · storeport PR #120 병합 · Railway 자동 배포 SUCCESS 후)."
+    },
+    {
+      "path": "checks/m0/M0-0918-D.md",
+      "id": "M0-0918-D",
+      "hub": "m0",
+      "pr": "",
+      "issued_at": "2026-09-18T17:00:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "expo",
+          "title": "K1 Login (SDK 57 · SVG fix · fork PR #6 후) · English 화면",
+          "ok": "Login/Setup Wizard 도달",
+          "ng": "transform.js:361 재현 또는 한글 잔여",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K2 Open register · Opening float 500000 · Opened by (optional nickname) · Cash sale complete",
+          "ok": "Register badge = Open · sale complete",
+          "ng": "세션 not found · not open",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K3 Card sale · 승인번호 123456 (6자리) · 5자리 시 Complete Order disabled",
+          "ok": "6자리 = 완료 · 5자리 = disabled + hint",
+          "ng": "5자리 or 문자 통과",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K4 QRIS sale · 승인번호 654321 · Orders 상세 · Deferred 상품인 경우 [Mark fulfilled] 노출",
+          "ok": "Immediate = Fulfilled 자동 · Deferred = [Mark fulfilled] 버튼",
+          "ng": "Deferred 자동 이행 or Mark fulfilled 노출 안 됨",
+          "est_min": 4
+        },
+        {
+          "device": "expo",
+          "title": "K5 Cash Pickup · Owner spouse · 100000",
+          "ok": "드로어 잔액 -100000",
+          "ng": "잔액 변화 없음",
+          "est_min": 1
+        },
+        {
+          "device": "expo",
+          "title": "K6 Register Close · Counted 다르게 · Note 필수 · Z Report · Copy to WhatsApp",
+          "ok": "Difference 표시 · Note 없으면 Close disabled · Z 3 라인 · 클립보드 English 텍스트",
+          "ng": "Difference 잘못 계산 · Note 없이 Close · Z 값 어긋남",
+          "est_min": 3
+        }
+      ],
+      "summary": "M0-0918-D · Anchor POS 하루 사이클 축약 6건 (K1~K6 · K7/K8 은 K6 안에 포함)."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
@@ -6410,7 +6463,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T08:21:00.676Z"
+      "fetched_at": "2026-09-18T08:21:44.503Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -7629,7 +7682,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T08:21:00.920Z"
+      "fetched_at": "2026-09-18T08:21:44.659Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -8248,7 +8301,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-18T08:21:01.294Z"
+      "fetched_at": "2026-09-18T08:21:45.170Z"
     }
   ],
   "rollup": {
