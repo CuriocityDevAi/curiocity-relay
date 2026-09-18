@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T04:56:28.527Z",
+  "built_at": "2026-09-18T07:43:58.995Z",
   "prompts": [],
   "reports": [
     {
@@ -1006,6 +1006,73 @@
         }
       ],
       "summary": "M0-0918-A · Anchor POS 하루 사이클 실기 8건 재실기 (폰 Expo Go SDK 57 · storeport PR #118 병합 후 서버 register_session 라우트 활성화 확진)."
+    },
+    {
+      "path": "checks/m0/M0-0918-C.md",
+      "id": "M0-0918-C",
+      "hub": "m0",
+      "pr": "",
+      "issued_at": "2026-09-18T16:00:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "expo",
+          "title": "K1 Login (SDK 57 · SVG fix · fork PR #6 후) · 크래시 없어야",
+          "ok": "매장 마법사 or 상품 목록 도달",
+          "ng": "transform.js:361 재현",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K2 상단 미개점 배지 → 시재 500000 개점 → 상품 1개 → 결제 → Cash → Complete Order",
+          "ok": "완료 후 배지 개점 상태 · 이전 라운드 not found 없음",
+          "ng": "POST /admin/register-sessions 404/500",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K3 Card 판매 · 승인번호 123456 (6자리) · 5자리 입력 시 Complete Order disabled 확인",
+          "ok": "6자리 = 완료 · 5자리 이하 = disabled + hint · 문자 입력 무시",
+          "ng": "5자리 or 문자 입력에 완료 가능",
+          "est_min": 4
+        },
+        {
+          "device": "expo",
+          "title": "K4 QRIS 판매 · 승인번호 654321 (6자리) → Orders 화면",
+          "ok": "3건 모두 Paid · Fulfilled (모든 상품이 immediate 인 경우)",
+          "ng": "Pending이 남음",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K5 [수금] 100000 · 수금자 아내",
+          "ok": "서랍 잔액이 10만 줄어듦",
+          "ng": "잔액 변화 없음",
+          "est_min": 1
+        },
+        {
+          "device": "expo",
+          "title": "K6 [마감] · Expected 산출 · Counted 다르게 · 비고 필수 · 세션 기간 표시 확인",
+          "ok": "차액 있을 때 비고 없이는 마감 막힘 · Opened at ~ Closed at 표시 (별건 착지 시)",
+          "ng": "카드가 Expected에 섞임 또는 비고 없이 마감",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K7 Z 리포트 · 3 수단 라인 + 건수 (문자열 영어화는 별건)",
+          "ok": "Cash/Card/QRIS 3 라인 + 건수 · 값 정합",
+          "ng": "합계만 or 값 어긋남",
+          "est_min": 1
+        },
+        {
+          "device": "expo",
+          "title": "K8 [WA 복사] → WhatsApp 붙여넣기 (영어화 별건)",
+          "ok": "텍스트 온전 · 3 라인",
+          "ng": "빈 클립보드 · 깨짐",
+          "est_min": 1
+        }
+      ],
+      "summary": "M0-0918-C · Anchor POS 하루 사이클 실기 8건 (폰 Expo Go SDK 57 · fork PR #6 + PR #7 병합 · storeport PR #120 병합 · Railway 자동 배포 SUCCESS 후)."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
@@ -5746,13 +5813,13 @@
   "hubs": {
     "k0": {
       "last_action": "K0-0918-A 리포트",
-      "files_touched": 9,
+      "files_touched": 5,
       "tests_touched": 0,
       "updated_at": "2026-09-18T03:47:23.813Z"
     },
     "k1": {
       "last_action": "K1-0918-B 리포트",
-      "files_touched": 9,
+      "files_touched": 7,
       "tests_touched": 0,
       "updated_at": "2026-09-18T04:30:42.965Z"
     },
@@ -6309,7 +6376,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T04:56:27.996Z"
+      "fetched_at": "2026-09-18T07:43:58.595Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -7528,156 +7595,176 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T04:56:28.244Z"
+      "fetched_at": "2026-09-18T07:43:58.747Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
       "project": "storeport",
-      "version": "1",
+      "version": "2",
       "areas": [
         {
           "id": "anchor-pos",
-          "label": "Anchor POS (매장 결제 단말)",
+          "name": "Anchor POS",
+          "summary": "매장 직원이 손에 쥐는 점포 결제 단말과 서랍 마감까지의 하루 사이클이다.",
           "repo": "agilo-medusa-pos-fork"
         },
         {
           "id": "commerce-core",
-          "label": "Commerce Core (Medusa 백엔드)",
+          "name": "Commerce Core",
+          "summary": "매장·온라인·상담이 공유하는 하나의 백엔드로 주문·재고·결제·손님을 한곳에 모은다.",
           "repo": "storeport"
         },
         {
           "id": "wing",
-          "label": "Wing (경량 온라인 몰)",
+          "name": "Wing",
+          "summary": "손님이 상담 창에서 받은 링크로 여는 가벼운 온라인 몰이다.",
           "repo": "storeport"
         },
         {
           "id": "care-agent",
-          "label": "CareAgent (WhatsApp 상담 봇)",
+          "name": "CareAgent",
+          "summary": "매장 WhatsApp 상담을 봇이 결정론적으로 이어 가며 결제·주문을 대화에 붙인다.",
           "repo": "storeport"
         },
         {
           "id": "pocket",
-          "label": "Pocket (손님 지갑 · 미착수)",
+          "name": "Pocket",
+          "summary": "단골 손님이 자기 주문 이력·적립·픽업 시간을 확인하는 손님 지갑이다.",
           "repo": "storeport"
         },
         {
           "id": "dashboard",
-          "label": "Dashboard (사장 관리 화면 · 미착수)",
+          "name": "Dashboard",
+          "summary": "사장이 하루·주·월 매출을 한눈에 보는 관리 화면이다.",
           "repo": "storeport"
         },
         {
           "id": "infra",
-          "label": "Infra (배포 · 감시 · 규약 · 원장)",
+          "name": "Infra",
+          "summary": "배포·감시·규약·원장이 사는 리포 뒤편의 뼈대다.",
           "repo": "storeport"
         }
       ],
       "processes": [
         {
-          "id": "anchor-pos.login",
+          "id": "login",
+          "area": "anchor-pos",
           "files": [
             "fork:app/login.tsx",
             "fork:app/setup-wizard.tsx",
             "fork:contexts/auth.tsx"
           ],
-          "area": "anchor-pos",
+          "name": "로그인",
           "summary": "매장 직원이 자기 매장 주소와 계정으로 점포 결제 단말에 로그인한다.",
           "status": "live"
         },
         {
-          "id": "anchor-pos.store-setup",
+          "id": "store-setup",
+          "area": "anchor-pos",
           "files": [
             "fork:app/setup-wizard.tsx",
             "fork:app/settings/**"
           ],
-          "area": "anchor-pos",
+          "name": "매장 세팅",
           "summary": "로그인 직후 판매 채널·지역·재고 위치를 골라 매장 정보를 첫 세팅한다.",
           "status": "live"
         },
         {
-          "id": "anchor-pos.products",
+          "id": "products",
+          "area": "anchor-pos",
           "files": [
             "fork:app/(tabs)/products.tsx",
             "fork:app/(tabs)/scan.tsx",
             "fork:app/product-details.tsx"
           ],
-          "area": "anchor-pos",
+          "name": "상품",
           "summary": "판매 상품 목록을 화면에 띄우고 상세와 바코드 스캔으로 상품을 찾는다.",
           "status": "live"
         },
         {
-          "id": "anchor-pos.cart",
+          "id": "cart",
+          "area": "anchor-pos",
           "files": [
             "fork:app/(tabs)/cart.tsx",
             "fork:api/hooks/draft-orders.tsx",
-            "fork:components/QuantityPicker.tsx"
+            "fork:components/ui/QuantityPicker.tsx"
           ],
-          "area": "anchor-pos",
+          "name": "장바구니",
           "summary": "손님이 고른 상품을 임시 주문에 담아 수량과 금액을 확인한다.",
           "status": "live"
         },
         {
-          "id": "anchor-pos.checkout-3way",
+          "id": "checkout-3way",
+          "area": "anchor-pos",
           "files": [
             "fork:app/checkout/[draftOrderId].tsx",
-            "fork:components/PaymentMethodPicker.tsx",
-            "fork:api/hooks/draft-orders.tsx"
+            "id: card-approval-number",
+            "fork:app/checkout/[draftOrderId].tsx",
+            "fork:api/hooks/draft-orders.tsx",
+            "id: qris",
+            "fork:app/checkout/[draftOrderId].tsx"
           ],
-          "area": "anchor-pos",
-          "summary": "결제 화면에서 현금·카드·QRIS 세 가지 결제 수단을 골라 승인 번호와 함께 주문을 마감한다.",
+          "name": "QRIS",
+          "summary": "손님이 QRIS 로 내면 단말기에서 뽑아 준 승인 번호를 입력해야 완료할 수 있다.",
           "status": "live"
         },
         {
-          "id": "anchor-pos.register-open",
-          "files": [
-            "fork:app/register/open.tsx",
-            "fork:api/hooks/register-session.ts"
-          ],
+          "id": "register-open",
           "area": "anchor-pos",
+          "files": [
+            "fork:app/register/open.tsx"
+          ],
+          "name": "개점",
           "summary": "하루를 시작할 때 현금 서랍의 시작 시재를 넣고 개점 상태로 전환한다.",
           "status": "live"
         },
         {
-          "id": "anchor-pos.pickup",
-          "files": [
-            "fork:app/register/pickup.tsx",
-            "fork:api/hooks/register-session.ts"
-          ],
+          "id": "pickup",
           "area": "anchor-pos",
+          "files": [
+            "fork:app/register/pickup.tsx"
+          ],
+          "name": "수금",
           "summary": "하루 중 사장 부부가 서랍에서 현금을 뽑아 가면서 수금자와 금액을 기록한다.",
           "status": "live"
         },
         {
-          "id": "anchor-pos.register-close",
-          "files": [
-            "fork:app/register/close.tsx",
-            "fork:api/hooks/register-session.ts"
-          ],
+          "id": "register-close",
           "area": "anchor-pos",
-          "summary": "하루를 마감할 때 남은 실사 현금을 세어 예상 금액과 비교하고 차액에 사유를 남긴다.",
+          "files": [
+            "fork:api/hooks/register-session.ts",
+            "id: diff-note",
+            "fork:app/register/close.tsx",
+            "id: z-generate",
+            "fork:app/register/z-result.tsx"
+          ],
+          "name": "Z 리포트 생성",
+          "summary": "마감이 확정되는 순간 하루 매출을 결제 수단별로 정리한 Z 리포트가 만들어진다.",
           "status": "live"
         },
         {
-          "id": "anchor-pos.z-report",
-          "files": [
-            "fork:app/register/z-result.tsx",
-            "fork:api/hooks/register-session.ts"
-          ],
+          "id": "z-report",
           "area": "anchor-pos",
+          "files": [
+            "fork:app/register/z-result.tsx"
+          ],
+          "name": "Z 리포트 보기",
           "summary": "마감 직후 하루 매출을 결제 수단별 라인과 건수로 요약해 보여 준다.",
           "status": "live"
         },
         {
-          "id": "anchor-pos.wa-copy",
+          "id": "wa-copy",
+          "area": "anchor-pos",
           "files": [
-            "fork:app/register/z-result.tsx",
             "fork:api/hooks/register-session.ts"
           ],
-          "area": "anchor-pos",
+          "name": "WhatsApp 복사",
           "summary": "Z 리포트 텍스트를 통째로 클립보드에 복사해 사장 부부 WhatsApp 방에 붙여넣게 한다.",
           "status": "live"
         },
         {
-          "id": "anchor-pos.expo-runtime",
+          "id": "expo-runtime",
+          "area": "anchor-pos",
           "files": [
             "fork:package.json",
             "fork:app.json",
@@ -7685,104 +7772,127 @@
             "fork:app/_layout.tsx",
             "fork:components/HapticTab.tsx"
           ],
-          "area": "anchor-pos",
+          "name": "Expo 실행 정합",
           "summary": "Expo Go 최신 판이 요구하는 SDK 정합을 맞춰 실기 폰에서 앱이 열리게 한다.",
           "status": "live"
         },
         {
-          "id": "commerce-core.pos-complete",
-          "files": [
-            "apps/commerce-core/src/api/admin/register-sessions/**",
-            "apps/commerce-core/src/modules/register_session/**",
-            "apps/commerce-core/src/workflows/pos-complete/**"
-          ],
+          "id": "pos-complete",
           "area": "commerce-core",
-          "summary": "매장 결제 완료를 하나의 백엔드 호출로 받아 결제 기록·자동 배송·현금 이동을 한 번에 처리한다.",
+          "files": [
+            "apps/commerce-core/src/workflows/pos-complete/payment-record/**",
+            "id: fulfilled",
+            "apps/commerce-core/src/workflows/pos-complete/fulfilled/**",
+            "id: cash-drawer",
+            "apps/commerce-core/src/workflows/pos-complete/cash-drawer/**"
+          ],
+          "name": "서랍 기록",
+          "summary": "현금 결제였다면 서랍의 현금 이동 원장에 판매 금액을 즉시 편입한다.",
           "status": "planned"
         },
         {
-          "id": "commerce-core.payment-providers",
+          "id": "register-session",
+          "area": "commerce-core",
+          "files": [
+            "apps/commerce-core/src/api/admin/register-sessions/**",
+            "apps/commerce-core/src/modules/register_session/**"
+          ],
+          "name": "매장 세션 원장",
+          "summary": "개점·수금·마감·Z 리포트를 담는 매장 세션 원장을 백엔드에 둔다.",
+          "status": "planned"
+        },
+        {
+          "id": "payment-providers",
+          "area": "commerce-core",
           "files": [
             "apps/commerce-core/src/modules/payment_midtrans/**",
             "apps/commerce-core/src/modules/payment_xendit/**"
           ],
-          "area": "commerce-core",
+          "name": "결제 공급자",
           "summary": "인도네시아 결제 회사(Midtrans·Xendit)를 붙일 수 있는 결제 공급자 자리를 백엔드에 마련한다.",
           "status": "planned"
         },
         {
-          "id": "commerce-core.intent-link",
+          "id": "intent-link",
+          "area": "commerce-core",
           "files": [
             "apps/commerce-core/src/api/store/intent/**",
             "apps/commerce-core/src/api/store/link/**",
             "apps/commerce-core/src/modules/intent/**",
             "apps/commerce-core/src/modules/link_token/**"
           ],
-          "area": "commerce-core",
+          "name": "상담 링크 연결",
           "summary": "상담 창에서 뽑아 준 결제 링크를 백엔드가 받아 주문에 연결한다.",
           "status": "planned"
         },
         {
-          "id": "commerce-core.pickup-slot",
+          "id": "pickup-slot",
+          "area": "commerce-core",
           "files": [
             "apps/commerce-core/src/modules/pickup_slot/**"
           ],
-          "area": "commerce-core",
+          "name": "픽업 시간대",
           "summary": "손님이 매장에 오는 시각을 예약할 수 있게 픽업 시간대를 관리한다.",
           "status": "planned"
         },
         {
-          "id": "commerce-core.tenant-rbac",
+          "id": "tenant-rbac",
+          "area": "commerce-core",
           "files": [
             "apps/commerce-core/src/modules/tenant/**",
             "apps/commerce-core/src/modules/rbac/**"
           ],
-          "area": "commerce-core",
+          "name": "매장·권한",
           "summary": "여러 매장이 한 백엔드를 나눠 쓸 수 있게 매장 구분과 사용자 권한을 관리한다.",
           "status": "planned"
         },
         {
-          "id": "commerce-core.todoboss-bridge",
+          "id": "todoboss-bridge",
+          "area": "commerce-core",
           "files": [
             "apps/commerce-core/src/modules/todoboss_bridge/**",
             "packages/event-contracts/**"
           ],
-          "area": "commerce-core",
+          "name": "Todoboss 다리",
           "summary": "주문이 확정되면 주문 정보를 다른 사내 시스템(Todoboss)에 보내 준다.",
           "status": "planned"
         },
         {
-          "id": "commerce-core.wa-webhook",
+          "id": "wa-webhook",
+          "area": "commerce-core",
           "files": [
             "apps/commerce-core/src/modules/notification_whatsapp_webhook/**"
           ],
-          "area": "commerce-core",
+          "name": "WhatsApp 웹훅",
           "summary": "WhatsApp 회사가 보내는 알림을 안전하게 받아 상담 시스템에 넘긴다.",
           "status": "planned"
         },
         {
-          "id": "commerce-core.admin-customization",
+          "id": "admin-customization",
+          "area": "commerce-core",
           "files": [
             "apps/commerce-core/src/admin/**"
           ],
-          "area": "commerce-core",
+          "name": "관리 화면 손보기",
           "summary": "사장이 백엔드 관리 화면에서 매장에 맞는 항목만 보이도록 화면과 언어를 손본다.",
           "status": "live"
         },
         {
-          "id": "commerce-core.custom-endpoints",
+          "id": "custom-endpoints",
+          "area": "commerce-core",
           "files": [
             "apps/commerce-core/src/api/admin/custom/**",
             "apps/commerce-core/src/api/store/custom/**",
             "apps/commerce-core/src/api/health/**",
             "apps/commerce-core/src/api/README.md"
           ],
-          "area": "commerce-core",
+          "name": "사용자 정의 창구",
           "summary": "매장 앱과 외부 시스템이 호출하는 간단한 상태·확인용 백엔드 창구를 제공한다.",
           "status": "live"
         },
         {
-          "id": "commerce-core.seed-scripts",
+          "id": "seed-scripts",
+          "area": "commerce-core",
           "files": [
             "apps/commerce-core/src/migration-scripts/**",
             "apps/commerce-core/src/scripts/**",
@@ -7792,97 +7902,107 @@
             "apps/commerce-core/src/links/**",
             "apps/commerce-core/src/modules/README.md"
           ],
-          "area": "commerce-core",
+          "name": "첫 배포 시드",
           "summary": "첫 배포 시 매장 기본 데이터를 넣어 주는 시드 스크립트와 마이그레이션 도구다.",
           "status": "live"
         },
         {
-          "id": "wing.storefront",
+          "id": "storefront",
+          "area": "wing",
           "files": [
             "apps/wing/app/**",
             "apps/wing/components/**",
             "apps/wing/lib/**"
           ],
-          "area": "wing",
+          "name": "스토어프론트",
           "summary": "손님이 상담 창에서 받은 링크로 열 수 있는 가벼운 온라인 주문 화면을 제공한다.",
           "status": "planned"
         },
         {
-          "id": "wing.custom-order",
+          "id": "custom-order",
+          "area": "wing",
           "files": [
             "apps/wing/app/custom/**",
             "apps/wing/lib/custom/**"
           ],
-          "area": "wing",
+          "name": "커스텀 주문",
           "summary": "케이크처럼 옵션이 많은 상품을 손님이 자유롭게 골라 주문할 수 있게 한다.",
           "status": "planned"
         },
         {
-          "id": "wing.order-lookup",
+          "id": "order-lookup",
+          "area": "wing",
           "files": [
             "apps/wing/app/orders/**"
           ],
-          "area": "wing",
+          "name": "주문 조회",
           "summary": "손님이 자기 주문 번호와 이름으로 진행 상태를 확인한다.",
           "status": "planned"
         },
         {
-          "id": "care-agent.dialog",
+          "id": "dialog",
+          "area": "care-agent",
           "files": [
             "apps/care-agent/src/dialog/**",
             "apps/care-agent/src/index.ts"
           ],
-          "area": "care-agent",
+          "name": "대화 세션",
           "summary": "손님이 매장 WhatsApp에 말을 걸면 한 대화 세션으로 묶어 응답을 이어 간다.",
           "status": "planned"
         },
         {
-          "id": "care-agent.link-issuer",
+          "id": "link-issuer",
+          "area": "care-agent",
           "files": [
             "apps/care-agent/src/link/**"
           ],
-          "area": "care-agent",
+          "name": "링크 발급",
           "summary": "상담 도중 결제·주문용 개인 링크를 만들어 손님에게 보낸다.",
           "status": "planned"
         },
         {
-          "id": "care-agent.attribution",
+          "id": "attribution",
+          "area": "care-agent",
           "files": [
             "apps/care-agent/src/attribution/**"
           ],
-          "area": "care-agent",
+          "name": "주문 귀속",
           "summary": "손님이 링크로 결제·주문을 완료하면 그 결과를 원래 상담 대화에 붙여 준다.",
           "status": "planned"
         },
         {
-          "id": "care-agent.handoff",
+          "id": "handoff",
+          "area": "care-agent",
           "files": [
             "apps/care-agent/src/handoff/**"
           ],
-          "area": "care-agent",
+          "name": "사람 상담 이관",
           "summary": "봇이 감당 못하는 문의는 실 사람 상담원에게 넘긴다.",
           "status": "planned"
         },
         {
-          "id": "pocket.customer-wallet",
+          "id": "customer-wallet",
+          "area": "pocket",
           "files": [
             "apps/pocket/**"
           ],
-          "area": "pocket",
+          "name": "손님 지갑",
           "summary": "단골 손님이 앱에서 자기 주문 이력·적립·픽업 시간을 확인할 수 있게 한다.",
           "status": "planned"
         },
         {
-          "id": "dashboard.sales-summary",
+          "id": "sales-summary",
+          "area": "dashboard",
           "files": [
             "apps/dashboard/**"
           ],
-          "area": "dashboard",
+          "name": "매출 요약",
           "summary": "사장이 하루·주·월 매출을 한눈에 볼 수 있는 관리 화면을 만든다.",
           "status": "planned"
         },
         {
-          "id": "infra.docs-plans",
+          "id": "docs-plans",
+          "area": "infra",
           "files": [
             "docs/plans/**",
             "docs/decisions/**",
@@ -7896,12 +8016,13 @@
             "docs/KNOWN_ISSUES.md",
             "docs/feature-map.yaml"
           ],
-          "area": "infra",
+          "name": "문서·원장",
           "summary": "매 라운드 실기 안내서와 결과 원장을 담는 문서 자리다.",
           "status": "live"
         },
         {
-          "id": "infra.docs-root",
+          "id": "docs-root",
+          "area": "infra",
           "files": [
             "README.md",
             "CLAUDE.md",
@@ -7912,12 +8033,13 @@
             "DAY-0-BOOTSTRAP.md",
             "TESTING-SYSTEM.md"
           ],
-          "area": "infra",
+          "name": "리포 뿌리 안내서",
           "summary": "리포 뿌리에 놓인 프로젝트 안내서와 규약 문서들이다.",
           "status": "live"
         },
         {
-          "id": "infra.ledger-scripts",
+          "id": "ledger-scripts",
+          "area": "infra",
           "files": [
             "scripts/epic-state-check.cjs",
             "scripts/upstream-tracking-check.sh",
@@ -7925,53 +8047,58 @@
             "scripts/feature-map-check.mjs",
             "scripts/dispatch/**"
           ],
-          "area": "infra",
+          "name": "원장 검사 스크립트",
           "summary": "원장 형식 검사와 상류 리포 신선도 검사를 자동으로 돌리는 검사 스크립트 묶음이다.",
           "status": "live"
         },
         {
-          "id": "infra.dev-scripts",
+          "id": "dev-scripts",
+          "area": "infra",
           "files": [
             "scripts/dev-fe.sh",
             "scripts/dev-server.sh",
             "scripts/port-map.txt"
           ],
-          "area": "infra",
+          "name": "개발 실행 스크립트",
           "summary": "개발용 서버·프론트를 편하게 띄우는 실행 스크립트들이다.",
           "status": "live"
         },
         {
-          "id": "infra.upstream-refs",
+          "id": "upstream-refs",
+          "area": "infra",
           "files": [
             "external-refs/**"
           ],
-          "area": "infra",
+          "name": "상류 참조 원장",
           "summary": "이식하지 않고 참고만 하는 상류 오픈소스 리포들의 신선도 원장이다.",
           "status": "live"
         },
         {
-          "id": "infra.ci-workflows",
+          "id": "ci-workflows",
+          "area": "infra",
           "files": [
             ".github/workflows/**",
             ".husky/**"
           ],
-          "area": "infra",
+          "name": "CI 파이프라인",
           "summary": "리포 자동 검사 파이프라인 설정 묶음이다.",
           "status": "live"
         },
         {
-          "id": "infra.ops-inbox",
+          "id": "ops-inbox",
+          "area": "infra",
           "files": [
             "ops/**",
             "inbox/**",
             "done/**"
           ],
-          "area": "infra",
+          "name": "별건 인박스",
           "summary": "아직 착수하지 않은 별건 지시들의 인박스와 완결 아카이브다.",
           "status": "live"
         },
         {
-          "id": "infra.commerce-core-envelope",
+          "id": "commerce-core-envelope",
+          "area": "infra",
           "files": [
             "apps/commerce-core/package.json",
             "apps/commerce-core/pnpm-lock.yaml",
@@ -7989,21 +8116,23 @@
             "apps/commerce-core/.gitignore",
             "apps/commerce-core/.npmrc"
           ],
-          "area": "infra",
+          "name": "Commerce Core 껍데기",
           "summary": "백엔드 앱의 배포·의존성·컨테이너 껍데기 파일들이다.",
           "status": "live"
         },
         {
-          "id": "infra.anchor-envelope",
+          "id": "anchor-envelope",
+          "area": "infra",
           "files": [
             "apps/anchor/**"
           ],
-          "area": "infra",
+          "name": "Anchor 껍데기 (종료)",
           "summary": "Anchor 앱(현재 종료된 웹판)의 껍데기 파일들이다.",
           "status": "deprecated"
         },
         {
-          "id": "infra.wing-envelope",
+          "id": "wing-envelope",
+          "area": "infra",
           "files": [
             "apps/wing/package.json",
             "apps/wing/Dockerfile",
@@ -8017,12 +8146,13 @@
             "apps/wing/.dockerignore",
             "apps/wing/.gitignore"
           ],
-          "area": "infra",
+          "name": "Wing 껍데기",
           "summary": "Wing 앱의 배포·의존성·컨테이너 껍데기 파일들이다.",
           "status": "planned"
         },
         {
-          "id": "infra.care-agent-envelope",
+          "id": "care-agent-envelope",
+          "area": "infra",
           "files": [
             "apps/care-agent/package.json",
             "apps/care-agent/wrangler.toml",
@@ -8032,12 +8162,13 @@
             "apps/care-agent/.dev.vars.example",
             "apps/care-agent/.gitignore"
           ],
-          "area": "infra",
+          "name": "CareAgent 껍데기",
           "summary": "CareAgent 앱의 배포·의존성 껍데기 파일들이다.",
           "status": "planned"
         },
         {
-          "id": "infra.workspace-root",
+          "id": "workspace-root",
+          "area": "infra",
           "files": [
             "package.json",
             "pnpm-workspace.yaml",
@@ -8045,23 +8176,25 @@
             ".gitignore",
             ".gitattributes",
             ".nvmrc",
-            "LICENSE"
+            "LICENSE",
+            "railway.json"
           ],
-          "area": "infra",
+          "name": "워크스페이스 뿌리",
           "summary": "pnpm 워크스페이스와 루트 설정 파일들이다.",
           "status": "live"
         },
         {
-          "id": "infra.marketing",
+          "id": "marketing",
+          "area": "infra",
           "files": [
             "marketing/**"
           ],
-          "area": "infra",
+          "name": "판매 자료",
           "summary": "판매 자료·브랜딩·웹사이트 원본이 사는 자리다.",
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-18T04:56:28.526Z"
+      "fetched_at": "2026-09-18T07:43:58.994Z"
     }
   ],
   "rollup": {
