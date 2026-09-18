@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T08:47:03.980Z",
+  "built_at": "2026-09-18T08:48:37.296Z",
   "prompts": [],
   "reports": [
     {
@@ -1407,7 +1407,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-18T07:57:52.546Z"
+          "last_ts": "2026-09-18T08:44:38.447Z"
         }
       },
       "note": "Kyu 맥 데몬 500·SSE 실패(09-17) → K1 다음 라운드"
@@ -1536,7 +1536,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-18T07:57:52.546Z"
+          "last_ts": "2026-09-18T08:44:38.447Z"
         }
       },
       "note": "OS 기본음+진동 · 포털 열림 시 띵 · Kyu 알림 실기 미완"
@@ -1708,7 +1708,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-18T07:57:52.546Z"
+          "last_ts": "2026-09-18T08:44:38.447Z"
         }
       },
       "note": "K2 폐쇄(09-16) · 소유 K1 승계"
@@ -1751,7 +1751,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-18T07:57:52.546Z"
+          "last_ts": "2026-09-18T08:44:38.447Z"
         }
       },
       "note": ""
@@ -2527,7 +2527,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-18T07:57:52.546Z"
+          "last_ts": "2026-09-18T08:44:38.447Z"
         }
       },
       "note": "R012(허브판 무의미)와 상충 → 삭제 제안 대상 · K1-0916-E에서 4상태 최소 정밀화는 완료"
@@ -2957,7 +2957,7 @@
         },
         "landed": {
           "seen": true,
-          "last_ts": "2026-09-18T07:57:52.546Z"
+          "last_ts": "2026-09-18T08:44:38.447Z"
         }
       },
       "note": "K0-0916-F 이관 · env v2 레시피(K1-0915-A)로 완료"
@@ -5960,6 +5960,22 @@
       "label": "상태 대사: k1.md",
       "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
       "raw": true
+    },
+    {
+      "ts": "2026-09-18T08:44:38.447Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/relay-K1DR/k1/K1-0918-D-report.md",
+      "label": "K1-0918-D 리포트",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-18T08:44:38.447Z",
+      "hub": "k1",
+      "type": "report-push",
+      "target": "/tmp/relay-K1DR/k1/K1-0918-D-report.md",
+      "label": "K1-0918-D 리포트",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
     }
   ],
   "mismatches": [],
@@ -5972,10 +5988,10 @@
       "updated_at": "2026-09-18T03:47:23.813Z"
     },
     "k1": {
-      "last_action": "K1-0918-C 리포트",
-      "files_touched": 8,
+      "last_action": "K1-0918-D 리포트",
+      "files_touched": 9,
       "tests_touched": 0,
-      "updated_at": "2026-09-18T07:57:52.546Z"
+      "updated_at": "2026-09-18T08:44:38.447Z"
     },
     "k2": {
       "last_action": null,
@@ -6530,7 +6546,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T08:47:03.399Z"
+      "fetched_at": "2026-09-18T08:48:36.742Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -7749,7 +7765,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T08:47:03.743Z"
+      "fetched_at": "2026-09-18T08:48:36.955Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -8370,7 +8386,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-18T08:47:03.980Z"
+      "fetched_at": "2026-09-18T08:48:37.295Z"
     }
   ],
   "rollup": {
