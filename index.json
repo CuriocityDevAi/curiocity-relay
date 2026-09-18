@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T15:15:29.224Z",
+  "built_at": "2026-09-18T15:25:00.980Z",
   "prompts": [],
   "reports": [
     {
@@ -1278,6 +1278,31 @@
         }
       ],
       "summary": "M0-0918-G · **긴급 핫픽스**: R2 provider env guard 로 프로덕션 크래시 루프 해소."
+    },
+    {
+      "path": "checks/m0/M0-0918-Z.md",
+      "id": "M0-0918-Z",
+      "hub": "m0",
+      "pr": "",
+      "issued_at": "2026-09-18T22:00:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "expo",
+          "title": "K1 신 카드 결제 · 승인번호 123456 · pos-complete 200 · Orders 배지 Paid + Fulfilled",
+          "ok": "Order confirmed 다이얼로그 · Orders에 Paid+Fulfilled 초록",
+          "ng": "400 total=0 재현 · Not Paid 유지",
+          "est_min": 4
+        },
+        {
+          "device": "expo",
+          "title": "K2 Order #15~#17 재시도 · Not Paid 배지 탭 → 6자리 재입력 → Confirm → Paid 전환",
+          "ok": "Paid 배지 전환 · Z 리포트 편입",
+          "ng": "popup 없음 · 재시도 400 · 배지 안 바뀜",
+          "est_min": 3
+        }
+      ],
+      "summary": "M0-0918-Z · **긴급 hotfix**: 결제 합계 0 뿌리 해소 (`pos-complete/route.ts:113~181`)."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
@@ -7390,7 +7415,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-09-18T15:15:28.893Z"
+      "fetched_at": "2026-09-18T15:25:00.691Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -8622,7 +8647,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-09-18T15:15:29.009Z"
+      "fetched_at": "2026-09-18T15:25:00.793Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -9195,7 +9220,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-09-18T15:15:29.223Z"
+      "fetched_at": "2026-09-18T15:25:00.979Z"
     }
   ],
   "rollup": {
