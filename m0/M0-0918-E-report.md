@@ -224,3 +224,51 @@ fork PR #6 (SDK 57) + PR #7 (C+D+E 통합) 병합 후 · Kyu 폰 Expo Go SDK 57.
 ---
 
 *M0-0918-E · 2026-09-18 · R042 대사표 + R021 뿌리 해소 + Orders 재설계 · fork PR #7 updated · storeport PR #122 · kyu_checks 8 · 이연 순증감 0 (병합 후 -3)*
+
+---
+
+## § F · fork PR #7 마감 (M0-0918-F · 2026-09-18)
+
+**목적** (Kyu 지시): fork master 에 SDK 57 (fork PR #6) squash 머지 반영 후 PR #7 을 rebase 로 착지 가능 상태로 만든다.
+
+### F.1 사전 실측
+
+- fork PR #6 = MERGED (`2a52423` squash · "chore(sdk57): Expo SDK 54 → 57 + SVG 렌더 수정 (M0-0915-A · M0-0917-C) — Kyu 승인 머지").
+- fork master tip = `2a52423`.
+- fork PR #7 branch (`feat/m0-0918-c-app`) 는 rebase 전 상태 = master 의 SDK 57 squash 이전 5 커밋 (SDK 57 원본 2 + C/D/E 3) 을 다 갖고 있어 `origin/master` 대비 중복.
+
+### F.2 rebase 전략 (SDK 57 = master 우선 · E 작업 보존)
+
+`git rebase --onto origin/master 69375ad feat/m0-0918-c-app`:
+
+- 컷 지점 = `69375ad` (SVG fix M0-0917-C · 이 커밋과 그 이전 `ae56445` M0-0915-A 는 master squash 로 대체됨).
+- 이후 3 커밋만 master 위에 재적용: `f5b2eaa` (C) · `352fe9f` (D) · `e0853b4` (E).
+- **충돌 0** (Successfully rebased and updated `refs/heads/feat/m0-0918-c-app`).
+
+### F.3 검증
+
+| 항목 | 결과 |
+|------|------|
+| `git log --oneline` | `e0853b4 (E)` · `352fe9f (D)` · `f5b2eaa (C)` · `2a52423 (master · SDK 57 squash)` |
+| `npm ci` | 재정합 완료 (rebase 후 lockfile 반영) |
+| `npx tsc --noEmit` | **0 error** |
+| `git push --force-with-lease origin feat/m0-0918-c-app` | `+ 012a23d...e0853b4 (forced update)` |
+| `gh pr view 7 --json mergeable` | **`"mergeable": "MERGEABLE"`** · `mergeStateStatus: "UNSTABLE"` (CI 실행 중 · MERGEABLE 자체는 확정) |
+| iOS 시뮬레이터 (iPhone 17 · iOS 26.1) · Expo Go SDK 57.0.0 · Login 화면 | ✓ 스샷 `/tmp/m0-0918-f-shots/login.png` · **Login** 헤더 + Shop URL/Email/Password 필드 · SVG 아이콘 정상 · Expo Go dev menu 오버레이 (앱 자체는 로드 완료) |
+
+### F.4 최종 브랜치 커밋 이력 (rebase 후)
+
+```
+e0853b4 feat(app): R021 Not Paid fix + Orders 배지·chip·요약·탭 액션 (M0-0918-E)
+352fe9f feat(app): English-only pass + [Mark fulfilled] + typography tokens (M0-0918-D · R041 · R040)
+f5b2eaa feat(checkout): 6자리 승인번호 UI 강제 + 결제수단 UI 영어 (M0-0918-C · R041 부분 · R021)
+2a52423 chore(sdk57): Expo SDK 54 → 57 + SVG 렌더 수정 (M0-0915-A · M0-0917-C) — Kyu 승인 머지
+```
+
+### F.5 판정
+
+- PR #7 = **병합 준비 완료** · Kyu 판정 대기.
+- SDK 57 관련 rebase 스킵 정상 (master squash 안에 이미 포함).
+- E 작업 (Not Paid fix · Orders 재설계 · 탭 액션) 전량 보존 확진.
+
+*§F · M0-0918-F · 2026-09-18 · fork PR #7 rebase 마감 · MERGEABLE · Login 스샷 확진*
