@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T14:57:00.615Z",
+  "built_at": "2026-09-18T14:58:24.125Z",
   "prompts": [],
   "reports": [
     {
@@ -361,6 +361,21 @@
       "pr": "storeport#114",
       "outcome": "feature-map-l1",
       "kyu_checks": [],
+      "ledger_events": []
+    },
+    {
+      "path": "k1/K1-0918-G-report.md",
+      "round": "K1-0918-G",
+      "pr": "TBD",
+      "outcome": "pending",
+      "kyu_checks": [
+        "흐름판 · 실기 탭 배지 = 흐름 탭 chip-my-turn 값 동일 확증 (K1G-1)",
+        "흐름판 · 5열 배치 정본 = filed→waiting · issued→implementing · landed→landing · verified→drilling · done→merged · GitHub merged 실측 시 column=merged 강등",
+        "R002 (K0-0917-D · PR#116) = ⑤ merged 열 · 착지·PR 열 잔존 없음 (K1G-3)",
+        "landing 열 카드 = PR# 링크 노출 (K1G-5)",
+        "지도 탭 · 첫 프로젝트 area 프로세스 카드 > 0 (K1G-6 · feature_maps nested 통일)",
+        "docs/contract/index-json.md 정본 계약 · K0 폐기 대상 코드 목록 (statusToColumn · my_turn 파생 · created_at 폴백) 회부"
+      ],
       "ledger_events": []
     }
   ],
@@ -7121,7 +7136,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-09-18T14:57:00.183Z"
+      "fetched_at": "2026-09-18T14:58:23.781Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -8353,7 +8368,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-09-18T14:57:00.345Z"
+      "fetched_at": "2026-09-18T14:58:23.914Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -8926,7 +8941,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-09-18T14:57:00.614Z"
+      "fetched_at": "2026-09-18T14:58:24.124Z"
     }
   ],
   "rollup": {
