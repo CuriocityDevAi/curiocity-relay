@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T07:43:58.995Z",
+  "built_at": "2026-09-18T07:58:06.761Z",
   "prompts": [],
   "reports": [
     {
@@ -316,27 +316,26 @@
       "ledger_events": []
     },
     {
-      "path": "k1/K1-0918-B-report.md",
-      "round": "K1-0918-B",
-      "pr": "135",
+      "path": "k1/K1-0918-C-report.md",
+      "round": "K1-0918-C",
+      "pr": "136",
       "outcome": "landed",
       "kyu_checks": [
-        "Kyu 맥 [테스트 열기] · Todoboss 로그인 화면 (localhost:4321 HTTP 200) 실 스샷",
-        "포털 헤더 헬스 초록 dot 스샷",
-        "install 재실행 · config.json.bak 자동 생성 확증"
+        "Kyu 맥 [테스트 열기] · Todoboss 로그인 후 5월 데이터 (백엔드 4000 + web-admin 4321) 실 스샷",
+        "SSE 로그 [web-admin] · [backend] prefix + HTTP 200 확증"
       ],
       "ledger_events": [
         {
           "id": "R003",
           "action": "consume",
-          "note": "HTTP health check 200 후 ready · 서버 미기동 오탐 회수 · fetch failed 시 사람 문장 error emit 확증",
-          "label": "R003 착지 (HTTP health check 200 후 ready · 서버 미기동 오탐 회수 · fetch failed )"
+          "note": "병렬 서버 (backend+web-admin) · 두 host 헬스 · lsof 정본 · 다중 .env · 실 SSE 6.6s HTTP 200 확증",
+          "label": "R003 착지 (병렬 서버 (backend+web-admin) · 두 host 헬스 · lsof 정본 · 다중 .env · )"
         },
         {
           "id": "R031",
           "action": "consume",
-          "note": "헬스 dot 진단 로그 · daemon crash 무재발 · install config.json.bak 자동 백업·복원 · Kyu 매번 재설정 반복 회수",
-          "label": "R031 착지 (헬스 dot 진단 로그 · daemon crash 무재발 · install config.json.bak 자동)"
+          "note": "lsof -nP -sTCP:LISTEN 정본 · 오판 회수 · envCwds 배열",
+          "label": "R031 착지 (lsof -nP -sTCP:LISTEN 정본 · 오판 회수 · envCwds 배열)"
         }
       ]
     }
@@ -5813,7 +5812,7 @@
   "hubs": {
     "k0": {
       "last_action": "K0-0918-A 리포트",
-      "files_touched": 5,
+      "files_touched": 4,
       "tests_touched": 0,
       "updated_at": "2026-09-18T03:47:23.813Z"
     },
@@ -6376,7 +6375,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T07:43:58.595Z"
+      "fetched_at": "2026-09-18T07:58:06.272Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -7595,7 +7594,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T07:43:58.747Z"
+      "fetched_at": "2026-09-18T07:58:06.525Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -8194,7 +8193,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-18T07:43:58.994Z"
+      "fetched_at": "2026-09-18T07:58:06.760Z"
     }
   ],
   "rollup": {
