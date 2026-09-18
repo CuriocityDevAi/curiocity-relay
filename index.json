@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T10:06:23.845Z",
+  "built_at": "2026-09-18T10:06:48.788Z",
   "prompts": [],
   "reports": [
     {
@@ -330,24 +330,6 @@
       "outcome": "feature-map-l1",
       "kyu_checks": [],
       "ledger_events": []
-    },
-    {
-      "path": "k1/K1-0918-E-report.md",
-      "round": "K1-0918-E",
-      "pr": "139",
-      "outcome": "landed",
-      "kyu_checks": [
-        "포털 홈 · agilo 프로젝트 탭 노출 · PR 상세 열림 스샷",
-        "Kyu 봇 계정 정본화 (선택 · K1-0917-D docs 유지)"
-      ],
-      "ledger_events": [
-        {
-          "id": "R031",
-          "action": "consume",
-          "note": "agilo 404 뿌리 규명 = Workers GITHUB_TOKEN scope 밖 (CROSS_REPO_READ_TOKEN 은 relay CI 만) · K1 shell PAT 갱신 · auto-deploy 후 /api/prs 200 · source:live · 7 PRs 실측 완결",
-          "label": "R031 착지 (agilo 404 뿌리 규명 = Workers GITHUB_TOKEN scope 밖 (CROSS_REPO_R)"
-        }
-      ]
     }
   ],
   "checks": [
@@ -6985,7 +6967,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T10:06:23.451Z"
+      "fetched_at": "2026-09-18T10:06:48.136Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -8204,7 +8186,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T10:06:23.596Z"
+      "fetched_at": "2026-09-18T10:06:48.482Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -8825,7 +8807,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-18T10:06:23.844Z"
+      "fetched_at": "2026-09-18T10:06:48.787Z"
     }
   ],
   "rollup": {
