@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T09:51:35.770Z",
+  "built_at": "2026-09-18T09:53:10.378Z",
   "prompts": [],
   "reports": [
     {
@@ -1194,6 +1194,45 @@
         }
       ],
       "summary": "M0-0918-E · R021 뿌리 (silent catch) 해소 + Orders 재설계 확진 + Upstream 대사표."
+    },
+    {
+      "path": "checks/m0/M0-0918-G.md",
+      "id": "M0-0918-G",
+      "hub": "m0",
+      "pr": "",
+      "issued_at": "2026-09-18T20:00:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "curl",
+          "title": "K1 착지 조건 · curl /health = {ok:true, db.ok:true}",
+          "ok": "응답 200 · {ok:true, db:{ok:true}}",
+          "ng": "200 아님 · db.ok false · 크래시 재현",
+          "est_min": 1
+        },
+        {
+          "device": "web",
+          "title": "K2 Railway Deployments · 최근 배포 SUCCESS",
+          "ok": "배지 초록 · 로그 [file] R2 미설정 · 로컬 저장",
+          "ng": "FAILED · Access key ID required 재현",
+          "est_min": 2
+        },
+        {
+          "device": "expo",
+          "title": "K3 Login (fork PR #7 병합 후) · Shop URL 검증 15s · cold-start hint 표시",
+          "ok": "URL 통과 · Sign In 진입 · 필드 아래 hint 노출",
+          "ng": "5s 만에 fail · hint 미표시",
+          "est_min": 2
+        },
+        {
+          "device": "web",
+          "title": "K4 Admin 이미지 업로드 · R2 env 미설정이므로 file-local 저장",
+          "ok": "업로드 200 · 이미지 URL = local path",
+          "ng": "업로드 500 · 크래시",
+          "est_min": 2
+        }
+      ],
+      "summary": "M0-0918-G · **긴급 핫픽스**: R2 provider env guard 로 프로덕션 크래시 루프 해소."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
@@ -6863,7 +6902,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T09:51:35.032Z"
+      "fetched_at": "2026-09-18T09:53:09.980Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -8082,7 +8121,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T09:51:35.406Z"
+      "fetched_at": "2026-09-18T09:53:10.166Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -8703,7 +8742,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-18T09:51:35.769Z"
+      "fetched_at": "2026-09-18T09:53:10.377Z"
     }
   ],
   "rollup": {
