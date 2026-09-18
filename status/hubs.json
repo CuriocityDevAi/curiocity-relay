@@ -1,26 +1,24 @@
 {
   "schema_version": 1,
-  "built_at": "2026-09-18T11:04:34.874Z",
+  "built_at": "2026-09-18T11:57:06.408Z",
   "hubs": {
     "n0": {
       "state": "idle",
       "last_activity": "2026-09-14T07:04:41.842Z",
-      "updated_at": "2026-09-18T11:04:09.766Z"
+      "updated_at": "2026-09-18T11:05:17.609Z"
     },
     "t0": {
       "state": "idle",
       "last_activity": "2026-09-18T08:19:43.609Z",
-      "updated_at": "2026-09-18T11:04:09.766Z"
+      "updated_at": "2026-09-18T11:05:17.609Z"
     },
     "m0": {
       "state": "idle",
       "last_activity": "2026-09-18T09:52:57.367Z",
-      "updated_at": "2026-09-18T11:04:09.766Z"
+      "updated_at": "2026-09-18T11:05:17.609Z"
     },
     "k0": {
-      "state": "idle",
-      "last_activity": "2026-09-18T10:07:32.672Z",
-      "updated_at": "2026-09-18T11:04:09.766Z",
+      "state": "waiting-inquiry",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -28,17 +26,19 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "updated_at": "2026-09-18T11:05:17.609Z"
     },
     "k1": {
-      "state": "idle",
-      "last_activity": "2026-09-18T10:09:31.742Z",
-      "updated_at": "2026-09-18T11:04:09.766Z"
+      "state": "running",
+      "last_activity": "2026-09-18T11:04:50.399Z",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "updated_at": "2026-09-18T11:05:17.609Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": "2026-09-16T08:51:26.461Z",
-      "updated_at": "2026-09-18T11:04:09.766Z"
+      "updated_at": "2026-09-18T11:05:17.609Z"
     }
   }
 }
