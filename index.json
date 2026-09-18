@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T03:47:40.387Z",
+  "built_at": "2026-09-18T03:50:19.440Z",
   "prompts": [],
   "reports": [
     {
@@ -308,20 +308,26 @@
       "ledger_events": []
     },
     {
-      "path": "k1/K1-0917-I-report.md",
-      "round": "K1-0917-I",
-      "pr": "131",
+      "path": "k1/K1-0918-A-report.md",
+      "round": "K1-0918-A",
+      "pr": "132",
       "outcome": "landed",
       "kyu_checks": [
-        "Kyu 맥 브라우저 [테스트 열기] · 환영 화면 0 · localhost:4321 바로 열림 스샷",
-        "K0 UI 진행 로그 = 사람 문장 노출 확증 (설치 중 · 서버 시작 중 등)"
+        "Kyu 맥 [테스트 열기] · prepare 단계 로그 노출 (환경 준비 중) · localhost:4321 로그인 화면 스샷",
+        "봇 토큰 절차 (docs/kyu-clicks/K1-0917-D 유지) 실기"
       ],
       "ledger_events": [
         {
           "id": "R003",
           "action": "consume",
-          "note": "Chrome 환영 화면 억제 (3 플래그 + First Run 마커) · progress label 13종 · 실 SSE progress label 5종 노출 확증",
-          "label": "R003 착지 (Chrome 환영 화면 억제 (3 플래그 + First Run 마커) · progress label 13종 )"
+          "note": "env.prepare 단계 계약 신설 · defaultPrepare 폴백 (.env 복사 + 포트 kill) · Kyu 어제 함정 3 자동 처리 · 실 SSE prepare 실 실측 확증",
+          "label": "R003 착지 (env.prepare 단계 계약 신설 · defaultPrepare 폴백 (.env 복사 + 포트 kill))"
+        },
+        {
+          "id": "R009",
+          "action": "consume",
+          "note": "범용화 · 새 프로젝트 = env.prepare 한 줄 편성 · defaultPrepare 폴백으로 4 프로젝트 무해 동작",
+          "label": "R009 착지 (범용화 · 새 프로젝트 = env.prepare 한 줄 편성 · defaultPrepare 폴백으로 4 프로)"
         }
       ]
     }
@@ -5584,7 +5590,7 @@
   "hubs": {
     "k0": {
       "last_action": "K0-0917-K 리포트",
-      "files_touched": 11,
+      "files_touched": 10,
       "tests_touched": 0,
       "updated_at": "2026-09-17T08:56:38.281Z"
     },
@@ -6147,7 +6153,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T03:47:39.894Z"
+      "fetched_at": "2026-09-18T03:50:19.007Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -7366,7 +7372,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T03:47:40.076Z"
+      "fetched_at": "2026-09-18T03:50:19.195Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -7899,7 +7905,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-18T03:47:40.386Z"
+      "fetched_at": "2026-09-18T03:50:19.440Z"
     }
   ],
   "rollup": {
