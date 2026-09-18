@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T08:44:53.494Z",
+  "built_at": "2026-09-18T08:47:03.980Z",
   "prompts": [],
   "reports": [
     {
@@ -1125,6 +1125,73 @@
         }
       ],
       "summary": "M0-0918-D · Anchor POS 하루 사이클 축약 6건 (K1~K6 · K7/K8 은 K6 안에 포함)."
+    },
+    {
+      "path": "checks/m0/M0-0918-E.md",
+      "id": "M0-0918-E",
+      "hub": "m0",
+      "pr": "",
+      "issued_at": "2026-09-18T19:00:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "expo",
+          "title": "K1 Login (SDK 57)",
+          "ok": "Login 도달 · SVG 크래시 없음",
+          "ng": "transform.js:361 재현",
+          "est_min": 2
+        },
+        {
+          "device": "expo",
+          "title": "K2 Open register 500000 · opener_nickname (optional)",
+          "ok": "Register badge = Open · nickname 표시",
+          "ng": "세션 not open",
+          "est_min": 2
+        },
+        {
+          "device": "expo",
+          "title": "K3 Card 판매 · 승인번호 123456 (6자리) · 성공 확진",
+          "ok": "Order confirmed 다이얼로그 · Orders 목록에 Paid + Fulfilled 배지 (immediate 상품)",
+          "ng": "Not Paid 유지 (silent catch 재현) 또는 5자리 통과",
+          "est_min": 4
+        },
+        {
+          "device": "expo",
+          "title": "K4 QRIS 판매 · 654321 · Paid 확진",
+          "ok": "Paid + Fulfilled 배지",
+          "ng": "Not Paid",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K5 Cash Pickup Owner spouse 100000",
+          "ok": "드로어 잔액 -100000",
+          "ng": "잔액 변화 없음",
+          "est_min": 1
+        },
+        {
+          "device": "expo",
+          "title": "K6 Close · Note · Z Report · Copy to WhatsApp",
+          "ok": "Difference · Note 필수 · Z 3 라인 · 클립보드 English",
+          "ng": "Note 없이 Close · Z 값 어긋남",
+          "est_min": 3
+        },
+        {
+          "device": "expo",
+          "title": "K7 Orders 목록 확진 · 결제수단 chip · 상품 요약 · Paid/Fulfilled 배지 쌍",
+          "ok": "Chip (Cash/Card/QRIS) · 요약 (Cake +2 등) · 배지 쌍",
+          "ng": "Chip 없음 · 요약 안 뜸 · 배지 하나만",
+          "est_min": 2
+        },
+        {
+          "device": "expo",
+          "title": "K8 Not Paid 재시도 케이스 · Not Paid 배지 탭 → 6자리 popup → Confirm → Paid 전환",
+          "ok": "Paid 초록 배지 전환",
+          "ng": "popup 안 뜸 · 재시도 실패 · 배지 안 바뀜",
+          "est_min": 3
+        }
+      ],
+      "summary": "M0-0918-E · R021 뿌리 (silent catch) 해소 + Orders 재설계 확진 + Upstream 대사표."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
@@ -6463,7 +6530,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T08:44:52.835Z"
+      "fetched_at": "2026-09-18T08:47:03.399Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -7682,7 +7749,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T08:44:53.110Z"
+      "fetched_at": "2026-09-18T08:47:03.743Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -8303,7 +8370,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-18T08:44:53.493Z"
+      "fetched_at": "2026-09-18T08:47:03.980Z"
     }
   ],
   "rollup": {
