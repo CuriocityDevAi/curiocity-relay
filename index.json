@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-09-18T08:00:27.887Z",
+  "built_at": "2026-09-18T08:21:01.295Z",
   "prompts": [],
   "reports": [
     {
@@ -1275,7 +1275,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T08:49:55.716Z"
+          "last_ts": "2026-09-18T08:10:23.095Z"
         },
         "priority": {
           "seen": false,
@@ -1404,7 +1404,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T08:49:55.716Z"
+          "last_ts": "2026-09-18T08:10:23.095Z"
         },
         "priority": {
           "seen": false,
@@ -1576,7 +1576,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T08:49:55.716Z"
+          "last_ts": "2026-09-18T08:10:23.095Z"
         },
         "priority": {
           "seen": false,
@@ -1619,7 +1619,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T08:49:55.716Z"
+          "last_ts": "2026-09-18T08:10:23.095Z"
         },
         "priority": {
           "seen": false,
@@ -2395,7 +2395,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T08:49:55.716Z"
+          "last_ts": "2026-09-18T08:10:23.095Z"
         },
         "priority": {
           "seen": false,
@@ -2825,7 +2825,7 @@
         },
         "reconcile": {
           "seen": true,
-          "last_ts": "2026-09-17T08:49:55.716Z"
+          "last_ts": "2026-09-18T08:10:23.095Z"
         },
         "priority": {
           "seen": false,
@@ -5813,6 +5813,33 @@
       "target": "/tmp/relay-K1CR/k1/K1-0918-C-report.md",
       "label": "K1-0918-C 리포트",
       "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d"
+    },
+    {
+      "ts": "2026-09-18T08:10:05.276Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/tracking/k1.md",
+      "label": "트래킹 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-18T08:10:19.241Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "label": "상태 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
+    },
+    {
+      "ts": "2026-09-18T08:10:23.095Z",
+      "hub": "k1",
+      "type": "reconcile",
+      "target": "/Users/kyu.lee/projects/test-portal-k1/docs/state/k1.md",
+      "label": "상태 대사: k1.md",
+      "session": "e46dbefe-1cc3-4e70-8f94-f5d202993c1d",
+      "raw": true
     }
   ],
   "mismatches": [],
@@ -6383,7 +6410,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T08:00:27.413Z"
+      "fetched_at": "2026-09-18T08:21:00.676Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -7602,7 +7629,7 @@
           "status": "live"
         }
       ],
-      "fetched_at": "2026-09-18T08:00:27.603Z"
+      "fetched_at": "2026-09-18T08:21:00.920Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -7787,15 +7814,15 @@
           "id": "pos-complete",
           "area": "commerce-core",
           "files": [
-            "apps/commerce-core/src/workflows/pos-complete/payment-record/**",
+            "apps/commerce-core/src/api/admin/register-sessions/[id]/pos-complete/route.ts",
             "id: fulfilled",
-            "apps/commerce-core/src/workflows/pos-complete/fulfilled/**",
+            "apps/commerce-core/src/api/admin/register-sessions/[id]/fulfill/route.ts",
             "id: cash-drawer",
-            "apps/commerce-core/src/workflows/pos-complete/cash-drawer/**"
+            "apps/commerce-core/src/modules/register_session/service.ts"
           ],
           "name": "서랍 기록",
           "summary": "현금 결제였다면 서랍의 현금 이동 원장에 판매 금액을 즉시 편입한다.",
-          "status": "planned"
+          "status": "live"
         },
         {
           "id": "register-session",
@@ -7805,7 +7832,27 @@
             "apps/commerce-core/src/modules/register_session/**"
           ],
           "name": "매장 세션 원장",
-          "summary": "개점·수금·마감·Z 리포트를 담는 매장 세션 원장을 백엔드에 둔다.",
+          "summary": "개점·수금·마감·Z 리포트를 담는 매장 세션 원장을 백엔드에 두고 자정 넘김을 차단한다.",
+          "status": "live"
+        },
+        {
+          "id": "fulfillment-policy",
+          "area": "commerce-core",
+          "files": [
+            "docs/decisions/ADR-0013-fulfillment-policy.md"
+          ],
+          "name": "이행 정책",
+          "summary": "상품이 즉시 인도되는지 나중에 인도되는지 정하고 그에 맞춰 결제 완료 시 자동 이행 여부를 결정한다.",
+          "status": "live"
+        },
+        {
+          "id": "r2-images",
+          "area": "commerce-core",
+          "files": [
+            "apps/commerce-core/src/modules/r2_file/**"
+          ],
+          "name": "손님 사진 저장소",
+          "summary": "상품 사진을 클라우드플레어 R2 에 올려 앱에서 빠르게 보여 준다.",
           "status": "planned"
         },
         {
@@ -8201,7 +8248,7 @@
           "status": "planned"
         }
       ],
-      "fetched_at": "2026-09-18T08:00:27.887Z"
+      "fetched_at": "2026-09-18T08:21:01.294Z"
     }
   ],
   "rollup": {
