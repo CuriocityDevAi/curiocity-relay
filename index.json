@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-03T07:28:33.242Z",
+  "built_at": "2026-11-03T07:31:12.794Z",
   "prompts": [],
   "reports": [
     {
@@ -1378,6 +1378,38 @@
         }
       ],
       "summary": "M0-1012-A · Kyu 10-12 iPad 실기 재현 7 항목 (R021·R042·R039) 해소."
+    },
+    {
+      "path": "checks/m0/M0-1103-A.md",
+      "id": "M0-1103-A",
+      "hub": "m0",
+      "pr": "",
+      "issued_at": "2026-11-03T20:00:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "expo",
+          "title": "stock-badge-real · 배지가 Admin 숫자와 일치",
+          "ok": "Admin 재고 15 → 앱 카드 15 left 초록 · 0 → Sold out 회색",
+          "ng": "배지 숫자 불일치 · 전 상품 Sold out 재현",
+          "est_min": 2
+        },
+        {
+          "device": "expo",
+          "title": "tap-open · 재고 있는 상품 터치 열림",
+          "ok": "N left 또는 unmanaged 상품 터치 → 상품 상세 열림",
+          "ng": "탭 무반응",
+          "est_min": 1
+        },
+        {
+          "device": "expo",
+          "title": "unknown-open · 값 없음일 때 배지 없이 열림 (fail-open)",
+          "ok": "서버가 inventory_quantity 안 돌려줘도 배지 없이 터치 허용",
+          "ng": "전 상품 Sold out · 탭 차단 재현",
+          "est_min": 1
+        }
+      ],
+      "summary": "M0-1103-A · 재고 배지 fail-open 핫픽스 (R021 재진입)."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
@@ -4322,7 +4354,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-03T07:28:32.720Z"
+      "fetched_at": "2026-11-03T07:31:12.275Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5554,7 +5586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-03T07:28:32.903Z"
+      "fetched_at": "2026-11-03T07:31:12.425Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6156,7 +6188,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-03T07:28:33.242Z"
+      "fetched_at": "2026-11-03T07:31:12.793Z"
     }
   ],
   "rollup": {
