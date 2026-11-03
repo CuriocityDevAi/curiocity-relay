@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-03T07:31:12.794Z",
+  "built_at": "2026-11-03T08:21:04.659Z",
   "prompts": [],
   "reports": [
     {
@@ -1410,6 +1410,52 @@
         }
       ],
       "summary": "M0-1103-A · 재고 배지 fail-open 핫픽스 (R021 재진입)."
+    },
+    {
+      "path": "checks/m0/M0-1103-B.md",
+      "id": "M0-1103-B",
+      "hub": "m0",
+      "pr": "",
+      "issued_at": "2026-11-03T20:40:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "ipad",
+          "title": "no-oss-name · 화면에 Medusa/Agilo 0건",
+          "ok": "홈 라벨 Meros POS · 로그인/설정/영수증 어디에도 Medusa·Agilo 글자 없음",
+          "ng": "Medusa 또는 Agilo 문구 재현",
+          "est_min": 3
+        },
+        {
+          "device": "ipad",
+          "title": "wordmark · 로그인 화면 MEROS",
+          "ok": "로그인 상단 두껍고 둥근 MEROS 워드마크 노출 (Variant 1 Orbitron Black)",
+          "ng": "워드마크 안 보임 · 깨짐",
+          "est_min": 1
+        },
+        {
+          "device": "ipad",
+          "title": "login-remember · 로그아웃 후 URL 드롭다운→이메일 자동",
+          "ok": "1회 로그인 성공 → 로그아웃 → 로그인 화면 Recent 칩 → URL 탭 → 이메일 자동 입력",
+          "ng": "Recent 칩 안 보임 · 자동 입력 안 됨",
+          "est_min": 2
+        },
+        {
+          "device": "ipad",
+          "title": "stock-badge-number · Admin 재고 숫자 = 앱 배지",
+          "ok": "Admin 재고 15 설정 → 앱 Products 탭 15 left 초록 배지 노출",
+          "ng": "배지 숫자 불일치 · 전 상품 Sold out 재현",
+          "est_min": 2
+        },
+        {
+          "device": "expo",
+          "title": "admin-title · 브라우저 탭 Meros Admin",
+          "ok": "admin.storeport.app 접속 시 브라우저 탭 title Meros Admin",
+          "ng": "기존 Medusa 표기 · title 교체 미반영",
+          "est_min": 1
+        }
+      ],
+      "summary": "M0-1103-B · Meros 리브랜딩 + 로그인 기억 + 재고 배지 진짜 뿌리 (fork PR #10)."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
@@ -4354,7 +4400,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-03T07:31:12.275Z"
+      "fetched_at": "2026-11-03T08:21:04.202Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5586,7 +5632,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-03T07:31:12.425Z"
+      "fetched_at": "2026-11-03T08:21:04.389Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6188,7 +6234,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-03T07:31:12.793Z"
+      "fetched_at": "2026-11-03T08:21:04.658Z"
     }
   ],
   "rollup": {
