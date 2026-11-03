@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-03T08:21:04.659Z",
+  "built_at": "2026-11-03T09:12:24.160Z",
   "prompts": [],
   "reports": [
     {
@@ -1456,6 +1456,45 @@
         }
       ],
       "summary": "M0-1103-B · Meros 리브랜딩 + 로그인 기억 + 재고 배지 진짜 뿌리 (fork PR #10)."
+    },
+    {
+      "path": "checks/m0/M0-1103-C.md",
+      "id": "M0-1103-C",
+      "hub": "m0",
+      "pr": "",
+      "issued_at": "2026-11-03T21:10:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "ipad",
+          "title": "logo-login · 로그인 화면 로고",
+          "ok": "로그인 화면 가운데 앰버 영수증 + MEROS 전체 로고 노출",
+          "ng": "로고 안 보임·깨짐·기존 Agilo·3안 재현",
+          "est_min": 1
+        },
+        {
+          "device": "ipad",
+          "title": "logo-splash · 스플래시 로고",
+          "ok": "앱 부팅 시 전체 로고 (cream 바탕 · 가운데)",
+          "ng": "스플래시 공백·기존 Agilo·M0-1103-B MEROS 재현",
+          "est_min": 1
+        },
+        {
+          "device": "ipad",
+          "title": "logo-receipt · Z 리포트 머리글",
+          "ok": "Z 리포트 상단 소형 마크 + 'Meros POS' 라벨",
+          "ng": "머리글 안 보임",
+          "est_min": 1
+        },
+        {
+          "device": "ipad",
+          "title": "icon-home · 홈 아이콘",
+          "ok": "iPad 홈 화면 앰버 바탕 + 어두운 M (OS 자동 라운드)",
+          "ng": "기존 Agilo/M0-1103-B MEROS 아이콘 재현",
+          "est_min": 1
+        }
+      ],
+      "summary": "M0-1103-C · Meros 정본 로고 (3 Receipt 시안) 확정 + 적용 (fork PR #11)."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
@@ -4400,7 +4439,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-03T08:21:04.202Z"
+      "fetched_at": "2026-11-03T09:12:23.444Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5632,7 +5671,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-03T08:21:04.389Z"
+      "fetched_at": "2026-11-03T09:12:23.829Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6234,7 +6273,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-03T08:21:04.658Z"
+      "fetched_at": "2026-11-03T09:12:24.160Z"
     }
   ],
   "rollup": {
