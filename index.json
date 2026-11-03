@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-03T09:12:24.160Z",
+  "built_at": "2026-11-03T09:23:45.932Z",
   "prompts": [],
   "reports": [
     {
@@ -1495,6 +1495,31 @@
         }
       ],
       "summary": "M0-1103-C · Meros 정본 로고 (3 Receipt 시안) 확정 + 적용 (fork PR #11)."
+    },
+    {
+      "path": "checks/m0/M0-1103-D.md",
+      "id": "M0-1103-D",
+      "hub": "m0",
+      "pr": "",
+      "issued_at": "2026-11-03T21:40:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "ipad",
+          "title": "stale-recover · 옛 ID 상태에서 Add to cart 성공",
+          "ok": "저장된 옛 draft order ID 가 stale 이어도 Add to cart 성공 · 빨간 토스트 없음",
+          "ng": "\"Order ... is not a draft order\" 반복 · \"Something went wrong\" 재현",
+          "est_min": 2
+        },
+        {
+          "device": "ipad",
+          "title": "sequential-orders · 결제 완료 후 연속 주문 재검 (M0-1012-A)",
+          "ok": "주문 완료 → 즉시 Add to cart → 반복 10회 모두 성공",
+          "ng": "2번째 주문부터 is-not-a-draft 재현",
+          "est_min": 3
+        }
+      ],
+      "summary": "M0-1103-D · 옛 draft order ID 자가 복구 핫픽스 (fork PR #12)."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
@@ -4439,7 +4464,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-03T09:12:23.444Z"
+      "fetched_at": "2026-11-03T09:23:45.603Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5671,7 +5696,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-03T09:12:23.829Z"
+      "fetched_at": "2026-11-03T09:23:45.718Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6273,7 +6298,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-03T09:12:24.160Z"
+      "fetched_at": "2026-11-03T09:23:45.932Z"
     }
   ],
   "rollup": {
