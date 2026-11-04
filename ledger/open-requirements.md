@@ -1,10 +1,14 @@
 # CurioCity 열린 요구 원장 (오케 유지 · Kyu 원문 기준)
 
-갱신: 2026-11-03 16:50 · 규칙: 새 요구 = 여기 먼저 등재(Kyu 원문 그대로 · 오케 번역은 괄호) · 소유 허브 필수 · 착지·실기 통과 시 ✅ · 이 파일이 챗보다 우선
+갱신: 2026-11-04 13:35 · 규칙: 새 요구 = 여기 먼저 등재(Kyu 원문 그대로 · 오케 번역은 괄호) · 소유 허브 필수 · 착지·실기 통과 시 ✅ · 이 파일이 챗보다 우선
 **발부 규약(09-16)**: 모든 프롬프트 작성 직전 이 파일을 읽고, 프롬프트 첫 줄 아래 `원장 대사:` 한 줄에 포함 항목을 적는다. 없으면 발부 금지. Kyu가 같은 요구를 두 번 말하면 🔴 · 다음 발부에 무조건 포함. 터미널 "별건/이연"은 Kyu 원문과 대조해 명시 요구면 거부. 주 1회 "한 번도 발부 안 된 요구" 표를 Kyu에게 보고.
 
 ## 🔴 재언급 요구 (Kyu 3회 · 09-16)
 - [ ] **"테스트 케이스들을 모았다가, 나중에 자동 테스트한다"** — Kyu 원문. (오케 번역: Kyu가 ✓✗ 찍은 실기 항목 중 기계 판정 가능한 것은 어설션으로 전환되어 축적 → 스케줄(PR마다·야간)로 자동 실행 → 다음 라운드부터 사람은 소리·감각 항목만.) 소유 = K2 · 발부 = K2-0916-A(09-16) · 상태 = 구현 중. 누락 원인 = 07-28~09-14 소유 허브 부재 + 오케가 "REQ↔테스트 매핑"으로 번역하며 원래 기능(축적→자동 실행) 탈락.
+
+## 전 제품 공통 (11-04 Kyu)
+- [ ] **Sentry 전 제품 확장** — Kyu "응 등재해줘" (오케 설명에 동의: 서버→앱→웹(GrowNest·Todoboss) 순 · 웹은 Session Replay 로 오류 직전 화면 녹화 · 오류/크래시는 Sentry 가 대신, "보기에 틀린 것"(레이아웃·틀린 결과)은 여전히 사람 눈 또는 스크린샷 비교 테스트). 오케 자인: 관측성(기계가 먼저 보고)을 포털(사람 판정 수집)보다 먼저 깔았어야 했음.
+- [ ] **[REPORT] 상시 조항 추가 (11-04)**: 앱 PR 은 로직 어설션만으로 착지 불가 — Expo 웹 실기동(Playwright: 로그인 화면 도달 · console.error 0) 필수. 근거 = M0-1103-D 회귀(기동 크래시)를 어설션이 못 잡음.
 
 ## 머지·실기 규칙 (Kyu 확정 2026-09-14)
 - **test-portal**: 머지 조건 = 터미널 자기 검증 통과 + CI 초록. Kyu 판정 없음. 오케가 리포트 검토 후 GitHub에서 직접 머지(auto-selfcheck-merge 워크플로 가동 중). Kyu 실기 = 오케가 부르는 마일스톤 때만.
@@ -38,48 +42,51 @@
 ## Todoboss (T0 · M0 뒤)
 - [ ] T0-0915-A 착지(PR#22/#23): orphan 필터 · "판정불가 4(출근 2·퇴근 2)" 표기 · [돌아가기] 필터 · 출근/퇴근 시각 직접 입력→재판정 — Kyu 실기 대기
 - [ ] 이연: 파라미터화 · Finalize · Payslip · Work Rotation 편성
+- [ ] Sentry + Session Replay (전 제품 확장 · M0 뒤)
 
 ## StorePort / Meros (M0 · 최우선 10-12)
 
 ### 브랜드 정본 (Kyu 확정 11-03)
 - 제품명: **Meros POS**(아이패드/아이폰 앱) · **Meros Admin**(관리자 웹) · 손님 사이트는 추후 Meros Shop 또는 매장명. 문장 속 Meros · 워드마크만 MEROS. 오픈소스 고지는 Settings → About → Open source licenses 한 곳.
-- 로고: **오케 시안 3A "Receipt"** (앰버 영수증 종이 + 잉크 M + Archivo Black "MEROS") 확정. 발전안 10종은 폐기("원안이 제일 낫다"). M0-1103-B 워드마크 3안 폐기.
-- 색: 잉크 #0E1B18 · 앰버 #E8A33D · 그린 #1C7C68 (시맨틱 토큰 등록 뒤 raw hex 금지).
-- 도메인: **meros.id** (호스팅어 등록 · Cloudflare DNS Active 11-03). `admin.meros.id` = Admin 웹 (Railway commerce-core 커스텀 도메인 · CORS 반영 · 로그인 확인 11-03 ✅). `api.meros.id` = 앱이 붙는 API (11-03 Kyu "지금 당장" · 진행 중). `images.storeport.app` = R2 (추후 images.meros.id 전환 가능). storeport.app 은 유지.
+- 로고: **오케 시안 3A "Receipt"** (앰버 영수증 종이 + 잉크 M + Archivo Black "MEROS") 확정 · ✅ 적용(M0-1103-C #11 · 11-04 머지). 발전안 10종 폐기.
+- 색 토큰: brand.ink #0E1B18 · brand.amber #E8A33D · brand.green #1C7C68 · brand.cream #F2F4F1 (constants/brand.ts + tailwind · 로고 외 raw hex 금지).
+- 도메인(11-03 완료): **meros.id** (호스팅어 · Cloudflare DNS). `admin.meros.id` ✅ Admin 웹(CORS 반영·로그인 확인). `api.meros.id` ✅ 앱 API(/health OK). `images.storeport.app` = R2. storeport.app 유지. Railway Hobby 커스텀 도메인 한도(서비스당 2) 소진 — 추가 시 Pro.
 
 ### 착지 ✅
-- ✅ Z 핫픽스 결제 합계 0 (#126) · M0-1012-A (포크 #8 · storeport #151 · 11-02 머지): Z 뿌리(complete 호출 제거) · 카트 초기화 · 띠 포맷 · 재고 배지 · 진단 로그
-- ✅ R2 이미지 저장소 (11-02): `images.storeport.app` 커스텀 도메인 · Admin 업로드 → 앱 표시 확인 (r2.dev 는 ISP 차단으로 불가)
-- ✅ M0-1103-A (포크 #9 · 11-03 머지): 재고 배지 fail-open · 뿌리 = Medusa 2.17.2 /admin/products 가 inventory_quantity 미반환
-- ✅ M0-1103-B (포크 #10 · 11-03 머지): 앱 리브랜딩 Meros POS · 로그인 기억(SecureStore · Recent 칩) · 재고 숫자 2차 조회(/admin/product-variants) · admin 도메인 런북
+- ✅ Z 핫픽스 결제 합계 0 (#126) · M0-1012-A (포크 #8 · storeport #151 · 11-02): Z 뿌리 · 카트 초기화 · 띠 포맷 · 재고 배지 · 진단 로그
+- ✅ R2 이미지 저장소 (11-02): images.storeport.app
+- ✅ M0-1103-A (#9 · 11-03): 재고 배지 fail-open · 뿌리 = Medusa 2.17.2 /admin/products 가 inventory_quantity 미반환
+- ✅ M0-1103-B (#10 · 11-03): 앱 리브랜딩 Meros POS · 로그인 기억(SecureStore · Recent 칩) · 재고 숫자 2차 조회 · admin 도메인 런북
+- ✅ M0-1103-C (#11 · 11-04 · E 리베이스 뒤): 로고 3A path 6종 · 로그인/스플래시/아이콘/Z 머리글 적용 · 색 토큰 · 클로드코드 옛 할일 51건 정리
+- ✅ M0-1103-D (#12 · 11-03): 옛 draft order ID 자가 복구 · "Cart was reset" 문구
+- ✅ M0-1104-A (#13 · 11-04): D 회귀(기동 크래시 "User is not authenticated") 해소 · Expo 웹 실기동 Playwright 체크 상시화
 - ✅ 아이패드 실기: 1 띠 포맷 ✓ (11-03)
 
 ### 진행 중
-- [ ] **M0-1103-D** 핫픽스 (11-03 투입): Add to cart → "Order order_01M4QPYQR3… is not a draft order" = 10-12 완료된 옛 주문 ID 가 앱 저장소에 잔존 · 자가 복구(404/not draft → 폐기 → 새 draft → 재시도) · 기동 시 1회 검증 · "Cart was reset" 문구
-- [ ] M0-1103-C (로고 3A 적용 · D 착지 뒤 Admin 리브랜딩 합쳐 새 ID 로 재발부 예정)
-- [ ] 아이패드 실기 재개 (D 뒤): 터치 · 로고 · Recent 칩 · 재고 숫자 · 4 Card · 5 연속 · 6 할인 · 7 칩 · 8 Z
+- [ ] **M0-1104-B** (착지 · 포크 #14 · 머지 대기): Expo SDK 57→58 (아이패드 Expo Go 58 강제 업데이트로 실기 차단) · expo-doctor 20/20 · 어설션 118 · Playwright pass
+- [ ] **M0-1104-C** (11-04 투입 · 실행 중): Sentry 서버(commerce-core) 연결 · 에이전트 플러그인(org curiocity-devai · run code 4178d3e5b9) · SENTRY_DSN 환경변수 · 진단 로그 3지점 승격 · 오케 조회 토큰 런북
+- [ ] 아이패드 실기 재개 (#14 머지 뒤): 기동·스플래시 로고 · 로그인 로고 · Recent 칩 · 재고 숫자 · 담기 · Card · 연속 · 할인 · 칩 · Z
 
-### 신규 요구 (Kyu 원문 · 11-03)
-- [ ] **(11-03) Admin 웹 리브랜딩**: "https://admin.meros.id/app/login 로 접근했더니, Welcome to Medusa 가 나오거든? Welcome to Meros 여야하잖아" · "가능하지만 되는지는 M0가 확인했으면해" — (오케 번역: Medusa Admin 로그인 문구·브라우저 탭 title "Meros Admin"·로고 3A·favicon 교체. 공식 설정 없음 → i18n 덮어쓰기/빌드 패치 가능 여부 M0 확진 후 storeport PR) — 소유 M0 · C 와 합산
-- [ ] **(11-03) api.meros.id**: "앱이 붙는곳은 따로 api.meros.id 로 만들자. 지금당장." — Railway 커스텀 도메인 + Cloudflare CNAME (오케 안내 중 · 코드 변경 없음) · 앱 기본 API 주소로 사용
-- [ ] **(11-03) Shop URL 칸 제거**: Kyu "Shop URL 에다가 왜 admin.meros.id 인거지? 어떤 회사나 가게의 이름이 들어가야하는게 아닌가?" → 오케 제안 "앱에서 Shop URL 칸을 없애고 api.meros.id 를 앱 안에 고정 · 로그인은 이메일·비번만 · 서버 전환은 설정 고급에만" → Kyu "동의" — 소유 M0 · 로그인 기억은 이메일 기억으로 축소
-- [ ] **(11-03) 가게 선택**: 오케 제안 "로그인하면 그 계정이 속한 매장 목록이 떠서 고름(여러 지점 대비) · 다른 사업자는 서버 분리 또는 테넌트" → Kyu "가게 선택도 동의" — 소유 M0 · 설계 라운드 (코어 sales channel/stock location 우선)
-- [ ] **(11-03) Sentry 도입**: Kyu "Sentry 는 해보자" — 앱(Expo SDK) + 서버(Medusa Node SDK) + 오케 조회용 API 토큰 · 라운드 E · Kyu 계정 생성 클릭 안내 필요
-- [ ] (11-03) 로그인 기억 ✅ 구현(B) · 실기 대기 · Shop URL 제거 시 이메일 기억만 유지
-- [ ] (11-03) 실패한 URL 저장·오류 미표시: 오타 URL 이 저장되어 다음 로그인 때 버튼 회색 + 콘솔에만 오류 → Shop URL 제거로 자연 해소 · 검증 실패 문구는 화면에
-- [ ] (11-03) 품절 카드 흐림 과함: 전부 품절이면 화면 전체가 안개 → 흐림 25% · 배지만 강조 — D(소소) 라운드
-- [ ] (11-03) 유령 예약 정리: 미완료 draft order 가 재고 Reserved 점유(Whole 5 · Slice 19) → M0 제안 C "Z 마감 시 open draft 자동 drop" (오케 동의) · Kyu 결정 대기 · 지금은 Admin Reservations 수동 삭제(A)
-- [ ] (11-03) 클로드코드 M0 세션 옛 할일 목록 51건(9월 잔재) 정리 — 원장만 정본
+### 신규 요구 (Kyu 원문 · 11-03~04)
+- [ ] **(11-03) Admin 웹 리브랜딩**: "Welcome to Medusa 가 나오거든? Welcome to Meros 여야하잖아" · "되는지는 M0가 확인했으면해" — Medusa Admin 문구·탭 title "Meros Admin"·로고 3A·favicon · 가능 여부 M0 확진 후 storeport PR
+- [ ] **(11-03) Shop URL 칸 제거**: api.meros.id 앱 내 고정 · 로그인은 이메일·비번만 · 서버 전환은 설정 고급 — Kyu "동의" · 로그인 기억은 이메일만
+- [ ] **(11-03) 가게 선택**: 로그인 후 계정 소속 매장 목록에서 선택 — Kyu "동의" · 코어 sales channel/stock location 우선
+- [ ] **(11-03/04) Sentry 앱(Expo) SDK**: SDK 58 머지 뒤 · Expo Go 에선 JS 오류만, EAS dev build 에서 완전체
+- [ ] **(11-04) EAS dev build 앞당김**: Expo Go 강제 업데이트 사고 재발 방지 · 홈 아이콘 "Meros POS" · Apple 개발자 계정($99/yr · Kyu 결제) 선행 · 평소 테스트 흐름은 동일(expo start + QR)
+- [ ] (11-03) 품절 카드 흐림 과함 → 25% · 배지만 강조 — D(소소)
+- [ ] (11-03) 유령 예약 정리: Whole 5 · Slice 19 → M0 제안 C "Z 마감 시 open draft 자동 drop"(오케 동의) · Kyu 결정 대기 · 지금은 Admin Reservations 수동 삭제
+- [ ] (11-03) 실패한 URL 저장·오류 미표시 → Shop URL 제거로 자연 해소
 
-### 로드맵 (10-12 합의 · A 뒤 순서)
+### 로드맵 (10-12 합의)
 - [ ] M0-1012-B: 싱가포르 리전 이전(DB 포함) + Redis
 - [ ] B: RMA(반품·환불·취소) · 픽업 예약 · 보류 주문
-- [ ] C: 고객 · 등급(실버/골드/플래티넘) · 스토어 크레딧 포인트(R043) · WA · Scan
-- [ ] D 소소: 영어 잔여 · 타이포 · 칩 · 완료 화면 · About 라이선스 UI · 품절 흐림 완화
-- [ ] A 잔여: 결제수단 공식 provider 등록은 Phase 2 Midtrans/Xendit 와 동시
-- [ ] 하드웨어 라운드: EAS dev build(Android APK · iOS 홈 아이콘 "Meros POS") + Xantri BT-58D BT 인쇄 + 서랍 열기 · iOS는 BLE 확인 후
-- [ ] 외부 신청: Meta WhatsApp 번호(K11) · Midtrans/Xendit 머천트(K13/K14)
-- [ ] Kyu 결정 보류: Metabase 선행 여부 · 이연 16(AgentsPay 제약) 봉인 유지 · 오프라인은 매장 투입 뒤
+- [ ] C: 고객 · 등급 · 스토어 크레딧(R043) · WA · Scan
+- [ ] D 소소: 영어 잔여 · 타이포 · 칩 · 완료 화면 · About 라이선스 UI · 품절 흐림
+- [ ] A 잔여: 결제수단 공식 provider = Phase 2 Midtrans/Xendit 와 동시
+- [ ] 하드웨어 라운드: EAS dev build(위로 앞당김) + Xantri BT-58D BT 인쇄 + 서랍 열기 · iOS BLE
+- [ ] 외부 신청: Meta WhatsApp(K11) · Midtrans/Xendit 머천트(K13/K14)
+- [ ] Kyu 결정 보류: Metabase 선행 · 이연 16(AgentsPay) 봉인 · 오프라인은 매장 투입 뒤
 
 ## GrowNest (N0 동면)
 - 재개 시 docs/handoff/HANDOFF-2026-09-14-N0-HIBERNATION.md 먼저 · 미결 = 카운트업 스케일 일반 스핀 적용(현행 유지)
+- [ ] Sentry + Session Replay (전 제품 확장 · 재개 시)
