@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-04T06:31:09.772Z",
+  "built_at": "2026-11-04T06:38:35.611Z",
   "prompts": [],
   "reports": [
     {
@@ -1584,6 +1584,24 @@
         }
       ],
       "summary": "M0-1104-B · Expo SDK 57 → 58 업그레이드 (fork PR #14) · Expo Go 58 호환 복구."
+    },
+    {
+      "path": "checks/m0/M0-1104-C.md",
+      "id": "M0-1104-C",
+      "hub": "m0",
+      "pr": "",
+      "issued_at": "2026-11-04T07:10:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "server",
+          "title": "sentry-event-arrives · 테스트 오류 1건 Sentry 도착",
+          "ok": "로컬 또는 Railway 재배포 후 pos-complete 테스트 오류 1건 전송 → Sentry Events 대시보드에 \"[M0-1104-C] test error\" 1건 가시",
+          "ng": "이벤트 미도착 · DSN 미설정",
+          "est_min": 5
+        }
+      ],
+      "summary": "M0-1104-C · Sentry 서버 wiring (storeport PR #175)."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
@@ -4528,7 +4546,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-04T06:31:09.290Z"
+      "fetched_at": "2026-11-04T06:38:35.225Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5760,7 +5778,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-04T06:31:09.444Z"
+      "fetched_at": "2026-11-04T06:38:35.378Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6362,7 +6380,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-04T06:31:09.772Z"
+      "fetched_at": "2026-11-04T06:38:35.611Z"
     }
   ],
   "rollup": {
