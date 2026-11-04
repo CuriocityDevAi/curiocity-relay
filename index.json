@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-04T04:36:18.393Z",
+  "built_at": "2026-11-04T06:28:06.805Z",
   "prompts": [],
   "reports": [
     {
@@ -1552,6 +1552,38 @@
         }
       ],
       "summary": "M0-1104-A · 앱 기동 크래시 \"User is not authenticated\" 핫픽스 (fork PR #13)."
+    },
+    {
+      "path": "checks/m0/M0-1104-B.md",
+      "id": "M0-1104-B",
+      "hub": "m0",
+      "pr": "",
+      "issued_at": "2026-11-04T06:40:00Z",
+      "author": "orchestrator",
+      "items": [
+        {
+          "device": "ipad",
+          "title": "expo-go-58-opens · Expo Go 58 에서 열림",
+          "ok": "iPad Expo Go (최신 58) 에서 QR 스캔 → \"incompatible\" 에러 없이 앱 열림",
+          "ng": "\"Project is incompatible\" 재현",
+          "est_min": 1
+        },
+        {
+          "device": "ipad",
+          "title": "login-screen · 로그인 폼 도달",
+          "ok": "스플래시 → 로그인 (MEROS 로고 + Shop URL/Email/Password + Sign In) 가시",
+          "ng": "스플래시 영구 · 흰 화면",
+          "est_min": 1
+        },
+        {
+          "device": "ipad",
+          "title": "cart-add · 로그인 후 담기 성공",
+          "ok": "로그인 성공 → Add to cart → 카트에 담김",
+          "ng": "stale ID 재현 · 부트 크래시 재현",
+          "est_min": 3
+        }
+      ],
+      "summary": "M0-1104-B · Expo SDK 57 → 58 업그레이드 (fork PR #14) · Expo Go 58 호환 복구."
     },
     {
       "path": "checks/k1/K1-0914-A.md",
@@ -4496,7 +4528,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-04T04:36:17.847Z"
+      "fetched_at": "2026-11-04T06:28:06.281Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5728,7 +5760,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-04T04:36:18.064Z"
+      "fetched_at": "2026-11-04T06:28:06.440Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6330,7 +6362,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-04T04:36:18.392Z"
+      "fetched_at": "2026-11-04T06:28:06.804Z"
     }
   ],
   "rollup": {
