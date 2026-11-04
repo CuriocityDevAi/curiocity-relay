@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-04T08:40:24.328Z",
+  "built_at": "2026-11-04T09:07:08.170Z",
   "prompts": [],
   "reports": [
     {
@@ -4546,7 +4546,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-04T08:40:23.921Z"
+      "fetched_at": "2026-11-04T09:07:07.674Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5778,7 +5778,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-04T08:40:24.055Z"
+      "fetched_at": "2026-11-04T09:07:07.833Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6287,6 +6287,16 @@
               "status": "live"
             },
             {
+              "id": "observability",
+              "name": "오류·관측 (Sentry)",
+              "summary": "Kyu 신호 → 오케 Sentry 조회 → 진단 모델을 지지하는 wiring 과 연결 검증 스크립트·착지 증빙(대시보드 스샷) 이다. 서버 init 과 런북은 commerce-core-envelope · docs-plans 에 걸치고, 이 프로세스는 검증 도구·증빙 자리다.",
+              "files": [
+                "apps/commerce-core/scripts/sentry-test.mjs",
+                "docs/M0-*-sentry-*.png"
+              ],
+              "status": "live"
+            },
+            {
               "id": "commerce-core-envelope",
               "name": "Commerce Core 껍데기",
               "summary": "백엔드 앱의 배포·의존성·컨테이너 껍데기 파일들이다.",
@@ -6380,7 +6390,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-04T08:40:24.328Z"
+      "fetched_at": "2026-11-04T09:07:08.170Z"
     }
   ],
   "rollup": {
