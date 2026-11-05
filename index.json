@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-05T03:29:25.358Z",
+  "built_at": "2026-11-05T03:45:33.479Z",
   "prompts": [],
   "reports": [
     {
@@ -4546,7 +4546,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-05T03:29:24.938Z"
+      "fetched_at": "2026-11-05T03:45:33.122Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5778,7 +5778,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-05T03:29:25.083Z"
+      "fetched_at": "2026-11-05T03:45:33.244Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6001,19 +6001,30 @@
             {
               "id": "receipt",
               "name": "영수증 (Receipt)",
-              "summary": "주문당 불변 영수증 스냅샷·receipt_no 시퀀스·재인쇄/환불 자식 영수증·공개 토큰 (/r/<token>). 영어 라벨 (ADDENDUM §2).",
+              "summary": "주문당 불변 영수증 스냅샷·receipt_no 시퀀스·재인쇄/환불 자식 영수증·공개 토큰 (/r/<token>). 영어 라벨 (ADDENDUM §2). API GET /admin/pos/receipts/:id.",
               "files": [
                 "apps/commerce-core/src/modules/receipt/**",
-                "apps/commerce-core/src/links/order-receipt.ts"
+                "apps/commerce-core/src/links/order-receipt.ts",
+                "apps/commerce-core/src/api/admin/pos/receipts/**"
               ],
               "status": "live"
             },
             {
               "id": "pos-settings",
               "name": "POS 설정 (Admin)",
-              "summary": "Admin 조정 가능 설정 (선결제 DP%·세금 라벨/%·영수증 헤더/푸터·재인쇄 제한·반올림·UI 언어). 기본값 ADDENDUM §2 영어 · 세금 null · rounding off · reprint_limit 3.",
+              "summary": "Admin 조정 가능 설정 (선결제 DP%·세금 라벨/%·영수증 헤더/푸터·재인쇄 제한·반올림·UI 언어). 기본값 ADDENDUM §2 영어 · 세금 null · rounding off · reprint_limit 3. API GET/PUT /admin/pos/settings.",
               "files": [
-                "apps/commerce-core/src/modules/pos_settings/**"
+                "apps/commerce-core/src/modules/pos_settings/**",
+                "apps/commerce-core/src/api/admin/pos/settings/**"
+              ],
+              "status": "live"
+            },
+            {
+              "id": "pos-tenders-fulfill",
+              "name": "POS 텐더·이행 API (J-b)",
+              "summary": "POST /admin/pos/orders/:id/tenders (provider_id 명시·cash/edc 검증·PaymentCollection+session+capture·register_session.expected_by_method 집계·영수증 자동 생성) · POST /admin/pos/orders/:id/fulfill (takeaway 만 fulfillment 생성·preorder/delivery 는 상태 전환). 기존 pos-complete 의 즉시 fulfill 는 제거.",
+              "files": [
+                "apps/commerce-core/src/api/admin/pos/orders/**"
               ],
               "status": "live"
             },
@@ -6412,7 +6423,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-05T03:29:25.358Z"
+      "fetched_at": "2026-11-05T03:45:33.478Z"
     }
   ],
   "rollup": {
