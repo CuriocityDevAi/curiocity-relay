@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-06T12:25:24.001Z",
+  "built_at": "2026-11-06T22:02:44.484Z",
   "prompts": [],
   "reports": [
     {
@@ -4546,7 +4546,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-06T12:25:23.490Z"
+      "fetched_at": "2026-11-06T22:02:44.083Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5778,7 +5778,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-06T12:25:23.696Z"
+      "fetched_at": "2026-11-06T22:02:44.233Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6022,9 +6022,10 @@
             {
               "id": "pos-tenders-fulfill",
               "name": "POS 텐더·이행 API (J-b)",
-              "summary": "POST /admin/pos/orders/:id/tenders (provider_id 명시·cash/edc 검증·PaymentCollection+session+capture·register_session.expected_by_method 집계·영수증 자동 생성) · POST /admin/pos/orders/:id/fulfill (takeaway 만 fulfillment 생성·preorder/delivery 는 상태 전환). 기존 pos-complete 의 즉시 fulfill 는 제거.",
+              "summary": "POST /admin/pos/orders/:id/tenders (provider_id 명시·cash/edc 검증·PaymentCollection+session+capture·register_session.expected_by_method 집계·영수증 자동 생성) · POST /admin/pos/orders/:id/fulfill (takeaway 만 fulfillment 생성·preorder/delivery 는 상태 전환). 기존 pos-complete 의 즉시 fulfill 는 제거. 통합 테스트는 `integration-tests/pos/**` (medusa-test-utils · real Postgres).",
               "files": [
-                "apps/commerce-core/src/api/admin/pos/orders/**"
+                "apps/commerce-core/src/api/admin/pos/orders/**",
+                "apps/commerce-core/integration-tests/pos/**"
               ],
               "status": "live"
             },
@@ -6424,7 +6425,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-06T12:25:24.000Z"
+      "fetched_at": "2026-11-06T22:02:44.483Z"
     }
   ],
   "rollup": {
