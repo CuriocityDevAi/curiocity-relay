@@ -3,7 +3,7 @@ round: M1-1105-J
 pr:
   fork_29: agilo-medusa-pos-fork#29
   fork_29_url: https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/29
-  fork_29_commit: a677c24
+  fork_29_commit: 4f53601
   fork_33: agilo-medusa-pos-fork#33
   fork_33_url: https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/33
   fork_33_commit: 290a24b
