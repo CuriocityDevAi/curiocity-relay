@@ -114,10 +114,10 @@ $ node scripts/m1-1105-b-playwright.mjs          →  6/6 passed
 
 ## 3. CI 링크 (fork PR #46)
 
-- **lint**: https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42339851776/job/128304891841 (PR body 작성 시점 · pending)
-- **assertions + playwright**: https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42339851639/job/128304892033 (pending)
+- **lint**: pass (1m0s) · https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42339851776/job/128304891841
+- **assertions + playwright**: pass (4m45s) · https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42339851639/job/128304892033
 
-CI 결과는 리포트 후 PR body 에 추가 반영. 로컬 full suite 전원 green 확인.
+두 job 모두 green. 로컬 full suite 전원 green 과 CI 전원 green 일치.
 
 ---
 
@@ -157,4 +157,4 @@ CI 결과는 리포트 후 PR body 에 추가 반영. 로컬 full suite 전원 g
 
 ---
 
-*M1-1105-M · 2026-11-07 · tenders body cashier_user_id + register_session_id 자동 주입 · fork PR #46 · api/hooks 1 + scripts 1 = 2 파일 · UI 변경 0 · m3-1105-d 24/24 pass (신 어설션 2 포함) · 회귀 전원 pass · CI pending*
+*M1-1105-M · 2026-11-07 · tenders body cashier_user_id + register_session_id 자동 주입 · fork PR #46 · api/hooks 1 + scripts 1 = 2 파일 · UI 변경 0 · m3-1105-d 24/24 pass (신 어설션 2 포함) · 회귀 전원 pass · CI green (lint 1m0s · playwright 4m45s)*
