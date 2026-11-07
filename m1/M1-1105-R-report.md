@@ -3,6 +3,7 @@ round: M1-1105-R
 pr:
   fork: agilo-medusa-pos-fork#57
   fork_url: https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/57
+  fork_commit: d209ce1
 outcome: Kyu 2차 ④ · useOrder 썸네일 fields + useCreateTender 중복 가드
 kyu_checks: 3 (품목 썸네일 노출 · double-tap 1회만 결제 · 리스트 썸네일 미렌더 알림)
 ---
@@ -102,7 +103,9 @@ Promise.allSettled([tender(ord_1, 120ms), tender(ord_1, 10ms)])
 
 ## 3. CI 링크 (fork PR #57)
 
-- (push 직후 pending · CI green 확정 뒤 본 리포트 갱신)
+- **CI 전원 green**
+- lint pass (53s) · https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42362154794/job/128372603794
+- assertions + playwright pass (6m53s) · https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42362154753/job/128372603892
 
 ---
 
@@ -127,7 +130,7 @@ Promise.allSettled([tender(ord_1, 120ms), tender(ord_1, 10ms)])
 | 중복 가드 훅 안에서만 (서버 호출 전) | ✓ |
 | CashTenderPanel disabled 는 M3 몫 → 리포트 라인 | ✓ |
 | 영어 전용 · D1 토큰만 | ✓ (어설션 기존 5/5 · 37/37) |
-| CI (lint · playwright) | ⏳ pending → green 뒤 갱신 |
+| CI (lint · playwright) | ✓ green (lint 53s · playwright 6m53s) |
 | 커밋 메시지 `!` 미사용 | ✓ |
 
 ---
@@ -153,4 +156,4 @@ Promise.allSettled([tender(ord_1, 120ms), tender(ord_1, 10ms)])
 
 ---
 
-*M1-1105-R · 2026-11-07 · useOrder thumbnails + tender dedup guard · fork PR #57 · 2 src · 1 test 수정 · 2 test 신규 · 로컬 regression 전원 pass · 영어 전용 · D1 토큰*
+*M1-1105-R · 2026-11-07 · useOrder thumbnails + tender dedup guard · fork PR #57 · 2 src · 1 test 수정 · 2 test 신규 · 로컬 regression 전원 pass · CI green (lint 53s · playwright 6m53s) · 영어 전용 · D1 토큰*
