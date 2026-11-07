@@ -1,9 +1,9 @@
 ---
 round: M0-1105-U
-pr: storeport#200 (같은 PR 재사용 · R0-AE §C.1 반영)
+pr: storeport#200 (같은 PR 재사용 · R0-AE §C.1 반영 · HEAD 7100653)
 base: storeport@feat/m0-1105-t-reservations · 4f9e9a3 (M0-1105-T)
-outcome: fulfill hand_over 재누름 멱등 가드 (R0-AE §C.1) + Kyu 7차 500 가드 통합 테스트 (pb1_pct=10 + logo_url 설정 뒤 POS 주문 상세·quote·목록 3경로 200)
-kyu_checks: 2 (① Admin 에서 설정 PB1=10 + logo_url 유지 상태로 신규 takeaway 주문 → 결제 → 영수증/주문 상세 화면 200 OK · ② 동일 주문에 Hand over 를 2회 눌러도 재고 변화 0 + fulfillments.length=1 + 응답 `already_fulfilled:true`)
+outcome: fulfill hand_over 재누름 멱등 가드 (R0-AE §C.1) + Kyu 7차 500 가드 통합 테스트 (pb1_pct=10 + logo_url 설정 뒤 POS 주문 상세·quote·목록 3경로 200) · 통합 32/32 · CI green
+kyu_checks: 2 (① Admin 에서 설정 PB1=10 + logo_url 유지 상태로 신규 takeaway 주문 → 결제 → 영수증/주문 상세 화면 200 OK · ② 동일 주문에 Hand over 를 2회 눌러도 재고 변화 0 + fulfillments 증가 0 + 응답 `already_fulfilled:true`)
 ---
 
 # M0-1105-U · fulfill hand_over 멱등 가드 + Kyu 7차 500 가드 (R0-AE §C.1 반영)
@@ -80,7 +80,7 @@ Kyu 7차 증상의 뿌리를 다시 트리아지:
 
 ### §B.4 · 회귀 가드 (통합 테스트 #32 · 신규)
 
-본 PR 커밋에 테스트 추가 (`tenders.spec.ts:1430-1491`). 3 경로 전부 200 을 어설트:
+본 PR 커밋에 테스트 추가. 3 경로 전부 200 을 어설트:
 ```ts
 await api.put(`/admin/pos/settings`, { pb1_pct: 10, service_charge_pct: 0,
   logo_url: "https://files.example.com/logos/kyu7.png", logo_file_id: "file_01KYU7LOGO" });
@@ -108,7 +108,7 @@ await api.get(`/admin/orders?fields=%2Bmetadata,%2Btotal&limit=10&order=-created
 | 3 | §B — Kyu 7차 500 진단 | ✓ 정적 분석 결과 "3경로 500 없음" · 가설 X 유력 |
 | 4 | 통합 #32 (pb1_pct=10 + logo_url 뒤 3 경로 200) | ✓ `tenders.spec.ts:1430+` |
 | 5 | feature-map.yaml summary 갱신 | ✓ pos-tenders-fulfill 에 "hand_over 재누름 멱등 가드" 명시 |
-| 6 | CI green | ⏳ PR #200 push 뒤 pending (markers · changes-filter · pos-integration) |
+| 6 | CI green | ✓ `pos-integration PASS 1m51s` · `markers-and-forbidden PASS` · `changes-filter PASS` · `check PASS` (run 42390919134 · HEAD 7100653 · Tests 32/32) |
 | 7 | 금지 영역 0 | ✓ medusa-config / providers / #197 세금 파일 전부 미변경 |
 
 ---
