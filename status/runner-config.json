@@ -1,7 +1,9 @@
 {
-  "schema_version": 2,
-  "note": "M1-1105-T · claude_bin 명시 경로 · model=opus 기본 (허브별 override 가능). hubs[hub].model 지정 시 그 값이 우선.",
-  "updated_at": "2026-11-07T17:58:00.000Z",
+  "schema_version": 3,
+  "note": "M1-1105-X · claude_bin · model · display · cmux_bin. v2 러너 (hub-runner-v2.mjs) 가 이 스키마를 소비.",
+  "updated_at": "2026-11-07T18:20:00.000Z",
+  "display": "cmux",
+  "cmux_bin": "/Applications/cmux.app/Contents/Resources/bin/cmux",
   "claude_bin": "/Users/kyu.lee/.local/bin/claude",
   "claude_bin_note": "실측 비교 (2026-11-07):\n  - /Applications/cmux.app/.../claude → wrapper (PATH 에서 실 claude 를 찾는다 — launchd PATH 에서는 /opt/homebrew/bin/claude 1.0.108 을 집어 R0-Z 404 재발 가능)\n  - /opt/homebrew/bin/claude → 실 바이너리 1.0.108 (구버전 · 404 모델 원인)\n  - /Users/kyu.lee/.local/bin/claude → 심링크 → /Users/kyu.lee/.local/share/claude/versions/2.1.128 (latest · 자동 갱신)\n  → .local/bin 직접 지정 (wrapper + PATH 우회).",
   "model": "opus",
