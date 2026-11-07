@@ -199,6 +199,32 @@ async function buildHubs() {
     nextHubs[hub.id] = merged;
   }
 
+  // M2-1105-N · status/claims/*.json 반영 → 허브별 current_round · state (started/blocked/done).
+  // claims 는 override 성격 — 허브의 "지금 뭘 하고 있나" 를 raw state 로 보여줌.
+  try {
+    const claimsDir = resolve(REPO_ROOT, 'status/claims');
+    const names = (await readdir(claimsDir)).filter((n) => n.endsWith('.json'));
+    const perHubLatest = {};
+    for (const name of names) {
+      try {
+        const raw = await readFile(resolve(claimsDir, name), 'utf8');
+        const c = JSON.parse(raw);
+        if (!c || !c.hub || !c.id || !c.state || !c.at) continue;
+        const prev = perHubLatest[c.hub];
+        if (!prev || c.at > prev.at) perHubLatest[c.hub] = c;
+      } catch { /* skip invalid */ }
+    }
+    for (const [hubId, claim] of Object.entries(perHubLatest)) {
+      if (!nextHubs[hubId]) continue; // claim 이 가리키는 허브 폴더가 아직 없으면 skip
+      nextHubs[hubId].current_round = claim.id;
+      nextHubs[hubId].current_state = claim.state;
+      nextHubs[hubId].current_at = claim.at;
+      if (claim.note) nextHubs[hubId].current_note = claim.note;
+    }
+  } catch {
+    // status/claims 디렉터리가 없으면 pass
+  }
+
   // 스캔되지 않은 기존 허브 (디렉터리가 사라졌거나 .md 가 없는 경우) 는 유지
   // (수기 데이터 보존 — 수기 삭제는 수동 커밋으로)
   for (const [id, data] of Object.entries(existing.hubs ?? {})) {

@@ -15,6 +15,17 @@
 
 ---
 
+## Claims (M2-1105-N · 감시 신호 ⑦)
+
+```bash
+# 시작·막힘·완료 시 1줄 — status/claims/<ID>.json + hubs.json rebuild + push
+node scripts/claim.mjs <ID> <started|blocked|done> [note...]
+# 예: node scripts/claim.mjs M2-1105-N started "accent guard + maestro"
+# ID 접두사 (M2-...) → 허브 자동 매핑 (m2) · hubs.json 에 current_round/state 반영.
+```
+
+---
+
 ## [청소]
 
 1. **push 시 자기 허브 폴더의 기존 파일을 같은 커밋에서 삭제** (허브당 리포트 1 개 유지)
