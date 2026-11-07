@@ -1,51 +1,53 @@
 # CurioCity 열린 요구 원장 (오케 유지 · Kyu 원문 기준)
 
-갱신: 2026-11-07 12:45 · 규칙: 새 요구 = 여기 먼저 등재(Kyu 원문 그대로 · 오케 번역은 괄호) · 소유 허브 필수 · 착지·실기 통과 시 ✅ · 이 파일이 챗보다 우선
+갱신: 2026-11-07 23:20 WIB · 규칙: 새 요구 = 여기 먼저 등재(Kyu 원문 그대로 · 오케 번역은 괄호) · 소유 허브 필수 · 착지·실기 통과 시 ✅ · 이 파일이 챗보다 우선
 **발부 규약(09-16)**: 모든 프롬프트 작성 직전 이 파일을 읽고 `원장 대사:` 한 줄. 재언급 🔴. 주 1회 미발부 요구 표.
 **갱신 규약(11-06)**: 결정·착지마다(최소 하루 1회) 이 파일 + `work-queue.md` 갱신. **이 파일이 기억의 정본**.
+**상태판**: https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE (프롬프트별 상태 · 실기 필요 카드) · 자동 투입: `queue/<hub>/<ID>.md` → Kyu Mac hub-runner v2.
 
-## 🔴 Kyu 실기 피드백 (11-07 12:22 · iPad 현금 결제 첫 실기)
-- **[버그] Orders 탭에 결제 주문(#30) 없음** — 진단 M0-1105-N(코드 0) → 수정 주인 결정.
-- **[버그] 영수증 시각 UTC**("04:55:31" · 실제 11:55 WIB) + 번호·날짜 붙음 — M3(ReceiptCard).
-- **[요구] 영수증에 숲속의 과자점 로고**(보라 · "MAKE YOUR DAY GREEN") — Admin 매장 설정에 로고 업로드(M0) + 앱 렌더(M3) + 프린터 흑백 비트맵(M2 · 뒤).
-- **[요구] 영수증 위아래 여백 더** — M3.
-- **[요구·결정 완료 12:27] 세금 표기**: Subtotal → **Service charge**(매장별 % · Admin 설정 · 현재 2매장 0%) → **PB1**(매장별 % · Admin 설정) → Grand total. **ⓐ 가산**(메뉴가에 얹음 · Ta Wan 샘플과 동일) **ⓑ 매장별 PB1** — 조리시설 있는 매장 10% · 조리시설 없이 받아서 파는 매장 0% (Kyu: "매장중 1개는 0%, 다른 하나는 10%") → Admin 매장(stock location)별 설정 **ⓒ 계산** SC = Subtotal×SC% · PB1 = (Subtotal+SC)×PB1% · 반올림(11-06 결정). (11-04 "세금 기본 숨김" 대체.) 서버 계산·snapshot 줄(M0) · 앱 Checkout/영수증 표시(M3).
-- **[확인] Checkout "Pay" 단일 버튼 → 현금** — P2 임시. P4 에서 Cash/Card/QRIS 탭 복귀.
-- ✅ 품절 상세 진입 · 현금 결제 → Payment successful · Admin 탭 제목.
+## 🔴 운영 장애 (11-07 22:50~ · 최우선)
+- Admin Orders 목록 + 앱 Orders 탭 "An unknown error" · 앱 영수증 화면 "Server Error" — 서버 로그 `logs/railway-api-20261107-1550-1607.log`: `Cannot read properties of undefined (reading 'captured_amount')` 123회(15:50Z~) · `fulfillment polyfill failed: FulfillmentItem.sku is required, 'null' found` · `Order id not found: order_01M6V…` 반복. 유력 뿌리 = #199 tenders "금액 다르면 pending collection 삭제" 경로(PB1 10% 켠 뒤 처음 탐) → 주문이 삭제된 collection 을 가리킴 → 목록 직렬화 500. → **M0-1105-U(진행) → M0-1105-V(긴급 · 삭제 금지 + 끊긴 주문 복구 + sku null + order-id 조회)**.
+- 로그에 `[railway-ssh] SSH connected` 16:04Z — Kyu 아님 → 어느 허브가 운영 SSH 한 것. **상시 금지 조항 추가(⑱)** · 아침에 로그로 허브 특정.
 
-## R0-1105-O 전 리포 감사 결과 (11-07)
-- 영어 전용 UI 0건 ✅ · raw color 활성 0건 ✅(dead ColorPicker 블록 `product-details.tsx:268-287` 5건 정리 권장) · 서버 계약 활성 불일치 0 ✅(close 응답 z_report 미사용 · M1 최적화).
-- **수정 필요(M3)**: `QuantityPicker.tsx:102/118/128` `text-ink-subtle` → `text-ink-disabled`(P0) · Option/Size/ColorPicker 비활성 텍스트 명시(P1) · dead 블록 삭제(P2).
-- M1 P3: `useCloseRegisterSession` z_report inline · `useOpenRegisterSession` opener_nickname.
-
-## 방법론 (①~⑮ 유지 · 요지)
-① R0 리뷰(리포트 relay push 의무 · 11-07 복구) ② 파일 주인 ③ 계획 게이트 ④ claude-code-action(제안 대기) ⑤ kyu-gate 폐기 ⑥ worktree ⑦ 감시 5분/30분 ⑧ 목적 2~3줄+작업 큐 ⑨ chore 직접 머지 ⑩ 진단은 타 허브 ⑪ R1 미발동 ⑫ 상시 [REPORT] ⓐⓑⓒⓓ ⑬ 쌓인 PR 합쳐 머지 ⑭ mock=서버 fixture ⑮ Kyu Mac Node 22 설치 완료 · Expo `--tunnel` 은 `@expo/ws-tunnel` 버그로 LAN 사용(M2 진단).
+## 🔴 Kyu 실기 피드백 누적 (11-07 · iPad · 1~7차)
+- ✅ 카트 비움·Orders 표시(#196·#52) · 영수증 WIB·번호/날짜·여백(#52) · 시재 0 Open(#48) · 썸네일(#57) · Pay 연타 가드(#57·#58) · 캐셔 줄(#55 · 이름 비면 이메일 앞 — Admin Users 에서 First name 입력하면 이름) · Checkout 세금 줄·영수증 PB1 줄(#58) · 로고 URL(#197 · Cloudflare R2 Public URL 로 표시 확인).
+- **[버그] Close shift → Z Report 가 Open shift 시트에 덮임** — #60(M1-U) 머지 뒤에도 **동일**(6차) → M3-1105-Q(iOS 시뮬레이터 재현 · M1 파일 이번 한정).
+- **[버그] Payment Captured ✓ 이지만 Not fulfilled · Completed 안 됨 · 재고 In stock 불변 + Reserved 누적(Whole 8 · Tea 4)** — Hand over 가 예약만 남김 → #200(M0-T) + 멱등 가드(M0-U) + 운영 로그 반영(M0-V).
+- **[요구] 영수증 로고 1.8배(위아래)** — 화면(M3 다음) + 프린터(M2-1105-R).
+- **[요구] Pickup date/time 은 키보드 입력 말고 달력/피커** — 키보드가 입력칸을 가림 · M3 다음(iOS 피커 · 빠른 칩 Today 17:00/Tomorrow 10:00).
+- **[규칙] 검정 버튼 = 다른 화면으로 넘어가는 결정 버튼만(Pay · Open shift · Hand over)**. 옵션 선택(Takeaway/Pre-order/Delivery · Cash/Card/QRIS 탭)은 **선택됨 = 연회색(#EDEDEB)+진한 테두리+굵은 글씨+체크 · 미선택 = 흰 배경+옅은 테두리** — M3 다음 · R0 체크 항목.
+- **[문구] Hand over 토스트 → `Product handed over to the customer.`** — #62(M3-P) 포함.
+- **[취소] POS Inventory 페이지** — Kyu "유사 화면 추가는 헛갈림 · 하지 말자". Available 은 기존 Inventory 상세로.
+- **[설정] 영수증 주소 "Indar"→"Indah" 오타** — Kyu 가 Admin 에서 수정 완료.
 
 ## Kyu 결정 정본 (11-04~07)
-- 반올림: 현금 Pembulatan 없음 · % 계산 round. 승인번호 6자리+끝4자리. WA 공유 먼저. 분할 P6. PG Xendit. Pre-order 기본 100% · DP% Admin.
-- **세금(11-07)**: 위 🔴 ⓐⓑⓒ.
-- **MEROS 앱 UI 전부 영어**. 재고 차감 = 전달/출고 이벤트만(preorder 는 paid_full+hand_over).
-- **팔레트 D1**(11-07): surface #FFFFFF · surface-muted #F2F2F0 · ink #0E1B18 · ink-muted #6F6F6F · ink-subtle #B5B5B5 · ink-disabled #C8C8C8 · line #E3E3E3 · accent(로고 점) #E8A33D/#FBE4B6 · success #0E1B18/#EDEDEB · warning #9B6D1F/#FBF1DC · danger #C62828/#FBE3E3. → fork #47(M3-1105-J · R0-Q 대기).
-- **P5 교대(11-07 "전부 추천대로")**: ① Open shift 취소 불가(로그아웃만) ② 하루 복수 교대 close→open · 각각 Z ③ cashier/session 자동(#46) ④ Settings Close shift = Reset 위 · 세션 열릴 때만 ⑤ 캐셔 = first_name → 이메일 @ 앞. 서버 신규 0.
-- 품절 (a) ✓ 실기 · Admin 비번 유지 · Admin 탭 제목 ✓ 실기 · 외부 신청(Apple Pending · Xendit·은행 미착수).
+- 반올림: 현금 Pembulatan 없음 · % round. 승인번호 6+4. WA 공유 먼저. 분할 P6. PG Xendit. Pre-order 기본 100% · DP% Admin(`preorder_deposit_pct` · #199).
+- **세금(11-07)**: ⓐ 가산 ⓑ 매장별 PB1(조리시설 10% · 없으면 0%) ⓒ SC=Subtotal×SC% · PB1=(Subtotal+SC)×PB1% · Admin POS Settings 매장별 · 로고 = URL.
+- **전달(Fulfillment) 교통정리(11-07 21:50·21:54)**: Takeaway = **Hand over 즉시 Fulfilled + 재고 차감 + Completed**. Pre-order = 계약금 → (잔금) → **앱 Orders 에서 Fulfill 시트**(Pickup 기본 / Delivery: 택배사·기사·연락처·운송장·메모) 시점에 차감. Delivery = 결제(전액/계약금) → `awaiting_dispatch` 로 Orders 에 남김 → Fulfill 시트(배송 정보) → 그때 차감·Completed. Admin 수동 전달 = 강제 보정용만. 서버 계약 `fulfill {stage:'hand_over', method, courier, driver, contact, tracking_ref, note}`(#200).
+- **MEROS 앱 UI 전부 영어**. **팔레트 D1**(적용 #47 · accent 정리 #52). **P5 교대** ①~⑤(①②④ #48 #53 · ③ #46 · ⑤ #55).
+- 외부 신청: Apple Pending · Xendit·은행 미착수. Admin 비번 유지.
+
+## 방법론 (요지 · ⑯~⑱ 신설 11-07)
+①~⑮ 유지(R0 리뷰 · 파일 주인 · 계획 게이트 · 감시 10분/30분 · 목적 2~3줄+작업 큐 · chore 직접 머지 · 진단은 타 허브 · 상시 [REPORT] · 쌓인 PR 합쳐 · mock=fixture · Node 22).
+⑯ **프롬프트 상태판 + claims 신호**: 모든 프롬프트는 상태판 DB(issued) + `queue/<hub>/<ID>.md` 커밋 → 러너 자동 투입 → claims started/done/blocked → 오케 tick(10분)이 상태판 반영(페이지 자체 fetch 는 브라우저 정책으로 불가). 머지 뒤 **실기 필요 → 완료**(Kyu 실기 후). 러너 수정 라운드는 **수동 투입 + 새 파일(v2)로 검증 후 교체**(W 가 깨진 코드 커밋해 러너 전멸 · X 로 복구).
+⑰ **R0 체크 ⑦ RN 번들 안전**: app PR 은 `node:`/fs/path/zlib import 0 + Metro 해석 1회(#59 node:zlib 크래시 재발 방지 · CI 번들 가드 #61).
+⑱ **허브 상시 금지**: 운영 서버 SSH · railway CLI · 운영 DB 직접 접근 · macOS 키체인/`security` · 허브 폴더 밖 접근. 토큰 필요하면 blocked_by kyu.
 
 ## StorePort / Meros
 
-### 착지 ✅
-- storeport main **32ab911**: … #193 · **#194 preorder 잔금(R0-P APPROVE · 통합 12/12)**. 배포는 Railway 자동(M2 확인 방식 /health.version).
-- fork master **fd0aa70 · CI green**: … #44 · **#45 Maestro 현금 플로 템플릿(미실행 · 자격증명 없음)**. 열린 PR: **#46 cashier/session 자동(M1-M) · #47 팔레트 D1(M3-J)** → R0-1105-Q.
-- 계획서: M1-1105-L P5. 감사: R0-1105-O.
+### 착지 ✅ (11-07 · 오늘 머지)
+- storeport main **4f3cd43**: #196 자동 전환 · **#197 매장별 SC/PB1+로고 URL+quote** · **#199(#198 승계) collection 재사용·hand_over completed·polyfill·M3-M 계약**. 열린 PR **#200**(M0-T 예약 소진·전달·maintenance·fulfill method · R0-AE CHANGES 경미 → M0-U 반영 중).
+- fork master **a0bfcd6**: #48 #50 #51 #52 #53 #54 · **#55 캐셔 · #56 P3 선주문 · #57 썸네일+가드 · #58 영수증 v2 앱 · #59 프린터 로고(→#61 핫픽스) · #60 Z Report 게이트(실기 실패) · #61 node:zlib 제거+번들 가드**. 열린 PR **#62 P4 Cash/Card(EDC)/QRIS + 토스트**(R0-AD).
+- relay: hub-runner v2(M1-S/T/X) · claim.mjs issued/blocked · r0/README ⑦.
 
-### 진행 중 / 발부 (11-07 12:45)
-- R0-1105-Q #46 #47 리뷰 · M0-1105-N Orders 미표시 진단 → 그 뒤 M0-1105-O(세금·로고 서버) → M0-1105-M(Delivery) · M1-1105-N P5 α(Open shift 시트) · M2-1105-L Expo 터널 버그 진단 · M3-1105-K 영수증 v2 앱 부분(WIB·번호/날짜·여백 + R0-O P0~P2)
+### 진행 중 (11-07 23:20 · 러너 자동)
+- M0-1105-U(#200 멱등 가드 + 500 진단) → M0-V 예정 · M2-1105-R(프린터 로고 비율) · M3-1105-Q(Z Report 실기기) · R0-1105-AD(#62) · 야간 자율 운영 16:12Z~20:15Z.
 
 ### 다음 (우선순위)
-- [ ] Orders 미표시 수정(진단 뒤 주인) → Kyu 재실기
-- [ ] 영수증 v2 서버: 매장별 SC%·PB1%·로고 설정(Admin POS Settings 확장) + snapshot 줄 + 가산 계산 — M0-O → 앱 표시(Checkout 합계·영수증) M3
-- [ ] P5 β(Settings Close shift · M2 파일) → ReceiptCard 캐셔(M3)
-- [ ] P3 거래 종류+잔금+Delivery 화면(M3) — M0-M 뒤 · P4 수단 탭 복귀+EDC 시트(M3)
-- [ ] J-c Xendit(key) · EAS/프린터(Apple) · Sentry pos-app(Kyu) · 프린터 로고 비트맵(M2)
-- [ ] 소소: M1 P3(z_report inline · opener_nickname) · images.* · hubs.json 스캔 · claude-code-action · R1 · pickup_at UI · stubs 주석
-- [ ] 다중 매장 RBAC(요구 시) · 유령 예약 C안(Kyu)
+- [ ] 운영 복구 머지·배포 → Kyu 재실기(Orders 목록 · 새 주문 Captured/Completed/Fulfilled · In stock −qty · Reserved 0 · 찌꺼기 예약 정리 curl)
+- [ ] #62 머지 → M3 화면 라운드: 날짜·시간 피커 · 선택 버튼 색 규칙 · 로고 높이 110 · Fulfill 시트(Pickup/Delivery · fixture) · Delivery 칩 활성(서버 awaiting_dispatch 뒤)
+- [ ] M2: 프린터 로고 비율 · Reprint · BLE 실기(프린터 도착 시)
+- [ ] 아침 실기 순서: ① Orders 목록 복구 ② 새 주문 상태 3종+재고 ③ Z Report 가림 ④ 선주문 날짜 피커 ⑤ 결제 탭 Cash/Card ⑥ 로고 크기
+- [ ] J-c Xendit(key) · EAS/프린터(Apple) · Sentry pos-app(Kyu) · 다중 매장 RBAC(요구 시)
 
 ### 로드맵 (10-12 · 유지) · 전 제품 공통(Sentry 확장 · 이름 원칙) · 머지 규칙(R0 APPROVE → squash · chore 직접 · ⑬ ⑭) · K0/T0/N0 변동 없음.
