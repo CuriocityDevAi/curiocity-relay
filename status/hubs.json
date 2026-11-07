@@ -1,11 +1,27 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-07T15:36:09.083Z",
+  "built_at": "2026-11-07T15:37:09.492Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-07T15:37:03.066Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-07T15:37:03.066Z"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-07T15:36:55.010Z",
+      "session": "f1f5107e-d50a-4630-92ba-7bd0cbd12873",
+      "updated_at": "2026-11-07T15:37:03.066Z"
+    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-07T15:14:01.930Z",
+      "updated_at": "2026-11-07T15:37:03.066Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,94 +29,17 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      ]
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-07T15:14:01.930Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-07T15:37:03.066Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-07T15:14:01.930Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-07T15:08:23.383Z",
-      "updated_at": "2026-11-07T15:14:01.930Z",
-      "last_round": "M0-1105-S",
-      "last_report": "m0/M0-1105-S-report.md",
-      "current_round": "M0-1105-T",
-      "current_state": "started",
-      "current_at": "2026-11-07T15:36:09.052Z",
-      "current_note": "runner"
-    },
-    "m1": {
-      "last_round": "M1-1105-T",
-      "last_report": "m1/M1-1105-T-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-07T15:36:09.083Z",
-      "current_round": "M1-1105-W",
-      "current_state": "cancelled",
-      "current_at": "2026-11-07T15:36:00Z",
-      "current_note": "오케 취소: 러너 수정 중 깨진 코드 커밋 → launchd 1분마다 crash · Kyu 가 904d59c revert · 러너 수정 라운드는 러너로 돌리지 않고 수동 투입(M1-1105-X)"
-    },
-    "m2": {
-      "last_round": "M2-1105-P",
-      "last_report": "m2/M2-1105-P-report.md",
-      "last_pr_fork": "https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/59",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-07T15:36:09.083Z",
-      "current_round": "M2-1105-Q",
-      "current_state": "done",
-      "current_at": "2026-11-07T14:45:43.259Z",
-      "current_note": "fork PR #61 · 37/37 run-all · logo-bitmap node:zlib 제거 + m2-1105-q-bundle-guard (grep + Metro iOS)"
-    },
-    "m3": {
-      "last_round": "M3-1105-P",
-      "last_report": "m3/M3-1105-P-report.md",
-      "last_pr_fork": "https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/62",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-07T15:36:09.083Z",
-      "current_round": "M3-1105-P",
-      "current_state": "done",
-      "current_at": "2026-11-07T15:05:00.000Z",
-      "current_note": "PR #62 · CI green (assertions+playwright 10m · lint 52s) · Cash/Card/QRIS 탭 + EDC 시트 + Hand over 토스트 영문화 + ReceiptCard 'Card (EDC)'. 어설션 17/17 · Playwright 20/20 · Lint 0 errors. Report: curiocity-relay/m3/M3-1105-P-report.md."
-    },
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-07T15:14:01.930Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
-    },
-    "r0": {
-      "last_round": "R0-1105-AC",
-      "last_report": "r0/R0-1105-AC-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-07T15:36:09.083Z",
-      "current_round": "R0-1105-AB",
-      "current_state": "done",
-      "current_at": "2026-11-07T22:05:00.000Z",
-      "current_note": "fork #60 APPROVE · 체크리스트 ⑦ 신설 · r0/README.md + r0/R0-1105-AB-report.md push"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-07T15:14:01.930Z",
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "updated_at": "2026-11-07T15:37:03.066Z"
     }
   }
 }
