@@ -108,7 +108,11 @@ function outOfScopeChanges() {
     if (!out) return [];
     return out
       .split('\n')
-      .map((l) => l.slice(3).trim())
+      .map((l) => {
+        // porcelain v1: "XY <path>" (XY = 2 chars index+worktree status). 공백 수는 환경차 흡수용 정규식.
+        const m = l.match(/^..\s+(.*)$/);
+        return (m ? m[1] : l).trim();
+      })
       .filter((p) => p && !RUNNER_SCOPE_PREFIXES.some((pre) => p.startsWith(pre)));
   } catch {
     return [];
