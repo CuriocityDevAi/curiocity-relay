@@ -121,8 +121,9 @@ npx tsc --noEmit                  → exit 1 (잔존 global.css · pre-existing)
 
 ## 4. CI 링크 (fork PR #55)
 
-- (push 직후 pending · 리포트 작성 시점 기준)
-- CI 그린 확정 후 PR body / 본 리포트 하단에 추가 반영.
+- **CI 전원 green**
+- lint pass (51s) · https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42360529468/job/128367757906
+- assertions + playwright pass (7m14s) · https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42360529569/job/128367758747
 
 ---
 
@@ -175,4 +176,4 @@ npx tsc --noEmit                  → exit 1 (잔존 global.css · pre-existing)
 
 ---
 
-*M1-1105-Q · 2026-11-07 · Cashier display + TendersTable props · fork PR #55 · 5 파일 (new 3 · modified 2) · Playwright 31/31 pass · 회귀 전원 pass · 영어 전용 · D1 토큰*
+*M1-1105-Q · 2026-11-07 · Cashier display + TendersTable props · fork PR #55 · 5 파일 (new 3 · modified 2) · Playwright 31/31 pass · 회귀 전원 pass · CI green (lint 51s · playwright 7m14s) · 영어 전용 · D1 토큰*
