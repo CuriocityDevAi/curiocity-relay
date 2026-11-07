@@ -1,7 +1,10 @@
 {
-  "schema_version": 1,
-  "note": "M1-1105-S · hub-runner.mjs 전용 cwd 지도. build-hubs.mjs 가 hubs.json 을 다시 써도 영향 없음. Kyu 가 직접 수정 권장 (hubs.json 은 자동 생성).",
-  "updated_at": "2026-11-07T17:15:00.000Z",
+  "schema_version": 2,
+  "note": "M1-1105-T · claude_bin 명시 경로 · model=opus 기본 (허브별 override 가능). hubs[hub].model 지정 시 그 값이 우선.",
+  "updated_at": "2026-11-07T17:58:00.000Z",
+  "claude_bin": "/Applications/cmux.app/Contents/Resources/bin/claude",
+  "claude_bin_note": "실측 비교 (2026-11-07): /Applications/cmux.app/.../claude=2.1.128 vs /opt/homebrew/bin/claude=1.0.108 → 최신 쪽 (cmux) 지정. 둘 다 구버전이 되면 `npm i -g @anthropic-ai/claude-code@latest` 후 이 필드 교체.",
+  "model": "opus",
   "hubs": {
     "m0": {
       "cwd": "/Users/kyu.lee/projects/storeport",

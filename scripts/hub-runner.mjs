@@ -44,8 +44,8 @@ const RUNNER_HOME = join(homedir(), '.hub-runner');
 const POLL_MS = 60 * 1000;
 const STALE_LOCK_MS = 10 * 60 * 1000;
 const HEARTBEAT_MS = 5 * 60 * 1000;
-const CLAUDE_BIN =
-  process.env.CLAUDE_BIN || findInPath('claude') || '/Applications/cmux.app/Contents/Resources/bin/claude';
+// M1-1105-T · claude_bin/model 은 runner-config.json 에서 로드 (override 우선순위: env > config.hubs[hub] > config). which claude 는 fallback 만.
+const DEFAULT_CLAUDE_BIN = '/Applications/cmux.app/Contents/Resources/bin/claude';
 
 const CONFIG_FILE = join(REPO_ROOT, 'status', 'runner-config.json');
 const QUEUE_DIR = join(REPO_ROOT, 'queue');
@@ -76,17 +76,6 @@ function ts() {
 
 function log(scope, ...xs) {
   console.error(`[hub-runner${scope ? `:${scope}` : ''} ${ts()}]`, ...xs);
-}
-
-function findInPath(cmd) {
-  try {
-    const out = execFileSync('which', [cmd], { stdio: ['ignore', 'pipe', 'ignore'] })
-      .toString()
-      .trim();
-    return out || null;
-  } catch {
-    return null;
-  }
 }
 
 function git(args, opts = {}) {
@@ -169,8 +158,30 @@ function releaseLock() {
 }
 
 function loadConfig() {
+  // M1-1105-T · 전역 claude_bin / model + 허브별 override 지원.
   const raw = JSON.parse(readFileSync(CONFIG_FILE, 'utf8'));
-  return raw.hubs || {};
+  return {
+    claude_bin: process.env.CLAUDE_BIN || raw.claude_bin || DEFAULT_CLAUDE_BIN,
+    model: raw.model || 'opus',
+    hubs: raw.hubs || {},
+  };
+}
+
+// M1-1105-T · claude_bin 버전 캐시 (process 수명 내 1 회 호출). 404 모델 재발 디버깅용.
+let _claudeVersionCache = null;
+function getClaudeVersion(bin) {
+  if (_claudeVersionCache && _claudeVersionCache.bin === bin) return _claudeVersionCache.version;
+  try {
+    const out = execFileSync(bin, ['--version'], { stdio: ['ignore', 'pipe', 'pipe'] })
+      .toString()
+      .trim();
+    _claudeVersionCache = { bin, version: out };
+    return out;
+  } catch (e) {
+    const msg = (e.stderr?.toString() || e.message).trim().split('\n')[0];
+    _claudeVersionCache = { bin, version: `unknown (--version 실패: ${msg})` };
+    return _claudeVersionCache.version;
+  }
 }
 
 function readClaim(id) {
@@ -239,26 +250,30 @@ async function runClaim({ id, state, note, blockedBy }) {
 }
 
 // claude 를 cwd 에서 spawn — 큐 파일 본문을 그대로 prompt 로 전달.
-function spawnClaude(item, cwd) {
+function spawnClaude(item, cwd, claudeBin, model) {
   const prompt = readFileSync(item.file, 'utf8');
   const logDir = join(RUNNER_HOME, item.hub);
   mkdirSync(logDir, { recursive: true });
   const logFile = join(logDir, `${item.id}.log`);
+  const version = getClaudeVersion(claudeBin);
   const header = [
     `# hub-runner log · ${item.id}`,
     `started_at: ${ts()}`,
     `hub: ${item.hub}`,
     `cwd: ${cwd}`,
-    `claude: ${CLAUDE_BIN}`,
+    `claude_bin: ${claudeBin}`,
+    `claude_version: ${version}`,
+    `model: ${model}`,
+    `process_env_path: ${process.env.PATH || '(unset)'}`,
     `log: ${logFile}`,
     '--- stdout ---',
     '',
   ].join('\n');
   writeFileSync(logFile, header, 'utf8');
 
-  log(item.hub, `spawn claude -p · ID=${item.id} · cwd=${cwd}`);
+  log(item.hub, `spawn claude -p · ID=${item.id} · cwd=${cwd} · bin=${claudeBin} · ver=${version} · model=${model}`);
   return new Promise((resolve) => {
-    const child = spawn(CLAUDE_BIN, ['-p', prompt, '--dangerously-skip-permissions'], {
+    const child = spawn(claudeBin, ['-p', prompt, '--model', model, '--dangerously-skip-permissions'], {
       cwd,
       env: { ...process.env },
       stdio: ['ignore', 'pipe', 'pipe'],
@@ -334,7 +349,7 @@ async function tick(hubs) {
 
     for (const hub of hubs) {
       if (busy.has(hub)) continue;
-      const cfg = config[hub];
+      const cfg = config.hubs[hub];
       if (!cfg?.cwd) {
         log(hub, `runner-config 에 cwd 없음 · 건너뜀`);
         continue;
@@ -349,9 +364,11 @@ async function tick(hubs) {
       busy.set(hub, { id: item.id, startedAt: Date.now() });
       enqueueClaim({ id: item.id, state: 'started', note: 'runner' });
 
+      // M1-1105-T · 허브별 model override 가능.
+      const model = cfg.model || config.model;
       // 자식 claude 는 메인 루프와 **병렬**로 돌지만, claim 커밋은 전부 queue drain 으로 직렬화.
       (async () => {
-        const { exit, logFile } = await spawnClaude(item, cfg.cwd);
+        const { exit, logFile } = await spawnClaude(item, cfg.cwd, config.claude_bin, model);
         busy.delete(hub);
 
         // 허브가 중간에 done/blocked/cancelled 올렸는지 확인 (덮어쓰기 금지)
@@ -387,7 +404,12 @@ async function tick(hubs) {
 }
 
 async function loop() {
-  log('', `시작 · mode=${ALL ? '--all' : `--hub ${hubFlag}`} · once=${ONCE} · poll=${POLL_MS}ms · claude=${CLAUDE_BIN}`);
+  const cfg = loadConfig();
+  const ver = getClaudeVersion(cfg.claude_bin);
+  log(
+    '',
+    `시작 · mode=${ALL ? '--all' : `--hub ${hubFlag}`} · once=${ONCE} · poll=${POLL_MS}ms · claude=${cfg.claude_bin} · version=${ver} · model=${cfg.model} · PATH=${process.env.PATH || '(unset)'}`,
+  );
   writeHeartbeat(true);
   for (;;) {
     try {

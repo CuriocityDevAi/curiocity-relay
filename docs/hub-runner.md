@@ -69,7 +69,15 @@ node scripts/hub-runner.mjs --hub m2          # 단일 허브 (디버그)
 ```
 
 **선택적 override**:
-- `CLAUDE_BIN=<path>` : claude 바이너리 경로 (기본값 `which claude` → cmux 번들).
+- `CLAUDE_BIN=<path>` : `runner-config.json` 의 `claude_bin` 보다 우선 (디버그용).
+
+---
+
+## claude 경로·모델 바꾸는 법 (M1-1105-T)
+
+1. 버전 비교: `/Applications/cmux.app/Contents/Resources/bin/claude --version` 과 `/opt/homebrew/bin/claude --version` 중 최신 쪽 경로 확인 (둘 다 구버전이면 `npm i -g @anthropic-ai/claude-code@latest` 후 `which claude` 경로 사용).
+2. `status/runner-config.json` 의 `claude_bin` (전역) 또는 `hubs.<hub>.claude_bin` (허브별 override) 를 그 경로로 교체. 모델은 `model` 필드 (기본 `opus` 별칭 · 허브별 `hubs.<hub>.model` 지원).
+3. launchd 재적용: `launchctl kickstart -k gui/$(id -u)/com.curiocity.hub-runner` — 러너가 재기동되며 새 바이너리/모델 로 spawn. 스폰 로그 헤더에 `claude_version` · `model` · `process_env_path` 기록됨.
 
 ---
 

@@ -55,7 +55,7 @@ if (missing.length) {
 }
 NODE
 
-PATH_LINE="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$HOME/.local/bin"
+PATH_LINE="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
 cat > "$PLIST_FILE" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
