@@ -2,8 +2,8 @@
   "schema_version": 2,
   "note": "M1-1105-T · claude_bin 명시 경로 · model=opus 기본 (허브별 override 가능). hubs[hub].model 지정 시 그 값이 우선.",
   "updated_at": "2026-11-07T17:58:00.000Z",
-  "claude_bin": "/Applications/cmux.app/Contents/Resources/bin/claude",
-  "claude_bin_note": "실측 비교 (2026-11-07): /Applications/cmux.app/.../claude=2.1.128 vs /opt/homebrew/bin/claude=1.0.108 → 최신 쪽 (cmux) 지정. 둘 다 구버전이 되면 `npm i -g @anthropic-ai/claude-code@latest` 후 이 필드 교체.",
+  "claude_bin": "/Users/kyu.lee/.local/bin/claude",
+  "claude_bin_note": "실측 비교 (2026-11-07):\n  - /Applications/cmux.app/.../claude → wrapper (PATH 에서 실 claude 를 찾는다 — launchd PATH 에서는 /opt/homebrew/bin/claude 1.0.108 을 집어 R0-Z 404 재발 가능)\n  - /opt/homebrew/bin/claude → 실 바이너리 1.0.108 (구버전 · 404 모델 원인)\n  - /Users/kyu.lee/.local/bin/claude → 심링크 → /Users/kyu.lee/.local/share/claude/versions/2.1.128 (latest · 자동 갱신)\n  → .local/bin 직접 지정 (wrapper + PATH 우회).",
   "model": "opus",
   "hubs": {
     "m0": {
