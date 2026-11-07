@@ -1,5 +1,5 @@
 #!/bin/bash
-# scripts/hub-runner-install.sh · launchd 단일 plist 설치 (M1-1105-S)
+# scripts/hub-runner-install.sh · launchd 단일 plist 설치 (M1-1105-S / X)
 #
 # Usage:
 #   bash scripts/hub-runner-install.sh          (no args = --all 로 5 허브 동시 처리)
@@ -10,8 +10,12 @@
 #
 # 기존 허브별 plist (com.curiocity.hub-runner.<hub>) 가 남아 있으면 bootout + 삭제.
 # runner-config.json 의 cwd 가 실제로 존재하는지 선실측.
+# M1-1105-X · v2 스폰 실패 시 자동 롤백 (v1 hub-runner.mjs 로 복구).
 
 set -euo pipefail
+
+TARGET_RUNNER="hub-runner-v2.mjs"
+FALLBACK_RUNNER="hub-runner.mjs"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -55,9 +59,16 @@ if (missing.length) {
 }
 NODE
 
-PATH_LINE="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+# node --check 선실측 (깨진 코드가 launchd 에 들어가지 않도록).
+if ! "$NODE_BIN" --check "$REPO_ROOT/scripts/$TARGET_RUNNER" >/dev/null 2>&1; then
+  echo "[install] node --check 실패: scripts/$TARGET_RUNNER · abort" >&2
+  exit 1
+fi
+echo "[install] node --check scripts/$TARGET_RUNNER · OK"
 
-cat > "$PLIST_FILE" <<PLIST
+write_plist() {
+  local runner="$1"
+  cat > "$PLIST_FILE" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -67,7 +78,7 @@ cat > "$PLIST_FILE" <<PLIST
   <key>ProgramArguments</key>
   <array>
     <string>$NODE_BIN</string>
-    <string>$REPO_ROOT/scripts/hub-runner.mjs</string>
+    <string>$REPO_ROOT/scripts/$runner</string>
     <string>--all</string>
   </array>
   <key>WorkingDirectory</key>
@@ -92,16 +103,55 @@ cat > "$PLIST_FILE" <<PLIST
 </dict>
 </plist>
 PLIST
+  echo "[install] plist 작성 · runner=scripts/$runner"
+}
 
-echo "plist 작성: $PLIST_FILE"
+load_plist() {
+  if launchctl list 2>/dev/null | awk '{print $3}' | grep -qx "$LABEL"; then
+    launchctl bootout "gui/$(id -u)" "$PLIST_FILE" 2>/dev/null || true
+  fi
+  launchctl bootstrap "gui/$(id -u)" "$PLIST_FILE"
+}
 
-if launchctl list 2>/dev/null | awk '{print $3}' | grep -qx "$LABEL"; then
-  echo "이미 load 중 · bootout 후 재로드"
-  launchctl bootout "gui/$(id -u)" "$PLIST_FILE" 2>/dev/null || true
+verify_loaded() {
+  # 5 초 안에 PID 가 0 이상 (즉 돌고 있음) 이 되는지 확인.
+  local tries=0
+  while (( tries < 10 )); do
+    local line
+    line="$(launchctl list 2>/dev/null | awk -v L="$LABEL" '$3 == L {print $0; exit}')"
+    if [[ -n "$line" ]]; then
+      local pid
+      pid="$(echo "$line" | awk '{print $1}')"
+      if [[ "$pid" != "-" && "$pid" -gt 0 ]]; then
+        echo "[install] verify OK · pid=$pid"
+        return 0
+      fi
+    fi
+    sleep 1
+    tries=$(( tries + 1 ))
+  done
+  echo "[install] verify 실패 · launchctl list 10 초 안에 pid>0 못 봄" >&2
+  return 1
+}
+
+write_plist "$TARGET_RUNNER"
+load_plist
+
+if verify_loaded; then
+  echo "load 완료: $LABEL (runner=$TARGET_RUNNER)"
+else
+  echo "[install] v2 verify 실패 · v1 ($FALLBACK_RUNNER) 로 롤백 시도" >&2
+  write_plist "$FALLBACK_RUNNER"
+  load_plist
+  if verify_loaded; then
+    echo "[install] 롤백 완료 · runner=$FALLBACK_RUNNER" >&2
+    exit 2
+  else
+    echo "[install] 롤백도 실패 · 수동 개입 필요" >&2
+    exit 3
+  fi
 fi
 
-launchctl bootstrap "gui/$(id -u)" "$PLIST_FILE"
-echo "load 완료: $LABEL"
 echo
 echo "상태 확인: launchctl list | grep $LABEL"
 echo "로그:      tail -f $LOG_DIR/launchd.err.log"
