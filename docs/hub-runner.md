@@ -73,16 +73,6 @@ node scripts/hub-runner.mjs --hub m2          # 단일 허브 (디버그)
 
 ---
 
-## 가시화 · 진행 로그 · 상태 (M1-1105-W · V 재발부)
-
-- **진행 로그 실시간**: 러너가 claude 를 `--output-format stream-json --verbose` 로 돌리고, 파이프라인 중간에 `node scripts/hub-runner.mjs --parse-stream` 가 stream 이벤트(툴 호출 · 파일 · 텍스트 · 최종 결과) 를 사람이 읽는 한 줄로 변환해 `~/.hub-runner/<hub>/<ID>.log` 에 즉시 flush. `tail -f` 로 그대로 흐름 관찰.
-- **cmux 탭 가시화**: `status/runner-config.json` 의 `display: "cmux" | "background"` (기본 `cmux`). cmux 모드는 2 단계만 시도 — ① cmux 번들 CLI (`/Applications/cmux.app/Contents/Resources/bin/cmux new-workspace --name <라벨> --cwd <cwd> --command <bashCmd>`), 실패하면 ② AppleScript `tell application "cmux" / "System Events"` 로 창 활성화 + Cmd+T + keystroke. **iTerm2 · Terminal.app 등 다른 터미널 앱 제어 금지** (상위 지침 — 러너가 그 분기를 들고 있지 않음). 둘 다 실패하면 background 로 자동 폴백, 로그 헤더에 `fallback_reason:` 한 줄.
-- **종료 코드 회수**: cmux 탭이 실행하는 파이프라인 끝에서 `echo "$RC" > <ID>.exit` 로 종료 코드 기록 → 러너 메인이 `.exit` 파일을 polling 해 exit 코드 얻음 (상한 60 분).
-- **키체인 금지**: `security` 명령 · `~/Library/Keychains` · Keychain Access · 어떤 자격증명 조회도 호출하지 않음. 토큰/인증이 필요하다고 판단되면 러너가 멈추고 `blocked_by:"kyu"` 로 claim blocked (M1-1105-V 재발 방지).
-- **상태 표**: `node scripts/hub-runner.mjs --status` → 허브별 current · started_at · display · 로그 경로 한 줄씩.
-
----
-
 ## claude 경로·모델 바꾸는 법 (M1-1105-T)
 
 1. 버전 비교: `/Applications/cmux.app/Contents/Resources/bin/claude --version` 과 `/opt/homebrew/bin/claude --version` 중 최신 쪽 경로 확인 (둘 다 구버전이면 `npm i -g @anthropic-ai/claude-code@latest` 후 `which claude` 경로 사용).
