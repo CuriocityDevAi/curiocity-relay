@@ -1,30 +1,37 @@
 {
-  "schema_version": 2,
-  "note": "M1-1105-T · claude_bin 명시 경로 · model=opus 기본 (허브별 override 가능). hubs[hub].model 지정 시 그 값이 우선.",
-  "updated_at": "2026-11-07T17:58:00.000Z",
+  "schema_version": 3,
+  "note": "M1-1105-W · display=cmux 기본 (cmux 허브 탭에 명령 송신 · 안 되면 background 자동 폴백). hubs[hub].display | cmux_tab 로 허브별 override. `security`/키체인 호출 금지.",
+  "updated_at": "2026-11-07T22:05:00.000Z",
   "claude_bin": "/Users/kyu.lee/.local/bin/claude",
   "claude_bin_note": "실측 비교 (2026-11-07):\n  - /Applications/cmux.app/.../claude → wrapper (PATH 에서 실 claude 를 찾는다 — launchd PATH 에서는 /opt/homebrew/bin/claude 1.0.108 을 집어 R0-Z 404 재발 가능)\n  - /opt/homebrew/bin/claude → 실 바이너리 1.0.108 (구버전 · 404 모델 원인)\n  - /Users/kyu.lee/.local/bin/claude → 심링크 → /Users/kyu.lee/.local/share/claude/versions/2.1.128 (latest · 자동 갱신)\n  → .local/bin 직접 지정 (wrapper + PATH 우회).",
   "model": "opus",
+  "display": "cmux",
+  "display_note": "M1-1105-W · 디스패치 2 단계만: ① cmux 번들 CLI (`/Applications/cmux.app/Contents/Resources/bin/cmux new-workspace --name <라벨> --cwd <cwd> --command <bashCmd>`) → 실패하면 ② AppleScript `tell application \"cmux\" / \"System Events\"` 로 활성화 + Cmd+T + keystroke. 다른 터미널 앱(iTerm2 · Terminal.app) 분기 없음 (상위 지침). 둘 다 실패하면 background 폴백 + 로그 헤더에 `fallback_reason:` 한 줄. cmux_tab 필드로 허브별 탭 라벨 override (기본: 허브 ID 대문자 · 예 m1→M1).",
   "hubs": {
     "m0": {
       "cwd": "/Users/kyu.lee/projects/storeport",
-      "label": "storeport · commerce-core backend"
+      "label": "storeport · commerce-core backend",
+      "cmux_tab": "M0"
     },
     "m1": {
       "cwd": "/Users/kyu.lee/projects/pos-m1",
-      "label": "POS mobile · M1"
+      "label": "POS mobile · M1",
+      "cmux_tab": "M1"
     },
     "m2": {
       "cwd": "/Users/kyu.lee/projects/pos-m2",
-      "label": "POS printer / register · M2"
+      "label": "POS printer / register · M2",
+      "cmux_tab": "M2"
     },
     "m3": {
       "cwd": "/Users/kyu.lee/projects/pos-m3",
-      "label": "POS checkout / orders · M3"
+      "label": "POS checkout / orders · M3",
+      "cmux_tab": "M3"
     },
     "r0": {
       "cwd": "/Users/kyu.lee/projects/pos-r0",
-      "label": "POS ops / reports · R0"
+      "label": "POS ops / reports · R0",
+      "cmux_tab": "R0"
     }
   }
 }
