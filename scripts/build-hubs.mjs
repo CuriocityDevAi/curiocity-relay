@@ -179,6 +179,8 @@ async function buildHubs() {
       'state', 'session', 'work_dir', 'repo', 'branch',
       'ci_run', 'ci_duration_s', 'open_prs_fork', 'last_round_kind',
       'last_activity', 'updated_at',
+      // M2-1105-O · hub-runner.mjs 가 참조. 수기 1회 세팅 후 build 가 보존.
+      'cwd',
     ];
 
     const merged = { ...prior };
