@@ -3,7 +3,7 @@ round: M1-1105-P
 pr:
   fork: agilo-medusa-pos-fork#53
   fork_url: https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/53
-  fork_commit: (push time 참조 · CI 결과 추가 commit 때 갱신)
+  fork_commit: 29998ae
 outcome: P5 β · Settings "Close shift" 행 (Reset 바로 위) · 세션 open 일 때만 활성 · 하루 복수 교대 ② 재노출 검증
 kyu_checks: 4 (활성 노출 · 라우팅 · 비활성 문구 · close 뒤 sheet 재노출)
 ---
@@ -119,8 +119,9 @@ m1-1105-n-playwright.mjs                      → 13/13
 
 ## 4. CI 링크 (fork PR #53)
 
-- (push 직후 pending · 리포트 작성 시점 기준)
-- CI 그린 확정 후 PR body / 본 리포트 하단에 추가 반영.
+- **CI 전원 green**
+- lint pass (43s) · https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42354642797/job/128349934337
+- assertions + playwright pass (7m1s) · https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42354642798/job/128349990230
 
 ---
 
@@ -171,4 +172,4 @@ m1-1105-n-playwright.mjs                      → 13/13
 
 ---
 
-*M1-1105-P · 2026-11-07 · Close shift row · fork PR #53 · 4 파일 (modified 1 · new 3) · Playwright 16/16 pass · 회귀 전원 pass · 영어 전용 · D1 토큰*
+*M1-1105-P · 2026-11-07 · Close shift row · fork PR #53 · 4 파일 (modified 1 · new 3) · Playwright 16/16 pass · 회귀 전원 pass · CI green (lint 43s · playwright 7m1s) · 영어 전용 · D1 토큰*
