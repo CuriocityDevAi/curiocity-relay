@@ -1,1 +1,1 @@
-{"round":"M3-1105-N","state":"started","at":"2026-11-07T17:00:00.000Z","notes":"pos-m3 · Checkout 세금 줄 + Receipt 로고/세금/여백 + CashTenderPanel pending 가드. api/hooks/pos-quote.ts 신규 (pos-payments.ts 는 M1-1105-R claim 중 — 미수정). components/receipt/** 는 #55 머지 뒤 state 기준 작업."}
+{"round":"M3-1105-N","state":"done","at":"2026-11-07T17:40:00.000Z","notes":"PR #58 CI green (assertions+playwright+lint). Checkout SC+PB1 quote + receipt logo/tax/padding + Pay double-tap guard. Report: curiocity-relay/m3/M3-1105-N-report.md."}
