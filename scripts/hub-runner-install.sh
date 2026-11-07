@@ -66,6 +66,8 @@ if ! "$NODE_BIN" --check "$REPO_ROOT/scripts/$TARGET_RUNNER" >/dev/null 2>&1; th
 fi
 echo "[install] node --check scripts/$TARGET_RUNNER · OK"
 
+PATH_LINE="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+
 write_plist() {
   local runner="$1"
   cat > "$PLIST_FILE" <<PLIST
