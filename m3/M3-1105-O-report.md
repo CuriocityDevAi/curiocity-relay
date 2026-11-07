@@ -26,7 +26,7 @@ kyu_checks: 0 (rebase + 충돌 해결 · 기능 변경 없음 · Kyu 실기 불�
 | 7 | 색 어설션 37/37 | ✓ |
 | 8 | force-push 뒤 PR 본문 "rebase 완료 · 충돌 해결 3줄" | ✓ |
 | 9 | 금지 영역 (lib/printer · api/hooks/pos-payments.ts) 미수정 | ✓ |
-| 10 | CI 전 job 그린 | **진행 중** |
+| 10 | CI 전 job 그린 | ✓ (PR #58 force-push 뒤 `assertions + playwright` + `lint` 모두 PASS) |
 
 ---
 
@@ -86,7 +86,7 @@ $ node scripts/run-all.mjs playwright
 ### 3-3. Lint
 `0 errors · 34 pre-existing warnings`.
 
-### 3-4. CI (fork · 재발화) — **진행 중** (PR #58 · force-push 뒤 자동 트리거)
+### 3-4. CI (fork · 재발화) — ✓ (PR #58 force-push 뒤 `assertions + playwright` + `lint` 모두 PASS) (PR #58 · force-push 뒤 자동 트리거)
 - PR #58: https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/58
 - Green 확인 뒤 claim state=done.
 
