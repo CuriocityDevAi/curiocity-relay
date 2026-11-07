@@ -3,7 +3,7 @@ round: M1-1105-N
 pr:
   fork: agilo-medusa-pos-fork#48
   fork_url: https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/48
-  fork_commit: (push time 참조 · relay commit SHA 는 ci 결과 추가 commit 때 갱신)
+  fork_commit: 577ffca
 outcome: P5 α · Open shift blocking sheet 가 인증+setup 완료일 때 session null 이면 자동 노출 · Log out 만 off-ramp · 하루 복수 교대 지원 · api/hooks + settings 변경 0
 kyu_checks: 4 (시트 자동 노출 · opening_float 0 입력 성공 · close 뒤 재노출 · Log out 작동)
 ---
@@ -119,8 +119,19 @@ m1-1105-b-playwright.mjs                      →  6/6
 
 ## 4. CI 링크 (fork PR #48)
 
-- (push 직후 pending · 리포트 작성 시점 기준 pending)
-- 결과 확정 후 PR body / 본 리포트 하단에 추가 반영.
+- **CI 전원 green**
+- `lint`: pass **59s** · https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42344696158/job/128319790355
+- `assertions + playwright`: pass **6m 3s** · https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42344696148/job/128319790451
+
+### 후속 fixup (harness default) — 커밋 `577ffca`
+
+CI 1차 실행 시 OpenShiftSheet 의 Dialog overlay (`absolute inset-0`) 가 여러 Playwright 하네스 (m2-1105-c · m3-1105-b · m3-1105-d · m3-1105-f) 의 클릭을 intercept 해 실패. `_harness.mjs` default 가 register-sessions GET 에 empty 반환하던 것이 원인. 수정:
+
+- `scripts/_harness.mjs` — `DEFAULTS.RSS` 신설 + register-sessions GET default 로 open 세션 1개 반환 → 모든 하네스가 가드 통과.
+- `scripts/m3-1105-b-playwright.mjs` — 자체 route 핸들러 (mockMedusa 미사용) 도 open 세션 1개로 수정.
+- m1-1105-n 자신 (세션 null 상태 테스트) 은 override 로 empty 반환 — 변경 0.
+
+commit `577ffca` 로 추가 푸시 뒤 CI 재실행 → 전원 green.
 
 ---
 
@@ -173,4 +184,4 @@ m1-1105-b-playwright.mjs                      →  6/6
 
 ---
 
-*M1-1105-N · 2026-11-07 · Open shift blocking sheet · fork PR #48 · 5 파일 (new 3 · modified 2) · Playwright 13/13 pass · 회귀 전원 pass · 영어 전용 · api/hooks + settings 변경 0*
+*M1-1105-N · 2026-11-07 · Open shift blocking sheet · fork PR #48 · commit `577ffca` · 7 파일 (new 3 · modified 4 — 2차 harness fix 포함) · Playwright 13/13 pass · 회귀 전원 pass · CI green (lint 59s · playwright 6m3s) · 영어 전용 · api/hooks + settings 변경 0*
