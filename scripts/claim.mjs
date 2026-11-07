@@ -3,6 +3,7 @@
 //
 // Usage:
 //   node scripts/claim.mjs <ID> <started|blocked|done> [note...]
+//   node scripts/claim.mjs <ID> blocked --blocked-by <who> "<note>"  (M1-1105-S)
 //   node scripts/claim.mjs M2-1105-N started "accent guard + maestro"
 //   node scripts/claim.mjs M2-1105-N blocked "waiting on M1 testID"
 //   node scripts/claim.mjs M2-1105-N done
@@ -31,13 +32,24 @@ function usage(code = 2) {
   process.exit(code);
 }
 
-const [, , rawId, rawState, ...noteParts] = process.argv;
+const [, , rawId, rawState, ...rest] = process.argv;
 if (!rawId || !rawState) usage();
 const id = rawId.trim();
 const state = rawState.trim().toLowerCase();
 if (!VALID_STATES.has(state)) {
   console.error(`invalid state "${state}" · must be one of: ${[...VALID_STATES].join(', ')}`);
   process.exit(2);
+}
+// M1-1105-S · 선택적 --blocked-by <who> (blocked state 에서만 payload 에 포함).
+let blockedBy = null;
+const noteParts = [];
+for (let i = 0; i < rest.length; i++) {
+  if (rest[i] === '--blocked-by' && i + 1 < rest.length) {
+    blockedBy = rest[i + 1];
+    i++;
+    continue;
+  }
+  noteParts.push(rest[i]);
 }
 const m = id.match(/^([a-z])(\d+)-/i);
 if (!m) {
@@ -51,6 +63,7 @@ const at = new Date().toISOString();
 mkdirSync(CLAIMS_DIR, { recursive: true });
 const file = join(CLAIMS_DIR, `${id}.json`);
 const payload = { id, hub, state, at, note };
+if (state === 'blocked' && blockedBy) payload.blocked_by = blockedBy;
 writeFileSync(file, JSON.stringify(payload, null, 2) + '\n', 'utf8');
 console.error(`[claim] wrote ${file} · ${JSON.stringify(payload)}`);
 

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "note": "M1-1105-S · hub-runner.mjs 전용 cwd 지도. build-hubs.mjs 가 hubs.json 을 다시 써도 영향 없음. Kyu 가 직접 수정 권장 (hubs.json 은 자동 생성).",
+  "updated_at": "2026-11-07T17:15:00.000Z",
+  "hubs": {
+    "m0": {
+      "cwd": "/Users/kyu.lee/projects/storeport",
+      "label": "storeport · commerce-core backend"
+    },
+    "m1": {
+      "cwd": "/Users/kyu.lee/projects/pos-m1",
+      "label": "POS mobile · M1"
+    },
+    "m2": {
+      "cwd": "/Users/kyu.lee/projects/pos-m2",
+      "label": "POS printer / register · M2"
+    },
+    "m3": {
+      "cwd": "/Users/kyu.lee/projects/pos-m3",
+      "label": "POS checkout / orders · M3"
+    },
+    "r0": {
+      "cwd": "/Users/kyu.lee/projects/pos-r0",
+      "label": "POS ops / reports · R0"
+    }
+  }
+}

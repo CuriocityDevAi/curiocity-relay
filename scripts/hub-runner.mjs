@@ -1,29 +1,29 @@
 #!/usr/bin/env node
-// scripts/hub-runner.mjs · 허브 큐 자동 투입 러너 (M2-1105-O · 방법론 ⑯)
+// scripts/hub-runner.mjs · 큐 자동 투입 러너 (M1-1105-S · 단일 프로세스 전부 처리)
+//
+// 교체 사유 (M2-1105-O 리포트 + Kyu 2026-11-07 실설치 로그):
+//   - cwd=null → 러너가 아무 허브도 cwd 를 못 찾음 (hubs.json 에 cwd 없음 · build-hubs 가 매번 덮어씀).
+//   - "cannot pull with rebase: unstaged changes" · "Cannot rebase onto multiple branches" — git pull 명시 안 함.
+//   - 허브별 별도 프로세스 5 개 → 서로 push race + heartbeat 폭주. 단일 프로세스 안에서 git 을 직렬로 돌리는 게 안전.
 //
 // Usage:
-//   node scripts/hub-runner.mjs <hub>              # 상시 polling (60 s)
-//   node scripts/hub-runner.mjs <hub> --once       # 1 tick 만 돌고 exit (CI/pilot)
-//   node scripts/hub-runner.mjs <hub> --cwd <path> # hubs.json 의 cwd override
+//   node scripts/hub-runner.mjs --all             # 5 허브 상시 polling (60 s)
+//   node scripts/hub-runner.mjs --all --once      # 1 tick 만
+//   node scripts/hub-runner.mjs --hub m2          # 단일 허브 (디버그)
+//   CLAUDE_BIN=<path> node scripts/hub-runner.mjs --all   # claude 바이너리 override
 //
-// 큐 규약:
-//   queue/<hub>/<ID>.md · 본문 = 프롬프트 원문 그대로 · 첫 줄 "허브-월일-알파벳 (ID)".
-//   취소 = 파일 삭제 또는 status/claims/<ID>.json state=cancelled.
+// cwd 지도: status/runner-config.json {hubs:{m0:{cwd}, ...}} — build-hubs 영향 X.
 //
-// 동작:
-//   1. 60 s 마다 `git pull --rebase --quiet` → queue/<hub>/*.md 스캔.
-//   2. claim 이 없거나 state 가 'issued' 인 것 중 **파일명 최솟값** 1개 선택 · 허브당 동시 1개.
-//   3. `scripts/claim.mjs <ID> started "runner"` 로 커밋+푸시.
-//   4. claude -p "<본문>" --dangerously-skip-permissions 를 hub cwd 에서 spawn.
-//      stdout/stderr → ~/.hub-runner/<hub>/<ID>.log.
-//   5. exit 0 → claim done "runner exit 0"
-//      exit N → claim blocked "runner exit N · 로그: <path>" (blocked_by: kyu)
-//      단, 허브가 이미 done/blocked 를 올렸으면 **덮어쓰지 않음** (claim 파일 확인).
-//   6. heartbeat status/runners/<hub>.json {at, pid, current} 5 분마다
-//      (chore(runner) · 변화 없으면 commit 생략).
-//   7. 허브당 lock ~/.hub-runner/<hub>.lock — stale 10 분 뒤 자동 해제.
+// 동작 요약:
+//   1. tick 마다 safePull (주 process 직렬)
+//   2. 각 허브마다 pickNext → busy 아니면 `claim started` 큐잉 + claude spawn (child 병렬)
+//   3. claude 종료 후 `claim done|blocked` 큐잉 (덮어쓰기 금지: 허브가 이미 done/blocked/cancelled 올렸으면 skip)
+//   4. 메인 루프의 claim-op 큐를 **한 번에 한 개** 만 drain (git 직렬 보장)
+//   5. 5 분마다 `status/runners/all.json` 1 커밋 (heartbeat 폭주 방지)
+//   6. git 안전: `git pull --rebase origin main` (branch 명시 → multiple branches 오류 제거). rebase 실패 → `rebase --abort`.
+//                변경 범위는 `status/claims` · `status/runners` 로 한정 — 러너 스코프 밖 변경은 손 안 댐 (경고만).
 
-import { execFileSync, spawnSync, spawn } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import {
   existsSync,
   mkdirSync,
@@ -34,7 +34,7 @@ import {
   writeFileSync,
 } from 'node:fs';
 import { homedir } from 'node:os';
-import { basename, dirname, join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -44,49 +44,97 @@ const RUNNER_HOME = join(homedir(), '.hub-runner');
 const POLL_MS = 60 * 1000;
 const STALE_LOCK_MS = 10 * 60 * 1000;
 const HEARTBEAT_MS = 5 * 60 * 1000;
+const CLAUDE_BIN =
+  process.env.CLAUDE_BIN || findInPath('claude') || '/Applications/cmux.app/Contents/Resources/bin/claude';
 
-const CLAUDE_BIN = process.env.CLAUDE_BIN || findInPath('claude') || '/Applications/cmux.app/Contents/Resources/bin/claude';
-
-const argv = process.argv.slice(2);
-const hub = argv.find((a) => /^[a-z]\d+$/.test(a));
-if (!hub) {
-  console.error('Usage: node scripts/hub-runner.mjs <hub> [--once] [--cwd <path>]');
-  process.exit(2);
-}
-const ONCE = argv.includes('--once');
-const cwdIdx = argv.indexOf('--cwd');
-const CWD_ARG = cwdIdx >= 0 ? argv[cwdIdx + 1] : null;
-
-const QUEUE_DIR = join(REPO_ROOT, 'queue', hub);
+const CONFIG_FILE = join(REPO_ROOT, 'status', 'runner-config.json');
+const QUEUE_DIR = join(REPO_ROOT, 'queue');
 const CLAIMS_DIR = join(REPO_ROOT, 'status', 'claims');
 const RUNNERS_DIR = join(REPO_ROOT, 'status', 'runners');
-const LOG_DIR = join(RUNNER_HOME, hub);
-const LOCK_FILE = join(RUNNER_HOME, `${hub}.lock`);
-const HEARTBEAT_FILE = join(RUNNERS_DIR, `${hub}.json`);
+const ALL_HEARTBEAT = join(RUNNERS_DIR, 'all.json');
+const LOCK_FILE = join(RUNNER_HOME, 'all.lock');
 
 mkdirSync(RUNNER_HOME, { recursive: true });
-mkdirSync(LOG_DIR, { recursive: true });
 mkdirSync(RUNNERS_DIR, { recursive: true });
 
-function log(...xs) {
-  const ts = new Date().toISOString();
-  console.error(`[hub-runner:${hub} ${ts}]`, ...xs);
+const argv = process.argv.slice(2);
+const ONCE = argv.includes('--once');
+const ALL = argv.includes('--all');
+const hubFlag = (() => {
+  const i = argv.indexOf('--hub');
+  return i >= 0 ? argv[i + 1] : null;
+})();
+
+if (!ALL && !hubFlag) {
+  console.error('Usage: node scripts/hub-runner.mjs --all [--once] | --hub <id>');
+  process.exit(2);
+}
+
+function ts() {
+  return new Date().toISOString();
+}
+
+function log(scope, ...xs) {
+  console.error(`[hub-runner${scope ? `:${scope}` : ''} ${ts()}]`, ...xs);
 }
 
 function findInPath(cmd) {
   try {
-    const out = execFileSync('which', [cmd], { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+    const out = execFileSync('which', [cmd], { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString()
+      .trim();
     return out || null;
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 }
 
 function git(args, opts = {}) {
-  return execFileSync('git', args, { cwd: REPO_ROOT, stdio: ['ignore', 'pipe', 'pipe'], ...opts }).toString();
+  return execFileSync('git', args, {
+    cwd: REPO_ROOT,
+    stdio: ['ignore', 'pipe', 'pipe'],
+    ...opts,
+  })
+    .toString()
+    .trim();
 }
 
-function tryGitPull() {
-  try { git(['pull', '--rebase', '--quiet']); return true; }
-  catch (e) { log('git pull --rebase 실패 (계속 진행):', (e.stderr?.toString() || e.message).trim().split('\n')[0]); return false; }
+// §3 안전: 러너 스코프 (status/claims · status/runners · status/hubs.json) 외 변경은 손 안 댐.
+const RUNNER_SCOPE_PREFIXES = ['status/claims/', 'status/runners/', 'status/hubs.json'];
+
+function outOfScopeChanges() {
+  try {
+    const out = git(['status', '--porcelain']);
+    if (!out) return [];
+    return out
+      .split('\n')
+      .map((l) => l.slice(3).trim())
+      .filter((p) => p && !RUNNER_SCOPE_PREFIXES.some((pre) => p.startsWith(pre)));
+  } catch {
+    return [];
+  }
+}
+
+function safePull() {
+  const foreign = outOfScopeChanges();
+  if (foreign.length) {
+    log('git', `스코프 밖 변경 감지 · pull 건너뜀 · files=${foreign.slice(0, 5).join(',')}${foreign.length > 5 ? '…' : ''}`);
+    return false;
+  }
+  try {
+    git(['fetch', 'origin', 'main']);
+    git(['pull', '--rebase', 'origin', 'main']);
+    return true;
+  } catch (e) {
+    const msg = (e.stderr?.toString() || e.message).trim().split('\n').slice(0, 3).join(' · ');
+    log('git', `pull --rebase origin main 실패: ${msg} · rebase --abort 시도`);
+    try {
+      git(['rebase', '--abort']);
+    } catch {
+      /* noop */
+    }
+    return false;
+  }
 }
 
 function acquireLock() {
@@ -94,167 +142,265 @@ function acquireLock() {
     if (existsSync(LOCK_FILE)) {
       const st = statSync(LOCK_FILE);
       if (Date.now() - st.mtimeMs < STALE_LOCK_MS) return false;
-      log('stale lock 삭제');
+      log('', `stale lock 삭제 (age ${Math.round((Date.now() - st.mtimeMs) / 1000)}s)`);
       rmSync(LOCK_FILE, { force: true });
     }
     writeFileSync(LOCK_FILE, String(process.pid), { flag: 'wx' });
     return true;
-  } catch { return false; }
+  } catch {
+    return false;
+  }
 }
 
 function releaseLock() {
-  try { rmSync(LOCK_FILE, { force: true }); } catch { /* noop */ }
+  try {
+    rmSync(LOCK_FILE, { force: true });
+  } catch {
+    /* noop */
+  }
+}
+
+function loadConfig() {
+  const raw = JSON.parse(readFileSync(CONFIG_FILE, 'utf8'));
+  return raw.hubs || {};
 }
 
 function readClaim(id) {
   const file = join(CLAIMS_DIR, `${id}.json`);
   if (!existsSync(file)) return null;
-  try { return JSON.parse(readFileSync(file, 'utf8')); } catch { return null; }
+  try {
+    return JSON.parse(readFileSync(file, 'utf8'));
+  } catch {
+    return null;
+  }
 }
 
-function listQueue() {
-  if (!existsSync(QUEUE_DIR)) return [];
-  return readdirSync(QUEUE_DIR)
+function listQueue(hub) {
+  const d = join(QUEUE_DIR, hub);
+  if (!existsSync(d)) return [];
+  return readdirSync(d)
     .filter((f) => f.endsWith('.md'))
-    .map((f) => ({ id: f.replace(/\.md$/, ''), file: join(QUEUE_DIR, f) }))
+    .map((f) => ({ id: f.replace(/\.md$/, ''), file: join(d, f), hub }))
     .sort((a, b) => a.file.localeCompare(b.file));
 }
 
-function pickNext() {
-  for (const item of listQueue()) {
+function pickNext(hub) {
+  for (const item of listQueue(hub)) {
     const claim = readClaim(item.id);
-    // 선택 조건: claim 없음 또는 state === 'issued'. started/done/blocked/cancelled 는 skip.
+    // §5: 기존 started/in_progress (Kyu 수동 투입) 는 skip.
     if (!claim || claim.state === 'issued') return item;
   }
   return null;
 }
 
-function runClaim(id, state, note) {
-  log(`claim ${id} → ${state}`);
+// Claim 큐 — 모든 git 변경은 여기서 직렬로.
+const claimQueue = [];
+let processingClaim = false;
+
+function enqueueClaim(op) {
+  claimQueue.push(op);
+}
+
+async function drainClaimQueue() {
+  if (processingClaim) return;
+  processingClaim = true;
   try {
-    execFileSync(process.execPath, [join(HERE, 'claim.mjs'), id, state, note || ''], {
-      cwd: REPO_ROOT, stdio: 'inherit',
-    });
-  } catch (e) {
-    log(`claim.mjs 실패 (${id} ${state}):`, (e.stderr?.toString() || e.message).trim().split('\n')[0]);
+    while (claimQueue.length) {
+      const op = claimQueue.shift();
+      await runClaim(op);
+    }
+  } finally {
+    processingClaim = false;
   }
 }
 
-function hubCwd() {
-  if (CWD_ARG) return CWD_ARG;
+async function runClaim({ id, state, note, blockedBy }) {
+  log('claim', `${id} → ${state}${note ? ` · ${note.slice(0, 80)}` : ''}`);
+  // scripts/claim.mjs 에 선택적 --blocked-by 인자 전달 (지원되지 않으면 note 안에 포함).
+  const args = [join(HERE, 'claim.mjs'), id, state];
+  if (blockedBy) {
+    args.push('--blocked-by', blockedBy);
+  }
+  if (note) args.push(note);
   try {
-    const hubs = JSON.parse(readFileSync(join(REPO_ROOT, 'status/hubs.json'), 'utf8'));
-    const h = hubs.hubs?.[hub];
-    if (h?.cwd) return h.cwd;
-    // fallback: work_dir 기반 매핑 (/Users/<home>/projects/<work_dir>)
-    if (h?.work_dir) return join(homedir(), 'projects', h.work_dir);
-  } catch { /* noop */ }
-  return null;
+    execFileSync(process.execPath, args, { cwd: REPO_ROOT, stdio: 'inherit' });
+  } catch (e) {
+    const msg = (e.stderr?.toString() || e.message).trim().split('\n').slice(0, 3).join(' · ');
+    log('claim', `claim.mjs 실패 (${id} ${state}): ${msg}`);
+  }
 }
 
-function runPrompt(item, cwd) {
+// claude 를 cwd 에서 spawn — 큐 파일 본문을 그대로 prompt 로 전달.
+function spawnClaude(item, cwd) {
   const prompt = readFileSync(item.file, 'utf8');
-  const logFile = join(LOG_DIR, `${item.id}.log`);
+  const logDir = join(RUNNER_HOME, item.hub);
+  mkdirSync(logDir, { recursive: true });
+  const logFile = join(logDir, `${item.id}.log`);
   const header = [
     `# hub-runner log · ${item.id}`,
-    `started_at: ${new Date().toISOString()}`,
-    `hub: ${hub}`,
+    `started_at: ${ts()}`,
+    `hub: ${item.hub}`,
     `cwd: ${cwd}`,
     `claude: ${CLAUDE_BIN}`,
     `log: ${logFile}`,
-    '--- stdout+stderr ---',
+    '--- stdout ---',
     '',
   ].join('\n');
   writeFileSync(logFile, header, 'utf8');
 
-  log(`spawn claude -p · ID=${item.id} · cwd=${cwd}`);
-  const child = spawnSync(CLAUDE_BIN, ['-p', prompt, '--dangerously-skip-permissions'], {
-    cwd,
-    env: { ...process.env },
-    stdio: ['ignore', 'pipe', 'pipe'],
-    maxBuffer: 50 * 1024 * 1024,
+  log(item.hub, `spawn claude -p · ID=${item.id} · cwd=${cwd}`);
+  return new Promise((resolve) => {
+    const child = spawn(CLAUDE_BIN, ['-p', prompt, '--dangerously-skip-permissions'], {
+      cwd,
+      env: { ...process.env },
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    const outChunks = [];
+    const errChunks = [];
+    child.stdout.on('data', (c) => outChunks.push(c));
+    child.stderr.on('data', (c) => errChunks.push(c));
+    child.on('close', (code) => {
+      const out = Buffer.concat(outChunks).toString();
+      const err = Buffer.concat(errChunks).toString();
+      writeFileSync(
+        logFile,
+        `${header}${out}\n--- stderr ---\n${err}\n--- exit ${code} ---\n`,
+        'utf8',
+      );
+      resolve({ exit: code, logFile });
+    });
+    child.on('error', (e) => {
+      writeFileSync(logFile, `${header}spawn error: ${e.message}\n--- exit -1 ---\n`, 'utf8');
+      resolve({ exit: -1, logFile });
+    });
   });
-  const out = (child.stdout || Buffer.alloc(0)).toString();
-  const err = (child.stderr || Buffer.alloc(0)).toString();
-  writeFileSync(logFile, header + out + '\n--- stderr ---\n' + err + `\n--- exit ${child.status} ---\n`, 'utf8');
-  return { exit: child.status, logFile };
 }
 
-function heartbeat(currentId) {
-  const payload = { at: new Date().toISOString(), pid: process.pid, hub, current: currentId || null };
-  const serialized = JSON.stringify(payload, null, 2) + '\n';
-  // 변화 없으면 skip (pid/at 는 매번 바뀌므로 current 기준으로 diff 판단)
-  let prev = null;
-  try { prev = JSON.parse(readFileSync(HEARTBEAT_FILE, 'utf8')); } catch { /* noop */ }
-  if (prev && prev.current === payload.current && prev.hub === payload.hub && prev.pid === payload.pid) {
-    // 변화 없음 → 파일만 재기록 (commit 생략)
-    writeFileSync(HEARTBEAT_FILE, serialized, 'utf8');
-    return;
-  }
-  writeFileSync(HEARTBEAT_FILE, serialized, 'utf8');
+const busy = new Map(); // hub -> { id, startedAt }
+const hubsToRun = ALL ? ['m0', 'm1', 'm2', 'm3', 'r0'] : [hubFlag];
+
+// §4 heartbeat — status/runners/all.json 로 1 파일 · 5 분마다 commit.
+let lastHeartbeatAt = 0;
+function writeHeartbeat(force = false) {
+  const now = Date.now();
+  const payload = {
+    at: ts(),
+    pid: process.pid,
+    poll_ms: POLL_MS,
+    hubs: Object.fromEntries(
+      hubsToRun.map((hub) => [
+        hub,
+        busy.has(hub)
+          ? { current: busy.get(hub).id, started_at: new Date(busy.get(hub).startedAt).toISOString() }
+          : { current: null },
+      ]),
+    ),
+  };
+  writeFileSync(ALL_HEARTBEAT, JSON.stringify(payload, null, 2) + '\n', 'utf8');
+  if (!force && now - lastHeartbeatAt < HEARTBEAT_MS) return;
   try {
-    git(['add', `status/runners/${hub}.json`]);
-    git(['commit', '-m', `chore(runner): ${hub} heartbeat · current=${payload.current || 'idle'}`]);
+    git(['add', 'status/runners/all.json']);
+    git(['commit', '-m', `chore(runner): heartbeat · ${hubsToRun.map((h) => `${h}=${payload.hubs[h].current || 'idle'}`).join(' · ')}`]);
     git(['push', 'origin', 'HEAD:main']);
-    log(`heartbeat pushed · current=${payload.current || 'idle'}`);
+    lastHeartbeatAt = now;
+    log('', `heartbeat pushed`);
   } catch (e) {
     const msg = (e.stderr?.toString() || e.message).trim().split('\n')[0];
-    if (!/nothing to commit/i.test(msg)) log(`heartbeat push skip: ${msg}`);
+    if (!/nothing to commit/i.test(msg)) {
+      log('', `heartbeat push skip: ${msg}`);
+    } else {
+      // "nothing to commit" 도 lastHeartbeatAt 전진 — 변경 없으면 다음 5 분에 재시도.
+      lastHeartbeatAt = now;
+    }
   }
 }
 
-async function tick() {
+async function tick(hubs) {
   if (!acquireLock()) {
-    log('lock 획득 실패 · 다른 러너 작동 중 (stale 10m 뒤 자동 해제)');
+    log('', `lock 획득 실패 · 다른 러너 작동 중 (${LOCK_FILE})`);
     return;
   }
   try {
-    tryGitPull();
-    heartbeat(null);
-    const item = pickNext();
-    if (!item) { log('큐 비어 있음 · 다음 폴 대기'); return; }
-    log(`pick · ${item.id}`);
-    heartbeat(item.id);
+    safePull();
+    const config = loadConfig();
 
-    const cwd = hubCwd();
-    if (!cwd || !existsSync(cwd)) {
-      log(`hub cwd 미설정/부재 · ${cwd} · claim blocked`);
-      runClaim(item.id, 'blocked', `runner: cwd 부재 (${cwd})`);
-      return;
+    for (const hub of hubs) {
+      if (busy.has(hub)) continue;
+      const cfg = config[hub];
+      if (!cfg?.cwd) {
+        log(hub, `runner-config 에 cwd 없음 · 건너뜀`);
+        continue;
+      }
+      if (!existsSync(cfg.cwd)) {
+        log(hub, `cwd 부재 · ${cfg.cwd} · 건너뜀 (큐가 있어도 cwd 복구 전엔 claim 안 바꿈)`);
+        continue;
+      }
+      const item = pickNext(hub);
+      if (!item) continue;
+      log(hub, `pick · ${item.id}`);
+      busy.set(hub, { id: item.id, startedAt: Date.now() });
+      enqueueClaim({ id: item.id, state: 'started', note: 'runner' });
+
+      // 자식 claude 는 메인 루프와 **병렬**로 돌지만, claim 커밋은 전부 queue drain 으로 직렬화.
+      (async () => {
+        const { exit, logFile } = await spawnClaude(item, cfg.cwd);
+        busy.delete(hub);
+
+        // 허브가 중간에 done/blocked/cancelled 올렸는지 확인 (덮어쓰기 금지)
+        safePull();
+        const post = readClaim(item.id);
+        if (post && (post.state === 'done' || post.state === 'blocked' || post.state === 'cancelled')) {
+          log(hub, `claim 이미 ${post.state} (허브 설정) · 덮어쓰지 않음`);
+          writeHeartbeat();
+          drainClaimQueue();
+          return;
+        }
+
+        if (exit === 0) {
+          enqueueClaim({ id: item.id, state: 'done', note: `runner exit 0 · 로그: ${logFile}` });
+        } else {
+          enqueueClaim({
+            id: item.id,
+            state: 'blocked',
+            note: `runner exit ${exit} · 로그: ${logFile}`,
+            blockedBy: 'kyu',
+          });
+        }
+        writeHeartbeat();
+        drainClaimQueue();
+      })();
     }
 
-    runClaim(item.id, 'started', 'runner');
-    const { exit, logFile } = runPrompt(item, cwd);
-
-    // 허브가 이미 done/blocked/cancelled 를 올렸는지 확인 (덮어쓰기 금지)
-    tryGitPull(); // 허브가 도중에 claim 을 올렸을 가능성 반영
-    const post = readClaim(item.id);
-    if (post && (post.state === 'done' || post.state === 'blocked' || post.state === 'cancelled')) {
-      log(`claim 이미 ${post.state} (허브가 설정) · 덮어쓰지 않음`);
-    } else if (exit === 0) {
-      runClaim(item.id, 'done', `runner exit 0 · 로그: ${logFile}`);
-    } else {
-      runClaim(item.id, 'blocked', `runner exit ${exit} · 로그: ${logFile} · blocked_by:kyu`);
-    }
-    heartbeat(null);
+    await drainClaimQueue();
+    writeHeartbeat();
   } finally {
     releaseLock();
   }
 }
 
 async function loop() {
-  log(`loop 시작 · poll=${POLL_MS}ms · heartbeat=${HEARTBEAT_MS}ms · hub cwd=${hubCwd()}`);
-  let lastHeartbeat = 0;
+  log('', `시작 · mode=${ALL ? '--all' : `--hub ${hubFlag}`} · once=${ONCE} · poll=${POLL_MS}ms · claude=${CLAUDE_BIN}`);
+  writeHeartbeat(true);
   for (;;) {
-    try { await tick(); }
-    catch (e) { log('tick 예외:', e.message); }
-    if (ONCE) break;
-    const now = Date.now();
-    if (now - lastHeartbeat > HEARTBEAT_MS) {
-      try { heartbeat(null); lastHeartbeat = now; } catch { /* noop */ }
+    try {
+      await tick(hubsToRun);
+    } catch (e) {
+      log('', `tick 예외: ${e.message}`);
+    }
+    if (ONCE) {
+      // 자식 claude 가 아직 돌고 있으면 전부 끝날 때까지 대기 (--once --all 셀프테스트용).
+      while (busy.size > 0 || claimQueue.length > 0 || processingClaim) {
+        await new Promise((r) => setTimeout(r, 1000));
+      }
+      // 마지막 heartbeat flush
+      writeHeartbeat(true);
+      break;
     }
     await new Promise((r) => setTimeout(r, POLL_MS));
   }
 }
 
-loop().catch((e) => { log('loop fatal:', e.message); process.exit(1); });
+loop().catch((e) => {
+  log('', `loop fatal: ${e.message}`);
+  process.exit(1);
+});
