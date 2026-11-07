@@ -129,7 +129,9 @@ function safePull() {
   }
   try {
     git(['fetch', 'origin', 'main']);
-    git(['pull', '--rebase', 'origin', 'main']);
+    // --autostash: 커밋 안 된 러너 스코프 변경 (예: 아직 push 전인 all.json) 을 임시로 stash 후 복원.
+    // branch 명시 (`origin main`) 로 "Cannot rebase onto multiple branches" 재발 방지.
+    git(['pull', '--rebase', '--autostash', 'origin', 'main']);
     return true;
   } catch (e) {
     const msg = (e.stderr?.toString() || e.message).trim().split('\n').slice(0, 3).join(' · ');
