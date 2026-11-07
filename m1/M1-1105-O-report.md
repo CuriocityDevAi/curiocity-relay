@@ -109,8 +109,9 @@ m1-1105-b-playwright.mjs                        →  6/6
 
 ## 3. CI 링크 (fork PR #50)
 
-- (push 직후 pending · 리포트 작성 시점 기준)
-- CI 그린 확정 후 PR body / 본 리포트 하단에 추가 반영.
+- **CI 전원 green**
+- lint pass (1m0s) · https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42350579810/job/128337631668
+- assertions + playwright pass (6m7s) · https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42350579863/job/128337631873
 
 ---
 
@@ -145,4 +146,4 @@ m1-1105-b-playwright.mjs                        →  6/6
 
 ---
 
-*M1-1105-O · 2026-11-07 · 3 hooks safety · fork PR #50 · 4 파일 (new 1 · modified 3) · Playwright 14/14 + 회귀 전원 pass · UI 변경 0*
+*M1-1105-O · 2026-11-07 · 3 hooks safety · fork PR #50 · 4 파일 (new 1 · modified 3) · Playwright 14/14 + 회귀 전원 pass · CI green (lint 1m0s · playwright 6m7s) · UI 변경 0*
