@@ -104,15 +104,17 @@ const RUNNER_SCOPE_PREFIXES = ['status/claims/', 'status/runners/', 'status/hubs
 
 function outOfScopeChanges() {
   try {
-    const out = git(['status', '--porcelain']);
-    if (!out) return [];
+    // 주의: git() 헬퍼의 .trim() 은 첫 줄 선행 공백 (" M path") 을 삼켜서
+    // XY 파싱이 어긋나기 때문에 porcelain 은 raw stdout 로 직접 읽는다.
+    const out = execFileSync('git', ['status', '--porcelain'], {
+      cwd: REPO_ROOT,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    }).toString();
+    if (!out.trim()) return [];
     return out
       .split('\n')
-      .map((l) => {
-        // porcelain v1: "XY <path>" (XY = 2 chars index+worktree status). 공백 수는 환경차 흡수용 정규식.
-        const m = l.match(/^..\s+(.*)$/);
-        return (m ? m[1] : l).trim();
-      })
+      .filter((l) => l.length)
+      .map((l) => (l.length > 3 ? l.slice(3) : '').trim())
       .filter((p) => p && !RUNNER_SCOPE_PREFIXES.some((pre) => p.startsWith(pre)));
   } catch {
     return [];
