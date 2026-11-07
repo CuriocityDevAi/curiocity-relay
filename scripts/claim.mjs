@@ -25,10 +25,11 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
 const CLAIMS_DIR = join(REPO_ROOT, 'status', 'claims');
 
-const VALID_STATES = new Set(['started', 'blocked', 'done']);
+// M1-1105-T · `issued` 추가 — blocked claim 을 큐에 되돌려 러너가 재픽하게.
+const VALID_STATES = new Set(['issued', 'started', 'blocked', 'done']);
 
 function usage(code = 2) {
-  console.error('Usage: node scripts/claim.mjs <ID> <started|blocked|done> [note...]');
+  console.error('Usage: node scripts/claim.mjs <ID> <issued|started|blocked|done> [--blocked-by <who>] [note...]');
   process.exit(code);
 }
 
