@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-07T05:29:16.353Z",
+  "built_at": "2026-11-07T05:35:50.871Z",
   "prompts": [],
   "reports": [
     {
@@ -368,6 +368,14 @@
       "round": "M0-0917-A",
       "pr": "storeport#114",
       "outcome": "feature-map-l1",
+      "kyu_checks": [],
+      "ledger_events": []
+    },
+    {
+      "path": "m0/M0-1105-O-report.md",
+      "round": "M0-1105-O",
+      "pr": "null",
+      "outcome": "뿌리 확정 · P2 cash flow 가 tenders 성공 후 draft→order 변환 + draft id 폐기 + 쿼리 invalidate 를 3군데 전부 생략 → 영수증은 발급되지만 Order 는 영구 draft 상태 → `/admin/orders` 하드코딩 필터로 제외 + Cart 탭 draft 유지. 코드 수정 0.",
       "kyu_checks": [],
       "ledger_events": []
     },
@@ -4546,7 +4554,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-07T05:29:16.020Z"
+      "fetched_at": "2026-11-07T05:35:50.543Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5778,7 +5786,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-07T05:29:16.132Z"
+      "fetched_at": "2026-11-07T05:35:50.665Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6425,7 +6433,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-07T05:29:16.353Z"
+      "fetched_at": "2026-11-07T05:35:50.870Z"
     }
   ],
   "rollup": {
