@@ -44,7 +44,7 @@ kyu_checks: 0 (스샷 즉시 확인 · Kyu 실기 불요)
 | 10 | Fixtures (SC 5.5%+PB1 10% · 0%/0% · receipt snapshot) | ✓ |
 | 11 | Playwright (Checkout 줄 · 영수증 줄·로고 · 0% 숨김 · 연타 가드) | ✓ (17/17) |
 | 12 | 색 어설션 37/37 | ✓ |
-| 13 | CI 전 job 그린 | **진행 중** (PR #58) |
+| 13 | CI 전 job 그린 | ✓ (PR #58 · `assertions + playwright` + `lint` 모두 PASS) |
 
 ---
 
@@ -128,9 +128,11 @@ $ node scripts/run-all.mjs playwright
 ### 5-3. Lint
 `0 errors · 34 pre-existing warnings`.
 
-### 5-4. CI (fork)
+### 5-4. CI (fork) — **그린 ✓**
 - PR #58: https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/58
-- Green 확인 후 state=done 상시 claim 커밋.
+- `assertions + playwright`: **PASS**
+- `lint`: **PASS**
+- 상시 claim state=done 커밋+푸시 완료 (17:40).
 
 ---
 
