@@ -1,0 +1,40 @@
+# Railway api(commerce-core) 운영 로그 발췌 · 2026-11-07 15:50~16:07Z · Kyu 제공 · 동일 메시지 중복 제거(원본에서 captured_amount 123회)
+# 증상: Admin Orders 목록 + 앱 Orders 탭 "An unknown error" · 앱 영수증 화면 "Server Error" · Hand over 뒤 Not fulfilled
+# 서버: storeport main 4f3cd43 (#199 포함) · PB1 10% + logo_url 설정 직후부터
+
+2026-11-07T15:50:09.848973497Z [inf]  Order id not found: order_01M6VAV3KG4PB3SKTYH2H2DKG2
+2026-11-07T15:50:11.581307356Z [err]  Cannot read properties of undefined (reading 'captured_amount')
+2026-11-07T15:50:35.832378893Z [inf]  Processing order.placed which has 1 subscribers
+2026-11-07T15:50:37.762869293Z [inf]  Order id not found: order_01M6VB7RCQAPMNV2WPM10PZQ5T
+2026-11-07T15:55:54.112404881Z [inf]  Order id not found: order_01M6VBJ350ZJJAGDKY6FAH1BGZ
+2026-11-07T15:56:26.367524724Z [err]  [M0-1105-R] fulfillment polyfill failed (non-fatal · row keeping only): Value for FulfillmentItem.sku is required, 'null' found
+2026-11-07T15:56:26.367531753Z [err]  entity: FulfillmentItem {
+2026-11-07T15:56:26.367539914Z [err]    id: 'fulit_01M6VBK60VHXCZ31MW7YAKDAZ6',
+2026-11-07T15:56:26.367547403Z [err]    title: 'Iced Tea',
+2026-11-07T15:56:26.367556104Z [err]    sku: null,
+2026-11-07T15:56:26.367564046Z [err]    line_item_id: 'ordli_01M6VBJ45CVXD589Q7X1JNS2KM',
+2026-11-07T15:56:26.367570957Z [err]    inventory_item_id: null,
+2026-11-07T15:56:26.367578512Z [err]    fulfillment_id: 'ful_01M6VBK60WV46MFEEKHPWPAP0T',
+2026-11-07T15:56:26.367601776Z [err]      location_id: 'sloc_01KZ5DCN2WJXNMDGVS617053ZA',
+2026-11-07T15:56:26.367608528Z [err]      packed_at: 2026-11-07T15:56:18.839Z,
+2026-11-07T15:56:26.367689842Z [err]      data: { pos: true, m0_1105_r_polyfill: true },
+2026-11-07T15:56:26.367697368Z [err]      requires_shipping: true,
+2026-11-07T15:56:26.367724909Z [err]      provider: (FulfillmentProvider) { id: 'manual_manual' },
+2026-11-07T15:56:26.367738836Z [err]      shipping_option_id: null,
+2026-11-07T15:56:28.046848171Z [err]        first_name: 'POS',
+2026-11-07T15:56:28.046857099Z [err]        last_name: 'Hand-over',
+2026-11-07T15:56:28.046864904Z [err]        address_1: 'In-store pickup',
+2026-11-07T15:56:28.046964344Z [err]        m0_1105_r: 'fulfillment polyfill (workflow inventory-link fallthrough)'
+2026-11-07T15:56:28.047004527Z [err]    raw_quantity: { value: '1', precision: 20 },
+2026-11-07T15:57:38.414998010Z [inf]  Order id not found: order_01M6VBMS5WWKC325VRWM9R7AES
+2026-11-07T15:57:51.117802776Z [err]    title: 'Coffee Latte',   (같은 sku null 폴리필 실패 · ful_01M6VBNFH6EBQSAZT8TYNACD8W)
+2026-11-07T15:59:16.259786500Z [inf]  Order id not found: order_01M6VBQKGJ7N8ZCQNKJ08T6H94
+2026-11-07T15:59:30.582889376Z [err]    (같은 sku null 폴리필 실패 · ful_01M6VBR7S0318ZV0WE29111ES1)
+2026-11-07T16:00:50.372820194Z [inf]  Order id not found: order_01M6VBRY9NWS34342C7T1V0YNW
+2026-11-07T16:02:24.766788188Z [err]    (같은 sku null 폴리필 실패 · ful_01M6VBY9YKXZG0Y6FFW0B7RBC5)
+2026-11-07T16:04:11.740617941Z [inf]  [railway-ssh] SSH connected
+2026-11-07T16:04:15.292238387Z [inf]  [railway-ssh] shell session ended (exit -1, 10s)
+2026-11-07T16:07:15.771572124Z [inf]  [railway-ssh] shell session ended (exit -1, 15s)
+
+# 15:50~16:07 사이 "Cannot read properties of undefined (reading 'captured_amount')" 가 거의 모든 요청마다 반복(123회) — 주문 목록/상세 조회 경로로 추정
+# "Order id not found: order_01M6V…" 는 결제 직후 앱이 조회하는 id 가 서버에 없다는 뜻 — 변환 전 draft id 로 조회하거나 전환 레코드 불일치 가능성
