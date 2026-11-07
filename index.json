@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-07T16:18:52.578Z",
+  "built_at": "2026-11-07T16:19:45.330Z",
   "prompts": [],
   "reports": [
     {
@@ -384,6 +384,14 @@
       "round": "M0-1105-T",
       "pr": "storeport#TBD",
       "outcome": "reservation 전수 정리 + fulfill 단일 지점 + body 계약 + delivery 흐름 + maintenance 도구",
+      "kyu_checks": [],
+      "ledger_events": []
+    },
+    {
+      "path": "m0/M0-1105-U-report.md",
+      "round": "M0-1105-U",
+      "pr": "storeport#200 (같은 PR 재사용 · R0-AE §C.1 반영)",
+      "outcome": "fulfill hand_over 재누름 멱등 가드 (R0-AE §C.1) + Kyu 7차 500 가드 통합 테스트 (pb1_pct=10 + logo_url 설정 뒤 POS 주문 상세·quote·목록 3경로 200)",
       "kyu_checks": [],
       "ledger_events": []
     },
@@ -4562,7 +4570,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-07T16:18:52.192Z"
+      "fetched_at": "2026-11-07T16:19:44.992Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5794,7 +5802,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-07T16:18:52.324Z"
+      "fetched_at": "2026-11-07T16:19:45.087Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6441,7 +6449,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-07T16:18:52.578Z"
+      "fetched_at": "2026-11-07T16:19:45.330Z"
     }
   ],
   "rollup": {
