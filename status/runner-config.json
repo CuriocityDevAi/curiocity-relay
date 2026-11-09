@@ -9,7 +9,7 @@
   "model": "opus",
   "run_timeout_min": 60,
   "heartbeat_min": 30,
-  "model_note": "M1-1105-Y · Kyu 11-09 결정: R0/M2 = sonnet (리포트성 라운드) · M0/M1/M3 = opus (코드 생성) · 토요일 M0-V 토큰 소진 분석 결과.",
+  "model_note": "M1-1105-Y · Kyu 11-09 결정: R0/M2 = sonnet (리포트성 라운드) · M0/M1/M3 = opus (코드 생성) · 토요일 M0-V 토큰 소진 분석 결과. · Kyu 11-10 04:54: M1 도 sonnet (가벼운 러너·디자인 작업) · Opus 는 M0/M3 코딩만.",
   "hubs": {
     "m0": {
       "cwd": "/Users/kyu.lee/projects/storeport",
@@ -19,7 +19,7 @@
     "m1": {
       "cwd": "/Users/kyu.lee/projects/pos-m1",
       "label": "POS mobile · M1",
-      "model": "opus"
+      "model": "sonnet"
     },
     "m2": {
       "cwd": "/Users/kyu.lee/projects/pos-m2",
