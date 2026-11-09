@@ -1,7 +1,23 @@
 {
   "id": "M0-1105-X",
   "hub": "m0",
-  "state": "started",
-  "at": "2026-11-09T09:55:57.383Z",
-  "note": "runner-v4 · model=opus"
+  "state": "done",
+  "pr": "storeport#203",
+  "branch": "fix/m0-1105-x-repair-dangling-links",
+  "base": "main@0f4b87b",
+  "head": "78df78f",
+  "commits": [
+    "78df78f fix(pos): repair-dangling-payment-links · 링크 엔티티 직접 조회로 'missing' 후보 탐지 (M0-1105-X · R0-1105-AI §C)"
+  ],
+  "integration_tests_added": ["#37", "#38"],
+  "verification": {
+    "typecheck": "0 err",
+    "unit": "4 suites · 24 tests pass",
+    "integration_pos": "38/38 pass (26.4s · real Postgres)",
+    "naming_check": "PASS",
+    "dispatch_validate": "0 violations"
+  },
+  "report": "m0/M0-1105-X-report.md",
+  "note": "Admin Orders 500 뿌리 완전 해소 · repair 가 query.graph(entity:'order_payment_collection') 로 전환 → missing/soft_deleted 모두 수집 · R0-1105-AI §C 지적('하드 삭제는 payment_collections.* 에 안 보임') 반영 · reproduce+repair 통합 테스트 #37 운영 stack 1:1 일치 · Medusa core 패치 0 · W A tenders.ts 삭제 경로 제거(신규 생성 방지)는 그대로 유지",
+  "at": "2026-11-09T17:20:00Z"
 }
