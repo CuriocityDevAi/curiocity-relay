@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-09T09:05:41.948Z",
+  "built_at": "2026-11-09T10:17:51.972Z",
   "prompts": [],
   "reports": [
     {
@@ -400,6 +400,14 @@
       "round": "M0-1105-W",
       "pr": "storeport#200 (같은 PR 재사용 · 운영 장애 A/B/C 뿌리 해소 · HEAD ac71c44)",
       "outcome": "V 승계 완료 → A/B/C 세 commit 분리 push · typecheck 0 err · 통합 #33~#36 신규 4건 · PR 본문 상단 \"운영 장애 3줄\" 배너 추가 · R0-AE §C.1(A) + §C.3(B) + §C.4(C) 반영",
+      "kyu_checks": [],
+      "ledger_events": []
+    },
+    {
+      "path": "m0/M0-1105-X-report.md",
+      "round": "M0-1105-X",
+      "pr": "storeport#203 (신 브랜치 · 새 PR · base=main@0f4b87b · HEAD 78df78f)",
+      "outcome": "Admin Orders 500 뿌리 **구조상 완결 해소** · repair 가 링크 엔티티 직조회로 missing/soft_deleted 모두 수집 · 38/38 integration pass (실 Postgres · reproduce+repair 포함) · R0-1105-AI §C 지적 반영",
       "kyu_checks": [],
       "ledger_events": []
     },
@@ -4578,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-09T09:05:41.477Z"
+      "fetched_at": "2026-11-09T10:17:51.465Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5810,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-09T09:05:41.610Z"
+      "fetched_at": "2026-11-09T10:17:51.635Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6458,7 +6466,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-09T09:05:41.948Z"
+      "fetched_at": "2026-11-09T10:17:51.971Z"
     }
   ],
   "rollup": {
