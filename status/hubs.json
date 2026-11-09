@@ -1,11 +1,26 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-09T10:18:28.532Z",
+  "built_at": "2026-11-09T10:33:37.843Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-09T10:33:25.834Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-09T10:33:25.834Z"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-09T10:17:42.034Z",
+      "updated_at": "2026-11-09T10:33:25.834Z"
+    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-09T09:56:34.466Z",
+      "updated_at": "2026-11-09T10:33:25.834Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,95 +28,17 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      ]
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-09T09:56:34.466Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-09T10:33:25.834Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-09T09:56:34.466Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-09T09:56:31.194Z",
-      "session": "22a84ab7-88eb-4733-bfa5-5930f5ee9104",
-      "updated_at": "2026-11-09T09:56:34.466Z",
-      "last_round": "M0-1105-X",
-      "last_report": "m0/M0-1105-X-report.md",
-      "current_round": "M0-1105-X",
-      "current_state": "done",
-      "current_at": "2026-11-09T17:20:00Z",
-      "current_note": "Admin Orders 500 뿌리 완전 해소 · repair 가 query.graph(entity:'order_payment_collection') 로 전환 → missing/soft_deleted 모두 수집 · R0-1105-AI §C 지적('하드 삭제는 payment_collections.* 에 안 보임') 반영 · reproduce+repair 통합 테스트 #37 운영 stack 1:1 일치 · Medusa core 패치 0 · W A tenders.ts 삭제 경로 제거(신규 생성 방지)는 그대로 유지"
-    },
-    "m1": {
-      "last_round": "M1-1105-Z",
-      "last_report": "m1/M1-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-09T10:04:54.345Z",
-      "current_round": "M1-1105-AA",
-      "current_state": "done",
-      "current_at": "2026-11-09T10:14:58.420Z",
-      "current_note": "v5 러너 신파일 · cmux 대화형 전환 · 착지 폴링 · 탭 유지 + ✓ · prev-cleanup · 셀프테스트 2건 ✓ · 리포트 m1/M1-1105-AA-report.md · 교체는 M0-X idle 후 Kyu"
-    },
-    "m2": {
-      "last_round": "M2-1105-R",
-      "last_report": "m2/M2-1105-R-report.md",
-      "last_pr_fork": "https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/63",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-09T10:04:54.345Z",
-      "current_round": "M2-1105-T-cmuxtest",
-      "current_state": "done",
-      "current_at": "2026-11-09T09:56:08.244Z",
-      "current_note": "cmux tab test"
-    },
-    "m3": {
-      "last_round": "M3-1105-U",
-      "last_report": "m3/M3-1105-U-report.md",
-      "last_pr_fork": "https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/65 (draft · head 25f3810 · base master 14a7e53)",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-09T10:04:54.345Z",
-      "current_round": "M3-1105-T",
-      "current_state": "done",
-      "current_at": "2026-11-09T11:40:00.000Z",
-      "current_note": "PR #62 head 9faa4a5 · base master 6375e05 (rebase from a0bfcd6 · 충돌 0 · 5 커밋 재적용) + M3-1105-T 치환 커밋 1개 (ReceiptCard 로고 → lib/receipt-layout.LOGO 공용 상수 · TODO 제거) · 색 37/37 + S 28/28 + D 27/27 + m3-1105-q 25/25 + logo-bitmap 37/37 + 번들 가드(node:* 0) PASS · 금지 영역(lib/printer · app/_layout.tsx · ShiftCloseGate · api/hooks) 0 touch · PR 본문 2줄 추가 · 리포트 m3/M3-1105-T-report.md"
-    },
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-09T09:56:34.466Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
-    },
-    "r0": {
-      "last_round": "R0-1105-AH-selftest",
-      "last_report": "r0/R0-1105-AH-selftest-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-09T10:04:54.345Z",
-      "current_round": "R0-1105-AJ",
-      "current_state": "blocked",
-      "current_at": "2026-11-09T04:52:31.179Z",
-      "current_note": "exit 0 · 리포트/claim 없음 · 미완 의심 · 리포트 기대 경로 r0/R0-1105-AJ-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1105-AJ.log"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-09T09:56:34.466Z",
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "updated_at": "2026-11-09T10:33:25.834Z"
     }
   }
 }
