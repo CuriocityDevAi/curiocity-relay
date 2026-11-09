@@ -1,10 +1,24 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-09T04:52:31.214Z",
+  "built_at": "2026-11-09T05:58:57.788Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-09T05:52:36.443Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-09T05:52:36.443Z"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-09T04:16:38.095Z",
+      "updated_at": "2026-11-09T05:52:36.443Z"
+    },
     "k0": {
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md",
+      "state": "waiting-inquiry",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,94 +27,17 @@
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
       ],
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-09T04:22:19.871Z"
+      "updated_at": "2026-11-09T05:52:36.443Z"
     },
     "k1": {
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md",
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-09T04:22:19.871Z"
+      "updated_at": "2026-11-09T05:52:36.443Z"
     },
     "k2": {
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md",
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-09T04:22:19.871Z"
-    },
-    "m0": {
-      "last_round": "M0-1105-W",
-      "last_report": "m0/M0-1105-W-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-09T04:22:19.871Z",
-      "current_round": "M0-1105-U",
-      "current_state": "done",
-      "current_at": "2026-11-07T23:50:00.000Z",
-      "current_note": "PR #200 (HEAD 7100653) · fulfill hand_over 멱등 가드 + Kyu 7차 500 가드 테스트 #31/#32 · CI green · Tests 32/32 · R0-AE §C.1 반영"
-    },
-    "m1": {
-      "last_round": "M1-1105-Z",
-      "last_report": "m1/M1-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-09T04:22:19.871Z",
-      "current_round": "M1-1105-Z",
-      "current_state": "done",
-      "current_at": "2026-11-09T04:25:39.741Z",
-      "current_note": "v4 러너 교체 완료 (pid 8499 live) · 착지 검증 (exit 0 && 리포트/claim 없음 → blocked oke) · --status judge 열 · cmux 진단 (socket write 저수준 실패 · 비번/env 로 안 풀림 · background 폴백) · 셀프테스트 2건 통과 · 리포트 m1/M1-1105-Z-report.md"
-    },
-    "m2": {
-      "last_round": "M2-1105-R",
-      "last_report": "m2/M2-1105-R-report.md",
-      "last_pr_fork": "https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/63",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-09T04:22:19.871Z",
-      "current_round": "M2-1105-S-selftest",
-      "current_state": "blocked",
-      "current_at": "2026-11-09T04:22:29.378Z",
-      "current_note": "exit 0 · 리포트/claim 없음 · 미완 의심 · 리포트 기대 경로 m2/M2-1105-S-selftest-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1105-S-selftest.log"
-    },
-    "m3": {
-      "last_round": "M3-1105-T",
-      "last_report": "m3/M3-1105-T-report.md",
-      "last_pr_fork": "https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/62 (ongoing · head 9faa4a5 · base master 6375e05)",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-09T04:22:19.871Z",
-      "current_round": "M3-1105-T",
-      "current_state": "done",
-      "current_at": "2026-11-09T11:40:00.000Z",
-      "current_note": "PR #62 head 9faa4a5 · base master 6375e05 (rebase from a0bfcd6 · 충돌 0 · 5 커밋 재적용) + M3-1105-T 치환 커밋 1개 (ReceiptCard 로고 → lib/receipt-layout.LOGO 공용 상수 · TODO 제거) · 색 37/37 + S 28/28 + D 27/27 + m3-1105-q 25/25 + logo-bitmap 37/37 + 번들 가드(node:* 0) PASS · 금지 영역(lib/printer · app/_layout.tsx · ShiftCloseGate · api/hooks) 0 touch · PR 본문 2줄 추가 · 리포트 m3/M3-1105-T-report.md"
-    },
-    "n0": {
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-09T04:22:19.871Z"
-    },
-    "r0": {
-      "last_round": "R0-1105-AH-selftest",
-      "last_report": "r0/R0-1105-AH-selftest-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-09T04:22:19.871Z",
-      "current_round": "R0-1105-AJ",
-      "current_state": "blocked",
-      "current_at": "2026-11-09T04:52:31.179Z",
-      "current_note": "exit 0 · 리포트/claim 없음 · 미완 의심 · 리포트 기대 경로 r0/R0-1105-AJ-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1105-AJ.log"
-    },
-    "t0": {
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-09T04:22:19.871Z"
+      "updated_at": "2026-11-09T05:52:36.443Z"
     }
   }
 }
