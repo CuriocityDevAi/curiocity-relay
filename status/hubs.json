@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-09T22:16:14.888Z",
+  "built_at": "2026-11-09T22:24:20.120Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -61,10 +61,10 @@
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-09T10:04:54.345Z",
-      "current_round": "M2-1105-U",
-      "current_state": "done",
-      "current_at": "2026-11-09T22:08:33.109Z",
-      "current_note": "runner v6.1 신파일 (scripts/hub-runner-v6.1.mjs · node --check ✓) · 절대경로 (cmux-tab+split) · recoverStuckStartedClaims 로 60m 재시작 복구 · ensureHubsLayout 재사용 (가장 오래된 Hubs 1개) · 셀프테스트 3건 OK · install.sh TARGET=v6.1 FALLBACK=v6 커밋 · 자동 교체는 m2/m3 busy 로 보류 (리포트 §5) · 리포트 m2/M2-1105-U-report.md"
+      "current_round": "M2-1105-V",
+      "current_state": "started",
+      "current_at": "2026-11-09T22:24:20.051Z",
+      "current_note": "pane 상태 판정 + /exit → 셔 복귀 후 dispatch · started 는 포그라운드 claude 확인 뒤 · done/blocked 이후 자동 /exit · 셀프테스트 4건"
     },
     "m3": {
       "last_round": "M3-1105-Y",
