@@ -10,12 +10,12 @@
 #
 # 기존 허브별 plist (com.curiocity.hub-runner.<hub>) 가 남아 있으면 bootout + 삭제.
 # runner-config.json 의 cwd 가 실제로 존재하는지 선실측.
-# M1-1105-Y · v3 (허브별 모델 + 60분 상한 + 30m heartbeat) 스폰 실패 시 v2 로 자동 롤백.
+# M1-1105-Z · v4 (착지 검증 + --status judge + cmux-password 파일 지원) 스폰 실패 시 v3 로 자동 롤백.
 
 set -euo pipefail
 
-TARGET_RUNNER="hub-runner-v3.mjs"
-FALLBACK_RUNNER="hub-runner-v2.mjs"
+TARGET_RUNNER="hub-runner-v4.mjs"
+FALLBACK_RUNNER="hub-runner-v3.mjs"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"

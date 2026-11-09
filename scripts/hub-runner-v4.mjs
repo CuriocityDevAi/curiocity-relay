@@ -641,7 +641,7 @@ async function tick(hubs) {
       const model = cfg.model || config.model;
       log(hub, `pick · ${item.id} · model=${model}`);
       busy.set(hub, { id: item.id, startedAt: Date.now(), model });
-      enqueueClaim({ id: item.id, state: 'started', note: `runner-v3 · model=${model}` });
+      enqueueClaim({ id: item.id, state: 'started', note: `runner-v4 · model=${model}` });
 
       (async () => {
         const { code, timedOut } = await spawnClaudeForItem(item, cfg.cwd, config);
