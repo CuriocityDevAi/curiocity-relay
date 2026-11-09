@@ -5,6 +5,7 @@
 **커밋**:
 - `168a51b` fix(m3-1105-w): Kyu 실기 #62 — picker 시간공란 · 피커 터치 ≥44pt · success 2열/하단바 (V 재발부)
 - `b7a9c06` chore(m3-1105-w): Playwright 스샷 4장
+- `76f4365` chore(lint): prettier single-line bottombar className (SuccessReceiptAnim)
 
 ---
 
@@ -146,9 +147,9 @@ iOS 시뮬레이터·Maestro 미실행 (W 지시 — 시간 소모 · 실기는 
 
 ## CI
 
-- `assertions + playwright` — pending (push 직후)
-- `lint` — pending
-- 조회: https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/actions/runs/42633124358
+- `assertions + playwright` — **PASS** (11m54s · run 42633487371)
+- `lint` — **PASS** (45s · run 42633487404 · prettier single-line fix in commit 76f4365)
+- https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/66/checks
 
 ---
 
