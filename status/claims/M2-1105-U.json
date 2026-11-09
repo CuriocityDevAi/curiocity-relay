@@ -1,7 +1,7 @@
 {
   "id": "M2-1105-U",
   "hub": "m2",
-  "state": "started",
-  "at": "2026-11-09T21:46:25.715Z",
-  "note": "runner-v6 → v6.1 수정: 절대경로 + 60m timeout 실제 발동 + Hubs 탭 단일화. 셀프테스트 + 조사까지. by model=opus"
+  "state": "done",
+  "at": "2026-11-09T22:08:33.109Z",
+  "note": "runner v6.1 신파일 (scripts/hub-runner-v6.1.mjs · node --check ✓) · 절대경로 (cmux-tab+split) · recoverStuckStartedClaims 로 60m 재시작 복구 · ensureHubsLayout 재사용 (가장 오래된 Hubs 1개) · 셀프테스트 3건 OK · install.sh TARGET=v6.1 FALLBACK=v6 커밋 · 자동 교체는 m2/m3 busy 로 보류 (리포트 §5) · 리포트 m2/M2-1105-U-report.md"
 }
