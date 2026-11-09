@@ -1,4 +1,6 @@
-# Hub Runner · 큐 자동 투입 (M1-1105-S · 단일 프로세스)
+# Hub Runner · 큐 자동 투입 (M1-1105-S / Y · 단일 프로세스)
+
+> **v3 (M1-1105-Y)**: 허브별 모델 (`hubs.<hub>.model`, R0/M2=sonnet · M0/M1/M3=opus) · 60 분 상한 (`run_timeout_min`, 초과 시 claim blocked note "timeout 60m" blocked_by=oke) · heartbeat 30 분 (`heartbeat_min`, 로컬 `status/runners/all.json` 은 매 tick 갱신 · git commit/push 만 30 분) · `--status` 에 model/elapsed/remaining · cmux workspace 이름 `<hub> · <ID>`. install.sh TARGET=`hub-runner-v3.mjs`, 실패 시 v2 자동 롤백.
 
 **목적**: 오케가 `queue/<hub>/<ID>.md` 로 발부한 프롬프트를 Mac 러너 1 프로세스가 picking → `claude -p <본문> --dangerously-skip-permissions` 로 **허브 리포 폴더에서** 실행 → `status/claims/<ID>.json` 자동 업데이트. Kyu 수동 투입 없이 24h 돌음.
 
