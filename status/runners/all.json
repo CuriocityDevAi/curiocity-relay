@@ -1,8 +1,10 @@
 {
-  "at": "2026-11-09T03:49:27.194Z",
-  "pid": 56700,
-  "runner": "v2",
+  "at": "2026-11-09T03:49:37.963Z",
+  "pid": 78169,
+  "runner": "v3",
   "poll_ms": 60000,
+  "heartbeat_ms": 1800000,
+  "run_timeout_ms": 3600000,
   "hubs": {
     "m0": {
       "current": null
@@ -17,8 +19,7 @@
       "current": null
     },
     "r0": {
-      "current": "R0-1105-AF-selftest",
-      "started_at": "2026-11-09T03:49:25.048Z"
+      "current": null
     }
   }
 }
