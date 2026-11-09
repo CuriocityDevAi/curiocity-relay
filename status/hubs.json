@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-09T10:14:58.482Z",
+  "built_at": "2026-11-09T10:18:28.532Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -36,12 +36,12 @@
       "last_activity": "2026-11-09T09:56:31.194Z",
       "session": "22a84ab7-88eb-4733-bfa5-5930f5ee9104",
       "updated_at": "2026-11-09T09:56:34.466Z",
-      "last_round": "M0-1105-W",
-      "last_report": "m0/M0-1105-W-report.md",
+      "last_round": "M0-1105-X",
+      "last_report": "m0/M0-1105-X-report.md",
       "current_round": "M0-1105-X",
-      "current_state": "started",
-      "current_at": "2026-11-09T09:55:57.383Z",
-      "current_note": "runner-v4 · model=opus"
+      "current_state": "done",
+      "current_at": "2026-11-09T17:20:00Z",
+      "current_note": "Admin Orders 500 뿌리 완전 해소 · repair 가 query.graph(entity:'order_payment_collection') 로 전환 → missing/soft_deleted 모두 수집 · R0-1105-AI §C 지적('하드 삭제는 payment_collections.* 에 안 보임') 반영 · reproduce+repair 통합 테스트 #37 운영 stack 1:1 일치 · Medusa core 패치 0 · W A tenders.ts 삭제 경로 제거(신규 생성 방지)는 그대로 유지"
     },
     "m1": {
       "last_round": "M1-1105-Z",
