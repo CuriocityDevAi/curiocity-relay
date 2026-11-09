@@ -1,6 +1,15 @@
 {
   "id": "M0-1105-W",
-  "state": "started",
-  "note": "runner-opus · v3 · reporting · V uncommitted 4 modified + 1 maintenance route 회수 완료 · 순서 A→B→C per-item commit+push",
-  "at": "2026-11-09T11:10:00Z"
+  "state": "done",
+  "pr": "storeport#200",
+  "head": "ac71c44",
+  "commits": [
+    "6138ac1 fix(pos): A · captured_amount undefined 500 뿌리",
+    "cbf68f1 fix(pos): B · polyfill FulfillmentItem.sku NOT NULL fallback",
+    "ac71c44 fix(pos): C · 결제 직후 Order id not found 완화"
+  ],
+  "integration_tests_added": ["#33", "#34", "#35", "#36"],
+  "report": "m0/M0-1105-W-report.md",
+  "note": "V 승계 완료 · A/B/C 3분리 commit+push · typecheck 0 err · PR 본문 상단 3줄 배너 추가 · R0-AE §C.1/§C.3/§C.4 반영",
+  "at": "2026-11-09T11:40:00Z"
 }
