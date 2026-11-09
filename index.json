@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-09T03:53:32.956Z",
+  "built_at": "2026-11-09T04:16:36.001Z",
   "prompts": [],
   "reports": [
     {
@@ -392,6 +392,14 @@
       "round": "M0-1105-U",
       "pr": "storeport#200 (같은 PR 재사용 · R0-AE §C.1 반영 · HEAD 7100653)",
       "outcome": "fulfill hand_over 재누름 멱등 가드 (R0-AE §C.1) + Kyu 7차 500 가드 통합 테스트 (pb1_pct=10 + logo_url 설정 뒤 POS 주문 상세·quote·목록 3경로 200) · 통합 32/32 · CI green",
+      "kyu_checks": [],
+      "ledger_events": []
+    },
+    {
+      "path": "m0/M0-1105-W-report.md",
+      "round": "M0-1105-W",
+      "pr": "storeport#200 (같은 PR 재사용 · 운영 장애 A/B/C 뿌리 해소 · HEAD ac71c44)",
+      "outcome": "V 승계 완료 → A/B/C 세 commit 분리 push · typecheck 0 err · 통합 #33~#36 신규 4건 · PR 본문 상단 \"운영 장애 3줄\" 배너 추가 · R0-AE §C.1(A) + §C.3(B) + §C.4(C) 반영",
       "kyu_checks": [],
       "ledger_events": []
     },
@@ -4570,7 +4578,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-09T03:53:32.585Z"
+      "fetched_at": "2026-11-09T04:16:35.485Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5802,7 +5810,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-09T03:53:32.709Z"
+      "fetched_at": "2026-11-09T04:16:35.653Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6449,7 +6457,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-09T03:53:32.956Z"
+      "fetched_at": "2026-11-09T04:16:36.000Z"
     }
   ],
   "rollup": {
