@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-09T04:22:31.536Z",
+  "built_at": "2026-11-09T04:25:39.775Z",
   "hubs": {
     "k0": {
       "last_round": "K0-0918-F",
@@ -43,15 +43,15 @@
       "current_note": "PR #200 (HEAD 7100653) · fulfill hand_over 멱등 가드 + Kyu 7차 500 가드 테스트 #31/#32 · CI green · Tests 32/32 · R0-AE §C.1 반영"
     },
     "m1": {
-      "last_round": "M1-1105-Y",
-      "last_report": "m1/M1-1105-Y-report.md",
+      "last_round": "M1-1105-Z",
+      "last_report": "m1/M1-1105-Z-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-09T04:22:19.871Z",
       "current_round": "M1-1105-Z",
-      "current_state": "started",
-      "current_at": "2026-11-09T04:12:34.647Z",
-      "current_note": "v4: 착지 검증 (exit 0 && 리포트/claim 없음 → blocked oke) · cmux launchd 가시성 조사 · --status 판정 열. 5허브 비면 교체 · 아니면 명령 1줄만"
+      "current_state": "done",
+      "current_at": "2026-11-09T04:25:39.741Z",
+      "current_note": "v4 러너 교체 완료 (pid 8499 live) · 착지 검증 (exit 0 && 리포트/claim 없음 → blocked oke) · --status judge 열 · cmux 진단 (socket write 저수준 실패 · 비번/env 로 안 풀림 · background 폴백) · 셀프테스트 2건 통과 · 리포트 m1/M1-1105-Z-report.md"
     },
     "m2": {
       "last_round": "M2-1105-R",

@@ -1,7 +1,7 @@
 {
   "id": "M1-1105-Z",
   "hub": "m1",
-  "state": "started",
-  "at": "2026-11-09T04:12:34.647Z",
-  "note": "v4: 착지 검증 (exit 0 && 리포트/claim 없음 → blocked oke) · cmux launchd 가시성 조사 · --status 판정 열. 5허브 비면 교체 · 아니면 명령 1줄만"
+  "state": "done",
+  "at": "2026-11-09T04:25:39.741Z",
+  "note": "v4 러너 교체 완료 (pid 8499 live) · 착지 검증 (exit 0 && 리포트/claim 없음 → blocked oke) · --status judge 열 · cmux 진단 (socket write 저수준 실패 · 비번/env 로 안 풀림 · background 폴백) · 셀프테스트 2건 통과 · 리포트 m1/M1-1105-Z-report.md"
 }
