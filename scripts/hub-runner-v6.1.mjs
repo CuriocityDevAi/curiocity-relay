@@ -1,22 +1,29 @@
 #!/usr/bin/env node
-// scripts/hub-runner-v6.1.mjs · M2-1105-U · v6 패치. 신파일.
+// scripts/hub-runner-v6.1.mjs · M2-1105-U/V · v6 패치. 신파일 (설치는 Kyu idle 때만).
 //
-// v6 와의 차이 (v6 는 돌고 있으니 건드리지 않고 **새 파일** · install.sh 교체는 전 허브 idle 때만):
-//   ① **프롬프트/echo 는 queue 파일 절대경로** (REPO_ROOT 기준) — cmux-tab · cmux-split 둘 다.
-//      v6 의 상대경로가 허브 cwd (예: pos-m1) 에 queue/ 가 없다는 이유로 claude 가 'file not found'
-//      대신 입력 대기 상태로 머물던 문제 수정 (hub-runner-v6.mjs:463,469,694,702).
-//   ② **"started" claim 재시작 복구**: tick() 진입 시 허브별 최신 "started" claim 을 스캔하여,
-//      busy 에 없고 (자기 재시작 or 이전 러너 유산) started.at 기준 elapsed > run_timeout_min 이면
-//      pane 안에 Ctrl+C 2 회 + claim blocked ("timeout 60m · 재시작 복구") 처리. v6 는 busy 가
-//      메모리 전용이라 러너 재시작 후 waitForLanding 타이머가 사라져 60m 상한이 영원히 미발동.
-//   ③ **Hubs 탭 단일화 (중복 생성 금지)**: ensureHubsLayout 이 저장 layout 무효 시
-//      먼저 `list-workspaces` 에서 이름 "Hubs" 탭을 찾아 재사용하고, 빠진 pane 만 그 탭 안에서
-//      new-split 으로 채움. 동명 탭이 여러 개면 가장 오래된 (workspace:<작은번호>) 1개만 사용,
-//      나머지는 건드리지 않음 (Kyu 가 수동 close). new-workspace 는 "Hubs" 가 하나도 없을 때만.
-//      기존 pane 식별은 surface 타이틀 ("M0 · idle" 등) 로 함.
-//   ④ selftest-split 는 v6 와 동일 · 추가로 `--selftest-timeout` (claude 띄우지 않고 sleep + 60s
-//      초과 → pane C-c + claim blocked) 과 `--selftest-layout` (저장 layout 손상 후 Hubs 재사용
-//      성공 확인) 를 노출.
+// v6 와의 차이 (v6 돌림 그대로 두고 **새 파일**):
+//   ① **queue 파일 절대경로** (REPO_ROOT 기준) — cmux-tab · cmux-split 양쪽 prompt/echo 둘 다.
+//      v6 는 상대경로라 허브 cwd (pos-m1 등) 에 queue/ 없어 claude 가 file not found 뒤 입력 대기.
+//      원인: hub-runner-v6.mjs:463, :469, :694, :702.
+//   ② **"started" claim 재시작 복구** (`recoverStuckStartedClaims`): tick 진입마다 60m 초과 started
+//      → pane C-c ×2 + claim blocked ("timeout 60m · 재시작 복구"). 원인: v6:1021 + busy 메모리 전용.
+//   ③ **Hubs 탭 단일화**: `ensureHubsLayout` 이 저장 layout 무효 시 list-workspaces 에서 "Hubs"
+//      가장 오래된 1개 재사용, 빠진 pane 만 그 안에서 new-split. new-workspace 는 "Hubs" 전무 시만.
+//      원인: v6:556, :568.
+//   ④ **M2-1105-V · 투입 전 pane 상태 판정 + /exit → 셔 복귀 흐름** (`detectPaneState`,
+//      `ensurePaneShell`, `waitPaneClaudeForeground`, `exitPaneClaude`):
+//      - 투입 전: pane 이 shell prompt 아니면 (claude REPL 등 포그라운드 살아 있으면) Escape + /exit
+//        → polling 으로 shell 복귀 확인 → 그 다음 명령. 복귀 실패면 **started 안 찍고** claim blocked
+//        "pane busy".
+//      - 투입 후: `claim started` 는 pane foreground 가 claude 로 바뀐 것을 확인한 **뒤**에만 발행.
+//      - 완료 뒤 (리포트 착지 · done · blocked · timeout 모두): pane claude 에 /exit → shell 복귀
+//        이중 방어 (사람이 봐도 마지막 화면 스크롤백 유지).
+//      - **원인 (v6 + v6.1 M2-1105-U 까지 미대응)**: `cleanupPaneForNewTask` 가 C-c ×2 만 보냄
+//        (hub-runner-v6.mjs:684-691, 이 파일 이전 revision:813). C-c 는 claude REPL 에선 current
+//        prompt 만 interrupt — REPL 자체는 살아 있어서 그 뒤 cd/claude 커맨드가 claude 입력칸에
+//        타이핑됨. 실측 (R0-1105-AN · 11-10 05:16 WIB · claim started 22:16:14Z = 가짜).
+//   ⑤ 셀프테스트: `--selftest-split` · `--selftest-timeout` · `--selftest-layout` · **`--selftest-busy`**
+//      (claude 가 살아있는 pane 에 작업 투입 → 자동 /exit → 정상 실행 → shell 복귀 실증).
 //
 // 보안·안전장치는 v6 와 동일.
 
@@ -50,6 +57,17 @@ const HUBS_WORKSPACE_NAME = 'Hubs';
 const PANE_INTERRUPT_GRACE_MS = 400;
 const SPLIT_HUBS_ORDER = ['m0', 'm1', 'm2', 'm3', 'r0'];
 
+// pane 상태 판정 (M2-1105-V):
+//   - claude REPL chrome 토큰: `❯` prompt cursor, `bypass permissions`, `(shift+tab`, `esc to interrupt`,
+//     `Deliberating…`, `⏵⏵`, `⏺`, `✻` — 하나라도 보이면 claude 포그라운드.
+//   - shell prompt: 마지막 비어있지 않은 라인이 `% ` · `$ ` · `# ` 로 끝나면 shell.
+const CLAUDE_CHROME_RE = /(❯|⏵⏵|⏺|✻|Deliberating…|esc to interrupt|bypass permissions|shift\+tab to cycle)/;
+const SHELL_PROMPT_LINE_RE = /[%$#][ \t]*$/;
+const PANE_SHELL_WAIT_MS = 15 * 1000;        // shell 복귀 대기 상한 (투입 전)
+const PANE_CLAUDE_WAIT_MS = 30 * 1000;       // claude foreground 확인 대기 상한 (투입 후)
+const PANE_EXIT_WAIT_MS = 15 * 1000;         // 완료 뒤 /exit → shell 복귀 상한
+const PANE_POLL_MS = 500;
+
 const CONFIG_FILE = join(REPO_ROOT, 'status', 'runner-config.json');
 const QUEUE_DIR = join(REPO_ROOT, 'queue');
 const CLAIMS_DIR = join(REPO_ROOT, 'status', 'claims');
@@ -72,6 +90,7 @@ const INIT_SPLIT = argv.includes('--init-split');
 const SELFTEST_SPLIT = argv.includes('--selftest-split');
 const SELFTEST_TIMEOUT = argv.includes('--selftest-timeout');
 const SELFTEST_LAYOUT = argv.includes('--selftest-layout');
+const SELFTEST_BUSY = argv.includes('--selftest-busy');
 const hubFlag = (() => {
   const i = argv.indexOf('--hub');
   return i >= 0 ? argv[i + 1] : null;
@@ -84,10 +103,11 @@ if (
   !INIT_SPLIT &&
   !SELFTEST_SPLIT &&
   !SELFTEST_TIMEOUT &&
-  !SELFTEST_LAYOUT
+  !SELFTEST_LAYOUT &&
+  !SELFTEST_BUSY
 ) {
   console.error(
-    'Usage: node scripts/hub-runner-v6.1.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-split --hub <hub> --id <ID> | --selftest-timeout --hub <hub> --id <ID> | --selftest-layout --hub <hub> --id <ID>',
+    'Usage: node scripts/hub-runner-v6.1.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-split --hub <hub> --id <ID> | --selftest-timeout --hub <hub> --id <ID> | --selftest-layout --hub <hub> --id <ID> | --selftest-busy --hub <hub> --id <ID>',
   );
   process.exit(2);
 }
@@ -504,7 +524,7 @@ function renameCmuxWorkspace(cmuxBin, workspaceRef, newTitle) {
 
 function sendCmuxCtrlC(cmuxBin, workspaceRef) {
   if (!workspaceRef) return false;
-  return cmux(cmuxBin, ['send-key', '--workspace', workspaceRef, 'C-c']).ok;
+  return cmux(cmuxBin, ['send-key', '--workspace', workspaceRef, 'ctrl-c']).ok;
 }
 
 function closeCmuxWorkspace(cmuxBin, workspaceRef) {
@@ -804,12 +824,111 @@ function sleepMs(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-async function cleanupPaneForNewTask(cmuxBin, layout, hub, logFile) {
-  const ok1 = sendPaneKey(cmuxBin, layout, hub, 'C-c');
+// M2-1105-V · pane 상태 판정.
+// 핵심 관찰: foreground 가 shell 이면 **마지막 비어있지 않은 라인**이 `%`·`$`·`#` prompt 로 끝남.
+// 과거 출력된 claude chrome 토큰(❯, ⏵⏵ 등)이 스크롤백에 남아 있을 수 있으므로 shell 체크를 먼저 함.
+// shell prompt 가 아닌 경우에만 claude chrome 토큰 검사 (화면 마지막 영역).
+function detectPaneState(cmuxBin, layout, hub) {
+  const screen = readPaneScreen(cmuxBin, layout, hub);
+  if (screen == null) return { state: 'unknown', reason: 'read-screen null', tail: '' };
+  const lines = screen.split('\n');
+  const tailLines = lines.slice(-20).join('\n');
+  // 1) 마지막 비어있지 않은 라인이 shell prompt 이면 shell.
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const t = lines[i].replace(/\s+$/, '');
+    if (!t) continue;
+    if (SHELL_PROMPT_LINE_RE.test(t)) {
+      return { state: 'shell', reason: `마지막 prompt 라인="${t.slice(-60)}"`, tail: tailLines };
+    }
+    break;
+  }
+  // 2) 아니면 화면 마지막 영역에 claude chrome 있는지 (스크롤백 멀리 떨어진 토큰에 속지 않도록 tail 범위).
+  if (CLAUDE_CHROME_RE.test(tailLines)) {
+    return { state: 'claude', reason: 'tail 영역 claude chrome 토큰 감지', tail: tailLines };
+  }
+  return { state: 'unknown', reason: 'prompt/claude 둘 다 아님', tail: tailLines };
+}
+
+// 투입 전: shell 복귀 보장. claude 면 Escape + /exit, unknown 이면 C-c ×2. polling.
+async function ensurePaneShell(cmuxBin, layout, hub, logFile, { timeoutMs = PANE_SHELL_WAIT_MS } = {}) {
+  const init = detectPaneState(cmuxBin, layout, hub);
+  appendLine(logFile, `[pane-state] hub=${hub} · initial=${init.state} · ${init.reason}`);
+  if (init.state === 'shell') return { ok: true, initial: init.state };
+  if (init.state === 'claude') {
+    // Escape 로 입력칸 비우고, /exit 로 REPL 자체 종료.
+    sendPaneKey(cmuxBin, layout, hub, 'Escape');
+    await sleepMs(200);
+    sendPaneKey(cmuxBin, layout, hub, 'Escape');
+    await sleepMs(200);
+    const exitSent = sendPaneText(cmuxBin, layout, hub, '/exit\n');
+    appendLine(logFile, `[pane-state] hub=${hub} · claude → Escape×2 + /exit · send=${exitSent}`);
+  } else {
+    // unknown: C-c 2회 (foreground 가 claude 아닐 때 혹시 모를 vim/less 등 종료 시도).
+    sendPaneKey(cmuxBin, layout, hub, 'ctrl-c');
+    await sleepMs(PANE_INTERRUPT_GRACE_MS);
+    sendPaneKey(cmuxBin, layout, hub, 'ctrl-c');
+    appendLine(logFile, `[pane-state] hub=${hub} · unknown → C-c ×2`);
+  }
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    await sleepMs(PANE_POLL_MS);
+    const s = detectPaneState(cmuxBin, layout, hub);
+    if (s.state === 'shell') {
+      appendLine(logFile, `[pane-state] hub=${hub} · shell 복귀 확인 (${s.reason})`);
+      return { ok: true, initial: init.state };
+    }
+  }
+  const last = detectPaneState(cmuxBin, layout, hub);
+  appendLine(logFile, `[pane-state] hub=${hub} · shell 복귀 실패 · last=${last.state} · tail:\n${last.tail}`);
+  return { ok: false, initial: init.state, last: last.state };
+}
+
+// 투입 후: pane foreground 가 claude 로 전환됐는지 확인 → claim started 발행 조건.
+async function waitPaneClaudeForeground(cmuxBin, layout, hub, logFile, { timeoutMs = PANE_CLAUDE_WAIT_MS } = {}) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    await sleepMs(PANE_POLL_MS);
+    const s = detectPaneState(cmuxBin, layout, hub);
+    if (s.state === 'claude') {
+      appendLine(logFile, `[pane-state] hub=${hub} · claude foreground 확인 (${s.reason})`);
+      return true;
+    }
+  }
+  const last = detectPaneState(cmuxBin, layout, hub);
+  appendLine(logFile, `[pane-state] hub=${hub} · claude foreground 미확인 (${timeoutMs}ms) · last=${last.state} · tail:\n${last.tail}`);
+  return false;
+}
+
+// 완료 뒤: pane 에 /exit 보내 shell 복귀. 이미 shell 이면 skip. 실패해도 graceful.
+async function exitPaneClaude(cmuxBin, layout, hub, logFile, { timeoutMs = PANE_EXIT_WAIT_MS } = {}) {
+  const init = detectPaneState(cmuxBin, layout, hub);
+  if (init.state === 'shell') {
+    appendLine(logFile, `[pane-exit] hub=${hub} · 이미 shell · skip`);
+    return true;
+  }
+  sendPaneKey(cmuxBin, layout, hub, 'Escape');
+  await sleepMs(200);
+  sendPaneKey(cmuxBin, layout, hub, 'Escape');
+  await sleepMs(200);
+  const sent = sendPaneText(cmuxBin, layout, hub, '/exit\n');
+  appendLine(logFile, `[pane-exit] hub=${hub} · init=${init.state} · /exit send=${sent}`);
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    await sleepMs(PANE_POLL_MS);
+    const s = detectPaneState(cmuxBin, layout, hub);
+    if (s.state === 'shell') {
+      appendLine(logFile, `[pane-exit] hub=${hub} · shell 복귀 확인`);
+      return true;
+    }
+  }
+  // 최후 수단: C-c 2회 (claude REPL 외의 foreground 였을 수도).
+  sendPaneKey(cmuxBin, layout, hub, 'ctrl-c');
   await sleepMs(PANE_INTERRUPT_GRACE_MS);
-  const ok2 = sendPaneKey(cmuxBin, layout, hub, 'C-c');
-  await sleepMs(PANE_INTERRUPT_GRACE_MS);
-  appendLine(logFile, `[pane-cleanup] hub=${hub} · C-c ×2 · ok=${ok1 && ok2}`);
+  sendPaneKey(cmuxBin, layout, hub, 'ctrl-c');
+  await sleepMs(PANE_POLL_MS);
+  const after = detectPaneState(cmuxBin, layout, hub);
+  appendLine(logFile, `[pane-exit] hub=${hub} · /exit timeout · C-c ×2 fallback · after=${after.state}`);
+  return after.state === 'shell';
 }
 
 async function dispatchInPane({ cmuxBin, layout, hub, item, cwd, claudeBin, model, logFile }) {
@@ -829,11 +948,24 @@ async function dispatchInPane({ cmuxBin, layout, hub, item, cwd, claudeBin, mode
   ].join('; ');
 
   appendLine(logFile, `[spawn] cmux-split · hub=${hub} · surface=${layout.panes[hub].surfaceRef} · prompt="${promptMsg}" · claude=${claudeBin} · version=${getClaudeVersion(claudeBin)}`);
-  await cleanupPaneForNewTask(cmuxBin, layout, hub, logFile);
+  // ① 투입 전 pane 상태 판정. shell 복귀 안되면 dispatch 포기 → pane busy.
+  const ready = await ensurePaneShell(cmuxBin, layout, hub, logFile);
+  if (!ready.ok) {
+    return { ok: false, reason: 'pane-busy', initial: ready.initial, last: ready.last };
+  }
   markPane(cmuxBin, layout, hub, 'running', item.id);
+  // ② 명령 송신.
   const sent = sendPaneText(cmuxBin, layout, hub, shellCmd + '\n');
   appendLine(logFile, `[cmux-send] hub=${hub} · send=${sent}`);
-  return { ok: sent };
+  if (!sent) {
+    return { ok: false, reason: 'cmux-send-failed' };
+  }
+  // ③ pane foreground 가 claude 로 전환됐는지 확인. 실패 시 started 미발행.
+  const claudeUp = await waitPaneClaudeForeground(cmuxBin, layout, hub, logFile);
+  if (!claudeUp) {
+    return { ok: false, reason: 'claude-foreground-timeout' };
+  }
+  return { ok: true };
 }
 
 // ---------- 착지 폴링 ----------
@@ -960,9 +1092,9 @@ async function recoverStuckStartedClaims(hubs, config) {
     if (config.display === 'cmux-split' && cmuxAlive(config.cmux_bin)) {
       const layout = loadHubsLayout();
       if (layout) {
-        sendPaneKey(config.cmux_bin, layout, hub, 'C-c');
+        sendPaneKey(config.cmux_bin, layout, hub, 'ctrl-c');
         await sleepMs(300);
-        sendPaneKey(config.cmux_bin, layout, hub, 'C-c');
+        sendPaneKey(config.cmux_bin, layout, hub, 'ctrl-c');
         markPane(config.cmux_bin, layout, hub, 'blocked', stuck.id);
       }
     }
@@ -1031,7 +1163,7 @@ async function spawnClaudeForItem(item, cwd, config) {
     if (!layout) {
       appendLine(logFile, `[fallback] cmux-split 레이아웃 생성 실패 · background 로 전환`);
     } else {
-      const { ok } = await dispatchInPane({
+      const dispatch = await dispatchInPane({
         cmuxBin: config.cmux_bin,
         layout,
         hub: item.hub,
@@ -1041,16 +1173,23 @@ async function spawnClaudeForItem(item, cwd, config) {
         model,
         logFile,
       });
-      if (ok) {
+      if (dispatch.ok) {
+        // ③ claim started 는 pane foreground 가 claude 로 전환된 뒤에만 발행 (M2-1105-V 스펙).
+        enqueueClaim({
+          id: item.id,
+          state: 'started',
+          note: `runner-v6.1 · cmux-split · model=${model} · pane foreground=claude 확인 뒤 started · 로그 ${logFile}`,
+        });
+        await drainClaimQueue();
         const landing = await waitForLanding({
           hub: item.hub,
           id: item.id,
           timeoutMs: config.run_timeout_ms,
           logFile,
           onTimeout: () => {
-            const k1 = sendPaneKey(config.cmux_bin, layout, item.hub, 'C-c');
+            const k1 = sendPaneKey(config.cmux_bin, layout, item.hub, 'ctrl-c');
             appendLine(logFile, `[timeout] pane send-key C-c · ok=${k1}`);
-            setTimeout(() => sendPaneKey(config.cmux_bin, layout, item.hub, 'C-c'), 300);
+            setTimeout(() => sendPaneKey(config.cmux_bin, layout, item.hub, 'ctrl-c'), 300);
           },
         });
         const screen = readPaneScreen(config.cmux_bin, layout, item.hub);
@@ -1058,14 +1197,29 @@ async function spawnClaudeForItem(item, cwd, config) {
           const tail = screen.split('\n').slice(-50).join('\n');
           appendLine(logFile, `[screen-capture] (pane ${item.hub} 마지막 ~50줄)\n${tail}\n[/screen-capture]`);
         }
+        // ② 완료 뒤 정리: pane claude → /exit → shell 복귀. 실패해도 graceful (claim 상태엔 영향 없음).
+        const exited = await exitPaneClaude(config.cmux_bin, layout, item.hub, logFile);
+        appendLine(logFile, `[pane-exit-final] hub=${item.hub} · exited=${exited}`);
         return {
           mode: 'cmux-split',
           landingReason: landing.reason,
           timedOut: landing.timedOut,
           layout,
+          startedClaimed: true,
+          panePostExit: exited,
         };
       }
-      appendLine(logFile, `[fallback] cmux-split 디스패치 실패 · background 로 전환`);
+      // dispatch 실패: pane-busy or claude-foreground-timeout → started 미발행, 호출자에게 blocked 신호 전달.
+      appendLine(logFile, `[dispatch-fail] hub=${item.hub} · reason=${dispatch.reason} · initial=${dispatch.initial || '-'} · last=${dispatch.last || '-'}`);
+      return {
+        mode: 'cmux-split',
+        dispatchFailed: true,
+        dispatchReason: dispatch.reason,
+        initial: dispatch.initial,
+        last: dispatch.last,
+        layout,
+        startedClaimed: false,
+      };
     }
   } else if (display === 'cmux-split') {
     appendLine(logFile, `[fallback] cmux 미응답 · background 로 전환 (display=cmux-split)`);
@@ -1086,6 +1240,13 @@ async function spawnClaudeForItem(item, cwd, config) {
     });
     if (ok) {
       savePrevSession(item.hub, { id: item.id, workspaceRef, startedAt: ts(), label });
+      // M2-1105-V: cmux-tab 은 신 workspace (fresh bash) · openCmuxWorkspace 성공 == 실행 시작 확정.
+      enqueueClaim({
+        id: item.id,
+        state: 'started',
+        note: `runner-v6.1 · cmux-tab · model=${model} · workspace=${workspaceRef || '?'} · 로그 ${logFile}`,
+      });
+      await drainClaimQueue();
       const landing = await waitForLanding({
         hub: item.hub,
         id: item.id,
@@ -1107,13 +1268,20 @@ async function spawnClaudeForItem(item, cwd, config) {
         const tail = screen.split('\n').slice(-50).join('\n');
         appendLine(logFile, `[screen-capture] (last ~50 lines of cmux tab)\n${tail}\n[/screen-capture]`);
       }
-      return { mode: 'cmux-tab', landingReason: landing.reason, timedOut: landing.timedOut, workspaceRef };
+      return { mode: 'cmux-tab', landingReason: landing.reason, timedOut: landing.timedOut, workspaceRef, startedClaimed: true };
     }
     appendLine(logFile, `[fallback] cmux-tab 실패 (${reason || 'unknown'}) · background 로 전환`);
   } else if (display === 'cmux-tab') {
     appendLine(logFile, `[fallback] cmux 미응답 · background 로 전환 (display=cmux-tab)`);
   }
 
+  // background 경로 · spawn 즉시 started 발행 (child.pid 확정 지점).
+  enqueueClaim({
+    id: item.id,
+    state: 'started',
+    note: `runner-v6.1 · bg · model=${model} · 로그 ${logFile}`,
+  });
+  await drainClaimQueue();
   const bg = await spawnClaudeBackground({
     claudeBin: config.claude_bin,
     model,
@@ -1123,7 +1291,7 @@ async function spawnClaudeForItem(item, cwd, config) {
     exitFile,
     timeoutMs: config.run_timeout_ms,
   });
-  return { mode: 'bg', code: bg.code, timedOut: bg.timedOut };
+  return { mode: 'bg', code: bg.code, timedOut: bg.timedOut, startedClaimed: true };
 }
 
 const busy = new Map();
@@ -1209,7 +1377,9 @@ async function tick(hubs) {
       const model = cfg.model || config.model;
       log(hub, `pick · ${item.id} · model=${model} · display=${config.display}`);
       busy.set(hub, { id: item.id, startedAt: Date.now(), model });
-      enqueueClaim({ id: item.id, state: 'started', note: `runner-v6.1 · model=${model} · display=${config.display}` });
+      // M2-1105-V: "started" 사전 발행 금지 — spawnClaudeForItem 내부 dispatchInPane 이
+      // pane foreground 를 claude 로 확인한 뒤에만 enqueueClaim(started) 호출.
+      // cmux-tab · background 경로도 동일 (아래 각 분기에서 발행).
 
       (async () => {
         const result = await spawnClaudeForItem(item, cfg.cwd, config);
@@ -1241,11 +1411,21 @@ async function tick(hubs) {
         }
 
         if (result.mode === 'cmux-split') {
-          if (result.timedOut) {
+          if (result.dispatchFailed) {
+            // M2-1105-V: pane 재사용 실패 — shell 복귀 안되거나 claude foreground 미확인.
+            // started 미발행, 바로 blocked "pane busy" (사용자 재시작 몫으로).
             enqueueClaim({
               id: item.id,
               state: 'blocked',
-              note: `timeout 60m · runner-v6.1 cmux-split · pane 유지 (C-c 전송) · model=${model} · 로그: ${logFile}`,
+              note: `pane busy · runner-v6.1 cmux-split · dispatch=${result.dispatchReason} · initial=${result.initial || '-'} · last=${result.last || '-'} · 로그: ${logFile}`,
+              blockedBy: 'kyu',
+            });
+            markSplit('blocked');
+          } else if (result.timedOut) {
+            enqueueClaim({
+              id: item.id,
+              state: 'blocked',
+              note: `timeout 60m · runner-v6.1 cmux-split · pane 유지 (C-c + /exit 전송) · model=${model} · 로그: ${logFile}`,
               blockedBy: 'oke',
             });
             markSplit('blocked');
@@ -1473,13 +1653,13 @@ if (INIT_SPLIT) {
   process.exit(0);
 }
 
-if (SELFTEST_SPLIT || SELFTEST_TIMEOUT || SELFTEST_LAYOUT) {
+if (SELFTEST_SPLIT || SELFTEST_TIMEOUT || SELFTEST_LAYOUT || SELFTEST_BUSY) {
   (async () => {
     const cfg = loadConfig();
     const idIdx = argv.indexOf('--id');
     const hubIdx = argv.indexOf('--hub');
     if (idIdx < 0 || hubIdx < 0) {
-      console.error('Usage: --selftest-split|--selftest-timeout|--selftest-layout --hub <hub> --id <ID>');
+      console.error('Usage: --selftest-split|--selftest-timeout|--selftest-layout|--selftest-busy --hub <hub> --id <ID>');
       process.exit(2);
     }
     const hub = argv[hubIdx + 1];
@@ -1556,7 +1736,7 @@ if (SELFTEST_SPLIT || SELFTEST_TIMEOUT || SELFTEST_LAYOUT) {
         }
         const reportFile = join(REPO_ROOT, hub, `${id}-report.md`);
         try { rmSync(reportFile, { force: true }); } catch { /* noop */ }
-        await cleanupPaneForNewTask(cfg.cmux_bin, layout, hub, logFile);
+        await ensurePaneShell(cfg.cmux_bin, layout, hub, logFile);
         markPane(cfg.cmux_bin, layout, hub, 'running', id);
         const shellCmd = [
           `clear`,
@@ -1566,7 +1746,7 @@ if (SELFTEST_SPLIT || SELFTEST_TIMEOUT || SELFTEST_LAYOUT) {
           `echo ${shellEscape(`[selftest-layout] wrote ${reportFile}`)}`,
         ].join('; ');
         sendPaneText(cfg.cmux_bin, layout, hub, shellCmd + '\n');
-        const landing = await waitForLanding({ hub, id, timeoutMs: 60_000, logFile, onTimeout: () => sendPaneKey(cfg.cmux_bin, layout, hub, 'C-c') });
+        const landing = await waitForLanding({ hub, id, timeoutMs: 60_000, logFile, onTimeout: () => sendPaneKey(cfg.cmux_bin, layout, hub, 'ctrl-c') });
         if (landing.reason !== 'report') {
           console.error(`[selftest-layout] FAIL · landing=${landing.reason}`);
           process.exit(1);
@@ -1594,7 +1774,7 @@ if (SELFTEST_SPLIT || SELFTEST_TIMEOUT || SELFTEST_LAYOUT) {
       mkdirSync(logDir, { recursive: true });
       const logFile = join(logDir, `${id}.log`);
       writeFileSync(logFile, `# hub-runner-v6.1 selftest-timeout · ${id}\nstarted_at: ${ts()}\nhub: ${hub}\n--- events ---\n`, 'utf8');
-      await cleanupPaneForNewTask(cfg.cmux_bin, layout, hub, logFile);
+      await ensurePaneShell(cfg.cmux_bin, layout, hub, logFile);
       markPane(cfg.cmux_bin, layout, hub, 'running', id);
       // sleep 300 : claim/report 를 쓰지 않음 → waitForLanding 은 timeoutMs 로만 끝남.
       const shellCmd = [
@@ -1613,8 +1793,8 @@ if (SELFTEST_SPLIT || SELFTEST_TIMEOUT || SELFTEST_LAYOUT) {
         logFile,
         onTimeout: () => {
           ctrlCCount++;
-          sendPaneKey(cfg.cmux_bin, layout, hub, 'C-c');
-          setTimeout(() => { ctrlCCount++; sendPaneKey(cfg.cmux_bin, layout, hub, 'C-c'); }, 300);
+          sendPaneKey(cfg.cmux_bin, layout, hub, 'ctrl-c');
+          setTimeout(() => { ctrlCCount++; sendPaneKey(cfg.cmux_bin, layout, hub, 'ctrl-c'); }, 300);
         },
       });
       if (landing.reason !== 'timeout' || !landing.timedOut) {
@@ -1635,6 +1815,140 @@ if (SELFTEST_SPLIT || SELFTEST_TIMEOUT || SELFTEST_LAYOUT) {
       process.exit(0);
     }
 
+    // SELFTEST_BUSY (M2-1105-V): claude 가 살아있는 pane 에 작업 투입 → 자동 /exit → 정상 실행 → 착지 후 shell 복귀.
+    //   1) mock claude (chrome 토큰 출력 + node stdin 에서 /exit 받으면 exit) 를 pane 에 띄움
+    //   2) detectPaneState == 'claude' 확인
+    //   3) ensurePaneShell → Escape + /exit → mock exits → shell 복귀 확인
+    //   4) 투입 흐름 흉내: pane 에 chrome 재출력 + report 파일 작성 + 종료
+    //   5) waitPaneClaudeForeground → chrome 감지
+    //   6) waitForLanding → report 감지
+    //   7) exitPaneClaude → 이미 shell 이므로 skip 확인
+    if (SELFTEST_BUSY) {
+      const layout = ensureHubsLayout(cfg.cmux_bin, bootLog);
+      if (!layout) {
+        console.error('[selftest-busy] layout 없음');
+        process.exit(1);
+      }
+      const logDir = join(RUNNER_HOME, hub);
+      mkdirSync(logDir, { recursive: true });
+      const logFile = join(logDir, `${id}.log`);
+      writeFileSync(logFile, `# hub-runner-v6.1 selftest-busy · ${id}\nstarted_at: ${ts()}\nhub: ${hub}\n--- events ---\n`, 'utf8');
+
+      // 1) mock claude 스크립트 디스크에 작성.
+      const mockPath = join(RUNNER_HOME, `mock-claude-${id}.mjs`);
+      const mockSrc = `#!/usr/bin/env node
+// mock claude REPL (M2-1105-V selftest): chrome 토큰 출력 후 stdin 에서 /exit 기다림.
+process.stdout.write('[mock-claude] starting · pretending to be claude REPL\\n');
+process.stdout.write('━━━━━\\n');
+process.stdout.write('❯ \\n');
+process.stdout.write('━━━━━\\n');
+process.stdout.write('⏵⏵ bypass permissions on (shift+tab to cycle) · esc to interrupt\\n');
+let buf = '';
+process.stdin.on('data', (c) => {
+  buf += c.toString();
+  // ANSI escape 시퀀스 무시, "/exit" 문자열만 보면 종료.
+  if (buf.includes('/exit')) {
+    process.stdout.write('\\n[mock-claude] /exit 감지 · 종료\\n');
+    process.exit(0);
+  }
+});
+process.stdin.resume();
+`;
+      writeFileSync(mockPath, mockSrc, 'utf8');
+      appendLine(logFile, `[selftest-busy] mock claude 작성 ${mockPath}`);
+
+      // 먼저 pane 을 shell 로 (이전 상태 정리).
+      await ensurePaneShell(cfg.cmux_bin, layout, hub, logFile);
+      markPane(cfg.cmux_bin, layout, hub, 'running', id);
+
+      // 2) mock claude 실행 → pane 이 claude 상태로 전환.
+      const bootCmd = `clear; node ${shellEscape(mockPath)}`;
+      sendPaneText(cfg.cmux_bin, layout, hub, bootCmd + '\n');
+      appendLine(logFile, `[selftest-busy] mock claude 실행 명령 송신`);
+      // 1~3초 사이에 chrome 출력 보임.
+      let seenClaude = false;
+      const warmDeadline = Date.now() + 10_000;
+      while (Date.now() < warmDeadline) {
+        await sleepMs(500);
+        const s = detectPaneState(cfg.cmux_bin, layout, hub);
+        if (s.state === 'claude') {
+          seenClaude = true;
+          appendLine(logFile, `[selftest-busy] mock claude 상태 확인 (${s.reason})`);
+          break;
+        }
+      }
+      if (!seenClaude) {
+        console.error(`[selftest-busy] FAIL · mock claude foreground 미확인 · ${JSON.stringify(detectPaneState(cfg.cmux_bin, layout, hub))}`);
+        try { rmSync(mockPath, { force: true }); } catch { /* noop */ }
+        process.exit(1);
+      }
+
+      // 3) ensurePaneShell → Escape + /exit → mock exits → shell 복귀.
+      const phaseA = await ensurePaneShell(cfg.cmux_bin, layout, hub, logFile, { timeoutMs: 10_000 });
+      if (!phaseA.ok || phaseA.initial !== 'claude') {
+        console.error(`[selftest-busy] FAIL (phase A) · ensurePaneShell · ok=${phaseA.ok} initial=${phaseA.initial} last=${phaseA.last}`);
+        try { rmSync(mockPath, { force: true }); } catch { /* noop */ }
+        process.exit(1);
+      }
+      appendLine(logFile, `[selftest-busy] phase A OK · mock claude 에서 shell 복귀`);
+
+      // 4) 투입 흐름 흉내: pane 에 chrome 재출력 + report 작성 + chrome 종료.
+      const reportFile = join(REPO_ROOT, hub, `${id}-report.md`);
+      try { rmSync(reportFile, { force: true }); } catch { /* noop */ }
+      const workScript = `#!/usr/bin/env node
+// mock task: chrome 출력 유지 (waitPaneClaudeForeground 가 감지할 시간 확보) → report 작성 → 종료.
+process.stdout.write('[mock-task] starting work\\n');
+process.stdout.write('❯ 작업 중…\\n');
+process.stdout.write('⏵⏵ bypass permissions on (shift+tab to cycle) · esc to interrupt\\n');
+import('node:fs').then((fs) => {
+  // 2초 chrome 유지 (detectPaneState poll 이 500ms 마다라 충분히 감지).
+  setTimeout(() => {
+    fs.writeFileSync(${JSON.stringify(reportFile)}, \`# ${id} selftest-busy report\\n\\nhub: ${hub}\\npane: ${layout.panes[hub].surfaceRef}\\nmock: busy pane → /exit → fresh dispatch · report 착지 뒤 shell 복귀 검증\\n\`, 'utf8');
+    process.stdout.write('[mock-task] report written\\n');
+    process.exit(0);
+  }, 2500);
+});
+`;
+      const workPath = join(RUNNER_HOME, `mock-work-${id}.mjs`);
+      writeFileSync(workPath, workScript, 'utf8');
+      sendPaneText(cfg.cmux_bin, layout, hub, `node ${shellEscape(workPath)}\n`);
+      appendLine(logFile, `[selftest-busy] 작업 흉내 송신 ${workPath}`);
+
+      // 5) waitPaneClaudeForeground → chrome 감지 (짧게).
+      const fgOk = await waitPaneClaudeForeground(cfg.cmux_bin, layout, hub, logFile, { timeoutMs: 10_000 });
+      if (!fgOk) {
+        console.error(`[selftest-busy] FAIL (phase B) · claude foreground 미확인`);
+        try { rmSync(mockPath, { force: true }); rmSync(workPath, { force: true }); } catch { /* noop */ }
+        process.exit(1);
+      }
+      appendLine(logFile, `[selftest-busy] phase B OK · 신 작업 foreground 확인`);
+
+      // 6) waitForLanding → report 감지.
+      const landing = await waitForLanding({ hub, id, timeoutMs: 30_000, logFile, onTimeout: () => sendPaneKey(cfg.cmux_bin, layout, hub, 'ctrl-c') });
+      if (landing.reason !== 'report') {
+        console.error(`[selftest-busy] FAIL (phase C) · landing=${landing.reason}`);
+        try { rmSync(mockPath, { force: true }); rmSync(workPath, { force: true }); } catch { /* noop */ }
+        process.exit(1);
+      }
+      appendLine(logFile, `[selftest-busy] phase C OK · report 착지`);
+
+      // 7) exitPaneClaude → mock-work 이미 exit 했으므로 pane 은 shell · skip 경로 밟아야 함.
+      await sleepMs(1000);  // mock-work 종료 → shell prompt 그려질 시간.
+      const exited = await exitPaneClaude(cfg.cmux_bin, layout, hub, logFile, { timeoutMs: 5_000 });
+      const finalState = detectPaneState(cfg.cmux_bin, layout, hub);
+      if (!exited || finalState.state !== 'shell') {
+        console.error(`[selftest-busy] FAIL (phase D) · exit=${exited} finalState=${finalState.state} tail:\n${finalState.tail}`);
+        try { rmSync(mockPath, { force: true }); rmSync(workPath, { force: true }); } catch { /* noop */ }
+        process.exit(1);
+      }
+      appendLine(logFile, `[selftest-busy] phase D OK · 최종 shell 복귀 확인`);
+
+      markPane(cfg.cmux_bin, layout, hub, 'done', id);
+      try { rmSync(mockPath, { force: true }); rmSync(workPath, { force: true }); } catch { /* noop */ }
+      console.log(`[selftest-busy] OK · busy claude pane → 자동 /exit → 작업 투입 → report 착지 → shell 복귀 (4 phase 전부)`);
+      process.exit(0);
+    }
+
     // SELFTEST_SPLIT: 기본 echo + report 작성 셀프테스트 (v6 와 동일 흐름).
     const layout = ensureHubsLayout(cfg.cmux_bin, bootLog);
     if (!layout) {
@@ -1647,7 +1961,7 @@ if (SELFTEST_SPLIT || SELFTEST_TIMEOUT || SELFTEST_LAYOUT) {
     writeFileSync(logFile, `# hub-runner-v6.1 selftest-split · ${id}\nstarted_at: ${ts()}\nhub: ${hub}\n--- events ---\n`, 'utf8');
 
     appendLine(logFile, `[spawn] selftest-split · hub=${hub} · surface=${layout.panes[hub].surfaceRef}`);
-    await cleanupPaneForNewTask(cfg.cmux_bin, layout, hub, logFile);
+    await ensurePaneShell(cfg.cmux_bin, layout, hub, logFile);
     markPane(cfg.cmux_bin, layout, hub, 'running', id);
 
     const qfileAbs = queueFileAbs(hub, id);
@@ -1676,7 +1990,7 @@ if (SELFTEST_SPLIT || SELFTEST_TIMEOUT || SELFTEST_LAYOUT) {
       timeoutMs: 60 * 1000,
       logFile,
       onTimeout: () => {
-        sendPaneKey(cfg.cmux_bin, layout, hub, 'C-c');
+        sendPaneKey(cfg.cmux_bin, layout, hub, 'ctrl-c');
       },
     });
     appendLine(logFile, `[landing-result] ${JSON.stringify(landing)}`);
