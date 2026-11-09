@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-09T04:29:08.458Z",
+  "built_at": "2026-11-09T04:37:44.609Z",
   "hubs": {
     "k0": {
       "last_round": "K0-0918-F",
@@ -66,16 +66,16 @@
       "current_note": "exit 0 · 리포트/claim 없음 · 미완 의심 · 리포트 기대 경로 m2/M2-1105-S-selftest-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1105-S-selftest.log"
     },
     "m3": {
-      "last_round": "M3-1105-S",
-      "last_report": "m3/M3-1105-S-report.md",
-      "last_pr_fork": "https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/62 (ongoing · head 966fa70)",
+      "last_round": "M3-1105-T",
+      "last_report": "m3/M3-1105-T-report.md",
+      "last_pr_fork": "https://github.com/CuriocityDevAi/agilo-medusa-pos-fork/pull/62 (ongoing · head 9faa4a5 · base master 6375e05)",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-09T04:22:19.871Z",
-      "current_round": "M3-1105-S",
+      "current_round": "M3-1105-T",
       "current_state": "done",
-      "current_at": "2026-11-09T04:50:00.000Z",
-      "current_note": "PR #62 head 10f93aa · 커밋 4 (16ee128 OptionChip + Tabs/OrderType · 5263787 Pickup picker · 966fa70 로고 110 · 10f93aa 스샷 3장) · 색 37/37 + S 28/28 + D 27/27 PASS · Lint 0 · 금지 영역 미수정 · 리포트 m3/M3-1105-S-report.md"
+      "current_at": "2026-11-09T11:40:00.000Z",
+      "current_note": "PR #62 head 9faa4a5 · base master 6375e05 (rebase from a0bfcd6 · 충돌 0 · 5 커밋 재적용) + M3-1105-T 치환 커밋 1개 (ReceiptCard 로고 → lib/receipt-layout.LOGO 공용 상수 · TODO 제거) · 색 37/37 + S 28/28 + D 27/27 + m3-1105-q 25/25 + logo-bitmap 37/37 + 번들 가드(node:* 0) PASS · 금지 영역(lib/printer · app/_layout.tsx · ShiftCloseGate · api/hooks) 0 touch · PR 본문 2줄 추가 · 리포트 m3/M3-1105-T-report.md"
     },
     "n0": {
       "last_round": "N0-0914-C",
@@ -91,9 +91,9 @@
       "last_activity": null,
       "updated_at": "2026-11-09T04:22:19.871Z",
       "current_round": "R0-1105-AI",
-      "current_state": "started",
-      "current_at": "2026-11-09T04:29:08.425Z",
-      "current_note": "runner-v4 · model=sonnet"
+      "current_state": "blocked",
+      "current_at": "2026-11-09T04:37:44.576Z",
+      "current_note": "exit 0 · 리포트/claim 없음 · 미완 의심 · 리포트 기대 경로 r0/R0-1105-AI-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1105-AI.log"
     },
     "t0": {
       "last_round": "T0-0915-A",
