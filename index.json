@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-09T04:16:36.001Z",
+  "built_at": "2026-11-09T09:05:41.948Z",
   "prompts": [],
   "reports": [
     {
@@ -4578,7 +4578,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-09T04:16:35.485Z"
+      "fetched_at": "2026-11-09T09:05:41.477Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5810,7 +5810,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-09T04:16:35.653Z"
+      "fetched_at": "2026-11-09T09:05:41.610Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6054,9 +6054,10 @@
             {
               "id": "pos-tenders-fulfill",
               "name": "POS 텐더·이행 API (J-b)",
-              "summary": "POST /admin/pos/orders/:id/tenders (provider_id 명시·cash/edc 검증·PaymentCollection+session+capture·register_session.expected_by_method 집계·영수증 자동 생성) · POST /admin/pos/orders/:id/fulfill (takeaway 만 fulfillment 생성·preorder/delivery 는 상태 전환). 기존 pos-complete 의 즉시 fulfill 는 제거. 통합 테스트는 `integration-tests/pos/**` (medusa-test-utils · real Postgres).",
+              "summary": "POST /admin/pos/orders/:id/tenders (provider_id 명시·cash/edc 검증·PaymentCollection+session+capture·register_session.expected_by_method 집계·영수증 자동 생성 · delivery 결제 시 metadata.delivery.stage=awaiting_dispatch · M0-1105-T) · POST /admin/pos/orders/:id/fulfill (takeaway/delivery/preorder-paid_full 는 createOrderFulfillmentWorkflow 단일 지점 · fallback 시 reservation 전수 삭제 + order↔fulfillment link · body 계약 {stage, method, courier?, driver?, contact?, tracking_ref?, note?} · preorder dp_paid 400 · hand_over 재누름 멱등 가드 M0-1105-U · M0-1105-T) · POST /admin/pos/maintenance/release-stale-reservations (dry_run 기본 · completed/canceled/hand_over 주문의 남은 reservation 전수 정리 · M0-1105-T). 통합 테스트는 `integration-tests/pos/**` (medusa-test-utils · real Postgres).",
               "files": [
                 "apps/commerce-core/src/api/admin/pos/orders/**",
+                "apps/commerce-core/src/api/admin/pos/maintenance/**",
                 "apps/commerce-core/integration-tests/pos/**"
               ],
               "status": "live"
@@ -6457,7 +6458,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-09T04:16:36.000Z"
+      "fetched_at": "2026-11-09T09:05:41.948Z"
     }
   ],
   "rollup": {
