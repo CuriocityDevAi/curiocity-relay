@@ -21,7 +21,14 @@
 - **[문구] `Product handed over to the customer.`** — #62.
 - **[취소] POS Inventory 페이지**(유사 화면 혼란). **[완료] "Indar"→"Indah"** Kyu 수정.
 
+## 🔴 Kyu 실기 피드백 (11-09 17:17 · iPad · #62) — M3-1105-V
+- [버그] Pre-order 피커에서 날짜·시간 고르고 Confirm → 칸에 `Fri 13 Nov · :` (시간 비어 있음).
+- [요구] 피커 안 시간 표시가 너무 작아 잘 안 눌림 — 시간과 "November 2026" 헤더 사이 간격·터치 영역 키우기.
+- [버그/요구] 영수증 로고 커진 뒤 Hand over 버튼이 화면 밖으로 밀려 안 보임 — "영수증 왼쪽 + 오른쪽 Hand over" 또는 "영수증 80% + 아래 버튼" 중 오케 판단(→ 넓은 화면 2열 · 좁은 화면 하단 고정 바).
+- ✅ 옵션 칩 연회색 규칙 · 키보드 대신 달력 시트 · 빠른 칩 3개.
+
 ## Kyu 결정 정본 (11-04~09)
+- **Fulfill 시트(11-09 17:17 · PR #65 Q1~Q3 전부 A)**: Q1 배송지·받는 사람 연락처 = **결제할 때**(Checkout 주소 단계) · Q2 Delivery Fulfill 필수 = **택배사만**(기사·연락처·운송장·메모 선택) · Q3 Delivery = **1단계**(Fulfill = 재고 차감 + Completed). → M3 코딩 라운드(M3-V 화면 수정 뒤).
 - 반올림: 현금 Pembulatan 없음 · % round. 승인번호 6+4. WA 공유 먼저. 분할 P6. PG Xendit. Pre-order 기본 100% · DP% Admin(`preorder_deposit_pct`).
 - **세금(11-07)**: ⓐ 가산 ⓑ 매장별 PB1 ⓒ SC=Subtotal×SC% · PB1=(Subtotal+SC)×PB1% · 로고 = URL.
 - **전달 교통정리(11-07)**: Takeaway = Hand over 즉시 Fulfilled+차감+Completed. Pre-order = 계약금→(잔금)→앱 Orders Fulfill 시트(Pickup 기본 / Delivery: 택배사·기사·연락처·운송장·메모) 시점 차감. Delivery = 결제 → `awaiting_dispatch` → Fulfill 시트 → 차감·Completed. Admin 수동 전달 = 보정용만. 서버 계약 `fulfill {stage:'hand_over', method, courier, driver, contact, tracking_ref, note}`(#200).
