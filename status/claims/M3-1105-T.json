@@ -1,7 +1,14 @@
 {
   "id": "M3-1105-T",
   "hub": "m3",
-  "state": "started",
-  "at": "2026-11-09T04:29:06.323Z",
-  "note": "runner-v4 · model=opus"
+  "state": "done",
+  "at": "2026-11-09T11:40:00.000Z",
+  "note": "PR #62 head 9faa4a5 · base master 6375e05 (rebase from a0bfcd6 · 충돌 0 · 5 커밋 재적용) + M3-1105-T 치환 커밋 1개 (ReceiptCard 로고 → lib/receipt-layout.LOGO 공용 상수 · TODO 제거) · 색 37/37 + S 28/28 + D 27/27 + m3-1105-q 25/25 + logo-bitmap 37/37 + 번들 가드(node:* 0) PASS · 금지 영역(lib/printer · app/_layout.tsx · ShiftCloseGate · api/hooks) 0 touch · PR 본문 2줄 추가 · 리포트 m3/M3-1105-T-report.md",
+  "pr": "agilo-medusa-pos-fork#62",
+  "commits": ["6cd5bf6", "a997d8f", "bf642a1", "e9b34f1", "9faa4a5"],
+  "head_before": "10f93aa",
+  "base_before": "a0bfcd6",
+  "base_target": "6375e05",
+  "head_after": "9faa4a5",
+  "report": "m3/M3-1105-T-report.md"
 }
