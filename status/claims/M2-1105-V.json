@@ -1,7 +1,7 @@
 {
   "id": "M2-1105-V",
   "hub": "m2",
-  "state": "started",
-  "at": "2026-11-09T22:24:20.051Z",
-  "note": "pane 상태 판정 + /exit → 셔 복귀 후 dispatch · started 는 포그라운드 claude 확인 뒤 · done/blocked 이후 자동 /exit · 셀프테스트 4건"
+  "state": "done",
+  "at": "2026-11-09T22:41:33.565Z",
+  "note": "pane 상태 판정 (detectPaneState · shell 우선 · claude chrome fallback) + ensurePaneShell (claude→Escape+/exit · unknown→ctrl-c×2 · polling 15s) + waitPaneClaudeForeground (started 는 confirm 뒤에만) + exitPaneClaude (완료 뒤 셔 복귀) · dispatchInPane 실패 시 blocked 'pane busy' · 보너스 C-c→ctrl-c 14곳 수정 (cmux 가 C-c 는 Unknown key 로 거절하던 침묵 실패) · 셀프테스트 4건 OK (busy + split + timeout + layout) · node --check ✓ · install.sh 그대로 (M2-1105-U 커밋) · Kyu 수동 교체 몫 · 리포트 m2/M2-1105-V-report.md"
 }
