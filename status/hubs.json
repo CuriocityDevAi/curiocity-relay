@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-10T07:03:29.129Z",
+  "built_at": "2026-11-10T07:08:31.957Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -36,8 +36,8 @@
       "last_activity": "2026-11-10T06:54:02.379Z",
       "session": "a8aae728-514e-4c10-839e-0d8161547296",
       "updated_at": "2026-11-10T06:54:16.020Z",
-      "last_round": "M0-1105-X",
-      "last_report": "m0/M0-1105-X-report.md",
+      "last_round": "M0-1105-Y",
+      "last_report": "m0/M0-1105-Y-report.md",
       "current_round": "M0-1105-Y",
       "current_state": "started",
       "current_at": "2026-11-10T06:54:03.033Z",
@@ -55,15 +55,15 @@
       "current_note": "runner-v6.2 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1105-AD.log"
     },
     "m2": {
-      "last_round": "M2-1105-X",
-      "last_report": "m2/M2-1105-X-report.md",
+      "last_round": "M2-1105-Y",
+      "last_report": "m2/M2-1105-Y-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-10T07:01:37.638Z",
       "current_round": "M2-1105-Y",
-      "current_state": "started",
-      "current_at": "2026-11-10T07:03:29.066Z",
-      "current_note": "runner-v6.2 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1105-Y.log"
+      "current_state": "done",
+      "current_at": "2026-11-10T05:55:00.000Z",
+      "current_note": "expo-dev-client ^58.0.18 설치 · eas.json 3개 프로필 확인 · bundleId id.meros.pos 확인 · runbook 6단계 완성 · run-all 21/21 · bundle-guard PASS · PR #71 · 리포트 m2/M2-1105-Y-report.md"
     },
     "m3": {
       "last_round": "M3-1105-Y",
@@ -72,9 +72,9 @@
       "last_activity": null,
       "updated_at": "2026-11-10T07:01:37.638Z",
       "current_round": "M3-1105-AB",
-      "current_state": "blocked",
-      "current_at": "2026-11-10T07:01:37.570Z",
-      "current_note": "pane busy (2nd · 재시도 소진) · runner-v6.2 cmux-split · dispatch=pane-busy · initial=claude · last=claude · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1105-AB.log"
+      "current_state": "started",
+      "current_at": "2026-11-10T07:08:31.853Z",
+      "current_note": "runner-v6.2 · cmux-split · model=opus · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1105-AB.log"
     },
     "n0": {
       "state": "idle",
