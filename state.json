@@ -1,0 +1,103 @@
+{
+  "runner": "v7.6",
+  "script": "/Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v7.6.mjs",
+  "repo": "/Users/kyu.lee/projects/curiocity-relay",
+  "pid": 61245,
+  "last_tick": "2026-11-21T21:41:53.410Z",
+  "git": {
+    "head": "8cf838e7c",
+    "ahead": 0,
+    "behind": 0,
+    "dirty": [
+      "status/runners/all.json",
+      "status/claims/M3-1121-C-report.md"
+    ],
+    "last_pull": {
+      "ok": true,
+      "at": "2026-11-21T21:41:52.434Z",
+      "err": null
+    },
+    "intruder": null
+  },
+  "hubs": {
+    "m0": {
+      "pane": "unknown",
+      "current": null,
+      "elapsed_s": null,
+      "last_decision": "skip:claim-done",
+      "last_decision_at": "2026-11-21T21:41:53.283Z",
+      "detect_latency_s": 5,
+      "stale_claim": null,
+      "stuck": null
+    },
+    "m1": {
+      "pane": "unknown",
+      "current": null,
+      "elapsed_s": null,
+      "last_decision": "skip:claim-done",
+      "last_decision_at": "2026-11-21T21:41:53.286Z",
+      "detect_latency_s": null,
+      "stale_claim": null,
+      "stuck": null
+    },
+    "m2": {
+      "pane": "unknown",
+      "current": null,
+      "elapsed_s": null,
+      "last_decision": "skip:claim-done",
+      "last_decision_at": "2026-11-21T21:41:53.289Z",
+      "detect_latency_s": 1503,
+      "stale_claim": null,
+      "stuck": null
+    },
+    "m3": {
+      "pane": "unknown",
+      "current": null,
+      "elapsed_s": null,
+      "last_decision": "skip:claim-done",
+      "last_decision_at": "2026-11-21T21:41:53.293Z",
+      "detect_latency_s": 3,
+      "stale_claim": null,
+      "stuck": null
+    },
+    "r0": {
+      "pane": "unknown",
+      "current": null,
+      "elapsed_s": null,
+      "last_decision": "skip:claim-done",
+      "last_decision_at": "2026-11-21T21:41:53.298Z",
+      "detect_latency_s": 5,
+      "stale_claim": null,
+      "stuck": null
+    }
+  },
+  "queue_seen": [
+    "M2-1121-E",
+    "M3-1121-B",
+    "M3-1121-C",
+    "M0-1121-D",
+    "R0-1121-H"
+  ],
+  "log_tail": [
+    "[hub-runner-v7.6 2026-11-21T11:35:13.971Z] 시작 · v7.6 · mode=--all · once=false · dry-run=false · poll=30000ms · claude=/Users/kyu.lee/.local/bin/claude · version=2.1.128 (Claude Code) · model=opus · display=cmux-split · cmux=/Applications/cmux.app/Contents/Resources/bin/cmux · cmux_password=(none) · heartbeat=30m · run_timeout=60m",
+    "[hub-runner-v7.6:gh-watchdog 2026-11-21T11:35:17.558Z] [gh-runner-watchdog] skip restart: no-ci-data",
+    "[hub-runner-v7.6:m2 2026-11-21T11:55:05.440Z] pick · M2-1121-E · model=sonnet · display=cmux-split",
+    "[hub-runner-v7.6:m3 2026-11-21T11:55:06.484Z] pick · M3-1121-B · model=sonnet · display=cmux-split",
+    "[hub-runner-v7.6:claim 2026-11-21T11:55:09.850Z] M3-1121-B → started · runner-v7.6 · cmux-split · model=sonnet · source=hub-default · pane foreground=c",
+    "[hub-runner-v7.6:claim 2026-11-21T11:55:12.517Z] M2-1121-E → started · runner-v7.6 · cmux-split · model=sonnet · source=hub-default · pane foreground=c",
+    "[hub-runner-v7.6:claim 2026-11-21T12:12:47.885Z] M3-1121-B → done · runner-v7.6 cmux-split · 리포트 확인 m3/M3-1121-B-report.md · model=sonnet · 로그: /Use",
+    "[hub-runner-v7.6:m3 2026-11-21T12:18:28.349Z] pick · M3-1121-C · model=sonnet · display=cmux-split",
+    "[hub-runner-v7.6:claim 2026-11-21T12:18:31.231Z] M3-1121-C → started · runner-v7.6 · cmux-split · model=sonnet · source=hub-default · pane foreground=c",
+    "[hub-runner-v7.6:claim 2026-11-21T12:20:19.812Z] M2-1121-E → done · runner-v7.6 cmux-split · 리포트 확인 m2/M2-1121-E-report.md · model=sonnet · 로그: /Use",
+    "[hub-runner-v7.6:m2 2026-11-21T12:20:19.889Z] [report-relocate] queue/m2/M2-1121-E-report.md → m2/M2-1121-E-report.md 이동 커밋 완료",
+    "[hub-runner-v7.6:claim 2026-11-21T12:20:19.889Z] [report-relocate] M2-1121-E: 1건 오경로 리포트 이동 완료",
+    "[hub-runner-v7.6:m0 2026-11-21T12:30:01.246Z] pick · M0-1121-D · model=opus · display=cmux-split",
+    "[hub-runner-v7.6:r0 2026-11-21T12:30:02.320Z] pick · R0-1121-H · model=sonnet · display=cmux-split",
+    "[hub-runner-v7.6:claim 2026-11-21T12:30:05.503Z] M0-1121-D → started · runner-v7.6 · cmux-split · model=opus · source=hub-default · pane foreground=cla",
+    "[hub-runner-v7.6:claim 2026-11-21T12:30:08.067Z] R0-1121-H → started · runner-v7.6 · cmux-split · model=sonnet · source=hub-default · pane foreground=c",
+    "[hub-runner-v7.6:claim 2026-11-21T12:32:56.087Z] R0-1121-H → done · runner-v7.6 cmux-split · 리포트 확인 r0/R0-1121-H-report.md · model=sonnet · 로그: /Use",
+    "[hub-runner-v7.6:claim 2026-11-21T12:33:59.895Z] M3-1121-C → done · runner-v7.6 cmux-split · 리포트 확인 m3/M3-1121-C-report.md · model=sonnet · 로그: /Use",
+    "[hub-runner-v7.6:m3 2026-11-21T12:33:59.896Z] [report-relocate] status/claims/M3-1121-C-report.md 발견 · 목표 m3/M3-1121-C-report.md 이미 존재 · 덮지 않음",
+    "[hub-runner-v7.6:claim 2026-11-21T12:36:05.687Z] M0-1121-D → done · runner-v7.6 cmux-split · 리포트 확인 m0/M0-1121-D-report.md · model=opus · 로그: /Users"
+  ]
+}
