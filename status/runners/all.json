@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-10T08:25:46.501Z",
+  "at": "2026-11-10T08:56:40.302Z",
   "pid": 62635,
   "runner": "v6.3",
   "poll_ms": 60000,
@@ -7,19 +7,27 @@
   "run_timeout_ms": 3600000,
   "hubs": {
     "m0": {
-      "current": null
+      "current": "M0-1105-AB",
+      "started_at": "2026-11-10T08:50:19.895Z",
+      "model": "opus"
     },
     "m1": {
-      "current": null
+      "current": "M1-1105-AG",
+      "started_at": "2026-11-10T08:50:20.867Z",
+      "model": "sonnet"
     },
     "m2": {
       "current": null
     },
     "m3": {
-      "current": null
+      "current": "M3-1105-AD",
+      "started_at": "2026-11-10T08:56:38.771Z",
+      "model": "opus"
     },
     "r0": {
-      "current": null
+      "current": "R0-1105-AW",
+      "started_at": "2026-11-10T08:50:21.834Z",
+      "model": "sonnet"
     }
   }
 }
