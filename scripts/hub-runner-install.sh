@@ -14,8 +14,8 @@
 
 set -euo pipefail
 
-TARGET_RUNNER="${TARGET:-hub-runner-v6.2.mjs}"
-FALLBACK_RUNNER="${FALLBACK:-hub-runner-v6.1.mjs}"
+TARGET_RUNNER="${TARGET:-hub-runner-v6.4.mjs}"
+FALLBACK_RUNNER="${FALLBACK:-hub-runner-v6.3.mjs}"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -57,6 +57,22 @@ if (missing.length) {
 } else {
   console.error('[install] runner-config.json 전 허브 cwd 존재 확인');
 }
+NODE
+
+# v6.4: 폴더 가드 — 러너 repo 경로가 허브 cwd 와 같으면 설치 거부.
+"$NODE_BIN" - "$REPO_ROOT" <<'NODE'
+import { readFileSync, existsSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+const [,, root] = process.argv;
+const cfg = JSON.parse(readFileSync(join(root, 'status/runner-config.json'), 'utf8'));
+const resolvedRoot = resolve(root);
+for (const [hub, hcfg] of Object.entries(cfg.hubs || {})) {
+  if (hcfg?.cwd && resolve(hcfg.cwd) === resolvedRoot) {
+    console.error(`[install] 폴더 가드 거부: 러너 repo(${root}) == 허브 ${hub} cwd(${hcfg.cwd}) · 별도 폴더에 클론 필요`);
+    process.exit(1);
+  }
+}
+console.error('[install] 폴더 가드 OK · 러너 repo 경로 허브 cwd 와 충돌 없음');
 NODE
 
 # node --check 선실측 (깨진 코드가 launchd 에 들어가지 않도록).
