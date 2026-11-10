@@ -79,6 +79,13 @@ try {
 function git(args) {
   return execFileSync('git', args, { cwd: REPO_ROOT, stdio: 'pipe' }).toString().trim();
 }
+// 스코프 밖 변경 경고 (건드리지 않음)
+try {
+  const st = execFileSync('git', ['status', '--porcelain'], { cwd: REPO_ROOT, stdio: ['ignore', 'pipe', 'pipe'] }).toString();
+  const scope = ['status/claims/', 'status/runners/', 'status/hubs.json'];
+  const foreign = st.split('\n').filter((l) => l.length > 2).map((l) => l.slice(3).trim()).filter((p) => p && !scope.some((pre) => p.startsWith(pre)));
+  if (foreign.length) console.error(`[claim] 경고: 스코프 밖 변경 ${foreign.length}건 (건드리지 않음): ${foreign.slice(0, 3).join(', ')}`);
+} catch { /* noop */ }
 try { git(['add', `status/claims/${id}.json`, 'status/hubs.json']); } catch { /* noop */ }
 
 let committed = false;
@@ -104,9 +111,14 @@ if (committed) {
     const err = e.stderr?.toString() || e.message;
     if (/rejected|non-fast-forward/i.test(err)) {
       console.error('[claim] rebase + retry');
-      try { git(['pull', '--rebase', 'origin', 'main']); } catch (re) {
-        console.error(`[claim] pull --rebase 실패 · 수동 개입 필요: ${re.stderr?.toString() || re.message}`);
-        process.exit(1);
+      try {
+        git(['pull', '--rebase', '--autostash', 'origin', 'main']);
+      } catch (re) {
+        const reMsg = (re.stderr?.toString() || re.message).trim().split('\n').slice(0, 3).join(' ');
+        console.error(`[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: ${reMsg}`);
+        try { git(['rebase', '--abort']); } catch { /* noop */ }
+        // claim.json 디스크 보존 · 러너 다음 tick 재push
+        process.exit(0);
       }
       try { git(['push', 'origin', 'HEAD:main']); console.error('[claim] pushed (after rebase)'); }
       catch (re2) {

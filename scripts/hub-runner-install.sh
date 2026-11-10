@@ -14,8 +14,8 @@
 
 set -euo pipefail
 
-TARGET_RUNNER="hub-runner-v6.1.mjs"
-FALLBACK_RUNNER="hub-runner-v6.mjs"
+TARGET_RUNNER="${TARGET:-hub-runner-v6.2.mjs}"
+FALLBACK_RUNNER="${FALLBACK:-hub-runner-v6.1.mjs}"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -111,6 +111,17 @@ PLIST
 load_plist() {
   if launchctl list 2>/dev/null | awk '{print $3}' | grep -qx "$LABEL"; then
     launchctl bootout "gui/$(id -u)" "$PLIST_FILE" 2>/dev/null || true
+    sleep 1
+  fi
+  # bootout 후 옛 PID lock 정리 — 사망 PID lock 이 남으면 새 러너 첫 10분이 아무것도 안 함.
+  local lock_file="$HOME/.hub-runner/all.lock"
+  if [[ -f "$lock_file" ]]; then
+    local old_pid
+    old_pid="$(cat "$lock_file" 2>/dev/null || echo "")"
+    if [[ -n "$old_pid" ]] && ! kill -0 "$old_pid" 2>/dev/null; then
+      echo "[install] stale lock 삭제 · pid=$old_pid 사망"
+      rm -f "$lock_file"
+    fi
   fi
   launchctl bootstrap "gui/$(id -u)" "$PLIST_FILE"
 }
