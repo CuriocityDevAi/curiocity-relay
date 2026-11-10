@@ -1,8 +1,7 @@
 {
   "id": "M1-1105-AF",
   "hub": "m1",
-  "state": "blocked",
-  "at": "2026-11-10T09:22:06.580Z",
-  "note": "timeout 60m · 러너 재시작 복구 · elapsed=77m · runner-v6.4 · pane 유지 (C-c 전송)",
-  "blocked_by": "oke"
+  "state": "done",
+  "at": "2026-11-10T08:10:09Z",
+  "note": "오케 복원 · 리포트 m1/M1-1105-AF-report.md · v6.4 재시작 복구(09:22Z)가 끝난 작업을 'timeout 60m'으로 덮고 M1 칸에 C-c 전송(#6 재발 · M2-1105-AB 에서 수정)"
 }
