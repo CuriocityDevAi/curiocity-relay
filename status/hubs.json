@@ -1,23 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-10T07:55:48.481Z",
+  "built_at": "2026-11-10T08:04:01.994Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-10T07:55:37.177Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-10T07:55:37.177Z"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-10T07:55:31.286Z",
-      "session": "dd6e762c-338a-41bf-8ae2-f91733e27c77",
-      "updated_at": "2026-11-10T07:55:37.177Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -29,17 +13,93 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-10T07:55:37.177Z"
+      "updated_at": "2026-11-10T07:55:37.177Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-10T07:55:37.177Z"
+      "updated_at": "2026-11-10T07:55:37.177Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-10T07:55:31.286Z",
+      "session": "dd6e762c-338a-41bf-8ae2-f91733e27c77",
+      "updated_at": "2026-11-10T07:55:37.177Z",
+      "last_round": "M2-1105-Z-st-busy",
+      "last_report": "m0/M2-1105-Z-st-busy-report.md",
+      "current_round": "M0-1105-Y",
+      "current_state": "done",
+      "current_at": "2026-11-10T08:30:00Z",
+      "current_note": "(A) medusa-config 에 @medusajs/medusa/fulfillment manual provider 등록 (manual_manual) · CLAUDE.md §0 예외 전결 1건. (B) metadata.fulfillment.handed_over_at 는 fulfillment_id 세팅 시에만 기록 · 응답에 fulfilled + fulfillment_warning 추가. (C) 멱등 가드는 packed_at+!canceled_at 있는 fulfillment row 만 인정 · handed_over_at 만 있는 stuck 재진입 허용 · pre-#200 packed_at null 도 가드 통과. 신규 POST /admin/pos/maintenance/repair-stuck-fulfillments (dry_run 기본 · fulfillment 재생성 · 재고 불변 · packed_at=legacy handed_over_at). 재고 이중 차감 방지 flag (inventory_decremented_at) + reservation 재조회 heuristic. PR#205."
+    },
+    "m1": {
+      "last_round": "M2-1105-Z-st-split3",
+      "last_report": "m1/M2-1105-Z-st-split3-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-10T08:04:01.994Z",
+      "current_round": "M2-1105-Z-st-b1",
+      "current_state": "done",
+      "current_at": "2026-11-10T08:02:44.758Z",
+      "current_note": "selftest-busy mock (v6.3)"
+    },
+    "m2": {
+      "last_round": "M2-1105-Y",
+      "last_report": "m2/M2-1105-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-10T08:04:01.994Z",
+      "current_round": "M2-1105-Y",
+      "current_state": "blocked",
+      "current_at": "2026-11-10T08:04:01.909Z",
+      "current_note": "timeout 60m · 러너 재시작 복구 · elapsed=61m · runner-v6.3 · pane 유지 (C-c 전송)"
+    },
+    "m3": {
+      "last_round": "M3-1105-Y",
+      "last_report": "m3/M3-1105-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-10T08:04:01.994Z",
+      "current_round": "M3-1105-AC",
+      "current_state": "started",
+      "current_at": "2026-11-10T07:54:53.803Z",
+      "current_note": "runner-v6.3 · cmux-split · model=opus · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1105-AC.log"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-10T07:55:37.177Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1105-AU",
+      "last_report": "r0/R0-1105-AU-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-10T08:04:01.994Z",
+      "current_round": "R0-1105-AU",
+      "current_state": "started",
+      "current_at": "2026-11-10T07:55:00.596Z",
+      "current_note": "runner-v6.3 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-AU.log"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-10T07:55:37.177Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
