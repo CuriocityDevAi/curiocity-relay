@@ -1,0 +1,93 @@
+{
+  "runner": "v7.3",
+  "script": "/Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v7.3.mjs",
+  "repo": "/Users/kyu.lee/projects/curiocity-relay",
+  "pid": 61172,
+  "last_tick": "2026-11-14T16:14:26.717Z",
+  "git": {
+    "head": "89b08366",
+    "ahead": 0,
+    "behind": 0,
+    "dirty": [
+      "status/runners/all.json"
+    ],
+    "last_pull": {
+      "ok": true,
+      "at": "2026-11-14T16:14:25.677Z",
+      "err": null
+    },
+    "intruder": null
+  },
+  "hubs": {
+    "m0": {
+      "pane": "unknown",
+      "current": null,
+      "elapsed_s": null,
+      "last_decision": "skip:claim-done",
+      "last_decision_at": "2026-11-14T16:14:26.619Z",
+      "detect_latency_s": 4,
+      "stale_claim": null,
+      "stuck": null
+    },
+    "m1": {
+      "pane": "unknown",
+      "current": null,
+      "elapsed_s": null,
+      "last_decision": "skip:claim-done",
+      "last_decision_at": "2026-11-14T16:14:26.620Z",
+      "detect_latency_s": 2,
+      "stale_claim": null,
+      "stuck": null
+    },
+    "m2": {
+      "pane": "unknown",
+      "current": null,
+      "elapsed_s": null,
+      "last_decision": "skip:claim-done",
+      "last_decision_at": "2026-11-14T16:14:26.621Z",
+      "detect_latency_s": null,
+      "stale_claim": null,
+      "stuck": null
+    },
+    "m3": {
+      "pane": "unknown",
+      "current": null,
+      "elapsed_s": null,
+      "last_decision": "skip:claim-done",
+      "last_decision_at": "2026-11-14T16:14:26.622Z",
+      "detect_latency_s": null,
+      "stale_claim": null,
+      "stuck": null
+    },
+    "r0": {
+      "pane": "unknown",
+      "current": null,
+      "elapsed_s": null,
+      "last_decision": "skip:claim-done",
+      "last_decision_at": "2026-11-14T16:14:26.624Z",
+      "detect_latency_s": null,
+      "stale_claim": null,
+      "stuck": null
+    }
+  },
+  "queue_seen": [
+    "M0-1105-BZ",
+    "M1-1105-BY"
+  ],
+  "log_tail": [
+    "[hub-runner-v7.3 2026-11-14T08:15:55.788Z] 시작 · v7.3 · mode=--all · once=false · dry-run=false · poll=30000ms · claude=/Users/kyu.lee/.local/bin/claude · version=2.1.128 (Claude Code) · model=opus · display=cmux-split · cmux=/Applications/cmux.app/Contents/Resources/bin/cmux · cmux_password=(none) · heartbeat=30m · run_timeout=60m",
+    "[hub-runner-v7.3:git 2026-11-14T08:15:58.128Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+    "[hub-runner-v7.3:state 2026-11-14T10:51:22.266Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status",
+    "[hub-runner-v7.3:heartbeat 2026-11-14T11:39:10.879Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Failed to connect to github.com port 443 after 993528 ms: Timeout was reached",
+    "[hub-runner-v7.3:git 2026-11-14T11:50:45.862Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+    "[hub-runner-v7.3:state 2026-11-14T13:11:48.251Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status",
+    "[hub-runner-v7.3:m0 2026-11-14T13:43:47.478Z] pick · M0-1105-BZ · model=opus · display=cmux-split",
+    "[hub-runner-v7.3:claim 2026-11-14T13:43:52.477Z] M0-1105-BZ → started · runner-v7.3 · cmux-split · model=opus · source=hub-default · pane foreground=cla",
+    "[hub-runner-v7.3:git 2026-11-14T13:49:56.132Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+    "[hub-runner-v7.3:m0 2026-11-14T13:49:57.514Z] claim 이미 done (허브 설정) · 덮어쓰기 금지",
+    "[hub-runner-v7.3:m1 2026-11-14T14:00:28.504Z] pick · M1-1105-BY · model=sonnet · display=cmux-split",
+    "[hub-runner-v7.3:claim 2026-11-14T14:00:32.699Z] M1-1105-BY → started · runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=c",
+    "[hub-runner-v7.3:git 2026-11-14T14:06:09.240Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+    "[hub-runner-v7.3:claim 2026-11-14T14:06:10.932Z] M1-1105-BY → done · runner-v7.3 cmux-split · 리포트 확인 m1/M1-1105-BY-report.md · model=sonnet · 로그: /Us"
+  ]
+}
