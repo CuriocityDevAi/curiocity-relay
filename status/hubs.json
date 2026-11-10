@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-10T09:22:29.641Z",
+  "built_at": "2026-11-10T09:29:39.719Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -71,10 +71,10 @@
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-10T08:56:43.153Z",
-      "current_round": "M3-1105-AD",
-      "current_state": "done",
-      "current_at": "2026-11-10T09:16:26.606Z",
-      "current_note": "runner-v6.3 cmux-split · 리포트 확인 m3/M3-1105-AD-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1105-AD.log"
+      "current_round": "M3-1105-AE",
+      "current_state": "started",
+      "current_at": "2026-11-10T09:29:39.609Z",
+      "current_note": "runner-v6.4 · cmux-split · model=opus · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1105-AE.log"
     },
     "n0": {
       "state": "idle",
@@ -84,15 +84,15 @@
       "last_report": "n0/N0-0914-C-report.md"
     },
     "r0": {
-      "last_round": "R0-1105-AX",
-      "last_report": "r0/R0-1105-AX-report.md",
+      "last_round": "R0-1105-AY",
+      "last_report": "r0/R0-1105-AY-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-10T08:56:43.153Z",
       "current_round": "R0-1105-AY",
-      "current_state": "started",
+      "current_state": "done",
       "current_at": "2026-11-10T09:22:10.547Z",
-      "current_note": "runner-v6.4 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-AY.log"
+      "current_note": "runner-v6.4 · cmux-split · model=sonnet · storeport#207 CHANGES (remaining→remaining_attempts, retry_at→locked_until) · fork#77 APPROVE · report r0/R0-1105-AY-report.md"
     },
     "t0": {
       "state": "idle",
