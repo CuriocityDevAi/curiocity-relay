@@ -1,7 +1,7 @@
 {
   "schema_version": 4,
-  "note": "M1-1105-Y · schema_version=4 · per-hub model (r0/m2=sonnet · m0/m1/m3=opus) · run_timeout_min · heartbeat_min. v3 러너 (hub-runner-v3.mjs) 가 소비. v2 는 전역 model 만 봄 (하위 호환 유지).",
-  "updated_at": "2026-11-09T03:45:00.000Z",
+  "note": "M1-1105-Y · schema_version=4 · per-hub model · run_timeout_min · heartbeat_min. 11-10 17:09 Kyu: M3 도 sonnet 기본(복잡한 라운드만 오케가 opus 로 바꿔 발부) · Opus 기본 = M0 만.",
+  "updated_at": "2026-11-10T10:10:00.000Z",
   "display": "cmux-split",
   "cmux_bin": "/Applications/cmux.app/Contents/Resources/bin/cmux",
   "claude_bin": "/Users/kyu.lee/.local/bin/claude",
@@ -9,7 +9,7 @@
   "model": "opus",
   "run_timeout_min": 60,
   "heartbeat_min": 30,
-  "model_note": "M1-1105-Y · Kyu 11-09 결정: R0/M2 = sonnet (리포트성 라운드) · M0/M1/M3 = opus (코드 생성) · 토요일 M0-V 토큰 소진 분석 결과. · Kyu 11-10 04:54: M1 도 sonnet (가벼운 러너·디자인 작업) · Opus 는 M0/M3 코딩만.",
+  "model_note": "M1-1105-Y · Kyu 11-09: R0/M2 = sonnet · Kyu 11-10 04:54: M1 sonnet · Kyu 11-10 17:09: M3 sonnet (토큰 절약) · Opus 기본 = M0(돈·재고 서버 로직)만.",
   "hubs": {
     "m0": {
       "cwd": "/Users/kyu.lee/projects/storeport",
@@ -29,7 +29,7 @@
     "m3": {
       "cwd": "/Users/kyu.lee/projects/pos-m3",
       "label": "POS checkout / orders · M3",
-      "model": "opus"
+      "model": "sonnet"
     },
     "r0": {
       "cwd": "/Users/kyu.lee/projects/pos-r0",
