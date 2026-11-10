@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-10T09:59:04.661Z",
+  "built_at": "2026-11-10T10:02:13.413Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -50,7 +50,7 @@
       "last_activity": null,
       "updated_at": "2026-11-10T09:52:36.473Z",
       "current_round": "M1-1105-AK",
-      "current_state": "started",
+      "current_state": "done",
       "current_at": "2026-11-10T09:52:36.409Z",
       "current_note": "runner-v6.4 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1105-AK.log"
     },
@@ -60,10 +60,10 @@
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-10T09:52:36.473Z",
-      "current_round": "M2-selftest-dirty-1794304744535",
-      "current_state": "started",
-      "current_at": "2026-11-10T09:59:04.601Z",
-      "current_note": "selftest-dirty-push"
+      "current_round": "M2-1105-AB",
+      "current_state": "done",
+      "current_at": "2026-11-10T10:00:07.000Z",
+      "current_note": "runner-v6.5 · 착지 감지 5초(로컬) · POLL 30s · 복구 #6 수정 · 셀프테스트 9건 통과 · a3ddc01 · 리포트 m2/M2-1105-AB-report.md"
     },
     "m3": {
       "last_round": "M3-1105-Y",
@@ -72,9 +72,9 @@
       "last_activity": null,
       "updated_at": "2026-11-10T09:52:36.473Z",
       "current_round": "M3-1105-AE",
-      "current_state": "started",
-      "current_at": "2026-11-10T09:29:39.609Z",
-      "current_note": "runner-v6.4 · cmux-split · model=opus · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1105-AE.log"
+      "current_state": "done",
+      "current_at": "2026-11-10T10:01:45.000Z",
+      "current_note": "PR #77"
     },
     "n0": {
       "state": "idle",
@@ -89,10 +89,10 @@
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-10T09:52:36.473Z",
-      "current_round": "R0-1105-AZ",
-      "current_state": "done",
-      "current_at": "2026-11-10T09:43:54.216Z",
-      "current_note": "runner-v6.4 · cmux-split · model=sonnet · CHANGES 판정 · PR #208 코멘트 제출 · 리포트 r0/R0-1105-AZ-report.md"
+      "current_round": "R0-1105-BA",
+      "current_state": "started",
+      "current_at": "2026-11-10T10:02:13.340Z",
+      "current_note": "runner-v6.4 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-BA.log"
     },
     "t0": {
       "state": "idle",
