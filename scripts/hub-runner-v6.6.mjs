@@ -111,6 +111,8 @@ const SELFTEST_FOLDER_GUARD = argv.includes('--selftest-folder-guard');
 const SELFTEST_LOCAL_LANDING = argv.includes('--selftest-local-landing');
 const SELFTEST_RECOVERY_DONE = argv.includes('--selftest-recovery-done');
 const SELFTEST_RECOVERY_TIMEOUT = argv.includes('--selftest-recovery-timeout');
+// v6.6 신규 셀프테스트
+const SELFTEST_STALE_RECOVERY = argv.includes('--selftest-stale-recovery');
 const hubFlag = (() => {
   const i = argv.indexOf('--hub');
   return i >= 0 ? argv[i + 1] : null;
@@ -134,10 +136,11 @@ if (
   !SELFTEST_FOLDER_GUARD &&
   !SELFTEST_LOCAL_LANDING &&
   !SELFTEST_RECOVERY_DONE &&
-  !SELFTEST_RECOVERY_TIMEOUT
+  !SELFTEST_RECOVERY_TIMEOUT &&
+  !SELFTEST_STALE_RECOVERY
 ) {
   console.error(
-    'Usage: node scripts/hub-runner-v6.6.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-split --hub <hub> --id <ID> | --selftest-timeout --hub <hub> --id <ID> | --selftest-layout --hub <hub> --id <ID> | --selftest-busy --hub <hub> --id <ID> | --selftest-respawn --hub <hub> --id <ID> | --selftest-stale-lock | --selftest-dirty-push | --selftest-state-dirty | --selftest-auto-recover | --selftest-human-files | --selftest-folder-guard | --selftest-local-landing | --selftest-recovery-done | --selftest-recovery-timeout',
+    'Usage: node scripts/hub-runner-v6.6.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-split --hub <hub> --id <ID> | --selftest-timeout --hub <hub> --id <ID> | --selftest-layout --hub <hub> --id <ID> | --selftest-busy --hub <hub> --id <ID> | --selftest-respawn --hub <hub> --id <ID> | --selftest-stale-lock | --selftest-dirty-push | --selftest-state-dirty | --selftest-auto-recover | --selftest-human-files | --selftest-folder-guard | --selftest-local-landing | --selftest-recovery-done | --selftest-recovery-timeout | --selftest-stale-recovery',
   );
   process.exit(2);
 }
@@ -244,6 +247,7 @@ function buildState() {
       last_decision: dec.lastDecision || null,
       last_decision_at: dec.lastDecisionAt || null,
       detect_latency_s: dec.detectLatencyS ?? null,  // v6.5 REQ5: 착지 감지 지연(s)
+      stale_claim: dec.staleClaim ?? null,           // v6.6 REQ0: stale 옛 started claim 보고
     };
   }
   return {
@@ -1512,6 +1516,45 @@ function findStartedClaim(hub) {
   return latest;
 }
 
+// v6.6 REQ0: 그 칸이 지금 실제로 그 ID를 돌리고 있다는 증거 탐색.
+// confirmed=true → 복구 진행 가능. confirmed=false → stale(칸 무접촉·claim 미변경).
+function probeClaimCurrent(hub, claimId, config) {
+  // 1) all.json(이전 러너 heartbeat) current 확인
+  let hbCurrent = null;
+  try {
+    if (existsSync(ALL_HEARTBEAT)) {
+      const hb = JSON.parse(readFileSync(ALL_HEARTBEAT, 'utf8'));
+      hbCurrent = hb?.hubs?.[hub]?.current ?? null;
+    }
+  } catch { /* noop */ }
+  if (hbCurrent && hbCurrent !== claimId) {
+    return { confirmed: false, reason: `heartbeat.current=${hbCurrent} ≠ ${claimId}` };
+  }
+  // 2) cmux-split: pane 타이틀·화면 확인
+  if (config.display === 'cmux-split' && cmuxAlive(config.cmux_bin)) {
+    const layout = loadHubsLayout();
+    if (layout) {
+      try {
+        const surfaces = inspectWorkspaceSurfaces(config.cmux_bin, layout.workspaceRef);
+        const surface = surfaces.find((s) => s.hub === hub);
+        if (surface) {
+          if (surface.title.includes(claimId)) return { confirmed: true, reason: `pane title="${surface.title}"` };
+          const otherMatch = surface.title.match(/[A-Z][0-9]+-\d{4}-[A-Z]+/);
+          if (otherMatch && otherMatch[0] !== claimId) {
+            return { confirmed: false, reason: `pane title="${surface.title}" (다른 ID: ${otherMatch[0]})` };
+          }
+        }
+      } catch { /* noop */ }
+      const screen = readPaneScreen(config.cmux_bin, layout, hub);
+      if (screen && screen.includes(claimId)) return { confirmed: true, reason: `pane screen contains ID` };
+    }
+  }
+  // 3) heartbeat 이 같은 ID 이면 긍정 증거
+  if (hbCurrent === claimId) return { confirmed: true, reason: `heartbeat.current=${claimId}` };
+  // 증거 없음 → 보수적으로 stale
+  return { confirmed: false, reason: '증거 없음(heartbeat null · cmux 미확인)' };
+}
+
 async function recoverStuckStartedClaims(hubs, config) {
   for (const hub of hubs) {
     if (busy.has(hub)) continue;
@@ -1531,6 +1574,15 @@ async function recoverStuckStartedClaims(hubs, config) {
     if (!Number.isFinite(atMs)) continue;
     const elapsedMs = Date.now() - atMs;
     if (elapsedMs < config.run_timeout_ms) continue;
+
+    // v6.6 REQ0: 그 칸이 지금 그 ID를 돌리고 있는지 증거 확인 (#14 재발 방지).
+    const probe = probeClaimCurrent(hub, stuck.id, config);
+    if (!probe.confirmed) {
+      log(hub, `복구 보류 · ${stuck.id} stale(옛 started) · ${probe.reason} · 칸 무접촉`);
+      setHubDecision(hub, 'stale-claim', { staleClaim: { id: stuck.id, reason: probe.reason, since: stuck.at } });
+      markRecovered(stuck.id);
+      continue;
+    }
 
     // v6.5 REQ3: timeout 판정 = 허브 칸에 claude 실제 실행 중 + started 후 60분 초과.
     // pane 에 claude 없으면(이미 종료·미확인) timeout blocked 보류.
@@ -2921,6 +2973,45 @@ process.stdin.resume();
     console.log(`[selftest-recovery-timeout] OK · 60m+ 초과 · pane claude 없음 → timeout blocked 보류 경로 검증`);
     process.exit(0);
   })().catch((e) => { console.error(`[selftest-recovery-timeout] 예외: ${e.message}`); process.exit(1); });
+
+} else if (SELFTEST_STALE_RECOVERY) {
+  // v6.6 ⓪: probeClaimCurrent 가 heartbeat 다른 ID → confirmed:false 반환 확인 · claim 미변경.
+  (async () => {
+    const fakeStaleId = `M2-v66-stale-st-${Date.now()}`;
+    const fakeOtherId = `M2-v66-other-st-${Date.now()}`;
+    const claimFile = join(CLAIMS_DIR, `${fakeStaleId}.json`);
+    const origHeartbeat = existsSync(ALL_HEARTBEAT) ? readFileSync(ALL_HEARTBEAT, 'utf8') : null;
+    mkdirSync(CLAIMS_DIR, { recursive: true });
+    writeFileSync(claimFile, JSON.stringify({
+      id: fakeStaleId, hub: 'm2', state: 'started',
+      at: new Date(Date.now() - 65 * 60 * 1000).toISOString(),
+      note: 'selftest-stale-recovery',
+    }) + '\n', 'utf8');
+    mkdirSync(RUNNERS_DIR, { recursive: true });
+    writeFileSync(ALL_HEARTBEAT, JSON.stringify({
+      at: ts(), pid: 99999, runner: 'v6.6',
+      hubs: { m2: { current: fakeOtherId } },
+    }, null, 2) + '\n', 'utf8');
+    try {
+      const cfg = loadConfig();
+      const probe = probeClaimCurrent('m2', fakeStaleId, cfg);
+      if (probe.confirmed) {
+        console.error(`[selftest-stale-recovery] FAIL · probe confirmed=true (기대: false) · ${probe.reason}`);
+        process.exit(1);
+      }
+      const after = JSON.parse(readFileSync(claimFile, 'utf8'));
+      if (after.state !== 'started') {
+        console.error(`[selftest-stale-recovery] FAIL · claim state 변경됨: ${after.state}`);
+        process.exit(1);
+      }
+      console.log(`[selftest-stale-recovery] OK · probe confirmed=false(${probe.reason}) · claim 미변경 · 칸 무접촉`);
+    } finally {
+      try { rmSync(claimFile, { force: true }); } catch { /* noop */ }
+      if (origHeartbeat != null) writeFileSync(ALL_HEARTBEAT, origHeartbeat, 'utf8');
+      else try { rmSync(ALL_HEARTBEAT, { force: true }); } catch { /* noop */ }
+    }
+    process.exit(0);
+  })().catch((e) => { console.error(`[selftest-stale-recovery] 예외: ${e.message}`); process.exit(1); });
 
 } else {
   loop().catch((e) => {
