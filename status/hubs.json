@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-09T22:41:33.628Z",
+  "built_at": "2026-11-10T03:14:00.438Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -73,10 +73,10 @@
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-09T10:04:54.345Z",
-      "current_round": "M3-1105-Y",
-      "current_state": "done",
-      "current_at": "2026-11-09T22:14:54.330Z",
-      "current_note": "runner-v6 cmux-split · 리포트 확인 m3/M3-1105-Y-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1105-Y.log"
+      "current_round": "M3-1105-Z",
+      "current_state": "blocked",
+      "current_at": "2026-11-10T03:14:00.370Z",
+      "current_note": "pane busy · runner-v6.1 cmux-split · dispatch=pane-busy · initial=claude · last=claude · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1105-Z.log"
     },
     "n0": {
       "state": "idle",
@@ -86,15 +86,15 @@
       "last_report": "n0/N0-0914-C-report.md"
     },
     "r0": {
-      "last_round": "R0-1105-AN",
-      "last_report": "r0/R0-1105-AN-report.md",
+      "last_round": "R0-1105-AO",
+      "last_report": "r0/R0-1105-AO-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-09T10:04:54.345Z",
-      "current_round": "R0-1105-AN",
+      "current_round": "R0-1105-AO",
       "current_state": "done",
-      "current_at": "2026-11-09T22:35:37.669Z",
-      "current_note": "runner-v6 cmux-split · 리포트 확인 r0/R0-1105-AN-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1105-AN.log"
+      "current_at": "2026-11-10T00:30:00.000Z",
+      "current_note": "fork #69 fix/m3-1105-y-preorder-pay · APPROVE · 충돌 없음(#68 겹치는 파일 없음) · Pay 하단 고정·hint·Takeaway 회귀 없음 · 43/44 중 1 FAIL = #67 사전 실패(Hand over testID FulfillSheet 이동) · 전 assertions/Y assertions green"
     },
     "t0": {
       "state": "idle",
