@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-10T06:54:00.684Z",
+  "built_at": "2026-11-10T06:54:03.099Z",
   "hubs": {
     "k0": {
       "last_round": "K0-0918-F",
@@ -37,10 +37,10 @@
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-10T04:30:48.258Z",
-      "current_round": "M0-1105-X",
-      "current_state": "done",
-      "current_at": "2026-11-09T17:20:00Z",
-      "current_note": "Admin Orders 500 뿌리 완전 해소 · repair 가 query.graph(entity:'order_payment_collection') 로 전환 → missing/soft_deleted 모두 수집 · R0-1105-AI §C 지적('하드 삭제는 payment_collections.* 에 안 보임') 반영 · reproduce+repair 통합 테스트 #37 운영 stack 1:1 일치 · Medusa core 패치 0 · W A tenders.ts 삭제 경로 제거(신규 생성 방지)는 그대로 유지"
+      "current_round": "M0-1105-Y",
+      "current_state": "started",
+      "current_at": "2026-11-10T06:54:03.033Z",
+      "current_note": "runner-v6.2 · cmux-split · model=opus · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-Y.log"
     },
     "m1": {
       "last_round": "M1-1105-Z",
