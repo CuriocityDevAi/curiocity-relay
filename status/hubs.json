@@ -1,27 +1,11 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-10T07:22:30.559Z",
+  "built_at": "2026-11-10T07:24:34.194Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-10T07:22:15.107Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-10T07:22:15.107Z"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-10T07:22:02.609Z",
-      "session": "89018a80-382e-4fea-8649-48aa0f8a41bc",
-      "updated_at": "2026-11-10T07:22:15.107Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-10T07:22:15.107Z",
+      "updated_at": "2026-11-10T07:14:04.716Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -29,17 +13,92 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-10T07:22:15.107Z"
+      "updated_at": "2026-11-10T07:14:04.716Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-10T07:22:15.107Z"
+      "updated_at": "2026-11-10T07:14:04.716Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-10T07:08:54.355Z",
+      "updated_at": "2026-11-10T07:14:04.716Z",
+      "last_round": "M0-1105-Y",
+      "last_report": "m0/M0-1105-Y-report.md",
+      "current_round": "M0-1105-Y",
+      "current_state": "done",
+      "current_at": "2026-11-10T08:30:00Z",
+      "current_note": "(A) medusa-config 에 @medusajs/medusa/fulfillment manual provider 등록 (manual_manual) · CLAUDE.md §0 예외 전결 1건. (B) metadata.fulfillment.handed_over_at 는 fulfillment_id 세팅 시에만 기록 · 응답에 fulfilled + fulfillment_warning 추가. (C) 멱등 가드는 packed_at+!canceled_at 있는 fulfillment row 만 인정 · handed_over_at 만 있는 stuck 재진입 허용 · pre-#200 packed_at null 도 가드 통과. 신규 POST /admin/pos/maintenance/repair-stuck-fulfillments (dry_run 기본 · fulfillment 재생성 · 재고 불변 · packed_at=legacy handed_over_at). 재고 이중 차감 방지 flag (inventory_decremented_at) + reservation 재조회 heuristic. PR#205."
+    },
+    "m1": {
+      "last_round": "M1-1105-Z",
+      "last_report": "m1/M1-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-10T07:14:49.829Z",
+      "current_round": "M1-1105-AE",
+      "current_state": "blocked",
+      "current_at": "2026-11-10T07:24:34.115Z",
+      "current_note": "pane busy (2nd · 재시도 소진) · runner-v6.2 cmux-split · dispatch=pane-busy · initial=claude · last=claude · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1105-AE.log"
+    },
+    "m2": {
+      "last_round": "M2-1105-Y",
+      "last_report": "m2/M2-1105-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-10T07:14:49.829Z",
+      "current_round": "M2-1105-Y",
+      "current_state": "done",
+      "current_at": "2026-11-10T05:55:00.000Z",
+      "current_note": "expo-dev-client ^58.0.18 설치 · eas.json 3개 프로필 확인 · bundleId id.meros.pos 확인 · runbook 6단계 완성 · run-all 21/21 · bundle-guard PASS · PR #71 · 리포트 m2/M2-1105-Y-report.md"
+    },
+    "m3": {
+      "last_round": "M3-1105-Y",
+      "last_report": "m3/M3-1105-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-10T07:14:49.829Z",
+      "current_round": "M3-1105-AB",
+      "current_state": "started",
+      "current_at": "2026-11-10T07:08:31.853Z",
+      "current_note": "runner-v6.2 · cmux-split · model=opus · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1105-AB.log"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-10T07:14:04.716Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1105-AS",
+      "last_report": "r0/R0-1105-AS-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-10T07:14:49.829Z",
+      "current_round": "R0-1105-AS",
+      "current_state": "started",
+      "current_at": "2026-11-10T07:14:49.766Z",
+      "current_note": "runner-v6.2 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-AS.log"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-10T07:14:04.716Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
