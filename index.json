@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-10T08:44:46.741Z",
+  "built_at": "2026-11-10T09:02:08.864Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-10T08:44:46.367Z"
+      "fetched_at": "2026-11-10T09:02:08.283Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-10T08:44:46.498Z"
+      "fetched_at": "2026-11-10T09:02:08.484Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6062,8 +6062,9 @@
             {
               "id": "pos-tenders-fulfill",
               "name": "POS 텐더·이행 API (J-b)",
-              "summary": "POST /admin/pos/orders/:id/tenders (provider_id 명시·cash/edc 검증·PaymentCollection+session+capture·register_session.expected_by_method 집계·영수증 자동 생성 · delivery 결제 시 metadata.delivery.stage=awaiting_dispatch · M0-1105-T) · POST /admin/pos/orders/:id/fulfill (takeaway/delivery/preorder-paid_full 는 createOrderFulfillmentWorkflow 단일 지점 · fallback 시 reservation 전수 삭제 + order↔fulfillment link · body 계약 {stage, method, courier?, driver?, contact?, tracking_ref?, note?} · preorder dp_paid 400 · hand_over 재누름 멱등 가드 M0-1105-U · M0-1105-T) · POST /admin/pos/maintenance/release-stale-reservations (dry_run 기본 · completed/canceled/hand_over 주문의 남은 reservation 전수 정리 · M0-1105-T). 통합 테스트는 `integration-tests/pos/**` (medusa-test-utils · real Postgres).",
+              "summary": "POST /admin/pos/orders/:id/tenders (provider_id 명시·cash/edc 검증·PaymentCollection+session+capture·register_session.expected_by_method 집계·영수증 자동 생성 · delivery 결제 시 metadata.delivery.stage=awaiting_dispatch · M0-1105-T) · POST /admin/pos/orders/:id/fulfill (takeaway/delivery/preorder-paid_full 는 createOrderFulfillmentWorkflow 단일 지점 · fallback 시 reservation 전수 삭제 + order↔fulfillment link · body 계약 {stage, method, courier?, driver?, contact?, tracking_ref?, note?} · preorder dp_paid 400 · hand_over 재누름 멱등 가드는 packed_at 있는 fulfillment row 만 \"fulfilled\" 로 인정 · 응답에 fulfilled/fulfillment_warning · metadata.fulfillment.handed_over_at 는 실 성공 시에만 기록 · M0-1105-Y) · POST /admin/pos/maintenance/release-stale-reservations (dry_run 기본 · completed/canceled/hand_over 주문의 남은 reservation 전수 정리 · M0-1105-T) · POST /admin/pos/maintenance/repair-stuck-fulfillments (dry_run 기본 · handed_over_at 있는데 packed row 없는 주문 fulfillment polyfill 재생성 · 재고 불변 · M0-1105-Y). fulfill route 와 repair 가 공유하는 FulfillmentItem polyfill 빌더는 `_shared/fulfillment-items.ts` 단일 지점 (title · sku · barcode · quantity 전부 NOT NULL 통과 · M0-1105-AA). medusa-config.ts 는 fulfillment manual provider 등록 (manual_manual · M0-1105-Y). 통합 테스트는 `integration-tests/pos/**` (medusa-test-utils · real Postgres).",
               "files": [
+                "apps/commerce-core/src/api/admin/pos/_shared/**",
                 "apps/commerce-core/src/api/admin/pos/orders/**",
                 "apps/commerce-core/src/api/admin/pos/maintenance/**",
                 "apps/commerce-core/integration-tests/pos/**"
@@ -6466,7 +6467,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-10T08:44:46.740Z"
+      "fetched_at": "2026-11-10T09:02:08.863Z"
     }
   ],
   "rollup": {
