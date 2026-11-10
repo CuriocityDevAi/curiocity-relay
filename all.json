@@ -1,0 +1,181 @@
+{
+  "at": "2026-11-28T11:18:47.384Z",
+  "pid": 64966,
+  "runner": "v8.3.7",
+  "poll_ms": 30000,
+  "heartbeat_ms": 1800000,
+  "run_timeout_ms": 3600000,
+  "last_error": null,
+  "last_error_at": null,
+  "hubs": {
+    "m0": {
+      "current": "M0-1128-G",
+      "started_at": "2026-11-28T07:42:37.541Z",
+      "model": "opus",
+      "last_activity": null
+    },
+    "m1": {
+      "current": "M1-1128-I",
+      "started_at": "2026-11-28T08:01:31.188Z",
+      "model": "sonnet",
+      "last_activity": null
+    },
+    "m2": {
+      "current": "M2-1128-H",
+      "started_at": "2026-11-28T08:01:32.543Z",
+      "model": "sonnet",
+      "last_activity": null
+    },
+    "m3": {
+      "current": "M3-1128-L",
+      "started_at": "2026-11-28T08:05:41.886Z",
+      "model": "sonnet",
+      "last_activity": null
+    },
+    "r0": {
+      "current": "R0-1128-I",
+      "started_at": "2026-11-28T08:01:33.520Z",
+      "model": "sonnet",
+      "last_activity": null
+    }
+  },
+  "pane_close_failures": {},
+  "last_sleep_gap": {
+    "lastMs": 828524,
+    "totalMs": 10521272,
+    "phase": "await-landing",
+    "at": "2026-11-28T11:18:39.659Z"
+  },
+  "kyu_folder_intrusion": null,
+  "mem": {
+    "total_gb": 16,
+    "used_gb": 15.55,
+    "compressed_gb": 4.05,
+    "swap_used_gb": 3.74,
+    "pressure": "normal",
+    "at": "2026-11-28T11:04:30.072Z"
+  },
+  "mem_peak_today": {
+    "date": "2026-11-28",
+    "used_gb": 15.92
+  },
+  "ci": {
+    "data": {
+      "at": "2026-11-28T11:04:12.994Z",
+      "repos_scanned": [
+        "CuriocityDevAi/storeport"
+      ],
+      "repos_failed": [],
+      "repos_skipped": [],
+      "api_calls": 3,
+      "api_budget": 40,
+      "api_overflow": false,
+      "heavy": {
+        "queued": 0,
+        "queued_prs": [],
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
+      },
+      "light": {
+        "queued": 0,
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
+      },
+      "cloud_in_progress": [],
+      "runners": {
+        "heavy_online": 1,
+        "heavy_busy": 0,
+        "light_online": 2
+      },
+      "cloud_today": 0,
+      "today": {
+        "mac-heavy": {
+          "jobs": 342,
+          "avg_wait_min": 0.6,
+          "avg_run_min": 1.2,
+          "success_rate": 77.8,
+          "run_min_total": 425.3000000000003
+        },
+        "mac-light": {
+          "jobs": 57,
+          "avg_wait_min": 0.1,
+          "avg_run_min": 0.3,
+          "success_rate": 75.4,
+          "run_min_total": 15.500000000000007
+        },
+        "cloud": {
+          "jobs": 0,
+          "avg_wait_min": 0,
+          "avg_run_min": 0,
+          "success_rate": null,
+          "run_min_total": 0
+        },
+        "cloud_cost_est_usd": 0,
+        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
+        "wasted_min": 17
+      },
+      "jsonl_added": 0,
+      "alerts": [],
+      "partial": true
+    },
+    "took_ms": 22252,
+    "at": "2026-11-28T11:04:33.049Z"
+  },
+  "gh_runner_alert": null,
+  "misplaced_reports": null,
+  "isolated_reports_collected": null,
+  "branch_reports_recovered": null,
+  "err_tail": "[hub-runner-v8.3.7:m0 2026-11-28T11:04:03.311Z] sleep gap 감지 381s · 예산 보정 · 누적 9674s · phase=await-landing\n[hub-runner-v8.3.7:m1 2026-11-28T11:04:07.388Z] sleep gap 감지 385s · 예산 보정 · 누적 9671s · phase=await-landing\n[hub-runner-v8.3.7:m3 2026-11-28T11:04:09.444Z] sleep gap 감지 386s · 예산 보정 · 누적 9675s · phase=await-landing\n[hub-runner-v8.3.7:m2 2026-11-28T11:04:10.013Z] sleep gap 감지 384s · 예산 보정 · 누적 9666s · phase=await-landing\n[hub-runner-v8.3.7:sleep-tracker 2026-11-28T11:04:10.796Z] sleep observed · gap=423s · threshold=120s\n[hub-runner-v8.3.7:m0 2026-11-28T11:04:13.554Z] 허브 멈춤 감지 · kind=api_error · id=M0-1128-G\n[hub-runner-v8.3.7:m1 2026-11-28T11:04:14.159Z] 허브 멈춤 감지 · kind=api_error · id=M1-1128-I\n[hub-runner-v8.3.7:m2 2026-11-28T11:04:14.743Z] 허브 멈춤 감지 · kind=api_error · id=M2-1128-H\n[hub-runner-v8.3.7:r0 2026-11-28T11:04:15.925Z] 허브 멈춤 감지 · kind=api_error · id=R0-1128-I\n[hub-runner-v8.3.7:r0 2026-11-28T11:04:25.314Z] sleep gap 감지 18s · 예산 보정 · 누적 9693s · phase=await-landing\n[hub-runner-v8.3.7:m0 2026-11-28T11:04:25.897Z] sleep gap 감지 18s · 예산 보정 · 누적 9692s · phase=await-landing\n[hub-runner-v8.3.7:gh-watchdog 2026-11-28T11:04:31.789Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.7:gh-watchdog 2026-11-28T11:04:31.789Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.7:gh-watchdog 2026-11-28T11:04:31.789Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.7:m0 2026-11-28T11:18:32.224Z] sleep gap 감지 824s · 예산 보정 · 누적 10516s · phase=await-landing\n[hub-runner-v8.3.7:m1 2026-11-28T11:18:33.986Z] sleep gap 감지 826s · 예산 보정 · 누적 10497s · phase=await-landing\n[hub-runner-v8.3.7:m3 2026-11-28T11:18:34.650Z] sleep gap 감지 825s · 예산 보정 · 누적 10499s · phase=await-landing\n[hub-runner-v8.3.7:m2 2026-11-28T11:18:35.846Z] sleep gap 감지 825s · 예산 보정 · 누적 10492s · phase=await-landing\n[hub-runner-v8.3.7:r0 2026-11-28T11:18:39.659Z] sleep gap 감지 829s · 예산 보정 · 누적 10521s · phase=await-landing\n[hub-runner-v8.3.7:sleep-tracker 2026-11-28T11:18:42.269Z] sleep observed · gap=871s · threshold=120s",
+  "git_state": {
+    "ahead": 0,
+    "behind": 0,
+    "rebase_in_progress": false,
+    "merge_in_progress": false,
+    "conflicted": [],
+    "needs_human": false
+  },
+  "ci_runners": [
+    {
+      "name": "ci-box-storeport-heavy-imac",
+      "status": "online",
+      "busy": false
+    },
+    {
+      "name": "ci-box-storeport-light-imac",
+      "status": "online",
+      "busy": false
+    },
+    {
+      "name": "Youngkyus-MacBook-Pro-M1",
+      "status": "offline",
+      "busy": false
+    },
+    {
+      "name": "curiocity-mac-light",
+      "status": "offline",
+      "busy": false
+    },
+    {
+      "name": "ci-box-fork-heavy-imac",
+      "status": "online",
+      "busy": false
+    },
+    {
+      "name": "ci-box-fork-light-imac",
+      "status": "online",
+      "busy": false
+    },
+    {
+      "name": "curiocity-mac-fork",
+      "status": "offline",
+      "busy": false
+    },
+    {
+      "name": "curiocity-mac-fork-light",
+      "status": "offline",
+      "busy": false
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "runner": "v8.3.7",
+  "script": "/Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v8.3.mjs",
+  "repo": "/Users/kyu.lee/projects/curiocity-relay",
+  "pid": 64966,
+  "last_tick": "2026-11-28T11:18:54.356Z",
+  "git": {
+    "head": "47458df33",
+    "ahead": 0,
+    "behind": 0,
+    "dirty": [],
+    "last_pull": {
+      "ok": true,
+      "at": "2026-11-28T11:18:43.323Z",
+      "err": null
+    },
+    "intruder": null
+  },
+  "hubs": {
+    "m0": {
+      "pane": "unknown",
+      "current": "M0-1128-G",
+      "elapsed_s": 12977,
+      "last_decision": "picked",
+      "last_decision_at": "2026-11-28T07:42:37.541Z",
+      "detect_latency_s": null,
+      "stale_claim": null,
+      "stuck": {
+        "kind": "api_error",
+        "since": "2026-11-28T11:18:44.983Z",
+        "tail": "  /M0-1128-G.md 파일을 읽고 그대로 수행            \n  ⎿  Please run /login · API Error: 401 \n     {\"type\":\"error\",\"error\":{\"type\":\"authenticatio\n     n_error\",\"message\":\"OAuth access token has \n     been revoked.\"},\"request_id\":\"req_011ChUx5xc6n\n     859kYfnEdWbw\"}                                \n                                                   \n✻ Churned for 3s                                   \n                                                 \n───────────────────────────────────────────────────\n❯ \n───────────────────────────────────────────────────\n  ⏵⏵ bypass permissions on (shift+tab to cycle)\n                                                   \n"
+      }
+    },
+    "m1": {
+      "pane": "unknown",
+      "current": "M1-1128-I",
+      "elapsed_s": 11843,
+      "last_decision": "picked",
+      "last_decision_at": "2026-11-28T08:01:31.188Z",
+      "detect_latency_s": null,
+      "stale_claim": null,
+      "stuck": {
+        "kind": "api_error",
+        "since": "2026-11-28T11:18:45.559Z",
+        "tail": "  저장한다. 중간에 리포트 파일을 만들거나        수정했다가 지우지 말 것. 작업·커밋·PR 다     \n  끝난 뒤 최종 요약만 리포트 파일에 쓴다.                                                     \n  /Users/kyu.lee/projects/curiocity-relay/queu   e/m1/M1-1128-I.md 파일을 읽고 그대로 수행    \n  ⎿  Please run /login · API Error: 401\n     {\"type\":\"error\",\"error\":{\"type\":\"authentic\n     ation_error\",\"message\":\"OAuth access token\n      has been revoked.\"},\"request_id\":\"req_011\n     ChUyXrhVEYdrqoNiwGC6F\"}\n✻ Cogitated for 2s\n\n                             ───────────────────────────────────────────────\n❯ \n───────────────────────────────────────────────\n  ⏵⏵ bypass permissions on (shift+tab to\n"
+      }
+    },
+    "m2": {
+      "pane": "unknown",
+      "current": "M2-1128-H",
+      "elapsed_s": 11842,
+      "last_decision": "picked",
+      "last_decision_at": "2026-11-28T08:01:32.543Z",
+      "detect_latency_s": null,
+      "stale_claim": null,
+      "stuck": {
+        "kind": "api_error",
+        "since": "2026-11-28T11:18:46.118Z",
+        "tail": "  ~/projects/curiocity-relay-wts/<ID> worktree 에서만. 러너    폴더(~/projects/curiocity-relay)에서는 브랜치 생성 · 커밋  \n  · rebase · stash · reset 전부 금지. 러너 폴더는 러너의       상시 main 체크아웃이며 claim·heartbeat·report push         \n  전용이다. 러너 폴더에 쓴 모든 변경은 다음 tick 에 자동       복구(main 강제 리셋) 되어 사라진다. 리포트는 마지막에 한   \n  번만 저장한다. 중간에 리포트 파일을 만들거나 수정했다가    \n  지우지 말 것. 작업·커밋·PR 다 끝난 뒤 최종 요약만 리포트     파일에 쓴다.                                               \n                                                               /Users/kyu.lee/projects/curiocity-relay/queue/m2/M2-1128-H \n  .md 파일을 읽고 그대로 수행                                  ⎿  Please run /login · API Error: 401 {\"type\":\"error\",\"erro\n     r\":{\"type\":\"authentication_error\",\"message\":\"OAuth           access token has been\n     revoked.\"},\"request_id\":\"req_011ChUyXKQJXC413CmkFhpq6\"}\n✻ Cogitated for 2s\n                                           ─────────────────────────────────────────────────────────────\n❯                                                            ─────────────────────────────────────────────────────────────\n  ⏵⏵ bypass permissions on (shift+tab to cycle)\n"
+      }
+    },
+    "m3": {
+      "pane": "unknown",
+      "current": "M3-1128-L",
+      "elapsed_s": 11592,
+      "last_decision": "picked",
+      "last_decision_at": "2026-11-28T08:05:41.886Z",
+      "detect_latency_s": null,
+      "stale_claim": null,
+      "stuck": {
+        "kind": "api_error",
+        "since": "2026-11-28T11:18:46.681Z",
+        "tail": "  /M3-1128-L.md 파일을 읽고 그대로 수행            \n  ⎿  Please run /login · API Error: 401 \n     {\"type\":\"error\",\"error\":{\"type\":\"authenticatio\n     n_error\",\"message\":\"OAuth access token has \n     been revoked.\"},\"request_id\":\"req_011ChUyr7ZT3\n     gt9nkug7Jo5E\"}                                \n                                                   \n✻ Cogitated for 2s                                 \n                                                 \n───────────────────────────────────────────────────\n❯ \n───────────────────────────────────────────────────\n  ⏵⏵ bypass permissions on (shift+tab to cycle)\n                                                   \n"
+      }
+    },
+    "r0": {
+      "pane": "unknown",
+      "current": "R0-1128-I",
+      "elapsed_s": 11841,
+      "last_decision": "picked",
+      "last_decision_at": "2026-11-28T08:01:33.520Z",
+      "detect_latency_s": null,
+      "stale_claim": null,
+      "stuck": {
+        "kind": "api_error",
+        "since": "2026-11-28T11:18:47.315Z",
+        "tail": "  금지. 러너 폴더는 러너의 상시 main               체크아웃이며 claim·heartbeat·report push         전용이다. 러너 폴더에 쓴 모든 변경은 다음 tick \n   에 자동 복구(main 강제 리셋) 되어 사라진다.     리포트는 마지막에 한 번만 저장한다. 중간에       리포트 파일을 만들거나 수정했다가 지우지 말    \n  것. 작업·커밋·PR 다 끝난 뒤 최종 요약만 리포트    파일에 쓴다.                                  \n                                                   /Users/kyu.lee/projects/curiocity-relay/queue/   r0/R0-1128-I.md 파일을 읽고 그대로 수행        \n  ⎿  Please run /login · API Error: 401               {\"type\":\"error\",\"error\":{\"type\":\"authenticat\n     ion_error\",\"message\":\"OAuth access token has      been revoked.\"},\"request_id\":\"req_011ChUyXM\n     VpcVrWaHmE9oUeR\"}\n                           ✻ Sautéed for 2s\n\n                                 ─────────────────────────────────────────────────❯                                                ─────────────────────────────────────────────────\n  ⏵⏵ bypass permissions on (shift+tab to cycle)\n"
+      }
+    }
+  },
+  "queue_seen": [
+    "M0-1128-G",
+    "M1-1128-I",
+    "M2-1128-H",
+    "R0-1128-I",
+    "M3-1128-L"
+  ],
+  "log_tail": [
+    "[hub-runner-v8.3.7:sleep-tracker 2026-11-28T10:57:08.235Z] sleep observed · gap=1039s · threshold=120s",
+    "[hub-runner-v8.3.7:self-update 2026-11-28T10:57:30.774Z] 보류 · busy=5 claimQueue=0 processing=false",
+    "[hub-runner-v8.3.7:m2 2026-11-28T10:57:30.775Z] sleep gap 감지 31s · 예산 보정 · 누적 9282s · phase=await-landing",
+    "[hub-runner-v8.3.7:r0 2026-11-28T10:57:31.457Z] sleep gap 감지 31s · 예산 보정 · 누적 9294s · phase=await-landing",
+    "[hub-runner-v8.3.7:m0 2026-11-28T10:57:32.136Z] sleep gap 감지 31s · 예산 보정 · 누적 9293s · phase=await-landing",
+    "[hub-runner-v8.3.7:m1 2026-11-28T10:57:32.791Z] sleep gap 감지 30s · 예산 보정 · 누적 9287s · phase=await-landing",
+    "[hub-runner-v8.3.7:m3 2026-11-28T10:57:33.429Z] sleep gap 감지 27s · 예산 보정 · 누적 9289s · phase=await-landing",
+    "[hub-runner-v8.3.7:gh-watchdog 2026-11-28T10:57:37.823Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online",
+    "[hub-runner-v8.3.7:gh-watchdog 2026-11-28T10:57:37.824Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online",
+    "[hub-runner-v8.3.7:r0 2026-11-28T11:04:01.999Z] sleep gap 감지 381s · 예산 보정 · 누적 9674s · phase=await-landing",
+    "[hub-runner-v8.3.7:m0 2026-11-28T11:04:03.311Z] sleep gap 감지 381s · 예산 보정 · 누적 9674s · phase=await-landing",
+    "[hub-runner-v8.3.7:m1 2026-11-28T11:04:07.388Z] sleep gap 감지 385s · 예산 보정 · 누적 9671s · phase=await-landing",
+    "[hub-runner-v8.3.7:m3 2026-11-28T11:04:09.444Z] sleep gap 감지 386s · 예산 보정 · 누적 9675s · phase=await-landing",
+    "[hub-runner-v8.3.7:m2 2026-11-28T11:04:10.013Z] sleep gap 감지 384s · 예산 보정 · 누적 9666s · phase=await-landing",
+    "[hub-runner-v8.3.7:sleep-tracker 2026-11-28T11:04:10.796Z] sleep observed · gap=423s · threshold=120s",
+    "[hub-runner-v8.3.7:m0 2026-11-28T11:04:13.554Z] 허브 멈춤 감지 · kind=api_error · id=M0-1128-G",
+    "[hub-runner-v8.3.7:m1 2026-11-28T11:04:14.159Z] 허브 멈춤 감지 · kind=api_error · id=M1-1128-I",
+    "[hub-runner-v8.3.7:m2 2026-11-28T11:04:14.743Z] 허브 멈춤 감지 · kind=api_error · id=M2-1128-H",
+    "[hub-runner-v8.3.7:r0 2026-11-28T11:04:15.925Z] 허브 멈춤 감지 · kind=api_error · id=R0-1128-I",
+    "[hub-runner-v8.3.7:r0 2026-11-28T11:04:25.314Z] sleep gap 감지 18s · 예산 보정 · 누적 9693s · phase=await-landing",
+    "[hub-runner-v8.3.7:m0 2026-11-28T11:04:25.897Z] sleep gap 감지 18s · 예산 보정 · 누적 9692s · phase=await-landing",
+    "[hub-runner-v8.3.7:gh-watchdog 2026-11-28T11:04:31.789Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online",
+    "[hub-runner-v8.3.7:gh-watchdog 2026-11-28T11:04:31.789Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online",
+    "[hub-runner-v8.3.7:gh-watchdog 2026-11-28T11:04:31.789Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online",
+    "[hub-runner-v8.3.7:m0 2026-11-28T11:18:32.224Z] sleep gap 감지 824s · 예산 보정 · 누적 10516s · phase=await-landing",
+    "[hub-runner-v8.3.7:m1 2026-11-28T11:18:33.986Z] sleep gap 감지 826s · 예산 보정 · 누적 10497s · phase=await-landing",
+    "[hub-runner-v8.3.7:m3 2026-11-28T11:18:34.650Z] sleep gap 감지 825s · 예산 보정 · 누적 10499s · phase=await-landing",
+    "[hub-runner-v8.3.7:m2 2026-11-28T11:18:35.846Z] sleep gap 감지 825s · 예산 보정 · 누적 10492s · phase=await-landing",
+    "[hub-runner-v8.3.7:r0 2026-11-28T11:18:39.659Z] sleep gap 감지 829s · 예산 보정 · 누적 10521s · phase=await-landing",
+    "[hub-runner-v8.3.7:sleep-tracker 2026-11-28T11:18:42.269Z] sleep observed · gap=871s · threshold=120s"
+  ]
+}
