@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T16:06:51.818Z",
+  "built_at": "2026-11-11T16:16:30.627Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -39,9 +39,9 @@
       "last_round": "M0-1105-Z",
       "last_report": "m0/M0-1105-Z-report.md",
       "current_round": "M0-1105-AQ",
-      "current_state": "started",
-      "current_at": "2026-11-11T16:04:29.925Z",
-      "current_note": "runner-v7.1 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-AQ.log"
+      "current_state": "done",
+      "current_at": "2026-11-11T16:16:30.564Z",
+      "current_note": "폴백이 reservations 경유로 inventory_item_id 보존 + 재고 1회 정확 차감 (뿌리 재고 차감 0회 해소) · #219"
     },
     "m1": {
       "last_round": "M1-1105-Z",
