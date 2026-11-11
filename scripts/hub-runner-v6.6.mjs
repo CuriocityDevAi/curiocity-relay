@@ -87,6 +87,9 @@ let lastStateContent = '';
 let lastPullResult = { ok: null, at: null, err: null };
 const hubDecisions = new Map();
 const queueSeen = new Set();
+// v6.6 REQ1: 허브 멈춤 감지
+const hubPaneHistory = new Map(); // hub → { screen, firstSeenAt }
+const hubStuckState = new Map();  // hub → { kind, since, tail } | null
 let recentLogs = [];
 const MAX_LOG_TAIL = 30;
 
@@ -113,6 +116,7 @@ const SELFTEST_RECOVERY_DONE = argv.includes('--selftest-recovery-done');
 const SELFTEST_RECOVERY_TIMEOUT = argv.includes('--selftest-recovery-timeout');
 // v6.6 신규 셀프테스트
 const SELFTEST_STALE_RECOVERY = argv.includes('--selftest-stale-recovery');
+const SELFTEST_STUCK = argv.includes('--selftest-stuck');
 const hubFlag = (() => {
   const i = argv.indexOf('--hub');
   return i >= 0 ? argv[i + 1] : null;
@@ -137,10 +141,11 @@ if (
   !SELFTEST_LOCAL_LANDING &&
   !SELFTEST_RECOVERY_DONE &&
   !SELFTEST_RECOVERY_TIMEOUT &&
-  !SELFTEST_STALE_RECOVERY
+  !SELFTEST_STALE_RECOVERY &&
+  !SELFTEST_STUCK
 ) {
   console.error(
-    'Usage: node scripts/hub-runner-v6.6.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-split --hub <hub> --id <ID> | --selftest-timeout --hub <hub> --id <ID> | --selftest-layout --hub <hub> --id <ID> | --selftest-busy --hub <hub> --id <ID> | --selftest-respawn --hub <hub> --id <ID> | --selftest-stale-lock | --selftest-dirty-push | --selftest-state-dirty | --selftest-auto-recover | --selftest-human-files | --selftest-folder-guard | --selftest-local-landing | --selftest-recovery-done | --selftest-recovery-timeout | --selftest-stale-recovery',
+    'Usage: node scripts/hub-runner-v6.6.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-split --hub <hub> --id <ID> | --selftest-timeout --hub <hub> --id <ID> | --selftest-layout --hub <hub> --id <ID> | --selftest-busy --hub <hub> --id <ID> | --selftest-respawn --hub <hub> --id <ID> | --selftest-stale-lock | --selftest-dirty-push | --selftest-state-dirty | --selftest-auto-recover | --selftest-human-files | --selftest-folder-guard | --selftest-local-landing | --selftest-recovery-done | --selftest-recovery-timeout | --selftest-stale-recovery | --selftest-stuck',
   );
   process.exit(2);
 }
@@ -248,6 +253,7 @@ function buildState() {
       last_decision_at: dec.lastDecisionAt || null,
       detect_latency_s: dec.detectLatencyS ?? null,  // v6.5 REQ5: 착지 감지 지연(s)
       stale_claim: dec.staleClaim ?? null,           // v6.6 REQ0: stale 옛 started claim 보고
+      stuck: hubStuckState.get(hub) ?? null,         // v6.6 REQ1: 허브 멈춤 감지
     };
   }
   return {
@@ -1496,6 +1502,79 @@ function clearPaneBusyExhausted(id) {
   try { rmSync(paneBusyExhaustedFile(id), { force: true }); } catch { /* noop */ }
 }
 
+// v6.6 REQ1: 허브 멈춤 감지 — started claim 보유 허브의 pane 텍스트를 주기적으로 검사.
+const API_ERROR_RE = /api.?error|exceeded|rate.?limit/i;
+const ASKING_USER_RE = /[?？]\s*$|승인|진행하면|하시겠습니까/m;
+const STUCK_ASKING_STALE_MS = 2 * 60_000;
+const STUCK_IDLE_MS = 10 * 60_000;
+
+function detectHubStuck(hub, busyItem, config) {
+  if (config.display !== 'cmux-split' || !cmuxAlive(config.cmux_bin)) return null;
+  const layout = loadHubsLayout();
+  if (!layout) return null;
+  const screen = readPaneScreen(config.cmux_bin, layout, hub);
+  if (!screen) return null;
+  const lines = screen.split('\n');
+  const tail15 = lines.slice(-15).join('\n');
+  const sinceNow = new Date().toISOString();
+
+  // 1) api_error: 화면에 오류 패턴
+  if (API_ERROR_RE.test(tail15)) {
+    return { kind: 'api_error', since: sinceNow, tail: tail15 };
+  }
+
+  const pSt = detectPaneState(config.cmux_bin, layout, hub);
+  const now = Date.now();
+
+  // 2) asking_user: claude foreground + 질문 패턴 + 2분 무변화
+  if (pSt.state === 'claude') {
+    const prev = hubPaneHistory.get(hub);
+    if (!prev || prev.screen !== screen) {
+      hubPaneHistory.set(hub, { screen, firstSeenAt: now });
+    } else if (now - prev.firstSeenAt >= STUCK_ASKING_STALE_MS) {
+      const lastFew = lines.filter(l => l.trim()).slice(-5).join('\n');
+      if (ASKING_USER_RE.test(lastFew)) {
+        return { kind: 'asking_user', since: sinceNow, tail: tail15 };
+      }
+    }
+    return null;
+  }
+  hubPaneHistory.delete(hub);
+
+  // 3) idle_no_landing: shell 상태 10분+ + 착지 없음
+  if (pSt.state === 'shell') {
+    const startedAt = busyItem?.startedAt;
+    if (startedAt && now - startedAt >= STUCK_IDLE_MS) {
+      return { kind: 'idle_no_landing', since: sinceNow, tail: tail15 };
+    }
+  }
+  return null;
+}
+
+function checkAllHubStuck(hubs, config) {
+  for (const hub of hubs) {
+    const busyItem = busy.get(hub);
+    if (!busyItem) {
+      hubStuckState.set(hub, null);
+      hubPaneHistory.delete(hub);
+      continue;
+    }
+    // started claim 이 아직 done/report 없는지 확인
+    const claim = readClaim(busyItem.id);
+    if (!claim || claim.state === 'done' || claim.state === 'blocked' || claim.state === 'cancelled') {
+      hubStuckState.set(hub, null);
+      continue;
+    }
+    const stuck = detectHubStuck(hub, busyItem, config);
+    if (stuck) {
+      hubStuckState.set(hub, stuck);
+      log(hub, `허브 멈춤 감지 · kind=${stuck.kind} · id=${busyItem.id}`);
+    } else {
+      hubStuckState.set(hub, null);
+    }
+  }
+}
+
 function findStartedClaim(hub) {
   if (!existsSync(CLAIMS_DIR)) return null;
   const prefix = hub.toUpperCase() + '-';
@@ -1848,6 +1927,9 @@ async function tick(hubs) {
 
     // v6.1: 러너 재시작 복구 — 60m 초과 "started" claim 을 blocked 처리.
     await recoverStuckStartedClaims(hubs, config);
+
+    // v6.6 REQ1: 허브 멈춤 감지 (1분 주기는 state.json 쓰기 간격으로 자연 조절).
+    checkAllHubStuck(hubs, config);
 
     for (const hub of hubs) {
       if (busy.has(hub)) continue;
@@ -2973,6 +3055,36 @@ process.stdin.resume();
     console.log(`[selftest-recovery-timeout] OK · 60m+ 초과 · pane claude 없음 → timeout blocked 보류 경로 검증`);
     process.exit(0);
   })().catch((e) => { console.error(`[selftest-recovery-timeout] 예외: ${e.message}`); process.exit(1); });
+
+} else if (SELFTEST_STUCK) {
+  // v6.6 ①: 가짜 pane 텍스트로 api_error · asking_user · idle_no_landing 판정.
+  // cmux 없이도 테스트 가능하도록 detectHubStuck 로직을 screen 직접 주입으로 단위 테스트.
+  (() => {
+    function testKind(kind, screen, busyMs = 0) {
+      const lines = screen.split('\n');
+      const tail15 = lines.slice(-15).join('\n');
+      const sinceNow = new Date().toISOString();
+      if (API_ERROR_RE.test(tail15)) return { kind: 'api_error', since: sinceNow, tail: tail15 };
+      const lastFew = lines.filter(l => l.trim()).slice(-5).join('\n');
+      const hasAsking = ASKING_USER_RE.test(lastFew);
+      const hasClaudeChrome = CLAUDE_CHROME_RE.test(tail15);
+      const isShellPrompt = SHELL_PROMPT_LINE_RE.test(lines.filter(l => l.trim()).slice(-1)[0] || '');
+      if (hasClaudeChrome && !isShellPrompt && hasAsking) return { kind: 'asking_user', since: sinceNow, tail: tail15 };
+      if (isShellPrompt && busyMs >= STUCK_IDLE_MS) return { kind: 'idle_no_landing', since: sinceNow, tail: tail15 };
+      return null;
+    }
+    const apiScreen = `> Starting task\n> API Error: exceeded output length limit of 32000 tokens\n`;
+    const askScreen = `> Here is what I found:\n❯ Should I proceed with this change? 진행하면 됩니까?\n`;
+    const idleScreen = `% cd ~/projects\n% `;
+    const r1 = testKind('api_error', apiScreen);
+    if (r1?.kind !== 'api_error') { console.error(`[selftest-stuck] FAIL api_error: ${JSON.stringify(r1)}`); process.exit(1); }
+    const r2 = testKind('asking_user', askScreen);
+    if (r2?.kind !== 'asking_user') { console.error(`[selftest-stuck] FAIL asking_user: ${JSON.stringify(r2)}`); process.exit(1); }
+    const r3 = testKind('idle_no_landing', idleScreen, STUCK_IDLE_MS + 1000);
+    if (r3?.kind !== 'idle_no_landing') { console.error(`[selftest-stuck] FAIL idle_no_landing: ${JSON.stringify(r3)}`); process.exit(1); }
+    console.log(`[selftest-stuck] OK · api_error="${r1.kind}" · asking_user="${r2.kind}" · idle_no_landing="${r3.kind}"`);
+    process.exit(0);
+  })();
 
 } else if (SELFTEST_STALE_RECOVERY) {
   // v6.6 ⓪: probeClaimCurrent 가 heartbeat 다른 ID → confirmed:false 반환 확인 · claim 미변경.
