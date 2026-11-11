@@ -1,22 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T13:46:05.455Z",
+  "built_at": "2026-11-11T13:50:11.784Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T13:45:57.110Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-11T13:45:57.110Z"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-11T13:40:08.791Z",
-      "updated_at": "2026-11-11T13:45:57.110Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -28,17 +13,92 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T13:45:57.110Z"
+      "updated_at": "2026-11-11T13:45:57.110Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T13:45:57.110Z"
+      "updated_at": "2026-11-11T13:45:57.110Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-11T13:40:08.791Z",
+      "updated_at": "2026-11-11T13:45:57.110Z",
+      "last_round": "M0-1105-Z",
+      "last_report": "m0/M0-1105-Z-report.md",
+      "current_round": "M0-1105-AN",
+      "current_state": "done",
+      "current_at": "2026-11-11T13:50:11.722Z",
+      "current_note": "runner-v6.9 cmux-split · 리포트 확인 m0/M0-1105-AN-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1105-AN.log"
+    },
+    "m1": {
+      "last_round": "M1-1105-Z",
+      "last_report": "m1/M1-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T13:50:11.784Z",
+      "current_round": "M1-1105-AT",
+      "current_state": "done",
+      "current_at": "2026-11-11T11:30:28.744Z",
+      "current_note": "R0-1105-BL 지적 3건 수정 — #61 뿌리(completed 가드) · #68/#68b skip · 로컬 2회+CI 초록"
+    },
+    "m2": {
+      "last_round": "M2-1105-Z",
+      "last_report": "m2/M2-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T13:50:11.784Z",
+      "current_round": "M2-1105-AN",
+      "current_state": "done",
+      "current_at": "2026-11-11T13:40:43.764Z",
+      "current_note": "runner-v6.9 cmux-split · 리포트 확인 m2/M2-1105-AN-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1105-AN.log"
+    },
+    "m3": {
+      "last_round": "M3-1105-Y",
+      "last_report": "m3/M3-1105-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T13:50:11.784Z",
+      "current_round": "M3-1105-AN",
+      "current_state": "done",
+      "current_at": "2026-11-11T11:29:03.766Z",
+      "current_note": "DigitsInput 공용 컴포넌트 추출 · PIN→시스템 숫자 키패드 통일 · NumericKeypad 삭제 · 신규 실패 0 · PR #90"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T13:45:57.110Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1105-BM",
+      "last_report": "r0/R0-1105-BM-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T13:50:11.784Z",
+      "current_round": "R0-1105-BM",
+      "current_state": "done",
+      "current_at": "2026-11-11T11:46:33.637Z",
+      "current_note": "(A) storeport #214 APPROVE · (B) storeport #215 APPROVE · (C) fork #90 APPROVE; 머지순서 #215→#214, fork #90만 master"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-11T13:45:57.110Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
