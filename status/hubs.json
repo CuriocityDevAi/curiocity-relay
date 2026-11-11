@@ -1,11 +1,27 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T08:01:21.214Z",
+  "built_at": "2026-11-11T08:01:57.750Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T08:01:51.525Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-11T08:01:51.525Z"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-11T08:01:44.143Z",
+      "session": "aa35f78e-bc69-4b2f-8da9-6df1f2a49c58",
+      "updated_at": "2026-11-11T08:01:51.525Z"
+    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-11T04:47:11.895Z",
+      "updated_at": "2026-11-11T08:01:51.525Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,92 +29,17 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      ]
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T04:47:11.895Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-11T08:01:51.525Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T04:47:11.895Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-11T03:35:56.727Z",
-      "updated_at": "2026-11-11T04:47:11.895Z",
-      "last_round": "M0-1105-Z",
-      "last_report": "m0/M0-1105-Z-report.md",
-      "current_round": "M0-1105-AI",
-      "current_state": "started",
-      "current_at": "2026-11-11T08:01:21.144Z",
-      "current_note": "runner-v6.6 · cmux-split · model=opus · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-AI.log"
-    },
-    "m1": {
-      "last_round": "M1-1105-Z",
-      "last_report": "m1/M1-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T07:10:10.649Z",
-      "current_round": "M1-1105-AP",
-      "current_state": "done",
-      "current_at": "2026-11-11T07:42:34.752Z",
-      "current_note": "54/57 pass · 영수증폭 diff=0px · 머리줄 Order#N · 현금버튼 50k/100k배수올림"
-    },
-    "m2": {
-      "last_round": "M2-1105-Z",
-      "last_report": "m2/M2-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T07:10:10.649Z",
-      "current_round": "M2-1105-AF",
-      "current_state": "done",
-      "current_at": "2026-11-11T07:25:01.703Z",
-      "current_note": "railway deny+hook 이중차단 완료, 실증4건, 모니터링제안"
-    },
-    "m3": {
-      "last_round": "M3-1105-Y",
-      "last_report": "m3/M3-1105-Y-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T07:10:10.649Z",
-      "current_round": "M3-1105-AI",
-      "current_state": "done",
-      "current_at": "2026-11-11T03:43:15.503Z",
-      "current_note": "부분 환불 Select items 모드 · ReturnItemsPicker · useReturnOrder(#208) · 어설션 52/52 · 스샷 3장 · PR #84"
-    },
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T04:47:11.895Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
-    },
-    "r0": {
-      "last_round": "R0-1105-BF",
-      "last_report": "r0/R0-1105-BF-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T07:10:10.649Z",
-      "current_round": "R0-1105-BG",
-      "current_state": "started",
-      "current_at": "2026-11-11T08:00:09.337Z",
-      "current_note": "runner-v6.6 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-BG.log"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-11T04:47:11.895Z",
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "updated_at": "2026-11-11T08:01:51.525Z"
     }
   }
 }
