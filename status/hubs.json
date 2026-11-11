@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T14:18:30.652Z",
+  "built_at": "2026-11-11T14:25:03.600Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -49,9 +49,9 @@
       "last_activity": null,
       "updated_at": "2026-11-11T13:50:11.784Z",
       "current_round": "M1-1105-AU",
-      "current_state": "started",
-      "current_at": "2026-11-11T14:18:30.588Z",
-      "current_note": "runner-v7.0 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1105-AU.log"
+      "current_state": "done",
+      "current_at": "2026-11-11T14:25:03.529Z",
+      "current_note": "원인=② void/refund storeId 불일치(register_session_id 폴백) → void/refund route를 Admin PIN 위젯과 동일 소스(첫 stock_location.id)로 통일, 회귀테스트#80/#81+lockout단위테스트 추가, PR#216"
     },
     "m2": {
       "last_round": "M2-1105-Z",

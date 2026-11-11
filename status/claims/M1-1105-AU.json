@@ -1,7 +1,7 @@
 {
   "id": "M1-1105-AU",
   "hub": "m1",
-  "state": "started",
-  "at": "2026-11-11T14:18:30.588Z",
-  "note": "runner-v7.0 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1105-AU.log"
+  "state": "done",
+  "at": "2026-11-11T14:25:03.529Z",
+  "note": "원인=② void/refund storeId 불일치(register_session_id 폴백) → void/refund route를 Admin PIN 위젯과 동일 소스(첫 stock_location.id)로 통일, 회귀테스트#80/#81+lockout단위테스트 추가, PR#216"
 }
