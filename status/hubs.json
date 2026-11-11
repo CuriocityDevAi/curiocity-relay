@@ -1,11 +1,26 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T10:22:18.223Z",
+  "built_at": "2026-11-11T10:34:04.559Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T10:33:30.095Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-11T10:33:30.095Z"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-11T10:25:31.878Z",
+      "updated_at": "2026-11-11T10:33:30.095Z"
+    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-11T10:19:12.390Z",
+      "updated_at": "2026-11-11T10:33:30.095Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,93 +28,17 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      ]
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T10:19:12.390Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-11T10:33:30.095Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T10:19:12.390Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-11T10:19:07.624Z",
-      "session": "611a80db-b922-44af-92db-6299b7023a57",
-      "updated_at": "2026-11-11T10:19:12.390Z",
-      "last_round": "M0-1105-Z",
-      "last_report": "m0/M0-1105-Z-report.md",
-      "current_round": "M0-1105-AL",
-      "current_state": "started",
-      "current_at": "2026-11-11T10:19:07.351Z",
-      "current_note": "runner-v6.6 · cmux-split · model=opus · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-AL.log"
-    },
-    "m1": {
-      "last_round": "M1-1105-Z",
-      "last_report": "m1/M1-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T10:20:59.450Z",
-      "current_round": "M1-1105-AS",
-      "current_state": "started",
-      "current_at": "2026-11-11T10:22:18.054Z",
-      "current_note": "runner-v6.7 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1105-AS.log"
-    },
-    "m2": {
-      "last_round": "M2-1105-Z",
-      "last_report": "m2/M2-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T10:20:59.450Z",
-      "current_round": "M2-1105-AK",
-      "current_state": "done",
-      "current_at": "2026-11-11T10:13:15.553Z",
-      "current_note": "hub-runner-v6.7: parseModelLine 추가 — 큐 파일 첫 10줄 모델 파싱 · source=queue-line|hub-default claim 기록"
-    },
-    "m3": {
-      "last_round": "M3-1105-Y",
-      "last_report": "m3/M3-1105-Y-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T10:20:59.450Z",
-      "current_round": "M3-1105-AL",
-      "current_state": "started",
-      "current_at": "2026-11-11T10:19:09.644Z",
-      "current_note": "runner-v6.6 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1105-AL.log"
-    },
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T10:19:12.390Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
-    },
-    "r0": {
-      "last_round": "R0-1105-BJ",
-      "last_report": "r0/R0-1105-BJ-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T10:20:59.450Z",
-      "current_round": "R0-1105-BJ",
-      "current_state": "done",
-      "current_at": "2026-11-11T10:20:59.377Z",
-      "current_note": "#212 APPROVE(Bug1·2 수정+로컬2회+CI pass) · #87 CHANGES(split-tender prettier lint 신규 오류) · 머지 순서 #212→#87 명시"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-11T10:19:12.390Z",
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "updated_at": "2026-11-11T10:33:30.095Z"
     }
   }
 }
