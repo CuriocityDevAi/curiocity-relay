@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T02:32:49.080Z",
+  "built_at": "2026-11-11T02:43:54.457Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -50,8 +50,8 @@
       "updated_at": "2026-11-11T01:33:25.167Z",
       "current_round": "M1-1105-AM",
       "current_state": "started",
-      "current_at": "2026-11-11T02:32:49.015Z",
-      "current_note": "runner-v6.6 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1105-AM.log"
+      "current_at": "2026-11-11T02:40:00.000Z",
+      "current_note": "Claude Code session · fix/m1-1105-ak rebase + chore/m1-1105-am-run-all"
     },
     "m2": {
       "last_round": "M2-1105-Z",
@@ -59,10 +59,10 @@
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-11T01:33:25.167Z",
-      "current_round": "M2-selftest-dirty-1794360805016",
+      "current_round": "M2-1105-AD",
       "current_state": "started",
-      "current_at": "2026-11-11T01:33:25.095Z",
-      "current_note": "selftest-dirty-push"
+      "current_at": "2026-11-11T02:43:54.393Z",
+      "current_note": "runner-v6.6 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1105-AD.log"
     },
     "m3": {
       "last_round": "M3-1105-Y",
@@ -70,10 +70,10 @@
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-11T01:33:25.167Z",
-      "current_round": "M3-1105-AG",
-      "current_state": "started",
-      "current_at": "2026-11-11T02:32:41.904Z",
-      "current_note": "runner-v6.6 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1105-AG.log"
+      "current_round": "M3-1105-AE",
+      "current_state": "done",
+      "current_at": "2026-11-10T10:01:45.000Z",
+      "current_note": "PR #77"
     },
     "n0": {
       "state": "idle",
@@ -83,13 +83,13 @@
       "last_report": "n0/N0-0914-C-report.md"
     },
     "r0": {
-      "last_round": "R0-1105-BB",
-      "last_report": "r0/R0-1105-BB-report.md",
+      "last_round": "R0-1105-BC",
+      "last_report": "r0/R0-1105-BC-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-11T01:33:25.167Z",
       "current_round": "R0-1105-BC",
-      "current_state": "started",
+      "current_state": "done",
       "current_at": "2026-11-11T02:32:44.621Z",
       "current_note": "runner-v6.6 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-BC.log"
     },
