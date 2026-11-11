@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-11T03:29:46.958Z",
+  "built_at": "2026-11-11T08:02:35.470Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-11T03:29:46.520Z"
+      "fetched_at": "2026-11-11T08:02:34.873Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-11T03:29:46.652Z"
+      "fetched_at": "2026-11-11T08:02:35.056Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6061,8 +6061,8 @@
             },
             {
               "id": "pos-void-refund",
-              "name": "POS 보이드·환불·매니저 PIN (M0-1105-AB)",
-              "summary": "일일 매니저 PIN (HMAC 결정적 계산·WIB 자정 교체·5회 잠금 15분·DB 저장 없음) · GET /admin/pos/manager-pin (오늘 PIN 반환 · Admin UI 위젯 노출) · POST /admin/pos/manager-pin/verify (PIN 검증 · 오입력 5회 15분 잠금) · POST /admin/pos/orders/:id/void (cancelOrderWorkflow · 같은 교대만 · CARD 단말기 승인번호 PIN 불필요 · 그 외 CASH + PIN) · POST /admin/pos/orders/:id/refund (refundPaymentWorkflow · 전체 환불 · CARD terminal_approval_code 또는 CASH + PIN · 현금 지급 시 Cash Movement adjustment(-amount) 자동 생성 · 영수증 kind=void/refund).",
+              "name": "POS 보이드·환불·반품·매니저 PIN (M0-1105-AB · AC · AE)",
+              "summary": "일일 매니저 PIN (HMAC 결정적 계산·WIB 자정 교체·5회 잠금 15분·DB 저장 없음) · GET /admin/pos/manager-pin (오늘 PIN 반환 · Admin UI 위젯 노출) · POST /admin/pos/manager-pin/verify (PIN 검증 · 오입력 5회 15분 잠금) · POST /admin/pos/orders/:id/void (cancelOrderWorkflow · 같은 교대만 · CARD 단말기 승인번호 PIN 불필요 · 그 외 CASH + PIN) · POST /admin/pos/orders/:id/refund (refundPaymentWorkflow · 전체 환불 · CARD terminal_approval_code 또는 CASH + PIN · 현금 지급 시 Cash Movement adjustment(-amount) 자동 생성 · 영수증 kind=void/refund) · POST /admin/pos/orders/:id/return (품목 수량 단위 부분 환불 · items[{line_item_id, quantity}] · 서버가 line_total 비율대로 할인·세금 배분 후 Math.round · refundPaymentWorkflow 부분 금액 + inventoryModule.adjustInventory(+qty) 복귀 · 누적 반품 수량 + 요청 > 산 수량 400 · M0-1105-AE: Guard A (items 해시 409) 제거 → 분할 반품 (qty 2 → qty 1 + qty 1) 둘 다 200 · 동시 요청의 재고 이중 복귀는 주문 단위 in-memory 큐로 직렬화 · PIN 계산 storeId 는 Admin 위젯과 동일 소스 (stock_location.id · register_session_id 폴백 제거)).",
               "files": [
                 "apps/commerce-core/src/api/admin/pos/_shared/manager-pin.ts",
                 "apps/commerce-core/src/api/admin/pos/manager-pin/**"
@@ -6477,7 +6477,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-11T03:29:46.957Z"
+      "fetched_at": "2026-11-11T08:02:35.470Z"
     }
   ],
   "rollup": {
