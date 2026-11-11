@@ -1,22 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T10:47:18.669Z",
+  "built_at": "2026-11-11T10:51:26.509Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T10:47:01.023Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-11T10:47:01.023Z"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-11T10:41:29.117Z",
-      "updated_at": "2026-11-11T10:47:01.023Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -28,17 +13,92 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T10:47:01.023Z"
+      "updated_at": "2026-11-11T10:47:01.023Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T10:47:01.023Z"
+      "updated_at": "2026-11-11T10:47:01.023Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-11T10:41:29.117Z",
+      "updated_at": "2026-11-11T10:47:01.023Z",
+      "last_round": "M0-1105-Z",
+      "last_report": "m0/M0-1105-Z-report.md",
+      "current_round": "M0-1105-AL",
+      "current_state": "done",
+      "current_at": "2026-11-11T10:41:19.637Z",
+      "current_note": "환불 all-or-nothing + cross-tender 재분배 · PR #214 · pos-int 77/77 x2"
+    },
+    "m1": {
+      "last_round": "M1-1105-Z",
+      "last_report": "m1/M1-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T10:51:26.509Z",
+      "current_round": "M1-1105-AS",
+      "current_state": "done",
+      "current_at": "2026-11-11T10:44:47.917Z",
+      "current_note": "fulfillment pre-cancel 로 POS void 뿌리 해소 · storeport#215"
+    },
+    "m2": {
+      "last_round": "M2-1105-Z",
+      "last_report": "m2/M2-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T10:51:26.509Z",
+      "current_round": "M2-1105-AL",
+      "current_state": "started",
+      "current_at": "2026-11-11T10:44:09.804Z",
+      "current_note": "runner-v6.7 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1105-AL.log"
+    },
+    "m3": {
+      "last_round": "M3-1105-Y",
+      "last_report": "m3/M3-1105-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T10:51:26.509Z",
+      "current_round": "M3-1105-AL",
+      "current_state": "started",
+      "current_at": "2026-11-11T10:19:09.644Z",
+      "current_note": "runner-v6.6 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1105-AL.log"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T10:47:01.023Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1105-BK",
+      "last_report": "r0/R0-1105-BK-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T10:51:26.509Z",
+      "current_round": "R0-1105-BK",
+      "current_state": "done",
+      "current_at": "2026-11-11T10:51:26.436Z",
+      "current_note": "CHANGES · (a) partial refund remains after mid-stream failure · pending 필드 추가 필요 · (b)~(e) PASS"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-11T10:47:01.023Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
