@@ -1,22 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T16:22:00.284Z",
+  "built_at": "2026-11-11T16:28:13.169Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T16:21:51.501Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-11T16:21:51.501Z"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-11T16:16:30.262Z",
-      "updated_at": "2026-11-11T16:21:51.501Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -28,17 +13,92 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T16:21:51.501Z"
+      "updated_at": "2026-11-11T16:21:51.501Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T16:21:51.501Z"
+      "updated_at": "2026-11-11T16:21:51.501Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-11T16:16:30.262Z",
+      "updated_at": "2026-11-11T16:21:51.501Z",
+      "last_round": "M0-1105-Z",
+      "last_report": "m0/M0-1105-Z-report.md",
+      "current_round": "M0-1105-AQ",
+      "current_state": "done",
+      "current_at": "2026-11-11T16:16:30.564Z",
+      "current_note": "폴백이 reservations 경유로 inventory_item_id 보존 + 재고 1회 정확 차감 (뿌리 재고 차감 0회 해소) · #219"
+    },
+    "m1": {
+      "last_round": "M1-1105-Z",
+      "last_report": "m1/M1-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T16:28:13.169Z",
+      "current_round": "M1-1105-AX",
+      "current_state": "blocked",
+      "current_at": "2026-11-11T16:28:13.103Z",
+      "current_note": "timeout 60m · runner-v7.1 cmux-split · pane 유지 (C-c + /exit 전송) · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1105-AX.log"
+    },
+    "m2": {
+      "last_round": "M2-1105-Z",
+      "last_report": "m2/M2-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T16:28:13.169Z",
+      "current_round": "M2-1105-AP",
+      "current_state": "done",
+      "current_at": "2026-11-11T15:56:59.397Z",
+      "current_note": "PR #218 · cancel workflow required_quantity 크래시 사전 판정 + 안전 fallback 삼단"
+    },
+    "m3": {
+      "last_round": "M3-1105-Y",
+      "last_report": "m3/M3-1105-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T16:28:13.169Z",
+      "current_round": "M3-1105-AS",
+      "current_state": "done",
+      "current_at": "2026-11-11T15:59:05.582Z",
+      "current_note": "rebase #95 · RefundRetrySheet displayBoxes + 6자리 DigitsInput · 스샷 갱신 · 신규실패 0"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T16:21:51.501Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1105-BT",
+      "last_report": "r0/R0-1105-BT-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T16:28:13.169Z",
+      "current_round": "R0-1105-BT",
+      "current_state": "done",
+      "current_at": "2026-11-11T16:21:12.039Z",
+      "current_note": "A=APPROVE(돈·Kyu 머지) · B=CHANGES(AR rebase 뒤 AL/AM/AN·AR 어설션 스크립트 stale 15건)"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-11T16:21:51.501Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
