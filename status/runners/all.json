@@ -1,11 +1,11 @@
 {
-  "at": "2026-11-11T11:12:47.652Z",
+  "at": "2026-11-11T11:20:49.817Z",
   "pid": 68126,
   "runner": "v6.8",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": null,
+  "last_error": "blocked: runner-folder change pending Kyu install (scripts/hub-runner-v6.9.mjs)",
   "hubs": {
     "m0": {
       "current": null,
@@ -30,10 +30,8 @@
       "last_activity": null
     },
     "r0": {
-      "current": "R0-1105-BL",
-      "started_at": "2026-11-11T11:01:29.595Z",
-      "model": "sonnet",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-11T11:20:13.437Z"
     }
   }
 }
