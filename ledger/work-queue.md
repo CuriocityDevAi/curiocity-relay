@@ -1,6 +1,6 @@
 # 작업 큐 (Kyu 의뢰 → 허브 할당 · 우선순위 · 상태 · 이유)
 
-갱신 2026-11-11 18:20 WIB · 당일 스냅샷 = `ledger/handoff-20261111.md`(오늘 마감 때 작성 예정) · 직전 = `ledger/handoff-20261110-evening.md` · 규칙(Kyu 11-05): 오케는 매 응답 현황판 아래에 이 표를 붙이고(바뀐 줄 굵게), 우선순위 변경 시 "↑/↓ 이유". 정본 = 이 파일 · **오케가 갱신** · 최소 하루 1회. 프롬프트별 실시간 상태 = 상태판 https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE
+갱신 2026-11-11 16:20 WIB · 당일 스냅샷 = `ledger/handoff-20261111.md`(오늘 마감 때 작성 예정) · 직전 = `ledger/handoff-20261110-evening.md` · 규칙(Kyu 11-05): 오케는 매 응답 현황판 아래에 이 표를 붙이고(바뀐 줄 굵게), 우선순위 변경 시 "↑/↓ 이유". 정본 = 이 파일 · **오케가 갱신** · 최소 하루 1회. 프롬프트별 실시간 상태 = 상태판 https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE
 
 결정 정본 파일(원문 보존 · 유지): [decision-delivery-ui-20261110](decision-delivery-ui-20261110.md) · [decision-p6-20261110](decision-p6-20261110.md) · [decision-p6-split-20261111](decision-p6-split-20261111.md) · [decision-checkout-ui-20261111](decision-checkout-ui-20261111.md) · [decision-p6-test-20261111](decision-p6-test-20261111.md) · 장치 사건 [device-incidents](device-incidents.md) · 지표 [metrics](metrics.md)
 
