@@ -1,11 +1,11 @@
 {
-  "at": "2026-11-11T11:37:45.026Z",
+  "at": "2026-11-11T11:39:09.501Z",
   "pid": 68126,
   "runner": "v6.8",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": "blocked: runner-folder change pending Kyu install (scripts/hub-runner-v6.9.mjs)",
+  "last_error": "blocked: runner-folder change pending Kyu install (queue/r0/R0-1105-BM.md)",
   "hubs": {
     "m0": {
       "current": null,
@@ -24,13 +24,13 @@
       "last_activity": null
     },
     "m3": {
-      "current": "M3-1105-AN",
-      "started_at": "2026-11-11T11:07:18.675Z",
-      "model": "sonnet",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-11T11:39:08.094Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1105-BM",
+      "started_at": "2026-11-11T11:39:01.805Z",
+      "model": "sonnet",
       "last_activity": "2026-11-11T11:20:13.437Z"
     }
   }
