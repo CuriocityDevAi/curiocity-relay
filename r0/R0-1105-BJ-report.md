@@ -1,0 +1,129 @@
+# R0-1105-BJ 리뷰 리포트
+
+## 판정
+
+| PR | 판정 | 한 줄 |
+|----|------|-------|
+| storeport #212 M0-1105-AK 나눠 결제 서버 재리뷰 | **APPROVE** | Bug 1·2 수정 확인 · 로컬 2회 + CI pass · #68 skip 이연 타당 |
+| agilo-medusa-pos-fork #87 M3-1105-AK 나눠 결제 앱 UI | **CHANGES** | split-tender/[draftOrderId].tsx prettier error 신규 lint FAIL |
+
+**머지 순서 명시**: #212 먼저 · #87 은 #212 머지 후에만 머지.
+
+---
+
+## (A) PR #212 — storeport M0-1105-AK 재리뷰
+
+### 버그 2건 검증 표
+
+| # | 항목 | 수정 위치 | 수정 내용 | 회귀 테스트 | 결과 |
+|---|------|-----------|-----------|-------------|------|
+| Bug 1 | preorder DP `receipt_kind` 회귀 | `tenders/route.ts:912` | `isComplete` 조건 `effectiveOrderType==='preorder' ? true` 분기 추가 — split 게이트 밖. `isBalanceTender` 조건 흡수 (로직 동치) | #70: preorder DP → `receipt_kind='sale'` · `receipt_id` 발급 | ✅ 수정 확인 |
+| Bug 2 | `paidSoFarBefore` reader-replica 타이밍 | `tenders/route.ts:356` | `order.payment_collections` 경로 제거 → `order.metadata.tenders[]` 기반 재계산. append 실패 fatal(500) 승격 | #71: 2차 split → `tender_sequence=2 · is_complete=true · metadata.tenders 2건` | ✅ 수정 확인 |
+
+### 로컬 2회 + CI
+
+| 실행 | 결과 |
+|------|------|
+| 로컬 1회 | ✅ 75 pass · 1 skip · 0 fail |
+| 로컬 2회 | ✅ 75 pass · 1 skip · 0 fail |
+| CI run #43000918468 | ✅ pos-integration pass · check pass · markers-and-forbidden pass |
+
+### S1~S4 체크표
+
+| # | 항목 | CI 검증 | 비고 |
+|---|------|---------|------|
+| S1 | tender 최대 2개 | ✅ #66 pass | Bug 2 수정으로 `tenderCountBefore` 정상 → S1 가드 올바름 |
+| S2 | CASH 포함 → PIN 필수 | ✅ #67 pass | |
+| S3 | 환불 CASH 먼저 | ⚠️ #68 skip | 신규 이연 (하단) |
+| S4 | preorder + split 배타 | ✅ #69 pass | |
+
+### 신규 이연 (#68 `it.skip`) 타당성
+
+원인: `return/route.ts` 의 `refundableCap` 이 `allPayments[0]` 단일 payment 기준 → split 주문에서 line share 가 origin cap 초과 시 `refundAmount` 조기 cap · cross-payment 재분배(CASH-first) 미실행.
+
+판단: **타당**. R0-1105-BI 기존 이연(multi `refundPaymentWorkflow` 부분 실패 무롤백)과 독립된 2차 이연. 본 PR 지시서(M0-1105-AK) 범위가 `tenders` 라우트 + `tenders.spec.ts` 로 한정돼 있어 `return/route.ts` 수정 보류 · `it.skip` 명시 처리는 적절. 다음 M0 fix 대상.
+
+### R0-1105-BI 스레드 resolve
+
+리뷰 스레드 없음(thread 0건) — M0가 PR 코멘트로 반영 사항을 보고함. 버그 2건 수정 확인 완료 → resolve 처리 불필요.
+
+---
+
+## (B) PR #87 — agilo-medusa-pos-fork M3-1105-AK
+
+### S1~S4 + 현금 버튼 + 영수증 체크표
+
+| # | 항목 | 결과 | 근거 |
+|---|------|------|------|
+| S1 | 최대 2수단 (3번째 → 400) | ✅ | 2-step 화면 구조로 3번째 진입 불가 · `split-tender-400-max.json` fixture 확인 |
+| S2 | PIN 시트 안 단계 (중첩 Modal 금지) | ✅ | `MIXED_TERMINAL_OPTION.requiresPin=true` · `VoidRefundSheet` 내 처리 · 별도 Modal 없음 — #86 회귀 없음 |
+| S3 | 2차 금액 = remaining prefill (수정 불가) | ✅ | `remaining = firstResponse?.remaining` (서버 authoritative) · InfoBanner 고정 표시 · Step 2 TextInput 없음 |
+| S4 | 선주문 DP Split 불가 (버튼 비활성) | ✅ | `splitDisabled = payDisabled \|\| orderType === 'preorder'` · "Split payment is not available for pre-orders" 힌트 |
+| 현금 버튼 | 포션 금액 기준 재사용 | ✅ | `CashTenderPanel total={firstAmount}` (1차) / `total={remaining}` (2차) — decision-checkout-ui-20261111 준수 |
+| 영수증 | 두 수단 모두 표시 | ⚠️ | 서버 `metadata.tenders[]` 재구성 경로 의존 — Playwright E2E 미구성으로 미검증 |
+
+### run-all 어설션 결과
+
+| 구분 | 수 | 비고 |
+|------|----|------|
+| 전체 assertion scripts | 34 | |
+| PASS | 31 | |
+| FAIL — m3-1105-ad (2건) | 기존 | `verify 401 mismatch` · `verify 423 locked` — AD 알려진 기존 실패 |
+| FAIL — m3-1105-ae (1건) | 기존 | `receipt kind='void' refund_watermark` — AE 알려진 기존 실패 |
+| FAIL — m3-1105-d (3건) | 기존 | `Send to production (preorder)` · `Pack (delivery)` 등 — D 알려진 기존 실패 |
+| **신규 실패** | **0** | ✅ |
+
+### ❌ 신규 Lint 오류 (CHANGES 사유)
+
+```
+app/checkout/split-tender/[draftOrderId].tsx:66:25
+  error    Delete `⏎···`    prettier/prettier
+```
+
+이 파일은 본 PR 신규 추가. prettier 포맷 오류로 lint CI FAIL. 수정 방법: `npx prettier --write "app/checkout/split-tender/[draftOrderId].tsx"` 후 커밋.
+
+(`success/[orderId].tsx:42` / `tender-cash/[draftOrderId].tsx` prettier 오류는 본 PR 범위 밖 기존 이슈.)
+
+### 기타 non-blocking
+
+`lib/refund-rules.ts:pickOriginalTender` dead branch: `tenderTypes.size === 1 && tenderTypes.has('cash') && active.some(p => ... !== 'cash')` 는 `size === 1 + has('cash')` 이면 `some` 조건이 항상 `false` — 도달 불가. 버그는 아니나 혼란 소지. 비우선 정리 권장.
+
+### #87 머지 조건
+
+**#87 은 storeport #212 머지 후에만 머지** (API 계약 `tender_sequence · paid_so_far · remaining · is_complete · receipt_kind` 필드 의존).
+
+---
+
+## 실행 로그
+
+```
+# 로컬 run 1
+Tests: 1 skipped, 75 passed, 76 total  Time: 54.8s
+
+# 로컬 run 2
+Tests: 1 skipped, 75 passed, 76 total  Time: 54.0s
+
+# CI PR #212 — pos-integration
+pos-integration  pass  2m33s  run #43000918468
+
+# CI PR #87 — assertions run-all
+총 34개 · 31 PASS · 3 FAIL (AD/AE/D 기존) · 55.4s
+
+# CI PR #87 — lint
+FAIL: split-tender/[draftOrderId].tsx:66 prettier/prettier error (신규)
+```
+
+---
+
+## 이연 순증감
+
+| 항목 | 방향 |
+|------|------|
+| (+) PR #212 Bug 1·2 수정 완료 → BI CHANGES 이연 소진 | 이연 소진 |
+| (-) `return/route.ts` refundableCap single-payment (#68 skip) | 신규 이연 · M0 다음 fix 대상 |
+| (-) PR #87 split-tender prettier lint 오류 | 신규 이연 · M3 fix 필요 |
+| (유지) `return/route.ts` multi-`refundPaymentWorkflow` 무롤백 | BI 기존 이연 · 미해소 |
+
+---
+
+*generated by R0 · 2026-11-11*
