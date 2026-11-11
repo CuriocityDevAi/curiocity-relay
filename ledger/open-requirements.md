@@ -1,14 +1,14 @@
 # CurioCity 열린 요구 원장 (오케 유지 · Kyu 원문 기준)
 
-갱신: 2026-11-11 17:16 WIB (11-09 11:05 판 + 11-10~11 결정·착지 통합) · 규칙: 새 요구 = 여기 먼저 등재(Kyu 원문 그대로 · 오케 번역은 괄호) · 소유 허브 필수 · 착지·실기 통과 시 ✅ · 이 파일이 챗보다 우선
+갱신: 2026-11-11 17:55 WIB (11-09 11:05 판 + 11-10~11 결정·착지 통합) · 규칙: 새 요구 = 여기 먼저 등재(Kyu 원문 그대로 · 오케 번역은 괄호) · 소유 허브 필수 · 착지·실기 통과 시 ✅ · 이 파일이 챗보다 우선
 **발부 규약(09-16)**: 모든 프롬프트 작성 직전 이 파일을 읽고 `원장 대사:` 한 줄. 재언급 🔴. 주 1회 미발부 요구 표.
 **갱신 규약(11-06)**: 결정·착지마다(최소 하루 1회) 이 파일 + `work-queue.md` 갱신. **이 파일이 기억의 정본**.
 **세션 교체 규약(11-09)**: 오케 세션·클로드코드 허브 세션은 **매일 새로**. 마감 시 `ledger/handoff-<날짜>.md`(당일 스냅샷) 작성. 새 세션 첫 줄: `CurioCity 오케. relay ledger/open-requirements.md · work-queue.md · 최신 handoff 읽고 현황판부터.` **최신 handoff: 오늘(11-11) 마감 때 `ledger/handoff-20261111.md` 가 작성될 예정 — 그 파일이 생기기 전까지의 직전 판 = `ledger/handoff-20261110-evening.md`.**
 **상태판**: https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE · 자동 투입: `queue/<hub>/<ID>.md` → Kyu Mac hub-runner(v6.5 가동 · v6.6 = M2-1105-AC).
 
-## 11-11 통합 — P6·배달·결제 화면 (결정 파일 5개 · 원문은 각 파일 유지)
+## 11-11 통합 — P6·배달·결제 화면 (결정 파일 6개 · 원문은 각 파일 유지)
 
-결정 정본(링크): [decision-p6-20261110](decision-p6-20261110.md)(환불·보이드·분할 Q1~Q5 · CARD 단말기 VOID/REFUND = PIN 없음 · 실패/CASH/QRIS = 현금 + 매니저 PIN · PIN 4자리 하루 1회 · Admin 표시) · [decision-p6-split-20261111](decision-p6-split-20261111.md)(S1~S4 "전부 권장." · 최대 2 tender · CASH 포함 시 PIN · 환불 현금부터 · 선주문과 상호 배타) · [decision-delivery-ui-20261110](decision-delivery-ui-20261110.md)(배달·선주문 결제 완료 화면 Hand over 제거 · courier 없는 fulfill 서버 거절 · 상태 표시 이름) · [decision-checkout-ui-20261111](decision-checkout-ui-20261111.md)(실기 A 원문 · 영수증 폭 🔴 2회째 · 경로 제목 · 현금 버튼 확정 규칙) · [decision-p6-test-20261111](decision-p6-test-20261111.md)(P6 실기 B 절차 · PIN 위치 변경 16:28).
+결정 정본(링크): [decision-p6-20261110](decision-p6-20261110.md)(환불·보이드·분할 Q1~Q5 · CARD 단말기 VOID/REFUND = PIN 없음 · 실패/CASH/QRIS = 현금 + 매니저 PIN · PIN 4자리 하루 1회 · Admin 표시) · [decision-p6-split-20261111](decision-p6-split-20261111.md)(S1~S4 "전부 권장." · 최대 2 tender · CASH 포함 시 PIN · 환불 현금부터 · 선주문과 상호 배타) · [decision-delivery-ui-20261110](decision-delivery-ui-20261110.md)(배달·선주문 결제 완료 화면 Hand over 제거 · courier 없는 fulfill 서버 거절 · 상태 표시 이름) · [decision-checkout-ui-20261111](decision-checkout-ui-20261111.md)(실기 A 원문 · 영수증 폭 🔴 2회째 · 경로 제목 · 현금 버튼 확정 규칙) · [decision-p6-test-20261111](decision-p6-test-20261111.md)(P6 실기 B 절차 · PIN 위치 변경 16:28) · [decision-refund-failure-20261111](decision-refund-failure-20261111.md)(환불 중간 실패 = A안 "남은 금액 다시 환불" · 17:53).
 
 ### ✅ 완료 (머지 · 실기 통과)
 - ✅ 배달 결제 완료 화면 Done · Orders 목록 Awaiting dispatch · 주문 상세 상태 이름 — fork **#79 #83** 머지 · 실기(주문 상세) 통과 11-11.
@@ -22,10 +22,11 @@
 - **[M3] P6 실기 B — PIN 숫자 키패드·칸 건너뜀 (decision-p6-test-20261111 17:12)** — 상태: 발부 **M3-1105-AL** · Kyu 원문: "void 시험에서 Manger PIN 을 입력하는 부분이 있는데, 비번 4자리를 입력하는 박스가 나오고 입력할수 있는 키보드가 나오는데, 문제는 키보드가 너무 큰게 나와. 즉, 숫자 키패드만 나오면 되는데, 알파벳까지 입력할수 있는 전체 키보드가 나오면서 화면을 다 잡아먹어. > 그냥 숫자 키패드만 나오도록변경. 그리고 숫자를 입력해보니, 숫자를 입력하는 칸이 4개가 있는데, 첫째 칸에 숫자를 입력하니 2번째 칸으로 커서가 넘어가는게 아니라 3번째 칸으로 넘어감. 내가 다시 포커스를 2번째 칸으로 옮겨서 숫자를 입력하니 4번째 칸으로 커서가 움직임. 이거 문제야. 원인파악해서 고쳐줘."
 - **[M3] 키패드 재활용 (decision-p6-test-20261111 17:15)** — 소유 M3 · 상태: M3-1105-AL 진행 중 — 답 받은 뒤 기존 키패드 재활용 반영 · Kyu 원문: "앱 안에서 숫자 키패드가 따로 있었어. 같은 키패드를 쓰면될듯. 재활용필요!"
 - **[M1] Void 실패 (decision-p6-test-20261111 17:15)** — 소유 M1 · 상태: **M1-1105-AS 발부**(11-11 17:22 WIB · #212 머지 c1148df 이후 main 기준) · Kyu 원문: "Void 도 실패야. order has active fulfillment ... 라는 검은 알약 toast 메세지가 나옴."
+- **[M0] 환불 중간 실패 = "남은 금액 다시 환불" (decision-refund-failure-20261111 · Kyu 17:53 WIB)** — 소유: 서버 M0 · 앱 버튼 M3(서버 계약 착지 후 나중) · 상태: **M0-1105-AM 발부**(storeport #214 이어서 · R0-1105-BK CHANGES 반영 · AL 은 changes) · Kyu 원문: "A (권장): 지금 방식에 "남은 금액 다시 환불" 버튼을 더해" · 카드 환불은 비가역이라 진짜 롤백 불가 → 부분 환불은 기록·재시도 가능하면 허용 · S3(CASH 먼저) 유지.
 - **Admin PIN = 왼쪽 메뉴**(Kyu 11-11 16:28 원문 "왼쪽 메뉴 방식으로 변경." · 11-11 15:17 의 "오른쪽 위 4자리 버튼" 요구를 대체 · 하단 카드 제거 · 페이지에 오늘 PIN 크게 + 다음 변경 시각 + 매장 + 날짜 · WIB 자정 자동 갱신) — storeport #211(M1-1105-AQ · DOM 주입)은 **머지 없이 닫음** → **M1-1105-AR**(공식 Admin UI route · 사이드바) 발부. 원장 대사 = "Admin PIN 위치 = 왼쪽 메뉴 (decision-p6-test-20261111 16:28)". ✅ 실기 통과 11/11 17:06 (#213 e5e2449)
 - **나눠 결제**(P6 3차 · S1~S4 서버) — storeport **#212**(M0-1105-AJ) → R0-1105-BI 버그 2건 지적 → M0-1105-AK 수정 → R0-1105-BJ 재리뷰 APPROVE → **#212 머지 c1148df**(11-11). 앱 fork **#87**(M3-1105-AK · 나눠 결제 UI)은 R0-BJ CHANGES(split-tender/[draftOrderId].tsx:66 prettier lint 오류) — 수정 후 머지(#212 머지로 조건 충족). 후속: 영수증 renderer(M0-AK) · 앱 Pay in parts UI(M0-AL) · 추가 통합 시나리오(M0-AM).
   - **이연(M0-1105-AK · 11-11) — M0-1105-AL 진행**: 환불 때 나눠 결제 품목 몫이 원 결제 한도보다 크면 환불액이 먼저 잘리고 다른 결제 수단으로 재분배가 안 됨(`return/route.ts:262` refundableCap · test #68 skip) — M0-1105-AL 진행.
-  - **이연(R0-1105-BI) — M0-1105-AL 진행**: 환불이 여러 결제에 걸쳐 일부만 실패하면 롤백이 없음(multi refundPaymentWorkflow 부분 실패 무롤백) — M0-1105-AL 진행.
+  - **이연(R0-1105-BI) — M0-1105-AL 진행**: 환불이 여러 결제에 걸쳐 일부만 실패하면 롤백이 없음(multi refundPaymentWorkflow 부분 실패 무롤백) — M0-1105-AL 진행 → R0-1105-BK 가 롤백 불가(비가역)로 CHANGES → 결정 A 로 **M0-1105-AM** 이 이어받음.
 - **방법론 리포**(Kyu: 일하는 방식을 유실되지 않는 문서로) — `CuriocityDevAi/curiocity-devai-method`(private · 29파일 1,645줄 · v1.0 · 4567df4 · M2-1105-AG 착지). 남은 일: **Kyu 가 Claude GitHub 연결에 리포 추가(K-1111-method-access)** → 오케 검토 · MP-006 후보 2건(metrics 주간 집계 절차 · R0 APPROVE 후 오케 squash 머지에 대한 Kyu 명시 승인) 결정.
 
 ### ⏳ 외부 대기
