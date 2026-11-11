@@ -1,11 +1,27 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T09:54:55.914Z",
+  "built_at": "2026-11-11T09:55:14.987Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T09:55:09.405Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-11T09:55:09.405Z"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-11T09:55:05.848Z",
+      "session": "97e1bb72-4a12-4e69-b4a4-d224627f7f6b",
+      "updated_at": "2026-11-11T09:55:09.405Z"
+    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-11T08:53:51.274Z",
+      "updated_at": "2026-11-11T09:55:09.405Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,92 +29,17 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      ]
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T08:53:51.274Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-11T09:55:09.405Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T08:53:51.274Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-11T08:47:58.451Z",
-      "updated_at": "2026-11-11T08:53:51.274Z",
-      "last_round": "M0-1105-Z",
-      "last_report": "m0/M0-1105-Z-report.md",
-      "current_round": "M0-1105-AK",
-      "current_state": "started",
-      "current_at": "2026-11-11T09:54:55.848Z",
-      "current_note": "runner-v6.6 · cmux-split · model=opus · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-AK.log"
-    },
-    "m1": {
-      "last_round": "M1-1105-Z",
-      "last_report": "m1/M1-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T09:00:15.029Z",
-      "current_round": "M1-1105-AR",
-      "current_state": "done",
-      "current_at": "2026-11-11T09:33:55.310Z",
-      "current_note": "매니저 PIN 왼쪽 메뉴 공식 route 전환 · 위젯 삭제 · 단위테스트 · PR #213"
-    },
-    "m2": {
-      "last_round": "M2-1105-Z",
-      "last_report": "m2/M2-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T09:00:15.029Z",
-      "current_round": "M2-1105-AI",
-      "current_state": "done",
-      "current_at": "2026-11-11T09:48:02.288Z",
-      "current_note": "v1.2 오케 검토 4건 반영: 메인창 분리·상태판 패널·감시 규칙·모델표 통일"
-    },
-    "m3": {
-      "last_round": "M3-1105-Y",
-      "last_report": "m3/M3-1105-Y-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T09:00:15.029Z",
-      "current_round": "M3-1105-AJ",
-      "current_state": "done",
-      "current_at": "2026-11-11T08:32:53.053Z",
-      "current_note": "iOS Modal 중첩 버그: VoidRefundSheet에 PIN 단계 인라인화로 ManagerPinSheet 중첩 렌더링 제거 → PR #86"
-    },
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T08:53:51.274Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
-    },
-    "r0": {
-      "last_round": "R0-1105-BI",
-      "last_report": "r0/R0-1105-BI-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T09:00:15.029Z",
-      "current_round": "R0-1105-BI",
-      "current_state": "done",
-      "current_at": "2026-11-11T09:47:54.155Z",
-      "current_note": "#212 CHANGES(Bug1 preorder DP receipt_kind 회귀·Bug2 paidSoFarBefore 타이밍·CI FAIL) · #213 APPROVE(CI pass·DOM주입없음)"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-11T08:53:51.274Z",
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "updated_at": "2026-11-11T09:55:09.405Z"
     }
   }
 }
