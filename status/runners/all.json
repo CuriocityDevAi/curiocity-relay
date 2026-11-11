@@ -1,33 +1,33 @@
 {
-  "at": "2026-11-10T08:56:40.302Z",
-  "pid": 62635,
-  "runner": "v6.3",
-  "poll_ms": 60000,
+  "at": "2026-11-11T11:01:30.684Z",
+  "pid": 68126,
+  "runner": "v6.8",
+  "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
+  "last_error": null,
   "hubs": {
     "m0": {
-      "current": "M0-1105-AB",
-      "started_at": "2026-11-10T08:50:19.895Z",
-      "model": "opus"
+      "current": null,
+      "last_activity": null
     },
     "m1": {
-      "current": "M1-1105-AG",
-      "started_at": "2026-11-10T08:50:20.867Z",
-      "model": "sonnet"
+      "current": null,
+      "last_activity": null
     },
     "m2": {
-      "current": null
+      "current": null,
+      "last_activity": null
     },
     "m3": {
-      "current": "M3-1105-AD",
-      "started_at": "2026-11-10T08:56:38.771Z",
-      "model": "opus"
+      "current": null,
+      "last_activity": null
     },
     "r0": {
-      "current": "R0-1105-AW",
-      "started_at": "2026-11-10T08:50:21.834Z",
-      "model": "sonnet"
+      "current": "R0-1105-BL",
+      "started_at": "2026-11-11T11:01:29.595Z",
+      "model": "sonnet",
+      "last_activity": null
     }
   }
 }
