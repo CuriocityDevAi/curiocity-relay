@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-11T03:19:07.657Z",
+  "built_at": "2026-11-11T03:29:46.958Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-11T03:19:07.281Z"
+      "fetched_at": "2026-11-11T03:29:46.520Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-11T03:19:07.406Z"
+      "fetched_at": "2026-11-11T03:29:46.652Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6056,6 +6056,16 @@
               "files": [
                 "apps/commerce-core/src/modules/pos_settings/**",
                 "apps/commerce-core/src/api/admin/pos/settings/**"
+              ],
+              "status": "live"
+            },
+            {
+              "id": "pos-void-refund",
+              "name": "POS 보이드·환불·매니저 PIN (M0-1105-AB)",
+              "summary": "일일 매니저 PIN (HMAC 결정적 계산·WIB 자정 교체·5회 잠금 15분·DB 저장 없음) · GET /admin/pos/manager-pin (오늘 PIN 반환 · Admin UI 위젯 노출) · POST /admin/pos/manager-pin/verify (PIN 검증 · 오입력 5회 15분 잠금) · POST /admin/pos/orders/:id/void (cancelOrderWorkflow · 같은 교대만 · CARD 단말기 승인번호 PIN 불필요 · 그 외 CASH + PIN) · POST /admin/pos/orders/:id/refund (refundPaymentWorkflow · 전체 환불 · CARD terminal_approval_code 또는 CASH + PIN · 현금 지급 시 Cash Movement adjustment(-amount) 자동 생성 · 영수증 kind=void/refund).",
+              "files": [
+                "apps/commerce-core/src/api/admin/pos/_shared/manager-pin.ts",
+                "apps/commerce-core/src/api/admin/pos/manager-pin/**"
               ],
               "status": "live"
             },
@@ -6467,7 +6477,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-11T03:19:07.656Z"
+      "fetched_at": "2026-11-11T03:29:46.957Z"
     }
   ],
   "rollup": {
