@@ -1,37 +1,105 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T02:53:38.526Z",
+  "built_at": "2026-11-11T02:56:05.802Z",
   "hubs": {
-    "n0": {
+    "k0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:36:43.561Z",
+      "updated_at": "2026-11-11T02:50:55.599Z",
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md",
+      "inquiry_files": [
+        "K0-0807-U-inquiry.md",
+        "K0-0807-W-inquiry.md",
+        "K0-0807-X-inquiry.md",
+        "K0-0824-AC-inquiry.md",
+        "K0-0902-AD-inquiry.md",
+        "K0-0907-AO-inquiry.md"
+      ]
+    },
+    "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T02:50:55.599Z"
+      "updated_at": "2026-11-11T02:50:55.599Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
-    "t0": {
+    "k2": {
       "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-11T02:50:55.599Z"
+      "last_activity": null,
+      "updated_at": "2026-11-11T02:50:55.599Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
     },
     "m0": {
       "state": "running",
       "last_activity": "2026-11-11T02:46:58.984Z",
       "session": "2553c375-e56f-414f-b30b-6cf95019971c",
-      "updated_at": "2026-11-11T02:50:55.599Z"
+      "updated_at": "2026-11-11T02:50:55.599Z",
+      "last_round": "M0-1105-Z",
+      "last_report": "m0/M0-1105-Z-report.md",
+      "current_round": "M0-1105-AF",
+      "current_state": "done",
+      "current_at": "2026-11-11T02:48:00.000Z",
+      "current_note": "runner-v6.6 · rebase #207 onto origin/main · tenders.spec.ts 양쪽 보존 · import/helper 복원 (fixup autosquash) · #208 rebase --onto 완료 · 로컬 unit 33/33 · CI pos-integration PASS 2m15s · #207=0dcb97a · #208=4761c14 · PR 본문 §7 추가 · 리포트 착지 dffa461"
     },
-    "k0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-11T02:50:55.599Z"
-    },
-    "k1": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T02:50:55.599Z"
-    },
-    "k2": {
+    "m1": {
+      "last_round": "M1-1105-Z",
+      "last_report": "m1/M1-1105-Z-report.md",
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T02:50:55.599Z"
+      "updated_at": "2026-11-11T02:56:05.802Z",
+      "current_round": "M1-1105-AM",
+      "current_state": "done",
+      "current_at": "2026-11-11T03:10:00.000Z",
+      "current_note": "PR #79 rebase + 7/7 Playwright + 13/13 vitest. PR #81 run-all 53/53 PASS. register-session dead key 제거. stale assertions 3건 수정."
+    },
+    "m2": {
+      "last_round": "M2-1105-Z",
+      "last_report": "m2/M2-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T02:56:05.802Z",
+      "current_round": "M2-1105-AD",
+      "current_state": "done",
+      "current_at": "2026-11-11T02:48:06.663Z",
+      "current_note": "16:04Z SSH 발신 허브 불명 — 클로드 세션·zsh_history 흔적 없음, Railway 웹 콘솔 가능성, 두 세션 모두 exit -1(10s·15s) 운영 DB 변경 없음"
+    },
+    "m3": {
+      "last_round": "M3-1105-Y",
+      "last_report": "m3/M3-1105-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T02:56:05.802Z",
+      "current_round": "M3-1105-AG",
+      "current_state": "done",
+      "current_at": "2026-11-11T02:56:05.740Z",
+      "current_note": "runner-v6.6 cmux-split · 리포트 확인 m3/M3-1105-AG-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1105-AG.log"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T02:50:55.599Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1105-BC",
+      "last_report": "r0/R0-1105-BC-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T02:56:05.802Z",
+      "current_round": "R0-1105-BC",
+      "current_state": "done",
+      "current_at": "2026-11-11T02:32:44.621Z",
+      "current_note": "runner-v6.6 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-BC.log"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-11T02:50:55.599Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
