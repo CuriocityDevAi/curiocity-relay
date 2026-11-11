@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T11:40:12.911Z",
+  "built_at": "2026-11-11T11:46:33.700Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -83,15 +83,15 @@
       "last_report": "n0/N0-0914-C-report.md"
     },
     "r0": {
-      "last_round": "R0-1105-BL",
-      "last_report": "r0/R0-1105-BL-report.md",
+      "last_round": "R0-1105-BM",
+      "last_report": "r0/R0-1105-BM-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-11T11:39:09.910Z",
       "current_round": "R0-1105-BM",
-      "current_state": "started",
-      "current_at": "2026-11-11T11:39:09.845Z",
-      "current_note": "runner-v6.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-BM.log"
+      "current_state": "done",
+      "current_at": "2026-11-11T11:46:33.637Z",
+      "current_note": "(A) storeport #214 APPROVE · (B) storeport #215 APPROVE · (C) fork #90 APPROVE; 머지순서 #215→#214, fork #90만 master"
     },
     "t0": {
       "state": "idle",
