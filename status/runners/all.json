@@ -1,17 +1,15 @@
 {
-  "at": "2026-11-11T14:46:30.569Z",
+  "at": "2026-11-11T14:50:32.121Z",
   "pid": 74116,
   "runner": "v7.0",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": null,
+  "last_error": "blocked: runner-folder change pending Kyu install (scripts/hub-runner-install.sh)",
   "hubs": {
     "m0": {
-      "current": "M0-1105-AO",
-      "started_at": "2026-11-11T14:34:24.151Z",
-      "model": "opus",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-11T14:49:41.141Z"
     },
     "m1": {
       "current": "M1-1105-AV",
