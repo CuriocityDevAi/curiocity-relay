@@ -1,11 +1,26 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T03:35:59.348Z",
+  "built_at": "2026-11-11T03:41:58.367Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-11T03:41:51.489Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-11T03:41:51.489Z"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-11T03:35:56.727Z",
+      "updated_at": "2026-11-11T03:41:51.489Z"
+    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-11T03:30:55.233Z",
+      "updated_at": "2026-11-11T03:41:51.489Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,93 +28,17 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      ]
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T03:30:55.233Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-11T03:41:51.489Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-11T03:30:55.233Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-11T03:30:46.351Z",
-      "session": "03001786-1b24-4238-805a-8a27c287c93d",
-      "updated_at": "2026-11-11T03:30:55.233Z",
-      "last_round": "M0-1105-Z",
-      "last_report": "m0/M0-1105-Z-report.md",
-      "current_round": "M0-1105-AH",
-      "current_state": "done",
-      "current_at": "2026-11-11T03:35:59.284Z",
-      "current_note": "#208 리베이스·CI 초록 · P6 분할 결제 계획서 §0"
-    },
-    "m1": {
-      "last_round": "M1-1105-Z",
-      "last_report": "m1/M1-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T03:34:11.999Z",
-      "current_round": "M1-1105-AO",
-      "current_state": "started",
-      "current_at": "2026-11-11T03:29:58.210Z",
-      "current_note": "runner-v6.6 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1105-AO.log"
-    },
-    "m2": {
-      "last_round": "M2-1105-Z",
-      "last_report": "m2/M2-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T03:34:11.999Z",
-      "current_round": "M2-1105-AE",
-      "current_state": "done",
-      "current_at": "2026-11-11T03:00:22.585Z",
-      "current_note": "owner curiocity·새 projectId 0ed85e16·expo.dev 프로젝트 생성·runbook 갱신·PR #82"
-    },
-    "m3": {
-      "last_round": "M3-1105-Y",
-      "last_report": "m3/M3-1105-Y-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T03:34:11.999Z",
-      "current_round": "M3-1105-AI",
-      "current_state": "started",
-      "current_at": "2026-11-11T03:30:00.793Z",
-      "current_note": "runner-v6.6 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1105-AI.log"
-    },
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T03:30:55.233Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
-    },
-    "r0": {
-      "last_round": "R0-1105-BE",
-      "last_report": "r0/R0-1105-BE-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-11T03:34:11.999Z",
-      "current_round": "R0-1105-BE",
-      "current_state": "done",
-      "current_at": "2026-11-11T03:34:11.935Z",
-      "current_note": "storeport#209 APPROVE(CI미확인·머지전초록필요) · fork#83 APPROVE"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-11T03:30:55.233Z",
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "updated_at": "2026-11-11T03:41:51.489Z"
     }
   }
 }
