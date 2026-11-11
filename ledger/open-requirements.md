@@ -19,7 +19,7 @@
 
 ### 🔄 진행 중
 - **P6 실기 B**(Void·환불·매니저 PIN · 상태판 K-1111-p6-test · 보류) — **Void 버튼 무반응(fork #86 · M3-1105-AJ · 원인 = 열린 시트 위에 PIN 시트(RN Modal) 중첩) 머지 뒤 오케가 "시작" 안내**. → R0-1105-BH 리뷰 대기.
-- **Admin PIN = 왼쪽 메뉴**(Kyu 11-11 16:28 원문 "왼쪽 메뉴 방식으로 변경." · 11-11 15:17 의 "오른쪽 위 4자리 버튼" 요구를 대체 · 하단 카드 제거 · 페이지에 오늘 PIN 크게 + 다음 변경 시각 + 매장 + 날짜 · WIB 자정 자동 갱신) — storeport #211(M1-1105-AQ · DOM 주입)은 **머지 없이 닫음** → **M1-1105-AR**(공식 Admin UI route · 사이드바) 발부. 원장 대사 = "Admin PIN 위치 = 왼쪽 메뉴 (decision-p6-test-20261111 16:28)".
+- **Admin PIN = 왼쪽 메뉴**(Kyu 11-11 16:28 원문 "왼쪽 메뉴 방식으로 변경." · 11-11 15:17 의 "오른쪽 위 4자리 버튼" 요구를 대체 · 하단 카드 제거 · 페이지에 오늘 PIN 크게 + 다음 변경 시각 + 매장 + 날짜 · WIB 자정 자동 갱신) — storeport #211(M1-1105-AQ · DOM 주입)은 **머지 없이 닫음** → **M1-1105-AR**(공식 Admin UI route · 사이드바) 발부. 원장 대사 = "Admin PIN 위치 = 왼쪽 메뉴 (decision-p6-test-20261111 16:28)". ✅ 실기 통과 11/11 17:06 (#213 e5e2449)
 - **나눠 결제**(P6 3차 · S1~S4 서버) — storeport **#212**(M0-1105-AJ) 착지 · CI pos-integration 2회 초록 미확인 → R0 리뷰는 BH 다음(한 번에 하나). 후속: 영수증 renderer(M0-AK) · 앱 Pay in parts UI(M0-AL) · 추가 통합 시나리오(M0-AM).
 - **방법론 리포**(Kyu: 일하는 방식을 유실되지 않는 문서로) — `CuriocityDevAi/curiocity-devai-method`(private · 29파일 1,645줄 · v1.0 · 4567df4 · M2-1105-AG 착지). 남은 일: **Kyu 가 Claude GitHub 연결에 리포 추가(K-1111-method-access)** → 오케 검토 · MP-006 후보 2건(metrics 주간 집계 절차 · R0 APPROVE 후 오케 squash 머지에 대한 Kyu 명시 승인) 결정.
 
