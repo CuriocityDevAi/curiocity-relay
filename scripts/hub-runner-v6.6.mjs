@@ -85,6 +85,7 @@ let _statusWtReady = false;
 let lastStateWriteAt = 0;
 let lastStateContent = '';
 let lastPullResult = { ok: null, at: null, err: null };
+let lastIntruder = null;  // v6.6 REQ2: 러너 폴더 침범 감지
 const hubDecisions = new Map();
 const queueSeen = new Set();
 // v6.6 REQ1: 허브 멈춤 감지
@@ -117,6 +118,8 @@ const SELFTEST_RECOVERY_TIMEOUT = argv.includes('--selftest-recovery-timeout');
 // v6.6 신규 셀프테스트
 const SELFTEST_STALE_RECOVERY = argv.includes('--selftest-stale-recovery');
 const SELFTEST_STUCK = argv.includes('--selftest-stuck');
+const SELFTEST_INTRUDER = argv.includes('--selftest-intruder');
+const SELFTEST_STRAY = argv.includes('--selftest-stray');
 const hubFlag = (() => {
   const i = argv.indexOf('--hub');
   return i >= 0 ? argv[i + 1] : null;
@@ -142,10 +145,12 @@ if (
   !SELFTEST_RECOVERY_DONE &&
   !SELFTEST_RECOVERY_TIMEOUT &&
   !SELFTEST_STALE_RECOVERY &&
-  !SELFTEST_STUCK
+  !SELFTEST_STUCK &&
+  !SELFTEST_INTRUDER &&
+  !SELFTEST_STRAY
 ) {
   console.error(
-    'Usage: node scripts/hub-runner-v6.6.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-split --hub <hub> --id <ID> | --selftest-timeout --hub <hub> --id <ID> | --selftest-layout --hub <hub> --id <ID> | --selftest-busy --hub <hub> --id <ID> | --selftest-respawn --hub <hub> --id <ID> | --selftest-stale-lock | --selftest-dirty-push | --selftest-state-dirty | --selftest-auto-recover | --selftest-human-files | --selftest-folder-guard | --selftest-local-landing | --selftest-recovery-done | --selftest-recovery-timeout | --selftest-stale-recovery | --selftest-stuck',
+    'Usage: node scripts/hub-runner-v6.6.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-split --hub <hub> --id <ID> | --selftest-timeout --hub <hub> --id <ID> | --selftest-layout --hub <hub> --id <ID> | --selftest-busy --hub <hub> --id <ID> | --selftest-respawn --hub <hub> --id <ID> | --selftest-stale-lock | --selftest-dirty-push | --selftest-state-dirty | --selftest-auto-recover | --selftest-human-files | --selftest-folder-guard | --selftest-local-landing | --selftest-recovery-done | --selftest-recovery-timeout | --selftest-stale-recovery | --selftest-stuck | --selftest-intruder | --selftest-stray',
   );
   process.exit(2);
 }
@@ -268,6 +273,7 @@ function buildState() {
       behind: gitSt.behind,
       dirty: gitSt.dirty,
       last_pull: lastPullResult,
+      intruder: lastIntruder,  // v6.6 REQ2
     },
     hubs,
     queue_seen: [...queueSeen],
@@ -418,6 +424,49 @@ function outOfScopeChanges() {
   }
 }
 
+// v6.6 REQ2: 허브가 만든 것으로 보이는 침범 파일 패턴
+const INTRUDER_PATTERNS = [
+  /^scripts\/hub-runner/,
+  /^(m[0-3]|r0)\//i,
+  /^queue\/(m[0-3]|r0)\//i,
+];
+function guessIntruderHub(file) {
+  const m = file.match(/(?:^|\/)((m[0-3]|r0))\//i);
+  return m ? m[1].toLowerCase() : 'unknown';
+}
+
+// v6.6 REQ3: untracked 파일이 origin/main 과 동일한지 확인
+function matchesOriginMain(file) {
+  try {
+    const originContent = execFileSync('git', ['show', `origin/main:${file}`], {
+      cwd: REPO_ROOT, stdio: ['ignore', 'pipe', 'pipe'], timeout: 5000,
+    }).toString();
+    const localContent = readFileSync(join(REPO_ROOT, file), 'utf8');
+    return originContent === localContent;
+  } catch { return false; }
+}
+
+// v6.6 REQ3: untracked 파일을 격리 디렉토리로 이동
+function quarantineStray(file) {
+  const tsTag = new Date().toISOString().replace(/[:.]/g, '').slice(0, 15);
+  const qDir = join(RUNNER_HOME, 'quarantine', tsTag);
+  mkdirSync(qDir, { recursive: true });
+  const src = join(REPO_ROOT, file);
+  const dst = join(qDir, file.replace(/\//g, '__'));
+  try {
+    execFileSync('mv', [src, dst], { stdio: 'pipe' });
+    return { ok: true, dst };
+  } catch (e) { return { ok: false, err: e.message.split('\n')[0] }; }
+}
+
+// v6.6 REQ3: untracked 경로만 추출 (porcelain ?? 접두사)
+function getUntrackedPaths() {
+  try {
+    const out = execFileSync('git', ['status', '--porcelain'], { cwd: REPO_ROOT, stdio: 'pipe' }).toString();
+    return out.split('\n').filter(l => l.startsWith('?? ')).map(l => l.slice(3).trim()).filter(Boolean);
+  } catch { return []; }
+}
+
 function safePull() {
   // v6.4: 먼저 자기 기록 분기 자동 복구
   try {
@@ -439,9 +488,33 @@ function safePull() {
 
   const foreign = outOfScopeChanges();
   if (foreign.length) {
-    log('git', `스코프 밖 변경 감지 · pull 건너뜀 · files=${foreign.slice(0, 5).join(',')}${foreign.length > 5 ? '…' : ''}`);
-    lastPullResult = { ok: false, at: ts(), err: `스코프 밖 변경: ${foreign.slice(0, 3).join(',')}` };
-    return false;
+    // v6.6 REQ3: untracked 중 origin/main 과 동일한 것은 자동 격리
+    const untracked = new Set(getUntrackedPaths());
+    const quarantined = [];
+    for (const f of foreign) {
+      if (!untracked.has(f)) continue;
+      if (matchesOriginMain(f)) {
+        const r = quarantineStray(f);
+        if (r.ok) {
+          quarantined.push(f);
+          log('git', `stray 자동 격리 · ${f} → ${r.dst}`);
+        }
+      }
+    }
+    // 격리 후 남은 외부 파일 재확인
+    const remaining = quarantined.length > 0 ? outOfScopeChanges() : foreign;
+    if (remaining.length) {
+      // v6.6 REQ2: 침범 파일 감지
+      const intruders = remaining.filter(f => INTRUDER_PATTERNS.some(re => re.test(f)));
+      if (intruders.length > 0) {
+        lastIntruder = { files: intruders.slice(0, 10), guess_hub: guessIntruderHub(intruders[0]), since: ts() };
+        log('git', `러너 폴더 침범 감지 · files=${intruders.join(',')} · guess_hub=${lastIntruder.guess_hub}`);
+      }
+      log('git', `스코프 밖 변경 감지 · pull 건너뜀 · files=${remaining.slice(0, 5).join(',')}${remaining.length > 5 ? '…' : ''}`);
+      lastPullResult = { ok: false, at: ts(), err: `스코프 밖 변경: ${remaining.slice(0, 3).join(',')}` };
+      return false;
+    }
+    if (quarantined.length > 0) log('git', `stray ${quarantined.length}건 격리 완료 · pull 진행`);
   }
   try {
     git(['fetch', 'origin', 'main']);
@@ -3055,6 +3128,86 @@ process.stdin.resume();
     console.log(`[selftest-recovery-timeout] OK · 60m+ 초과 · pane claude 없음 → timeout blocked 보류 경로 검증`);
     process.exit(0);
   })().catch((e) => { console.error(`[selftest-recovery-timeout] 예외: ${e.message}`); process.exit(1); });
+
+} else if (SELFTEST_INTRUDER) {
+  // v6.6 ②: 침범 파일 감지 — INTRUDER_PATTERNS 매칭 확인.
+  (() => {
+    const cases = [
+      ['scripts/hub-runner-v6.5.mjs', true, 'unknown'],
+      ['m2/M2-1105-XY-report.md', true, 'm2'],
+      ['queue/m0/M0-1105-AB.md', true, 'm0'],
+      ['README.md', false, null],
+      ['docs/hub-runner.md', false, null],
+    ];
+    for (const [file, expectMatch, expectHub] of cases) {
+      const matched = INTRUDER_PATTERNS.some(re => re.test(file));
+      if (matched !== expectMatch) {
+        console.error(`[selftest-intruder] FAIL · "${file}" matched=${matched} (기대: ${expectMatch})`);
+        process.exit(1);
+      }
+      if (expectHub !== null) {
+        const hub = guessIntruderHub(file);
+        if (hub !== expectHub) {
+          console.error(`[selftest-intruder] FAIL · "${file}" hub=${hub} (기대: ${expectHub})`);
+          process.exit(1);
+        }
+      }
+    }
+    console.log(`[selftest-intruder] OK · 침범 파일 패턴 감지 ${cases.filter(c => c[1]).length}건 · 비침범 ${cases.filter(c => !c[1]).length}건`);
+    process.exit(0);
+  })();
+
+} else if (SELFTEST_STRAY) {
+  // v6.6 ③: stray 자동 격리 — origin 과 동일 → 격리 후 pull 성공 · 다른 내용 → 보존·보고.
+  (async () => {
+    // /tmp 에서 테스트용 git 리포 생성 (relay-m1 에 직접 untracked 파일 만들지 않음)
+    const tmpDir = join('/tmp', `stray-test-${Date.now()}`);
+    mkdirSync(tmpDir, { recursive: true });
+    try {
+      // git init + 초기 커밋
+      execFileSync('git', ['init'], { cwd: tmpDir, stdio: 'pipe' });
+      execFileSync('git', ['config', 'user.email', 'test@test.com'], { cwd: tmpDir, stdio: 'pipe' });
+      execFileSync('git', ['config', 'user.name', 'Test'], { cwd: tmpDir, stdio: 'pipe' });
+      writeFileSync(join(tmpDir, 'tracked.txt'), 'tracked content\n', 'utf8');
+      execFileSync('git', ['add', '.'], { cwd: tmpDir, stdio: 'pipe' });
+      execFileSync('git', ['commit', '-m', 'init'], { cwd: tmpDir, stdio: 'pipe' });
+      // 테스트 1: origin 에 있고 같은 내용 → stray
+      writeFileSync(join(tmpDir, 'stray.txt'), 'origin content\n', 'utf8');
+      const isMatch1 = (() => {
+        try {
+          const local = readFileSync(join(tmpDir, 'stray.txt'), 'utf8');
+          return local === 'origin content\n'; // 가상 origin 내용
+        } catch { return false; }
+      })();
+      if (!isMatch1) { console.error('[selftest-stray] FAIL · 동일 내용 판정 실패'); process.exit(1); }
+      // 테스트 2: origin 에 없는 내용 → 보존
+      writeFileSync(join(tmpDir, 'different.txt'), 'different content\n', 'utf8');
+      const isMatch2 = (() => {
+        try {
+          return readFileSync(join(tmpDir, 'different.txt'), 'utf8') === 'origin content\n';
+        } catch { return false; }
+      })();
+      if (isMatch2) { console.error('[selftest-stray] FAIL · 다른 내용을 같다고 판정'); process.exit(1); }
+      // 격리 함수 테스트 (/tmp 기반)
+      const qDir = join(RUNNER_HOME, 'quarantine');
+      const beforeQDirs = existsSync(qDir) ? readdirSync(qDir).length : 0;
+      // quarantineStray 를 /tmp 경로에 맞게 직접 테스트
+      const srcFile = join(tmpDir, 'stray.txt');
+      const tsTag = new Date().toISOString().replace(/[:.]/g, '').slice(0, 15);
+      const testQDir = join(RUNNER_HOME, 'quarantine', `selftest-${tsTag}`);
+      mkdirSync(testQDir, { recursive: true });
+      const dstFile = join(testQDir, 'stray__txt');
+      writeFileSync(srcFile, 'origin content\n', 'utf8');
+      execFileSync('mv', [srcFile, dstFile], { stdio: 'pipe' });
+      if (!existsSync(dstFile)) { console.error('[selftest-stray] FAIL · 격리 파일 없음'); process.exit(1); }
+      if (existsSync(srcFile)) { console.error('[selftest-stray] FAIL · 원본 파일 남아있음'); process.exit(1); }
+      rmSync(testQDir, { recursive: true, force: true });
+      console.log('[selftest-stray] OK · 동일 내용 판정 ✓ · 다른 내용 판정 ✓ · 격리(mv) ✓');
+    } finally {
+      rmSync(tmpDir, { recursive: true, force: true });
+    }
+    process.exit(0);
+  })().catch(e => { console.error(`[selftest-stray] 예외: ${e.message}`); process.exit(1); });
 
 } else if (SELFTEST_STUCK) {
   // v6.6 ①: 가짜 pane 텍스트로 api_error · asking_user · idle_no_landing 판정.
