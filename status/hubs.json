@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T09:43:45.602Z",
+  "built_at": "2026-11-11T09:47:54.221Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -83,15 +83,15 @@
       "last_report": "n0/N0-0914-C-report.md"
     },
     "r0": {
-      "last_round": "R0-1105-BH",
-      "last_report": "r0/R0-1105-BH-report.md",
+      "last_round": "R0-1105-BI",
+      "last_report": "r0/R0-1105-BI-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-11T09:00:15.029Z",
       "current_round": "R0-1105-BI",
-      "current_state": "started",
-      "current_at": "2026-11-11T09:43:40.559Z",
-      "current_note": "runner-v6.6 · cmux-split · model=sonnet · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-BI.log"
+      "current_state": "done",
+      "current_at": "2026-11-11T09:47:54.155Z",
+      "current_note": "#212 CHANGES(Bug1 preorder DP receipt_kind 회귀·Bug2 paidSoFarBefore 타이밍·CI FAIL) · #213 APPROVE(CI pass·DOM주입없음)"
     },
     "t0": {
       "state": "idle",
