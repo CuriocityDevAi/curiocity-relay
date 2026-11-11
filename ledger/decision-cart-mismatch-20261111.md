@@ -8,5 +8,8 @@
 ## 스샷 관찰 (오케 · 21:19)
 - Cart 화면: 품목 3줄 표시(Coffee Latte Hot 30,000 · Coffee Latte Hot 30,000 · Iced Tea Lemon 18,000 = 78,000) 인데 **Total = IDR 110,000** · 탭 바 Cart 배지 = **4**.
 - Checkout 화면: 4줄 (위 3줄 + Coffee Latte Iced 32,000) = 110,000.
-- → 서버 장바구니(draft order)에는 이미 4줄이 있고, Cart 화면 목록이 1줄을 안 보여주는 것으로 보임(목록 스크롤 잘림 또는 목록 데이터가 오래된 것). Total·배지·Checkout 은 서버 기준으로 일치.
+- → 서버 장바구니(draft order)에는 이미 4줄이 있고, Cart 화면 목록이 1줄을 안 보여주는 것으로 보임. Total·배지·Checkout 은 서버 기준으로 일치.
 - 부수 관찰: 같은 품목·같은 옵션(Coffee Latte Hot)이 수량 2 한 줄이 아니라 두 줄로 들어감.
+
+## Kyu 확인 (21:26)
+- 원문: "아이스라떼는 cart 에서 없어. 그러니 b 혹은 c 야." → 가설 (a) 스크롤 잘림 **배제**. 원인 = (b) Cart 목록 데이터 오래됨 또는 (c) 이전 미완 draft order 섞임. M3-1105-AP 착지 판정 시 (a) 결론이면 반려.
