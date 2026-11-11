@@ -17,3 +17,8 @@
 ## P6 실기 B 결과 (17:12)
 - Kyu 원문: "void 시험에서 Manger PIN 을 입력하는 부분이 있는데, 비번 4자리를 입력하는 박스가 나오고 입력할수 있는 키보드가 나오는데, 문제는 키보드가 너무 큰게 나와. 즉, 숫자 키패드만 나오면 되는데, 알파벳까지 입력할수 있는 전체 키보드가 나오면서 화면을 다 잡아먹어. > 그냥 숫자 키패드만 나오도록변경. 그리고 숫자를 입력해보니, 숫자를 입력하는 칸이 4개가 있는데, 첫째 칸에 숫자를 입력하니 2번째 칸으로 커서가 넘어가는게 아니라 3번째 칸으로 넘어감. 내가 다시 포커스를 2번째 칸으로 옮겨서 숫자를 입력하니 4번째 칸으로 커서가 움직임. 이거 문제야. 원인파악해서 고쳐줘."
 - 발부: → M3-1105-AL (앱 내 숫자 키패드 컴포넌트 + 칸 건너뜀 원인 확정·수정). 선행: fork #86(M3-1105-AJ)의 인라인 PIN 단계(components/orders/VoidRefundSheet.tsx).
+
+## P6 실기 B 결과 2 (17:15)
+- Kyu 원문: "앱 안에서 숫자 키패드가 따로 있었어. 같은 키패드를 쓰면될듯. 재활용필요! Void 도 실패야. order has active fulfillment ... 라는 검은 알약 toast 메세지가 나옴."
+- 요구 1 (키패드 재활용) → 소유 M3 · M3-1105-AL 진행 중 — 답 받은 뒤 기존 키패드 재활용 반영.
+- 요구 2 (Void 실패 · 서버 void route `apps/commerce-core/src/api/admin/pos/orders/[id]/void/route.ts` 가 active fulfillment 있으면 400 "order has active fulfillments · cancel fulfillment first or use refund") → 소유 M1 · 단 storeport #212(M0-1105-AJ)가 같은 파일을 건드리고 있어 발부 보류(충돌 확인 필요).
