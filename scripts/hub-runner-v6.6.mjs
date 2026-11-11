@@ -2860,7 +2860,7 @@ process.stdin.resume();
         process.exit(1);
       }
       const written = JSON.parse(readFileSync(wtStateFile, 'utf8'));
-      if (written.runner !== 'v6.5') {
+      if (written.runner !== 'v6.6') {
         console.error(`[selftest-state-dirty] FAIL · runner 불일치: ${written.runner}`);
         process.exit(1);
       }
