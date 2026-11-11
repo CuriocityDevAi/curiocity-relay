@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-11T11:04:42.056Z",
+  "built_at": "2026-11-11T11:05:06.571Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -84,15 +84,15 @@
       "last_report": "n0/N0-0914-C-report.md"
     },
     "r0": {
-      "last_round": "R0-1105-BK",
-      "last_report": "r0/R0-1105-BK-report.md",
+      "last_round": "R0-1105-BL",
+      "last_report": "r0/R0-1105-BL-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-11T11:01:35.892Z",
       "current_round": "R0-1105-BL",
-      "current_state": "started",
-      "current_at": "2026-11-11T11:01:35.824Z",
-      "current_note": "runner-v6.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-BL.log"
+      "current_state": "done",
+      "current_at": "2026-11-11T11:05:06.511Z",
+      "current_note": "CHANGES — pos-integration 3 fail: #61 cancelOrderFulfillmentWorkflow 400(핵심 기능 미작동) · #68/#68b it.skip 미복구로 return/route.ts 미구현 테스트 CI 오염"
     },
     "t0": {
       "state": "idle",
