@@ -22,3 +22,7 @@
 - Kyu 원문: "앱 안에서 숫자 키패드가 따로 있었어. 같은 키패드를 쓰면될듯. 재활용필요! Void 도 실패야. order has active fulfillment ... 라는 검은 알약 toast 메세지가 나옴."
 - 요구 1 (키패드 재활용) → 소유 M3 · M3-1105-AL 진행 중 — 답 받은 뒤 기존 키패드 재활용 반영.
 - 요구 2 (Void 실패 · 서버 void route `apps/commerce-core/src/api/admin/pos/orders/[id]/void/route.ts` 가 active fulfillment 있으면 400 "order has active fulfillments · cancel fulfillment first or use refund") → 소유 M1 · 단 storeport #212(M0-1105-AJ)가 같은 파일을 건드리고 있어 발부 보류(충돌 확인 필요).
+
+## P6 실기 B 결과 3 (17:57)
+- Kyu 원문: "숫자 키패드는 card last 4 digit 을 입력하는 부분에서야. 즉, Card Tendor 화면에서 Card last 4 digits 에야."
+- 오케 확인(11-11): 해당 입력 = fork master `components/payment/CardTenderPanel.tsx` 의 `card-last4-input` (RN `TextInput` · `keyboardType="numeric"` · `maxLength={4}`). 커스텀 키패드 컴포넌트가 아니라 시스템 숫자 키패드(iPad 숫자 전용 키보드). → M3-1105-AN 은 PIN 입력을 이 방식과 동일하게 맞춤.
