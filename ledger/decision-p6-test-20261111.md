@@ -8,3 +8,8 @@
 
 ## 발부
 - 버그 → M3-1105-AJ · PIN 버튼 → M1-1105-AQ (11-11 15:20).
+
+## PIN 위치 변경 (16:28)
+- 원문: "왼쪽 메뉴 방식으로 변경."
+- 결정: 상단바 버튼(storeport #211 · M1-1105-AQ · DOM 주입)을 폐기하고 Medusa 공식 Admin UI route(`src/admin/routes/manager-pin/page.tsx` + `defineRouteConfig` label·icon)로 왼쪽 사이드바에 "Manager PIN" 메뉴를 둔다. 페이지: 오늘 PIN 크게 · 다음 변경 시각(WIB 자정) · 매장 · 날짜 · 자정에 자동 갱신. 하단 카드 위젯 제거. #211 은 머지하지 않고 닫음. → M1-1105-AR.
+- 이유: Medusa 에 상단바 공식 확장 지점이 없어 DOM 주입은 Medusa 업그레이드 때 깨질 위험 · 보너스로 PIN 이 화면에 상시 노출되지 않아 보안상 유리.
