@@ -14,8 +14,8 @@
 
 set -euo pipefail
 
-TARGET_RUNNER="${TARGET:-hub-runner-v6.5.mjs}"
-FALLBACK_RUNNER="${FALLBACK:-hub-runner-v6.4.mjs}"
+TARGET_RUNNER="${TARGET:-hub-runner-v6.6.mjs}"
+FALLBACK_RUNNER="${FALLBACK:-hub-runner-v6.5.mjs}"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
