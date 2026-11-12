@@ -1,23 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-12T15:17:07.031Z",
+  "built_at": "2026-11-12T15:21:42.632Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-12T15:16:53.292Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-12T15:16:53.292Z"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-12T15:16:26.831Z",
-      "session": "d6d79678-439a-4162-ba23-12ff2da57603",
-      "updated_at": "2026-11-12T15:16:53.292Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -29,17 +13,93 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T15:16:53.292Z"
+      "updated_at": "2026-11-12T15:16:53.292Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T15:16:53.292Z"
+      "updated_at": "2026-11-12T15:16:53.292Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-12T15:16:26.831Z",
+      "session": "d6d79678-439a-4162-ba23-12ff2da57603",
+      "updated_at": "2026-11-12T15:16:53.292Z",
+      "last_round": "M0-1105-Z",
+      "last_report": "m0/M0-1105-Z-report.md",
+      "current_round": "M0-1105-BH",
+      "current_state": "started",
+      "current_at": "2026-11-12T15:16:25.564Z",
+      "current_note": "runner-v7.2 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-BH.log"
+    },
+    "m1": {
+      "last_round": "M1-1105-Z",
+      "last_report": "m1/M1-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T15:21:42.632Z",
+      "current_round": "M1-1105-BI",
+      "current_state": "done",
+      "current_at": "2026-11-12T09:54:50.561Z",
+      "current_note": "#105·#107 rebase master — CI 43192692056·43192903920 ✅"
+    },
+    "m2": {
+      "last_round": "M2-1105-Z",
+      "last_report": "m2/M2-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T15:21:42.632Z",
+      "current_round": "M2-1105-BA",
+      "current_state": "done",
+      "current_at": "2026-11-12T09:57:08.273Z",
+      "current_note": "Toast→GestureHandlerRootView 이동으로 FlashList PanResponder 충돌 해소 · PR#112"
+    },
+    "m3": {
+      "last_round": "M3-1105-Y",
+      "last_report": "m3/M3-1105-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T15:21:42.632Z",
+      "current_round": "M3-1105-BI",
+      "current_state": "done",
+      "current_at": "2026-11-12T15:21:42.573Z",
+      "current_note": "B안 네이티브 헤더 복귀: headerShown:false→true · PillBackButton/chevron-left 삭제 · S3-2 split-tender title='Split payment' · BH rebase · CI billing 초과"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T15:16:53.292Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1105-CW",
+      "last_report": "r0/R0-1105-CW-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T15:21:42.632Z",
+      "current_round": "R0-1105-CW",
+      "current_state": "done",
+      "current_at": "2026-11-12T10:56:12.306Z",
+      "current_note": "runner-v7.2 cmux-split · 리포트 확인 r0/R0-1105-CW-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1105-CW.log"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-12T15:16:53.292Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
