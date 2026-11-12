@@ -1,11 +1,10 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-12T07:35:22.996Z",
+  "built_at": "2026-11-12T07:36:07.130Z",
   "hubs": {
     "k0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-12T07:20:26.317Z",
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -14,29 +13,30 @@
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
       ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T07:35:38.423Z"
     },
     "k1": {
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md",
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T07:20:26.317Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-12T07:35:38.423Z"
     },
     "k2": {
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md",
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T07:20:26.317Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
+      "updated_at": "2026-11-12T07:35:38.423Z"
     },
     "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-12T07:15:00.301Z",
-      "updated_at": "2026-11-12T07:20:26.317Z",
       "last_round": "M0-1105-Z",
       "last_report": "m0/M0-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T07:35:38.423Z",
       "current_round": "M0-1105-AX",
       "current_state": "done",
       "current_at": "2026-11-12T07:15:01.660Z",
@@ -47,18 +47,18 @@
       "last_report": "m1/M1-1105-Z-report.md",
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T07:23:45.466Z",
-      "current_round": "M1-1105-BF",
+      "updated_at": "2026-11-12T07:35:38.423Z",
+      "current_round": "M1-1105-BG",
       "current_state": "started",
-      "current_at": "2026-11-12T07:09:13.229Z",
-      "current_note": "runner-v7.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1105-BF.log"
+      "current_at": "2026-11-12T07:36:06.472Z",
+      "current_note": "runner-v7.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1105-BG.log"
     },
     "m2": {
       "last_round": "M2-1105-Z",
       "last_report": "m2/M2-1105-Z-report.md",
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T07:23:45.466Z",
+      "updated_at": "2026-11-12T07:35:38.423Z",
       "current_round": "M2-1105-AW",
       "current_state": "started",
       "current_at": "2026-11-12T07:28:01.821Z",
@@ -69,36 +69,36 @@
       "last_report": "m3/M3-1105-Y-report.md",
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T07:23:45.466Z",
+      "updated_at": "2026-11-12T07:35:38.423Z",
       "current_round": "M3-1105-BA",
       "current_state": "started",
       "current_at": "2026-11-12T07:29:57.431Z",
       "current_note": "runner-v7.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1105-BA.log"
     },
     "n0": {
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md",
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T07:20:26.317Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
+      "updated_at": "2026-11-12T07:35:38.423Z"
     },
     "r0": {
       "last_round": "R0-1105-CJ",
       "last_report": "r0/R0-1105-CJ-report.md",
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T07:23:45.466Z",
+      "updated_at": "2026-11-12T07:35:38.423Z",
       "current_round": "R0-1105-CJ",
-      "current_state": "done",
-      "current_at": "2026-11-12T07:35:22.939Z",
-      "current_note": "CHANGES · 설계·공식·멱등 모두 정합이나 CI pos-integration RED (tenders.spec #61·#82) + 신규 pos-tax-lines.spec 가 test:integration:pos 패턴에 미편입 → 2건 해소 전 머지 금지"
+      "current_state": "started",
+      "current_at": "2026-11-12T07:36:07.070Z",
+      "current_note": "runner-v7.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-CJ.log"
     },
     "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-12T07:20:26.317Z",
       "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "last_report": "t0/T0-0915-A-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T07:35:38.423Z"
     }
   }
 }
