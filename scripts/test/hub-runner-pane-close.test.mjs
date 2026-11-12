@@ -1,5 +1,6 @@
 // scripts/test/hub-runner-pane-close.test.mjs — 끝난 Claude 세션 자동 닫기 단위 테스트
 // M1-1105-BC · 장치 사건 #19 (R0 3회 · M1 1회) 재발 방지.
+// M1-1105-BD · M2 자동 투입 전환 반영 (hub=m2 skip 가드 제거).
 //
 // [REQ] 3 의 5종 + 추가 가드:
 //   ① 정상 닫힘           — 첫 시도 /exit → 15초 안 shell
@@ -83,12 +84,28 @@ test('⑤ isDone=false · 재시도 중이어도 skip (상태 무관)', () => {
   assert.equal(d.reason, 'not-done');
 });
 
-// ─── 가드: M2 는 수동 투입 칸 · 영원히 안 닫음 ───
+// ─── M1-1105-BD REQ3: M2 자동 투입 전환 · hub 고정 가드 제거 ───
+// 뿌리: v6.5 때 M2 는 수동 투입 전용이라 skip 가드 추가 → v7 시대 M2 도 큐 자동 투입
+// (M2-1105-AQ·AR·AS) 전환되면서 M2 끝난 창이 영원히 안 닫힘. 가드가 의미를 잃고 역효과.
+// 수동 투입(Kyu 직접) 은 러너 dispatch 경로에 도달하지 않으므로 함수-레벨 skip 가드 불필요.
 
-test('가드 — hub=m2 는 state 무관 · isDone 무관 · skip (수동 투입)', () => {
-  assert.equal(decideCloseAction({ hub: 'm2', state: 'claude', attempt: 0, isDone: true }).action, 'skip');
-  assert.equal(decideCloseAction({ hub: 'm2', state: 'shell', attempt: 0, isDone: true }).action, 'skip');
-  assert.equal(decideCloseAction({ hub: 'm2', state: 'claude', attempt: 3, isDone: true }).action, 'skip');
+test('BD — hub=m2 는 다른 허브와 동일하게 닫힘 (수동 가드 제거)', () => {
+  assert.equal(decideCloseAction({ hub: 'm2', state: 'claude', attempt: 0, isDone: true }).action, 'ctrl-u-exit');
+  assert.equal(decideCloseAction({ hub: 'm2', state: 'shell', attempt: 0, isDone: true }).action, 'done');
+  assert.equal(decideCloseAction({ hub: 'm2', state: 'claude', attempt: 3, isDone: true }).action, 'report-failure');
+});
+
+test('BD — reason 에 manual-hub 가 더 이상 등장하지 않음', () => {
+  for (const hub of ['m0', 'm1', 'm2', 'm3', 'r0']) {
+    for (const state of ['shell', 'claude', 'unknown']) {
+      for (let attempt = 0; attempt <= 3; attempt++) {
+        for (const isDone of [true, false]) {
+          const d = decideCloseAction({ hub, state, attempt, isDone });
+          assert.notEqual(d.reason, 'manual-hub', `manual-hub reason 발견: ${hub}/${state}/${attempt}/${isDone}`);
+        }
+      }
+    }
+  }
 });
 
 // ─── 가드: unknown 상태 → skip (vim/less 등 미개입) ───
@@ -99,13 +116,9 @@ test('가드 — state=unknown → skip (vim/less 등 안전 보호)', () => {
   assert.equal(d.reason, 'unknown-state');
 });
 
-// ─── 가드: 우선순위 (m2 > isDone > state) ───
+// ─── 가드: 우선순위 (isDone > state) — BD 에서 m2 가드 제거 ───
 
-test('우선순위 — m2 는 isDone=false 보다 먼저 체크', () => {
-  assert.equal(decideCloseAction({ hub: 'm2', state: 'claude', attempt: 0, isDone: false }).action, 'skip');
-});
-
-test('우선순위 — isDone=false 는 state=claude 보다 먼저 체크', () => {
-  const d = decideCloseAction({ hub: 'r0', state: 'claude', attempt: 2, isDone: false });
-  assert.equal(d.reason, 'not-done');
+test('우선순위 — isDone=false 는 state=claude 보다 먼저 체크 (BD: m2 포함)', () => {
+  assert.equal(decideCloseAction({ hub: 'r0', state: 'claude', attempt: 2, isDone: false }).reason, 'not-done');
+  assert.equal(decideCloseAction({ hub: 'm2', state: 'claude', attempt: 0, isDone: false }).reason, 'not-done');
 });

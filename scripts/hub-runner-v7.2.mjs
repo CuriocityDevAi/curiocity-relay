@@ -1522,12 +1522,14 @@ async function waitSessionStartedWithRetry(cmuxBin, layout, hub, logFile) {
   return { ok: false, enterRetries: ENTER_RETRY_MAX };
 }
 
-// 완료 뒤 Claude pane 닫기 (M1-1105-BC · 장치 사건 #19):
+// 완료 뒤 Claude pane 닫기 (M1-1105-BC · 장치 사건 #19 · BD 에서 M2 가드 제거):
 //   v7.1 은 "자연 종료 대기(최대 10m)" 후에야 /exit — Claude Code 는 자동 종료 안 하므로 10분 낭비 ·
-//   Kyu 손 /exit (오늘 R0 3회 · M1 1회). v7.2 는 done 감지 즉시 /exit · 15초 안 shell 미복귀 → 재시도 2회
+//   Kyu 손 /exit (R0 3회 · M1 1회). v7.2 는 done 감지 즉시 /exit · 15초 안 shell 미복귀 → 재시도 2회
 //   (두 번째는 Escape 추가) · 3회 실패 → status/runners/all.json 에 pane_close_failed 플래그 + inbox 코멘트.
 //   순수 결정: lib/pane-close.mjs decideCloseAction.
-//   ⛔ 쉘 프롬프트에 exit 를 절대 보내지 않음(cmux 칸 닫힘) · 수동 투입 M2 · done 아닌 세션 미개입.
+//   M1-1105-BD: M2 는 자동 투입(M2-1105-AQ·AR·AS) 로 전환됐으므로 hub==='m2' skip 가드 제거.
+//               수동 투입 작업은 러너 dispatch 경로를 밟지 않아 이 함수에 도달하지 않음.
+//   ⛔ 쉘 프롬프트에 exit 를 절대 보내지 않음(cmux 칸 닫힘) · done 아닌 세션 미개입.
 async function exitPaneClaude(cmuxBin, layout, hub, logFile, { isDone = true, id = null } = {}) {
   for (let attempt = 0; attempt <= PANE_CLOSE_MAX_ATTEMPTS; attempt++) {
     const s = detectPaneState(cmuxBin, layout, hub);

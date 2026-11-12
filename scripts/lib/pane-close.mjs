@@ -4,16 +4,22 @@
 //      자동 /exit 하지 않으므로 10 분이 거의 늘 흐르거나 Kyu 가 손으로 /exit 함.
 //      오늘(11-12) R0 3회 · M1 1회 발생 (Kyu 10:35·10:39 원문).
 //
-// 새 규칙 (M1-1105-BC [REQ] 2):
-//   1. hub === 'm2'            → skip (수동 투입 칸 · 건드리지 않음)
-//   2. isDone === false         → skip (작업 중 세션은 절대 안 닫기)
-//   3. state === 'shell'        → done (이미 쉘 · ⛔ `exit` 를 쉘에 절대 보내지 않음 — cmux 칸 닫힘)
-//   4. state === 'unknown'      → skip (vim/less 등 모를 땐 안전하게 미개입)
-//   5. state === 'claude':
+// 새 규칙 (M1-1105-BC [REQ] 2 · M1-1105-BD REQ3 갱신):
+//   1. isDone === false         → skip (작업 중 세션은 절대 안 닫기)
+//   2. state === 'shell'        → done (이미 쉘 · ⛔ `exit` 를 쉘에 절대 보내지 않음 — cmux 칸 닫힘)
+//   3. state === 'unknown'      → skip (vim/less 등 모를 땐 안전하게 미개입)
+//   4. state === 'claude':
 //        attempt 0 (초회)        → 'ctrl-u-exit'       (ctrl-u 로 입력칸 비우고 `/exit\n`)
 //        attempt 1 (재시도 1)    → 'ctrl-u-exit'       (같은 시퀀스)
 //        attempt 2 (재시도 2)    → 'escape-ctrl-u-exit' (Escape 후 재시도 — recap·bake 상태 대응)
 //        attempt >= 3            → 'report-failure'    (3회 전부 15초 안 쉘 미복귀)
+//
+// M1-1105-BD (장치 사건 11-12): BC 의 `hub === 'm2' → skip (수동 투입)` 가드 제거.
+//   - 뿌리: v6.5 때 M2 는 수동 투입 전용이라 가드 추가 → v7 시대 M2 도 큐 자동 투입(M2-1105-AQ·AR·AS)
+//     전환되면서 M2 끝난 창이 영원히 안 닫힘. 가드가 의미를 잃고 역효과만 남음.
+//   - 수동 투입 식별: exitPaneClaude 는 러너 자체 dispatch 성공 경로에서만 호출 → 수동 투입(Kyu 가
+//     직접 claude 띄움) 작업은 이 경로에 도달하지 않음. 따라서 "manual" 판정 없이도 안전하게 닫음.
+//     (claim note 내 "manual" 문자열은 보고용 메타이지, 자동 닫기 결정과 무관.)
 //
 // decideCloseAction 은 순수 함수 — 사이드 이펙트 없이 다음 액션만 반환.
 // 러너는 액션에 맞게 cmux send-key / send-text 호출 후 15초간 detectPaneState 폴, 그래도 claude 면
@@ -39,8 +45,7 @@
  * @param {CloseInput} input
  * @returns {CloseDecision}
  */
-export function decideCloseAction({ hub, state, attempt, isDone }) {
-  if (hub === 'm2') return { action: 'skip', reason: 'manual-hub' };
+export function decideCloseAction({ hub: _hub, state, attempt, isDone }) {
   if (isDone === false) return { action: 'skip', reason: 'not-done' };
   if (state === 'shell') return { action: 'done', reason: 'already-shell' };
   if (state === 'unknown') return { action: 'skip', reason: 'unknown-state' };
