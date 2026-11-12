@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-12T15:33:08.801Z",
+  "built_at": "2026-11-12T15:37:50.774Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -60,9 +60,9 @@
       "last_activity": null,
       "updated_at": "2026-11-12T15:32:35.314Z",
       "current_round": "M2-1105-BB",
-      "current_state": "started",
-      "current_at": "2026-11-12T15:28:35.604Z",
-      "current_note": "runner-v7.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1105-BB.log"
+      "current_state": "done",
+      "current_at": "2026-11-12T15:37:50.709Z",
+      "current_note": "/refund 전액이 order.cancel+reservation 미처리 → ghost reservation; it.failing 2개 고정, PR#232"
     },
     "m3": {
       "last_round": "M3-1105-Y",
@@ -83,15 +83,15 @@
       "last_report": "n0/N0-0914-C-report.md"
     },
     "r0": {
-      "last_round": "R0-1105-CX",
-      "last_report": "r0/R0-1105-CX-report.md",
+      "last_round": "R0-1105-CY",
+      "last_report": "r0/R0-1105-CY-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-12T15:32:35.314Z",
       "current_round": "R0-1105-CY",
-      "current_state": "started",
-      "current_at": "2026-11-12T15:33:08.735Z",
-      "current_note": "runner-v7.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-CY.log"
+      "current_state": "done",
+      "current_at": "2026-11-12T15:37:00.917Z",
+      "current_note": "fork #113 APPROVE(B안·BH rebase ✅) · storeport #231 APPROVE(JSONB 직조회·인젝션 없음·멱등·충돌 해소 ✅)"
     },
     "t0": {
       "state": "idle",
