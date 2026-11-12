@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-12T03:43:35.352Z",
+  "built_at": "2026-11-12T03:50:07.362Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -39,9 +39,9 @@
       "last_round": "M0-1105-Z",
       "last_report": "m0/M0-1105-Z-report.md",
       "current_round": "M0-1105-AS",
-      "current_state": "started",
-      "current_at": "2026-11-12T03:41:17.031Z",
-      "current_note": "runner-v7.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-AS.log"
+      "current_state": "done",
+      "current_at": "2026-11-12T03:50:07.298Z",
+      "current_note": "lib/qr.ts 신규(orderQrPayload·orderIdToQrBitmap·parseScanPayload) + scan.tsx QR 분기 + 22 assertions 전부 통과 + PR #100"
     },
     "m1": {
       "last_round": "M1-1105-Z",
