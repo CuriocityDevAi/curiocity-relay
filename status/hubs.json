@@ -1,22 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-12T03:55:23.106Z",
+  "built_at": "2026-11-12T03:57:00.684Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-12T03:55:17.558Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-12T03:55:17.558Z"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-12T03:50:07.009Z",
-      "updated_at": "2026-11-12T03:55:17.558Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -28,17 +13,92 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T03:55:17.558Z"
+      "updated_at": "2026-11-12T03:55:17.558Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T03:55:17.558Z"
+      "updated_at": "2026-11-12T03:55:17.558Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-12T03:50:07.009Z",
+      "updated_at": "2026-11-12T03:55:17.558Z",
+      "last_round": "M0-1105-Z",
+      "last_report": "m0/M0-1105-Z-report.md",
+      "current_round": "M0-1105-AT",
+      "current_state": "started",
+      "current_at": "2026-11-12T03:57:00.614Z",
+      "current_note": "runner-v7.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-AT.log"
+    },
+    "m1": {
+      "last_round": "M1-1105-Z",
+      "last_report": "m1/M1-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T03:57:00.684Z",
+      "current_round": "M1-1105-BC",
+      "current_state": "done",
+      "current_at": "2026-11-12T03:55:10.305Z",
+      "current_note": "v7.2 exitPaneClaude 재작성 · #19 해결 · PR #1 커밋 추가 · 설치 전 머지 필수"
+    },
+    "m2": {
+      "last_round": "M2-1105-Z",
+      "last_report": "m2/M2-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T03:57:00.684Z",
+      "current_round": "M2-1105-AR",
+      "current_state": "done",
+      "current_at": "2026-11-12T03:22:48.866Z",
+      "current_note": "split 2차 split:true 누락(buildSplitBody 헬퍼) · approval_code DIGITS_INPUT_PROPS · layout Stack.Screen 등록 · PR#99"
+    },
+    "m3": {
+      "last_round": "M3-1105-Y",
+      "last_report": "m3/M3-1105-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T03:57:00.684Z",
+      "current_round": "M3-1105-AW",
+      "current_state": "done",
+      "current_at": "2026-11-12T03:11:31.108Z",
+      "current_note": "Void UI 완료 — R1재고·R2/R9Verify제거·R6/R7Payments·R8toast·R10버튼·A안restock·R12배너·53/53 PR#98"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T03:55:17.558Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1105-CB",
+      "last_report": "r0/R0-1105-CB-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T03:57:00.684Z",
+      "current_round": "R0-1105-CC",
+      "current_state": "started",
+      "current_at": "2026-11-12T03:54:38.533Z",
+      "current_note": "runner-v7.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-CC.log"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-12T03:55:17.558Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
