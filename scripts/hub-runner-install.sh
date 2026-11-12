@@ -14,8 +14,8 @@
 
 set -euo pipefail
 
-TARGET_RUNNER="${TARGET:-hub-runner-v7.1.mjs}"
-FALLBACK_RUNNER="${FALLBACK:-hub-runner-v7.0.mjs}"
+TARGET_RUNNER="${TARGET:-hub-runner-v7.2.mjs}"
+FALLBACK_RUNNER="${FALLBACK:-hub-runner-v7.1.mjs}"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -107,6 +107,19 @@ write_plist() {
   <true/>
   <key>ThrottleInterval</key>
   <integer>60</integer>
+  <!-- M1-1105-BA(d): Mac 잠금 시 bg 모드에서 setInterval(5s) 이 23분 지연된 사건(handoff-20261112-early) 고침.
+       원인: launchd 가 이 프로세스를 Background Service 로 취급 → App Nap · timer coalescing · I/O throttling 적용.
+       잠금(= 포커스 없음) 시 커널이 수 분 단위로 타이머를 묶어서 깨움.
+       고침: ProcessType=Interactive — launchd 가 사용자 상호작용 수준으로 격상 → App Nap 면제 + timer coalescing 완화.
+             LowPriorityIO=false — 디스크 I/O 우선도 유지 (세션 lock 중에도 claim 파일 즉시 쓰기).
+             LegacyTimers=true  — darwinNotify 기반 coalescing 대신 과거 방식 유지 (더 정밀한 wake).
+       (대안으로 `caffeinate -i` 서브프로세스를 러너 안에서 유지하는 방법도 있으나, plist 선언이 더 단순·신뢰성↑.) -->
+  <key>ProcessType</key>
+  <string>Interactive</string>
+  <key>LowPriorityIO</key>
+  <false/>
+  <key>LegacyTimers</key>
+  <true/>
   <key>StandardOutPath</key>
   <string>$LOG_DIR/launchd.out.log</string>
   <key>StandardErrorPath</key>
