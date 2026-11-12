@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-12T07:29:57.490Z",
+  "built_at": "2026-11-12T07:35:22.996Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -83,15 +83,15 @@
       "last_report": "n0/N0-0914-C-report.md"
     },
     "r0": {
-      "last_round": "R0-1105-CI",
-      "last_report": "r0/R0-1105-CI-report.md",
+      "last_round": "R0-1105-CJ",
+      "last_report": "r0/R0-1105-CJ-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-12T07:23:45.466Z",
       "current_round": "R0-1105-CJ",
-      "current_state": "started",
-      "current_at": "2026-11-12T07:27:57.789Z",
-      "current_note": "runner-v7.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-CJ.log"
+      "current_state": "done",
+      "current_at": "2026-11-12T07:35:22.939Z",
+      "current_note": "CHANGES · 설계·공식·멱등 모두 정합이나 CI pos-integration RED (tenders.spec #61·#82) + 신규 pos-tax-lines.spec 가 test:integration:pos 패턴에 미편입 → 2건 해소 전 머지 금지"
     },
     "t0": {
       "state": "idle",
