@@ -1,7 +1,7 @@
 {
   "id": "M1-1105-AZ",
   "hub": "m1",
-  "state": "started",
-  "at": "2026-11-12T02:19:03.279Z",
-  "note": "runner-v7.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1105-AZ.log"
+  "state": "done",
+  "at": "2026-11-12T02:26:22.522Z",
+  "note": "7건 진단 완료: R3=cancelFulfill 재예약+orderModule.cancel 미정리, R4=정리도구 위치 확인, R1=variant합산+In stock사용, R6=PB1 computedGrand vs order.total 괴리, R5=payment cancel 미수행, R7=refund record 없음, R8=order.status!==canceled 가드 없음"
 }

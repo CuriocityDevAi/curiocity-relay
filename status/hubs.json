@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-12T02:19:03.351Z",
+  "built_at": "2026-11-12T02:26:22.588Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -49,9 +49,9 @@
       "last_activity": null,
       "updated_at": "2026-11-11T16:28:13.169Z",
       "current_round": "M1-1105-AZ",
-      "current_state": "started",
-      "current_at": "2026-11-12T02:19:03.279Z",
-      "current_note": "runner-v7.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1105-AZ.log"
+      "current_state": "done",
+      "current_at": "2026-11-12T02:26:22.522Z",
+      "current_note": "7건 진단 완료: R3=cancelFulfill 재예약+orderModule.cancel 미정리, R4=정리도구 위치 확인, R1=variant합산+In stock사용, R6=PB1 computedGrand vs order.total 괴리, R5=payment cancel 미수행, R7=refund record 없음, R8=order.status!==canceled 가드 없음"
     },
     "m2": {
       "last_round": "M2-1105-Z",
