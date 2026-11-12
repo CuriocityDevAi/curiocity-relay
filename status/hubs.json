@@ -1,23 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-12T02:54:13.659Z",
+  "built_at": "2026-11-12T02:57:18.982Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-12T02:54:08.184Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-12T02:54:08.184Z"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-12T02:54:00.032Z",
-      "session": "4d5f72d6-c1be-4c47-ae6a-0b396de23f84",
-      "updated_at": "2026-11-12T02:54:08.184Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -29,17 +13,93 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T02:54:08.184Z"
+      "updated_at": "2026-11-12T02:54:08.184Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T02:54:08.184Z"
+      "updated_at": "2026-11-12T02:54:08.184Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-12T02:54:00.032Z",
+      "session": "4d5f72d6-c1be-4c47-ae6a-0b396de23f84",
+      "updated_at": "2026-11-12T02:54:08.184Z",
+      "last_round": "M0-1105-Z",
+      "last_report": "m0/M0-1105-Z-report.md",
+      "current_round": "M0-1105-AR",
+      "current_state": "started",
+      "current_at": "2026-11-12T02:53:06.402Z",
+      "current_note": "runner-v7.1 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-AR.log"
+    },
+    "m1": {
+      "last_round": "M1-1105-Z",
+      "last_report": "m1/M1-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T02:57:18.982Z",
+      "current_round": "M1-1105-AZ",
+      "current_state": "done",
+      "current_at": "2026-11-12T02:26:22.522Z",
+      "current_note": "7건 진단 완료: R3=cancelFulfill 재예약+orderModule.cancel 미정리, R4=정리도구 위치 확인, R1=variant합산+In stock사용, R6=PB1 computedGrand vs order.total 괴리, R5=payment cancel 미수행, R7=refund record 없음, R8=order.status!==canceled 가드 없음"
+    },
+    "m2": {
+      "last_round": "M2-1105-Z",
+      "last_report": "m2/M2-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T02:57:18.982Z",
+      "current_round": "M2-1105-AQ",
+      "current_state": "started",
+      "current_at": "2026-11-12T02:57:18.921Z",
+      "current_note": "runner-v7.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1105-AQ.log"
+    },
+    "m3": {
+      "last_round": "M3-1105-Y",
+      "last_report": "m3/M3-1105-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T02:57:18.982Z",
+      "current_round": "M3-1105-AW",
+      "current_state": "started",
+      "current_at": "2026-11-12T02:53:08.778Z",
+      "current_note": "runner-v7.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1105-AW.log"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T02:54:08.184Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1105-BX",
+      "last_report": "r0/R0-1105-BX-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T02:57:18.982Z",
+      "current_round": "R0-1105-BX",
+      "current_state": "done",
+      "current_at": "2026-11-11T18:13:23.839Z",
+      "current_note": "APPROVE — C-BV-1·C-BV-2 해소, check6a 약화 없음, assertions 41/41, 미해결 대화 0"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-12T02:54:08.184Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
