@@ -1,11 +1,26 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-12T04:31:07.062Z",
+  "built_at": "2026-11-12T04:33:46.741Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-12T04:33:37.030Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-12T04:33:37.030Z"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-12T04:28:09.798Z",
+      "updated_at": "2026-11-12T04:33:37.030Z"
+    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-12T04:22:52.879Z",
+      "updated_at": "2026-11-12T04:33:37.030Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,93 +28,17 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      ]
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T04:22:52.879Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-12T04:33:37.030Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-12T04:22:52.879Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-12T04:22:38.786Z",
-      "session": "8d279f4e-fe20-41a9-8d07-9b05b8bb86e1",
-      "updated_at": "2026-11-12T04:22:52.879Z",
-      "last_round": "M0-1105-Z",
-      "last_report": "m0/M0-1105-Z-report.md",
-      "current_round": "M0-1105-AU",
-      "current_state": "done",
-      "current_at": "2026-11-12T04:28:10.178Z",
-      "current_note": "scan.tsx:89 setErrorMessage('Order not found') 삭제 · 어설션 1줄 추가 · #102 72406e8 위로 rebase · run-all 43/43 PASS"
-    },
-    "m1": {
-      "last_round": "M1-1105-Z",
-      "last_report": "m1/M1-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-12T04:28:10.242Z",
-      "current_round": "M1-1105-BC",
-      "current_state": "done",
-      "current_at": "2026-11-12T03:55:10.305Z",
-      "current_note": "v7.2 exitPaneClaude 재작성 · #19 해결 · PR #1 커밋 추가 · 설치 전 머지 필수"
-    },
-    "m2": {
-      "last_round": "M2-1105-Z",
-      "last_report": "m2/M2-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-12T04:28:10.242Z",
-      "current_round": "M2-1105-AS",
-      "current_state": "blocked",
-      "current_at": "2026-11-12T04:17:24.954Z",
-      "current_note": "runner-v7.1 cmux-split · landing=claim-done · post claim 없음 (race?) · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1105-AS.log"
-    },
-    "m3": {
-      "last_round": "M3-1105-Y",
-      "last_report": "m3/M3-1105-Y-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-12T04:28:10.242Z",
-      "current_round": "M3-1105-AX",
-      "current_state": "done",
-      "current_at": "2026-11-12T04:04:44.935Z",
-      "current_note": "반품 품목 선택 UI 완성: 토스트 IDR N (Cash) · N items · partially_refunded Refund 유지 · 66 assertions · 스크린샷 4장"
-    },
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-12T04:22:52.879Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
-    },
-    "r0": {
-      "last_round": "R0-1105-CE",
-      "last_report": "r0/R0-1105-CE-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-12T04:28:10.242Z",
-      "current_round": "R0-1105-CE",
-      "current_state": "done",
-      "current_at": "2026-11-12T04:31:07.007Z",
-      "current_note": "APPROVE: app.config.js app.json 완전 계승·runtimeVersion 불변·prettier 0.6 서식 변경 0·CI 캐시 키 타당·M2 업데이트 경로 정확"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-12T04:22:52.879Z",
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "updated_at": "2026-11-12T04:33:37.030Z"
     }
   }
 }
