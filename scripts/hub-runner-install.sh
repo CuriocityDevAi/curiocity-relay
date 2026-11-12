@@ -84,6 +84,18 @@ echo "[install] node --check scripts/$TARGET_RUNNER · OK"
 
 PATH_LINE="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
+# M1-1105-BA(d): Mac 잠금 시 bg 모드에서 setInterval(5s) 이 23분 지연된 사건(handoff-20261112-early) 고침.
+#   원인: launchd 가 이 프로세스를 Background Service 로 취급 → App Nap · timer coalescing · I/O throttling 적용.
+#         잠금(= 포커스 없음) 시 커널이 수 분 단위로 타이머를 묶어서 깨움.
+#   고침: ProcessType=Interactive — launchd 가 사용자 상호작용 수준으로 격상 → App Nap 면제 + timer coalescing 완화.
+#         LowPriorityIO=false — 디스크 I/O 우선도 유지 (세션 lock 중에도 claim 파일 즉시 쓰기).
+#         LegacyTimers=true  — darwinNotify 기반 coalescing 대신 과거 방식 유지 (더 정밀한 wake).
+#   (대안: caffeinate -i 서브프로세스 유지 — plist 선언이 더 단순·신뢰성↑ 이라 미채택.)
+#
+# M1-1105-BD (장치 사건 11-12 13:12): write_plist heredoc 이 `<<PLIST` (unquoted) 라서 위 주석을
+# 그대로 넣었을 때 백틱 `caffeinate -i` 가 명령 치환으로 실행 → 설치가 `node --check OK` 뒤 멈추고
+# caffeinate 가 무한 돌음 (Kyu 가 pkill 로 수동 복구). 재발 방지: plist 안 주석을 위 쉘 주석으로 이동,
+# heredoc 에는 변수 치환만 필요한 뼈대만 유지. 테스트(test/hub-runner-install.test.mjs) 로 재발 감시.
 write_plist() {
   local runner="$1"
   cat > "$PLIST_FILE" <<PLIST
@@ -107,13 +119,6 @@ write_plist() {
   <true/>
   <key>ThrottleInterval</key>
   <integer>60</integer>
-  <!-- M1-1105-BA(d): Mac 잠금 시 bg 모드에서 setInterval(5s) 이 23분 지연된 사건(handoff-20261112-early) 고침.
-       원인: launchd 가 이 프로세스를 Background Service 로 취급 → App Nap · timer coalescing · I/O throttling 적용.
-       잠금(= 포커스 없음) 시 커널이 수 분 단위로 타이머를 묶어서 깨움.
-       고침: ProcessType=Interactive — launchd 가 사용자 상호작용 수준으로 격상 → App Nap 면제 + timer coalescing 완화.
-             LowPriorityIO=false — 디스크 I/O 우선도 유지 (세션 lock 중에도 claim 파일 즉시 쓰기).
-             LegacyTimers=true  — darwinNotify 기반 coalescing 대신 과거 방식 유지 (더 정밀한 wake).
-       (대안으로 `caffeinate -i` 서브프로세스를 러너 안에서 유지하는 방법도 있으나, plist 선언이 더 단순·신뢰성↑.) -->
   <key>ProcessType</key>
   <string>Interactive</string>
   <key>LowPriorityIO</key>
