@@ -39,6 +39,7 @@ import {
 } from './lib/cmux-hubs.mjs';
 import { shouldRecoverStartedClaim } from './lib/recovery.mjs';
 import { waitForLandingWith } from './lib/land-detect.mjs';
+import { decideCloseAction, PANE_CLOSE_MAX_ATTEMPTS } from './lib/pane-close.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
@@ -72,7 +73,6 @@ const PANE_SHELL_WAIT_MS = 10 * 1000;              // shell 복귀 대기 상한
 const PANE_CLAUDE_WAIT_MS = 30 * 1000;             // claude foreground 확인 대기 상한 (투입 후)
 const PANE_EXIT_WAIT_MS = 15 * 1000;               // 강제 /exit 후 shell 복귀 대기
 const PANE_RESPAWN_WAIT_MS = 3 * 1000;             // respawn-pane 후 shell 복귀 대기
-const PANE_POST_LANDING_WAIT_MS = 10 * 60 * 1000; // 완료 판정 후 자연 종료 대기 (hub commit/push 시간)
 const LANDING_ORIGIN_POLL_INTERVAL = 4;            // waitForLanding 에서 git fetch 주기 (poll N 마다)
 const PANE_POLL_MS = 500;
 const ENTER_RETRY_CHECK_MS = 60_000;               // REQ(a): 세션 시작 확인 대기 (회당)
@@ -1522,61 +1522,78 @@ async function waitSessionStartedWithRetry(cmuxBin, layout, hub, logFile) {
   return { ok: false, enterRetries: ENTER_RETRY_MAX };
 }
 
-// 완료 뒤: 허브 commit/push 완료까지 자연 종료 대기 → /exit 는 최후 수단.
-// v6.2: 판정 직후 /exit 를 보내지 않음 — 허브가 아직 git commit/push 중일 수 있음.
-//   원인(v6.1 허브 작업 중단): exitPaneClaude 가 즉시 /exit 송신 → hub-runner-v6.1.mjs:930.
-async function exitPaneClaude(cmuxBin, layout, hub, logFile, { timeoutMs = PANE_POST_LANDING_WAIT_MS } = {}) {
-  // v6.5 REQ4: 수동 투입 칸(M2)은 건드리지 않음 — 원인 1줄: 명시적 가드 부재로 모든 허브가 같은 경로.
-  if (hub === 'm2') {
-    appendLine(logFile, `[pane-exit] hub=${hub} · 수동 투입 칸 · skip`);
-    return true;
-  }
-  const init = detectPaneState(cmuxBin, layout, hub);
-  if (init.state === 'shell') {
-    appendLine(logFile, `[pane-exit] hub=${hub} · 이미 shell · skip`);
-    return true;
-  }
-  // 먼저 자연 종료 대기 (허브 commit/push 완료 → claude 스스로 종료).
-  appendLine(logFile, `[pane-exit] hub=${hub} · init=${init.state} · 자연 종료 대기 (최대 ${Math.round(timeoutMs / 60000)}m)`);
-  const deadline = Date.now() + timeoutMs;
-  while (Date.now() < deadline) {
-    await sleepMs(PANE_POLL_MS);
+// 완료 뒤 Claude pane 닫기 (M1-1105-BC · 장치 사건 #19):
+//   v7.1 은 "자연 종료 대기(최대 10m)" 후에야 /exit — Claude Code 는 자동 종료 안 하므로 10분 낭비 ·
+//   Kyu 손 /exit (오늘 R0 3회 · M1 1회). v7.2 는 done 감지 즉시 /exit · 15초 안 shell 미복귀 → 재시도 2회
+//   (두 번째는 Escape 추가) · 3회 실패 → status/runners/all.json 에 pane_close_failed 플래그 + inbox 코멘트.
+//   순수 결정: lib/pane-close.mjs decideCloseAction.
+//   ⛔ 쉘 프롬프트에 exit 를 절대 보내지 않음(cmux 칸 닫힘) · 수동 투입 M2 · done 아닌 세션 미개입.
+async function exitPaneClaude(cmuxBin, layout, hub, logFile, { isDone = true, id = null } = {}) {
+  for (let attempt = 0; attempt <= PANE_CLOSE_MAX_ATTEMPTS; attempt++) {
     const s = detectPaneState(cmuxBin, layout, hub);
-    if (s.state === 'shell') {
-      appendLine(logFile, `[pane-exit] hub=${hub} · shell 복귀 확인 (자연 종료)`);
+    const decision = decideCloseAction({ hub, state: s.state, attempt, isDone });
+    if (decision.action === 'skip') {
+      appendLine(logFile, `[pane-exit] hub=${hub} · skip (${decision.reason}) · state=${s.state}`);
       return true;
     }
-  }
-  // 자연 종료 타임아웃 → ctrl-u + /exit 강제 송신 (v6.3: Escape×2 → ctrl-u).
-  sendPaneKey(cmuxBin, layout, hub, 'ctrl-u');
-  await sleepMs(200);
-  const sent = sendPaneText(cmuxBin, layout, hub, '/exit\n');
-  appendLine(logFile, `[pane-exit] hub=${hub} · 자연 종료 타임아웃 · 강제 ctrl-u+/exit send=${sent}`);
-  const exitDeadline = Date.now() + PANE_EXIT_WAIT_MS;
-  while (Date.now() < exitDeadline) {
-    await sleepMs(PANE_POLL_MS);
-    const s = detectPaneState(cmuxBin, layout, hub);
-    if (s.state === 'shell') {
-      appendLine(logFile, `[pane-exit] hub=${hub} · shell 복귀 확인 (/exit 후)`);
+    if (decision.action === 'done') {
+      if (attempt === 0) appendLine(logFile, `[pane-exit] hub=${hub} · 이미 shell · skip`);
+      else appendLine(logFile, `[pane-exit] hub=${hub} · shell 복귀 확인 (attempt=${attempt})`);
       return true;
     }
+    if (decision.action === 'report-failure') {
+      appendLine(logFile, `[pane-exit] hub=${hub} · pane_close_failed · ${PANE_CLOSE_MAX_ATTEMPTS}회 전부 15초 안 shell 미복귀 · last=${s.state}`);
+      recordPaneCloseFailure({ hub, id, attempts: PANE_CLOSE_MAX_ATTEMPTS, lastState: s.state, tail: s.tail });
+      return false;
+    }
+    if (decision.action === 'escape-ctrl-u-exit') {
+      sendPaneKey(cmuxBin, layout, hub, 'escape');
+      await sleepMs(200);
+    }
+    sendPaneKey(cmuxBin, layout, hub, 'ctrl-u');
+    await sleepMs(200);
+    const sent = sendPaneText(cmuxBin, layout, hub, '/exit\n');
+    appendLine(logFile, `[pane-exit] hub=${hub} · attempt=${attempt} · ${decision.action} · send=${sent}`);
+    const exitDeadline = Date.now() + PANE_EXIT_WAIT_MS;
+    let returned = false;
+    while (Date.now() < exitDeadline) {
+      await sleepMs(PANE_POLL_MS);
+      const ps = detectPaneState(cmuxBin, layout, hub);
+      if (ps.state === 'shell') {
+        appendLine(logFile, `[pane-exit] hub=${hub} · shell 복귀 확인 (attempt=${attempt} · ${ps.reason})`);
+        returned = true;
+        break;
+      }
+    }
+    if (returned) return true;
+    appendLine(logFile, `[pane-exit] hub=${hub} · attempt=${attempt} · 15초 안 shell 미복귀 · 재시도`);
   }
-  // C-c ×2 폴백.
-  sendPaneKey(cmuxBin, layout, hub, 'ctrl-c');
-  await sleepMs(PANE_INTERRUPT_GRACE_MS);
-  sendPaneKey(cmuxBin, layout, hub, 'ctrl-c');
-  await sleepMs(PANE_POLL_MS);
-  const afterCc = detectPaneState(cmuxBin, layout, hub);
-  if (afterCc.state === 'shell') {
-    appendLine(logFile, `[pane-exit] hub=${hub} · shell 복귀 확인 (C-c ×2 후)`);
-    return true;
-  }
-  // 최후 수단: respawn-pane.
-  appendLine(logFile, `[pane-exit] hub=${hub} · /exit + C-c 실패 → respawn-pane`);
-  const respawned = await respawnPaneShell(cmuxBin, layout, hub, logFile);
-  if (respawned.ok) return true;
-  appendLine(logFile, `[pane-exit] hub=${hub} · respawn-pane 도 실패 · after=${afterCc.state}`);
   return false;
+}
+
+// pane_close_failed 보고 (M1-1105-BC [REQ] 2): status/runners/all.json 의 pane_close_failures 맵에 기록 + 선택 inbox 코멘트.
+// 다음 dispatch 때 overwrite · 러너 재시작과 무관하게 all.json heartbeat 에서 노출.
+const paneCloseFailures = new Map();
+function recordPaneCloseFailure({ hub, id, attempts, lastState, tail }) {
+  paneCloseFailures.set(hub, {
+    id: id || null,
+    at: ts(),
+    attempts,
+    last_state: lastState,
+    tail: (tail || '').split('\n').slice(-5).join('\n'),
+  });
+  if (RELAY_INBOX_ENABLED && RELAY_INBOX_ISSUE) {
+    try {
+      const body = `pane_close_failed ${hub}${id ? ` · ${id}` : ''} · ${attempts}회 /exit 실패 · last=${lastState}`;
+      execFileSync('gh', ['issue', 'comment', String(RELAY_INBOX_ISSUE), '-R', RELAY_INBOX_REPO, '-b', body], {
+        stdio: ['ignore', 'pipe', 'pipe'],
+        timeout: 10_000,
+      });
+    } catch { /* noop */ }
+  }
+}
+function clearPaneCloseFailure(hub) {
+  paneCloseFailures.delete(hub);
 }
 
 async function dispatchInPane({ cmuxBin, layout, hub, item, cwd, claudeBin, model, logFile }) {
@@ -2061,8 +2078,10 @@ async function spawnClaudeForItem(item, cwd, config) {
           const tail = screen.split('\n').slice(-50).join('\n');
           appendLine(logFile, `[screen-capture] (pane ${item.hub} 마지막 ~50줄)\n${tail}\n[/screen-capture]`);
         }
-        // ② 완료 뒤 정리: pane claude → /exit → shell 복귀. 실패해도 graceful (claim 상태엔 영향 없음).
-        const exited = await exitPaneClaude(config.cmux_bin, layout, item.hub, logFile);
+        // ② 완료 뒤 정리: pane claude → /exit → shell 복귀 (M1-1105-BC).
+        //    이전 실패 흔적은 clear — 실제 실패 시 exitPaneClaude 내부에서 다시 기록.
+        clearPaneCloseFailure(item.hub);
+        const exited = await exitPaneClaude(config.cmux_bin, layout, item.hub, logFile, { isDone: true, id: item.id });
         appendLine(logFile, `[pane-exit-final] hub=${item.hub} · exited=${exited}`);
         return {
           mode: 'cmux-split',
@@ -2185,6 +2204,8 @@ function writeHeartbeat(config) {
           : { current: null, last_activity: hubLastActivity.get(hub) || null },
       ]),
     ),
+    // M1-1105-BC (#19): 끝난 Claude 세션 자동 닫기 실패 보고. 다음 dispatch 때 clear.
+    pane_close_failures: Object.fromEntries(paneCloseFailures),
   };
   writeFileSync(ALL_HEARTBEAT, JSON.stringify(payload, null, 2) + '\n', 'utf8');
   // v6.8 REQ2: stage all.json — bundles into the next claim commit automatically.
@@ -2915,7 +2936,7 @@ import('node:fs').then((fs) => {
 
       // 7) exitPaneClaude → mock-work 이미 exit 했으므로 pane 은 shell · skip 경로 밟아야 함.
       await sleepMs(1000);  // mock-work 종료 → shell prompt 그려질 시간.
-      const exited = await exitPaneClaude(cfg.cmux_bin, layout, hub, logFile, { timeoutMs: 5_000 });
+      const exited = await exitPaneClaude(cfg.cmux_bin, layout, hub, logFile, { isDone: true, id });
       const finalState = detectPaneState(cfg.cmux_bin, layout, hub);
       if (!exited || finalState.state !== 'shell') {
         console.error(`[selftest-busy] FAIL (phase D) · exit=${exited} finalState=${finalState.state} tail:\n${finalState.tail}`);
