@@ -1,10 +1,34 @@
 # 작업 큐 (Kyu 의뢰 → 허브 할당 · 우선순위 · 상태 · 이유)
 
-갱신 2026-11-13 WIB (handoff-20261113 병합 · 오케 작업자) · **최신 handoff = `ledger/handoff-20261113.md`** · 직전 = `ledger/handoff-20261112.md` · 직전 갱신 2026-11-11 16:20 WIB · 규칙(Kyu 11-05): 오케는 매 응답 현황판 아래에 이 표를 붙이고(바뀐 줄 굵게), 우선순위 변경 시 "↑/↓ 이유". 정본 = 이 파일 · **오케가 갱신** · 최소 하루 1회. 프롬프트별 실시간 상태 = 상태판 https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE
+갱신 2026-11-13 06:40 WIB (Kyu 06:35 회신 반영 · 오케 작업자) · 그 전 2026-11-13 WIB (handoff-20261113 병합) · **최신 handoff = `ledger/handoff-20261113.md`** · 직전 = `ledger/handoff-20261112.md` · 직전 갱신 2026-11-11 16:20 WIB · 규칙(Kyu 11-05): 오케는 매 응답 현황판 아래에 이 표를 붙이고(바뀐 줄 굵게), 우선순위 변경 시 "↑/↓ 이유". 정본 = 이 파일 · **오케가 갱신** · 최소 하루 1회. 프롬프트별 실시간 상태 = 상태판 https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE
 
-결정 정본 파일(원문 보존 · 유지): [decision-payment-icons-qris-sim-20261113](decision-payment-icons-qris-sim-20261113.md) · [decision-qris-20261112](decision-qris-20261112.md) · [decision-refund-nav-20261112](decision-refund-nav-20261112.md) · [decision-split-delivery-test-20261112](decision-split-delivery-test-20261112.md) · [decision-delivery-ui-20261110](decision-delivery-ui-20261110.md) · [decision-p6-20261110](decision-p6-20261110.md) · [decision-p6-split-20261111](decision-p6-split-20261111.md) · [decision-checkout-ui-20261111](decision-checkout-ui-20261111.md) · [decision-p6-test-20261111](decision-p6-test-20261111.md) · 장치 사건 [device-incidents](device-incidents.md) · 지표 [metrics](metrics.md)
+결정 정본 파일(원문 보존 · 유지): [decision-next-big-20261113](decision-next-big-20261113.md) · [decision-payment-icons-qris-sim-20261113](decision-payment-icons-qris-sim-20261113.md) · [decision-qris-20261112](decision-qris-20261112.md) · [decision-refund-nav-20261112](decision-refund-nav-20261112.md) · [decision-split-delivery-test-20261112](decision-split-delivery-test-20261112.md) · [decision-delivery-ui-20261110](decision-delivery-ui-20261110.md) · [decision-p6-20261110](decision-p6-20261110.md) · [decision-p6-split-20261111](decision-p6-split-20261111.md) · [decision-checkout-ui-20261111](decision-checkout-ui-20261111.md) · [decision-p6-test-20261111](decision-p6-test-20261111.md) · 장치 사건 [device-incidents](device-incidents.md) · 지표 [metrics](metrics.md)
 
-## 11-13 현재 상태 (이 절이 최신 · 출처 = handoff-20261113.md 05:40 WIB · 아래 11-11 절 이하는 이력)
+## 11-13 06:35 Kyu 회신 반영 (이 절이 최신)
+
+### Kyu 할 일
+| # | 항목 | 상태 |
+|---|---|---|
+| K3 | **실기: QRIS 테스트 결제**(#233 03226a1 · #236 19f38d5 머지됨) | **지금 가능** — Railway 배포 2~3분 뒤 iPad QRIS → "Simulate payment (test)" → 영수증 · Admin Paid · Webhook Logs 200 |
+| K2 | 실기: #118 아이콘 | 부분 통과 · 선택된 버튼에서 아이콘 흰색 여부만 재확인 |
+| K5 | 외부 신청 3건 | Kyu 나중에 |
+| K6 | 11-12 실기 잔여 | Kyu 나중에(몰아서) |
+| ~~K1 · K4 · K7 · K8~~ | #233 머지 · 다음 큰 것 = EAS만 · CI 비용 = 안 함 · 러너 재설치 | ✅ 종결 |
+
+### 진행 / 대기
+| 항목 | 허브 | 상태 |
+|---|---|---|
+| **EAS 새 앱 빌드(옛 dev client 교체) — 계획서만** | M2 | **M2-1105-BE 발부(11-13)** · 계획서 승인 뒤 코딩 라운드 분할 발부 · 서랍 범위 밖 · 프린터 이연 |
+| fork #122 vitest 2 fail 수정(M2-1105-BD) | M2 → R0 | 착지(clean · CI pass) → **R0-1105-DH 리뷰** → 오케 머지 |
+| **storeport #232** reservation ghost 재현 테스트 | R0 → 오케 | **R0-1105-DI 판정 리뷰 발부**(#237 BC-1 과 대조 · 폐기 / it 전환 / 실제 버그) |
+| **QRIS simulate 실제 DB 통합 테스트(#236 이연)** | M0 | **M0-1105-BM 발부**(테스트만 · Kyu 06:38 "허브 놀지 않게" 품질 일) |
+| **세금 이연 R0-CJ-3 마커 · R0-CJ-4 다품목 정밀도 가드** | M1 | **M1-1105-BN 발부**(보이는 금액 바뀌면 계획서만 · 멈춤) |
+| **fork lint warnings 46 → 0 근처(동작 변경 없음)** | M3 | **M3-1105-BP 발부**(void-refund-nav-bc 테스트 파일 제외) |
+
+### 이연 갱신
+BLE 프린터 BT-58D(Kyu 11-13 "나중으로") · 현금 서랍(Kyu 11-13 "당분간 필요없을듯" — 범위 밖) · CI 비용 절감(Kyu "아니" — 종결).
+
+## 11-13 현재 상태 (05:40 판 · 위 06:35 절이 최신 · 출처 = handoff-20261113.md 05:40 WIB · 아래 11-11 절 이하는 이력)
 
 모든 허브 idle → M2-1105-BD 발부(11-13). 프롬프트별 실시간 상태 = 상태판.
 
@@ -106,3 +130,4 @@ Anchor 테스트 모드 결제 완성 → QRIS live(Xendit KYC · xenPlatform) �
 - **11-09 11:05: M1-Y 착지 → 진단으로 M3-R "done" 이 가짜(코드 0)였음 확인. M0-V → M0-1105-W · M3-R → M3-1105-S 로 재발부(항목별 push 규칙 ⓗ 추가). #64·#63 은 R0-1105-AG 로 먼저 리뷰(#62·#200 은 재작업 뒤). M1-1105-Z 신설(러너가 리포트 없는 exit 0 을 done 처리하지 않게).**
 - **11-11: 원장 통합(11-09 판 이후 누락분 합침). P6 환불·보이드·분할 결정 파일 5개 링크. P6 실기 B 는 Void 수정(#86) 머지 뒤. 분할 결제 서버 #212 착지. 방법론 리포 생성.**
 - **11-13: handoff-20261113 병합. 허브 전부 idle → M2-1105-BD(vitest 2 fail · 테스트만) 발부. #232 판정 필요(오케) 추가. K1(#233 머지해)이 #236·K3 을 막고 있음.**
+- **11-13 06:40: Kyu 06:35 회신 7항 반영(decision-next-big-20261113). #233·#236 머지. 다음 큰 것 = EAS 만(서랍 제외 · 프린터 이연) → M2-1105-BE 계획서 발부. M2-BD 착지 → R0-1105-DH. Kyu 06:38 "모든 허브들이 놀고있는데, 테스트없이는 투입할 프롬프트가 없어?" → 품질 일 4건 발부: M0-1105-BM · M1-1105-BN · M3-1105-BP · R0-1105-DI.**
