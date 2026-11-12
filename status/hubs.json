@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-12T07:53:54.863Z",
+  "built_at": "2026-11-12T07:58:24.461Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -84,15 +84,15 @@
       "last_report": "n0/N0-0914-C-report.md"
     },
     "r0": {
-      "last_round": "R0-1105-CL",
-      "last_report": "r0/R0-1105-CL-report.md",
+      "last_round": "R0-1105-CM",
+      "last_report": "r0/R0-1105-CM-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-12T07:42:13.908Z",
       "current_round": "R0-1105-CM",
-      "current_state": "started",
-      "current_at": "2026-11-12T07:53:50.849Z",
-      "current_note": "runner-v7.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-CM.log"
+      "current_state": "done",
+      "current_at": "2026-11-12T07:58:24.398Z",
+      "current_note": "#225 수정 필요(prod-shape-seed 충돌·server guard·#2 테스트) · #223 APPROVE · 머지 순서 #224→#223→#225"
     },
     "t0": {
       "state": "idle",
