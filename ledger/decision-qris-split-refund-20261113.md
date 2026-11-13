@@ -15,3 +15,13 @@
 
 ## 순서 (오케)
 QRIS 웹훅 claim 500 수정(M0-1105-BN) 머지 → QRIS 테스트 결제 실기 통과 → 서버(M0: 결제 허용 + 환불 + retry 확장) 계획서 먼저(큰 라운드) → 앱(M3) → R0 → Kyu "머지해"(돈 PR) → 실기.
+
+## 계획서(storeport #246 · M0-1105-BQ) 열린 질문 Q1~Q7 — Kyu 21:28 원문 "추천대로."
+- Q1 1차 QRIS PENDING 중 2차 tender → 409 거부(qris_pending_cannot_split_next)
+- Q2 split 양쪽 QRIS 허용
+- Q3 cash_fallback 뒤 늦은 Xendit SUCCEEDED → 자동 교정 금지 · 로그만(사람 처리)
+- Q4 cash_fallback 영수증 kind → 기존 helper(resolveRefundReceiptKind) 유지
+- Q5 7일 window 임박 알림 → R4 별도(이번 범위 밖)
+- Q6 실패 tender 는 2개 한도에서 처음부터 제외
+- Q7 split 한쪽 QRIS 7일 초과 → 다른 몫만 환불(기존 동작)
+- 순서: QRIS 기본 결제 실기 통과(M0-1105-BR → 수정) 뒤 R1(서버 split 가드 해제) → R2(refund-retry 확장) → R3(앱 UI) → R4(선택)
