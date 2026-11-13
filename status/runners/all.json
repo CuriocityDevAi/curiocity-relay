@@ -1,14 +1,16 @@
 {
-  "at": "2026-11-13T14:11:31.614Z",
+  "at": "2026-11-13T14:15:01.929Z",
   "pid": 11749,
   "runner": "v7.2",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": "blocked: runner-folder change pending Kyu install (m0/M0-1105-BP-report.md)",
+  "last_error": "blocked: runner-folder change pending Kyu install (scripts/hub-runner-v7.3.mjs)",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1105-BR",
+      "started_at": "2026-11-13T14:14:58.073Z",
+      "model": "opus",
       "last_activity": "2026-11-13T13:03:36.907Z"
     },
     "m1": {
@@ -20,11 +22,15 @@
       "last_activity": "2026-11-13T12:57:09.603Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1105-BW",
+      "started_at": "2026-11-13T14:14:58.884Z",
+      "model": "sonnet",
       "last_activity": "2026-11-13T14:03:52.512Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1105-DT",
+      "started_at": "2026-11-13T14:14:59.727Z",
+      "model": "sonnet",
       "last_activity": "2026-11-13T14:00:57.049Z"
     }
   },
