@@ -12,9 +12,16 @@
 ## 판정
 - ✅ 4 Payment successful 상단 뒤로가기 없음 · 6 Void+Refund 둘 다(#114) · 7 상세 Done(#111 F3)
 - ❌ C1 같은 상품(같은 변형·옵션) 2번 추가 → 줄 2개(각 1) — 기대: 줄 1개 수량 2
-- ❌ C2 카트 줄 삭제 수단 없음(수량 1 에서 − 비활성 · Cancel Cart 뿐) — **UX 방식 Kyu 답 대기**(Kyu 안: 금액 밑 휴지통 / 오케 안: 수량 1 에서 − 가 휴지통으로 바뀜 + 왼쪽 스와이프 삭제)
+- ❌ C2 카트 줄 삭제 수단 없음(수량 1 에서 − 비활성 · Cancel Cart 뿐) — **결정 B (Kyu 08:50 원문: "수량이 1일 때 “−” 버튼이 휴지통 모양으로 바뀜.(B)로 선택할게")** · 오케 보충(제시안 포함): 삭제 직후 "Removed · Undo" 토스트로 되돌리기
 - ❌ N-a Checkout 상단 뒤로가기 표기 "< (tabs)"(기대 "< Cart") + Checkout 제목과 겹침 · N-b Cash tender 제목 겹침 — #113(N2) 미해소/회귀
 - ⚠️ N-c View order: My Orders 가 0.5초 먼저 보인 뒤 상세 — 상세가 바로 보이고 뒤에 Orders 가 깔리게
 - 오케 안내 문구 오류: "서로 다른 걸로 2개" = 다른 상품 2개(예: 라떼+아메리카노)를 뜻함 — 카트 2개 아님
 
-소유: M3 · 발부 M3-1105-BR(C1 · N-a · N-b · N-c) · C2 는 Kyu 답 뒤 별도
+소유: M3 · 발부 M3-1105-BR(C1 · N-a · N-b · N-c) · C2(B) 는 M3-BR 착지 뒤 발부(같은 카트 파일 · 순차)
+
+## 테스트 2~5 (Kyu 08:48)
+- 원문: "테스트2 : 성공 / 테스트 3: 정상 / 테스트4: 1. 성공(첨부확인) 2. 성공 3. 성공(맞는것같아. 너가 재검증해줘) / 테스트 5 : 실패 (3번째 첨부, 확인해줘. 아무것도 안떠)"
+- ✅ 테스트 2 배달 Done 토스트(#111 F2) · 테스트 3 Orders 스크롤(#112)
+- ✅ 테스트 4 세금(#224) 오케 재검증: 주문 #89 Subtotal 60,000 + PB1 10% 6,000 = 66,000 · Paid 66,000 · Outstanding 0 → 라떼 1개 환불 33,000(=30,000+세금 3,000) · Paid 33,000 · Outstanding 0 · 환불 줄 Not allocated(예약 해제)
+- ⏳ 테스트 5 Stock cleanup: Stale 칸 "No stale reservations" — #81 이 #234 로 이미 해제됐을 가능성 → Kyu 가 Admin #81 상품 줄 Allocated/Not allocated 확인 대기 · Open orders 빈 칸은 정상(#82~#85 24h 후 · 저녁)
+- 🐞 문구 오타: Open orders 빈 상태 "No sale reservations" → "No open orders"류로(Admin · M1 · 다음 Admin 라운드)
