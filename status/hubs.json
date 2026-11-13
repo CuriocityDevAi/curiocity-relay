@@ -1,11 +1,27 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-13T02:20:57.959Z",
+  "built_at": "2026-11-13T02:21:54.234Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-13T02:21:34.662Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-13T02:21:34.662Z"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-13T02:20:54.839Z",
+      "session": "e5f32f05-b5ba-43e6-8158-6a5e452cc9f0",
+      "updated_at": "2026-11-13T02:21:34.662Z"
+    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-13T01:40:28.625Z",
+      "updated_at": "2026-11-13T02:21:34.662Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,92 +29,17 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      ]
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-13T01:40:28.625Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-13T02:21:34.662Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-13T01:40:28.625Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-13T01:35:00.118Z",
-      "updated_at": "2026-11-13T01:40:28.625Z",
-      "last_round": "M0-1105-Z",
-      "last_report": "m0/M0-1105-Z-report.md",
-      "current_round": "M0-1105-BO",
-      "current_state": "started",
-      "current_at": "2026-11-13T02:20:53.259Z",
-      "current_note": "runner-v7.2 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-BO.log"
-    },
-    "m1": {
-      "last_round": "M1-1105-Z",
-      "last_report": "m1/M1-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-13T01:42:02.296Z",
-      "current_round": "M1-1105-BP",
-      "current_state": "done",
-      "current_at": "2026-11-13T02:01:13.841Z",
-      "current_note": "query.graph items.* 와일드카드→tax_lines.rate 역산 합산 3001 · 로컬 120 tests 0 failed · head a55c8b2"
-    },
-    "m2": {
-      "last_round": "M2-1105-Z",
-      "last_report": "m2/M2-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-13T01:42:02.296Z",
-      "current_round": "M2-1105-BH",
-      "current_state": "started",
-      "current_at": "2026-11-13T02:20:57.894Z",
-      "current_note": "runner-v7.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1105-BH.log"
-    },
-    "m3": {
-      "last_round": "M3-1105-Y",
-      "last_report": "m3/M3-1105-Y-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-13T01:42:02.296Z",
-      "current_round": "M3-1105-BR",
-      "current_state": "done",
-      "current_at": "2026-11-13T02:01:53.328Z",
-      "current_note": "runner-v7.2 cmux-split · 리포트 확인 m3/M3-1105-BR-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1105-BR.log"
-    },
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-13T01:40:28.625Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
-    },
-    "r0": {
-      "last_round": "R0-1105-DO",
-      "last_report": "r0/R0-1105-DO-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-13T01:42:02.296Z",
-      "current_round": "R0-1105-DO",
-      "current_state": "done",
-      "current_at": "2026-11-13T02:17:15.055Z",
-      "current_note": "storeport#240 APPROVE(clean) · fork#127 APPROVE(playwright pending) · fork#128 수정요청(m3-1105-aw:159 assertion 갱신 필요)"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-13T01:40:28.625Z",
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "updated_at": "2026-11-13T02:21:34.662Z"
     }
   }
 }
