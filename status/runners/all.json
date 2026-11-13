@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-13T12:09:51.607Z",
+  "at": "2026-11-13T12:10:31.620Z",
   "pid": 11749,
   "runner": "v7.2",
   "poll_ms": 30000,
@@ -8,11 +8,15 @@
   "last_error": "blocked: runner-folder change pending Kyu install (m3/M3-1105-AY-report.md)",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1105-BP",
+      "started_at": "2026-11-13T12:10:27.068Z",
+      "model": "opus",
       "last_activity": "2026-11-13T03:50:21.941Z"
     },
     "m1": {
-      "current": null,
+      "current": "M1-1105-BR",
+      "started_at": "2026-11-13T12:10:27.958Z",
+      "model": "sonnet",
       "last_activity": "2026-11-13T03:50:19.560Z"
     },
     "m2": {
@@ -20,7 +24,9 @@
       "last_activity": "2026-11-13T02:56:12.357Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1105-BT",
+      "started_at": "2026-11-13T12:10:28.897Z",
+      "model": "sonnet",
       "last_activity": "2026-11-13T03:50:20.706Z"
     },
     "r0": {
