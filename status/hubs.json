@@ -1,26 +1,11 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-13T14:30:04.703Z",
+  "built_at": "2026-11-13T14:30:46.994Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-13T14:29:55.830Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-13T14:29:55.830Z"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-13T14:24:38.225Z",
-      "updated_at": "2026-11-13T14:29:55.830Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-13T14:29:55.830Z",
+      "updated_at": "2026-11-13T14:15:55.776Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -28,17 +13,93 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-13T14:29:55.830Z"
+      "updated_at": "2026-11-13T14:15:55.776Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-13T14:29:55.830Z"
+      "updated_at": "2026-11-13T14:15:55.776Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-13T14:15:46.589Z",
+      "session": "49fdf043-d199-44e6-9f01-8d4aa3e34c8d",
+      "updated_at": "2026-11-13T14:15:55.776Z",
+      "last_round": "M0-1105-Z",
+      "last_report": "m0/M0-1105-Z-report.md",
+      "current_round": "M0-1105-BR",
+      "current_state": "done",
+      "current_at": "2026-11-13T14:24:42.727Z",
+      "current_note": "서버 qris-status pr_... → payses_... 오매치 수정 · JSONB 직조회 통일 · PR #247 draft · 통합 테스트 4건 PASS"
+    },
+    "m1": {
+      "last_round": "M1-1105-Z",
+      "last_report": "m1/M1-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-13T14:17:18.527Z",
+      "current_round": "M1-1105-BS",
+      "current_state": "done",
+      "current_at": "2026-11-13T12:59:30.554Z",
+      "current_note": "runner-v7.2 cmux-split · 리포트 확인 m1/M1-1105-BS-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1105-BS.log"
+    },
+    "m2": {
+      "last_round": "M2-1105-Z",
+      "last_report": "m2/M2-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-13T14:17:18.527Z",
+      "current_round": "M2-1105-BI",
+      "current_state": "done",
+      "current_at": "2026-11-13T12:57:11.681Z",
+      "current_note": "runner-v7.2 cmux-split · 리포트 확인 m2/M2-1105-BI-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1105-BI.log"
+    },
+    "m3": {
+      "last_round": "M3-1105-Y",
+      "last_report": "m3/M3-1105-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-13T14:17:18.527Z",
+      "current_round": "M3-1105-BW",
+      "current_state": "done",
+      "current_at": "2026-11-13T14:29:59.825Z",
+      "current_note": "runner-v7.2 cmux-split · 리포트 확인 m3/M3-1105-BW-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1105-BW.log"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-13T14:15:55.776Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1105-DT",
+      "last_report": "r0/R0-1105-DT-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-13T14:17:18.527Z",
+      "current_round": "R0-1105-DU",
+      "current_state": "started",
+      "current_at": "2026-11-13T14:30:46.932Z",
+      "current_note": "runner-v7.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-DU.log"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-13T14:15:55.776Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
