@@ -3,8 +3,17 @@
 갱신: 2026-11-13 06:40 WIB (Kyu 06:35 회신 7항 반영 · decision-next-big-20261113 · 오케 작업자) · 그 전 2026-11-13 WIB (handoff-20261113 §2~§9 병합) · 직전 갱신 2026-11-11 17:55 WIB (11-09 11:05 판 + 11-10~11 결정·착지 통합) · 규칙: 새 요구 = 여기 먼저 등재(Kyu 원문 그대로 · 오케 번역은 괄호) · 소유 허브 필수 · 착지·실기 통과 시 ✅ · 이 파일이 챗보다 우선
 **발부 규약(09-16)**: 모든 프롬프트 작성 직전 이 파일을 읽고 `원장 대사:` 한 줄. 재언급 🔴. 주 1회 미발부 요구 표.
 **갱신 규약(11-06)**: 결정·착지마다(최소 하루 1회) 이 파일 + `work-queue.md` 갱신. **이 파일이 기억의 정본**.
-**세션 교체 규약(11-09)**: 오케 세션·클로드코드 허브 세션은 **매일 새로**. 마감 시 `ledger/handoff-<날짜>.md`(당일 스냅샷) 작성. 새 세션 첫 줄: `CurioCity 오케. relay ledger/open-requirements.md · work-queue.md · 최신 handoff 읽고 현황판부터.` **최신 handoff: `ledger/handoff-20261113.md`** (11-13 05:40 WIB 정본 · 세부 = handoff-20261112.md · handoff-20261113-night.md)
+**세션 교체 규약(11-09)**: 오케 세션·클로드코드 허브 세션은 **매일 새로**. 마감 시 `ledger/handoff-<날짜>.md`(당일 스냅샷) 작성. 새 세션 첫 줄: `CurioCity 오케. relay ledger/open-requirements.md · work-queue.md · 최신 handoff 읽고 현황판부터.` **최신 handoff: `ledger/handoff-20261114.md`** (11-13 05:40 WIB 정본 · 세부 = handoff-20261112.md · handoff-20261113-night.md)
 **상태판**: https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE · 자동 투입: `queue/<hub>/<ID>.md` → Kyu Mac hub-runner(v6.5 가동 · v6.6 = M2-1105-AC).
+
+## 11-14 09:23 Kyu K1 실기 반영 (원문 = [decision-k1-qris-20261114](decision-k1-qris-20261114.md))
+
+| # | Kyu 원문 요지 | 소유 | 상태 |
+|---|---|---|---|
+| K1 | QRIS 기본 결제 재실기 (storeport #247) | M0 | ✅ 실기 통과 11-14 |
+| N1 | "성공하고나서 영수증화면으로 (즉,Payment successful) 가는게 아니라, Orders 화면으로 가" | M3 | 등재 · R0-1105-DX 결과 뒤 M3 다음 발부에 포함 |
+| N2 | "Paid 가 아니라 Captured 라고 표기됨. Paid 로 고치는게 좋을듯" | M0/M2(Admin) | 등재 · Admin 리브랜딩과 묶음(후순위) |
+| R1 | 나눠결제 QRIS R1 (서버 split 가드 해제) | M0 | 발부 M0-1105-BS |
 
 ## 11-13 06:35 Kyu 회신 반영 (이 절이 최신 · 원문 = [decision-next-big-20261113](decision-next-big-20261113.md))
 
