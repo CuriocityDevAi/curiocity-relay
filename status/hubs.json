@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-14T06:31:47.853Z",
+  "built_at": "2026-11-14T06:45:08.832Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -38,9 +38,9 @@
       "last_round": "M0-1105-Z",
       "last_report": "m0/M0-1105-Z-report.md",
       "current_round": "M0-1105-BX",
-      "current_state": "started",
-      "current_at": "2026-11-14T05:44:50.473Z",
-      "current_note": "runner-v7.2 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-BX.log"
+      "current_state": "blocked",
+      "current_at": "2026-11-14T06:45:08.771Z",
+      "current_note": "timeout 60m · 러너 재시작 복구 · elapsed=60m · runner-v7.2 · pane empty"
     },
     "m1": {
       "last_round": "M1-1105-Z",
@@ -83,15 +83,15 @@
       "last_report": "n0/N0-0914-C-report.md"
     },
     "r0": {
-      "last_round": "R0-1105-EE",
-      "last_report": "r0/R0-1105-EE-report.md",
+      "last_round": "R0-1105-EF",
+      "last_report": "r0/R0-1105-EF-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-14T06:04:06.781Z",
       "current_round": "R0-1105-EF",
-      "current_state": "started",
-      "current_at": "2026-11-14T06:31:47.791Z",
-      "current_note": "runner-v7.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-EF.log"
+      "current_state": "done",
+      "current_at": "2026-11-14T06:35:10.612Z",
+      "current_note": "APPROVE — 추출 함수 동작 동일 · 픽스처 400 정정 확인 · 단위 테스트 직접 호출 완비"
     },
     "t0": {
       "state": "idle",
