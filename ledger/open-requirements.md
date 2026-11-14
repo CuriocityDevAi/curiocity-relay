@@ -13,8 +13,8 @@
 | K1 | QRIS 기본 결제 재실기 (storeport #247) | M0 | ✅ 실기 통과 11-14 |
 | N1 | "성공하고나서 영수증화면으로 (즉,Payment successful) 가는게 아니라, Orders 화면으로 가" | M3 | fork #132 R0-EC APPROVE · **머지 = Kyu iOS 실기 뒤** |
 | N2 | "Paid 가 아니라 Captured 라고 표기됨. Paid 로 고치는게 좋을듯" | M2 | ✅ storeport #249 머지 0d58850 (R0-EA APPROVE) · Kyu 배포 후 Admin 확인 |
-| R1 | 나눠결제 QRIS R1 (서버 split 가드 해제) | M0 | 착지 #248 · R0-DZ CHANGES(만료 QRIS 늦은 paid → 영수증 중복) → M0-1105-BU 수정 |
-| R2 | 나눠결제 QRIS R2 (refund-retry 확장 · 이중 환불 가드) | M0 | 착지 #251 · R0-EB CHANGES(신규 spec CI 미포함) → M0-1105-BW · R3 = M3-1105-CA 진행 |
+| R1 | 나눠결제 QRIS R1 (서버 split 가드 해제) | M0 | ✅ storeport #248 머지 181a532 (R0-ED APPROVE · CI 초록) · 서버 단독 · 실기는 R3 뒤 |
+| R2 | 나눠결제 QRIS R2 (refund-retry 확장 · 이중 환불 가드) | M0 | #251 R0-ED APPROVE · base main 전환 · M0-1105-BX rebase+CI 뒤 머지 · R3 = fork #134 R0-1105-EE 리뷰 |
 | C1 | (Kyu 10:00 선택) "고객·포인트·WA 영수증 계획서" | M1 | ✅ storeport #250 머지 044017f · 열린 질문 Q1~Q8 Kyu 결정 대기 |
 | C2 | (Kyu 10:00 선택) "매장 투입 준비 점검표" | M1 | ✅ fork #133 머지 bc29c8a |
 | C3 | (Kyu 10:00 선택) "품질 일만" | M2/R0 | BJ 뒤 쌓기 |
