@@ -1,11 +1,25 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-14T03:31:55.315Z",
+  "built_at": "2026-11-14T03:49:30.303Z",
   "hubs": {
-    "k0": {
+    "n0": {
       "state": "idle",
-      "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-14T02:59:22.841Z",
+      "last_activity": null,
+      "updated_at": "2026-11-14T03:33:25.811Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-14T03:33:25.811Z"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-14T03:33:21.549Z",
+      "session": "c7dd6929-a43e-4281-9ea8-0cd0122a641e",
+      "updated_at": "2026-11-14T03:33:25.811Z"
+    },
+    "k0": {
+      "state": "waiting-inquiry",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -14,92 +28,17 @@
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
       ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      "updated_at": "2026-11-14T03:33:25.811Z"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-14T02:59:22.841Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-14T03:33:25.811Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-14T02:59:22.841Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-14T02:59:15.252Z",
-      "session": "4928fdee-5134-437a-b2b0-06633d08a7c1",
-      "updated_at": "2026-11-14T02:59:22.841Z",
-      "last_round": "M0-1105-Z",
-      "last_report": "m0/M0-1105-Z-report.md",
-      "current_round": "M0-1105-BU",
-      "current_state": "started",
-      "current_at": "2026-11-14T03:24:37.220Z",
-      "current_note": "runner-v7.2 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-BU.log"
-    },
-    "m1": {
-      "last_round": "M1-1105-Z",
-      "last_report": "m1/M1-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T03:02:45.423Z",
-      "current_round": "M1-1105-BV",
-      "current_state": "done",
-      "current_at": "2026-11-14T03:15:33.773Z",
-      "current_note": "runner-v7.2 cmux-split · 리포트 확인 m1/M1-1105-BV-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1105-BV.log"
-    },
-    "m2": {
-      "last_round": "M2-1105-Z",
-      "last_report": "m2/M2-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T03:02:45.423Z",
-      "current_round": "M2-1105-BJ",
-      "current_state": "done",
-      "current_at": "2026-11-14T03:18:09.502Z",
-      "current_note": "runner-v7.2 cmux-split · 리포트 확인 m2/M2-1105-BJ-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1105-BJ.log"
-    },
-    "m3": {
-      "last_round": "M3-1105-Y",
-      "last_report": "m3/M3-1105-Y-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T03:02:45.423Z",
-      "current_round": "M3-1105-BZ",
-      "current_state": "done",
-      "current_at": "2026-11-14T03:31:55.254Z",
-      "current_note": "뒤로가기 Checkout+QRIS captured receipt_id metadata 재조회 →주문상세+dev-refresh --pr/--back"
-    },
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T02:59:22.841Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
-    },
-    "r0": {
-      "last_round": "R0-1105-EA",
-      "last_report": "r0/R0-1105-EA-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T03:02:45.423Z",
-      "current_round": "R0-1105-EA",
-      "current_state": "done",
-      "current_at": "2026-11-14T03:26:02.652Z",
-      "current_note": "APPROVE — 공식 deepMerge 실측·키 실재·데이터불변·타화면 충돌없음·CI 전통과"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-14T02:59:22.841Z",
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "updated_at": "2026-11-14T03:33:25.811Z"
     }
   }
 }
