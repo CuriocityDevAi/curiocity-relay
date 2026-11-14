@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-14T23:22:26.506Z",
+  "built_at": "2026-11-14T23:41:55.193Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-14T23:22:26.196Z"
+      "fetched_at": "2026-11-14T23:41:54.890Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-14T23:22:26.296Z"
+      "fetched_at": "2026-11-14T23:41:55.000Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6082,6 +6082,15 @@
                 "apps/commerce-core/scripts/test-integration-pos.sh"
               ],
               "status": "live"
+            },
+            {
+              "id": "loyalty-store-credit",
+              "name": "로열티 (적립금·기프트카드)",
+              "summary": "공식 @medusajs/loyalty-plugin (2.17.2 · Medusa peerDeps 정합) 을 설치해 store_credit(계좌·거래) · loyalty(gift card) 테이블과 Admin \"Store Credits\"/\"Gift Cards\" 메뉴를 얻는다. amount = numeric (IDR 0 소수 정수 저장) · service.debitAccounts_ 가 잔액 미달 시 \"Insufficient balance\" MedusaError throw. 결제 흐름 (payment providers · tenders · refund) 은 무변경 · 1단계 R1 설치/스모크 범위 (M0-1105-CA · 계획서 #254 §5 R1).",
+              "files": [
+                "apps/commerce-core/integration-tests/loyalty/**"
+              ],
+              "status": "planned"
             },
             {
               "id": "intent-link",
@@ -6479,7 +6488,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-14T23:22:26.506Z"
+      "fetched_at": "2026-11-14T23:41:55.193Z"
     }
   ],
   "rollup": {
