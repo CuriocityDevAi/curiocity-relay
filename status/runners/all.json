@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-14T23:38:25.515Z",
+  "at": "2026-11-14T23:41:57.471Z",
   "pid": 61172,
   "runner": "v7.3",
   "poll_ms": 30000,
@@ -8,10 +8,8 @@
   "last_error": null,
   "hubs": {
     "m0": {
-      "current": "M0-1105-CB",
-      "started_at": "2026-11-14T23:20:03.052Z",
-      "model": "opus",
-      "last_activity": "2026-11-14T23:14:01.244Z"
+      "current": null,
+      "last_activity": "2026-11-14T23:38:40.024Z"
     },
     "m1": {
       "current": null,
@@ -26,7 +24,9 @@
       "last_activity": null
     },
     "r0": {
-      "current": null,
+      "current": "R0-1105-EJ",
+      "started_at": "2026-11-14T23:41:56.186Z",
+      "model": "sonnet",
       "last_activity": "2026-11-14T23:22:36.728Z"
     }
   },
