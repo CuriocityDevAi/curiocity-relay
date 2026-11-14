@@ -1,11 +1,27 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-14T06:48:42.491Z",
+  "built_at": "2026-11-14T06:48:56.334Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-14T06:48:49.392Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-14T06:48:49.392Z"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-14T06:48:43.424Z",
+      "session": "e207d50e-5e1f-41d6-983d-e8b419cc21e2",
+      "updated_at": "2026-11-14T06:48:49.392Z"
+    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-14T05:55:42.094Z",
+      "updated_at": "2026-11-14T06:48:49.392Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,92 +29,17 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      ]
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-14T05:55:42.094Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-14T06:48:49.392Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-14T05:55:42.094Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-14T05:49:54.161Z",
-      "updated_at": "2026-11-14T05:55:42.094Z",
-      "last_round": "M0-1105-Z",
-      "last_report": "m0/M0-1105-Z-report.md",
-      "current_round": "M0-1105-BY",
-      "current_state": "started",
-      "current_at": "2026-11-14T06:48:42.424Z",
-      "current_note": "runner-v7.2 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-BY.log"
-    },
-    "m1": {
-      "last_round": "M1-1105-Z",
-      "last_report": "m1/M1-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T06:04:06.781Z",
-      "current_round": "M1-1105-BX",
-      "current_state": "done",
-      "current_at": "2026-11-14T06:12:12.582Z",
-      "current_note": "sentry-app.md 미완 단계 완성 — EAS Secret 주입(CLI+대시보드)·production DSN 검증·소스맵 현황·역할 구분표 · PR #137"
-    },
-    "m2": {
-      "last_round": "M2-1105-Z",
-      "last_report": "m2/M2-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T06:04:06.781Z",
-      "current_round": "M2-1105-BK",
-      "current_state": "started",
-      "current_at": "2026-11-14T06:04:09.655Z",
-      "current_note": "runner-v7.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1105-BK.log"
-    },
-    "m3": {
-      "last_round": "M3-1105-Y",
-      "last_report": "m3/M3-1105-Y-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T06:04:06.781Z",
-      "current_round": "M3-1105-CD",
-      "current_state": "done",
-      "current_at": "2026-11-14T06:23:32.597Z",
-      "current_note": "runner-v7.2 cmux-split · 리포트 확인 m3/M3-1105-CD-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1105-CD.log"
-    },
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T05:55:42.094Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
-    },
-    "r0": {
-      "last_round": "R0-1105-EF",
-      "last_report": "r0/R0-1105-EF-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T06:04:06.781Z",
-      "current_round": "R0-1105-EF",
-      "current_state": "done",
-      "current_at": "2026-11-14T06:35:10.612Z",
-      "current_note": "APPROVE — 추출 함수 동작 동일 · 픽스처 400 정정 확인 · 단위 테스트 직접 호출 완비"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-14T05:55:42.094Z",
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "updated_at": "2026-11-14T06:48:49.392Z"
     }
   }
 }
