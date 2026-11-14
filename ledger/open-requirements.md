@@ -11,7 +11,7 @@
 | # | Kyu 원문 요지 | 소유 | 상태 |
 |---|---|---|---|
 | K1 | QRIS 기본 결제 재실기 (storeport #247) | M0 | ✅ 실기 통과 11-14 |
-| N1 | "성공하고나서 영수증화면으로 (즉,Payment successful) 가는게 아니라, Orders 화면으로 가" | M3 | fork #132 R0-EC APPROVE · **머지 = Kyu iOS 실기 뒤** |
+| N1 | "성공하고나서 영수증화면으로 (즉,Payment successful) 가는게 아니라, Orders 화면으로 가" | M3 | ✅ Kyu 12:52 실기 "checkout 이 있어. 정상!" · "Simulate Payment (test) 성공." → fork #132 머지 0539f5b |
 | N2 | "Paid 가 아니라 Captured 라고 표기됨. Paid 로 고치는게 좋을듯" | M2 | ✅ storeport #249 머지 0d58850 (R0-EA APPROVE) · Kyu 배포 후 Admin 확인 |
 | R1 | 나눠결제 QRIS R1 (서버 split 가드 해제) | M0 | ✅ storeport #248 머지 181a532 (R0-ED APPROVE · CI 초록) · 서버 단독 · 실기는 R3 뒤 |
 | R2 | 나눠결제 QRIS R2 (refund-retry 확장 · 이중 환불 가드) | M0 | #251 R0-ED APPROVE · base main 전환 · M0-1105-BX rebase+CI 뒤 머지 · R3 = fork #134 R0-1105-EE 리뷰 |
@@ -19,8 +19,8 @@
 | C2 | (Kyu 10:00 선택) "매장 투입 준비 점검표" | M1 | ✅ fork #133 머지 bc29c8a |
 | C3 | (Kyu 10:00 선택) "품질 일만" | M2/R0 | BJ 뒤 쌓기 |
 | K2 | #131 실기: View order "성공" (Kyu 09:55) | M3 | ✅ #131 머지 c8ed669 (오케 · Kyu 09:55 "4시간동안 머지는 … 너 마음대로") |
-| N3 | (K2 실기 09:35) "Process payment 버튼이 있는 화면에 상단이 뒤로가기 버튼이 그냥 <  라고만 되어있어 … < Checkout  이런식으로 버튼명이 되어있길 기대했었어. 근데 그게 없어짐." | M3 | fork #132 R0-EC APPROVE · **머지 = Kyu iOS 실기 뒤** |
-| N4 | (오케) dev-refresh.sh 가 master 전용이라 PR 실기 때 우회 필요 → PR 실기 옵션 | M3 | fork #132 R0-EC APPROVE · **머지 = Kyu iOS 실기 뒤** |
+| N3 | (K2 실기 09:35) "Process payment 버튼이 있는 화면에 상단이 뒤로가기 버튼이 그냥 <  라고만 되어있어 … < Checkout  이런식으로 버튼명이 되어있길 기대했었어. 근데 그게 없어짐." | M3 | ✅ Kyu 12:52 실기 "checkout 이 있어. 정상!" · "Simulate Payment (test) 성공." → fork #132 머지 0539f5b |
+| N4 | (오케) dev-refresh.sh 가 master 전용이라 PR 실기 때 우회 필요 → PR 실기 옵션 | M3 | ✅ Kyu 12:52 실기 "checkout 이 있어. 정상!" · "Simulate Payment (test) 성공." → fork #132 머지 0539f5b |
 
 ## 11-13 06:35 Kyu 회신 반영 (이 절이 최신 · 원문 = [decision-next-big-20261113](decision-next-big-20261113.md))
 
