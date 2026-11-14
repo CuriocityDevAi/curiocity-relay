@@ -1,11 +1,26 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-14T02:51:21.733Z",
+  "built_at": "2026-11-14T02:56:29.238Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-14T02:56:21.317Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-14T02:56:21.317Z"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-14T02:51:18.579Z",
+      "updated_at": "2026-11-14T02:56:21.317Z"
+    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-14T02:27:09.712Z",
+      "updated_at": "2026-11-14T02:56:21.317Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,93 +28,17 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      ]
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-14T02:27:09.712Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-14T02:56:21.317Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-14T02:27:09.712Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-14T02:26:30.728Z",
-      "session": "b4873b8e-d8e9-4c03-a009-7d59d35fd3a6",
-      "updated_at": "2026-11-14T02:27:09.712Z",
-      "last_round": "M0-1105-Z",
-      "last_report": "m0/M0-1105-Z-report.md",
-      "current_round": "M0-1105-BS",
-      "current_state": "done",
-      "current_at": "2026-11-14T02:51:21.669Z",
-      "current_note": "QRIS × split R1 — 가드 조건부 해제 + metadata.tenders status 필드 + webhook paid/expired patch · 통합 테스트 133/133 통과 (BS-a..d 신규) · CI 전 job green · PR #248 draft"
-    },
-    "m1": {
-      "last_round": "M1-1105-Z",
-      "last_report": "m1/M1-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T02:31:55.801Z",
-      "current_round": "M1-1105-BS",
-      "current_state": "done",
-      "current_at": "2026-11-13T12:59:30.554Z",
-      "current_note": "runner-v7.2 cmux-split · 리포트 확인 m1/M1-1105-BS-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1105-BS.log"
-    },
-    "m2": {
-      "last_round": "M2-1105-Z",
-      "last_report": "m2/M2-1105-Z-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T02:31:55.801Z",
-      "current_round": "M2-1105-BI",
-      "current_state": "done",
-      "current_at": "2026-11-13T12:57:11.681Z",
-      "current_note": "runner-v7.2 cmux-split · 리포트 확인 m2/M2-1105-BI-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1105-BI.log"
-    },
-    "m3": {
-      "last_round": "M3-1105-Y",
-      "last_report": "m3/M3-1105-Y-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T02:31:55.801Z",
-      "current_round": "M3-1105-BY",
-      "current_state": "done",
-      "current_at": "2026-11-13T16:48:37.905Z",
-      "current_note": "runner-v7.2 cmux-split · 리포트 확인 m3/M3-1105-BY-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1105-BY.log"
-    },
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T02:27:09.712Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
-    },
-    "r0": {
-      "last_round": "R0-1105-DY",
-      "last_report": "r0/R0-1105-DY-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-14T02:31:55.801Z",
-      "current_round": "R0-1105-DY",
-      "current_state": "done",
-      "current_at": "2026-11-14T02:31:55.739Z",
-      "current_note": "runner-v7.2 cmux-split · 리포트 확인 r0/R0-1105-DY-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1105-DY.log"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-14T02:27:09.712Z",
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "updated_at": "2026-11-14T02:56:21.317Z"
     }
   }
 }
