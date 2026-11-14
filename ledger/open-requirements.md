@@ -12,11 +12,11 @@
 |---|---|---|---|
 | K1 | QRIS 기본 결제 재실기 (storeport #247) | M0 | ✅ 실기 통과 11-14 |
 | N1 | "성공하고나서 영수증화면으로 (즉,Payment successful) 가는게 아니라, Orders 화면으로 가" | M3 | 발부 M3-1105-BZ |
-| N2 | "Paid 가 아니라 Captured 라고 표기됨. Paid 로 고치는게 좋을듯" | M2 | 발부 M2-1105-BJ (Kyu 10:00 선택) |
-| R1 | 나눠결제 QRIS R1 (서버 split 가드 해제) | M0 | ✅ 착지 storeport #248 · R0-1105-DZ 리뷰 |
+| N2 | "Paid 가 아니라 Captured 라고 표기됨. Paid 로 고치는게 좋을듯" | M2 | 착지 storeport #249 · R0-1105-EA 리뷰 |
+| R1 | 나눠결제 QRIS R1 (서버 split 가드 해제) | M0 | 착지 #248 · R0-DZ CHANGES(만료 QRIS 늦은 paid → 영수증 중복) → M0-1105-BU 수정 |
 | R2 | 나눠결제 QRIS R2 (refund-retry 확장 · 이중 환불 가드) | M0 | 발부 M0-1105-BT (#248 위 stacked) |
-| C1 | (Kyu 10:00 선택) "고객·포인트·WA 영수증 계획서" | M1 | 발부 M1-1105-BU (docs) |
-| C2 | (Kyu 10:00 선택) "매장 투입 준비 점검표" | M1 | 발부 M1-1105-BV (docs · BU 뒤) |
+| C1 | (Kyu 10:00 선택) "고객·포인트·WA 영수증 계획서" | M1 | ✅ storeport #250 머지 044017f · 열린 질문 Q1~Q8 Kyu 결정 대기 |
+| C2 | (Kyu 10:00 선택) "매장 투입 준비 점검표" | M1 | 착지 fork #133 (docs + prettier 2파일) · CI 대기 후 머지 |
 | C3 | (Kyu 10:00 선택) "품질 일만" | M2/R0 | BJ 뒤 쌓기 |
 | K2 | #131 실기: View order "성공" (Kyu 09:55) | M3 | ✅ #131 머지 c8ed669 (오케 · Kyu 09:55 "4시간동안 머지는 … 너 마음대로") |
 | N3 | (K2 실기 09:35) "Process payment 버튼이 있는 화면에 상단이 뒤로가기 버튼이 그냥 <  라고만 되어있어 … < Checkout  이런식으로 버튼명이 되어있길 기대했었어. 근데 그게 없어짐." | M3 | 발부 M3-1105-BZ |
