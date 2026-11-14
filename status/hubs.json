@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-14T05:47:40.785Z",
+  "built_at": "2026-11-14T05:53:36.779Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -39,9 +39,9 @@
       "last_round": "M0-1105-Z",
       "last_report": "m0/M0-1105-Z-report.md",
       "current_round": "M0-1105-BX",
-      "current_state": "started",
-      "current_at": "2026-11-14T05:44:50.473Z",
-      "current_note": "runner-v7.2 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1105-BX.log"
+      "current_state": "done",
+      "current_at": "2026-11-14T05:49:57.446Z",
+      "current_note": "rebase OK · head 2083c54 · pos-integration FAIL at partial-refund-anytime (BF regression? · refund-retry-qris 미실행)"
     },
     "m1": {
       "last_round": "M1-1105-Z",
@@ -71,10 +71,10 @@
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-14T05:47:40.785Z",
-      "current_round": "M3-1105-CB",
-      "current_state": "done",
-      "current_at": "2026-11-14T05:16:00.546Z",
-      "current_note": "REQ1~4 전항목 확인 완료 · CI 3종 all pass · PR#134 본문 대사 표·CI·Kyu확인항목 업데이트"
+      "current_round": "M3-1105-CC",
+      "current_state": "started",
+      "current_at": "2026-11-14T05:53:36.717Z",
+      "current_note": "runner-v7.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1105-CC.log"
     },
     "n0": {
       "state": "idle",
