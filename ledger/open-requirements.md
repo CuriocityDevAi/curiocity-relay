@@ -16,6 +16,7 @@
 | R1 | 나눠결제 QRIS R1 (서버 split 가드 해제) | M0 | ✅ storeport #248 머지 181a532 (R0-ED APPROVE · CI 초록) · 서버 단독 · 실기는 R3 뒤 |
 | R2 | ✅ 나눠결제 QRIS R2 storeport #251 머지 82ac983 (Kyu 15:16 "머지해") · /fulfill 부분출고·/return 재고위치 기존 버그 수정 포함 |
 | R2-old | M0 | #251 R0-ED APPROVE · pos-integration 초록(e542085 · 160 pass) · BY 가 /fulfill 부분 출고·/return 재고 위치 기존 버그 수정 → R0-1105-EG · ✅ R3 fork #134 머지 6855e0a (R0-EE APPROVE · CI 4 초록) · 실기 7종 대기 |
+| L1 | 🔴 로열티 1단계 (decision-loyalty-20261114 · 적립금 장부 · 점원 번호입력 · 손님용 앱/화면 · Admin 파라미터) | M0 | 진단 발부 M0-1105-BZ |
 | C1 | (Kyu 10:00 선택) "고객·포인트·WA 영수증 계획서" | M1 | ✅ storeport #250 머지 044017f · 열린 질문 Q1~Q8 Kyu 결정 대기 |
 | R3 실기 | 나눠결제 QRIS 실기 7종 (계획서 §6-1) | Kyu | **실기 가능** (R1 #248 · R2 #251 · R3 #134 머지) |
 | RUN | 러너 v7.3 교체 | Kyu | ✅ 15:16 |
