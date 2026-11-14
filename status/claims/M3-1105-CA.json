@@ -1,7 +1,8 @@
 {
   "id": "M3-1105-CA",
   "hub": "m3",
-  "state": "started",
-  "at": "2026-11-14T03:49:49.222Z",
-  "note": "runner-v7.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1105-CA.log"
+  "state": "blocked",
+  "at": "2026-11-14T04:50:11.223Z",
+  "note": "timeout 60m · runner-v7.2 cmux-split · pane 유지 (C-c + /exit 전송) · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1105-CA.log",
+  "blocked_by": "oke"
 }
