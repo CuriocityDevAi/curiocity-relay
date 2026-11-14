@@ -14,6 +14,8 @@
 | N1 | "성공하고나서 영수증화면으로 (즉,Payment successful) 가는게 아니라, Orders 화면으로 가" | M3 | 등재 · R0-1105-DX 결과 뒤 M3 다음 발부에 포함 |
 | N2 | "Paid 가 아니라 Captured 라고 표기됨. Paid 로 고치는게 좋을듯" | M0/M2(Admin) | 등재 · Admin 리브랜딩과 묶음(후순위) |
 | R1 | 나눠결제 QRIS R1 (서버 split 가드 해제) | M0 | 발부 M0-1105-BS |
+| N3 | (K2 실기 09:35) "Process payment 버튼이 있는 화면에 상단이 뒤로가기 버튼이 그냥 <  라고만 되어있어 … < Checkout  이런식으로 버튼명이 되어있길 기대했었어. 근데 그게 없어짐." | M3 | 등재 · #131 회귀 · K2 나머지 결과와 함께 M3-1105-BZ 포함 |
+| N4 | (오케) dev-refresh.sh 가 master 전용이라 PR 실기 때 우회 필요 → PR 실기 옵션 | M3 | 등재 · BZ 포함 |
 
 ## 11-13 06:35 Kyu 회신 반영 (이 절이 최신 · 원문 = [decision-next-big-20261113](decision-next-big-20261113.md))
 
