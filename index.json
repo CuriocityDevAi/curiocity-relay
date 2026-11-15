@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-15T08:45:13.712Z",
+  "built_at": "2026-11-15T10:44:00.665Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-15T08:45:13.317Z"
+      "fetched_at": "2026-11-15T10:44:00.113Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-15T08:45:13.444Z"
+      "fetched_at": "2026-11-15T10:44:00.270Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6127,6 +6127,16 @@
                 "apps/commerce-core/integration-tests/loyalty/expiry.spec.ts"
               ],
               "status": "live"
+            },
+            {
+              "id": "customer-display-web-serve",
+              "name": "손님 화면 웹 서빙 (M2-1105-BQ)",
+              "summary": "Expo Web 빌드를 commerce-core 가 /customer-display-web 경로에서 직접 서빙하는 정적 파일 미들웨어와 버전 조회 API다.",
+              "files": [
+                "apps/commerce-core/src/api/admin/pos/customer-display/web-version/**",
+                "scripts/build-customer-display-web.sh"
+              ],
+              "status": "planned"
             },
             {
               "id": "customer-display-settings",
@@ -6580,7 +6590,7 @@
                 "apps/customer-display/src/i18n/**",
                 "apps/customer-display/src/components/**"
               ],
-              "status": "planned"
+              "status": "live"
             },
             {
               "id": "cd-checkout",
@@ -6627,11 +6637,13 @@
             },
             {
               "id": "cd-event-decor",
-              "name": "이벤트 장식 렌더러 (M3-1105-CM · G3)",
-              "summary": "7종 이벤트(christmas·imlek·valentine·ramadan·lebaran·maulid·merdeka) 장식 렌더러 독립 모듈. EventDecor 오버레이 컴포넌트(float/sparkle/shake 애니메이션·prefers-reduced-motion)·resolveActiveEvent 순수 함수(이슬람력 주입형·연도 하드코딩 없음)·i18n 5개 언어 인사 띠·dev 전용 미리보기 페이지. #268 머지 후 ReceiptScreen·DoneScreen·MainScreen 연결.",
+              "name": "이벤트 장식 렌더러 (M3-1105-CM/CQ · G3)",
+              "summary": "7종 이벤트(christmas·imlek·valentine·ramadan·lebaran·maulid·merdeka) 장식 렌더러 독립 모듈. EventDecor 오버레이 컴포넌트(float/sparkle/shake 애니메이션·prefers-reduced-motion)·resolveActiveEvent 순수 함수(이슬람력 주입형·연도 하드코딩 없음)·i18n 5개 언어 인사 띠·dev 전용 미리보기 페이지. useActiveEvent 훅(서버 설정 주입형·?testDate= 날짜 주입 지원·기본 장식 없음)·Main·Receipt·Done 화면 overlay 연결(pointerEvents none·reduce-motion 존중).",
               "files": [
                 "apps/customer-display/src/decor/**",
+                "apps/customer-display/src/hooks/useActiveEvent.ts",
                 "apps/customer-display/app/decor-preview.tsx",
+                "apps/customer-display/e2e/event-decor-screens.spec.ts",
                 "apps/customer-display/screenshots/decor-*.png",
                 "apps/customer-display/screenshots/decor-preview-all.png"
               ],
@@ -6652,15 +6664,17 @@
                 "apps/customer-display/playwright.config.ts",
                 "apps/customer-display/expo-env.d.ts",
                 "apps/customer-display/.gitignore",
+                "apps/customer-display/README.md",
                 "apps/customer-display/assets/**",
-                "apps/customer-display/e2e/**"
+                "apps/customer-display/e2e/**",
+                "apps/customer-display/scripts/**"
               ],
               "status": "planned"
             }
           ]
         }
       ],
-      "fetched_at": "2026-11-15T08:45:13.712Z"
+      "fetched_at": "2026-11-15T10:44:00.664Z"
     }
   ],
   "rollup": {
