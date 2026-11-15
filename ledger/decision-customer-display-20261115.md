@@ -32,7 +32,7 @@ Kyu 원문: "happy new year 삭제. white day 삭제, Lunar New Year 은 Valenti
 | CD-3 | 대기 화면 왼쪽 = Admin 업로드 매장 이미지/로고 · 미업로드 시 v1 기본형(매장색 패널 + 문구) | 확정 |
 | CD-4 | 언어: 영어 기본 · 우측 상단 지구본 → EN/ID/KO/JA/ZH 손님 선택 | 확정 |
 | CD-5 | 매장명 · 세금 이름/세율(PB1 · 0%면 줄 숨김) · 적립률 = 매장별 설정 | 확정 |
-| CD-6 | 이벤트 테마 7종(Christmas · Imlek · Valentine · Ramadan · Lebaran · Maulid · 17 Agustus) — 예약 기간 동안 컬러 테마 대신 적용 · 색 전체 + 인사 띠(5개 언어) + 움직이는 장식 | 디자인 v5 Kyu 판정 대기 |
+| CD-6 | 이벤트 테마 7종(Christmas · Imlek · Valentine · Ramadan · Lebaran · Maulid · 17 Agustus) — 예약 기간 동안 컬러 테마 대신 적용 · 색 전체 + 인사 띠(5개 언어) + 움직이는 장식(v6 값: 크기 v5의 50% · 2배 느리게 · 부드럽게) | 확정(Kyu 07:36 "맘에 들어. 훌륭해" · 07:52 "완벽한듯! 구현시작하자") |
 | CD-7 | Admin: 이벤트별 From~To 달력 선택 · 달력 보기(언제 어떤 이벤트) | 확정 |
 | CD-8 | Admin: 컬러/이벤트 테마 설정 Simulate 팝업 — 시안처럼 체험 | 확정 |
 | CD-9 | 손님 iPad에는 테마/이벤트 버튼 없음(시안 전용) | 확정 |
