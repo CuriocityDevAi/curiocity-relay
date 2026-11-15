@@ -1,23 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-15T07:27:34.588Z",
+  "built_at": "2026-11-15T07:28:01.272Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-15T07:27:28.995Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-15T07:27:28.995Z"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-15T07:26:57.666Z",
-      "session": "1bf89cc5-5f2b-41a3-b5f4-d91a8b9a6aed",
-      "updated_at": "2026-11-15T07:27:28.995Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -29,17 +13,93 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-15T07:27:28.995Z"
+      "updated_at": "2026-11-15T07:27:28.995Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-15T07:27:28.995Z"
+      "updated_at": "2026-11-15T07:27:28.995Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-15T07:26:57.666Z",
+      "session": "1bf89cc5-5f2b-41a3-b5f4-d91a8b9a6aed",
+      "updated_at": "2026-11-15T07:27:28.995Z",
+      "last_round": "M0-1105-Z",
+      "last_report": "m0/M0-1105-Z-report.md",
+      "current_round": "M0-1105-CJ",
+      "current_state": "blocked",
+      "current_at": "2026-11-15T07:28:01.209Z",
+      "current_note": "runner-v7.3 cmux-split · landing=claim-done · post claim 없음 (race?) · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1105-CJ.log"
+    },
+    "m1": {
+      "last_round": "M1-1105-Z",
+      "last_report": "m1/M1-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-15T07:28:01.272Z",
+      "current_round": "M1-1105-CH",
+      "current_state": "done",
+      "current_at": "2026-11-15T07:25:08.720Z",
+      "current_note": "runner-v7.3 cmux-split · 리포트 확인 m1/M1-1105-CH-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1105-CH.log"
+    },
+    "m2": {
+      "last_round": "M2-1105-Z",
+      "last_report": "m2/M2-1105-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-15T07:28:01.272Z",
+      "current_round": "M2-1105-BR",
+      "current_state": "blocked",
+      "current_at": "2026-11-15T07:16:02.882Z",
+      "current_note": "runner-v7.3 cmux-split · landing=claim-done · post claim 없음 (race?) · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1105-BR.log"
+    },
+    "m3": {
+      "last_round": "M3-1105-Y",
+      "last_report": "m3/M3-1105-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-15T07:28:01.272Z",
+      "current_round": "M3-1105-CM",
+      "current_state": "done",
+      "current_at": "2026-11-15T07:16:43.752Z",
+      "current_note": "runner-v7.3 cmux-split · 리포트 확인 m3/M3-1105-CM-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1105-CM.log"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-15T07:27:28.995Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1105-EY",
+      "last_report": "r0/R0-1105-EY-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-15T07:28:01.272Z",
+      "current_round": "R0-1105-EY",
+      "current_state": "done",
+      "current_at": "2026-11-15T07:23:47.302Z",
+      "current_note": "#271 CHANGES(reference_id unique 없음·23505불발·order.updated과다구독) · #270 APPROVE(inj minor) · #269 재판정 CHANGES([...path] 경로 Medusa 미지원·pos-integration 전파괴)"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-15T07:27:28.995Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
