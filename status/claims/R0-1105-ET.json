@@ -1,7 +1,8 @@
 {
   "id": "R0-1105-ET",
   "hub": "r0",
-  "state": "started",
-  "at": "2026-11-15T04:06:23.458Z",
-  "note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-ET.log"
+  "state": "blocked",
+  "at": "2026-11-15T05:49:09.619Z",
+  "note": "timeout 60m · runner-v7.3 cmux-split · pane 유지 (C-c + /exit 전송) · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1105-ET.log",
+  "blocked_by": "oke"
 }
