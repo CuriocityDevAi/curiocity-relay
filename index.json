@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-15T06:59:50.346Z",
+  "built_at": "2026-11-15T08:45:13.712Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-15T06:59:49.983Z"
+      "fetched_at": "2026-11-15T08:45:13.317Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-15T06:59:50.086Z"
+      "fetched_at": "2026-11-15T08:45:13.444Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6099,13 +6099,32 @@
             {
               "id": "loyalty-store-credit",
               "name": "로열티 (적립금·기프트카드)",
-              "summary": "공식 @medusajs/loyalty-plugin (2.17.2 · Medusa peerDeps 정합) 설치 + R3 POS 손님 연결 — phone-id.ts(E.164 정규화) · POST /admin/pos/orders/:id/customer(upsert+P-3 guard · DB unique index) · GET /admin/pos/orders/:id/loyalty-info · 통합 테스트. R1 store_credit 스모크 완료. R4(earn) 이후 미구현.",
+              "summary": "공식 @medusajs/loyalty-plugin (2.17.2 · Medusa peerDeps 정합) 설치 + R3 POS 손님 연결 — phone-id.ts(E.164 정규화) · POST /admin/pos/orders/:id/customer(upsert+link_open_until guard · DB unique index) · GET /admin/pos/orders/:id/loyalty-info · 통합 테스트. M0-1105-CI S1b: `linkCustomerToOrder` 공용 함수(src/lib/link-customer-order.ts) · R3 route 가 이 함수 호출 · 손님 iPad 경로 POST /admin/pos/loyalty/sessions/snapshots/:id/link-phone 신규 · 결제 완료 subscriber(loyalty-earn-on-paid)와 결제 후 연결 두 경로가 멱등으로 R4 적립(src/lib/loyalty/earn.ts · 금액은 receipt-preview 규칙 그대로 · order.metadata.loyalty_earn + credit tx reference_id `earn:<order_id>` 가드).",
               "files": [
                 "apps/commerce-core/src/lib/phone-id.ts",
                 "apps/commerce-core/src/lib/__tests__/phone-id.unit.spec.ts",
+                "apps/commerce-core/src/lib/link-customer-order.ts",
+                "apps/commerce-core/src/lib/loyalty/earn.ts",
                 "apps/commerce-core/src/api/admin/pos/orders/[id]/customer/**",
                 "apps/commerce-core/src/api/admin/pos/orders/[id]/loyalty-info/**",
-                "apps/commerce-core/integration-tests/loyalty/**"
+                "apps/commerce-core/src/api/admin/pos/loyalty/sessions/snapshots/[id]/link-phone/**",
+                "apps/commerce-core/src/subscribers/loyalty-earn-on-paid.ts",
+                "apps/commerce-core/integration-tests/loyalty/**",
+                "apps/commerce-core/e2e/**",
+                "apps/commerce-core/playwright.config.ts"
+              ],
+              "status": "live"
+            },
+            {
+              "id": "loyalty-expiry-r7",
+              "name": "로열티 R7 적립금 소멸 (M0-1105-CD)",
+              "summary": "적립(credit) 거래의 `적립일 + expiry_days` 가 지난 분을 FIFO 로 자동 차감. expiry_days=0 또는 enabled=false 면 no-op. 사용(debit · reference!=\"expiry\") 은 오래된 적립분부터 소진 · 소멸 debit 은 `reference=\"expiry\"` + `reference_id=\"expiry:<credit_tx_id>\"` 로 기록해 재실행 멱등. Scheduled job (apps/commerce-core/src/jobs/loyalty-expiry.ts · Asia/Jakarta 00:10 ≈ UTC 17:10) · 수동 트리거 POST /admin/pos/loyalty/expire {dry_run?,now?} → {dry_run, enabled, expiry_days, expired_accounts, expired_amount, items?[]}. 순수 계산 함수 apps/commerce-core/src/lib/loyalty/expiry.ts + 러너 expiry-runner.ts 단일 지점 (job + route 공유). 잔액 초과 차감 금지 (플러그인 서비스가 거부).",
+              "files": [
+                "apps/commerce-core/src/jobs/loyalty-expiry.ts",
+                "apps/commerce-core/src/lib/loyalty/**",
+                "apps/commerce-core/src/api/admin/pos/loyalty/expire/**",
+                "apps/commerce-core/src/modules/loyalty_settings/__tests__/expiry.unit.spec.ts",
+                "apps/commerce-core/integration-tests/loyalty/expiry.spec.ts"
               ],
               "status": "live"
             },
@@ -6566,14 +6585,21 @@
             {
               "id": "cd-checkout",
               "name": "결제 중 화면",
-              "summary": "결제 진행 중 품목·소계·세금·합계·예상 적립금과 번호 입력 버튼을 보여 준다.",
+              "summary": "결제 진행 중 품목·소계·세금·합계·예상 적립금과 번호 입력 버튼을 보여 주고, 결제 완료 후 영수증·Done 화면으로 전환한다.",
               "files": [
                 "apps/customer-display/app/cart.tsx",
                 "apps/customer-display/src/screens/CartScreen.tsx",
                 "apps/customer-display/src/mocks/**",
-                "apps/customer-display/src/types/**"
+                "apps/customer-display/src/types/**",
+                "apps/customer-display/app/done.tsx",
+                "apps/customer-display/app/receipt.tsx",
+                "apps/customer-display/src/hooks/useDisplayMachine.ts",
+                "apps/customer-display/src/lib/display-machine.ts",
+                "apps/customer-display/src/lib/__tests__/display-machine.test.ts",
+                "apps/customer-display/src/screens/DoneScreen.tsx",
+                "apps/customer-display/src/screens/ReceiptScreen.tsx"
               ],
-              "status": "planned"
+              "status": "live"
             },
             {
               "id": "cd-keypad",
@@ -6600,6 +6626,18 @@
               "status": "planned"
             },
             {
+              "id": "cd-event-decor",
+              "name": "이벤트 장식 렌더러 (M3-1105-CM · G3)",
+              "summary": "7종 이벤트(christmas·imlek·valentine·ramadan·lebaran·maulid·merdeka) 장식 렌더러 독립 모듈. EventDecor 오버레이 컴포넌트(float/sparkle/shake 애니메이션·prefers-reduced-motion)·resolveActiveEvent 순수 함수(이슬람력 주입형·연도 하드코딩 없음)·i18n 5개 언어 인사 띠·dev 전용 미리보기 페이지. #268 머지 후 ReceiptScreen·DoneScreen·MainScreen 연결.",
+              "files": [
+                "apps/customer-display/src/decor/**",
+                "apps/customer-display/app/decor-preview.tsx",
+                "apps/customer-display/screenshots/decor-*.png",
+                "apps/customer-display/screenshots/decor-preview-all.png"
+              ],
+              "status": "live"
+            },
+            {
               "id": "cd-envelope",
               "name": "Customer Display 껍데기",
               "summary": "Expo SDK 58 앱의 배포·의존성·빌드 설정과 Playwright·vitest 검증 껍데기 파일들이다.",
@@ -6622,7 +6660,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-15T06:59:50.345Z"
+      "fetched_at": "2026-11-15T08:45:13.712Z"
     }
   ],
   "rollup": {
