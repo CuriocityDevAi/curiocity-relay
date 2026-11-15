@@ -1,0 +1,939 @@
+{
+ "screens": {
+  "Main": {
+   "en": {
+    "welcome": "Welcome",
+    "headline": "Shop today,\npoints go to\nyour phone number.",
+    "sub": "No sign-up. No app.\nJust type your number on this screen.",
+    "how": "HOW TO EARN POINTS",
+    "steps": [
+     [
+      "Shop",
+      "Order at the counter as usual"
+     ],
+     [
+      "Type your number",
+      "It appears on this screen at payment"
+     ],
+     [
+      "Points added",
+      "Use them to pay next time"
+     ]
+    ],
+    "rate": "{r}% of your purchase comes back as credit. 1 point = Rp 1."
+   },
+   "id": {
+    "welcome": "Selamat datang",
+    "headline": "Belanja hari ini,\npoinnya masuk ke\nnomor HP kamu.",
+    "sub": "Tanpa daftar. Tanpa aplikasi.\nCukup ketik nomor HP di layar ini.",
+    "how": "CARA DAPAT POIN",
+    "steps": [
+     [
+      "Belanja",
+      "Pesan di kasir seperti biasa"
+     ],
+     [
+      "Ketik nomor HP",
+      "Muncul di layar ini saat bayar"
+     ],
+     [
+      "Poin masuk",
+      "Bisa dipakai bayar lain kali"
+     ]
+    ],
+    "rate": "{r}% dari belanja kembali jadi saldo. 1 poin = Rp 1."
+   },
+   "ko": {
+    "welcome": "어서 오세요",
+    "headline": "오늘 구매하고\n전화번호로\n포인트 받으세요.",
+    "sub": "가입도, 앱도 필요 없어요.\n이 화면에 번호만 입력하세요.",
+    "how": "포인트 적립 방법",
+    "steps": [
+     [
+      "구매",
+      "평소처럼 계산대에서 주문"
+     ],
+     [
+      "번호 입력",
+      "결제할 때 이 화면에 떠요"
+     ],
+     [
+      "포인트 적립",
+      "다음 결제 때 사용"
+     ]
+    ],
+    "rate": "구매 금액의 {r}%가 적립금으로 돌아와요. 1포인트 = Rp 1."
+   },
+   "ja": {
+    "welcome": "いらっしゃいませ",
+    "headline": "お買い物のポイントを\n電話番号に\n貯めましょう。",
+    "sub": "会員登録もアプリも不要。\nこの画面に番号を入力するだけ。",
+    "how": "ポイントの貯め方",
+    "steps": [
+     [
+      "お買い物",
+      "いつも通りレジで注文"
+     ],
+     [
+      "番号を入力",
+      "お会計時にこの画面に表示"
+     ],
+     [
+      "ポイント付与",
+      "次回のお支払いに使えます"
+     ]
+    ],
+    "rate": "お買い物の{r}%がポイントに。1ポイント = Rp 1。"
+   },
+   "zh": {
+    "welcome": "欢迎光临",
+    "headline": "今天购物，\n积分直接存入\n您的手机号。",
+    "sub": "无需注册，无需App。\n只需在此屏幕输入手机号。",
+    "how": "积分方法",
+    "steps": [
+     [
+      "购物",
+      "照常在收银台点单"
+     ],
+     [
+      "输入手机号",
+      "付款时显示在此屏幕"
+     ],
+     [
+      "积分到账",
+      "下次可用于付款"
+     ]
+    ],
+    "rate": "消费金额的{r}%返还为积分。1积分 = Rp 1。"
+   }
+  },
+  "Cart": {
+   "en": {
+    "order": "Order",
+    "title": "Your order",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "earn": "Points from this purchase",
+    "cta": "Enter phone number",
+    "fast": "No sign-up · 2 seconds",
+    "credit": "Have credit? You can pay with it — just tell the cashier."
+   },
+   "id": {
+    "order": "Pesanan",
+    "title": "Pesanan kamu",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "earn": "Poin dari belanja ini",
+    "cta": "Ketik nomor HP",
+    "fast": "Tanpa daftar · 2 detik",
+    "credit": "Punya saldo poin? Bisa dipakai bayar — bilang ke kasir."
+   },
+   "ko": {
+    "order": "주문",
+    "title": "주문 내역",
+    "subtotal": "소계",
+    "total": "합계",
+    "earn": "이번 구매 적립 예정",
+    "cta": "전화번호 입력",
+    "fast": "가입 없이 · 2초",
+    "credit": "적립금이 있나요? 결제에 쓸 수 있어요 — 계산원에게 말씀하세요."
+   },
+   "ja": {
+    "order": "注文",
+    "title": "ご注文内容",
+    "subtotal": "小計",
+    "total": "合計",
+    "earn": "今回貯まるポイント",
+    "cta": "電話番号を入力",
+    "fast": "登録不要・2秒",
+    "credit": "ポイント残高はお支払いに使えます。スタッフにお申し付けください。"
+   },
+   "zh": {
+    "order": "订单",
+    "title": "您的订单",
+    "subtotal": "小计",
+    "total": "合计",
+    "earn": "本次购物可得积分",
+    "cta": "输入手机号",
+    "fast": "无需注册 · 2秒",
+    "credit": "有积分余额？可用于付款，请告诉收银员。"
+   }
+  },
+  "Keypad": {
+   "en": {
+    "title": "Enter your phone number\nto earn points",
+    "earn": "Points from this purchase:",
+    "privacy": "No sign-up. We only keep your phone number for points — no name, email or photo.",
+    "cancel": "Cancel",
+    "del": "Delete",
+    "paid": "Payment complete",
+    "earnAfter": "Enter your number to get",
+    "skip": "Skip",
+    "auto": "Closes automatically in 30 s"
+   },
+   "id": {
+    "title": "Ketik nomor HP\nuntuk dapat poin",
+    "earn": "Poin dari belanja ini:",
+    "privacy": "Tanpa daftar. Kami hanya simpan nomor HP untuk poin — tanpa nama, email, atau foto.",
+    "cancel": "Batal",
+    "del": "Hapus",
+    "paid": "Pembayaran berhasil",
+    "earnAfter": "Ketik nomor HP untuk dapat",
+    "skip": "Lewati",
+    "auto": "Tertutup otomatis dalam 30 detik"
+   },
+   "ko": {
+    "title": "포인트 적립을 위해\n전화번호를 입력하세요",
+    "earn": "이번 구매 적립 예정:",
+    "privacy": "가입 없음. 포인트용 전화번호만 저장하고 이름·이메일·사진은 저장하지 않아요.",
+    "cancel": "취소",
+    "del": "지우기",
+    "paid": "결제 완료",
+    "earnAfter": "번호를 입력하면 적립돼요:",
+    "skip": "건너뛰기",
+    "auto": "30초 후 자동으로 닫혀요"
+   },
+   "ja": {
+    "title": "ポイントを貯めるため\n電話番号を入力",
+    "earn": "今回貯まるポイント:",
+    "privacy": "登録不要。ポイント用の電話番号のみ保存し、氏名・メール・写真は保存しません。",
+    "cancel": "キャンセル",
+    "del": "削除",
+    "paid": "お支払い完了",
+    "earnAfter": "番号を入力してポイント獲得:",
+    "skip": "スキップ",
+    "auto": "30秒後に自動で閉じます"
+   },
+   "zh": {
+    "title": "请输入手机号\n领取积分",
+    "earn": "本次购物可得积分:",
+    "privacy": "无需注册。仅保存手机号用于积分，不保存姓名、邮箱或照片。",
+    "cancel": "取消",
+    "del": "删除",
+    "paid": "支付成功",
+    "earnAfter": "输入手机号即可获得",
+    "skip": "跳过",
+    "auto": "30秒后自动关闭"
+   }
+  },
+  "KeypadAfter": {
+   "en": {
+    "title": "Enter your phone number\nto earn points",
+    "earn": "Points from this purchase:",
+    "privacy": "No sign-up. We only keep your phone number for points — no name, email or photo.",
+    "cancel": "Cancel",
+    "del": "Delete",
+    "paid": "Payment complete",
+    "earnAfter": "Enter your number to get",
+    "skip": "Skip",
+    "auto": "Closes automatically in 30 s"
+   },
+   "id": {
+    "title": "Ketik nomor HP\nuntuk dapat poin",
+    "earn": "Poin dari belanja ini:",
+    "privacy": "Tanpa daftar. Kami hanya simpan nomor HP untuk poin — tanpa nama, email, atau foto.",
+    "cancel": "Batal",
+    "del": "Hapus",
+    "paid": "Pembayaran berhasil",
+    "earnAfter": "Ketik nomor HP untuk dapat",
+    "skip": "Lewati",
+    "auto": "Tertutup otomatis dalam 30 detik"
+   },
+   "ko": {
+    "title": "포인트 적립을 위해\n전화번호를 입력하세요",
+    "earn": "이번 구매 적립 예정:",
+    "privacy": "가입 없음. 포인트용 전화번호만 저장하고 이름·이메일·사진은 저장하지 않아요.",
+    "cancel": "취소",
+    "del": "지우기",
+    "paid": "결제 완료",
+    "earnAfter": "번호를 입력하면 적립돼요:",
+    "skip": "건너뛰기",
+    "auto": "30초 후 자동으로 닫혀요"
+   },
+   "ja": {
+    "title": "ポイントを貯めるため\n電話番号を入力",
+    "earn": "今回貯まるポイント:",
+    "privacy": "登録不要。ポイント用の電話番号のみ保存し、氏名・メール・写真は保存しません。",
+    "cancel": "キャンセル",
+    "del": "削除",
+    "paid": "お支払い完了",
+    "earnAfter": "番号を入力してポイント獲得:",
+    "skip": "スキップ",
+    "auto": "30秒後に自動で閉じます"
+   },
+   "zh": {
+    "title": "请输入手机号\n领取积分",
+    "earn": "本次购物可得积分:",
+    "privacy": "无需注册。仅保存手机号用于积分，不保存姓名、邮箱或照片。",
+    "cancel": "取消",
+    "del": "删除",
+    "paid": "支付成功",
+    "earnAfter": "输入手机号即可获得",
+    "skip": "跳过",
+    "auto": "30秒后自动关闭"
+   }
+  },
+  "Consent": {
+   "en": {
+    "newNum": "New number",
+    "title": "Save this number\nto collect points?",
+    "keep": "WHAT WE KEEP",
+    "keepList": "Phone number\nCredit balance & history",
+    "notKeep": "NOT KEPT",
+    "notList": "Name, email,\nphoto, address",
+    "agree": "Agree & get points",
+    "no": "No, thanks",
+    "policy": "Privacy policy"
+   },
+   "id": {
+    "newNum": "Nomor baru",
+    "title": "Simpan nomor ini\nuntuk kumpulkan poin?",
+    "keep": "YANG KAMI SIMPAN",
+    "keepList": "Nomor HP\nSaldo & riwayat poin",
+    "notKeep": "TIDAK DISIMPAN",
+    "notList": "Nama, email,\nfoto, alamat",
+    "agree": "Setuju & dapat poin",
+    "no": "Tidak, terima kasih",
+    "policy": "Kebijakan privasi"
+   },
+   "ko": {
+    "newNum": "처음 오셨네요",
+    "title": "이 번호로\n포인트를 모을까요?",
+    "keep": "저장하는 것",
+    "keepList": "전화번호\n적립금 잔액·내역",
+    "notKeep": "저장 안 하는 것",
+    "notList": "이름, 이메일,\n사진, 주소",
+    "agree": "동의하고 적립",
+    "no": "괜찮아요",
+    "policy": "개인정보 처리방침"
+   },
+   "ja": {
+    "newNum": "新しい番号",
+    "title": "この番号で\nポイントを貯めますか？",
+    "keep": "保存する情報",
+    "keepList": "電話番号\nポイント残高・履歴",
+    "notKeep": "保存しない情報",
+    "notList": "氏名、メール、\n写真、住所",
+    "agree": "同意してポイントを受け取る",
+    "no": "今回はしない",
+    "policy": "プライバシーポリシー"
+   },
+   "zh": {
+    "newNum": "新号码",
+    "title": "用此号码\n累积积分吗？",
+    "keep": "我们保存",
+    "keepList": "手机号\n积分余额与记录",
+    "notKeep": "不保存",
+    "notList": "姓名、邮箱、\n照片、地址",
+    "agree": "同意并领取积分",
+    "no": "不用了",
+    "policy": "隐私政策"
+   }
+  },
+  "Done": {
+   "en": {
+    "added": "Points added",
+    "thanks": "Thank you for shopping at {store}.",
+    "balance": "Your balance now",
+    "useNext": "Use it to pay on your next visit",
+    "totalLbl": "Purchase total",
+    "used": "Credit used",
+    "visit": "Visit no.",
+    "valid": "Credit valid until",
+    "back": "Back to start in 3 seconds",
+    "done": "Done"
+   },
+   "id": {
+    "added": "Poin masuk",
+    "thanks": "Terima kasih sudah belanja di {store}.",
+    "balance": "Saldo kamu sekarang",
+    "useNext": "Bisa dipakai bayar di kunjungan berikutnya",
+    "totalLbl": "Total belanja",
+    "used": "Poin dipakai",
+    "visit": "Kunjungan ke-",
+    "valid": "Saldo berlaku sampai",
+    "back": "Kembali ke awal dalam 3 detik",
+    "done": "Selesai"
+   },
+   "ko": {
+    "added": "포인트 적립 완료",
+    "thanks": "{store}에서 구매해 주셔서 감사합니다.",
+    "balance": "현재 적립금",
+    "useNext": "다음 방문 때 결제에 쓸 수 있어요",
+    "totalLbl": "구매 금액",
+    "used": "사용한 적립금",
+    "visit": "방문 횟수",
+    "valid": "적립금 유효기간",
+    "back": "3초 후 처음 화면으로",
+    "done": "완료"
+   },
+   "ja": {
+    "added": "ポイント付与",
+    "thanks": "{store}でのお買い物ありがとうございます。",
+    "balance": "現在のポイント残高",
+    "useNext": "次回のお支払いに使えます",
+    "totalLbl": "お買い上げ金額",
+    "used": "使用ポイント",
+    "visit": "来店回数",
+    "valid": "ポイント有効期限",
+    "back": "3秒後に最初の画面へ",
+    "done": "完了"
+   },
+   "zh": {
+    "added": "积分已到账",
+    "thanks": "感谢您在{store}购物。",
+    "balance": "当前积分余额",
+    "useNext": "下次光临可用于付款",
+    "totalLbl": "消费金额",
+    "used": "已用积分",
+    "visit": "到店次数",
+    "valid": "积分有效期至",
+    "back": "3秒后返回首页",
+    "done": "完成"
+   }
+  },
+  "Receipt": {
+   "en": {
+    "title": "Payment complete",
+    "sub": "Thank you! Your receipt is ready.",
+    "via": "Paid with QRIS"
+   },
+   "id": {
+    "title": "Pembayaran berhasil",
+    "sub": "Terima kasih! Struk kamu sudah siap.",
+    "via": "Dibayar dengan QRIS"
+   },
+   "ko": {
+    "title": "결제 완료",
+    "sub": "감사합니다! 영수증이 준비됐어요.",
+    "via": "QRIS로 결제"
+   },
+   "ja": {
+    "title": "お支払い完了",
+    "sub": "ありがとうございます。レシートをお受け取りください。",
+    "via": "QRISでお支払い"
+   },
+   "zh": {
+    "title": "支付成功",
+    "sub": "谢谢！您的收据已准备好。",
+    "via": "QRIS 支付"
+   }
+  }
+ },
+ "colorThemes": {
+  "pastel": {
+   "name": "Butter Cream",
+   "bg": "#FFFDF7",
+   "surface": "#FFF6D6",
+   "soft": "#FFF0B8",
+   "primary": "#FFD54F",
+   "primaryInk": "#3B2A1F",
+   "accent": "#A0522D",
+   "ink": "#3B2A1F",
+   "muted": "#7A6656",
+   "border": "#F0E2C8",
+   "hero": "#FFE58A",
+   "heroInk": "#3B2A1F",
+   "mark": "#FFFFFF"
+  },
+  "forest": {
+   "name": "Forest",
+   "bg": "#FFFFFF",
+   "surface": "#F3F5F4",
+   "soft": "#E8F3EE",
+   "primary": "#1F7A55",
+   "primaryInk": "#FFFFFF",
+   "accent": "#1F7A55",
+   "ink": "#16181D",
+   "muted": "#5B6470",
+   "border": "#E3E7E5",
+   "hero": "#1F7A55",
+   "heroInk": "#FFFFFF",
+   "mark": "#FFFFFF"
+  },
+  "mono": {
+   "name": "Mono",
+   "bg": "#FFFFFF",
+   "surface": "#F4F4F5",
+   "soft": "#EDEDEF",
+   "primary": "#16181D",
+   "primaryInk": "#FFFFFF",
+   "accent": "#16181D",
+   "ink": "#16181D",
+   "muted": "#5B6470",
+   "border": "#E4E4E7",
+   "hero": "#16181D",
+   "heroInk": "#FFFFFF",
+   "mark": "#FFFFFF"
+  },
+  "honey": {
+   "name": "Honey",
+   "bg": "#FFFBF0",
+   "surface": "#FFF1CC",
+   "soft": "#FFE8A3",
+   "primary": "#F2B705",
+   "primaryInk": "#2E2206",
+   "accent": "#8A5A00",
+   "ink": "#2E2206",
+   "muted": "#6E5A33",
+   "border": "#EEDDB3",
+   "hero": "#F2B705",
+   "heroInk": "#2E2206",
+   "mark": "#FFFFFF"
+  },
+  "lemon": {
+   "name": "Lemon & Black",
+   "bg": "#FFFFFF",
+   "surface": "#FFF9D6",
+   "soft": "#FFF1A1",
+   "primary": "#FFE14D",
+   "primaryInk": "#111111",
+   "accent": "#111111",
+   "ink": "#111111",
+   "muted": "#555555",
+   "border": "#EEE6B5",
+   "hero": "#FFE14D",
+   "heroInk": "#111111",
+   "mark": "#FFFFFF"
+  },
+  "citrus": {
+   "name": "Citrus",
+   "bg": "#FFFBF5",
+   "surface": "#FFEFD9",
+   "soft": "#FFDDB0",
+   "primary": "#F28C28",
+   "primaryInk": "#2D1A05",
+   "accent": "#A64F08",
+   "ink": "#2D1A05",
+   "muted": "#74583B",
+   "border": "#F2DFC4",
+   "hero": "#FFB866",
+   "heroInk": "#2D1A05",
+   "mark": "#FFFFFF"
+  },
+  "peach": {
+   "name": "Peach Sand",
+   "bg": "#FFFCF8",
+   "surface": "#FCEFE3",
+   "soft": "#F8DFC9",
+   "primary": "#E58E5A",
+   "primaryInk": "#2E1C10",
+   "accent": "#9A4E22",
+   "ink": "#2E1C10",
+   "muted": "#735C4C",
+   "border": "#F0DDCC",
+   "hero": "#F8DFC9",
+   "heroInk": "#2E1C10",
+   "mark": "#FFFFFF"
+  },
+  "terracotta": {
+   "name": "Terracotta",
+   "bg": "#FFFAF6",
+   "surface": "#FBEDE3",
+   "soft": "#F6DCC8",
+   "primary": "#B5532B",
+   "primaryInk": "#FFFFFF",
+   "accent": "#A34A26",
+   "ink": "#3A2218",
+   "muted": "#7A5B4C",
+   "border": "#EED9CB",
+   "hero": "#B5532B",
+   "heroInk": "#FFFFFF",
+   "mark": "#FFFFFF"
+  },
+  "bakery": {
+   "name": "Retro Bakery",
+   "bg": "#FFFCF5",
+   "surface": "#FBF1DF",
+   "soft": "#F5E1BE",
+   "primary": "#C8312B",
+   "primaryInk": "#FFFFFF",
+   "accent": "#B02A24",
+   "ink": "#2A1A12",
+   "muted": "#6F5A48",
+   "border": "#EEDFC6",
+   "hero": "#C8312B",
+   "heroInk": "#FFFFFF",
+   "mark": "#FFFFFF"
+  },
+  "coffee": {
+   "name": "Coffee",
+   "bg": "#FBF7F2",
+   "surface": "#F0E6DA",
+   "soft": "#E2D0BB",
+   "primary": "#5A3A22",
+   "primaryInk": "#FFFFFF",
+   "accent": "#6B4428",
+   "ink": "#2B1D13",
+   "muted": "#6E5A4B",
+   "border": "#E5D7C7",
+   "hero": "#5A3A22",
+   "heroInk": "#FFF7EC",
+   "mark": "#FFFFFF"
+  },
+  "matcha": {
+   "name": "Matcha",
+   "bg": "#FBFCF5",
+   "surface": "#EEF2DE",
+   "soft": "#DDE6BF",
+   "primary": "#5C7A1F",
+   "primaryInk": "#FFFFFF",
+   "accent": "#4F6A18",
+   "ink": "#26301A",
+   "muted": "#5E6750",
+   "border": "#E0E6CC",
+   "hero": "#C9D99A",
+   "heroInk": "#26301A",
+   "mark": "#FFFFFF"
+  },
+  "sage": {
+   "name": "Sage",
+   "bg": "#FBFBF7",
+   "surface": "#EFF1E8",
+   "soft": "#DFE4D3",
+   "primary": "#5B6E52",
+   "primaryInk": "#FFFFFF",
+   "accent": "#52644A",
+   "ink": "#252B22",
+   "muted": "#5E6658",
+   "border": "#E2E6D9",
+   "hero": "#DFE4D3",
+   "heroInk": "#252B22",
+   "mark": "#FFFFFF"
+  },
+  "mint": {
+   "name": "Mint",
+   "bg": "#FAFFFC",
+   "surface": "#E6F7EF",
+   "soft": "#CDEFE0",
+   "primary": "#0F8A5F",
+   "primaryInk": "#FFFFFF",
+   "accent": "#0F7A55",
+   "ink": "#12322A",
+   "muted": "#4E6B62",
+   "border": "#D5EBE1",
+   "hero": "#BFEBD7",
+   "heroInk": "#12322A",
+   "mark": "#FFFFFF"
+  },
+  "teal": {
+   "name": "Ocean Teal",
+   "bg": "#F7FDFD",
+   "surface": "#E3F4F4",
+   "soft": "#C7E9E9",
+   "primary": "#0E7C7B",
+   "primaryInk": "#FFFFFF",
+   "accent": "#0B6E6D",
+   "ink": "#0F2B2B",
+   "muted": "#4B6666",
+   "border": "#D2E8E8",
+   "hero": "#0E7C7B",
+   "heroInk": "#FFFFFF",
+   "mark": "#FFFFFF"
+  },
+  "sky": {
+   "name": "Sky",
+   "bg": "#F8FBFF",
+   "surface": "#E8F1FD",
+   "soft": "#D3E5FB",
+   "primary": "#1D6FD6",
+   "primaryInk": "#FFFFFF",
+   "accent": "#1D5FB8",
+   "ink": "#10233F",
+   "muted": "#4E5F78",
+   "border": "#D7E3F3",
+   "hero": "#CFE2FA",
+   "heroInk": "#10233F",
+   "mark": "#FFFFFF"
+  },
+  "navy": {
+   "name": "Navy",
+   "bg": "#FFFFFF",
+   "surface": "#F1F4F9",
+   "soft": "#E1E8F2",
+   "primary": "#1B2A4A",
+   "primaryInk": "#FFFFFF",
+   "accent": "#1B2A4A",
+   "ink": "#141B2B",
+   "muted": "#566075",
+   "border": "#DEE4EE",
+   "hero": "#1B2A4A",
+   "heroInk": "#FFFFFF",
+   "mark": "#FFFFFF"
+  },
+  "lavender": {
+   "name": "Lavender",
+   "bg": "#FCFAFF",
+   "surface": "#F1ECFB",
+   "soft": "#E3D9F7",
+   "primary": "#6B4FBB",
+   "primaryInk": "#FFFFFF",
+   "accent": "#5E44A8",
+   "ink": "#241B3A",
+   "muted": "#605778",
+   "border": "#E4DDF2",
+   "hero": "#DCCFF5",
+   "heroInk": "#241B3A",
+   "mark": "#FFFFFF"
+  },
+  "berry": {
+   "name": "Berry",
+   "bg": "#FFFAFB",
+   "surface": "#F7EAEE",
+   "soft": "#EED3DC",
+   "primary": "#8E2453",
+   "primaryInk": "#FFFFFF",
+   "accent": "#8E2453",
+   "ink": "#2E1220",
+   "muted": "#6E5260",
+   "border": "#EEDCE3",
+   "hero": "#8E2453",
+   "heroInk": "#FFFFFF",
+   "mark": "#FFFFFF"
+  },
+  "gold": {
+   "name": "Charcoal Gold",
+   "bg": "#FFFFFF",
+   "surface": "#F5F3EE",
+   "soft": "#ECE6D6",
+   "primary": "#C9A227",
+   "primaryInk": "#1C1A15",
+   "accent": "#8A6D12",
+   "ink": "#1C1A15",
+   "muted": "#625C4E",
+   "border": "#E6E0D1",
+   "hero": "#1C1A15",
+   "heroInk": "#F5E6B8",
+   "mark": "#FFFFFF"
+  },
+  "midnight": {
+   "name": "Midnight",
+   "bg": "#15171C",
+   "surface": "#20242C",
+   "soft": "#2A2F39",
+   "primary": "#FFD54F",
+   "primaryInk": "#15171C",
+   "accent": "#FFD54F",
+   "ink": "#F3F4F6",
+   "muted": "#A5ACB8",
+   "border": "#343A46",
+   "hero": "#20242C",
+   "heroInk": "#F3F4F6",
+   "mark": "#2A2F39"
+  }
+ },
+ "eventThemes": {
+  "christmas": {
+   "name": "Christmas",
+   "motifs": [
+    "snow",
+    "star"
+   ],
+   "decor": [
+    "#B3261E",
+    "#1E6B3A",
+    "#C9A227"
+   ],
+   "greet": {
+    "en": "Merry Christmas",
+    "id": "Selamat Natal",
+    "ko": "메리 크리스마스",
+    "ja": "メリークリスマス",
+    "zh": "圣诞快乐"
+   },
+   "bg": "#FFFDF8",
+   "surface": "#F6EFE6",
+   "soft": "#E8F1EA",
+   "primary": "#B3261E",
+   "primaryInk": "#FFFFFF",
+   "accent": "#1E6B3A",
+   "ink": "#2A1A14",
+   "muted": "#6B5A50",
+   "border": "#EADFD3",
+   "hero": "#1E6B3A",
+   "heroInk": "#FFFFFF",
+   "mark": "#FFFFFF"
+  },
+  "imlek": {
+   "name": "Imlek (Lunar New Year)",
+   "motifs": [
+    "lantern",
+    "sparkle"
+   ],
+   "decor": [
+    "#B71C1C",
+    "#D4A017"
+   ],
+   "greet": {
+    "en": "Happy Lunar New Year",
+    "id": "Selamat Tahun Baru Imlek",
+    "ko": "즐거운 설 보내세요",
+    "ja": "春節おめでとう",
+    "zh": "新春快乐"
+   },
+   "bg": "#FFF9F2",
+   "surface": "#FBEADB",
+   "soft": "#F6D3B8",
+   "primary": "#B71C1C",
+   "primaryInk": "#FFFFFF",
+   "accent": "#A31616",
+   "ink": "#2B1410",
+   "muted": "#74514A",
+   "border": "#F1D9C6",
+   "hero": "#B71C1C",
+   "heroInk": "#FFE9A8",
+   "mark": "#FFF9F2"
+  },
+  "valentine": {
+   "name": "Valentine’s Day",
+   "motifs": [
+    "heart",
+    "heartO"
+   ],
+   "decor": [
+    "#C2253F",
+    "#E88A9C"
+   ],
+   "greet": {
+    "en": "Happy Valentine’s Day",
+    "id": "Selamat Hari Valentine",
+    "ko": "해피 발렌타인데이",
+    "ja": "ハッピーバレンタイン",
+    "zh": "情人节快乐"
+   },
+   "bg": "#FFF8F9",
+   "surface": "#FDEBEE",
+   "soft": "#F9D5DC",
+   "primary": "#C2253F",
+   "primaryInk": "#FFFFFF",
+   "accent": "#B01F38",
+   "ink": "#3A1219",
+   "muted": "#7A4E57",
+   "border": "#F3D6DC",
+   "hero": "#F9D5DC",
+   "heroInk": "#3A1219",
+   "mark": "#FFFFFF"
+  },
+  "ramadan": {
+   "name": "Ramadan",
+   "motifs": [
+    "crescent",
+    "star",
+    "lantern"
+   ],
+   "decor": [
+    "#C9A227",
+    "#145A4A"
+   ],
+   "greet": {
+    "en": "Ramadan Kareem",
+    "id": "Selamat Menunaikan Ibadah Puasa",
+    "ko": "라마단 카림",
+    "ja": "ラマダン・カリーム",
+    "zh": "斋月吉庆"
+   },
+   "bg": "#FBF8F0",
+   "surface": "#F1EBDC",
+   "soft": "#E4DABF",
+   "primary": "#145A4A",
+   "primaryInk": "#FFFFFF",
+   "accent": "#145A4A",
+   "ink": "#1E2A26",
+   "muted": "#5D665F",
+   "border": "#E5DCC6",
+   "hero": "#0E3B33",
+   "heroInk": "#F4E7C1",
+   "mark": "#FBF8F0"
+  },
+  "lebaran": {
+   "name": "Lebaran (Idul Fitri)",
+   "motifs": [
+    "ketupat",
+    "crescent"
+   ],
+   "decor": [
+    "#2F7D32",
+    "#C9A227"
+   ],
+   "greet": {
+    "en": "Happy Eid al-Fitr",
+    "id": "Selamat Hari Raya Idul Fitri",
+    "ko": "이드 무바라크",
+    "ja": "イード・ムバーラク",
+    "zh": "开斋节快乐"
+   },
+   "bg": "#FFFDF5",
+   "surface": "#F2F5E6",
+   "soft": "#E1EAC5",
+   "primary": "#2F7D32",
+   "primaryInk": "#FFFFFF",
+   "accent": "#2F6B2F",
+   "ink": "#1F2A1A",
+   "muted": "#5E6852",
+   "border": "#E2E6CF",
+   "hero": "#2F7D32",
+   "heroInk": "#FFF8DC",
+   "mark": "#FFFDF5"
+  },
+  "maulid": {
+   "name": "Maulid Nabi",
+   "motifs": [
+    "star8",
+    "crescent"
+   ],
+   "decor": [
+    "#1F6B45",
+    "#C9A227"
+   ],
+   "greet": {
+    "en": "Celebrating Mawlid al-Nabi",
+    "id": "Selamat Maulid Nabi Muhammad SAW",
+    "ko": "무함마드 탄신일을 기념합니다",
+    "ja": "預言者生誕祭",
+    "zh": "圣纪节快乐"
+   },
+   "bg": "#FAFCF8",
+   "surface": "#ECF3EA",
+   "soft": "#D8E8D4",
+   "primary": "#1F6B45",
+   "primaryInk": "#FFFFFF",
+   "accent": "#1F6B45",
+   "ink": "#18281E",
+   "muted": "#56665A",
+   "border": "#DCE7D8",
+   "hero": "#DCEBD6",
+   "heroInk": "#18281E",
+   "mark": "#FFFFFF"
+  },
+  "merdeka": {
+   "name": "17 Agustus (HUT RI)",
+   "motifs": [
+    "flag",
+    "sparkle"
+   ],
+   "decor": [
+    "#C8102E",
+    "#C8102E"
+   ],
+   "greet": {
+    "en": "Happy Independence Day, Indonesia",
+    "id": "Dirgahayu Republik Indonesia",
+    "ko": "인도네시아 독립기념일",
+    "ja": "インドネシア独立記念日",
+    "zh": "印尼独立日快乐"
+   },
+   "bg": "#FFFFFF",
+   "surface": "#F8F1F1",
+   "soft": "#F1DEDE",
+   "primary": "#C8102E",
+   "primaryInk": "#FFFFFF",
+   "accent": "#B00E28",
+   "ink": "#241416",
+   "muted": "#6B5457",
+   "border": "#EEDCDE",
+   "hero": "#C8102E",
+   "heroInk": "#FFFFFF",
+   "mark": "#FFFFFF"
+  }
+ }
+}
