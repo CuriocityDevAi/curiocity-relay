@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-15T21:59:39.614Z",
+  "built_at": "2026-11-15T23:07:41.927Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-15T21:59:39.100Z"
+      "fetched_at": "2026-11-15T23:07:41.513Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-15T21:59:39.259Z"
+      "fetched_at": "2026-11-15T23:07:41.663Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6097,6 +6097,15 @@
               "status": "live"
             },
             {
+              "id": "split-pending-orders",
+              "name": "나눠결제 미완료 주문 목록 (M1-1105-CO)",
+              "summary": "1차 결제가 완료됐지만 2차 결제가 아직 남은 미완료 주문을 조회해 계산대 직원이 이어서 결제하거나 취소할 수 있게 한다.",
+              "files": [
+                "apps/commerce-core/src/api/admin/pos/draft-orders/**"
+              ],
+              "status": "live"
+            },
+            {
               "id": "loyalty-store-credit",
               "name": "로열티 (적립금·기프트카드)",
               "summary": "공식 @medusajs/loyalty-plugin (2.17.2 · Medusa peerDeps 정합) 설치 + R3 POS 손님 연결 — phone-id.ts(E.164 정규화) · POST /admin/pos/orders/:id/customer(upsert+link_open_until guard · DB unique index) · GET /admin/pos/orders/:id/loyalty-info · 통합 테스트. M0-1105-CI S1b: `linkCustomerToOrder` 공용 함수(src/lib/link-customer-order.ts) · R3 route 가 이 함수 호출 · 손님 iPad 경로 POST /admin/pos/loyalty/sessions/snapshots/:id/link-phone 신규 · 결제 완료 subscriber(loyalty-earn-on-paid)와 결제 후 연결 두 경로가 멱등으로 R4 적립(src/lib/loyalty/earn.ts · 금액은 receipt-preview 규칙 그대로 · order.metadata.loyalty_earn + credit tx reference_id `earn:<order_id>` 가드).",
@@ -6236,6 +6245,18 @@
               "summary": "사장이 백엔드 관리 화면에서 매장에 맞는 항목만 보이도록 화면과 언어를 손본다.",
               "files": [
                 "apps/commerce-core/src/admin/**"
+              ],
+              "status": "live"
+            },
+            {
+              "id": "pos-orders-admin",
+              "name": "POS Orders 목록 UI",
+              "summary": "Admin 사이드바 최상단 \"Orders\" 화면에서 주문 목록·전화번호 클릭·번호 검색·페이지네이션을 제공한다.",
+              "files": [
+                "apps/commerce-core/src/api/admin/pos/orders-list/route.ts",
+                "id: pos-orders-list-ui",
+                "apps/commerce-core/src/admin/routes/pos-orders/page.tsx",
+                "apps/commerce-core/src/admin/widgets/nav-hide.tsx"
               ],
               "status": "live"
             },
@@ -6559,6 +6580,7 @@
                 ".gitignore",
                 ".gitattributes",
                 ".nvmrc",
+                ".dockerignore",
                 "LICENSE",
                 "railway.json"
               ],
@@ -6674,7 +6696,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-15T21:59:39.614Z"
+      "fetched_at": "2026-11-15T23:07:41.927Z"
     }
   ],
   "rollup": {
