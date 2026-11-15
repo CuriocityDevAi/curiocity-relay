@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-15T01:52:37.733Z",
+  "built_at": "2026-11-15T06:24:02.391Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-15T01:52:37.279Z"
+      "fetched_at": "2026-11-15T06:24:01.938Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-15T01:52:37.442Z"
+      "fetched_at": "2026-11-15T06:24:02.115Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6061,6 +6061,18 @@
               "status": "live"
             },
             {
+              "id": "loyalty-settings-r2",
+              "name": "로열티 R2 설정 · 시뮬레이션 · 감사 (M0-1105-CB)",
+              "summary": "적립금 설정 (earn_rate_pct · earn_base · round_mode · min_use_amount · max_use_pct_per_order · expiry_days · signup_bonus · exclude_product_ids · tax_mode · enabled · earn_on_balance_tender_only). 돈/세금 키는 \"시뮬 1회 → settings_hash 일치 → Save\" 게이트 · 설정 바로 저장은 enabled/earn_on_balance_tender_only 만. API GET/POST /admin/pos/loyalty/settings · POST /admin/pos/loyalty/settings/simulate (6시나리오 · 30일 영향) · POST /admin/pos/loyalty/settings/pending/:id/cancel · GET /admin/pos/loyalty/settings/audit (append-only). receipt-preview 순수 함수는 R4~R6 재사용의 단일 원천. 예약 반영 job 은 매장 timezone 00:00 적용 · 멱등. Admin UI 는 M2-1105-BM 소관.",
+              "files": [
+                "apps/commerce-core/src/modules/loyalty_settings/**",
+                "apps/commerce-core/src/api/admin/pos/loyalty/**",
+                "apps/commerce-core/src/jobs/loyalty-settings-apply.ts",
+                "apps/commerce-core/src/lib/loyalty/**"
+              ],
+              "status": "live"
+            },
+            {
               "id": "pos-void-refund",
               "name": "POS 보이드·환불·반품·매니저 PIN (M0-1105-AB · AC · AE · BF)",
               "summary": "일일 매니저 PIN (HMAC 결정적 계산·WIB 자정 교체·5회 잠금 15분·DB 저장 없음) · GET /admin/pos/manager-pin (오늘 PIN 반환 · Admin UI 위젯 노출) · POST /admin/pos/manager-pin/verify (PIN 검증 · 오입력 5회 15분 잠금) · POST /admin/pos/orders/:id/void (cancelOrderWorkflow · 같은 교대만 · CARD 단말기 승인번호 PIN 불필요 · 그 외 CASH + PIN) · POST /admin/pos/orders/:id/refund (refundPaymentWorkflow · 전체 환불 · CARD terminal_approval_code 또는 CASH + PIN · 현금 지급 시 Cash Movement adjustment(-amount) 자동 생성 · 영수증 kind=void/refund) · POST /admin/pos/orders/:id/return (품목 수량 단위 부분 환불 · items[{line_item_id, quantity}] · 서버가 line_total 비율대로 할인·세금 배분 후 Math.round · refundPaymentWorkflow 부분 금액 · M0-1105-BF 품목별 fulfillment 상태 분기: fulfilled 품목은 inventoryModule.adjustInventory(+qty) 복귀, unfulfilled 품목은 reservation 삭제 (In stock 불변 · Reserved -qty · Available +qty) → 선주문 (Fulfill 전) 부분 취소 지원 · 응답 items[].disposition = 'returned' | 'canceled_unfulfilled' + reservation_released 플래그 · 누적 반품 수량 + 요청 > 산 수량 400 · M0-1105-AE: Guard A (items 해시 409) 제거 → 분할 반품 (qty 2 → qty 1 + qty 1) 둘 다 200 · 동시 요청의 재고 이중 복귀는 주문 단위 in-memory 큐로 직렬화 · PIN 계산 storeId 는 Admin 위젯과 동일 소스 (stock_location.id · register_session_id 폴백 제거)).",
@@ -6079,6 +6091,7 @@
                 "apps/commerce-core/src/api/admin/pos/orders/**",
                 "apps/commerce-core/src/api/admin/pos/maintenance/**",
                 "apps/commerce-core/integration-tests/pos/**",
+                "apps/commerce-core/integration-tests/setup.js",
                 "apps/commerce-core/scripts/test-integration-pos.sh"
               ],
               "status": "live"
@@ -6086,9 +6099,55 @@
             {
               "id": "loyalty-store-credit",
               "name": "로열티 (적립금·기프트카드)",
-              "summary": "공식 @medusajs/loyalty-plugin (2.17.2 · Medusa peerDeps 정합) 을 설치해 store_credit(계좌·거래) · loyalty(gift card) 테이블과 Admin \"Store Credits\"/\"Gift Cards\" 메뉴를 얻는다. amount = numeric (IDR 0 소수 정수 저장) · service.debitAccounts_ 가 잔액 미달 시 \"Insufficient balance\" MedusaError throw. 결제 흐름 (payment providers · tenders · refund) 은 무변경 · 1단계 R1 설치/스모크 범위 (M0-1105-CA · 계획서 #254 §5 R1).",
+              "summary": "공식 @medusajs/loyalty-plugin (2.17.2 · Medusa peerDeps 정합) 설치 + R3 POS 손님 연결 — phone-id.ts(E.164 정규화) · POST /admin/pos/orders/:id/customer(upsert+P-3 guard · DB unique index) · GET /admin/pos/orders/:id/loyalty-info · 통합 테스트. R1 store_credit 스모크 완료. R4(earn) 이후 미구현.",
               "files": [
+                "apps/commerce-core/src/lib/phone-id.ts",
+                "apps/commerce-core/src/lib/__tests__/phone-id.unit.spec.ts",
+                "apps/commerce-core/src/api/admin/pos/orders/[id]/customer/**",
+                "apps/commerce-core/src/api/admin/pos/orders/[id]/loyalty-info/**",
                 "apps/commerce-core/integration-tests/loyalty/**"
+              ],
+              "status": "live"
+            },
+            {
+              "id": "customer-display-settings",
+              "name": "손님 화면 매장 설정 (M1-1105-CF · S2)",
+              "summary": "매장별 손님 화면 설정 · 컬러 테마 20종(기본 pastel) · 매장 이미지 · 타이머 4개(receipt_display_sec·keypad_timeout_sec·done_to_idle_sec·post_pay_link_grace_sec) · 이벤트 예약 7종(겹침 금지·00:00 경계) · 이슬람력 자동 채움(Intl.DateTimeFormat + 타뷸라 폴백) · getDisplayConfig 순수 함수. API: GET/PUT /admin/pos/customer-display/settings · GET/POST/PUT/DELETE events · GET islamic-suggestions?year. 경로 노출(손님 iPad용)은 M3-1105-CK 머지 뒤 연결. 정본 docs/plans/customer-display-plan.md §4·§5·§7.",
+              "files": [
+                "apps/commerce-core/src/modules/customer_display_settings/**",
+                "apps/commerce-core/src/api/admin/pos/customer-display/settings/**",
+                "apps/commerce-core/src/lib/customer-display/**"
+              ],
+              "status": "live"
+            },
+            {
+              "id": "customer-display-snapshot",
+              "name": "손님용 화면 OrderSnapshot v2 (M0-1105-CE · S1a)",
+              "summary": "손님 화면(iPad) 이 폴링하는 주문 스냅샷. OrderSnapshot v2 모델(snapshot_state=active|paid|expired · paid_at · link_open_until · pre_entry · customer_phone · polled_at · receipt · items/합계) · GET /admin/pos/loyalty/sessions/snapshots/active?register_id (TTL 10분 active · 보류 규칙 E paid · polled_at 갱신 · 응답 server_now) · PATCH /admin/pos/loyalty/sessions/snapshots/:id {typing:true} 또는 {phone,pre_entry:true} · Medusa subscriber(order.updated·payment.captured)가 payment_status=captured 시 snapshot_state=paid 로 멱등 전환(결제 라우트 파일 무수정) · 수명 판정과 응답 직렬화는 lifecycle.ts pure helper · S1b(link-phone 단일화)·R3 는 별도 라운드. 정본 docs/plans/customer-display-server-contract.md.",
+              "files": [
+                "apps/commerce-core/src/modules/register_session/models/order-snapshot.ts",
+                "apps/commerce-core/src/modules/register_session/migrations/Migration20261115100000.ts",
+                "apps/commerce-core/src/modules/register_session/lifecycle.ts",
+                "apps/commerce-core/src/modules/register_session/__tests__/order-snapshot.unit.spec.ts",
+                "apps/commerce-core/src/api/admin/pos/loyalty/sessions/snapshots/**",
+                "apps/commerce-core/src/subscribers/order-snapshot-paid.ts",
+                "apps/commerce-core/src/types/customer-display.ts"
+              ],
+              "status": "planned"
+            },
+            {
+              "id": "customer-display-pairing",
+              "name": "손님 iPad 페어링 + 기기 토큰 (M3-1105-CK · S1c)",
+              "summary": "손님 iPad 전용 기기 토큰 발급 흐름. Admin이 6자리 코드 발급(POST /admin/pos/loyalty/sessions) · iPad가 코드 소비(POST /customer-display/pair · 인증 없음) → device_token 평문 1회 반환 · DB에 sha256 해시만 저장. 미들웨어(X-Device-Token)가 /customer-display/* 보호(pair 제외) · register_id 주입. rate limit: 5회 → 코드 폐기 · 429. Admin 연결 상태/폐기 API. 스냅샷 기기 경로 재노출(S1a 서비스 재사용). 정본 docs/plans/customer-display-server-contract.md §6.",
+              "files": [
+                "apps/commerce-core/src/lib/device-token.ts",
+                "apps/commerce-core/src/lib/__tests__/device-token.unit.spec.ts",
+                "apps/commerce-core/src/modules/register_session/migrations/Migration20261115200000.ts",
+                "apps/commerce-core/src/modules/register_session/__tests__/pairing.unit.spec.ts",
+                "apps/commerce-core/src/api/middlewares.ts",
+                "apps/commerce-core/src/api/admin/pos/loyalty/sessions/route.ts",
+                "apps/commerce-core/src/api/admin/pos/loyalty/sessions/[register_id]/**",
+                "apps/commerce-core/src/api/customer-display/**"
               ],
               "status": "planned"
             },
@@ -6486,9 +6545,84 @@
               "status": "planned"
             }
           ]
+        },
+        {
+          "id": "customer-display",
+          "name": "Customer Display",
+          "processes": [
+            {
+              "id": "cd-idle",
+              "name": "대기 화면",
+              "summary": "매장이 대기 중일 때 포인트 적립 안내와 매장 이미지를 보여 준다.",
+              "files": [
+                "apps/customer-display/app/index.tsx",
+                "apps/customer-display/src/screens/MainScreen.tsx",
+                "apps/customer-display/src/theme/**",
+                "apps/customer-display/src/i18n/**",
+                "apps/customer-display/src/components/**"
+              ],
+              "status": "planned"
+            },
+            {
+              "id": "cd-checkout",
+              "name": "결제 중 화면",
+              "summary": "결제 진행 중 품목·소계·세금·합계·예상 적립금과 번호 입력 버튼을 보여 준다.",
+              "files": [
+                "apps/customer-display/app/cart.tsx",
+                "apps/customer-display/src/screens/CartScreen.tsx",
+                "apps/customer-display/src/mocks/**",
+                "apps/customer-display/src/types/**"
+              ],
+              "status": "planned"
+            },
+            {
+              "id": "cd-keypad",
+              "name": "번호 입력 화면 (3·3')",
+              "summary": "결제 전/후 고객이 전화번호를 입력하는 키패드 화면과 번호 정규화·마스킹 라이브러리.",
+              "files": [
+                "apps/customer-display/app/keypad.tsx",
+                "apps/customer-display/app/keypad-after.tsx",
+                "apps/customer-display/src/screens/KeypadScreen.tsx",
+                "apps/customer-display/src/screens/KeypadAfterScreen.tsx",
+                "apps/customer-display/src/lib/phone-id.ts",
+                "apps/customer-display/src/lib/__tests__/phone-id.test.ts"
+              ],
+              "status": "planned"
+            },
+            {
+              "id": "cd-consent",
+              "name": "첫 방문 동의 화면 (4)",
+              "summary": "처음 방문한 고객에게 개인정보 보관 범위를 안내하고 동의를 받는 화면.",
+              "files": [
+                "apps/customer-display/app/consent.tsx",
+                "apps/customer-display/src/screens/ConsentScreen.tsx"
+              ],
+              "status": "planned"
+            },
+            {
+              "id": "cd-envelope",
+              "name": "Customer Display 껍데기",
+              "summary": "Expo SDK 58 앱의 배포·의존성·빌드 설정과 Playwright·vitest 검증 껍데기 파일들이다.",
+              "files": [
+                "apps/customer-display/app/_layout.tsx",
+                "apps/customer-display/package.json",
+                "apps/customer-display/app.json",
+                "apps/customer-display/babel.config.js",
+                "apps/customer-display/metro.config.js",
+                "apps/customer-display/tsconfig.json",
+                "apps/customer-display/vitest.config.ts",
+                "apps/customer-display/playwright.config.ts",
+                "apps/customer-display/expo-env.d.ts",
+                "apps/customer-display/.gitignore",
+                "apps/customer-display/assets/**",
+                "apps/customer-display/e2e/**"
+              ],
+              "status": "planned"
+            }
+          ]
         }
       ],
-      "fetched_at": "2026-11-15T01:52:37.733Z"
+      "fetched_at": "2026-11-15T06:24:02.391Z"
     }
   ],
   "rollup": {
