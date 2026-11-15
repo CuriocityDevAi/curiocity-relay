@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-15T14:29:11.272Z",
+  "built_at": "2026-11-15T14:31:23.861Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -83,15 +83,15 @@
       "last_report": "n0/N0-0914-C-report.md"
     },
     "r0": {
-      "last_round": "R0-1105-FG",
-      "last_report": "r0/R0-1105-FG-report.md",
+      "last_round": "R0-1105-FH",
+      "last_report": "r0/R0-1105-FH-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-15T14:03:53.605Z",
       "current_round": "R0-1105-FH",
-      "current_state": "started",
-      "current_at": "2026-11-15T14:29:11.210Z",
-      "current_note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-FH.log"
+      "current_state": "done",
+      "current_at": "2026-11-15T14:31:23.796Z",
+      "current_note": "503 원인: Railway rootDir=apps/commerce-core → Docker 컨텍스트에 apps/customer-display 없음 → 조건부 COPY 건너뜀 → CDW_BASE 비존재 → 503. 권장: Option A(rootDir을 . 으로 변경 + Dockerfile 빌드 단계 추가), Kyu Railway 클릭 1회 필요"
     },
     "t0": {
       "state": "idle",

@@ -1,7 +1,7 @@
 {
   "id": "R0-1105-FH",
   "hub": "r0",
-  "state": "started",
-  "at": "2026-11-15T14:29:11.210Z",
-  "note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1105-FH.log"
+  "state": "done",
+  "at": "2026-11-15T14:31:23.796Z",
+  "note": "503 원인: Railway rootDir=apps/commerce-core → Docker 컨텍스트에 apps/customer-display 없음 → 조건부 COPY 건너뜀 → CDW_BASE 비존재 → 503. 권장: Option A(rootDir을 . 으로 변경 + Dockerfile 빌드 단계 추가), Kyu Railway 클릭 1회 필요"
 }
