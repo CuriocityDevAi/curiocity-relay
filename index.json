@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-15T10:44:00.665Z",
+  "built_at": "2026-11-15T21:59:39.614Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-15T10:44:00.113Z"
+      "fetched_at": "2026-11-15T21:59:39.100Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-15T10:44:00.270Z"
+      "fetched_at": "2026-11-15T21:59:39.259Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6167,7 +6167,7 @@
             {
               "id": "customer-display-pairing",
               "name": "손님 iPad 페어링 + 기기 토큰 (M3-1105-CK · S1c)",
-              "summary": "손님 iPad 전용 기기 토큰 발급 흐름. Admin이 6자리 코드 발급(POST /admin/pos/loyalty/sessions) · iPad가 코드 소비(POST /customer-display/pair · 인증 없음) → device_token 평문 1회 반환 · DB에 sha256 해시만 저장. 미들웨어(X-Device-Token)가 /customer-display/* 보호(pair 제외) · register_id 주입. rate limit: 5회 → 코드 폐기 · 429. Admin 연결 상태/폐기 API. 스냅샷 기기 경로 재노출(S1a 서비스 재사용). 정본 docs/plans/customer-display-server-contract.md §6.",
+              "summary": "손님 iPad 전용 기기 토큰 발급 흐름. Admin이 6자리 코드 발급(POST /admin/pos/loyalty/sessions) · iPad가 코드 소비(POST /customer-display/pair · 인증 없음) → device_token 평문 1회 반환 · DB에 sha256 해시만 저장. 미들웨어(X-Device-Token)가 /customer-display/* 보호(pair 제외) · register_id 주입. rate limit: 5회 → 코드 폐기 · 429. Admin 연결 상태/폐기 API. 스냅샷 기기 경로 재노출(S1a 서비스 재사용). M0-1105-CP S1c 마무리: `POST /customer-display/snapshots/:id/link-phone` 정식 경로 신설(device-token 인증 + register scope 403 검증 · 내부는 `linkCustomerToOrder(source:\"customer_display\")`), 임시 admin 경로는 @deprecated 유지. R0 후속: 페어링 실패 카운터를 pgConnection 원자 UPDATE RETURNING 으로 레이스-프리 증가 + 코드/토큰 비교를 `crypto.timingSafeEqual` 로 상수시간화. 정본 docs/plans/customer-display-server-contract.md §6.",
               "files": [
                 "apps/commerce-core/src/lib/device-token.ts",
                 "apps/commerce-core/src/lib/__tests__/device-token.unit.spec.ts",
@@ -6674,7 +6674,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-15T10:44:00.664Z"
+      "fetched_at": "2026-11-15T21:59:39.614Z"
     }
   ],
   "rollup": {
