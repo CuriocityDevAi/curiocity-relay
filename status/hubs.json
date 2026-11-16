@@ -1,22 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-16T14:38:41.900Z",
+  "built_at": "2026-11-16T14:40:13.021Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-16T14:38:33.788Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-16T14:38:33.788Z"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-16T14:32:59.280Z",
-      "updated_at": "2026-11-16T14:38:33.788Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -28,17 +13,92 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-16T14:38:33.788Z"
+      "updated_at": "2026-11-16T14:38:33.788Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-16T14:38:33.788Z"
+      "updated_at": "2026-11-16T14:38:33.788Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-16T14:32:59.280Z",
+      "updated_at": "2026-11-16T14:38:33.788Z",
+      "last_round": "M0-1116-Q",
+      "last_report": "m0/M0-1116-Q-report.md",
+      "current_round": "M0-1116-Q",
+      "current_state": "done",
+      "current_at": "2026-11-16T14:33:02.743Z",
+      "current_note": "cwd 미스매치 · install 건 無 · Kyu 2단계"
+    },
+    "m1": {
+      "last_round": "M1-1116-V",
+      "last_report": "m1/M1-1116-V-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T14:40:13.021Z",
+      "current_round": "M1-1116-V",
+      "current_state": "done",
+      "current_at": "2026-11-16T13:35:06.864Z",
+      "current_note": "runner-v7.3 cmux-split · 리포트 확인 m1/M1-1116-V-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1116-V.log"
+    },
+    "m2": {
+      "last_round": "M2-1116-V",
+      "last_report": "m2/M2-1116-V-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T14:40:13.021Z",
+      "current_round": "M2-1116-W",
+      "current_state": "started",
+      "current_at": "2026-11-16T14:40:12.958Z",
+      "current_note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1116-W.log"
+    },
+    "m3": {
+      "last_round": "M3-1116-S",
+      "last_report": "m3/M3-1116-S-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T14:40:13.021Z",
+      "current_round": "M3-1116-S",
+      "current_state": "done",
+      "current_at": "2026-11-16T13:56:42.336Z",
+      "current_note": "① Expo Router useEffect navigator 경쟁조건 → 선언적 Redirect · ② 짝짓기 계산대 단위(customer_display_device) · PR#317 · fork 후속 불필요 · 재짝짓기 불필요"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T14:38:33.788Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1116-Z",
+      "last_report": "r0/R0-1116-Z-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T14:40:13.021Z",
+      "current_round": "R0-1116-AD",
+      "current_state": "done",
+      "current_at": "2026-11-16T14:32:11.225Z",
+      "current_note": "runner-v7.3 cmux-split · 리포트 확인 r0/R0-1116-AD-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1116-AD.log"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-16T14:38:33.788Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
