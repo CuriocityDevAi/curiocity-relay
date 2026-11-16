@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-16T04:28:54.441Z",
+  "built_at": "2026-11-16T04:32:44.713Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -43,15 +43,15 @@
       "current_note": "#290 안전 · smoke=pre-existing(main #284 동일 hang) · 운영 200/uptime 6230s/db.ok=true · PR 없음"
     },
     "m1": {
-      "last_round": "M1-1116-K",
-      "last_report": "m1/M1-1116-K-report.md",
+      "last_round": "M1-1116-L",
+      "last_report": "m1/M1-1116-L-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-16T03:43:54.581Z",
       "current_round": "M1-1116-L",
-      "current_state": "started",
-      "current_at": "2026-11-16T04:28:51.728Z",
-      "current_note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1116-L.log"
+      "current_state": "done",
+      "current_at": "2026-11-16T04:32:44.653Z",
+      "current_note": "runner-v7.3 cmux-split · 리포트 확인 m1/M1-1116-L-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1116-L.log"
     },
     "m2": {
       "last_round": "M2-1116-K",
