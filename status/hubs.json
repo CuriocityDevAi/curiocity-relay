@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-16T01:10:12.726Z",
+  "built_at": "2026-11-16T01:21:01.015Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -38,9 +38,9 @@
       "last_round": "M0-1116-D",
       "last_report": "m0/M0-1116-D-report.md",
       "current_round": "M0-1116-E",
-      "current_state": "started",
-      "current_at": "2026-11-16T00:14:41.731Z",
-      "current_note": "runner-v7.3 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1116-E.log"
+      "current_state": "blocked",
+      "current_at": "2026-11-16T01:21:00.953Z",
+      "current_note": "timeout 60m · runner-v7.3 cmux-split · pane 유지 (C-c + /exit 전송) · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1116-E.log"
     },
     "m1": {
       "last_round": "M1-1116-H",
