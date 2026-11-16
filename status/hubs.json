@@ -1,23 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-16T08:17:54.547Z",
+  "built_at": "2026-11-16T08:20:32.216Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-16T08:17:47.845Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-16T08:17:47.845Z"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-16T08:17:41.117Z",
-      "session": "6a8ce8fa-b1cf-4646-ab83-71a2de60374f",
-      "updated_at": "2026-11-16T08:17:47.845Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -29,17 +13,93 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-16T08:17:47.845Z"
+      "updated_at": "2026-11-16T08:17:47.845Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-16T08:17:47.845Z"
+      "updated_at": "2026-11-16T08:17:47.845Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-16T08:17:41.117Z",
+      "session": "6a8ce8fa-b1cf-4646-ab83-71a2de60374f",
+      "updated_at": "2026-11-16T08:17:47.845Z",
+      "last_round": "M0-1116-K",
+      "last_report": "m0/M0-1116-K-report.md",
+      "current_round": "M0-1116-L",
+      "current_state": "started",
+      "current_at": "2026-11-16T08:17:04.591Z",
+      "current_note": "runner-v7.3 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1116-L.log"
+    },
+    "m1": {
+      "last_round": "M1-1116-O",
+      "last_report": "m1/M1-1116-O-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T08:20:32.216Z",
+      "current_round": "M1-1116-O",
+      "current_state": "done",
+      "current_at": "2026-11-16T08:15:08.855Z",
+      "current_note": "PR #309 · customer-display 개발 서버 포트 8082 고정 (CD_PORT 오버라이드 가능)"
+    },
+    "m2": {
+      "last_round": "M2-1116-P",
+      "last_report": "m2/M2-1116-P-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T08:20:32.216Z",
+      "current_round": "M2-1116-P",
+      "current_state": "blocked",
+      "current_at": "2026-11-16T08:03:04.983Z",
+      "current_note": "runner-v7.3 cmux-split · landing=claim-done · post claim 없음 (race?) · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1116-P.log"
+    },
+    "m3": {
+      "last_round": "M3-1116-K",
+      "last_report": "m3/M3-1116-K-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T08:20:32.216Z",
+      "current_round": "M3-1116-L",
+      "current_state": "started",
+      "current_at": "2026-11-16T07:59:28.822Z",
+      "current_note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1116-L.log"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T08:17:47.845Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1116-T",
+      "last_report": "r0/R0-1116-T-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T08:20:32.216Z",
+      "current_round": "R0-1116-T",
+      "current_state": "done",
+      "current_at": "2026-11-16T08:20:32.155Z",
+      "current_note": "#308 C(splash TS 타입 에러 블로커) · #309 A(전체 요건 충족)"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-16T08:17:47.845Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
