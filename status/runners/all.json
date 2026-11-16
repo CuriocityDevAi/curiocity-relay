@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-16T00:37:07.931Z",
+  "at": "2026-11-16T00:37:58.313Z",
   "pid": 61172,
   "runner": "v7.3",
   "poll_ms": 30000,
@@ -30,15 +30,17 @@
       "last_activity": "2026-11-16T00:26:33.386Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1116-H",
+      "started_at": "2026-11-16T00:37:53.286Z",
+      "model": "sonnet",
       "last_activity": "2026-11-16T00:37:05.083Z"
     }
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 20645,
-    "totalMs": 61342,
+    "lastMs": 28269,
+    "totalMs": 89727,
     "phase": "await-landing",
-    "at": "2026-11-16T00:22:33.036Z"
+    "at": "2026-11-16T00:37:07.957Z"
   }
 }
