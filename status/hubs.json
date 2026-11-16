@@ -1,11 +1,26 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-16T05:04:04.360Z",
+  "built_at": "2026-11-16T05:04:19.335Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T05:04:13.222Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-16T05:04:13.222Z"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-16T04:59:01.369Z",
+      "updated_at": "2026-11-16T05:04:13.222Z"
+    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-16T04:42:49.581Z",
+      "updated_at": "2026-11-16T05:04:13.222Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,93 +28,17 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      ]
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-16T04:42:49.581Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-16T05:04:13.222Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-16T04:42:49.581Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-16T04:42:45.590Z",
-      "session": "ed52acdf-5aa9-479c-9696-276cdec1f2dc",
-      "updated_at": "2026-11-16T04:42:49.581Z",
-      "last_round": "M0-1116-J",
-      "last_report": "m0/M0-1116-J-report.md",
-      "current_round": "M0-1116-J",
-      "current_state": "done",
-      "current_at": "2026-11-16T04:59:04.196Z",
-      "current_note": "PR #302 (I 를 이어서) · feature-map-check FAILURE 를 cd-envelope.files 에 app.json 추가로 해결 · 운영 웹 영향 0 · Kyu 실기 5단계"
-    },
-    "m1": {
-      "last_round": "M1-1116-L",
-      "last_report": "m1/M1-1116-L-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-16T04:43:50.003Z",
-      "current_round": "M1-1116-M",
-      "current_state": "started",
-      "current_at": "2026-11-16T05:04:01.911Z",
-      "current_note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1116-M.log"
-    },
-    "m2": {
-      "last_round": "M2-1116-L",
-      "last_report": "m2/M2-1116-L-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-16T04:43:50.003Z",
-      "current_round": "M2-1116-L",
-      "current_state": "done",
-      "current_at": "2026-11-16T04:59:36.183Z",
-      "current_note": "#300 색상 토큰화(CALENDAR_OVERRIDE_STRIPE·LOCATION_SAMPLE_BG) · pos-integration 기존 불량(main 동일) · unit 332/e2e 4 통과"
-    },
-    "m3": {
-      "last_round": "M3-1116-H",
-      "last_report": "m3/M3-1116-H-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-16T04:43:50.003Z",
-      "current_round": "M3-1116-I",
-      "current_state": "started",
-      "current_at": "2026-11-16T04:50:55.212Z",
-      "current_note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1116-I.log"
-    },
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-16T04:42:49.581Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
-    },
-    "r0": {
-      "last_round": "R0-1116-N",
-      "last_report": "r0/R0-1116-N-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-16T04:43:50.003Z",
-      "current_round": "R0-1116-O",
-      "current_state": "started",
-      "current_at": "2026-11-16T05:04:04.299Z",
-      "current_note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1116-O.log"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-16T04:42:49.581Z",
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "updated_at": "2026-11-16T05:04:13.222Z"
     }
   }
 }
