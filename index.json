@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-16T04:36:43.646Z",
+  "built_at": "2026-11-16T08:59:18.780Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T04:36:43.227Z"
+      "fetched_at": "2026-11-16T08:59:18.151Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T04:36:43.371Z"
+      "fetched_at": "2026-11-16T08:59:18.334Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6198,17 +6198,22 @@
                 "apps/commerce-core/src/api/admin/pos/loyalty/sessions/[register_id]/**",
                 "apps/commerce-core/src/api/customer-display/**",
                 "apps/customer-display/app/pair.tsx",
-                "apps/customer-display/src/lib/pairing.ts"
+                "apps/customer-display/src/lib/pairing.ts",
+                "apps/customer-display/src/lib/__tests__/pair-flow.test.ts"
               ],
               "status": "planned"
             },
             {
               "id": "customer-display-live-connect",
               "name": "Customer Display 라이브 연결 (M2-1116-G)",
-              "summary": "손님 iPad 앱의 부팅 컨텍스트(boot-context)와 라이브 커넥트(live-connect) 로직 — POS 서버와의 실시간 연결 초기화·재연결 처리.",
+              "summary": "손님 iPad 앱의 부팅 컨텍스트(boot-context)와 라이브 커넥트(live-connect) 로직 — POS 서버와의 실시간 연결 초기화·재연결 처리. M0-1116-L — 설치형 네이티브 빌드가 상대 경로로 Metro 에 붙어 pair HTTP 404 가 나던 것을 수정. API base 결정 규칙은 `src/lib/api-base.ts` (env → 웹=\"\" → 네이티브는 `app.config` extra.apiUrl → 운영 폴백 `https://admin.meros.id`). 한 helper 로 pair/snapshots/link-phone/display-config 모두 같은 값을 쓰도록 `_layout.tsx` 가 BootContext.apiBaseUrl 에 주입.",
               "files": [
                 "apps/customer-display/src/lib/boot-context.tsx",
-                "apps/customer-display/src/lib/__tests__/live-connect.test.ts"
+                "apps/customer-display/src/lib/__tests__/live-connect.test.ts",
+                "apps/customer-display/src/lib/api-base.ts",
+                "apps/customer-display/src/lib/__tests__/api-base.test.ts",
+                "apps/customer-display/app/_layout.tsx",
+                "apps/customer-display/app.config.ts"
               ],
               "status": "live"
             },
@@ -6739,11 +6744,13 @@
             {
               "id": "cd-envelope",
               "name": "Customer Display 껍데기",
-              "summary": "Expo SDK 58 앱의 배포·의존성·빌드 설정과 Playwright·vitest 검증 껍데기 파일들이다.",
+              "summary": "Expo SDK 58 앱의 배포·의존성·빌드 설정과 Playwright·vitest 검증 껍데기 파일들이다. M0-1116-I — 네이티브(iPad) 설치형 앱 전환: `app.config.ts`(웹 빌드 baseUrl 유지·네이티브 빌드 비활성화·owner curiocity·updates/runtimeVersion) + `eas.json`(development/preview/production profiles · dev-client · OTA channel) + `expo-keep-awake` 로 손님 화면 꺼짐 방지 + `scripts/dev-refresh.sh`(POS 동형).",
               "files": [
                 "apps/customer-display/app/_layout.tsx",
                 "apps/customer-display/package.json",
                 "apps/customer-display/app.json",
+                "apps/customer-display/app.config.ts",
+                "apps/customer-display/eas.json",
                 "apps/customer-display/babel.config.js",
                 "apps/customer-display/metro.config.js",
                 "apps/customer-display/tsconfig.json",
@@ -6761,7 +6768,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-16T04:36:43.646Z"
+      "fetched_at": "2026-11-16T08:59:18.780Z"
     }
   ],
   "rollup": {
