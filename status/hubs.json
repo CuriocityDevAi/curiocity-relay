@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-16T10:04:53.913Z",
+  "built_at": "2026-11-16T10:06:15.862Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -83,15 +83,15 @@
       "last_report": "n0/N0-0914-C-report.md"
     },
     "r0": {
-      "last_round": "R0-1116-W",
-      "last_report": "r0/R0-1116-W-report.md",
+      "last_round": "R0-1116-X",
+      "last_report": "r0/R0-1116-X-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-16T09:59:42.059Z",
       "current_round": "R0-1116-X",
-      "current_state": "started",
-      "current_at": "2026-11-16T09:59:41.995Z",
-      "current_note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1116-X.log"
+      "current_state": "done",
+      "current_at": "2026-11-16T10:06:15.799Z",
+      "current_note": "#314 C(시점·색) · #313 A(merge-order) · 충돌: #313 먼저 머지 후 #314 rebase"
     },
     "t0": {
       "state": "idle",
