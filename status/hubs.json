@@ -1,27 +1,11 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-16T06:38:33.224Z",
+  "built_at": "2026-11-16T06:38:49.273Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-16T06:38:27.171Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-16T06:38:27.171Z"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-16T06:38:16.107Z",
-      "session": "12c4b228-3ded-4231-9c7e-40777752deab",
-      "updated_at": "2026-11-16T06:38:27.171Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-16T06:38:27.171Z",
+      "updated_at": "2026-11-16T05:04:13.222Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -29,17 +13,92 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-16T06:38:27.171Z"
+      "updated_at": "2026-11-16T05:04:13.222Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-16T06:38:27.171Z"
+      "updated_at": "2026-11-16T05:04:13.222Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-16T04:59:01.369Z",
+      "updated_at": "2026-11-16T05:04:13.222Z",
+      "last_round": "M0-1116-J",
+      "last_report": "m0/M0-1116-J-report.md",
+      "current_round": "M0-1116-K",
+      "current_state": "started",
+      "current_at": "2026-11-16T06:37:18.957Z",
+      "current_note": "runner-v7.3 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1116-K.log"
+    },
+    "m1": {
+      "last_round": "M1-1116-M",
+      "last_report": "m1/M1-1116-M-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T05:07:24.988Z",
+      "current_round": "M1-1116-N",
+      "current_state": "started",
+      "current_at": "2026-11-16T06:37:22.325Z",
+      "current_note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1116-N.log"
+    },
+    "m2": {
+      "last_round": "M2-1116-M",
+      "last_report": "m2/M2-1116-M-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T05:07:24.988Z",
+      "current_round": "M2-1116-M",
+      "current_state": "done",
+      "current_at": "2026-11-16T06:38:49.210Z",
+      "current_note": "runner-v7.3 cmux-split · 리포트 확인 m2/M2-1116-M-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1116-M.log"
+    },
+    "m3": {
+      "last_round": "M3-1116-I",
+      "last_report": "m3/M3-1116-I-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T05:07:24.988Z",
+      "current_round": "M3-1116-J",
+      "current_state": "started",
+      "current_at": "2026-11-16T06:16:42.209Z",
+      "current_note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1116-J.log"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T05:04:13.222Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1116-P",
+      "last_report": "r0/R0-1116-P-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T05:07:24.988Z",
+      "current_round": "R0-1116-P",
+      "current_state": "done",
+      "current_at": "2026-11-16T05:18:13.070Z",
+      "current_note": "#303 APPROVE(TS2869 4곳 동작동일) · #301 CHANGES(네이티브 이동 블로커: saveDeviceToken 후 layout liveToken 미갱신)"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-16T05:04:13.222Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
