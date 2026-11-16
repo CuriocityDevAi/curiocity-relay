@@ -1,11 +1,26 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-16T00:03:06.820Z",
+  "built_at": "2026-11-16T00:08:26.963Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-16T00:08:20.210Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-16T00:08:20.210Z"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-16T00:03:03.526Z",
+      "updated_at": "2026-11-16T00:08:20.210Z"
+    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-15T23:55:14.583Z",
+      "updated_at": "2026-11-16T00:08:20.210Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,93 +28,17 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      ]
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-15T23:55:14.583Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-16T00:08:20.210Z"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-15T23:55:14.583Z",
-      "last_round": "K2-0916-B",
-      "last_report": "k2/K2-0916-B-report.md"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-15T23:55:02.425Z",
-      "session": "3dfd1da3-e628-4bf4-a0f0-9586dcd5c240",
-      "updated_at": "2026-11-15T23:55:14.583Z",
-      "last_round": "M0-1116-D",
-      "last_report": "m0/M0-1116-D-report.md",
-      "current_round": "M0-1116-D",
-      "current_state": "done",
-      "current_at": "2026-11-16T00:03:06.759Z",
-      "current_note": "#290 M0-1116-C REQ1~4 전부 완료 · #291 계약 차이 5건 · 손님 화면 mock 모드만"
-    },
-    "m1": {
-      "last_round": "M1-1116-E",
-      "last_report": "m1/M1-1116-E-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-15T23:55:59.483Z",
-      "current_round": "M1-1116-F",
-      "current_state": "started",
-      "current_at": "2026-11-15T23:55:15.881Z",
-      "current_note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1116-F.log"
-    },
-    "m2": {
-      "last_round": "M2-1116-F",
-      "last_report": "m2/M2-1116-F-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-15T23:55:59.483Z",
-      "current_round": "M2-1116-F",
-      "current_state": "done",
-      "current_at": "2026-11-16T00:01:53.840Z",
-      "current_note": "기존 경로 없음 · GET /admin/pos/registers/:id/snapshot 신설 · customer_phone 마스킹 · tsc 0 errors · 통합 테스트 3케이스 · feature-map 등록"
-    },
-    "m3": {
-      "last_round": "M3-1116-D",
-      "last_report": "m3/M3-1116-D-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-15T23:55:59.483Z",
-      "current_round": "M3-1116-E",
-      "current_state": "started",
-      "current_at": "2026-11-15T23:23:52.906Z",
-      "current_note": "runner-v7.3 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1116-E.log"
-    },
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-15T23:55:14.583Z",
-      "last_round": "N0-0914-C",
-      "last_report": "n0/N0-0914-C-report.md"
-    },
-    "r0": {
-      "last_round": "R0-1116-F",
-      "last_report": "r0/R0-1116-F-report.md",
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-15T23:55:59.483Z",
-      "current_round": "R0-1116-F",
-      "current_state": "done",
-      "current_at": "2026-11-15T23:59:50.690Z",
-      "current_note": "#293 CHANGES(status 필터 누락) · #292 APPROVE(문구↔서버 일치)"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-15T23:55:14.583Z",
-      "last_round": "T0-0915-A",
-      "last_report": "t0/T0-0915-A-report.md"
+      "updated_at": "2026-11-16T00:08:20.210Z"
     }
   }
 }
