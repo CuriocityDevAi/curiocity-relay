@@ -46,3 +46,9 @@
 - Q2 품목 매핑 = Todoboss item 쪽 `external_ref` 에 Medusa variant id(보내는 쪽이 받는 곳 주소를 앎 · MEROS 상품 모델 무변경)
 - Q3 픽업 신호 = MEROS → Todoboss 이벤트 푸시(todoboss_bridge outbox · 서명 · 멱등) + 조회 폴백
 - 착수 순서(점검표 권장): A T2 계약 고정(docs) → B T6 근태 직접 연결 → C T3 재고 주입 · 발부는 공용 정리·포인트 빚 뒤
+
+## 22:39 Kyu 결정 (CareAgent × Wing 조사 문서 검토)
+- CA2 가용성: CareAgent가 직접 계산하지 않고 Todoboss에 의뢰 ("todoboss 에게 가용성 계산을 의뢰하는게 맞아보임"). 오케 보탬: 계산은 규칙(비 AI) + 답에 이유 · Todoboss 무응답 시 사람 확인으로.
+- CA3 위험한 답: "리스크가 있는 대답은 AI 가 하지 않기로 하자. 대신 사람이 한다." CareAgent는 사람에게 물어 중계 + 자기 계산(그림자 답)과 비교 학습. 경로 후보: 매니저 WhatsApp / Todoboss 직원 앱 (오케 권장: 앱 기본 + 늦으면 매니저 WhatsApp) — Kyu 회신 대기.
+- W5 Wing: 까페노티드식 1번(픽업 예약) 먼저 동의 · 노티드 기능 조사 완료(knottedstore.com: 픽업 예약 달력·시간대 3구간·2일 전 17시 마감·추가 옵션·대량 주문 직원 확인 후 결제·매장 픽업 불가일·굿즈 숍). 레터링/커스텀·배송은 노티드에 없음 = 차별점.
+- 구현 보류 유지.
