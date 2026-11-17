@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-17T04:55:03.102Z",
+  "at": "2026-11-17T04:58:46.914Z",
   "pid": 34716,
   "runner": "v7.3",
   "poll_ms": 30000,
@@ -35,5 +35,10 @@
     }
   },
   "pane_close_failures": {},
-  "last_sleep_gap": null
+  "last_sleep_gap": {
+    "lastMs": 15148,
+    "totalMs": 43750,
+    "phase": "await-landing",
+    "at": "2026-11-17T04:57:55.086Z"
+  }
 }
