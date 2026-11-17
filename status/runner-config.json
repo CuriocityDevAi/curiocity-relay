@@ -1,7 +1,7 @@
 {
   "schema_version": 4,
-  "note": "M1-1105-Y · schema_version=4 · per-hub model · run_timeout_min · heartbeat_min. 11-10 17:09 Kyu: M3 도 sonnet 기본(복잡한 라운드만 오케가 opus 로 바꿔 발부) · Opus 기본 = M0 만.",
-  "updated_at": "2026-11-10T10:10:00.000Z",
+  "note": "M1-1105-Y · schema_version=4 · per-hub model · run_timeout_min · heartbeat_min. 11-10 17:09 Kyu: M3 도 sonnet 기본(복잡한 라운드만 오케가 opus 로 바꿔 발부) · Opus 기본 = M0 만. 11-17 M0-1116-Q: 리포 라우팅 = storeport 작업 → M0·M2 · POS(fork) 작업 → M1·M3 · 리뷰 → R0. m2 cwd = storeport 전용 worktree(hub-m2). hub-m3 worktree 는 예비(m3 는 fork 유지).",
+  "updated_at": "2026-11-17T02:40:00.000Z",
   "display": "cmux-split",
   "cmux_bin": "/Applications/cmux.app/Contents/Resources/bin/cmux",
   "claude_bin": "/Users/kyu.lee/.local/bin/claude",
@@ -22,8 +22,8 @@
       "model": "sonnet"
     },
     "m2": {
-      "cwd": "/Users/kyu.lee/projects/pos-m2",
-      "label": "POS printer / register · M2",
+      "cwd": "/Users/kyu.lee/curiocity-live/storeport-wts/hub-m2",
+      "label": "storeport · apps/customer-display · loyalty · M2",
       "model": "sonnet"
     },
     "m3": {
