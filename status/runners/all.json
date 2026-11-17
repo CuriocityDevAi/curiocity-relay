@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-17T04:58:46.914Z",
+  "at": "2026-11-17T05:00:02.563Z",
   "pid": 34716,
   "runner": "v7.3",
   "poll_ms": 30000,
@@ -26,19 +26,23 @@
       "last_activity": "2026-11-17T04:46:01.709Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1117-H",
+      "started_at": "2026-11-17T04:59:44.561Z",
+      "model": "sonnet",
       "last_activity": "2026-11-17T04:41:03.117Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1117-L",
+      "started_at": "2026-11-17T04:59:57.266Z",
+      "model": "sonnet",
       "last_activity": "2026-11-17T04:55:00.519Z"
     }
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 15148,
-    "totalMs": 43750,
+    "lastMs": 25468,
+    "totalMs": 69332,
     "phase": "await-landing",
-    "at": "2026-11-17T04:57:55.086Z"
+    "at": "2026-11-17T04:58:53.394Z"
   }
 }
