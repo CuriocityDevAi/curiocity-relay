@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-17T03:49:44.365Z",
+  "built_at": "2026-11-17T08:21:02.093Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-17T03:49:43.951Z"
+      "fetched_at": "2026-11-17T08:21:01.666Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-17T03:49:44.097Z"
+      "fetched_at": "2026-11-17T08:21:01.818Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6674,12 +6674,27 @@
           "name": "Customer Display",
           "processes": [
             {
+              "id": "cd-splash",
+              "name": "시작 화면 애니메이션",
+              "summary": "앱 콜드 스타트 1회에만 표시. 프린터 막대 → 노란 영수증(갈색 M) 슬라이드 다운 → \"MEROS / Customer\" 떠오르기 → 0.2초 페이드. M2-1117-E · splash-receipt-v1.md 정본.",
+              "files": [
+                "apps/customer-display/src/components/SplashAnimation.tsx",
+                "apps/customer-display/assets/receipt-anim.png",
+                "apps/customer-display/app/_layout.tsx",
+                "apps/customer-display/app.config.ts",
+                "apps/customer-display/scripts/gen-icons.mjs",
+                "apps/customer-display/e2e/splash-anim.spec.ts"
+              ],
+              "status": "live"
+            },
+            {
               "id": "cd-idle",
               "name": "대기 화면",
-              "summary": "매장이 대기 중일 때 포인트 적립 안내와 매장 이미지를 보여 준다.",
+              "summary": "매장이 대기 중일 때 포인트 적립 안내와 매장 이미지를 보여 준다. M2-1117-B — useLayout 훅(useWindowDimensions 기반 wide/normal/narrow 3단 breakpoint)으로 세로·가로·화면 분할 모두 레이아웃 깨짐 없이 대응.",
               "files": [
                 "apps/customer-display/app/index.tsx",
                 "apps/customer-display/src/screens/MainScreen.tsx",
+                "apps/customer-display/src/hooks/useLayout.ts",
                 "apps/customer-display/src/theme/**",
                 "apps/customer-display/src/i18n/**",
                 "apps/customer-display/src/components/**"
@@ -6772,7 +6787,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-17T03:49:44.364Z"
+      "fetched_at": "2026-11-17T08:21:02.093Z"
     }
   ],
   "rollup": {
