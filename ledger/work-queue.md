@@ -1,8 +1,20 @@
 # 작업 큐 (Kyu 의뢰 → 허브 할당 · 우선순위 · 상태 · 이유)
 
-갱신 2026-11-17 WIB (전화번호 발부 · 오케 작업자) · 그 전 2026-11-13 06:40 WIB (Kyu 06:35 회신 반영 · 오케 작업자) · 그 전 2026-11-13 WIB (handoff-20261113 병합) · **최신 handoff = `ledger/handoff-20261113.md`** · 직전 = `ledger/handoff-20261112.md` · 직전 갱신 2026-11-11 16:20 WIB · 규칙(Kyu 11-05): 오케는 매 응답 현황판 아래에 이 표를 붙이고(바뀐 줄 굵게), 우선순위 변경 시 "↑/↓ 이유". 정본 = 이 파일 · **오케가 갱신** · 최소 하루 1회. 프롬프트별 실시간 상태 = 상태판 https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE
+갱신 2026-11-17 WIB (전화번호 발부 · 오케 작업자) · 그 전 2026-11-13 06:40 WIB (Kyu 06:35 회신 반영 · 오케 작업자) · 그 전 2026-11-13 WIB (handoff-20261113 병합) · **최신 handoff = `ledger/handoff-20261117.md`** · 직전 = `ledger/handoff-20261112.md` · 직전 갱신 2026-11-11 16:20 WIB · 규칙(Kyu 11-05): 오케는 매 응답 현황판 아래에 이 표를 붙이고(바뀐 줄 굵게), 우선순위 변경 시 "↑/↓ 이유". 정본 = 이 파일 · **오케가 갱신** · 최소 하루 1회. 프롬프트별 실시간 상태 = 상태판 https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE
 
 결정 정본 파일(원문 보존 · 유지): [decision-next-big-20261113](decision-next-big-20261113.md) · [decision-payment-icons-qris-sim-20261113](decision-payment-icons-qris-sim-20261113.md) · [decision-qris-20261112](decision-qris-20261112.md) · [decision-refund-nav-20261112](decision-refund-nav-20261112.md) · [decision-split-delivery-test-20261112](decision-split-delivery-test-20261112.md) · [decision-delivery-ui-20261110](decision-delivery-ui-20261110.md) · [decision-p6-20261110](decision-p6-20261110.md) · [decision-p6-split-20261111](decision-p6-split-20261111.md) · [decision-checkout-ui-20261111](decision-checkout-ui-20261111.md) · [decision-p6-test-20261111](decision-p6-test-20261111.md) · 장치 사건 [device-incidents](device-incidents.md) · 지표 [metrics](metrics.md)
+
+## 11-17 밤 마감 (handoff-20261117 · 이 절이 최신)
+
+| 항목 | 허브 | 상태 | 이유 / 막힌 것 |
+|---|---|---|---|
+| Wing 픽업 예약 설계서(대사표) | M0 | **M0-1117-Q 야간 발부** | 구현은 Kyu 신호 대기 |
+| NET 환불 통합 테스트(축소) | M1 | **M1-1117-W 야간 발부** | U 60분 초과 → 축소 |
+| 주문 목록 표준화 진단 | M2 | **M2-1117-AB 야간 발부** | 공용 정리 다음 순서 |
+| 오래 열린 PR #296 #320 #325 판정 | R0 | **R0-1117-AR 야간 발부** | 머지·닫기는 오케가 내일 |
+| 실기: Customer 재빌드 · POS 환불 미리보기 | Kyu | 대기 | #351 · fork#190 머지됨 |
+| 러너 v7.4 설치 | Kyu | 대기 | 전 허브 유휴일 때 |
+| ✅ 오늘 머지 | — | #345 #347 #349 #350 #351 · fork#190 | — |
 
 ## 11-17 전화번호 식별 정리 (storeport #320 · Kyu 08:22 "Q2~Q4는 권장대로" · 이 절이 최신)
 
