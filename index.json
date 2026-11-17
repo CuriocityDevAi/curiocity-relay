@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-17T08:27:58.590Z",
+  "built_at": "2026-11-17T09:50:19.448Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-17T08:27:58.119Z"
+      "fetched_at": "2026-11-17T09:50:18.848Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-17T08:27:58.263Z"
+      "fetched_at": "2026-11-17T09:50:18.982Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6069,6 +6069,15 @@
                 "apps/commerce-core/src/api/admin/pos/loyalty/**",
                 "apps/commerce-core/src/jobs/loyalty-settings-apply.ts",
                 "apps/commerce-core/src/lib/loyalty/**"
+              ],
+              "status": "live"
+            },
+            {
+              "id": "loyalty-negative-ledger",
+              "name": "로열티 음수 잔액 레저 (포인트 빚 · M0-1117-I)",
+              "summary": "환불·손님 연결 취소로 회수 못 한 포인트를 손님 단위 \"빚\"으로 기록하는 side-car 레저 (@medusajs/loyalty-plugin 의 store_credit.balance 는 음수 불가 전제 유지). 2 모델 — loyalty_negative_balance (customer_id unique · balance signed int IDR · last_reason) · loyalty_negative_event (append-only · kind ∈ refund_shortfall/unlink_debt/patch_debt/earn_offset/void_shortfall/block_redeem · amount signed · ref unique for idempotency · source_order_id/source_refund_ref/meta). 서비스 addDebt({customer_id, amount, kind, ref, ...}) · offset({customer_id, max_amount, ref}) → 실제 상계액 · getBalance(customer_id). 모든 쓰기는 ref 멱등 (중복 호출 = no-op) · 같은 customer 동시 쓰기는 in-process per-customer async mutex 로 직렬화 (§3.10 DB row-lock 은 multi-worker 로드 시 보강). S1 라운드 범위 = 레저 뿌리만 (recover.ts/earn.ts/route 변경은 후속 라운드 S2~S8).",
+              "files": [
+                "apps/commerce-core/src/modules/loyalty_negative/**"
               ],
               "status": "live"
             },
@@ -6676,14 +6685,17 @@
             {
               "id": "cd-splash",
               "name": "시작 화면 애니메이션",
-              "summary": "앱 콜드 스타트 1회에만 표시. 프린터 막대 → 노란 영수증(갈색 M) 슬라이드 다운 → \"MEROS / Customer\" 떠오르기 → 0.2초 페이드. M2-1117-E · splash-receipt-v1.md 정본.",
+              "summary": "앱 콜드 스타트 1회에만 표시. 프린터 막대 → 노란 영수증(갈색 M) 슬라이드 다운 → \"MEROS\" 워드마크(SVG) + \"Customer\" 떠오르기. M2-1117-E · M2-1117-M · splash-receipt-v1.md 정본.",
               "files": [
                 "apps/customer-display/src/components/SplashAnimation.tsx",
+                "apps/customer-display/src/components/MerosWordmark.tsx",
                 "apps/customer-display/assets/receipt-anim.png",
+                "apps/customer-display/assets/splash.png",
                 "apps/customer-display/app/_layout.tsx",
                 "apps/customer-display/app.config.ts",
                 "apps/customer-display/scripts/gen-icons.mjs",
-                "apps/customer-display/e2e/splash-anim.spec.ts"
+                "apps/customer-display/e2e/splash-anim.spec.ts",
+                "apps/customer-display/src/components/__tests__/splash-wordmark.test.ts"
               ],
               "status": "live"
             },
@@ -6787,7 +6799,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-17T08:27:58.590Z"
+      "fetched_at": "2026-11-17T09:50:19.447Z"
     }
   ],
   "rollup": {
