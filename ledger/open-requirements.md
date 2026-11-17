@@ -1,10 +1,27 @@
 # CurioCity 열린 요구 원장 (오케 유지 · Kyu 원문 기준)
 
-갱신: 2026-11-13 06:40 WIB (Kyu 06:35 회신 7항 반영 · decision-next-big-20261113 · 오케 작업자) · 그 전 2026-11-13 WIB (handoff-20261113 §2~§9 병합) · 직전 갱신 2026-11-11 17:55 WIB (11-09 11:05 판 + 11-10~11 결정·착지 통합) · 규칙: 새 요구 = 여기 먼저 등재(Kyu 원문 그대로 · 오케 번역은 괄호) · 소유 허브 필수 · 착지·실기 통과 시 ✅ · 이 파일이 챗보다 우선
+갱신: 2026-11-17 WIB (전화번호 Q2~Q4 결정 · M0-1117-A/B · M3-1117-A/B 발부 · 오케 작업자) · 그 전 2026-11-13 06:40 WIB (Kyu 06:35 회신 7항 반영 · decision-next-big-20261113 · 오케 작업자) · 그 전 2026-11-13 WIB (handoff-20261113 §2~§9 병합) · 직전 갱신 2026-11-11 17:55 WIB (11-09 11:05 판 + 11-10~11 결정·착지 통합) · 규칙: 새 요구 = 여기 먼저 등재(Kyu 원문 그대로 · 오케 번역은 괄호) · 소유 허브 필수 · 착지·실기 통과 시 ✅ · 이 파일이 챗보다 우선
 **발부 규약(09-16)**: 모든 프롬프트 작성 직전 이 파일을 읽고 `원장 대사:` 한 줄. 재언급 🔴. 주 1회 미발부 요구 표.
 **갱신 규약(11-06)**: 결정·착지마다(최소 하루 1회) 이 파일 + `work-queue.md` 갱신. **이 파일이 기억의 정본**.
 **세션 교체 규약(11-09)**: 오케 세션·클로드코드 허브 세션은 **매일 새로**. 마감 시 `ledger/handoff-<날짜>.md`(당일 스냅샷) 작성. 새 세션 첫 줄: `CurioCity 오케. relay ledger/open-requirements.md · work-queue.md · 최신 handoff 읽고 현황판부터.` **최신 handoff: `ledger/handoff-20261114.md`** (11-13 05:40 WIB 정본 · 세부 = handoff-20261112.md · handoff-20261113-night.md)
 **상태판**: https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE · 자동 투입: `queue/<hub>/<ID>.md` → Kyu Mac hub-runner(v6.5 가동 · v6.6 = M2-1105-AC).
+
+## 11-17 08:22 전화번호 = 손님 식별 키 (storeport #320 계획서 · M0-1116-AS + BB) — 이 절이 최신
+
+Kyu 원문(11-16 23:03): "나는 1명인데 3명의 유저에게 매출 로열티가 나뉘어서 쌓여버렸음 … best practice 해법이 있어? 결국 국가번호와 진짜 전화번호를 나누어서 관리해야할듯해."
+Kyu 원문(11-17 08:22): "Q2~Q4는 권장대로" → **Q2 = (a) 병합 시 비어 있는 쪽 채우기(있는 값 덮어쓰기 금지)** · **Q3 = (a) 당분간 인도네시아(+62) 모바일 번호만(libphonenumber 도입 안 함)** · **Q4 = (b) R4 dry-run 은 오케 · `--apply` 는 Kyu 터미널**.
+Q1(운영 DB `*2480` 3레코드 조회 · SQL = #320 §7) = **Kyu 나중에 실행 — 대기**.
+
+| # | 항목 | 소유 | 문서화 | 구현 | 실기 |
+|---|---|---|---|---|---|
+| PH-R1s | 서버: phone-id 확장 + findCustomersByPhone + POST /admin/pos/customers + GET /admin/pos/customers/search (W9·S7 서버 입구) | M0 | #320 §6 | **M0-1117-A 발부** | — |
+| PH-R2s | 서버: orders-list q 정규화(S1) + 로컬 maskPhone 제거(R3 일부) | M0 | #320 §6 | **M0-1117-B 발부** | Admin Orders 081… 검색 |
+| PH-R1f | fork: Add new customer → 서버 입구 + 번호 칸 숫자패드 + 검색 교체(W9·S7) | M3 | #320 §6 | **M3-1117-A 발부**(M0-1117-A 머지 뒤 머지) | iPad Add new customer · 검색 |
+| PH-R2f | fork: Orders 탭 검색 → /admin/pos/orders-list(S8) | M3 | #320 §6 | **M3-1117-B 발부** | iPad Orders 검색 |
+| PH-R3b | 백필 스크립트 정규화 + `--rewrite-phone` | M0 | #320 §R3 | ⏸ R4 와 함께(Q1 대기) | — |
+| PH-R4 | 중복 손님 병합 스크립트(dry-run 기본 · Q2 채우기 규칙) + link-customer-order S2 레거시 조회 | M0 | #320 §R4 | ⏸ **Q1 대기** | dry-run 오케 → apply Kyu |
+| PH-R5 | customer.phone full unique 인덱스 | M0 | #320 §R5 | ⏸ R4 운영 적용 뒤 | — |
+| PH-anc | anchor(W1·S3) 정규화 | M0 | #320 §6 | ⏸ 후순위(매장 미사용) | — |
 
 ## 11-14 09:23 Kyu K1 실기 반영 (원문 = [decision-k1-qris-20261114](decision-k1-qris-20261114.md))
 

@@ -1,8 +1,22 @@
 # 작업 큐 (Kyu 의뢰 → 허브 할당 · 우선순위 · 상태 · 이유)
 
-갱신 2026-11-13 06:40 WIB (Kyu 06:35 회신 반영 · 오케 작업자) · 그 전 2026-11-13 WIB (handoff-20261113 병합) · **최신 handoff = `ledger/handoff-20261113.md`** · 직전 = `ledger/handoff-20261112.md` · 직전 갱신 2026-11-11 16:20 WIB · 규칙(Kyu 11-05): 오케는 매 응답 현황판 아래에 이 표를 붙이고(바뀐 줄 굵게), 우선순위 변경 시 "↑/↓ 이유". 정본 = 이 파일 · **오케가 갱신** · 최소 하루 1회. 프롬프트별 실시간 상태 = 상태판 https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE
+갱신 2026-11-17 WIB (전화번호 발부 · 오케 작업자) · 그 전 2026-11-13 06:40 WIB (Kyu 06:35 회신 반영 · 오케 작업자) · 그 전 2026-11-13 WIB (handoff-20261113 병합) · **최신 handoff = `ledger/handoff-20261113.md`** · 직전 = `ledger/handoff-20261112.md` · 직전 갱신 2026-11-11 16:20 WIB · 규칙(Kyu 11-05): 오케는 매 응답 현황판 아래에 이 표를 붙이고(바뀐 줄 굵게), 우선순위 변경 시 "↑/↓ 이유". 정본 = 이 파일 · **오케가 갱신** · 최소 하루 1회. 프롬프트별 실시간 상태 = 상태판 https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE
 
 결정 정본 파일(원문 보존 · 유지): [decision-next-big-20261113](decision-next-big-20261113.md) · [decision-payment-icons-qris-sim-20261113](decision-payment-icons-qris-sim-20261113.md) · [decision-qris-20261112](decision-qris-20261112.md) · [decision-refund-nav-20261112](decision-refund-nav-20261112.md) · [decision-split-delivery-test-20261112](decision-split-delivery-test-20261112.md) · [decision-delivery-ui-20261110](decision-delivery-ui-20261110.md) · [decision-p6-20261110](decision-p6-20261110.md) · [decision-p6-split-20261111](decision-p6-split-20261111.md) · [decision-checkout-ui-20261111](decision-checkout-ui-20261111.md) · [decision-p6-test-20261111](decision-p6-test-20261111.md) · 장치 사건 [device-incidents](device-incidents.md) · 지표 [metrics](metrics.md)
+
+## 11-17 전화번호 식별 정리 (storeport #320 · Kyu 08:22 "Q2~Q4는 권장대로" · 이 절이 최신)
+
+| 항목 | 허브 | 상태 | 이유 / 막힌 것 |
+|---|---|---|---|
+| R1·R2 서버: 손님 만들기·검색 API(번호 정규화·레거시 포함 조회) | M0 | **M0-1117-A 발부(자동 투입)** | — |
+| R2·R3 서버: 주문 목록 번호 검색 + 마스킹 통일 | M0 | **M0-1117-B 발부(큐 2번째)** | A 와 파일 안 겹침 |
+| R1·R2 fork: Add new customer + 손님 검색 교체 · 숫자패드 | M3 | **M3-1117-A 발부** | 머지 순서 = M0-1117-A 먼저 |
+| R2 fork: Orders 탭 검색 교체 | M3 | **M3-1117-B 발부(큐 2번째)** | — |
+| fork 긴급 핫픽스(draft-orders.tsx · _layout.tsx) | M1 | M1-1117-A(오케 메인 발부) | 전화번호 프롬프트는 이 두 파일 금지 |
+| R3 백필 정규화 · R4 중복 병합 · link S2 레거시 조회 | M0 | ⏸ 보류 | **Kyu Q1(운영 DB 조회) 대기** |
+| R5 full unique | M0 | ⏸ 보류 | R4 운영 적용 뒤 |
+| anchor W1·S3 | — | ⏸ 후순위 | 매장 미사용 |
+| Kyu: Q1 SQL 실행(#320 §7) | Kyu | 대기 | Kyu 나중에 |
 
 ## 11-13 06:35 Kyu 회신 반영 (이 절이 최신)
 
