@@ -11,7 +11,7 @@
 | 15:27 | **4c6b588 (#170 · 오전 정상 코드)** | 오전분 | ❌ **멈춤 (6689 modules)** |
 
 ## 결론: 코드가 아니라 환경 문제
-- 오전에 정상이던 같은 코드가 지금은 멈춤 → 11:14~14:08 사이 Kyu 맥의 `~/projects/agilo-fork-test` node_modules·Metro·dev client 중 무엇인가가 바뀜
-- 번들 모듈 수: 오전 09:2x 6647 → 지금 6689~6690 (+42~44) — node_modules 변화 의심(누군가 install 했거나 의존성 해석이 바뀜)
-- 의심: 허브가 Kyu 폴더에서 install/빌드 실행? · 네이티브 dev client 와 JS(reanimated/worklets) 버전 불일치
-- 다음: Kyu 폴더 읽기 전용 진단(git status · node_modules 변경 시각 · reanimated/worklets 버전) → `npm ci` 로 package-lock 기준 재설치
+- 15:32 Kyu 진단: `git status` 깨끗 · **`node_modules` 디렉터리 최종 변경 = 2026-11-17 12:49 WIB**(Kyu 식사 중 · 자동 진행 시간대) · reanimated/worklets 폴더 자체는 11-12 그대로(4.7.1 / 0.13.0)
+- 즉 12:49 에 누군가 Kyu 폴더(`~/projects/agilo-fork-test`)에서 패키지 설치/삭제를 실행 → 최상위 모듈 구성이 바뀜(번들 6647 → 6689)
+- 조치: Kyu 가 `npm ci`(package-lock 기준 재설치) → `--clear` 재시작
+- 재발 방지: 어느 허브가 12:49 에 Kyu 폴더에서 install 했는지 추적(허브 로그) · 러너/프롬프트에 Kyu 폴더 쓰기 차단 강화
