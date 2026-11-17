@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-17T10:47:37.004Z",
+  "built_at": "2026-11-17T14:22:48.767Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-17T10:47:36.515Z"
+      "fetched_at": "2026-11-17T14:22:48.305Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-17T10:47:36.704Z"
+      "fetched_at": "2026-11-17T14:22:48.477Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6084,10 +6084,14 @@
             {
               "id": "pos-void-refund",
               "name": "POS 보이드·환불·반품·매니저 PIN (M0-1105-AB · AC · AE · BF)",
-              "summary": "일일 매니저 PIN (HMAC 결정적 계산·WIB 자정 교체·5회 잠금 15분·DB 저장 없음) · GET /admin/pos/manager-pin (오늘 PIN 반환 · Admin UI 위젯 노출) · POST /admin/pos/manager-pin/verify (PIN 검증 · 오입력 5회 15분 잠금) · POST /admin/pos/orders/:id/void (cancelOrderWorkflow · 같은 교대만 · CARD 단말기 승인번호 PIN 불필요 · 그 외 CASH + PIN) · POST /admin/pos/orders/:id/refund (refundPaymentWorkflow · 전체 환불 · CARD terminal_approval_code 또는 CASH + PIN · 현금 지급 시 Cash Movement adjustment(-amount) 자동 생성 · 영수증 kind=void/refund) · POST /admin/pos/orders/:id/return (품목 수량 단위 부분 환불 · items[{line_item_id, quantity}] · 서버가 line_total 비율대로 할인·세금 배분 후 Math.round · refundPaymentWorkflow 부분 금액 · M0-1105-BF 품목별 fulfillment 상태 분기: fulfilled 품목은 inventoryModule.adjustInventory(+qty) 복귀, unfulfilled 품목은 reservation 삭제 (In stock 불변 · Reserved -qty · Available +qty) → 선주문 (Fulfill 전) 부분 취소 지원 · 응답 items[].disposition = 'returned' | 'canceled_unfulfilled' + reservation_released 플래그 · 누적 반품 수량 + 요청 > 산 수량 400 · M0-1105-AE: Guard A (items 해시 409) 제거 → 분할 반품 (qty 2 → qty 1 + qty 1) 둘 다 200 · 동시 요청의 재고 이중 복귀는 주문 단위 in-memory 큐로 직렬화 · PIN 계산 storeId 는 Admin 위젯과 동일 소스 (stock_location.id · register_session_id 폴백 제거)).",
+              "summary": "일일 매니저 PIN (HMAC 결정적 계산·WIB 자정 교체·5회 잠금 15분·DB 저장 없음) · GET /admin/pos/manager-pin (오늘 PIN 반환 · Admin UI 위젯 노출) · POST /admin/pos/manager-pin/verify (PIN 검증 · 오입력 5회 15분 잠금) · POST /admin/pos/orders/:id/void (posVoidOrderWorkflow — 채널 중립 결제 취소·재고 복원·주문 취소 위임 · 같은 교대만 · CARD 단말기 승인번호 PIN 불필요 · 그 외 CASH + PIN · M2-1117-S) · POST /admin/pos/orders/:id/refund (refundPaymentWorkflow · 전체 환불 · CARD terminal_approval_code 또는 CASH + PIN · 현금 지급 시 Cash Movement adjustment(-amount) 자동 생성 · 영수증 kind=void/refund) · POST /admin/pos/orders/:id/return (품목 수량 단위 부분 환불 · items[{line_item_id, quantity}] · 서버가 line_total 비율대로 할인·세금 배분 후 Math.round · refundPaymentWorkflow 부분 금액 · M0-1105-BF 품목별 fulfillment 상태 분기: fulfilled 품목은 inventoryModule.adjustInventory(+qty) 복귀, unfulfilled 품목은 reservation 삭제 (In stock 불변 · Reserved -qty · Available +qty) → 선주문 (Fulfill 전) 부분 취소 지원 · 응답 items[].disposition = 'returned' | 'canceled_unfulfilled' + reservation_released 플래그 · 누적 반품 수량 + 요청 > 산 수량 400 · M0-1105-AE: Guard A (items 해시 409) 제거 → 분할 반품 (qty 2 → qty 1 + qty 1) 둘 다 200 · 동시 요청의 재고 이중 복귀는 주문 단위 in-memory 큐로 직렬화 · PIN 계산 storeId 는 Admin 위젯과 동일 소스 (stock_location.id · register_session_id 폴백 제거)).",
               "files": [
                 "apps/commerce-core/src/api/admin/pos/_shared/manager-pin.ts",
-                "apps/commerce-core/src/api/admin/pos/manager-pin/**"
+                "apps/commerce-core/src/api/admin/pos/manager-pin/**",
+                "apps/commerce-core/src/workflows/pos-void/**",
+                "apps/commerce-core/src/workflows/_shared/**",
+                "apps/commerce-core/src/api/admin/pos/orders/[id]/refund/route.ts",
+                "apps/commerce-core/src/workflows/pos-refund/**"
               ],
               "status": "live"
             },
@@ -6099,6 +6103,7 @@
                 "apps/commerce-core/src/api/admin/pos/_shared/**",
                 "apps/commerce-core/src/api/admin/pos/orders/**",
                 "apps/commerce-core/src/api/admin/pos/maintenance/**",
+                "apps/commerce-core/src/workflows/pos-fulfill/**",
                 "apps/commerce-core/integration-tests/pos/**",
                 "apps/commerce-core/integration-tests/setup.js",
                 "apps/commerce-core/scripts/test-integration-pos.sh"
@@ -6110,7 +6115,16 @@
               "name": "나눠결제 미완료 주문 목록 (M1-1105-CO)",
               "summary": "1차 결제가 완료됐지만 2차 결제가 아직 남은 미완료 주문을 조회해 계산대 직원이 이어서 결제하거나 취소할 수 있게 한다.",
               "files": [
-                "apps/commerce-core/src/api/admin/pos/draft-orders/**"
+                "apps/commerce-core/src/api/admin/pos/draft-orders/route.ts"
+              ],
+              "status": "live"
+            },
+            {
+              "id": "pos-cart-items-oneshot",
+              "name": "POS 장바구니 담기 oneshot (M0-1117-K)",
+              "summary": "POS 가 상품을 담을 때 begin+add+confirm 세 요청을 한 요청으로 합친다. POST /admin/pos/draft-orders/:id/items 가 서버 안에서 beginDraftOrderEditWorkflow → addDraftOrderItemsWorkflow / updateDraftOrderItemWorkflow(qty=0 로 remove 표현) → confirmDraftOrderEditWorkflow 를 직렬 실행하고, 실패 시 cancelDraftOrderEditWorkflow 로 롤백한다. body = `{ add?: [{variant_id, quantity}], update?: [{item_id, quantity}], remove?: [item_id] }` · 응답 = 계산 끝난 draft order 전체 (items · subtotal · tax_total · total · currency_code · elapsed_ms). 이미 열린 edit 세션이 남아 begin 이 400 을 던지면 cancel 후 1회 재시도 (#182 복구). POS 클라이언트 교체는 후속 라운드.",
+              "files": [
+                "apps/commerce-core/src/api/admin/pos/draft-orders/[id]/items/**"
               ],
               "status": "live"
             },
@@ -6799,7 +6813,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-17T10:47:37.003Z"
+      "fetched_at": "2026-11-17T14:22:48.767Z"
     }
   ],
   "rollup": {
