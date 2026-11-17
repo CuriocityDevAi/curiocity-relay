@@ -33,3 +33,10 @@
 - **확정 TB1: 직원 정본 = Todoboss · MEROS POS 는 필요한 직원(주로 계산원)만 가져다 씀**
 - 문서: https://claude.ai/artifact/P3zCzDwTdpEujJacZYVQ5z (MEROS 전체 연동 지도 · 접점 T1~T8 · 정본 제안표)
 - Kyu 확인 대기 3: ① 완제품 판매 재고 정본 = MEROS(제안) ② 픽업 완료 = MEROS Hand over 만(제안) ③ Todoboss Phase -1(주문 분리 4~5주) 순서
+
+## 21:47 Kyu 확정 — Todoboss 경계 3건
+- Kyu 원문: "완제품 판매 재고는 정본은 MEROS 가 맞다 … Todoboss 는 생산한 완제품 수량을 가지고 있고(생산팀이 쓰는 냉장고), 그것을 MEROS 쪽으로 보고하는 개념 … 그중에 몇개는 display 냉장고 … stock 이라고 하면 생산팀이 '생산완료, 판매가능상품' 이라고 만들어낸 제품 … 생산팀의 팀장이 confirm 하면 sales팀(MEROS를 사용하는 캐시어)의 재고 수량이 늘어나야 … todoboss 는 하루에 몇개씩의 상품을 만들어내는 공장이고, MEROS는 그것을 판매하는 상점 … 판매용 stock은 MEROS에서 관리" / "픽업완료도 MEROS 에서 정본을 관리하고, Todoboss 는 MEROS쪽에서 관리하는 데이터를 끌어다가 쓰면 … 픽업이 될 시간이 오면 직원들에게 알려주고, 픽업되기전에 해야할일들을 지시해주면서, 준비가 되지않았으면 재촉 … 픽업여부도 알아야 … MEROS 를 통해서 input" / "주문 분리는 나중에 했으면해. 필요한 설계가 있는지만 체크해두고"
+- **TB2 판매 재고 정본 = MEROS** · Todoboss = 생산팀 냉장고 완제품 수량 · 생산팀장 확정 → MEROS 판매 재고 +N (공장→상점 이관 · T3)
+- **TB3 픽업 완료 정본 = MEROS(Hand over)** · Todoboss 는 픽업 여부를 받아 픽업 임박 알림·준비 지시·재촉 (T8)
+- **TB4 Todoboss Phase -1(주문 분리) = 나중** · 지금은 T2 주문 연결에 필요한 설계 점검만(보류 항목: bridge 이벤트 계약 · outbox · commerce_order_ref 매핑 점검 문서)
+- 지도 문서 반영 완료
