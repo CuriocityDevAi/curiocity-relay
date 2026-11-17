@@ -17,3 +17,8 @@
 - Kyu 원문: "권장대로. 그치만 구현은 아직 들어가지마"
 - KD-1 픽업 시간 = 버튼 목록(권장) · KD-2 LLM = Claude Haiku급(오케 결정) · KD-3 Wing 결제 후 WA 영수증·픽업 안내 자동 발송(권장)
 - **⛔ Wing · CareAgent 구현 라운드 발부 보류 — Kyu 가 시작 신호 줄 때까지 (계획서 #336 문서만 머지)**
+
+## 17:42~17:47 공용 아키텍처 — 정리 먼저
+- Kyu 17:42 원문: "현재 pos 가 wing과 careagent 와 연동하기 좋도록 설계되어있는지 확인해줘. 즉, 예를들어 이미 pos 에서 사용하는 재고 관리는 공통 모듈로 사용해야할것 같아서 .. 결제도 마찬가지고 여러 기능들을 공유해야할듯 한데 그렇게 아키텍쳐가 되어있나?"
+- 오케 1차 확인: 데이터층(Medusa 모듈·커스텀 모듈·phone-id·loyalty lib) 공용 ○ · 업무 로직(refund/void/fulfill/return/예약 해제)이 `api/admin/pos/**` 라우트 안 · workflows 비어 있음 · Xendit 웹훅 POS draft-order 흐름 전용 · #336 "웹훅 수정 없음" 오류 · CA 도구가 admin/pos API 호출 설계
+- Kyu 17:47 원문: "정리부터란 말에 동의함" → **SA1 확정: Wing 구현 전에 공용 정리(채널 중립 workflow/service 추출 · POS 라우트 얇게) 먼저** · 감사 = R0-1117-AC → 정리 라운드 발부 · 포인트 빚 S4·S5(refund/void route)는 정리 순서에 합류(⏸)
