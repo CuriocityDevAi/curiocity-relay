@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-17T02:34:34.856Z",
+  "built_at": "2026-11-17T03:49:44.365Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-17T02:34:34.317Z"
+      "fetched_at": "2026-11-17T03:49:43.951Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-17T02:34:34.505Z"
+      "fetched_at": "2026-11-17T03:49:44.097Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6108,15 +6108,19 @@
             {
               "id": "loyalty-store-credit",
               "name": "로열티 (적립금·기프트카드)",
-              "summary": "공식 @medusajs/loyalty-plugin (2.17.2 · Medusa peerDeps 정합) 설치 + R3 POS 손님 연결 — phone-id.ts(E.164 정규화) · POST /admin/pos/orders/:id/customer(upsert+link_open_until guard · DB unique index) · GET /admin/pos/orders/:id/loyalty-info · 통합 테스트. M0-1105-CI S1b: `linkCustomerToOrder` 공용 함수(src/lib/link-customer-order.ts) · R3 route 가 이 함수 호출 · 손님 iPad 경로 POST /admin/pos/loyalty/sessions/snapshots/:id/link-phone 신규 · 결제 완료 subscriber(loyalty-earn-on-paid)와 결제 후 연결 두 경로가 멱등으로 R4 적립(src/lib/loyalty/earn.ts · 금액은 receipt-preview 규칙 그대로 · order.metadata.loyalty_earn + credit tx reference_id `earn:<order_id>` 가드).",
+              "summary": "공식 @medusajs/loyalty-plugin (2.17.2 · Medusa peerDeps 정합) 설치 + R3 POS 손님 연결 — phone-id.ts(E.164 정규화) · POST /admin/pos/orders/:id/customer(upsert+link_open_until guard · DB unique index) · GET /admin/pos/orders/:id/loyalty-info · 통합 테스트. M0-1105-CI S1b: `linkCustomerToOrder` 공용 함수(src/lib/link-customer-order.ts) · R3 route 가 이 함수 호출 · 손님 iPad 경로 POST /admin/pos/loyalty/sessions/snapshots/:id/link-phone 신규 · 결제 완료 subscriber(loyalty-earn-on-paid)와 결제 후 연결 두 경로가 멱등으로 R4 적립(src/lib/loyalty/earn.ts · 금액은 receipt-preview 규칙 그대로 · order.metadata.loyalty_earn + credit tx reference_id `earn:<order_id>` 가드). M0-1117-A R1·R2: phone-id 확장(country + local_display) · `findCustomersByPhone` 공용 헬퍼(src/lib/find-customers-by-phone.ts · 레거시 081…/6281…/+62 813… 전부 수집 + canonical 정렬) · POST /admin/pos/customers(upsert · 빈칸만 채움 · 23505 재조회) + GET /admin/pos/customers/search(정규화 성공 → 레거시 전부 · 숫자 3자리 이상 → 부분 포함 · 그 외 → Medusa core q). 레거시 수정 금지 — 중복 병합은 R4 소관.",
               "files": [
                 "apps/commerce-core/src/lib/phone-id.ts",
                 "apps/commerce-core/src/lib/__tests__/phone-id.unit.spec.ts",
                 "apps/commerce-core/src/lib/link-customer-order.ts",
+                "apps/commerce-core/src/lib/find-customers-by-phone.ts",
+                "apps/commerce-core/src/lib/__tests__/find-customers-by-phone.unit.spec.ts",
                 "apps/commerce-core/src/lib/loyalty/earn.ts",
                 "apps/commerce-core/src/api/admin/pos/orders/[id]/customer/**",
                 "apps/commerce-core/src/api/admin/pos/orders/[id]/loyalty-info/**",
                 "apps/commerce-core/src/api/admin/pos/loyalty/sessions/snapshots/[id]/link-phone/**",
+                "apps/commerce-core/src/api/admin/pos/customers/route.ts",
+                "apps/commerce-core/src/api/admin/pos/customers/search/**",
                 "apps/commerce-core/src/subscribers/loyalty-earn-on-paid.ts",
                 "apps/commerce-core/integration-tests/loyalty/**",
                 "apps/commerce-core/e2e/**",
@@ -6768,7 +6772,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-17T02:34:34.856Z"
+      "fetched_at": "2026-11-17T03:49:44.364Z"
     }
   ],
   "rollup": {
