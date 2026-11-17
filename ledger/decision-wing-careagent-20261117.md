@@ -22,3 +22,8 @@
 - Kyu 17:42 원문: "현재 pos 가 wing과 careagent 와 연동하기 좋도록 설계되어있는지 확인해줘. 즉, 예를들어 이미 pos 에서 사용하는 재고 관리는 공통 모듈로 사용해야할것 같아서 .. 결제도 마찬가지고 여러 기능들을 공유해야할듯 한데 그렇게 아키텍쳐가 되어있나?"
 - 오케 1차 확인: 데이터층(Medusa 모듈·커스텀 모듈·phone-id·loyalty lib) 공용 ○ · 업무 로직(refund/void/fulfill/return/예약 해제)이 `api/admin/pos/**` 라우트 안 · workflows 비어 있음 · Xendit 웹훅 POS draft-order 흐름 전용 · #336 "웹훅 수정 없음" 오류 · CA 도구가 admin/pos API 호출 설계
 - Kyu 17:47 원문: "정리부터란 말에 동의함" → **SA1 확정: Wing 구현 전에 공용 정리(채널 중립 workflow/service 추출 · POS 라우트 얇게) 먼저** · 감사 = R0-1117-AC → 정리 라운드 발부 · 포인트 빚 S4·S5(refund/void route)는 정리 순서에 합류(⏸)
+
+## 18:15 감사 #338 머지 · 오케 결정
+- D1 = A (Wing 전에 정리 · Kyu 17:47 "정리부터" 동의) · D2 = A (W5 Xendit 웹훅 cart 분기는 Wing 결제 도입 직전 — 미리 만들면 쓰지 않는 코드)
+- 순서(오케): W1 return(M0) ∥ W3 void(M2) → W4 fulfill → W2 refund → S4·S5(포인트 빚 NET 환불)를 새 workflow 안에 얹음 → W6 손님 조회 중립 → (Wing 직전) W5
+- 근거: 감사 권장(S 먼저 → W2)과 달리 W2 를 S4 보다 먼저 — 포인트 로직을 라우트에 넣었다가 다시 옮기는 이중 작업 방지
