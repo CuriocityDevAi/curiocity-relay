@@ -27,3 +27,9 @@
 - D1 = A (Wing 전에 정리 · Kyu 17:47 "정리부터" 동의) · D2 = A (W5 Xendit 웹훅 cart 분기는 Wing 결제 도입 직전 — 미리 만들면 쓰지 않는 코드)
 - 순서(오케): W1 return(M0) ∥ W3 void(M2) → W4 fulfill → W2 refund → S4·S5(포인트 빚 NET 환불)를 새 workflow 안에 얹음 → W6 손님 조회 중립 → (Wing 직전) W5
 - 근거: 감사 권장(S 먼저 → W2)과 달리 W2 를 S4 보다 먼저 — 포인트 로직을 라우트에 넣었다가 다시 옮기는 이중 작업 방지
+
+## 21:16 Kyu — Todoboss 연동 · 전체 지도 문서
+- Kyu 원문: "todoboss의 레포가 있어 … 다른쪽 소프트웨어들과의 접점을 찾아봐줘 · Todoboss 의 경우, 오히려 전체직원리스트 전부를 가지고 있고, 그중에서 POS는 주로 캐셔만 쓸거니까, todoboss쪽이 정본이고, POS쪽은 그중에서 필요한 사람들을 가져다 쓰는 개념 · 권장 웹문서로 만들어줘"
+- **확정 TB1: 직원 정본 = Todoboss · MEROS POS 는 필요한 직원(주로 계산원)만 가져다 씀**
+- 문서: https://claude.ai/artifact/P3zCzDwTdpEujJacZYVQ5z (MEROS 전체 연동 지도 · 접점 T1~T8 · 정본 제안표)
+- Kyu 확인 대기 3: ① 완제품 판매 재고 정본 = MEROS(제안) ② 픽업 완료 = MEROS Hand over 만(제안) ③ Todoboss Phase -1(주문 분리 4~5주) 순서
