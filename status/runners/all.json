@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-17T16:43:08.894Z",
+  "at": "2026-11-17T16:45:34.032Z",
   "pid": 34716,
   "runner": "v7.3",
   "poll_ms": 30000,
@@ -8,15 +8,21 @@
   "last_error": "blocked: runner-folder change pending Kyu install (scripts/hub-runner-v7.4.mjs)",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1117-Q",
+      "started_at": "2026-11-17T16:45:28.221Z",
+      "model": "opus",
       "last_activity": "2026-11-17T16:03:41.363Z"
     },
     "m1": {
-      "current": null,
+      "current": "M1-1117-W",
+      "started_at": "2026-11-17T16:45:29.117Z",
+      "model": "sonnet",
       "last_activity": "2026-11-17T16:34:04.428Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1117-AB",
+      "started_at": "2026-11-17T16:45:30.131Z",
+      "model": "sonnet",
       "last_activity": "2026-11-17T15:24:58.605Z"
     },
     "m3": {
@@ -24,7 +30,9 @@
       "last_activity": "2026-11-17T16:15:22.884Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1117-AR",
+      "started_at": "2026-11-17T16:45:31.110Z",
+      "model": "sonnet",
       "last_activity": "2026-11-17T16:32:28.965Z"
     }
   },
