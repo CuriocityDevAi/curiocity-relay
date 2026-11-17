@@ -40,3 +40,9 @@
 - **TB3 픽업 완료 정본 = MEROS(Hand over)** · Todoboss 는 픽업 여부를 받아 픽업 임박 알림·준비 지시·재촉 (T8)
 - **TB4 Todoboss Phase -1(주문 분리) = 나중** · 지금은 T2 주문 연결에 필요한 설계 점검만(보류 항목: bridge 이벤트 계약 · outbox · commerce_order_ref 매핑 점검 문서)
 - 지도 문서 반영 완료
+
+## 22:00 오케 결정 — 연동 점검표 #348 기술 질문 3 (Kyu 업무 규칙 아님 → 오케 판단)
+- Q1 직원 연결 키 = Todoboss user.id 를 MEROS 쪽 직원 계정 metadata(`todoboss_user_id`)에 1회 매핑(이메일 없는 직원 · 코드 로그인 고려 · 이름 매칭 금지)
+- Q2 품목 매핑 = Todoboss item 쪽 `external_ref` 에 Medusa variant id(보내는 쪽이 받는 곳 주소를 앎 · MEROS 상품 모델 무변경)
+- Q3 픽업 신호 = MEROS → Todoboss 이벤트 푸시(todoboss_bridge outbox · 서명 · 멱등) + 조회 폴백
+- 착수 순서(점검표 권장): A T2 계약 고정(docs) → B T6 근태 직접 연결 → C T3 재고 주입 · 발부는 공용 정리·포인트 빚 뒤
