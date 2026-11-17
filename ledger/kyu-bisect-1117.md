@@ -8,6 +8,10 @@
 | 15:17 | e21c381 (#178 · master) | 전부 | ❌ 멈춤 |
 | 15:20 | fba37d6 (#162) | #172 + #162 까지 | ❌ 멈춤 (6690 modules) |
 | 15:26 | 15a941e (#172) | #172 까지 | ❌ 멈춤 (6690 modules) |
+| 15:27 | **4c6b588 (#170 · 오전 정상 코드)** | 오전분 | ❌ **멈춤 (6689 modules)** |
 
-→ 범인 = #172(나눠결제 SlipMergeAnim) 또는 **환경 변화**(오전 정상 4c6b588 이 지금도 정상인지 확인 필요). 다음: 4c6b588 재확인
-- 참고: 오전 09:2x 번들 6647 modules · 지금 6690 — #172 가 44 모듈 추가? 아니면 node_modules 변화?
+## 결론: 코드가 아니라 환경 문제
+- 오전에 정상이던 같은 코드가 지금은 멈춤 → 11:14~14:08 사이 Kyu 맥의 `~/projects/agilo-fork-test` node_modules·Metro·dev client 중 무엇인가가 바뀜
+- 번들 모듈 수: 오전 09:2x 6647 → 지금 6689~6690 (+42~44) — node_modules 변화 의심(누군가 install 했거나 의존성 해석이 바뀜)
+- 의심: 허브가 Kyu 폴더에서 install/빌드 실행? · 네이티브 dev client 와 JS(reanimated/worklets) 버전 불일치
+- 다음: Kyu 폴더 읽기 전용 진단(git status · node_modules 변경 시각 · reanimated/worklets 버전) → `npm ci` 로 package-lock 기준 재설치
