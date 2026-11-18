@@ -1,6 +1,6 @@
 {
-  "at": "2026-11-18T23:10:47.994Z",
-  "pid": 56618,
+  "at": "2026-11-18T23:27:38.864Z",
+  "pid": 32116,
   "runner": "v7.4",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
@@ -9,61 +9,34 @@
   "hubs": {
     "m0": {
       "current": null,
-      "last_activity": "2026-11-18T23:10:45.979Z"
+      "last_activity": null
     },
     "m1": {
       "current": null,
-      "last_activity": "2026-11-18T22:38:55.117Z"
+      "last_activity": null
     },
     "m2": {
-      "current": null,
-      "last_activity": "2026-11-18T22:39:00.604Z"
+      "current": "M2-1119-A",
+      "started_at": "2026-11-18T23:27:33.559Z",
+      "model": "sonnet",
+      "last_activity": null
     },
     "m3": {
-      "current": null,
-      "last_activity": "2026-11-18T16:22:09.026Z"
+      "current": "M3-1118-K",
+      "started_at": "2026-11-18T23:27:34.893Z",
+      "model": "sonnet",
+      "last_activity": null
     },
     "r0": {
-      "current": "R0-1118-AH",
-      "started_at": "2026-11-18T16:29:08.085Z",
+      "current": "R0-1118-AI",
+      "started_at": "2026-11-18T23:27:36.188Z",
       "model": "sonnet",
-      "last_activity": "2026-11-18T16:28:16.823Z"
+      "last_activity": null
     }
   },
   "pane_close_failures": {},
-  "last_sleep_gap": {
-    "lastMs": 17498,
-    "totalMs": 150674,
-    "phase": "await-landing",
-    "at": "2026-11-18T16:14:57.172Z"
-  },
-  "kyu_folder_intrusion": {
-    "hub": "m0",
-    "prompt_id": "M0-1118-I",
-    "folder": [
-      "/Users/kyu.lee/projects/kyu-display"
-    ],
-    "changed": [
-      {
-        "dir": "/Users/kyu.lee/projects/kyu-display",
-        "fields": [
-          "HEAD",
-          "node_modules-mtime"
-        ]
-      }
-    ],
-    "at": "2026-11-18T09:33:13.127Z"
-  },
-  "mem": {
-    "total_gb": 16,
-    "used_gb": 15.83,
-    "compressed_gb": 4.22,
-    "swap_used_gb": 7.83,
-    "pressure": "normal",
-    "at": "2026-11-18T22:38:54.167Z"
-  },
-  "mem_peak_today": {
-    "date": "2026-11-18",
-    "used_gb": 15.93
-  }
+  "last_sleep_gap": null,
+  "kyu_folder_intrusion": null,
+  "mem": null,
+  "mem_peak_today": null
 }
