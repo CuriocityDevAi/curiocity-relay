@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-18T07:49:57.506Z",
+  "built_at": "2026-11-18T14:22:02.344Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-18T07:49:57.147Z"
+      "fetched_at": "2026-11-18T14:22:01.796Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-18T07:49:57.264Z"
+      "fetched_at": "2026-11-18T14:22:01.973Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6083,11 +6083,13 @@
             },
             {
               "id": "pos-void-refund",
-              "name": "POS 보이드·환불·반품·매니저 PIN (M0-1105-AB · AC · AE · BF)",
-              "summary": "일일 매니저 PIN (HMAC 결정적 계산·WIB 자정 교체·5회 잠금 15분·DB 저장 없음) · GET /admin/pos/manager-pin (오늘 PIN 반환 · Admin UI 위젯 노출) · POST /admin/pos/manager-pin/verify (PIN 검증 · 오입력 5회 15분 잠금) · POST /admin/pos/orders/:id/void (posVoidOrderWorkflow — 채널 중립 결제 취소·재고 복원·주문 취소 위임 · 같은 교대만 · CARD 단말기 승인번호 PIN 불필요 · 그 외 CASH + PIN · M2-1117-S) · POST /admin/pos/orders/:id/refund (refundPaymentWorkflow · 전체 환불 · CARD terminal_approval_code 또는 CASH + PIN · 현금 지급 시 Cash Movement adjustment(-amount) 자동 생성 · 영수증 kind=void/refund) · POST /admin/pos/orders/:id/return (품목 수량 단위 부분 환불 · items[{line_item_id, quantity}] · 서버가 line_total 비율대로 할인·세금 배분 후 Math.round · refundPaymentWorkflow 부분 금액 · M0-1105-BF 품목별 fulfillment 상태 분기: fulfilled 품목은 inventoryModule.adjustInventory(+qty) 복귀, unfulfilled 품목은 reservation 삭제 (In stock 불변 · Reserved -qty · Available +qty) → 선주문 (Fulfill 전) 부분 취소 지원 · 응답 items[].disposition = 'returned' | 'canceled_unfulfilled' + reservation_released 플래그 · 누적 반품 수량 + 요청 > 산 수량 400 · M0-1105-AE: Guard A (items 해시 409) 제거 → 분할 반품 (qty 2 → qty 1 + qty 1) 둘 다 200 · 동시 요청의 재고 이중 복귀는 주문 단위 in-memory 큐로 직렬화 · PIN 계산 storeId 는 Admin 위젯과 동일 소스 (stock_location.id · register_session_id 폴백 제거)).",
+              "name": "POS 보이드·환불·반품·매니저 PIN (M0-1105-AB · AC · AE · BF · M2-1118-N)",
+              "summary": "일일 매니저 PIN (HMAC 결정적 계산·WIB 자정 교체·5회 잠금 15분·DB 저장 없음) · GET /admin/pos/manager-pin (오늘 PIN 반환 · Admin UI 위젯 노출) · POST /admin/pos/manager-pin/verify (PIN 검증 · 오입력 5회 15분 잠금) · POST /admin/pos/orders/:id/void · /refund · /return · /refund-retry (CASH + PIN 필수) · 나중 연결(source=order_lookup 또는 결제 후 10분 초과) PIN 강제 + 같은 날 주문만 허용 · PIN 사용 감사 로그 (pin_audit 모듈 · DB 영속 · Admin /manager-pin/audit 날짜별 조회). POST /admin/pos/orders/:id/void (posVoidOrderWorkflow — 채널 중립 결제 취소·재고 복원·주문 취소 위임 · 같은 교대만 · CARD 단말기 승인번호 PIN 불필요 · 그 외 CASH + PIN · M2-1117-S) · POST /admin/pos/orders/:id/refund (refundPaymentWorkflow · 전체 환불 · CARD terminal_approval_code 또는 CASH + PIN · 현금 지급 시 Cash Movement adjustment(-amount) 자동 생성 · 영수증 kind=void/refund) · POST /admin/pos/orders/:id/return (품목 수량 단위 부분 환불 · items[{line_item_id, quantity}] · 서버가 line_total 비율대로 할인·세금 배분 후 Math.round · refundPaymentWorkflow 부분 금액 · M0-1105-BF 품목별 fulfillment 상태 분기: fulfilled 품목은 inventoryModule.adjustInventory(+qty) 복귀, unfulfilled 품목은 reservation 삭제 (In stock 불변 · Reserved -qty · Available +qty) → 선주문 (Fulfill 전) 부분 취소 지원 · 응답 items[].disposition = 'returned' | 'canceled_unfulfilled' + reservation_released 플래그 · 누적 반품 수량 + 요청 > 산 수량 400 · M0-1105-AE: Guard A (items 해시 409) 제거 → 분할 반품 (qty 2 → qty 1 + qty 1) 둘 다 200 · 동시 요청의 재고 이중 복귀는 주문 단위 in-memory 큐로 직렬화 · PIN 계산 storeId 는 Admin 위젯과 동일 소스 (stock_location.id · register_session_id 폴백 제거)).",
               "files": [
                 "apps/commerce-core/src/api/admin/pos/_shared/manager-pin.ts",
                 "apps/commerce-core/src/api/admin/pos/manager-pin/**",
+                "apps/commerce-core/src/modules/pin_audit/**",
+                "apps/commerce-core/src/lib/link-customer-order.ts",
                 "apps/commerce-core/src/workflows/pos-void/**",
                 "apps/commerce-core/src/workflows/_shared/**",
                 "apps/commerce-core/src/api/admin/pos/orders/[id]/refund/route.ts",
@@ -6108,6 +6110,15 @@
                 "apps/commerce-core/integration-tests/pos/**",
                 "apps/commerce-core/integration-tests/setup.js",
                 "apps/commerce-core/scripts/test-integration-pos.sh"
+              ],
+              "status": "live"
+            },
+            {
+              "id": "integration-runner",
+              "name": "통합 테스트 실행 스크립트 (M1-1116-H)",
+              "summary": "로컬과 CI 에서 pos·loyalty 통합 테스트를 한 명령으로 실행하는 단일 진입점이다.",
+              "files": [
+                "apps/commerce-core/scripts/it.sh"
               ],
               "status": "live"
             },
@@ -6202,15 +6213,18 @@
             {
               "id": "customer-display-snapshot",
               "name": "손님용 화면 OrderSnapshot v2 (M0-1105-CE · S1a)",
-              "summary": "손님 화면(iPad) 이 폴링하는 주문 스냅샷. OrderSnapshot v2 모델(snapshot_state=active|paid|expired · paid_at · link_open_until · pre_entry · customer_phone · polled_at · receipt · items/합계) · GET /admin/pos/loyalty/sessions/snapshots/active?register_id (TTL 10분 active · 보류 규칙 E paid · polled_at 갱신 · 응답 server_now) · PATCH /admin/pos/loyalty/sessions/snapshots/:id {typing:true} 또는 {phone,pre_entry:true} · Medusa subscriber(order.updated·payment.captured)가 payment_status=captured 시 snapshot_state=paid 로 멱등 전환(결제 라우트 파일 무수정) · 수명 판정과 응답 직렬화는 lifecycle.ts pure helper · S1b(link-phone 단일화)·R3 는 별도 라운드. 정본 docs/plans/customer-display-server-contract.md.",
+              "summary": "손님 화면(iPad) 이 폴링하는 주문 스냅샷. OrderSnapshot v2 모델(snapshot_state=active|paid|expired · paid_at · link_open_until · pre_entry · customer_phone · polled_at · receipt · items/합계) · GET /admin/pos/loyalty/sessions/snapshots/active?register_id (TTL 10분 active · 보류 규칙 E paid · polled_at 갱신 · 응답 server_now) · PATCH /admin/pos/loyalty/sessions/snapshots/:id {typing:true} 또는 {phone,pre_entry:true} · Medusa subscriber(order.updated·payment.captured)가 payment_status=captured 시 snapshot_state=paid 로 멱등 전환(결제 라우트 파일 무수정) · 수명 판정과 응답 직렬화는 lifecycle.ts pure helper · S1b(link-phone 단일화)·R3 는 별도 라운드. M0-1118-J R1: `pos_screen`(16종 · nullable · 하위 호환) + `seq`(멱등성·순서 역전 방지) 필드 추가 · 뒤로=cart 유지는 `POST stage='cart'` 으로 서버 upsert · `POST /admin/pos/registers/:id/next-customer` (paid 10분 윈도우 즉시 해제 · idle snapshot 1건 재심기) · 폴링 1초 주기용 복합 인덱스 (register_session_id, updated_at desc). 정본 docs/plans/customer-display-server-contract.md + docs/plans/customer-display-sync.md §4 R1.",
               "files": [
                 "apps/commerce-core/src/modules/register_session/models/order-snapshot.ts",
                 "apps/commerce-core/src/modules/register_session/migrations/Migration20261115100000.ts",
+                "apps/commerce-core/src/modules/register_session/migrations/Migration20261118000001.ts",
                 "apps/commerce-core/src/modules/register_session/lifecycle.ts",
                 "apps/commerce-core/src/modules/register_session/__tests__/order-snapshot.unit.spec.ts",
                 "apps/commerce-core/src/api/admin/pos/loyalty/sessions/snapshots/**",
+                "apps/commerce-core/src/api/admin/pos/registers/[id]/next-customer/route.ts",
                 "apps/commerce-core/src/subscribers/order-snapshot-paid.ts",
-                "apps/commerce-core/src/types/customer-display.ts"
+                "apps/commerce-core/src/types/customer-display.ts",
+                "apps/commerce-core/integration-tests/pos/cd-pos-screen-sync.spec.ts"
               ],
               "status": "planned"
             },
@@ -6816,7 +6830,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-18T07:49:57.506Z"
+      "fetched_at": "2026-11-18T14:22:02.344Z"
     }
   ],
   "rollup": {
