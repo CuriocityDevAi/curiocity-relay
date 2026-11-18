@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-18T15:29:14.981Z",
+  "built_at": "2026-11-18T17:29:05.976Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-18T15:29:14.442Z"
+      "fetched_at": "2026-11-18T17:29:05.455Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-18T15:29:14.587Z"
+      "fetched_at": "2026-11-18T17:29:05.626Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6215,6 +6215,7 @@
               "name": "손님용 화면 OrderSnapshot v2 (M0-1105-CE · S1a)",
               "summary": "손님 화면(iPad) 이 폴링하는 주문 스냅샷. OrderSnapshot v2 모델(snapshot_state=active|paid|expired · paid_at · link_open_until · pre_entry · customer_phone · polled_at · receipt · items/합계) · GET /admin/pos/loyalty/sessions/snapshots/active?register_id (TTL 10분 active · 보류 규칙 E paid · polled_at 갱신 · 응답 server_now) · PATCH /admin/pos/loyalty/sessions/snapshots/:id {typing:true} 또는 {phone,pre_entry:true} · Medusa subscriber(order.updated·payment.captured)가 payment_status=captured 시 snapshot_state=paid 로 멱등 전환(결제 라우트 파일 무수정) · 수명 판정과 응답 직렬화는 lifecycle.ts pure helper · S1b(link-phone 단일화)·R3 는 별도 라운드. M0-1118-J R1: `pos_screen`(16종 · nullable · 하위 호환) + `seq`(멱등성·순서 역전 방지) 필드 추가 · 뒤로=cart 유지는 `POST stage='cart'` 으로 서버 upsert · `POST /admin/pos/registers/:id/next-customer` (paid 10분 윈도우 즉시 해제 · idle snapshot 1건 재심기) · 폴링 1초 주기용 복합 인덱스 (register_session_id, updated_at desc). 정본 docs/plans/customer-display-server-contract.md + docs/plans/customer-display-sync.md §4 R1.",
               "files": [
+                "apps/commerce-core/src/modules/register_session/order_snapshot/model.ts",
                 "apps/commerce-core/src/modules/register_session/models/order-snapshot.ts",
                 "apps/commerce-core/src/modules/register_session/migrations/Migration20261115100000.ts",
                 "apps/commerce-core/src/modules/register_session/migrations/Migration20261118000001.ts",
@@ -6747,10 +6748,12 @@
             {
               "id": "cd-checkout",
               "name": "결제 중 화면",
-              "summary": "결제 진행 중 품목·소계·세금·합계·예상 적립금과 번호 입력 버튼을 보여 주고, 결제 완료 후 영수증·Done 화면으로 전환한다. M0-1116-C — config_version 폴링 감지 → GET /customer-display/display-config 재로드 어댑터·훅(결제 중이면 적용 보류 → 결제 종료 후 반영 → 깜빡임 방지).",
+              "summary": "결제 진행 중 품목·소계·세금·합계·예상 적립금과 번호 입력 버튼을 보여 주고, 결제 완료 후 영수증·Done 화면으로 전환한다. M0-1116-C — config_version 폴링 감지 → GET /customer-display/display-config 재로드 어댑터·훅(결제 중이면 적용 보류 → 결제 종료 후 반영 → 깜빡임 방지). M0-1118-M — payment_qris 때 손님 화면 전용 분기(QrisScreen): 큰 QR + 금액 + 소형 장바구니 recap. qr_string 없으면 \"준비 중\" placeholder.",
               "files": [
                 "apps/customer-display/app/cart.tsx",
+                "apps/customer-display/app/qris.tsx",
                 "apps/customer-display/src/screens/CartScreen.tsx",
+                "apps/customer-display/src/screens/QrisScreen.tsx",
                 "apps/customer-display/src/mocks/**",
                 "apps/customer-display/src/types/**",
                 "apps/customer-display/app/done.tsx",
@@ -6760,6 +6763,7 @@
                 "apps/customer-display/src/lib/display-machine.ts",
                 "apps/customer-display/src/lib/display-config-source.ts",
                 "apps/customer-display/src/lib/__tests__/display-machine.test.ts",
+                "apps/customer-display/src/lib/__tests__/display-sync-scenarios.test.ts",
                 "apps/customer-display/src/screens/DoneScreen.tsx",
                 "apps/customer-display/src/screens/ReceiptScreen.tsx"
               ],
@@ -6830,7 +6834,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-18T15:29:14.980Z"
+      "fetched_at": "2026-11-18T17:29:05.975Z"
     }
   ],
   "rollup": {
