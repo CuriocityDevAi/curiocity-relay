@@ -41,6 +41,7 @@ import {
 import { shouldRecoverStartedClaim } from './lib/recovery.mjs';
 import { waitForLandingAwake } from './lib/land-detect-v2.mjs';
 import { decideCloseAction, PANE_CLOSE_MAX_ATTEMPTS } from './lib/pane-close.mjs';
+import { sampleMem } from './lib/mem-sample.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
@@ -95,6 +96,8 @@ const QUEUE_DIR = join(REPO_ROOT, 'queue');
 const CLAIMS_DIR = join(REPO_ROOT, 'status', 'claims');
 const RUNNERS_DIR = join(REPO_ROOT, 'status', 'runners');
 const ALL_HEARTBEAT = join(RUNNERS_DIR, 'all.json');
+const MEM_LOG_FILE = join(RUNNERS_DIR, 'mem-log.ndjson');
+const MEM_LOG_MS = 60 * 60 * 1000;
 const LOCK_FILE = join(RUNNER_HOME, 'all.lock');
 const HUBS_LAYOUT_FILE = join(RUNNER_HOME, 'hubs-layout.json');
 const RECOVERY_MARK_DIR = join(RUNNER_HOME, 'recovery');
@@ -135,6 +138,11 @@ let recentLogs = [];
 const MAX_LOG_TAIL = 30;
 // M1-1117-K: Kyu 폴더 침범 — 마지막 감지 기록 (writeHeartbeat 가 all.json 에 포함).
 let lastKyuIntrusion = null;
+
+// M2-1118-J: 메모리 샘플 캐시 — 루프를 블록하지 않도록 비동기로 갱신.
+let lastMemSample = null;
+let memPeakToday = { date: null, used_gb: null };
+let lastMemLogAt = 0;
 
 const argv = process.argv.slice(2);
 const ONCE = argv.includes('--once');
@@ -2301,6 +2309,45 @@ function compareKyuFingerprints(before, after) {
   return changed;
 }
 
+function updateMemPeak(mem) {
+  const today = new Date().toISOString().slice(0, 10);
+  if (memPeakToday.date !== today) {
+    memPeakToday = { date: today, used_gb: mem.used_gb };
+  } else if (mem.used_gb > (memPeakToday.used_gb ?? 0)) {
+    memPeakToday.used_gb = mem.used_gb;
+  }
+}
+
+function fireMem() {
+  sampleMem()
+    .then((m) => {
+      if (!m) return;
+      lastMemSample = m;
+      updateMemPeak(m);
+    })
+    .catch(() => {});
+}
+
+function appendMemLog(entry) {
+  const line = JSON.stringify(entry) + '\n';
+  let existing = '';
+  if (existsSync(MEM_LOG_FILE)) {
+    existing = readFileSync(MEM_LOG_FILE, 'utf8');
+    if (existing.length + line.length > 1024 * 1024) {
+      const lines = existing.split('\n').filter(Boolean);
+      while (lines.length > 0 && lines.join('\n').length + 1 + line.length > 1024 * 1024) {
+        lines.shift();
+      }
+      existing = lines.length ? lines.join('\n') + '\n' : '';
+    }
+  }
+  try {
+    writeFileSync(MEM_LOG_FILE, existing + line, 'utf8');
+  } catch (e) {
+    log('mem', `mem-log 쓰기 실패: ${e.message}`);
+  }
+}
+
 function writeHeartbeat(config) {
   const heartbeatMs = config?.heartbeat_ms || DEFAULT_HEARTBEAT_MIN * 60 * 1000;
   const payload = {
@@ -2330,10 +2377,21 @@ function writeHeartbeat(config) {
     last_sleep_gap: lastSleepGap,
     // M1-1117-K: Kyu 폴더 침범 — 마지막 감지 (null = 없음).
     kyu_folder_intrusion: lastKyuIntrusion,
+    // M2-1118-J: 메모리 샘플.
+    mem: lastMemSample ?? null,
+    mem_peak_today: memPeakToday.date ? memPeakToday : null,
   };
   writeFileSync(ALL_HEARTBEAT, JSON.stringify(payload, null, 2) + '\n', 'utf8');
   // v6.8 REQ2: stage all.json — bundles into the next claim commit automatically.
   try { git(['add', 'status/runners/all.json']); } catch { /* noop */ }
+
+  // M2-1118-J: 1시간마다 mem-log.ndjson 에 한 줄 추가.
+  const now = Date.now();
+  if (lastMemSample && now - lastMemLogAt >= MEM_LOG_MS) {
+    appendMemLog({ ...lastMemSample, peak_today: memPeakToday });
+    lastMemLogAt = now;
+    try { git(['add', 'status/runners/mem-log.ndjson']); } catch { /* noop */ }
+  }
 }
 
 const HEARTBEAT_PUSH_INTERVAL_MS = 5 * 60_000;
@@ -2601,6 +2659,7 @@ async function loop() {
     '',
     `시작 · ${RUNNER_VERSION} · mode=${ALL ? '--all' : `--hub ${hubFlag}`} · once=${ONCE} · dry-run=${DRY_RUN} · poll=${POLL_MS}ms · claude=${cfg.claude_bin} · version=${ver} · model=${cfg.model} · display=${cfg.display} · cmux=${cfg.cmux_bin} · cmux_password=${readCmuxPassword() ? 'file' : '(none)'} · heartbeat=${Math.round(cfg.heartbeat_ms / 60000)}m · run_timeout=${Math.round(cfg.run_timeout_ms / 60000)}m${guardResult.guarded ? ` · [folder-guard!]` : ''}`,
   );
+  fireMem(); // M2-1118-J: 첫 샘플 (비동기 · 루프 블록 안 함)
   writeHeartbeat(cfg);
   writeState(buildState(), true);
   for (;;) {
@@ -2609,6 +2668,7 @@ async function loop() {
     } catch (e) {
       log('', `tick 예외: ${e.message}`);
     }
+    fireMem(); // M2-1118-J: tick 마다 갱신 (비동기 · 2s 타임아웃)
     if (ONCE) {
       while (busy.size > 0 || claimQueue.length > 0 || processingClaim) {
         await new Promise((r) => setTimeout(r, 1000));
