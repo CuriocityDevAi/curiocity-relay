@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-18T09:19:38.221Z",
+  "at": "2026-11-18T09:23:12.645Z",
   "pid": 56618,
   "runner": "v7.4",
   "poll_ms": 30000,
@@ -8,7 +8,9 @@
   "last_error": null,
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1118-I",
+      "started_at": "2026-11-18T09:23:11.073Z",
+      "model": "opus",
       "last_activity": "2026-11-18T09:19:35.835Z"
     },
     "m1": {
@@ -61,10 +63,10 @@
   "mem": {
     "total_gb": 16,
     "used_gb": 15.22,
-    "compressed_gb": 3.13,
-    "swap_used_gb": 7.43,
+    "compressed_gb": 3.34,
+    "swap_used_gb": 7.41,
     "pressure": "normal",
-    "at": "2026-11-18T09:19:13.389Z"
+    "at": "2026-11-18T09:22:37.990Z"
   },
   "mem_peak_today": {
     "date": "2026-11-18",
