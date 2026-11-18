@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-18T04:49:11.489Z",
+  "at": "2026-11-18T04:53:12.044Z",
   "pid": 9348,
   "runner": "v7.4",
   "poll_ms": 30000,
@@ -8,10 +8,8 @@
   "last_error": null,
   "hubs": {
     "m0": {
-      "current": "M0-1118-D",
-      "started_at": "2026-11-18T04:49:10.010Z",
-      "model": "opus",
-      "last_activity": "2026-11-18T04:30:26.665Z"
+      "current": null,
+      "last_activity": "2026-11-18T04:51:34.540Z"
     },
     "m1": {
       "current": "M1-1118-E",
@@ -24,7 +22,9 @@
       "last_activity": "2026-11-18T04:47:25.837Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1118-A",
+      "started_at": "2026-11-18T04:50:07.654Z",
+      "model": "sonnet",
       "last_activity": null
     },
     "r0": {
@@ -35,6 +35,11 @@
     }
   },
   "pane_close_failures": {},
-  "last_sleep_gap": null,
+  "last_sleep_gap": {
+    "lastMs": 22704,
+    "totalMs": 94401,
+    "phase": "await-landing",
+    "at": "2026-11-18T04:52:22.993Z"
+  },
   "kyu_folder_intrusion": null
 }
