@@ -1,23 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-18T15:35:30.118Z",
+  "built_at": "2026-11-18T15:41:23.170Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-18T15:35:21.993Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-18T15:35:21.993Z"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-18T15:35:16.455Z",
-      "session": "f9adb228-6310-4878-a258-20a87d70eaf2",
-      "updated_at": "2026-11-18T15:35:21.993Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -29,17 +13,93 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-18T15:35:21.993Z"
+      "updated_at": "2026-11-18T15:35:21.993Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-18T15:35:21.993Z"
+      "updated_at": "2026-11-18T15:35:21.993Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-18T15:35:16.455Z",
+      "session": "f9adb228-6310-4878-a258-20a87d70eaf2",
+      "updated_at": "2026-11-18T15:35:21.993Z",
+      "last_round": "M0-1118-L",
+      "last_report": "m0/M0-1118-L-report.md",
+      "current_round": "M0-1118-M",
+      "current_state": "started",
+      "current_at": "2026-11-18T15:34:20.393Z",
+      "current_note": "runner-v7.4 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1118-M.log"
+    },
+    "m1": {
+      "last_round": "M1-1118-L",
+      "last_report": "m1/M1-1118-L-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-18T15:41:23.170Z",
+      "current_round": "M1-1118-M",
+      "current_state": "started",
+      "current_at": "2026-11-18T15:22:36.763Z",
+      "current_note": "runner-v7.4 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1118-M.log"
+    },
+    "m2": {
+      "last_round": "M2-1118-R",
+      "last_report": "m2/M2-1118-R-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-18T15:41:23.170Z",
+      "current_round": "M2-1118-S",
+      "current_state": "started",
+      "current_at": "2026-11-18T15:22:40.230Z",
+      "current_note": "runner-v7.4 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1118-S.log"
+    },
+    "m3": {
+      "last_round": "M3-1118-G",
+      "last_report": "m3/M3-1118-G-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-18T15:41:23.170Z",
+      "current_round": "M3-1118-I",
+      "current_state": "started",
+      "current_at": "2026-11-18T15:16:17.729Z",
+      "current_note": "runner-v7.4 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1118-I.log"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-18T15:35:21.993Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1118-Y",
+      "last_report": "r0/R0-1118-Y-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-18T15:41:23.170Z",
+      "current_round": "R0-1118-AD",
+      "current_state": "blocked",
+      "current_at": "2026-11-18T15:41:23.101Z",
+      "current_note": "runner-v7.4 cmux-split · landing=claim-done · post claim 없음 (race?) · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1118-AD.log"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-18T15:35:21.993Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
