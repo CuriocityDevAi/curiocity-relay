@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-18T05:01:06.910Z",
+  "at": "2026-11-18T05:05:24.262Z",
   "pid": 9348,
   "runner": "v7.4",
   "poll_ms": 30000,
@@ -18,7 +18,9 @@
       "last_activity": null
     },
     "m2": {
-      "current": null,
+      "current": "M2-1118-G",
+      "started_at": "2026-11-18T05:02:00.906Z",
+      "model": "sonnet",
       "last_activity": "2026-11-18T04:47:25.837Z"
     },
     "m3": {
@@ -34,10 +36,10 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 19330,
-    "totalMs": 159841,
+    "lastMs": 18080,
+    "totalMs": 237407,
     "phase": "await-landing",
-    "at": "2026-11-18T05:00:28.039Z"
+    "at": "2026-11-18T05:03:59.428Z"
   },
   "kyu_folder_intrusion": null
 }
