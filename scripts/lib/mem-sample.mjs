@@ -66,10 +66,10 @@ function parsePressure(out) {
 
 export async function sampleMem() {
   const [vmStatOut, sysctlTotalOut, sysctlSwapOut, memPressureOut] = await Promise.all([
-    run('vm_stat', []),
-    run('sysctl', ['hw.memsize']),
-    run('sysctl', ['vm.swapusage']),
-    run('memory_pressure', ['-Q']),
+    run('/usr/bin/vm_stat', []),
+    run('/usr/sbin/sysctl', ['hw.memsize']),
+    run('/usr/sbin/sysctl', ['vm.swapusage']),
+    run('/usr/bin/memory_pressure', ['-Q']),
   ]);
 
   const vmStat = parseVmStat(vmStatOut);
