@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-18T05:22:05.884Z",
+  "at": "2026-11-18T05:27:27.639Z",
   "pid": 9348,
   "runner": "v7.4",
   "poll_ms": 30000,
@@ -8,7 +8,9 @@
   "last_error": null,
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1118-E",
+      "started_at": "2026-11-18T05:27:22.528Z",
+      "model": "opus",
       "last_activity": "2026-11-18T04:51:34.540Z"
     },
     "m1": {
@@ -16,11 +18,15 @@
       "last_activity": "2026-11-18T05:09:06.301Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1118-H",
+      "started_at": "2026-11-18T05:27:23.818Z",
+      "model": "sonnet",
       "last_activity": "2026-11-18T05:07:19.596Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1118-B",
+      "started_at": "2026-11-18T05:27:24.762Z",
+      "model": "sonnet",
       "last_activity": "2026-11-18T05:06:27.804Z"
     },
     "r0": {
