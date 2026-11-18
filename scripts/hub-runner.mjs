@@ -36,6 +36,7 @@ import {
 import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { sampleMem } from './lib/mem-sample.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
@@ -44,6 +45,7 @@ const RUNNER_HOME = join(homedir(), '.hub-runner');
 const POLL_MS = 60 * 1000;
 const STALE_LOCK_MS = 10 * 60 * 1000;
 const HEARTBEAT_MS = 5 * 60 * 1000;
+const MEM_LOG_MS = 60 * 60 * 1000;
 // M1-1105-T · claude_bin/model 은 runner-config.json 에서 로드 (override 우선순위: env > config.hubs[hub] > config). which claude 는 fallback 만.
 const DEFAULT_CLAUDE_BIN = '/Applications/cmux.app/Contents/Resources/bin/claude';
 
@@ -52,6 +54,7 @@ const QUEUE_DIR = join(REPO_ROOT, 'queue');
 const CLAIMS_DIR = join(REPO_ROOT, 'status', 'claims');
 const RUNNERS_DIR = join(REPO_ROOT, 'status', 'runners');
 const ALL_HEARTBEAT = join(RUNNERS_DIR, 'all.json');
+const MEM_LOG_FILE = join(RUNNERS_DIR, 'mem-log.ndjson');
 const LOCK_FILE = join(RUNNER_HOME, 'all.lock');
 
 mkdirSync(RUNNER_HOME, { recursive: true });
@@ -302,6 +305,50 @@ function spawnClaude(item, cwd, claudeBin, model) {
 const busy = new Map(); // hub -> { id, startedAt }
 const hubsToRun = ALL ? ['m0', 'm1', 'm2', 'm3', 'r0'] : [hubFlag];
 
+// M2-1118-I · 메모리 샘플 캐시 — 30s 루프를 블록하지 않도록 비동기로 갱신.
+let lastMemSample = null;
+let memPeakToday = { date: null, used_gb: null };
+let lastMemLogAt = 0;
+
+function updateMemPeak(mem) {
+  const today = new Date().toISOString().slice(0, 10);
+  if (memPeakToday.date !== today) {
+    memPeakToday = { date: today, used_gb: mem.used_gb };
+  } else if (mem.used_gb > (memPeakToday.used_gb ?? 0)) {
+    memPeakToday.used_gb = mem.used_gb;
+  }
+}
+
+function fireMem() {
+  sampleMem()
+    .then((m) => {
+      if (!m) return;
+      lastMemSample = m;
+      updateMemPeak(m);
+    })
+    .catch(() => {});
+}
+
+function appendMemLog(entry) {
+  const line = JSON.stringify(entry) + '\n';
+  let existing = '';
+  if (existsSync(MEM_LOG_FILE)) {
+    existing = readFileSync(MEM_LOG_FILE, 'utf8');
+    if (existing.length + line.length > 1024 * 1024) {
+      const lines = existing.split('\n').filter(Boolean);
+      while (lines.length > 0 && lines.join('\n').length + 1 + line.length > 1024 * 1024) {
+        lines.shift();
+      }
+      existing = lines.length ? lines.join('\n') + '\n' : '';
+    }
+  }
+  try {
+    writeFileSync(MEM_LOG_FILE, existing + line, 'utf8');
+  } catch (e) {
+    log('mem', `mem-log 쓰기 실패: ${e.message}`);
+  }
+}
+
 // §4 heartbeat — status/runners/all.json 로 1 파일 · 5 분마다 commit.
 let lastHeartbeatAt = 0;
 function writeHeartbeat(force = false) {
@@ -318,8 +365,16 @@ function writeHeartbeat(force = false) {
           : { current: null },
       ]),
     ),
+    mem: lastMemSample ?? null,
+    mem_peak_today: memPeakToday.date ? memPeakToday : null,
   };
   writeFileSync(ALL_HEARTBEAT, JSON.stringify(payload, null, 2) + '\n', 'utf8');
+
+  // M2-1118-I · 1시간마다 mem-log.ndjson 에 한 줄 추가.
+  if (lastMemSample && now - lastMemLogAt >= MEM_LOG_MS) {
+    appendMemLog({ ...lastMemSample, peak_today: memPeakToday });
+    lastMemLogAt = now;
+  }
   if (!force && now - lastHeartbeatAt < HEARTBEAT_MS) return;
   try {
     git(['add', 'status/runners/all.json']);
@@ -410,6 +465,7 @@ async function loop() {
     '',
     `시작 · mode=${ALL ? '--all' : `--hub ${hubFlag}`} · once=${ONCE} · poll=${POLL_MS}ms · claude=${cfg.claude_bin} · version=${ver} · model=${cfg.model} · PATH=${process.env.PATH || '(unset)'}`,
   );
+  fireMem(); // M2-1118-I · 첫 샘플 (비동기 · 루프 블록 안 함)
   writeHeartbeat(true);
   for (;;) {
     try {
@@ -417,6 +473,7 @@ async function loop() {
     } catch (e) {
       log('', `tick 예외: ${e.message}`);
     }
+    fireMem(); // M2-1118-I · tick 마다 갱신 (비동기 · 2s 타임아웃)
     if (ONCE) {
       // 자식 claude 가 아직 돌고 있으면 전부 끝날 때까지 대기 (--once --all 셀프테스트용).
       while (busy.size > 0 || claimQueue.length > 0 || processingClaim) {
