@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-18T08:45:15.086Z",
+  "at": "2026-11-18T08:50:51.283Z",
   "pid": 56618,
   "runner": "v7.4",
   "poll_ms": 30000,
@@ -31,7 +31,12 @@
     }
   },
   "pane_close_failures": {},
-  "last_sleep_gap": null,
+  "last_sleep_gap": {
+    "lastMs": 25625,
+    "totalMs": 25625,
+    "phase": "await-landing",
+    "at": "2026-11-18T08:45:37.448Z"
+  },
   "kyu_folder_intrusion": {
     "hub": "r0",
     "prompt_id": "R0-1118-P",
@@ -57,11 +62,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.73,
-    "compressed_gb": 4.24,
-    "swap_used_gb": 6.94,
+    "used_gb": 15.89,
+    "compressed_gb": 4.32,
+    "swap_used_gb": 6.64,
     "pressure": "normal",
-    "at": "2026-11-18T08:44:42.016Z"
+    "at": "2026-11-18T08:50:18.978Z"
   },
   "mem_peak_today": {
     "date": "2026-11-18",
