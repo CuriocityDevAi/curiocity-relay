@@ -1,0 +1,1 @@
+PR #366 · ① icon.png RGBA→RGB 변환(PIL 흰 배경 합성, color_type 6→2) · ② pair-screen 테스트: page.goto(baseURL!) + addInitScript localStorage.clear() + index.tsx window.location.replace('/pair') 로 교체(expo-router static-export router queue 미플러시 우회) · CI customer-display 초록 O(로컬 e2e 9/9, unit 150/150)
