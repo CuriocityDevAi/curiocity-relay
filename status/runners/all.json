@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-18T07:26:17.211Z",
+  "at": "2026-11-18T07:30:55.838Z",
   "pid": 56618,
   "runner": "v7.4",
   "poll_ms": 30000,
@@ -24,7 +24,9 @@
       "last_activity": null
     },
     "r0": {
-      "current": null,
+      "current": "R0-1118-O",
+      "started_at": "2026-11-18T07:30:54.357Z",
+      "model": "sonnet",
       "last_activity": null
     }
   },
@@ -33,14 +35,14 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.76,
-    "compressed_gb": 5.34,
-    "swap_used_gb": 7.47,
+    "used_gb": 15.84,
+    "compressed_gb": 3.91,
+    "swap_used_gb": 5.78,
     "pressure": "normal",
-    "at": "2026-11-18T07:25:43.995Z"
+    "at": "2026-11-18T07:30:20.855Z"
   },
   "mem_peak_today": {
     "date": "2026-11-18",
-    "used_gb": 15.83
+    "used_gb": 15.85
   }
 }
