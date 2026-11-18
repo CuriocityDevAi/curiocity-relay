@@ -1,43 +1,33 @@
 {
-  "at": "2026-11-18T06:28:25.546Z",
-  "pid": 9348,
-  "runner": "v7.4",
+  "at": "2026-11-18T06:32:36.060Z",
+  "pid": 55468,
+  "runner": "v7.3",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
   "last_error": "blocked: runner-folder change pending Kyu install (m2/M2-1118-I-report.md)",
   "hubs": {
     "m0": {
-      "current": "M0-1118-E",
-      "started_at": "2026-11-18T05:27:22.528Z",
-      "model": "opus",
-      "last_activity": "2026-11-18T04:51:34.540Z"
+      "current": null,
+      "last_activity": null
     },
     "m1": {
       "current": null,
-      "last_activity": "2026-11-18T06:13:13.203Z"
+      "last_activity": null
     },
     "m2": {
       "current": null,
-      "last_activity": "2026-11-18T06:11:20.187Z"
+      "last_activity": null
     },
     "m3": {
-      "current": "M3-1118-B",
-      "started_at": "2026-11-18T05:27:24.762Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-18T05:06:27.804Z"
+      "current": null,
+      "last_activity": null
     },
     "r0": {
       "current": null,
-      "last_activity": "2026-11-18T06:16:25.720Z"
+      "last_activity": null
     }
   },
   "pane_close_failures": {},
-  "last_sleep_gap": {
-    "lastMs": 30087,
-    "totalMs": 165021,
-    "phase": "await-landing",
-    "at": "2026-11-18T05:58:57.198Z"
-  },
-  "kyu_folder_intrusion": null
+  "last_sleep_gap": null
 }
