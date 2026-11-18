@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-18T07:20:28.939Z",
+  "at": "2026-11-18T07:25:41.799Z",
   "pid": 56618,
   "runner": "v7.4",
   "poll_ms": 30000,
@@ -31,6 +31,16 @@
   "pane_close_failures": {},
   "last_sleep_gap": null,
   "kyu_folder_intrusion": null,
-  "mem": null,
-  "mem_peak_today": null
+  "mem": {
+    "total_gb": 16,
+    "used_gb": 15.7,
+    "compressed_gb": 4.79,
+    "swap_used_gb": 8.67,
+    "pressure": "normal",
+    "at": "2026-11-18T07:25:08.687Z"
+  },
+  "mem_peak_today": {
+    "date": "2026-11-18",
+    "used_gb": 15.83
+  }
 }
