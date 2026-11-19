@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T13:11:24.587Z",
+  "at": "2026-11-19T13:16:48.424Z",
   "pid": 49838,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -31,7 +31,26 @@
   "pane_close_failures": {},
   "last_sleep_gap": null,
   "kyu_folder_intrusion": null,
-  "mem": null,
-  "mem_peak_today": null,
-  "ci": null
+  "mem": {
+    "total_gb": 16,
+    "used_gb": 14.64,
+    "compressed_gb": 4.11,
+    "swap_used_gb": 9.65,
+    "pressure": "normal",
+    "at": "2026-11-19T13:16:04.461Z"
+  },
+  "mem_peak_today": {
+    "date": "2026-11-19",
+    "used_gb": 15.9
+  },
+  "ci": {
+    "data": {
+      "at": "2026-11-19T13:11:24.545Z",
+      "error": "Command failed: gh api repos/CuriocityDevAi/storeport/actions/runs?status=in_progress&per_page=100 -H Accept: application/vnd.github+json\n",
+      "api_calls": 24,
+      "api_budget": 40
+    },
+    "took_ms": 23268,
+    "at": "2026-11-19T13:11:44.556Z"
+  }
 }
