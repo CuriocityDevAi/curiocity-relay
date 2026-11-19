@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T12:23:04.871Z",
+  "at": "2026-11-19T12:24:55.463Z",
   "pid": 42106,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -44,105 +44,18 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.21,
-    "compressed_gb": 4.76,
-    "swap_used_gb": 9.6,
+    "used_gb": 15.82,
+    "compressed_gb": 4,
+    "swap_used_gb": 9.44,
     "pressure": "normal",
-    "at": "2026-11-19T12:22:31.314Z"
+    "at": "2026-11-19T12:24:21.434Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
     "used_gb": 15.92
   },
   "ci": {
-    "data": {
-      "at": "2026-11-19T12:17:33.870Z",
-      "repos_scanned": [
-        "CuriocityDevAi/agilo-medusa-pos-fork"
-      ],
-      "repos_failed": [
-        {
-          "repo": "CuriocityDevAi/storeport",
-          "error": "Command failed: gh api repos/CuriocityDevAi/storeport/actions/runs?status=queued&per_page=100 -H Accept: application/vnd.github+json\n"
-        }
-      ],
-      "repos_skipped": [],
-      "api_calls": 8,
-      "api_budget": 40,
-      "api_overflow": false,
-      "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "in_progress": []
-      },
-      "cloud_in_progress": [
-        {
-          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-          "pr": "master",
-          "job": "lint",
-          "step": "Run npm run lint",
-          "running_min": 1,
-          "runner": "GitHub Actions 1000007407",
-          "kind": "cloud"
-        },
-        {
-          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-          "pr": "master",
-          "job": "assertions",
-          "step": "Install deps",
-          "running_min": 1,
-          "runner": "GitHub Actions 1000007406",
-          "kind": "cloud"
-        },
-        {
-          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-          "pr": "#211",
-          "job": "playwright",
-          "step": "Run Playwright harnesses",
-          "running_min": 3,
-          "runner": "GitHub Actions 1000007404",
-          "kind": "cloud"
-        }
-      ],
-      "runners": null,
-      "cloud_today": 0,
-      "today": {
-        "mac-heavy": {
-          "jobs": 121,
-          "avg_wait_min": 4,
-          "avg_run_min": 5.1,
-          "success_rate": 30.6,
-          "run_min_total": 623.1
-        },
-        "mac-light": {
-          "jobs": 184,
-          "avg_wait_min": 1.1,
-          "avg_run_min": 1.6,
-          "success_rate": 89.7,
-          "run_min_total": 289
-        },
-        "cloud": {
-          "jobs": 224,
-          "avg_wait_min": 0,
-          "avg_run_min": 2.4,
-          "success_rate": 67,
-          "run_min_total": 535.2000000000005
-        },
-        "cloud_cost_est_usd": 5.328,
-        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 739.8999999999999
-      },
-      "jsonl_added": 0,
-      "alerts": []
-    },
-    "took_ms": 21376,
-    "at": "2026-11-19T12:17:52.267Z"
+    "error": "deadline 30000ms",
+    "at": "2026-11-19T12:23:30.367Z"
   }
 }
