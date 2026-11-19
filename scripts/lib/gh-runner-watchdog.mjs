@@ -23,6 +23,15 @@
 //   · 다음 회차에 상태 복귀 안 되면 "실패". 2회 연속 실패 → 더 안 하고 `gh_runner_alert` 플래그.
 //
 // 기록: `status/ci/runner-restarts-<WIB-date>.jsonl` · 한 줄 당 1 재시작.
+//
+// M0-1119-U — 실행 중 job 을 죽일 수 있는 경로 봉쇄 (R0C-1119-AH):
+//   1. ci-health 가 queued 먼저 · in_progress 나중에 조회 → deadline/budget 로 partial 이면
+//      queued 만 남고 in_progress 가 빔. repos_failed 에 들어간 repo 도 같은 공백.
+//      또 latest 캐시가 오래됐으면 지금 돌고 있는 job 이 아직 반영 전.
+//      → ciData 가 `partial` 이거나 `repos_failed.length>0` 이거나 `ci.data.at` 이 6분보다
+//        오래되면 그 회차는 재시작 판정 통째 skip · warn 로그만.
+//   2. stop 직전 안전망: 러너 폴더 (dirname(svc.sh)) 에 Runner.Worker 가 살아있으면 skip.
+//      pgrep 호출은 execFile + 인자 배열 (셸 주입 방지).
 
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
@@ -40,6 +49,9 @@ export const DEFAULT_RUNNER_PATHS = {
 };
 export const DEFAULT_MAX_FAILURES = 2;
 export const DEFAULT_EXEC_TIMEOUT_MS = 30_000;
+// M0-1119-U: ci.data.at 이 이보다 오래되면 "지금 돌고 있는 job 이 미반영" 가능 → skip.
+export const DEFAULT_STALE_CACHE_MS = 6 * 60_000;
+export const DEFAULT_WORKER_CHECK_TIMEOUT_MS = 3_000;
 export const STATE_REL_PATH = join('.cache', 'gh-runner-watchdog-state.json');
 
 // Module-level latest alert (also persisted in state file). Hub-runner heartbeat
@@ -65,6 +77,55 @@ function wibDateStr(ms) {
   // WIB = UTC+7. Reuse ci-history convention.
   const shifted = new Date(ms + 7 * 3600_000);
   return shifted.toISOString().slice(0, 10);
+}
+
+// M0-1119-U safety gate 1 (pure): ciData 가 믿을 수 있는가?
+// partial · repos_failed · 오래된 캐시 중 하나라도 걸리면 in_progress 공백 가능 → skip.
+export function isDataIncomplete(ciData, now, opts = {}) {
+  const staleMs = opts.staleCacheMs ?? DEFAULT_STALE_CACHE_MS;
+  if (!ciData) return { incomplete: true, reason: 'no-ci-data' };
+  if (ciData.partial === true) return { incomplete: true, reason: 'data-partial' };
+  if (Array.isArray(ciData.repos_failed) && ciData.repos_failed.length > 0) {
+    return {
+      incomplete: true,
+      reason: 'data-repos-failed',
+      repos_failed_n: ciData.repos_failed.length,
+    };
+  }
+  if (ciData.at) {
+    const atMs = new Date(ciData.at).getTime();
+    if (Number.isFinite(atMs) && (now - atMs) > staleMs) {
+      return { incomplete: true, reason: 'data-stale', age_ms: now - atMs };
+    }
+  }
+  return { incomplete: false };
+}
+
+// M0-1119-U safety gate 2: Runner.Worker 가 러너 폴더에서 돌고 있는가?
+// execFile + 인자 배열 (셸 없음 = 주입 없음). pgrep -f 는 ERE 패턴.
+// exit 0 = 매칭 · exit 1 = 없음 · 기타 = 비정상.
+async function defaultWorkerCheck(runnerDir) {
+  try {
+    await execFileAsync('pgrep', ['-f', `${runnerDir}.*Runner\\.Worker`], {
+      timeout: DEFAULT_WORKER_CHECK_TIMEOUT_MS,
+      maxBuffer: 256 * 1024,
+    });
+    return true;
+  } catch (e) {
+    if (e && e.code === 1) return false;  // no match — the expected "no worker" path
+    throw e;                                // ENOENT / timeout / permission 등은 위로
+  }
+}
+
+export async function hasRunningWorker(svcPath, opts = {}) {
+  const runnerDir = dirname(expandHome(svcPath));
+  const checkFn = opts.workerCheckFn || defaultWorkerCheck;
+  try {
+    return (await checkFn(runnerDir)) === true;
+  } catch {
+    // 안전측: 알 수 없음 → "있을 수 있음" 으로 보고 재시작 금지.
+    return true;
+  }
 }
 
 // Pure judge — exported for tests.
@@ -161,7 +222,9 @@ function defaultExec(svcPath, timeoutMs) {
 //   · thresholdMin, cooldownMs, maxFailures, execTimeoutMs: knobs.
 //   · stateFile: override default path (tests).
 //   · execFn(svcPath, timeoutMs): injectable — resolves on exec ok, rejects on fail.
+//   · workerCheckFn(runnerDir): injectable — returns true if Runner.Worker alive (M0-1119-U).
 //   · recordFn(record): injectable jsonl append.
+//   · staleCacheMs: ci.data.at 허용 최대 지연 (M0-1119-U · 기본 6분).
 //   · now: injectable clock.
 //   · warn(msg): injectable logger.
 export async function runOnce(opts = {}) {
@@ -173,14 +236,30 @@ export async function runOnce(opts = {}) {
   const cooldownMs = opts.cooldownMs ?? DEFAULT_COOLDOWN_MS;
   const maxFailures = opts.maxFailures ?? DEFAULT_MAX_FAILURES;
   const execTimeoutMs = opts.execTimeoutMs ?? DEFAULT_EXEC_TIMEOUT_MS;
+  const staleCacheMs = opts.staleCacheMs ?? DEFAULT_STALE_CACHE_MS;
   const stateFile = opts.stateFile || join(repoRoot, STATE_REL_PATH);
   const execFn = opts.execFn || ((svc, t) => defaultExec(svc, t));
+  const workerCheckFn = opts.workerCheckFn || defaultWorkerCheck;
   const recordFn = opts.recordFn || ((rec) => defaultRecord(repoRoot, rec));
   const now = opts.now ?? Date.now();
   const warn = opts.warn || (() => {});
 
   const state = readState(stateFile);
   const actions = [];
+
+  // M0-1119-U safety gate 1: ciData 가 불완전하면 그 회차 재시작 통째 skip (warn 만).
+  // partial / repos_failed / stale cache 는 in_progress 공백을 만들 수 있고 → 돌고 있는 job 을 죽일 수 있다.
+  const dataCheck = isDataIncomplete(ciData, now, { staleCacheMs });
+  if (dataCheck.incomplete) {
+    warn(`[gh-runner-watchdog] skip restart: ${dataCheck.reason}`);
+    for (const kind of ['mac-heavy', 'mac-light']) {
+      if (!runnerPaths[kind]) continue;
+      actions.push({ kind, action: 'skip', reason: dataCheck.reason });
+    }
+    writeState(stateFile, state);
+    latestAlert = state.alert || null;
+    return { actions, alert: state.alert || null };
+  }
 
   for (const kind of ['mac-heavy', 'mac-light']) {
     const svc = runnerPaths[kind];
@@ -231,6 +310,21 @@ export async function runOnce(opts = {}) {
         try { recordFn({ at: state.alert.at, kind, svc, event: 'alert', reason: state.alert.reason }); } catch {}
       }
       actions.push({ kind, action: 'skip', reason: 'max-failures', failures });
+      continue;
+    }
+
+    // M0-1119-U safety gate 2: stop 직전 Runner.Worker 생존 확인. ci-health 가 놓친 in_progress 보호.
+    let workerAlive = false;
+    try {
+      workerAlive = await hasRunningWorker(svc, { workerCheckFn });
+    } catch (e) {
+      // hasRunningWorker 자체는 삼키지만, 방어적으로 한 번 더.
+      workerAlive = true;
+      warn(`[gh-runner-watchdog] ${kind} worker-check 예외: ${e.message || e}`);
+    }
+    if (workerAlive) {
+      warn(`[gh-runner-watchdog] ${kind} skip restart: Runner.Worker alive`);
+      actions.push({ kind, action: 'skip', reason: 'worker-running' });
       continue;
     }
 
