@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T17:14:46.142Z",
+  "at": "2026-11-19T17:20:17.631Z",
   "pid": 63036,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -42,11 +42,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.5,
-    "compressed_gb": 5.03,
-    "swap_used_gb": 11.06,
+    "used_gb": 15.36,
+    "compressed_gb": 5.6,
+    "swap_used_gb": 10.88,
     "pressure": "normal",
-    "at": "2026-11-19T17:14:12.585Z"
+    "at": "2026-11-19T17:19:40.459Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -54,14 +54,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T17:13:01.005Z",
+      "at": "2026-11-19T17:18:24.687Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 16,
+      "api_calls": 11,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -76,7 +76,7 @@
             "pr_display": "storeport:#402",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 5,
+            "running_min": 11,
             "runner": "Youngkyus-MacBook-Pro-M1",
             "kind": "mac-heavy"
           }
@@ -94,8 +94,8 @@
           "pr": "#208",
           "pr_display": "fork:#208",
           "job": "playwright",
-          "step": "Install Chromium system deps",
-          "running_min": 3,
+          "step": "Run Playwright harnesses",
+          "running_min": 8,
           "runner": "GitHub Actions 1000007498",
           "kind": "cloud"
         },
@@ -104,8 +104,8 @@
           "pr": "#207",
           "pr_display": "fork:#207",
           "job": "playwright",
-          "step": "Install playwright-chromium",
-          "running_min": 3,
+          "step": "Run Playwright harnesses",
+          "running_min": 9,
           "runner": "GitHub Actions 1000007497",
           "kind": "cloud"
         }
@@ -115,7 +115,7 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 4,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 1,
@@ -142,11 +142,12 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 5,
-      "alerts": []
+      "jsonl_added": 0,
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 14101,
-    "at": "2026-11-19T17:13:13.159Z"
+    "took_ms": 17125,
+    "at": "2026-11-19T17:18:39.434Z"
   },
   "gh_runner_alert": null
 }
