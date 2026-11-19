@@ -36,6 +36,7 @@ import {
 import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { fetchCiHealth } from './lib/ci-health.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
@@ -303,9 +304,26 @@ const busy = new Map(); // hub -> { id, startedAt }
 const hubsToRun = ALL ? ['m0', 'm1', 'm2', 'm3', 'r0'] : [hubFlag];
 
 // §4 heartbeat — status/runners/all.json 로 1 파일 · 5 분마다 commit.
+// M0-1119-G: heartbeat 커밋 시 ci 블록(storeport CI 건강 상태) 포함.
+// gh 호출은 heartbeat 커밋 타이밍에만 — 30초 폴링 루프에는 절대 포함 금지 (API 한도).
 let lastHeartbeatAt = 0;
-function writeHeartbeat(force = false) {
+let lastCiHealth = null;
+
+async function writeHeartbeat(force = false) {
   const now = Date.now();
+  const shouldPush = force || now - lastHeartbeatAt >= HEARTBEAT_MS;
+
+  // CI 건강 상태 조회는 실제 커밋 타이밍에만 (heartbeat_ms 주기)
+  if (shouldPush) {
+    lastCiHealth = await fetchCiHealth();
+    if (lastCiHealth.error) {
+      log('ci-health', `조회 실패: ${lastCiHealth.error}`);
+    } else {
+      const alertTypes = lastCiHealth.alerts.map((a) => a.type).join(',') || '없음';
+      log('ci-health', `heavy_queued=${lastCiHealth.heavy.queued} in_progress=${lastCiHealth.heavy.in_progress.length} alerts=[${alertTypes}]`);
+    }
+  }
+
   const payload = {
     at: ts(),
     pid: process.pid,
@@ -318,10 +336,11 @@ function writeHeartbeat(force = false) {
           : { current: null },
       ]),
     ),
+    ci: lastCiHealth,
   };
   writeFileSync(ALL_HEARTBEAT, JSON.stringify(payload, null, 2) + '\n', 'utf8');
 
-  if (!force && now - lastHeartbeatAt < HEARTBEAT_MS) return;
+  if (!shouldPush) return;
   try {
     git(['add', 'status/runners/all.json']);
     git(['commit', '-m', `chore(runner): heartbeat · ${hubsToRun.map((h) => `${h}=${payload.hubs[h].current || 'idle'}`).join(' · ')}`]);
@@ -377,7 +396,7 @@ async function tick(hubs) {
         const post = readClaim(item.id);
         if (post && (post.state === 'done' || post.state === 'blocked' || post.state === 'cancelled')) {
           log(hub, `claim 이미 ${post.state} (허브 설정) · 덮어쓰지 않음`);
-          writeHeartbeat();
+          await writeHeartbeat();
           drainClaimQueue();
           return;
         }
@@ -392,13 +411,13 @@ async function tick(hubs) {
             blockedBy: 'kyu',
           });
         }
-        writeHeartbeat();
+        await writeHeartbeat();
         drainClaimQueue();
       })();
     }
 
     await drainClaimQueue();
-    writeHeartbeat();
+    await writeHeartbeat();
   } finally {
     releaseLock();
   }
@@ -411,7 +430,7 @@ async function loop() {
     '',
     `시작 · mode=${ALL ? '--all' : `--hub ${hubFlag}`} · once=${ONCE} · poll=${POLL_MS}ms · claude=${cfg.claude_bin} · version=${ver} · model=${cfg.model} · PATH=${process.env.PATH || '(unset)'}`,
   );
-  writeHeartbeat(true);
+  await writeHeartbeat(true);
   for (;;) {
     try {
       await tick(hubsToRun);
@@ -424,7 +443,7 @@ async function loop() {
         await new Promise((r) => setTimeout(r, 1000));
       }
       // 마지막 heartbeat flush
-      writeHeartbeat(true);
+      await writeHeartbeat(true);
       break;
     }
     await new Promise((r) => setTimeout(r, POLL_MS));
