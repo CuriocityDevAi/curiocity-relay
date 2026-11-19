@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T03:41:55.505Z",
+  "at": "2026-11-19T03:44:18.099Z",
   "pid": 32116,
   "runner": "v7.4",
   "poll_ms": 30000,
@@ -8,7 +8,9 @@
   "last_error": null,
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1119-E",
+      "started_at": "2026-11-19T03:44:14.875Z",
+      "model": "opus",
       "last_activity": "2026-11-19T03:14:43.139Z"
     },
     "m1": {
@@ -16,10 +18,10 @@
       "last_activity": "2026-11-19T03:33:22.538Z"
     },
     "m2": {
-      "current": "M2-1119-F",
-      "started_at": "2026-11-19T03:31:40.667Z",
+      "current": "M2-1119-G",
+      "started_at": "2026-11-19T03:44:16.104Z",
       "model": "sonnet",
-      "last_activity": "2026-11-19T03:18:51.899Z"
+      "last_activity": "2026-11-19T03:42:07.935Z"
     },
     "m3": {
       "current": "M3-1119-C",
@@ -42,11 +44,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.64,
-    "compressed_gb": 4.54,
-    "swap_used_gb": 7.27,
+    "used_gb": 15.85,
+    "compressed_gb": 4.94,
+    "swap_used_gb": 7.24,
     "pressure": "normal",
-    "at": "2026-11-19T03:41:21.996Z"
+    "at": "2026-11-19T03:43:40.822Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
