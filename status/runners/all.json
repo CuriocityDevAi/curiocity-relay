@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T11:22:25.987Z",
+  "at": "2026-11-19T11:24:16.322Z",
   "pid": 42106,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -22,10 +22,8 @@
       "last_activity": "2026-11-19T10:41:27.508Z"
     },
     "m3": {
-      "current": "M3-1119-O",
-      "started_at": "2026-11-19T11:03:23.107Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-19T11:02:52.082Z"
+      "current": null,
+      "last_activity": "2026-11-19T11:22:34.078Z"
     },
     "r0": {
       "current": null,
@@ -34,19 +32,19 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 16283,
-    "totalMs": 16283,
+    "lastMs": 155803,
+    "totalMs": 188046,
     "phase": "await-landing",
-    "at": "2026-11-19T11:09:26.427Z"
+    "at": "2026-11-19T11:22:31.778Z"
   },
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.87,
-    "compressed_gb": 5.66,
-    "swap_used_gb": 9.84,
+    "used_gb": 15.45,
+    "compressed_gb": 4.07,
+    "swap_used_gb": 9.95,
     "pressure": "normal",
-    "at": "2026-11-19T11:19:25.287Z"
+    "at": "2026-11-19T11:23:42.586Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -54,38 +52,56 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T11:16:20.156Z",
+      "at": "2026-11-19T11:23:04.184Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 11,
+      "api_calls": 17,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 2,
+        "queued": 1,
         "queued_prs": [
-          398,
           399
         ],
         "oldest_queued_min": 21,
-        "oldest_queued_pr": "#398",
-        "in_progress": []
+        "oldest_queued_pr": "#399",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "#398",
+            "job": "pos-integration",
+            "step": "Run POS integration tests",
+            "running_min": 4,
+            "runner": "Youngkyus-MacBook-Pro-M1",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
+        "queued": 2,
+        "oldest_queued_min": 2,
         "in_progress": []
       },
       "cloud_in_progress": [
         {
           "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#208",
+          "job": "playwright",
+          "step": "Expo export web",
+          "running_min": 2,
+          "runner": "GitHub Actions 1000007382",
+          "kind": "cloud"
+        },
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
           "pr": "#207",
           "job": "playwright",
           "step": "Run Playwright harnesses",
-          "running_min": 16,
+          "running_min": 23,
           "runner": "GitHub Actions 1000007374",
           "kind": "cloud"
         }
@@ -93,9 +109,9 @@
       "runners": {
         "heavy_online": 1,
         "heavy_busy": 1,
-        "light_online": 1
+        "light_online": 0
       },
-      "cloud_today": 0,
+      "cloud_today": 2,
       "today": {
         "mac-heavy": {
           "jobs": 99,
@@ -105,36 +121,32 @@
           "run_min_total": 577.3
         },
         "mac-light": {
-          "jobs": 166,
+          "jobs": 167,
           "avg_wait_min": 1.2,
           "avg_run_min": 0.3,
           "success_rate": 96.4,
-          "run_min_total": 53.499999999999986
+          "run_min_total": 53.999999999999986
         },
         "cloud": {
-          "jobs": 203,
+          "jobs": 205,
           "avg_wait_min": 0,
-          "avg_run_min": 2.4,
-          "success_rate": 67.5,
-          "run_min_total": 478.6000000000004
+          "avg_run_min": 2.3,
+          "success_rate": 67.8,
+          "run_min_total": 480.1000000000004
         },
-        "cloud_cost_est_usd": 4.792,
+        "cloud_cost_est_usd": 4.816,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 492.89999999999986
       },
-      "jsonl_added": 0,
+      "jsonl_added": 3,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 21m (#398)"
-        },
-        {
-          "type": "runner_idle",
-          "detail": "2 queued but 0 in_progress for 21m"
+          "detail": "oldest heavy queued 21m (#399)"
         }
       ]
     },
-    "took_ms": 29365,
-    "at": "2026-11-19T11:16:46.049Z"
+    "took_ms": 24544,
+    "at": "2026-11-19T11:23:25.235Z"
   }
 }
