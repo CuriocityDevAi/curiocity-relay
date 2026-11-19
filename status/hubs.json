@@ -1,22 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-19T06:54:19.641Z",
+  "built_at": "2026-11-19T07:01:22.478Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-19T06:54:14.398Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-19T06:54:14.398Z"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-19T06:49:08.079Z",
-      "updated_at": "2026-11-19T06:54:14.398Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -28,17 +13,92 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-19T06:54:14.398Z"
+      "updated_at": "2026-11-19T06:54:14.398Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-19T06:54:14.398Z"
+      "updated_at": "2026-11-19T06:54:14.398Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "idle",
+      "last_activity": "2026-11-19T06:49:08.079Z",
+      "updated_at": "2026-11-19T06:54:14.398Z",
+      "last_round": "M0-1119-G",
+      "last_report": "m0/M0-1119-G-report.md",
+      "current_round": "M0-1119-H",
+      "current_state": "started",
+      "current_at": "2026-11-19T07:01:22.406Z",
+      "current_note": "runner-v7.4 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1119-H.log"
+    },
+    "m1": {
+      "last_round": "M1-1119-I",
+      "last_report": "m1/M1-1119-I-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-19T07:01:22.478Z",
+      "current_round": "M1-1119-J",
+      "current_state": "started",
+      "current_at": "2026-11-19T06:36:14.984Z",
+      "current_note": "runner-v7.4 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1119-J.log"
+    },
+    "m2": {
+      "last_round": "M2-1119-M",
+      "last_report": "m2/M2-1119-M-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-19T07:01:22.478Z",
+      "current_round": "M2-1119-N",
+      "current_state": "started",
+      "current_at": "2026-11-19T06:28:21.729Z",
+      "current_note": "runner-v7.4 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1119-N.log"
+    },
+    "m3": {
+      "last_round": "M3-1119-I",
+      "last_report": "m3/M3-1119-I-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-19T07:01:22.478Z",
+      "current_round": "M3-1119-I",
+      "current_state": "done",
+      "current_at": "2026-11-19T06:50:52.188Z",
+      "current_note": "runner-v7.4 cmux-split · 리포트 확인 m3/M3-1119-I-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1119-I.log"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-19T06:54:14.398Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1119-H",
+      "last_report": "r0/R0-1119-H-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-19T07:01:22.478Z",
+      "current_round": "R0-1119-H",
+      "current_state": "done",
+      "current_at": "2026-11-19T03:00:06.012Z",
+      "current_note": "runner-v7.4 cmux-split · 리포트 확인 r0/R0-1119-H-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1119-H.log"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-19T06:54:14.398Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
