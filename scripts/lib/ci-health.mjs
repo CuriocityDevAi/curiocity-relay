@@ -62,6 +62,19 @@
 //           실패 run 의 created_at 을 넘어가 영구 누락. runs 는 오름차순 처리라 break
 //           시 earliestUnprocessed = 실패 run 의 created_at 으로 설정 → 다음 tick 에
 //           created>=실패 run.created_at 로 재조회.
+//
+// M0-1119-S (R0 AC CHANGES — 5차 · 후속):
+//   REQ1: collectHistoryForRepo catch 에서 non-404 (예: 500 · 네트워크 실패) 는
+//         `{ partial: true, earliestUnprocessed: null, latestProcessedRunCreatedAt: null }`
+//         반환. 직전은 non-404 도 partial:false 로 떨어져 커서 블록이 activeMin 으로
+//         전진 → 완료 run 영구 누락. 404 는 기존대로 partial:false (state 가 skipped
+//         로 표시 → stateFullySeen=false 로 cursor 전진 생략).
+//   REQ2: 커서 블록에서 `partial && !earliestUnprocessed` 이면 cursor 전진 생략.
+//         collectCompletedJobs 시작부 budget/deadline 조기 반환 (partial:true,
+//         earliestUnprocessed:null) + REQ1 non-404 catch 모두 이 조건으로 fall-through.
+//         직전은 candidates=[activeMin] 으로 cursor = activeMin 전진 → long run 영구
+//         누락. O-1c (active 만 · completed 없음 · partial=false) 는 유지 — partial=false
+//         이면 이 continue 가 불발.
 
 import { execFile } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
@@ -495,8 +508,13 @@ async function collectHistoryForRepo(execFn, repo, since, budget, maxRuns, warn,
         repoWarned.add(repo);
         warn(`[ci-health] repo 접근 실패 (오늘 재시도 안함): ${repo} · ${(e.message || e).toString().split('\n')[0]}`);
       }
+      return { records: [], partial: false, earliestUnprocessed: null, latestProcessedRunCreatedAt: null };
     }
-    return { records: [], partial: false, earliestUnprocessed: null, latestProcessedRunCreatedAt: null };
+    // M0-1119-S REQ1: non-404 (e.g. 500, network failure) returns partial:true so the
+    // cursor block falls through to the `partial && !earliestUnprocessed` skip (REQ2).
+    // Without this, cursor = activeMin → completed runs created before activeMin are
+    // permanently lost on next tick's `created>=activeMin` filter.
+    return { records: [], partial: true, earliestUnprocessed: null, latestProcessedRunCreatedAt: null };
   }
 }
 
@@ -647,6 +665,15 @@ export async function fetchCiHealth(opts = {}, _legacy = null, _legacyRoot = nul
         const sr = stateResultByRepo.get(r);
         const stateFullySeen = sr && !sr.error && !sr.skipped && !sr.partial;
         if (!stateFullySeen) continue;
+
+        // M0-1119-S REQ2: skip cursor advance when history is partial without a marker.
+        // Covers (a) collectCompletedJobs budget/deadline early-return before any API call
+        // and (b) collectHistoryForRepo non-404 catch (REQ1). Both return partial:true with
+        // earliestUnprocessed=null; without this skip, candidates=[activeMin] → cursor =
+        // activeMin → completed runs older than activeMin are filtered out next tick.
+        // O-1c (completed empty · active present · partial=false) still advances: partial
+        // is false so this guard doesn't fire.
+        if (partial && !earliestUnprocessed) continue;
 
         // Advance cursor per-repo:
         //   - partial: clamp to min(earliestUnprocessed, activeMin). (M0-1119-M + M0-1119-P)
