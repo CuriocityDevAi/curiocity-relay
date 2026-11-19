@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T15:16:16.984Z",
+  "at": "2026-11-19T15:16:37.785Z",
   "pid": 49838,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -12,12 +12,10 @@
       "last_activity": "2026-11-19T14:50:10.422Z"
     },
     "m1": {
-      "current": null,
-      "last_activity": "2026-11-19T15:16:15.133Z",
-      "suspect_done": {
-        "since": "2026-11-19T14:53:10.648Z",
-        "id": "M1-1119-V"
-      }
+      "current": "M1-1119-W",
+      "started_at": "2026-11-19T15:16:36.127Z",
+      "model": "sonnet",
+      "last_activity": "2026-11-19T15:16:15.133Z"
     },
     "m2": {
       "current": "M2-1119-AB",
@@ -53,13 +51,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T15:10:31.102Z",
+      "at": "2026-11-19T15:16:00.239Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport"
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 14,
+      "api_calls": 13,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -67,7 +66,7 @@
         "queued_prs": [
           402
         ],
-        "oldest_queued_min": 20,
+        "oldest_queued_min": 25,
         "oldest_queued_pr": "storeport:#402",
         "in_progress": [
           {
@@ -76,25 +75,36 @@
             "pr_display": "storeport:#403",
             "job": "pos-integration",
             "step": "Run POS integration tests",
-            "running_min": 3,
+            "running_min": 8,
             "runner": "Youngkyus-MacBook-Pro-M1",
             "kind": "mac-heavy"
           }
         ]
       },
       "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
+        "queued": 2,
+        "oldest_queued_min": 5,
+        "oldest_queued_pr": "storeport:#404",
         "in_progress": []
       },
-      "cloud_in_progress": [],
+      "cloud_in_progress": [
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#207",
+          "pr_display": "fork:#207",
+          "job": "assertions",
+          "step": "Run assertions",
+          "running_min": 3,
+          "runner": "GitHub Actions 1000007466",
+          "kind": "cloud"
+        }
+      ],
       "runners": {
         "heavy_online": 1,
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 2,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 167,
@@ -121,16 +131,16 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 1124.399999999999
       },
-      "jsonl_added": 14,
+      "jsonl_added": 0,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 20m (storeport:#402)"
+          "detail": "oldest heavy queued 25m (storeport:#402)"
         }
       ],
       "partial": true
     },
-    "took_ms": 21543,
-    "at": "2026-11-19T15:10:49.812Z"
+    "took_ms": 23242,
+    "at": "2026-11-19T15:16:20.959Z"
   }
 }
