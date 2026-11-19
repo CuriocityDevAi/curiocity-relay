@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T13:43:04.094Z",
+  "at": "2026-11-19T13:46:03.417Z",
   "pid": 49838,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -22,10 +22,8 @@
       "last_activity": null
     },
     "m3": {
-      "current": "M3-1119-U",
-      "started_at": "2026-11-19T13:35:15.737Z",
-      "model": "sonnet",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-19T13:43:21.389Z"
     },
     "r0": {
       "current": null,
@@ -37,11 +35,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.19,
-    "compressed_gb": 3.01,
-    "swap_used_gb": 11.08,
+    "used_gb": 15.74,
+    "compressed_gb": 5.66,
+    "swap_used_gb": 10.54,
     "pressure": "normal",
-    "at": "2026-11-19T13:41:55.135Z"
+    "at": "2026-11-19T13:45:28.256Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -49,7 +47,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T13:38:43.521Z",
+      "at": "2026-11-19T13:44:15.446Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -62,40 +60,18 @@
       "heavy": {
         "queued": 2,
         "queued_prs": [
-          400,
-          399
+          399,
+          401
         ],
-        "oldest_queued_min": 24,
-        "oldest_queued_pr": "storeport:#400",
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/storeport",
-            "pr": "#394",
-            "pr_display": "storeport:#394",
-            "job": "heavy-mac",
-            "step": null,
-            "running_min": 4,
-            "runner": "Youngkyus-MacBook-Pro-M1",
-            "kind": "mac-heavy"
-          }
-        ]
+        "oldest_queued_min": 29,
+        "oldest_queued_pr": "storeport:#399",
+        "in_progress": []
       },
       "light": {
-        "queued": 2,
-        "oldest_queued_min": 23,
-        "oldest_queued_pr": "storeport:main",
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/storeport",
-            "pr": "main",
-            "pr_display": "storeport:main",
-            "job": "post",
-            "step": "Complete job",
-            "running_min": 0,
-            "runner": "curiocity-mac-light",
-            "kind": "mac-light"
-          }
-        ]
+        "queued": 4,
+        "oldest_queued_min": 1,
+        "oldest_queued_pr": "storeport:#400",
+        "in_progress": []
       },
       "cloud_in_progress": [],
       "runners": {
@@ -103,21 +79,21 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 2,
       "today": {
         "mac-heavy": {
-          "jobs": 137,
-          "avg_wait_min": 3.6,
+          "jobs": 131,
+          "avg_wait_min": 3.7,
           "avg_run_min": 4.8,
-          "success_rate": 30.7,
-          "run_min_total": 651.2000000000002
+          "success_rate": 29,
+          "run_min_total": 628.5000000000001
         },
         "mac-light": {
           "jobs": 198,
-          "avg_wait_min": 2.3,
+          "avg_wait_min": 2.1,
           "avg_run_min": 2.4,
           "success_rate": 84.8,
-          "run_min_total": 470.70000000000016
+          "run_min_total": 470.50000000000017
         },
         "cloud": {
           "jobs": 256,
@@ -130,20 +106,20 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 920.1999999999994
       },
-      "jsonl_added": 9,
+      "jsonl_added": 3,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 24m (storeport:#400)"
+          "detail": "oldest heavy queued 29m (storeport:#399)"
         },
         {
-          "type": "light_wait",
-          "detail": "oldest light queued 23m (storeport:main)"
+          "type": "runner_idle",
+          "detail": "2 queued but 0 in_progress for 29m (storeport:#399)"
         }
       ],
       "partial": true
     },
-    "took_ms": 23125,
-    "at": "2026-11-19T13:39:03.538Z"
+    "took_ms": 24631,
+    "at": "2026-11-19T13:44:35.474Z"
   }
 }
