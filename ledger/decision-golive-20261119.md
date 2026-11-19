@@ -15,4 +15,5 @@
 - POS 앱 Split View 반응형: M1-1119-F 결과 본 뒤(같은 테스트 방식이라 왼쪽 POS 도 좁아짐) — 오케 보류 1줄
 
 ## 미결
-- 매장 2곳이 같은 PT 인지 · 매장별 Xendit 키 분리 필요 여부 → Xendit 인증 완료 때 확인
+- ✅ Kyu 11:22 "매장 2곳이 같은 PT야." → Xendit 계정 1개(매장 PT) · 매장 구분은 POS 쪽 매장(stock location)·거래 메타데이터로
+- 6번(카드 단말기): Xendit In-Person Payment Terminal(인도네시아 서비스 중 · BRI/Cashup 단말기 · Terminal API · T+1 정산 · 문의 inpersonpayments@xendit.co) 을 은행 직접 ECR 보다 먼저 검토 — Xendit 인증 후 조건 문의
