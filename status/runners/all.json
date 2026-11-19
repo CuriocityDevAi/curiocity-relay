@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T23:14:51.015Z",
+  "at": "2026-11-19T23:24:33.809Z",
   "pid": 63036,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -38,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.67,
-    "compressed_gb": 4.36,
-    "swap_used_gb": 9.17,
+    "used_gb": 15.6,
+    "compressed_gb": 4.96,
+    "swap_used_gb": 8.9,
     "pressure": "normal",
-    "at": "2026-11-19T23:14:19.037Z"
+    "at": "2026-11-19T23:24:00.950Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -50,67 +50,13 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T23:11:32.706Z",
-      "repos_scanned": [
-        "CuriocityDevAi/storeport",
-        "CuriocityDevAi/agilo-medusa-pos-fork"
-      ],
-      "repos_failed": [],
-      "repos_skipped": [],
-      "api_calls": 8,
-      "api_budget": 40,
-      "api_overflow": false,
-      "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "cloud_in_progress": [],
-      "runners": {
-        "heavy_online": 1,
-        "heavy_busy": 0,
-        "light_online": 1
-      },
-      "cloud_today": 0,
-      "today": {
-        "mac-heavy": {
-          "jobs": 4,
-          "avg_wait_min": 2,
-          "avg_run_min": 10.3,
-          "success_rate": 100,
-          "run_min_total": 41.199999999999996
-        },
-        "mac-light": {
-          "jobs": 16,
-          "avg_wait_min": 0.7,
-          "avg_run_min": 0.4,
-          "success_rate": 100,
-          "run_min_total": 5.699999999999998
-        },
-        "cloud": {
-          "jobs": 28,
-          "avg_wait_min": 0,
-          "avg_run_min": 1.6,
-          "success_rate": 35.7,
-          "run_min_total": 44.400000000000006
-        },
-        "cloud_cost_est_usd": 0.432,
-        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 0
-      },
-      "jsonl_added": 0,
-      "alerts": []
+      "at": "2026-11-19T23:22:26.064Z",
+      "error": "Command failed: gh api repos/CuriocityDevAi/storeport/actions/runs?status=queued&per_page=100 -H Accept: application/vnd.github+json\nerror connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n",
+      "api_calls": 2,
+      "api_budget": 40
     },
-    "took_ms": 6515,
-    "at": "2026-11-19T23:11:37.425Z"
+    "took_ms": 1416,
+    "at": "2026-11-19T23:22:26.393Z"
   },
   "gh_runner_alert": null
 }
