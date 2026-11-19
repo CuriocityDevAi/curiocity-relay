@@ -6,6 +6,15 @@
 **세션 교체 규약(11-09)**: 오케 세션·클로드코드 허브 세션은 **매일 새로**. 마감 시 `ledger/handoff-<날짜>.md`(당일 스냅샷) 작성. 새 세션 첫 줄: `CurioCity 오케. relay ledger/open-requirements.md · work-queue.md · 최신 handoff 읽고 현황판부터.` **최신 handoff: `ledger/handoff-20261114.md`** (11-13 05:40 WIB 정본 · 세부 = handoff-20261112.md · handoff-20261113-night.md)
 **상태판**: https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE · 자동 투입: `queue/<hub>/<ID>.md` → Kyu Mac hub-runner(v6.5 가동 · v6.6 = M2-1105-AC).
 
+## 🔴 11-19 12:50 CI 클라우드 넘기기(overflow) — 결정만 되고 구현 누락 (재언급)
+
+Kyu 원문(11-19 12:50): "큰 작업 CI 에 작업이 쌓이지 않도록, 기존에 작업이 돌고있어서, 신규CI 작업이 Queue 에 들어가는경우에, 그런 작업은 클라우드CI(github) 을 사용하자고, 그리고 5개까지 허용하고나서 그거 이상이면 나에게 물어보자고 이미 정의했는데, 왜 queue 에 CI 작업이 쌓였지?"
+원 결정: [decision-ci-cloud-overflow-20261118](decision-ci-cloud-overflow-20261118.md) (하루 5건 · 6건째 Kyu 문의 · 무응답 = 로컬 대기 + 계속 문의) · handoff-20261118-evening "#369 머지 → overflow 구현 라운드"
+누락 원인(오케): 11-19 #369 머지(dfa7788) 뒤 overflow 구현 프롬프트를 발부하지 않음 · 원장에 미등재 상태로 handoff 메모에만 있었음.
+| 항목 | 소유 | 상태 |
+|---|---|---|
+| heavy 러너 busy/대기 시 GitHub 클라우드로 자동 전환 · 하루 5건 카운트 · 6건째 Kyu 문의 | M2 | 🔴 발부 대기 — M2-1119-L(#394 · ci.yml) 착지 직후 같은 파일 순차로 발부 |
+
 ## 11-17 08:22 전화번호 = 손님 식별 키 (storeport #320 계획서 · M0-1116-AS + BB) — 이 절이 최신
 
 Kyu 원문(11-16 23:03): "나는 1명인데 3명의 유저에게 매출 로열티가 나뉘어서 쌓여버렸음 … best practice 해법이 있어? 결국 국가번호와 진짜 전화번호를 나누어서 관리해야할듯해."
