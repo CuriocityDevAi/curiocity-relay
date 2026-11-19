@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T12:12:53.625Z",
+  "at": "2026-11-19T12:17:37.684Z",
   "pid": 42106,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -8,7 +8,9 @@
   "last_error": "blocked: runner-folder change pending Kyu install (m2/M2-1119-V-icon-compare.png)",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1119-R",
+      "started_at": "2026-11-19T12:17:34.575Z",
+      "model": "opus",
       "last_activity": "2026-11-19T12:12:23.328Z"
     },
     "m1": {
@@ -18,10 +20,10 @@
       "last_activity": "2026-11-19T11:45:56.062Z"
     },
     "m2": {
-      "current": "M2-1119-V",
-      "started_at": "2026-11-19T12:03:36.885Z",
+      "current": "M2-1119-W",
+      "started_at": "2026-11-19T12:17:35.722Z",
       "model": "sonnet",
-      "last_activity": "2026-11-19T11:39:05.915Z"
+      "last_activity": "2026-11-19T12:13:17.050Z"
     },
     "m3": {
       "current": null,
@@ -42,11 +44,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.64,
-    "compressed_gb": 4.15,
-    "swap_used_gb": 9.34,
+    "used_gb": 15.7,
+    "compressed_gb": 3.12,
+    "swap_used_gb": 9.84,
     "pressure": "normal",
-    "at": "2026-11-19T12:12:22.334Z"
+    "at": "2026-11-19T12:17:01.167Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
