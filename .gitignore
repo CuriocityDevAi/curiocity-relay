@@ -4,3 +4,5 @@ node_modules/
 scripts/*.bak
 # 정본 claim 경로는 status/claims/ · 허브가 루트 claims/ 에 잘못 쓰면 러너 pull 을 막으므로 무시 (11-10)
 /claims/
+# M0-1119-K: runtime cursor (process-local state)
+.cache/ci-history-cursor.json
