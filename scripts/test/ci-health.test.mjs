@@ -29,7 +29,8 @@ import {
   CLOUD_COST_NOTE,
 } from '../lib/ci-history.mjs';
 import { createCiBackground, maybeStartCiFetch, getLatestCi, isFetchInFlight } from '../lib/ci-background.mjs';
-import { computeSuspectDone, SUSPECT_DONE_THRESHOLD_MS } from '../lib/ci-suspect.mjs';
+import { computeSuspectDone, SUSPECT_DONE_THRESHOLD_MS, SUSPECT_DONE_TMP_DIR } from '../lib/ci-suspect.mjs';
+import { _resetCiHealthCache } from '../lib/ci-health.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(HERE, '..', '..');
@@ -255,16 +256,21 @@ test('I-2a: 백그라운드 — 동시 1개만, 두 번째 호출은 skip', asyn
   assert.ok(getLatestCi({ state }).data.ok);
 });
 
-test('I-2b: 백그라운드 — 전체 마감 초과 시 error 만, throw 없음', async () => {
+test('I-2b: 백그라운드 — deadline 소프트 (error 보고 · inFlight 는 실 fetch 완료까지 유지)', async () => {
   const state = createCiBackground();
-  const hangFetch = () => new Promise(() => { /* never resolves */ });
-  const r = maybeStartCiFetch(hangFetch, { state, deadlineMs: 80 });
+  let resolveFetch;
+  const slowFetch = () => new Promise((r) => { resolveFetch = r; });
+  const r = maybeStartCiFetch(slowFetch, { state, deadlineMs: 50 });
   assert.equal(r.started, true);
-  await new Promise((res) => setTimeout(res, 150));
+  await new Promise((res) => setTimeout(res, 120));
   const latest = getLatestCi({ state });
-  assert.ok(latest, 'latest 있음');
-  assert.ok(latest.error && latest.error.includes('deadline'), `error=${latest && latest.error}`);
-  assert.equal(isFetchInFlight({ state }), false, 'in-flight 해제됨');
+  assert.ok(latest && latest.error && latest.error.includes('deadline'),
+    `deadline error 보고: ${latest && latest.error}`);
+  assert.equal(isFetchInFlight({ state }), true,
+    'in-flight 유지 (실 fetch 미완) — 다음 tick 과 겹침 방지');
+  resolveFetch({ ok: 'late' });
+  await new Promise((res) => setTimeout(res, 20));
+  assert.equal(isFetchInFlight({ state }), false, '실 fetch 완료 후 in-flight 해제');
 });
 
 test('I-3: 분류 fallback — labels 비어도 runner_name 으로 mac-heavy', () => {
@@ -426,4 +432,210 @@ test('I-9: getWibDayBoundary — WIB 자정의 UTC', () => {
   // 2026-11-19T10:00:00Z (WIB 17:00) → WIB 오늘 자정 = 2026-11-19T00:00 WIB = 2026-11-18T17:00Z
   const b = getWibDayBoundary(new Date('2026-11-19T10:00:00Z'));
   assert.equal(b.toISOString(), '2026-11-18T17:00:00.000Z');
+});
+
+// ---- J: M0-1119-J — 간격 · 캐시 · 겹침 0 · /tmp · fork 스킵 · budget ----
+
+test('J-1: fireCi minIntervalMs 가드 — 5분 미만 재호출은 min-interval 로 skip', async () => {
+  const state = createCiBackground();
+  const fast = async () => ({ ok: 1 });
+  const r1 = maybeStartCiFetch(fast, { state, deadlineMs: 500, minIntervalMs: 5 * 60_000 });
+  assert.equal(r1.started, true);
+  await new Promise((r) => setTimeout(r, 30));
+  assert.equal(isFetchInFlight({ state }), false);
+  const r2 = maybeStartCiFetch(fast, { state, deadlineMs: 500, minIntervalMs: 5 * 60_000 });
+  assert.equal(r2.started, false, '5분 지나지 않으면 start 금지');
+  assert.equal(r2.reason, 'min-interval');
+});
+
+test('J-1b: fireCi minIntervalMs=0 이면 간격 가드 off', async () => {
+  const state = createCiBackground();
+  const fast = async () => ({ ok: 1 });
+  maybeStartCiFetch(fast, { state, deadlineMs: 500 });
+  await new Promise((r) => setTimeout(r, 30));
+  const r2 = maybeStartCiFetch(fast, { state, deadlineMs: 500 });
+  assert.equal(r2.started, true, 'minIntervalMs 미지정 → gate off');
+});
+
+test('J-1c: hub-runner-v7.5 소스에 CI_MIN_FIRE_INTERVAL_MS=5분 상수 선언', () => {
+  const src = readFileSync(join(REPO_ROOT, 'scripts', 'hub-runner-v7.5.mjs'), 'utf8');
+  assert.ok(src.includes('CI_MIN_FIRE_INTERVAL_MS'), '상수 선언 있음');
+  assert.ok(/CI_MIN_FIRE_INTERVAL_MS\s*=\s*5\s*\*\s*60_?000/.test(src),
+    '값 = 5 * 60_000 (5분)');
+  assert.ok(src.includes('minIntervalMs: CI_MIN_FIRE_INTERVAL_MS'),
+    'fireCi 가 maybeStartCiFetch 에 minIntervalMs 전달');
+});
+
+test('J-2: completed run id 메모리 캐시 — 같은 run 두 번째 조회는 jobs 호출 안 함', async () => {
+  _resetCiHealthCache();
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-cache-'));
+  const completedAt = minsAgo(2);
+  const createdAt = minsAgo(5);
+  let jobsCalls = 0;
+  const responses = {
+    'actions/runs?status=queued': { workflow_runs: [] },
+    'actions/runs?status=in_progress': { workflow_runs: [] },
+    'actions/runs?status=completed': {
+      workflow_runs: [{
+        id: 8001, name: 'CI', status: 'completed',
+        created_at: createdAt, updated_at: completedAt,
+        pull_requests: [{ number: 55 }],
+        repository: { full_name: 'CuriocityDevAi/storeport' },
+      }],
+    },
+    'actions/runs/8001/jobs': {
+      jobs: [{
+        id: 9001, name: 'lint', status: 'completed',
+        labels: ['ubuntu-latest'],
+        created_at: createdAt, started_at: createdAt, completed_at: completedAt,
+        conclusion: 'success',
+      }],
+    },
+    'actions/runners': { runners: [] },
+  };
+  const execFn = async (endpoint) => {
+    if (!endpoint.includes(MAIN_REPO)) {
+      if (endpoint.includes('actions/runs')) return { workflow_runs: [] };
+      if (endpoint.includes('actions/runners')) return { runners: [] };
+      return {};
+    }
+    if (endpoint.includes('/jobs')) jobsCalls++;
+    for (const [key, val] of Object.entries(responses)) {
+      if (endpoint.includes(key)) return val;
+    }
+    throw new Error(`no mock: ${endpoint}`);
+  };
+  const r1 = await fetchCiHealth({ execFn, repoRoot: tmpRoot });
+  assert.ok(!r1.error, `r1 error: ${r1.error}`);
+  const jobsCallsAfter1 = jobsCalls;
+  assert.ok(jobsCallsAfter1 >= 1, 'first run 은 jobs 호출');
+  const r2 = await fetchCiHealth({ execFn, repoRoot: tmpRoot });
+  assert.ok(!r2.error, `r2 error: ${r2.error}`);
+  assert.equal(jobsCalls, jobsCallsAfter1,
+    `두 번째 호출은 같은 completed run 재조회 안 함 (jobs 호출 추가 0)`);
+});
+
+test('J-3: 겹침 0 — deadline 후에도 inFlight 유지 → 다음 start 는 in-flight skip', async () => {
+  const state = createCiBackground();
+  let active = 0, maxActive = 0;
+  const hangTillExternal = () => new Promise((resolve) => {
+    active++; maxActive = Math.max(maxActive, active);
+    setTimeout(() => { active--; resolve({ ok: 1 }); }, 200);
+  });
+  const r1 = maybeStartCiFetch(hangTillExternal, { state, deadlineMs: 50 });
+  assert.equal(r1.started, true);
+  await new Promise((res) => setTimeout(res, 80));
+  const r2 = maybeStartCiFetch(hangTillExternal, { state, deadlineMs: 50 });
+  assert.equal(r2.started, false, 'deadline 지나도 in-flight → 두 번째 start 금지');
+  assert.equal(r2.reason, 'in-flight');
+  await new Promise((res) => setTimeout(res, 200));
+  assert.equal(maxActive, 1, '동시 실행 최대 1 (겹침 0)');
+  assert.equal(isFetchInFlight({ state }), false);
+});
+
+test('J-4: suspect_done TMP_DIR 는 리터럴 /tmp (os.tmpdir 영향 없음)', () => {
+  assert.equal(SUSPECT_DONE_TMP_DIR, '/tmp');
+  const src = readFileSync(join(REPO_ROOT, 'scripts', 'lib', 'ci-suspect.mjs'), 'utf8');
+  assert.ok(!src.includes("tmpdir()"), 'tmpdir() 호출 제거');
+  assert.ok(src.includes("'/tmp'"), '/tmp 리터럴 사용');
+});
+
+test('J-5: fork 404 → repoDailySkip + 1회 경고', async () => {
+  _resetCiHealthCache();
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-fork-'));
+  const warned = [];
+  const execFn = async (endpoint) => {
+    if (endpoint.includes('agilo-medusa-pos-fork')) {
+      throw new Error('gh: HTTP 404 Not Found (repos/CuriocityDevAi/agilo-medusa-pos-fork/...)');
+    }
+    if (endpoint.includes('actions/runs')) return { workflow_runs: [] };
+    if (endpoint.includes('actions/runners')) return { runners: [] };
+    return {};
+  };
+  const r1 = await fetchCiHealth({
+    execFn, repoRoot: tmpRoot,
+    repos: ['CuriocityDevAi/storeport', 'CuriocityDevAi/agilo-medusa-pos-fork'],
+    warn: (m) => warned.push(m),
+  });
+  assert.ok(!r1.error);
+  assert.ok(r1.repos_skipped.find((s) => s.repo === 'CuriocityDevAi/agilo-medusa-pos-fork'),
+    'fork 는 skipped 목록에');
+  assert.equal(warned.length, 1, '첫 접근에 1회 경고');
+  const r2 = await fetchCiHealth({
+    execFn, repoRoot: tmpRoot,
+    repos: ['CuriocityDevAi/storeport', 'CuriocityDevAi/agilo-medusa-pos-fork'],
+    warn: (m) => warned.push(m),
+  });
+  assert.ok(!r2.error);
+  assert.equal(warned.length, 1, '같은 날 재조회에도 경고 중복 발행 안 함');
+});
+
+test('J-5b: DEFAULT_REPOS 에 fork = CuriocityDevAi/agilo-medusa-pos-fork', () => {
+  const src = readFileSync(join(REPO_ROOT, 'scripts', 'lib', 'ci-health.mjs'), 'utf8');
+  assert.ok(src.includes("'CuriocityDevAi/agilo-medusa-pos-fork'"), 'fork 지정 확인');
+  assert.ok(!src.includes("'KyuuuLee/storeport'"), '옛 fork 추측값 제거');
+});
+
+test('J-6: API 호출 상한 — overflow 시 api_overflow:true, 예외 없음', async () => {
+  _resetCiHealthCache();
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-bud-'));
+  let calls = 0;
+  const execFn = async () => {
+    calls++;
+    if (calls <= 2) return { workflow_runs: [] };
+    return { workflow_runs: [], runners: [] };
+  };
+  const r = await fetchCiHealth({
+    execFn, repoRoot: tmpRoot, apiBudget: 2,
+    repos: ['CuriocityDevAi/storeport'],
+  });
+  assert.ok(!r.error, `error: ${r.error}`);
+  assert.ok(r.api_calls <= 2, `api_calls ${r.api_calls} <= budget 2`);
+  assert.equal(r.api_overflow, true, 'budget 소진 플래그');
+});
+
+test('J-7: updated=>= 로 URL 쿼리 filter (오래 걸린 run 누락 방지)', async () => {
+  _resetCiHealthCache();
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-upd-'));
+  const seenEndpoints = [];
+  const execFn = async (endpoint) => {
+    seenEndpoints.push(endpoint);
+    if (endpoint.includes('actions/runners')) return { runners: [] };
+    return { workflow_runs: [] };
+  };
+  await fetchCiHealth({
+    execFn, repoRoot: tmpRoot,
+    repos: ['CuriocityDevAi/storeport'],
+  });
+  const completedEp = seenEndpoints.find((e) => e.includes('status=completed'));
+  assert.ok(completedEp, 'completed runs 조회 있음');
+  assert.ok(completedEp.includes('updated'), `updated 파라미터 있음: ${completedEp}`);
+  assert.ok(!completedEp.includes('created='), 'created 파라미터 제거됨');
+});
+
+test('J-8: queued run 분류 — jobs 의 labels=curiocity-mac-light → lightQueued', async () => {
+  _resetCiHealthCache();
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-qj-'));
+  const execFn = makeExecFn({
+    'actions/runs?status=queued': {
+      workflow_runs: [{
+        id: 12001, name: 'CI', status: 'queued', created_at: minsAgo(3),
+        head_branch: 'feat/light', pull_requests: [{ number: 77 }],
+      }],
+    },
+    'actions/runs?status=in_progress': { workflow_runs: [] },
+    'actions/runs?status=completed': { workflow_runs: [] },
+    'actions/runs/12001/jobs': {
+      jobs: [{
+        id: 13001, name: 'lint', status: 'queued',
+        labels: ['self-hosted', 'curiocity-mac-light'], runner_name: null,
+        created_at: minsAgo(3), started_at: null, completed_at: null,
+      }],
+    },
+    'actions/runners': { runners: [] },
+  });
+  const r = await fetchCiHealth({ execFn, repoRoot: tmpRoot });
+  assert.ok(!r.error, `error: ${r.error}`);
+  assert.equal(r.light.queued, 1, 'light queued 로 분류');
+  assert.equal(r.heavy.queued, 0, 'heavy queued 비어있음');
 });

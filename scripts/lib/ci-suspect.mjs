@@ -11,9 +11,9 @@
 
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { tmpdir } from 'node:os';
 
 export const SUSPECT_DONE_THRESHOLD_MS = 15 * 60_000;
+export const SUSPECT_DONE_TMP_DIR = '/tmp';
 
 export function computeSuspectDone({
   hubs,              // ['m0','m1', ...]
@@ -41,5 +41,5 @@ export function computeSuspectDone({
 }
 
 function defaultReportExists(id) {
-  return existsSync(join(tmpdir(), `${id}-report.md`));
+  return existsSync(join(SUSPECT_DONE_TMP_DIR, `${id}-report.md`));
 }

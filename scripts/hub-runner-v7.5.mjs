@@ -66,6 +66,8 @@ const DEFAULT_CLAUDE_BIN = '/Users/kyu.lee/.local/bin/claude';
 const RUNNER_VERSION = 'v7.5';
 // M0-1119-I: CI 조회 전체 마감(ms) · tick 경로와 분리된 fire-and-forget 1개만.
 const CI_FETCH_DEADLINE_MS = 30_000;
+// M0-1119-J REQ1: fireCi 최소 간격 — 마지막 시작 시각 기준 5분. tick(30s) × 10 회 skip.
+const CI_MIN_FIRE_INTERVAL_MS = 5 * 60_000;
 // M1-1117-K: Kyu 폴더 침범 감지 — 기본 감시 목록 (runner-config.json kyu_watch_dirs 로 덮어쓰기 가능).
 const DEFAULT_KYU_WATCH_DIRS = [
   join(homedir(), 'projects', 'agilo-fork-test'),
@@ -2438,15 +2440,16 @@ function pushHeartbeatIfDue() {
   }
 }
 
-// M0-1119-I: tick 시작부에서 fire-and-forget. tick 자체에 await 추가하지 않는다.
+// M0-1119-I/J: tick 시작부에서 fire-and-forget. tick 자체에 await 추가하지 않는다.
+// REQ1 — maybeStartCiFetch 가 minIntervalMs(5분) · in-flight 를 둘 다 가드.
 function fireCi() {
   try {
     const res = maybeStartCiFetch(
       () => fetchCiHealth({ repoRoot: REPO_ROOT }),
-      { deadlineMs: CI_FETCH_DEADLINE_MS },
+      { deadlineMs: CI_FETCH_DEADLINE_MS, minIntervalMs: CI_MIN_FIRE_INTERVAL_MS },
     );
     if (res.started === false && res.reason) {
-      // in-flight — 조용히 skip. 다음 tick 에서 재시도.
+      // in-flight 또는 min-interval — 조용히 skip. 다음 tick 에서 재시도.
     }
   } catch (e) {
     log('ci', `fireCi 시작 실패: ${e.message}`);
