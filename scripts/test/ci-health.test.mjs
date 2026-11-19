@@ -594,7 +594,7 @@ test('J-6: API 호출 상한 — overflow 시 api_overflow:true, 예외 없음',
   assert.equal(r.api_overflow, true, 'budget 소진 플래그');
 });
 
-test('J-7: updated=>= 로 URL 쿼리 filter (오래 걸린 run 누락 방지)', async () => {
+test('J-7: created=>= 로 URL 쿼리 filter (M0-1119-M · GitHub API 는 updated 미지원)', async () => {
   _resetCiHealthCache();
   const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-upd-'));
   const seenEndpoints = [];
@@ -609,8 +609,8 @@ test('J-7: updated=>= 로 URL 쿼리 filter (오래 걸린 run 누락 방지)', 
   });
   const completedEp = seenEndpoints.find((e) => e.includes('status=completed'));
   assert.ok(completedEp, 'completed runs 조회 있음');
-  assert.ok(completedEp.includes('updated'), `updated 파라미터 있음: ${completedEp}`);
-  assert.ok(!completedEp.includes('created='), 'created 파라미터 제거됨');
+  assert.ok(completedEp.includes('created'), `created 파라미터 있음: ${completedEp}`);
+  assert.ok(!/[?&]updated=/.test(completedEp), `updated 파라미터 제거됨: ${completedEp}`);
 });
 
 test('J-8: queued run 분류 — jobs 의 labels=curiocity-mac-light → lightQueued', async () => {
