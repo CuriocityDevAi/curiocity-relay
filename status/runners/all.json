@@ -1,33 +1,27 @@
 {
-  "at": "2026-11-19T13:08:52.489Z",
-  "pid": 42106,
+  "at": "2026-11-19T13:11:24.587Z",
+  "pid": 49838,
   "runner": "v7.5",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": "blocked: runner-folder change pending Kyu install (m2/M2-1119-V-icon-compare.png)",
+  "last_error": null,
   "hubs": {
     "m0": {
       "current": null,
-      "last_activity": "2026-11-19T12:51:05.798Z"
+      "last_activity": null
     },
     "m1": {
-      "current": "M1-1119-R",
-      "started_at": "2026-11-19T13:08:40.923Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-19T12:27:54.457Z"
+      "current": null,
+      "last_activity": null
     },
     "m2": {
-      "current": "M2-1119-X",
-      "started_at": "2026-11-19T13:08:45.716Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-19T12:30:20.940Z"
+      "current": null,
+      "last_activity": null
     },
     "m3": {
-      "current": "M3-1119-T",
-      "started_at": "2026-11-19T13:08:47.890Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-19T12:49:37.444Z"
+      "current": null,
+      "last_activity": null
     },
     "r0": {
       "current": null,
@@ -35,27 +29,9 @@
     }
   },
   "pane_close_failures": {},
-  "last_sleep_gap": {
-    "lastMs": 21754,
-    "totalMs": 210723,
-    "phase": "await-landing",
-    "at": "2026-11-19T12:49:31.120Z"
-  },
+  "last_sleep_gap": null,
   "kyu_folder_intrusion": null,
-  "mem": {
-    "total_gb": 16,
-    "used_gb": 15.59,
-    "compressed_gb": 5.02,
-    "swap_used_gb": 8.85,
-    "pressure": "normal",
-    "at": "2026-11-19T13:08:06.697Z"
-  },
-  "mem_peak_today": {
-    "date": "2026-11-19",
-    "used_gb": 15.92
-  },
-  "ci": {
-    "error": "deadline 30000ms",
-    "at": "2026-11-19T13:06:23.000Z"
-  }
+  "mem": null,
+  "mem_peak_today": null,
+  "ci": null
 }
