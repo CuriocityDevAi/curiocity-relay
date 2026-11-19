@@ -48,6 +48,20 @@
 //         earliestUnprocessed 그대로. 재발 차단: long(T-40m 진행 중) + short 12개
 //         (상한 10) → 직전은 커서 = earliestUnprocessed(T-25m) 로만 올려
 //         long(T-40m) 을 다음 tick `created>=T-25m` 필터로 영구 누락.
+//
+// M0-1119-R (R0 AA CHANGES — 4차):
+//   REQ(a): state 를 끝까지 못 본 repo (stateResults 누락 · sr.error · sr.skipped ·
+//           sr.partial) 는 history 커서 전진 생략. 기록은 그대로 수행 (seen-set 이
+//           중복 방지). 재발 차단: state 단계 10s 초과로 fork repo 의 queued/in_progress
+//           를 끝까지 못 보면 minActiveByRepo 에 fork 의 long run (T-40m) 이 빠짐 →
+//           history 가 short run (T-30m) 만 보고 cursor = T-30m 로 올리면 long 영구
+//           누락. partial 인 repo 는 cursor 를 그대로 둬서 다음 tick 에 created>=이전
+//           cursor 로 long 을 재조회.
+//   REQ(b): collectCompletedJobs 의 jobs 조회 catch 에서 noteUnprocessed(run); break;
+//           실패한 run 이 unprocessed 로 표시되지 않으면 뒤 run 처리 결과로 커서가
+//           실패 run 의 created_at 을 넘어가 영구 누락. runs 는 오름차순 처리라 break
+//           시 earliestUnprocessed = 실패 run 의 created_at 으로 설정 → 다음 tick 에
+//           created>=실패 run.created_at 로 재조회.
 
 import { execFile } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
@@ -397,7 +411,11 @@ async function collectCompletedJobs(execFn, repo, since, budget, maxRuns, deadli
         }
       }
     } catch {
-      // retry next tick
+      // M0-1119-R REQ(b): mark the failed run as unprocessed so the cursor can't step past it.
+      // Since runs are sorted ascending by created_at, break here guarantees earliestUnprocessed
+      // = this failed run's created_at (no later run has processed yet to overwrite the cursor).
+      noteUnprocessed(run);
+      break;
     }
   }
   return {
@@ -604,6 +622,13 @@ export async function fetchCiHealth(opts = {}, _legacy = null, _legacyRoot = nul
     if (minT != null) minActiveByRepo.set(sr.repo, new Date(minT).toISOString());
   }
 
+  // M0-1119-R REQ(a): index stateResults by repo so we can tell, per repo, whether state
+  // was fully seen. A repo is "state fully seen" iff it's in stateResults AND !error AND
+  // !skipped AND !partial. Only those repos are safe for cursor advancement; otherwise the
+  // activeMin we'd clamp against is incomplete and a long in-progress run may be skipped.
+  const stateResultByRepo = new Map();
+  for (const sr of stateResults) stateResultByRepo.set(sr.repo, sr);
+
   if (historyBudgetMs > 500 && !budget.overflow) {
     try {
       for (const r of repos) {
@@ -616,6 +641,12 @@ export async function fetchCiHealth(opts = {}, _legacy = null, _legacyRoot = nul
           );
         completedRecords.push(...records);
         if (partial) overallPartial = true;
+
+        // M0-1119-R REQ(a): skip cursor advance when state wasn't fully seen for this repo.
+        // seen-set still prevents duplicate recording when the same runs come back next tick.
+        const sr = stateResultByRepo.get(r);
+        const stateFullySeen = sr && !sr.error && !sr.skipped && !sr.partial;
+        if (!stateFullySeen) continue;
 
         // Advance cursor per-repo:
         //   - partial: clamp to min(earliestUnprocessed, activeMin). (M0-1119-M + M0-1119-P)
