@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-19T06:49:32.393Z",
+  "built_at": "2026-11-19T10:25:24.661Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-19T06:49:31.967Z"
+      "fetched_at": "2026-11-19T10:25:24.081Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-19T06:49:32.120Z"
+      "fetched_at": "2026-11-19T10:25:24.306Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6056,6 +6056,7 @@
               "summary": "Admin 조정 가능 설정 (선결제 DP%·세금 라벨/%·영수증 헤더/푸터·재인쇄 제한·반올림·UI 언어). 기본값 ADDENDUM §2 영어 · 세금 null · rounding off · reprint_limit 3. API GET/PUT /admin/pos/settings.",
               "files": [
                 "apps/commerce-core/src/modules/pos_settings/**",
+                "apps/commerce-core/src/lib/pos-settings-module.ts",
                 "apps/commerce-core/src/api/admin/pos/settings/**"
               ],
               "status": "live"
@@ -6087,9 +6088,11 @@
               "summary": "일일 매니저 PIN (HMAC 결정적 계산·WIB 자정 교체·5회 잠금 15분·DB 저장 없음) · GET /admin/pos/manager-pin (오늘 PIN 반환 · Admin UI 위젯 노출) · POST /admin/pos/manager-pin/verify (PIN 검증 · 오입력 5회 15분 잠금) · POST /admin/pos/orders/:id/void · /refund · /return · /refund-retry (CASH + PIN 필수) · 나중 연결(source=order_lookup 또는 결제 후 10분 초과) PIN 강제 + 같은 날 주문만 허용 · PIN 사용 감사 로그 (pin_audit 모듈 · DB 영속 · Admin /manager-pin/audit 날짜별 조회). POST /admin/pos/orders/:id/void (posVoidOrderWorkflow — 채널 중립 결제 취소·재고 복원·주문 취소 위임 · 같은 교대만 · CARD 단말기 승인번호 PIN 불필요 · 그 외 CASH + PIN · M2-1117-S) · POST /admin/pos/orders/:id/refund (refundPaymentWorkflow · 전체 환불 · CARD terminal_approval_code 또는 CASH + PIN · 현금 지급 시 Cash Movement adjustment(-amount) 자동 생성 · 영수증 kind=void/refund) · POST /admin/pos/orders/:id/return (품목 수량 단위 부분 환불 · items[{line_item_id, quantity}] · 서버가 line_total 비율대로 할인·세금 배분 후 Math.round · refundPaymentWorkflow 부분 금액 · M0-1105-BF 품목별 fulfillment 상태 분기: fulfilled 품목은 inventoryModule.adjustInventory(+qty) 복귀, unfulfilled 품목은 reservation 삭제 (In stock 불변 · Reserved -qty · Available +qty) → 선주문 (Fulfill 전) 부분 취소 지원 · 응답 items[].disposition = 'returned' | 'canceled_unfulfilled' + reservation_released 플래그 · 누적 반품 수량 + 요청 > 산 수량 400 · M0-1105-AE: Guard A (items 해시 409) 제거 → 분할 반품 (qty 2 → qty 1 + qty 1) 둘 다 200 · 동시 요청의 재고 이중 복귀는 주문 단위 in-memory 큐로 직렬화 · PIN 계산 storeId 는 Admin 위젯과 동일 소스 (stock_location.id · register_session_id 폴백 제거)).",
               "files": [
                 "apps/commerce-core/src/api/admin/pos/_shared/manager-pin.ts",
+                "apps/commerce-core/src/lib/manager-pin.ts",
                 "apps/commerce-core/src/api/admin/pos/manager-pin/**",
                 "apps/commerce-core/src/modules/pin_audit/**",
                 "apps/commerce-core/src/lib/link-customer-order.ts",
+                "apps/commerce-core/src/lib/fulfillment-cancel.ts",
                 "apps/commerce-core/src/workflows/pos-void/**",
                 "apps/commerce-core/src/workflows/_shared/**",
                 "apps/commerce-core/src/api/admin/pos/orders/[id]/refund/route.ts",
@@ -6104,6 +6107,7 @@
               "summary": "POST /admin/pos/orders/:id/tenders (provider_id 명시·cash/edc 검증·PaymentCollection+session+capture·register_session.expected_by_method 집계·영수증 자동 생성 · delivery 결제 시 metadata.delivery.stage=awaiting_dispatch · M0-1105-T) · POST /admin/pos/orders/:id/fulfill — 채널 중립 posFulfillWorkflow (M0-1117-N) 위임: fetchOrder → executeFulfillment (createOrderFulfillmentWorkflow + polyfill fallback) → updateMetadata → completeOrder → recordHandoverAt(no-overwrite · M2-1117-Z) → mintSaleReceipt(non-fatal · M2-1117-Z). body 계약 {stage, method, courier?, driver?, contact?, tracking_ref?, note?, register_session_id?} · preorder dp_paid 400 · hand_over 재누름 멱등 가드는 packed_at 있는 fulfillment row 만 \"fulfilled\" 로 인정. 응답: fulfilled · fulfillment_warning · handed_over_at · receipt_id · receipt_no (M2-1117-Z). POST /admin/pos/maintenance/release-stale-reservations (dry_run 기본 · M0-1105-T) · POST /admin/pos/maintenance/repair-stuck-fulfillments (dry_run 기본 · M0-1105-Y). fulfill route 와 repair 가 공유하는 FulfillmentItem polyfill 빌더는 `_shared/fulfillment-items.ts` 단일 지점 (M0-1105-AA). medusa-config.ts 는 fulfillment manual provider 등록 (manual_manual · M0-1105-Y). 통합 테스트는 `integration-tests/pos/**` (medusa-test-utils · real Postgres).",
               "files": [
                 "apps/commerce-core/src/api/admin/pos/_shared/**",
+                "apps/commerce-core/src/lib/fulfillment-polyfill-items.ts",
                 "apps/commerce-core/src/api/admin/pos/orders/**",
                 "apps/commerce-core/src/api/admin/pos/maintenance/**",
                 "apps/commerce-core/src/workflows/pos-fulfill/**",
@@ -6225,7 +6229,8 @@
                 "apps/commerce-core/src/api/admin/pos/registers/[id]/next-customer/route.ts",
                 "apps/commerce-core/src/subscribers/order-snapshot-paid.ts",
                 "apps/commerce-core/src/types/customer-display.ts",
-                "apps/commerce-core/integration-tests/pos/cd-pos-screen-sync.spec.ts"
+                "apps/commerce-core/integration-tests/pos/cd-pos-screen-sync.spec.ts",
+                "apps/commerce-core/integration-tests/loyalty/cd-snapshot-skip.spec.ts"
               ],
               "status": "live"
             },
@@ -6781,7 +6786,9 @@
                 "apps/customer-display/src/screens/KeypadScreen.tsx",
                 "apps/customer-display/src/screens/KeypadAfterScreen.tsx",
                 "apps/customer-display/src/lib/phone-id.ts",
-                "apps/customer-display/src/lib/__tests__/phone-id.test.ts"
+                "apps/customer-display/src/lib/__tests__/phone-id.test.ts",
+                "apps/customer-display/src/lib/snapshot-api.ts",
+                "apps/customer-display/src/lib/__tests__/skip-patch.test.ts"
               ],
               "status": "planned"
             },
@@ -6837,7 +6844,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-19T06:49:32.393Z"
+      "fetched_at": "2026-11-19T10:25:24.661Z"
     }
   ],
   "rollup": {
