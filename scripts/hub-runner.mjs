@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // scripts/hub-runner.mjs · 큐 자동 투입 러너 (M1-1105-S · 단일 프로세스 전부 처리)
+// M0-1119-H: ci.today 블록 추가 · suspect_done 감지 (5분 프롬프트+보고서 → 착지 명령 자동 입력 · 10분 무응답 → blocked)
 //
 // 교체 사유 (M2-1105-O 리포트 + Kyu 2026-11-07 실설치 로그):
 //   - cwd=null → 러너가 아무 허브도 cwd 를 못 찾음 (hubs.json 에 cwd 없음 · build-hubs 가 매번 덮어씀).
@@ -19,9 +20,11 @@
 //   2. 각 허브마다 pickNext → busy 아니면 `claim started` 큐잉 + claude spawn (child 병렬)
 //   3. claude 종료 후 `claim done|blocked` 큐잉 (덮어쓰기 금지: 허브가 이미 done/blocked/cancelled 올렸으면 skip)
 //   4. 메인 루프의 claim-op 큐를 **한 번에 한 개** 만 drain (git 직렬 보장)
-//   5. 5 분마다 `status/runners/all.json` 1 커밋 (heartbeat 폭주 방지)
+//   5. 5 분마다 `status/runners/all.json` 1 커밋 (heartbeat 폭주 방지) + ci.today 블록 포함
 //   6. git 안전: `git pull --rebase origin main` (branch 명시 → multiple branches 오류 제거). rebase 실패 → `rebase --abort`.
 //                변경 범위는 `status/claims` · `status/runners` 로 한정 — 러너 스코프 밖 변경은 손 안 댐 (경고만).
+//   7. suspect_done: started 허브가 cmux 창 프롬프트 5분+ · /tmp/<ID>-report.md 존재 → 착지 명령 1회 자동 전송
+//                   10분 내 claim done 없으면 blocked(done-not-landed) 로 승격
 
 import { execFileSync, spawn } from 'node:child_process';
 import {
@@ -37,6 +40,7 @@ import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchCiHealth } from './lib/ci-health.mjs';
+import { summarizeToday } from './lib/ci-history.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
@@ -45,6 +49,9 @@ const RUNNER_HOME = join(homedir(), '.hub-runner');
 const POLL_MS = 60 * 1000;
 const STALE_LOCK_MS = 10 * 60 * 1000;
 const HEARTBEAT_MS = 5 * 60 * 1000;
+// suspect_done 감지 임계값 (M0-1119-H)
+const SUSPECT_DONE_PROMPT_MS = 5 * 60 * 1000;   // 5분 프롬프트 대기
+const SUSPECT_DONE_BLOCKED_MS = 10 * 60 * 1000; // 10분 내 claim 없으면 blocked
 // M1-1105-T · claude_bin/model 은 runner-config.json 에서 로드 (override 우선순위: env > config.hubs[hub] > config). which claude 는 fallback 만.
 const DEFAULT_CLAUDE_BIN = '/Applications/cmux.app/Contents/Resources/bin/claude';
 
@@ -301,13 +308,125 @@ function spawnClaude(item, cwd, claudeBin, model) {
 }
 
 const busy = new Map(); // hub -> { id, startedAt }
+// suspect_done 추적: hub -> { id, since, promptSince, nudgeSent }
+const suspectDone = new Map();
 const hubsToRun = ALL ? ['m0', 'm1', 'm2', 'm3', 'r0'] : [hubFlag];
 
 // §4 heartbeat — status/runners/all.json 로 1 파일 · 5 분마다 commit.
 // M0-1119-G: heartbeat 커밋 시 ci 블록(storeport CI 건강 상태) 포함.
+// M0-1119-H: ci.today 블록 포함 · suspect_done 감지.
 // gh 호출은 heartbeat 커밋 타이밍에만 — 30초 폴링 루프에는 절대 포함 금지 (API 한도).
 let lastHeartbeatAt = 0;
 let lastCiHealth = null;
+
+// cmux 창 프롬프트 감지 (tmux capture-pane) — enter-check.mjs 의 SESSION_STARTED_RE 재사용
+const PROMPT_RE = /(❯|⏵⏵|⏺|✻|Deliberating…|esc to interrupt|bypass permissions|shift\+tab to cycle)/;
+// 반대: 허브가 아직 작업 중 = 세션 프롬프트가 화면에 있음
+// 허브 대기 프롬프트 = claude 세션이 없고 shell 프롬프트만 남음
+const SHELL_PROMPT_RE = /\$\s*$|%\s*$|>\s*$/m;
+
+function capturePane(paneTarget) {
+  try {
+    const out = execFileSync('tmux', ['capture-pane', '-p', '-t', paneTarget], {
+      stdio: ['ignore', 'pipe', 'pipe'],
+    }).toString();
+    return out;
+  } catch {
+    return null;
+  }
+}
+
+function isPaneAtShellPrompt(paneTarget) {
+  const screen = capturePane(paneTarget);
+  if (!screen) return false;
+  // 세션 진행 중 패턴이 없고 shell 프롬프트만 있으면 입력 대기 중
+  const hasSession = PROMPT_RE.test(screen);
+  const hasShell = SHELL_PROMPT_RE.test(screen.split('\n').slice(-5).join('\n'));
+  return !hasSession && hasShell;
+}
+
+function sendToPane(paneTarget, text) {
+  try {
+    execFileSync('tmux', ['send-keys', '-t', paneTarget, text, 'Enter'], {
+      stdio: 'ignore',
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// suspect_done 감지 — heartbeat 루프 매 tick 에서 호출 (M0-1119-H [REQ] 4)
+async function checkSuspectDone(config) {
+  const now = Date.now();
+  for (const hub of hubsToRun) {
+    const b = busy.get(hub);
+    if (!b) {
+      // 허브가 idle 이면 suspect_done 초기화
+      if (suspectDone.has(hub)) suspectDone.delete(hub);
+      continue;
+    }
+
+    const id = b.id;
+    const cfg = config.hubs[hub] || {};
+    const pane = cfg.cmux_pane || `${hub}`;
+
+    // /tmp/<ID>-report.md 존재 확인
+    const reportFile = `/tmp/${id}-report.md`;
+    const reportExists = existsSync(reportFile);
+
+    if (!reportExists) {
+      // 보고서 없으면 suspect_done 아님
+      if (suspectDone.has(hub) && suspectDone.get(hub).id === id) suspectDone.delete(hub);
+      continue;
+    }
+
+    // pane 프롬프트 감지
+    const atPrompt = isPaneAtShellPrompt(pane);
+
+    const sd = suspectDone.get(hub);
+    if (!sd || sd.id !== id) {
+      if (atPrompt) {
+        // 처음 발견 — promptSince 기록
+        suspectDone.set(hub, { id, since: now, promptSince: now, nudgeSent: false });
+        log(hub, `suspect_done 초기 감지 · id=${id} · report=true`);
+      }
+      continue;
+    }
+
+    // 이미 추적 중
+    const promptDuration = now - sd.promptSince;
+    if (promptDuration >= SUSPECT_DONE_PROMPT_MS && !sd.nudgeSent) {
+      // 5분 이상 대기 → 착지 명령 1회 자동 전송
+      log(hub, `suspect_done: ${promptDuration / 1000}초 대기 · 착지 명령 전송 · pane=${pane}`);
+      const sent = sendToPane(pane, '착지 명령을 지금 실행해');
+      sd.nudgeSent = true;
+      sd.nudgeSentAt = now;
+      log(hub, `suspect_done: nudge 전송 ${sent ? 'OK' : 'FAIL'}`);
+    }
+
+    if (sd.nudgeSent) {
+      const sinceNudge = now - (sd.nudgeSentAt || sd.since);
+      const claim = readClaim(id);
+      if (claim && (claim.state === 'done' || claim.state === 'blocked' || claim.state === 'cancelled')) {
+        // 착지 완료 — 초기화
+        log(hub, `suspect_done 해소 · claim=${claim.state}`);
+        suspectDone.delete(hub);
+        busy.delete(hub);
+        continue;
+      }
+      if (sinceNudge >= SUSPECT_DONE_BLOCKED_MS) {
+        // 10분 넘어도 claim 없음 → blocked 로 승격
+        log(hub, `suspect_done: ${sinceNudge / 1000}초 무응답 · blocked(done-not-landed) 승격`);
+        enqueueClaim({ id, state: 'blocked', note: 'done-not-landed', blockedBy: 'kyu' });
+        suspectDone.delete(hub);
+        busy.delete(hub);
+      }
+    }
+  }
+
+  // all.json 에 suspect_done 상태 반영 (writeHeartbeat 호출 전에 suspectDone 맵이 갱신됨)
+}
 
 async function writeHeartbeat(force = false) {
   const now = Date.now();
@@ -315,7 +434,7 @@ async function writeHeartbeat(force = false) {
 
   // CI 건강 상태 조회는 실제 커밋 타이밍에만 (heartbeat_ms 주기)
   if (shouldPush) {
-    lastCiHealth = await fetchCiHealth();
+    lastCiHealth = await fetchCiHealth(undefined, null, REPO_ROOT);
     if (lastCiHealth.error) {
       log('ci-health', `조회 실패: ${lastCiHealth.error}`);
     } else {
@@ -324,26 +443,42 @@ async function writeHeartbeat(force = false) {
     }
   }
 
+  // ci.today 요약 (매 tick 갱신)
+  let ciToday = null;
+  try {
+    ciToday = summarizeToday(REPO_ROOT);
+  } catch {
+    ciToday = null;
+  }
+
+  const hubsPayload = Object.fromEntries(
+    hubsToRun.map((hub) => {
+      const b = busy.get(hub);
+      const sd = suspectDone.get(hub);
+      const entry = b
+        ? { current: b.id, started_at: new Date(b.startedAt).toISOString() }
+        : { current: null };
+      if (sd) {
+        entry.suspect_done = { since: new Date(sd.since).toISOString(), report: true };
+      }
+      return [hub, entry];
+    }),
+  );
+
   const payload = {
     at: ts(),
     pid: process.pid,
     poll_ms: POLL_MS,
-    hubs: Object.fromEntries(
-      hubsToRun.map((hub) => [
-        hub,
-        busy.has(hub)
-          ? { current: busy.get(hub).id, started_at: new Date(busy.get(hub).startedAt).toISOString() }
-          : { current: null },
-      ]),
-    ),
+    hubs: hubsPayload,
     ci: lastCiHealth,
+    'ci.today': ciToday,
   };
   writeFileSync(ALL_HEARTBEAT, JSON.stringify(payload, null, 2) + '\n', 'utf8');
 
   if (!shouldPush) return;
   try {
     git(['add', 'status/runners/all.json']);
-    git(['commit', '-m', `chore(runner): heartbeat · ${hubsToRun.map((h) => `${h}=${payload.hubs[h].current || 'idle'}`).join(' · ')}`]);
+    git(['commit', '-m', `chore(runner): heartbeat · ${hubsToRun.map((h) => `${h}=${hubsPayload[h].current || 'idle'}`).join(' · ')}`]);
     git(['push', 'origin', 'HEAD:main']);
     lastHeartbeatAt = now;
     log('', `heartbeat pushed`);
@@ -366,6 +501,9 @@ async function tick(hubs) {
   try {
     safePull();
     const config = loadConfig();
+
+    // suspect_done 감지 (M0-1119-H)
+    await checkSuspectDone(config);
 
     for (const hub of hubs) {
       if (busy.has(hub)) continue;

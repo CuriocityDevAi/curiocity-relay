@@ -1,32 +1,44 @@
-// scripts/lib/ci-health.mjs · M0-1119-G — storeport CI 건강 상태 조회
+// scripts/lib/ci-health.mjs · M0-1119-H — storeport CI 건강 상태 조회 (runner_kind · jsonl 기록 포함)
 //
 // 사용:
 //   import { fetchCiHealth } from './ci-health.mjs';
-//   const ci = await fetchCiHealth();          // 기본 (gh CLI 사용)
-//   const ci = await fetchCiHealth(execFn);    // 의존성 주입 (테스트용)
+//   const ci = await fetchCiHealth();                        // 기본 (gh CLI 사용)
+//   const ci = await fetchCiHealth(execFn);                  // 의존성 주입 (테스트용)
+//   const ci = await fetchCiHealth(execFn, null, repoRoot);  // jsonl 기록 활성화
 //
 // CLI:
-//   node scripts/lib/ci-health.mjs --once     // 1회 실행 후 JSON pretty-print
+//   node scripts/lib/ci-health.mjs --once     // 1회 실행 후 JSON pretty-print + jsonl 기록
 //
 // 반환 구조:
-//   { at, heavy: { queued, oldest_queued_min, oldest_queued_pr, in_progress: [{pr, job, step, running_min}] },
-//     light: { queued, oldest_queued_min }, runners: { heavy_online, heavy_busy, light_online } | null,
-//     cloud_today: N, alerts: [...] }
+//   { at,
+//     heavy: { queued, queued_prs: [prNum…], oldest_queued_min, oldest_queued_pr,
+//              in_progress: [{repo, pr, job, step, running_min, runner}] },
+//     light: { queued, oldest_queued_min,
+//              in_progress: [{repo, pr, job, step, running_min, runner}] },
+//     runners: { heavy_online, heavy_busy, light_online } | null,
+//     cloud_today: N, today: {mac_heavy:{…}, mac_light:{…}, cloud:{…}, cloud_cost_usd, wasted_min},
+//     alerts: [...] }
 //   실패 시: { error: "..." }
 
 import { execFile } from 'node:child_process';
+import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
+import { classifyRunnerKind, appendJobs, summarizeToday } from './ci-history.mjs';
 
 const execFileAsync = promisify(execFile);
 
 const REPO = 'CuriocityDevAi/storeport';
 const TIMEOUT_MS = 20_000;
 
+const HERE = dirname(fileURLToPath(import.meta.url));
+const DEFAULT_REPO_ROOT = resolve(HERE, '..', '..');
+
 // heavy runner label: storeport 전 workflow 는 [self-hosted, curiocity-mac]
 // light: ubuntu-latest 등 cloud runner (현재 storeport 에 없음 — 미래 대비)
-const HEAVY_LABELS = ['curiocity-mac', 'self-hosted'];
-const LIGHT_LABELS = ['ubuntu-latest', 'ubuntu-22.04', 'ubuntu-20.04'];
+const HEAVY_LABELS = ['curiocity-mac', 'curiocity-mac-heavy', 'self-hosted'];
+const LIGHT_LABELS = ['curiocity-mac-light'];
+const CLOUD_LABELS = ['ubuntu-latest', 'ubuntu-22.04', 'ubuntu-20.04'];
 
 // WIB (Asia/Jakarta) UTC+7 기준 오늘 날짜 경계
 function getTodayWibBoundary() {
@@ -49,12 +61,26 @@ function labelName(l) {
 
 function isHeavyRunner(labels) {
   if (!Array.isArray(labels)) return false;
-  return labels.some((l) => HEAVY_LABELS.includes(labelName(l)));
+  const names = labels.map(labelName);
+  // mac-heavy: curiocity-mac or curiocity-mac-heavy (with or without self-hosted)
+  // legacy: storeport uses [curiocity-mac] without self-hosted prefix
+  if (names.some((n) => n === 'curiocity-mac' || n === 'curiocity-mac-heavy')) return true;
+  // self-hosted + any curiocity-mac-* prefix (future-proof)
+  if (names.includes('self-hosted') && names.some((n) => n.startsWith('curiocity-mac'))) return true;
+  return false;
 }
 
 function isLightRunner(labels) {
   if (!Array.isArray(labels)) return false;
-  return labels.some((l) => LIGHT_LABELS.includes(labelName(l)));
+  const names = labels.map(labelName);
+  // mac-light: curiocity-mac-light label
+  return names.includes('curiocity-mac-light');
+}
+
+function isCloudRunner(labels) {
+  if (!Array.isArray(labels)) return false;
+  const names = labels.map(labelName);
+  return CLOUD_LABELS.some((cl) => names.includes(cl));
 }
 
 function minutesSince(isoString) {
@@ -82,7 +108,7 @@ function extractPr(run) {
   return branch || 'unknown';
 }
 
-export async function fetchCiHealth(execFn = defaultExecFn) {
+export async function fetchCiHealth(execFn = defaultExecFn, _unused = null, repoRoot = null) {
   try {
     const at = new Date().toISOString();
 
@@ -125,28 +151,121 @@ export async function fetchCiHealth(execFn = defaultExecFn) {
     });
 
     const inProgressDetails = [];
+    // completed jobs 수집 (jsonl 기록용)
+    const completedJobRecords = [];
+
     for (const run of heavyInProgress) {
       try {
         const jobsData = await execFn(`repos/${REPO}/actions/runs/${run.id}/jobs?per_page=50`);
-        const activeJobs = (jobsData.jobs || []).filter((j) => j.status === 'in_progress');
+        const jobs = jobsData.jobs || [];
+        const activeJobs = jobs.filter((j) => j.status === 'in_progress');
+        const doneJobs = jobs.filter((j) => j.status === 'completed');
+
         for (const job of activeJobs) {
           const currentStep = job.steps
             ? job.steps.filter((s) => s.status === 'in_progress').map((s) => s.name)[0] || null
             : null;
           inProgressDetails.push({
+            repo: REPO,
             pr: extractPr(run),
             job: job.name,
             step: currentStep,
             running_min: minutesSince(job.started_at),
+            runner: job.runner_name || null,
+          });
+        }
+
+        // 완료된 job 수집
+        for (const job of doneJobs) {
+          if (!job.completed_at) continue;
+          completedJobRecords.push({
+            id: job.id,
+            repo: REPO,
+            pr: (run.pull_requests && run.pull_requests[0]?.number) || null,
+            workflow: run.name || null,
+            job: job.name,
+            runner_kind: classifyRunnerKind(run.runner_labels || [], job.runner_name),
+            runner_name: job.runner_name || null,
+            queued_at: run.created_at || null,
+            started_at: job.started_at || null,
+            completed_at: job.completed_at,
+            wait_min: (run.created_at && job.started_at)
+              ? Math.round((new Date(job.started_at) - new Date(run.created_at)) / 60_000)
+              : null,
+            run_min: (job.started_at && job.completed_at)
+              ? Math.round((new Date(job.completed_at) - new Date(job.started_at)) / 60_000 * 10) / 10
+              : null,
+            conclusion: job.conclusion || null,
           });
         }
       } catch {
         // job 조회 실패 → run 단위만
         inProgressDetails.push({
+          repo: REPO,
           pr: extractPr(run),
           job: run.name || run.workflow_id,
           step: null,
           running_min: minutesSince(run.run_started_at || run.created_at),
+          runner: null,
+        });
+      }
+    }
+
+    // light in_progress
+    const lightInProgress = inProgressRuns.filter((r) => {
+      const labels = r.runner_labels || [];
+      return isLightRunner(labels);
+    });
+    const lightInProgressDetails = [];
+    for (const run of lightInProgress) {
+      try {
+        const jobsData = await execFn(`repos/${REPO}/actions/runs/${run.id}/jobs?per_page=50`);
+        const jobs = jobsData.jobs || [];
+        const activeJobs = jobs.filter((j) => j.status === 'in_progress');
+        const doneJobs = jobs.filter((j) => j.status === 'completed');
+        for (const job of activeJobs) {
+          const currentStep = job.steps
+            ? job.steps.filter((s) => s.status === 'in_progress').map((s) => s.name)[0] || null
+            : null;
+          lightInProgressDetails.push({
+            repo: REPO,
+            pr: extractPr(run),
+            job: job.name,
+            step: currentStep,
+            running_min: minutesSince(job.started_at),
+            runner: job.runner_name || null,
+          });
+        }
+        for (const job of doneJobs) {
+          if (!job.completed_at) continue;
+          completedJobRecords.push({
+            id: job.id,
+            repo: REPO,
+            pr: (run.pull_requests && run.pull_requests[0]?.number) || null,
+            workflow: run.name || null,
+            job: job.name,
+            runner_kind: 'mac-light',
+            runner_name: job.runner_name || null,
+            queued_at: run.created_at || null,
+            started_at: job.started_at || null,
+            completed_at: job.completed_at,
+            wait_min: (run.created_at && job.started_at)
+              ? Math.round((new Date(job.started_at) - new Date(run.created_at)) / 60_000)
+              : null,
+            run_min: (job.started_at && job.completed_at)
+              ? Math.round((new Date(job.completed_at) - new Date(job.started_at)) / 60_000 * 10) / 10
+              : null,
+            conclusion: job.conclusion || null,
+          });
+        }
+      } catch {
+        lightInProgressDetails.push({
+          repo: REPO,
+          pr: extractPr(run),
+          job: run.name || run.workflow_id,
+          step: null,
+          running_min: minutesSince(run.run_started_at || run.created_at),
+          runner: null,
         });
       }
     }
@@ -159,6 +278,15 @@ export async function fetchCiHealth(execFn = defaultExecFn) {
       );
       oldestLightMin = minutesSince(sorted[0].created_at);
     }
+
+    // queued_prs: heavy 대기 중인 PR 번호 목록 (중복 제거)
+    const queuedPrsSet = new Set();
+    for (const run of effectiveHeavyQueued) {
+      if (run.pull_requests && run.pull_requests.length > 0) {
+        queuedPrsSet.add(run.pull_requests[0].number);
+      }
+    }
+    const queued_prs = [...queuedPrsSet];
 
     // runners API (권한 없을 수 있음)
     let runners = null;
@@ -176,18 +304,36 @@ export async function fetchCiHealth(execFn = defaultExecFn) {
       runners = null;
     }
 
-    // cloud_today: ubuntu runner 로 돈 heavy job 수 (WIB 오늘)
+    // cloud_today: cloud runner (ubuntu) 로 돈 job 수 (WIB 오늘)
     const todayBoundary = getTodayWibBoundary();
     const cloudToday = [...queuedRuns, ...inProgressRuns].filter((r) => {
       const labels = r.runner_labels || [];
-      const isCloud = isLightRunner(labels);
+      const isCloud = isCloudRunner(labels);
       const created = new Date(r.created_at);
       return isCloud && created >= todayBoundary;
     }).length;
 
+    // jsonl 기록 (repoRoot 가 있을 때만)
+    const effectiveRepoRoot = repoRoot || DEFAULT_REPO_ROOT;
+    let jsonlAdded = 0;
+    if (completedJobRecords.length > 0) {
+      try {
+        jsonlAdded = appendJobs(effectiveRepoRoot, completedJobRecords);
+      } catch (e) {
+        // jsonl 기록 실패는 CI health 결과에 영향 주지 않음
+      }
+    }
+
+    // today 요약 (ci-history 에서)
+    let today = null;
+    try {
+      today = summarizeToday(effectiveRepoRoot);
+    } catch {
+      today = null;
+    }
+
     // alerts
     const alerts = [];
-    const now = Date.now();
 
     // queue_wait: heavy 대기 15분 초과
     if (oldestQueuedMin !== null && oldestQueuedMin > 15) {
@@ -215,6 +361,7 @@ export async function fetchCiHealth(execFn = defaultExecFn) {
       at,
       heavy: {
         queued: effectiveHeavyQueued.length,
+        queued_prs,
         oldest_queued_min: oldestQueuedMin,
         oldest_queued_pr: oldestQueuedPr,
         in_progress: inProgressDetails,
@@ -222,9 +369,12 @@ export async function fetchCiHealth(execFn = defaultExecFn) {
       light: {
         queued: lightQueued.length,
         oldest_queued_min: oldestLightMin,
+        in_progress: lightInProgressDetails,
       },
       runners,
       cloud_today: cloudToday,
+      today,
+      jsonl_added: jsonlAdded,
       alerts,
     };
   } catch (e) {
@@ -234,7 +384,10 @@ export async function fetchCiHealth(execFn = defaultExecFn) {
 
 // CLI --once
 if (process.argv.includes('--once')) {
-  fetchCiHealth().then((result) => {
+  fetchCiHealth(undefined, null, DEFAULT_REPO_ROOT).then((result) => {
     process.stdout.write(JSON.stringify(result, null, 2) + '\n');
+    if (result.jsonl_added > 0) {
+      process.stderr.write(`[ci-health --once] jsonl_added=${result.jsonl_added}\n`);
+    }
   });
 }

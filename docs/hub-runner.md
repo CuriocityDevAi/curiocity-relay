@@ -1,5 +1,9 @@
 # Hub Runner · 큐 자동 투입 (M1-1105-S / Y · 단일 프로세스)
 
+> **v7.6 (M0-1119-H)**: CI 이력 jsonl 기록 · runner_kind 분류 · ci.today 요약 · suspect_done 감지.
+>
+> **v7.5 (M0-1119-G)**: heartbeat ci 블록 (storeport CI 건강 상태 · `ci.heavy.in_progress[].runner` · `ci.heavy.queued_prs`).
+>
 > **v3 (M1-1105-Y)**: 허브별 모델 (`hubs.<hub>.model`, R0/M2=sonnet · M0/M1/M3=opus) · 60 분 상한 (`run_timeout_min`, 초과 시 claim blocked note "timeout 60m" blocked_by=oke) · heartbeat 30 분 (`heartbeat_min`, 로컬 `status/runners/all.json` 은 매 tick 갱신 · git commit/push 만 30 분) · `--status` 에 model/elapsed/remaining · cmux workspace 이름 `<hub> · <ID>`. install.sh TARGET=`hub-runner-v3.mjs`, 실패 시 v2 자동 롤백.
 
 **목적**: 오케가 `queue/<hub>/<ID>.md` 로 발부한 프롬프트를 Mac 러너 1 프로세스가 picking → `claude -p <본문> --dangerously-skip-permissions` 로 **허브 리포 폴더에서** 실행 → `status/claims/<ID>.json` 자동 업데이트. Kyu 수동 투입 없이 24h 돌음.
@@ -57,7 +61,39 @@ tail -f ~/.hub-runner/launchd.err.log      # 작동 확인
    - exit 0 → `done · 로그: ...`
    - exit N → `blocked`, payload 에 `blocked_by:"kyu"`, note = `runner exit N · 로그: ...`.
 6. claim-op 큐는 메인 루프가 **1 개씩 drain** — git commit 직렬화.
-7. 5 분마다 `status/runners/all.json` 1 커밋 (`chore(runner): heartbeat · m0=... · m1=... · ...`).
+7. 5 분마다 `status/runners/all.json` 1 커밋 (`chore(runner): heartbeat · m0=... · m1=... · ...`). ci 블록 + `ci.today` 블록 포함.
+8. **suspect_done 감지** (M0-1119-H): started 허브가 cmux 창 프롬프트 5분+ · `/tmp/<ID>-report.md` 존재 → `착지 명령을 지금 실행해` 1회 tmux send-keys. 10분 내 claim 없으면 `blocked (done-not-landed)` 승격.
+
+---
+
+## CI 이력 · 러너 종류 · 비용 (M0-1119-H)
+
+heartbeat 마다 GitHub API 에서 완료된 job 을 `status/ci/<YYYY-MM-DD WIB>.jsonl` 에 기록 (중복 방지 · job id 기준).
+
+**runner_kind 분류**:
+
+| runner_kind | 조건 |
+|-------------|------|
+| `mac-heavy` | runner_name 에 `curiocity-mac-heavy` / `MacBook` / `-M1` 포함 OR labels 에 `curiocity-mac` |
+| `mac-light`  | runner_name 에 `curiocity-mac-light` 포함 OR labels 에 `curiocity-mac-light` |
+| `cloud`      | 그 외 (ubuntu-latest 등) |
+
+**jsonl 필드**: `{id, repo, pr, workflow, job, runner_kind, runner_name, queued_at, started_at, completed_at, wait_min, run_min, conclusion}`
+
+**ci.today 요약** (`all.json` 의 `ci.today` 키):
+
+```json
+{
+  "mac-heavy": { "jobs": N, "avg_wait_min": X, "avg_run_min": Y, "success_rate": Z, "run_min_total": T },
+  "mac-light":  { ... },
+  "cloud":      { ... },
+  "cloud_cost_usd": C,
+  "wasted_min": W
+}
+```
+
+**비용 계산**: ubuntu (cloud) 러너 한정 · `ceil(run_min) × $0.008` per job.
+**wasted_min**: `conclusion === "cancelled"` 인 job 의 `run_min` 합.
 
 ---
 
@@ -96,12 +132,16 @@ node scripts/hub-runner.mjs --hub m2          # 단일 허브 (디버그)
 ```
 curiocity-relay/
 ├─ queue/<hub>/<ID>.md              ← 오케 발부
-├─ scripts/hub-runner.mjs           ← 러너 (단일 프로세스 --all)
+├─ scripts/hub-runner.mjs           ← 러너 (단일 프로세스 --all) v7.6
+├─ scripts/hub-runner-v7.6.mjs      ← 버전 사본 (v7.6 = M0-1119-H)
+├─ scripts/lib/ci-health.mjs        ← CI 건강 상태 조회 (runner 필드 · queued_prs)
+├─ scripts/lib/ci-history.mjs       ← CI 이력 jsonl + today 요약 + 비용 계산 (M0-1119-H)
 ├─ scripts/hub-runner-install.sh    ← launchd 설치 (인자 없음 = 전체)
 ├─ scripts/hub-runner-uninstall.sh  ← launchd 제거 (단일 + 레거시 plist 전부)
 ├─ scripts/claim.mjs                ← 라운드 state 1 줄 + --blocked-by 지원 (M1-1105-S)
 ├─ status/claims/<ID>.json          ← 라운드 state (started/blocked/done/cancelled)
-├─ status/runners/all.json          ← 러너 heartbeat (단일 파일)
+├─ status/runners/all.json          ← 러너 heartbeat (단일 파일 · ci + ci.today 포함)
+├─ status/ci/<YYYY-MM-DD WIB>.jsonl ← 완료된 CI job 이력 (날짜별 · M0-1119-H)
 ├─ status/runner-config.json        ← 허브별 cwd 지도 (M1-1105-S)
 └─ docs/hub-runner.md               ← 이 문서
 ```
