@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T10:50:22.259Z",
+  "at": "2026-11-19T10:55:58.276Z",
   "pid": 42106,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -50,11 +50,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.67,
-    "compressed_gb": 4.69,
-    "swap_used_gb": 8.73,
+    "used_gb": 15.8,
+    "compressed_gb": 5.42,
+    "swap_used_gb": 9.51,
     "pressure": "normal",
-    "at": "2026-11-19T10:49:47.578Z"
+    "at": "2026-11-19T10:55:23.622Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -62,30 +62,30 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T10:49:44.009Z",
+      "at": "2026-11-19T10:55:17.459Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 14,
+      "api_calls": 16,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 2,
+        "queued": 1,
         "queued_prs": [
           398
         ],
-        "oldest_queued_min": 228,
-        "oldest_queued_pr": "ci/M2-1119-J-one-heavy",
+        "oldest_queued_min": 53,
+        "oldest_queued_pr": "#398",
         "in_progress": [
           {
             "repo": "CuriocityDevAi/storeport",
             "pr": "main",
             "job": "pos-integration",
-            "step": "Set up job",
-            "running_min": 1,
+            "step": "Run POS integration tests",
+            "running_min": 7,
             "runner": "Youngkyus-MacBook-Pro-M1",
             "kind": "mac-heavy"
           }
@@ -100,10 +100,28 @@
         {
           "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
           "pr": "#207",
-          "job": "playwright",
-          "step": "Run Playwright harnesses",
-          "running_min": 6,
-          "runner": "GitHub Actions 1000007361",
+          "job": "flow-tests",
+          "step": "Install deps",
+          "running_min": 0,
+          "runner": "GitHub Actions 1000007364",
+          "kind": "cloud"
+        },
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#207",
+          "job": "assertions",
+          "step": "Install deps",
+          "running_min": 0,
+          "runner": "GitHub Actions 1000007365",
+          "kind": "cloud"
+        },
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#207",
+          "job": "lint",
+          "step": "Run npm ci --legacy-peer-deps",
+          "running_min": 1,
+          "runner": "GitHub Actions 1000007362",
           "kind": "cloud"
         }
       ],
@@ -112,14 +130,14 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 10,
       "today": {
         "mac-heavy": {
-          "jobs": 86,
-          "avg_wait_min": 2.8,
-          "avg_run_min": 3.4,
-          "success_rate": 27.9,
-          "run_min_total": 293.7
+          "jobs": 87,
+          "avg_wait_min": 2.7,
+          "avg_run_min": 6,
+          "success_rate": 27.6,
+          "run_min_total": 526.2
         },
         "mac-light": {
           "jobs": 156,
@@ -129,25 +147,25 @@
           "run_min_total": 50.29999999999999
         },
         "cloud": {
-          "jobs": 185,
+          "jobs": 195,
           "avg_wait_min": 0,
-          "avg_run_min": 2.3,
-          "success_rate": 67.6,
-          "run_min_total": 432.0000000000002
+          "avg_run_min": 2.4,
+          "success_rate": 67.7,
+          "run_min_total": 472.80000000000035
         },
-        "cloud_cost_est_usd": 4.328,
+        "cloud_cost_est_usd": 4.704,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 221.79999999999987
+        "wasted_min": 465.0999999999999
       },
-      "jsonl_added": 6,
+      "jsonl_added": 11,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 228m (ci/M2-1119-J-one-heavy)"
+          "detail": "oldest heavy queued 53m (#398)"
         }
       ]
     },
-    "took_ms": 21608,
-    "at": "2026-11-19T10:50:02.697Z"
+    "took_ms": 27291,
+    "at": "2026-11-19T10:55:41.598Z"
   }
 }
