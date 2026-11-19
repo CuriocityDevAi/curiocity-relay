@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T17:03:31.793Z",
+  "at": "2026-11-19T17:09:23.101Z",
   "pid": 63036,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -37,11 +37,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.84,
-    "compressed_gb": 4.98,
-    "swap_used_gb": 11.22,
+    "used_gb": 15.86,
+    "compressed_gb": 4.45,
+    "swap_used_gb": 11.04,
     "pressure": "normal",
-    "at": "2026-11-19T17:02:55.488Z"
+    "at": "2026-11-19T17:08:35.051Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -49,31 +49,29 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T17:02:53.615Z",
+      "at": "2026-11-19T17:07:56.499Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 12,
+      "api_calls": 14,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 1,
-        "queued_prs": [
-          402
-        ],
-        "oldest_queued_min": 3,
-        "oldest_queued_pr": "storeport:#402",
+        "queued": 0,
+        "queued_prs": [],
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
         "in_progress": [
           {
             "repo": "CuriocityDevAi/storeport",
-            "pr": "main",
-            "pr_display": "storeport:main",
+            "pr": "#402",
+            "pr_display": "storeport:#402",
             "job": "heavy-mac",
-            "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 10,
+            "step": "Checkout",
+            "running_min": 0,
             "runner": "Youngkyus-MacBook-Pro-M1",
             "kind": "mac-heavy"
           }
@@ -85,7 +83,58 @@
         "oldest_queued_pr": null,
         "in_progress": []
       },
-      "cloud_in_progress": [],
+      "cloud_in_progress": [
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#208",
+          "pr_display": "fork:#208",
+          "job": "flow-tests",
+          "step": "Install deps",
+          "running_min": 1,
+          "runner": "GitHub Actions 1000007493",
+          "kind": "cloud"
+        },
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#208",
+          "pr_display": "fork:#208",
+          "job": "assertions",
+          "step": "Install deps",
+          "running_min": 1,
+          "runner": "GitHub Actions 1000007494",
+          "kind": "cloud"
+        },
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#208",
+          "pr_display": "fork:#208",
+          "job": "lint",
+          "step": "Run npm ci --legacy-peer-deps",
+          "running_min": 1,
+          "runner": "GitHub Actions 1000007492",
+          "kind": "cloud"
+        },
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#207",
+          "pr_display": "fork:#207",
+          "job": "assertions",
+          "step": "Install ImageMagick",
+          "running_min": 1,
+          "runner": "GitHub Actions 1000007491",
+          "kind": "cloud"
+        },
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#207",
+          "pr_display": "fork:#207",
+          "job": "lint",
+          "step": "Post Run actions/checkout@v4",
+          "running_min": 1,
+          "runner": "GitHub Actions 1000007489",
+          "kind": "cloud"
+        }
+      ],
       "runners": {
         "heavy_online": 1,
         "heavy_busy": 1,
@@ -94,11 +143,11 @@
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 0,
+          "jobs": 1,
           "avg_wait_min": 0,
-          "avg_run_min": 0,
-          "success_rate": null,
-          "run_min_total": 0
+          "avg_run_min": 14.7,
+          "success_rate": 100,
+          "run_min_total": 14.7
         },
         "mac-light": {
           "jobs": 2,
@@ -118,11 +167,12 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 2,
-      "alerts": []
+      "jsonl_added": 5,
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 14086,
-    "at": "2026-11-19T17:03:04.882Z"
+    "took_ms": 15149,
+    "at": "2026-11-19T17:08:09.580Z"
   },
   "gh_runner_alert": null
 }
