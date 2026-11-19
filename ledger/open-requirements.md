@@ -214,3 +214,8 @@ R0-CJ-3/4(세금 fallback 마커·다품목 정밀도) · split+QRIS 환불 · /
 - 소유: fork(agilo-medusa-pos-fork) Android adaptive icon · 기준 = M3-1119-N(손님 화면 iOS 아이콘 M 축소) 에서 채택한 비율과 safe zone 규칙 재사용
 - Kyu 18:15 손님 화면 아이콘 비율 선택 = **75%** (CD M = POS M 의 75%) — Android POS 쪽 크기 조정 때 이 비율감 참고
 - 트리거: 다음 Android preview APK 빌드 발부 시 원장 대사에 포함 · 상태: 미착수
+
+## 11-19 21:32 CareAgent Meta 앱 소유 (Kyu 결정)
+- Kyu 원문: "이거를 꼭 soopsok 꺼로 만들지 말고, 그냥 앱이름은 CareAgent 로 하고, 이름은, Curiocity 로 할게."
+- Meta 개발자 앱 = **CareAgent** · 비즈니스 포트폴리오 = **Curiocity** (플랫폼 소유) · 테스트 번호로 시작
+- 후속(오케 메모): 실제 매장 번호 운영 시 매장 WhatsApp 계정을 매장 명의로 둘지(Curiocity 앱이 매장 계정에 연결하는 방식) 그때 Kyu 결정
