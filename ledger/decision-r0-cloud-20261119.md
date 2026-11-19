@@ -21,3 +21,9 @@
 - POS 앱(fork) PR 은 리포 연결 완료(11-19) · 시험 1회 뒤 전환 · 그때까지 Mac R0.
 - Mac R0 = 백업(클라우드 실패 시).
 - 남은 과제: 클라우드 토큰 측정 수단 · 모델 지정(Sonnet) 가능 여부 · 같은 계정 리뷰 이벤트 제약.
+
+## 11:03 WIB 추가 — POS 앱(fork)도 클라우드 R0 전환
+- R0C-1119-F(fork #199 첫 시험): 설치 27초(sentry-cli 다운로드 차단 → `SENTRYCLI_SKIP_DOWNLOAD=1` 필요) · lint · assertions 47/47(ImageMagick 대체 필요) · vitest · flow-tests 전부 클라우드에서 돎 · 총 약 4분 · 가드 탐지 실험까지 수행
+- 클라우드 불가 = iOS 시뮬레이터/Maestro · Metro 실기 → 이건 원래 Kyu 실기 몫
+- 결정(오케 · Kyu "시험 1회 뒤 전환" 범위 안): **POS 앱 PR 리뷰도 오늘부터 클라우드 R0** · Mac R0 = 백업
+- 클라우드 R0 프롬프트 고정 문구: fork 설치 시 `SENTRYCLI_SKIP_DOWNLOAD=1` · assertions 의 ImageMagick 의존 처리
