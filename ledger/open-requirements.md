@@ -208,3 +208,8 @@ R0-CJ-3/4(세금 fallback 마커·다품목 정밀도) · split+QRIS 환불 · /
 - relay: hub-runner **v3**(M1-Y · pid 80967) · claim.mjs · r0/README ⑦ · handoff-20261109.
 
 ### 로드맵 (10-12 · 유지) · 전 제품 공통 · 머지 규칙(R0 APPROVE → squash · chore 직접) · K0/T0/N0 변동 없음.
+
+## 🟡 Android POS 아이콘 M 크기 (Kyu 11-19 17:29 · 급하지 않음 · 다음 Android 재빌드 때 반드시 포함)
+- Kyu 원문: "아까, 깔았었던 MEROS POS 앱(oppo) 도 M 싸이즈가 너무 크게 렌더링되었거든.그래서 급한건 아니니, 나중에 다시 재빌드할때는 M 싸이즈를 줄여서 아이콘 만드는것을 하는것을 잊지말자."
+- 소유: fork(agilo-medusa-pos-fork) Android adaptive icon · 기준 = M3-1119-N(손님 화면 iOS 아이콘 M 축소) 에서 채택한 비율과 safe zone 규칙 재사용
+- 트리거: 다음 Android preview APK 빌드 발부 시 원장 대사에 포함 · 상태: 미착수
