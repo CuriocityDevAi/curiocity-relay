@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T14:06:09.376Z",
+  "at": "2026-11-19T14:11:39.998Z",
   "pid": 49838,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -41,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.88,
-    "compressed_gb": 5.71,
-    "swap_used_gb": 10.17,
+    "used_gb": 15.81,
+    "compressed_gb": 5.9,
+    "swap_used_gb": 9.77,
     "pressure": "normal",
-    "at": "2026-11-19T14:05:30.065Z"
+    "at": "2026-11-19T14:11:06.376Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -53,14 +53,13 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T14:05:27.618Z",
+      "at": "2026-11-19T14:11:01.799Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport",
-        "CuriocityDevAi/agilo-medusa-pos-fork"
+        "CuriocityDevAi/storeport"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 20,
+      "api_calls": 17,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -70,7 +69,7 @@
           400,
           399
         ],
-        "oldest_queued_min": 22,
+        "oldest_queued_min": 27,
         "oldest_queued_pr": "storeport:#401",
         "in_progress": []
       },
@@ -86,7 +85,7 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 10,
+      "cloud_today": 9,
       "today": {
         "mac-heavy": {
           "jobs": 138,
@@ -96,11 +95,11 @@
           "run_min_total": 660.8000000000001
         },
         "mac-light": {
-          "jobs": 228,
+          "jobs": 229,
           "avg_wait_min": 7.6,
           "avg_run_min": 2.2,
-          "success_rate": 86.8,
-          "run_min_total": 492.70000000000016
+          "success_rate": 86.9,
+          "run_min_total": 493.00000000000017
         },
         "cloud": {
           "jobs": 259,
@@ -113,20 +112,20 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 945.9999999999993
       },
-      "jsonl_added": 3,
+      "jsonl_added": 1,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 22m (storeport:#401)"
+          "detail": "oldest heavy queued 27m (storeport:#401)"
         },
         {
           "type": "runner_idle",
-          "detail": "3 queued but 0 in_progress for 22m (storeport:#401)"
+          "detail": "3 queued but 0 in_progress for 27m (storeport:#401)"
         }
       ],
       "partial": true
     },
-    "took_ms": 23058,
-    "at": "2026-11-19T14:05:47.636Z"
+    "took_ms": 22450,
+    "at": "2026-11-19T14:11:21.815Z"
   }
 }
