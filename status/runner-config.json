@@ -10,6 +10,16 @@
   "run_timeout_min": 60,
   "heartbeat_min": 30,
   "model_note": "M1-1105-Y · Kyu 11-09: R0/M2 = sonnet · Kyu 11-10 04:54: M1 sonnet · Kyu 11-10 17:09: M3 sonnet (토큰 절약) · Opus 기본 = M0(돈·재고 서버 로직)만.",
+  "gh_runner_watchdog": {
+    "note": "M0-1119-T · Mac 수면 복귀 후 self-hosted runner 자동 재시작. stuck_threshold_min 분 이상 queued · 0 in_progress 면 svc.sh stop && start. cooldown_ms/max_failures 생략 가능 (기본 30분/2회).",
+    "stuck_threshold_min": 8,
+    "cooldown_ms": 1800000,
+    "max_failures": 2,
+    "runner_paths": {
+      "mac-heavy": "~/actions-runner/svc.sh",
+      "mac-light": "~/actions-runner-light/svc.sh"
+    }
+  },
   "hubs": {
     "m0": {
       "cwd": "/Users/kyu.lee/projects/storeport",
