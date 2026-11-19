@@ -41,6 +41,13 @@
 //         영구 누락. 이제는 min(long.created_at)=T-40m 으로 커서를 clamp.
 //   REQ2 (nit): execFile timeout = min(남은 시간, PER_REPO_TIMEOUT_MS).
 //         남은 시간 ≤ 0 이면 호출 자체를 거부.
+//
+// M0-1119-P (R0 Y CHANGES):
+//   REQ1: partial 경로 커서도 activeMin 을 반영. `partial && earliestUnprocessed`
+//         일 때 커서 = min(earliestUnprocessed, activeMin). activeMin 없으면
+//         earliestUnprocessed 그대로. 재발 차단: long(T-40m 진행 중) + short 12개
+//         (상한 10) → 직전은 커서 = earliestUnprocessed(T-25m) 로만 올려
+//         long(T-40m) 을 다음 tick `created>=T-25m` 필터로 영구 누락.
 
 import { execFile } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
@@ -611,23 +618,23 @@ export async function fetchCiHealth(opts = {}, _legacy = null, _legacyRoot = nul
         if (partial) overallPartial = true;
 
         // Advance cursor per-repo:
-        //   - partial: clamp to earliest unprocessed created_at so we never skip it. (M0-1119-M)
-        //   - else: cursor = min(latestProcessedRunCreatedAt, minActive created_at).
+        //   - partial: clamp to min(earliestUnprocessed, activeMin). (M0-1119-M + M0-1119-P)
+        //   - else: cursor = min(latestProcessedRunCreatedAt, activeMin).
         //     Using run.created_at (not completed_at) plus the active-min clamp guarantees
         //     a concurrent long run is still re-queried next tick; the seen-set prevents
-        //     double-recording of runs we already processed. (M0-1119-O REQ1)
+        //     double-recording of runs we already processed. (M0-1119-O REQ1 · M0-1119-P)
+        const activeMinIso = minActiveByRepo.get(r) || null;
+        const candidates = [];
         if (partial && earliestUnprocessed) {
-          setHistoryCursor(root, r, earliestUnprocessed);
-        } else {
-          const activeMinIso = minActiveByRepo.get(r) || null;
-          const candidates = [];
-          if (latestProcessedRunCreatedAt) candidates.push(latestProcessedRunCreatedAt);
-          if (activeMinIso) candidates.push(activeMinIso);
-          if (candidates.length > 0) {
-            const chosen = candidates.reduce((a, b) =>
-              new Date(a).getTime() <= new Date(b).getTime() ? a : b);
-            setHistoryCursor(root, r, chosen);
-          }
+          candidates.push(earliestUnprocessed);
+        } else if (latestProcessedRunCreatedAt) {
+          candidates.push(latestProcessedRunCreatedAt);
+        }
+        if (activeMinIso) candidates.push(activeMinIso);
+        if (candidates.length > 0) {
+          const chosen = candidates.reduce((a, b) =>
+            new Date(a).getTime() <= new Date(b).getTime() ? a : b);
+          setHistoryCursor(root, r, chosen);
         }
       }
     } catch {

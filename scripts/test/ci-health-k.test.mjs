@@ -21,6 +21,10 @@
 //   O-2a: computeExecTimeoutMs — 남은 시간 < 10s → 그 값으로 clamp (REQ2 nit)
 //   O-2b: computeExecTimeoutMs — 남은 시간 ≥ 10s → 10s cap (REQ2 nit)
 //   O-2c: computeExecTimeoutMs — 남은 시간 ≤ 0 → 0 (호출 거부 신호) (REQ2 nit)
+//
+// 커버리지 (P-*, M0-1119-P R0 3차 CHANGES):
+//   P-1: partial 경로도 activeMin 반영 — long(진행 중) + shorts > 상한 →
+//        tick1 커서 ≤ long.created_at · tick2 에 long 기록됨 (REQ1)
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -761,4 +765,162 @@ test('O-2c: computeExecTimeoutMs — 남은 시간 ≤ 0 → 0 (호출 거부 �
 test('O-2d: computeExecTimeoutMs — deadline null → full max', () => {
   assert.equal(computeExecTimeoutMs(null), 10_000);
   assert.equal(computeExecTimeoutMs(undefined), 10_000);
+});
+
+// ---- P-1: Partial path also clamps to activeMin (M0-1119-P R0 Y CHANGES) ----
+//
+// R0C-1119-Y 재현 시나리오:
+//   - long run: T-40m 생성, 진행 중
+//   - short run × 12: T-35m~T-24m 생성, 모두 완료
+//   - maxRuns = 10 → tick1 은 10개 처리 · 2개 미처리 (earliestUnprocessed = T-25m)
+//   - 직전 구현은 `partial && earliestUnprocessed` 이면 커서 = earliestUnprocessed(T-25m)
+//     만 사용 → tick2 에 `created>=T-25m` 필터가 long(T-40m 생성)을 제외 → 영구 누락.
+//   - 수정: 커서 = min(earliestUnprocessed, activeMin). activeMin = T-40m 이므로
+//     커서 ≤ T-40m. tick2 에 long 이 조회·기록된다.
+
+test('P-1: partial + active 겹침 — 커서 ≤ long.created_at · tick2 에 long 기록', async () => {
+  _resetCiHealthCache();
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-p1-'));
+
+  const longRun = {
+    id: 110001,
+    name: 'long-ci',
+    status: 'in_progress',
+    created_at: minsAgo(40),
+    pull_requests: [{ number: 701 }],
+    head_branch: 'feat/long',
+    repository: { full_name: MAIN_REPO },
+  };
+  const longJobsInProgress = {
+    jobs: [{
+      id: 1100010, name: 'heavy-mac', status: 'in_progress',
+      labels: ['self-hosted', 'curiocity-mac'], runner_name: 'youngs-mac',
+      created_at: longRun.created_at, started_at: minsAgo(38), completed_at: null,
+    }],
+  };
+
+  // 12 short runs: ages (minsAgo) 35,34,...,24 (ascending created_at → most recent = T-24m)
+  const shortRuns = [];
+  for (let i = 0; i < 12; i++) {
+    const ageMin = 35 - i; // 35, 34, ..., 24
+    shortRuns.push({
+      id: 110100 + i,
+      name: `short-ci-${i}`,
+      status: 'completed',
+      created_at: minsAgo(ageMin),
+      updated_at: minsAgo(Math.max(ageMin - 5, 1)),
+      pull_requests: [{ number: 800 + i }],
+      head_branch: `feat/short-${i}`,
+      repository: { full_name: MAIN_REPO },
+    });
+  }
+  const shortJobsById = {};
+  for (const r of shortRuns) {
+    shortJobsById[r.id] = {
+      jobs: [{
+        id: r.id * 10, name: 'build', status: 'completed',
+        labels: ['ubuntu-latest'], runner_name: 'GitHub Actions 1',
+        created_at: r.created_at, started_at: r.created_at,
+        completed_at: r.updated_at, conclusion: 'success',
+      }],
+    };
+  }
+
+  const applyCreatedFilter = (iso, list) => {
+    if (!iso) return list;
+    const since = new Date(iso).getTime();
+    return list.filter((r) => new Date(r.created_at).getTime() >= since);
+  };
+
+  // ---- tick1 ----
+  const execFn1 = async (endpoint) => {
+    if (!endpoint.includes(MAIN_REPO)) {
+      if (endpoint.includes('actions/runs')) return { workflow_runs: [] };
+      if (endpoint.includes('actions/runners')) return { runners: [] };
+      return {};
+    }
+    if (endpoint.includes('actions/runs?status=queued')) return { workflow_runs: [] };
+    if (endpoint.includes('actions/runs?status=in_progress')) return { workflow_runs: [longRun] };
+    if (endpoint.includes('actions/runners')) return { runners: [] };
+    if (endpoint.includes('actions/runs?status=completed')) {
+      return { workflow_runs: shortRuns };
+    }
+    if (endpoint.includes(`actions/runs/${longRun.id}/jobs`)) return longJobsInProgress;
+    for (const r of shortRuns) {
+      if (endpoint.includes(`actions/runs/${r.id}/jobs`)) return shortJobsById[r.id];
+    }
+    return {};
+  };
+
+  const r1 = await fetchCiHealth({
+    execFn: execFn1,
+    repoRoot: tmpRoot,
+    repos: [MAIN_REPO],
+    overallDeadlineMs: 30_000,
+  });
+  assert.ok(!r1.error, `tick1 error: ${r1.error}`);
+  assert.equal(r1.partial, true, 'tick1 partial=true (12 > maxRuns 10)');
+  assert.equal(r1.jsonl_added, 10, 'tick1 records 10 short runs (maxRuns cap)');
+
+  const cursorPath = join(tmpRoot, '.cache', 'ci-history-cursor.json');
+  assert.ok(existsSync(cursorPath), 'cursor file exists after tick1');
+  const cursor1 = JSON.parse(readFileSync(cursorPath, 'utf8'));
+  const longCreatedMs = new Date(longRun.created_at).getTime();
+  const cursor1Ms = new Date(cursor1[MAIN_REPO]).getTime();
+  assert.ok(
+    cursor1Ms <= longCreatedMs,
+    `cursor ${cursor1[MAIN_REPO]} must be ≤ long.created_at ${longRun.created_at} (partial path must honor activeMin)`,
+  );
+
+  // ---- tick2: long completed, 2 remaining shorts still there + 10 seen shorts ----
+  const longRunCompleted = {
+    ...longRun,
+    status: 'completed',
+    updated_at: new Date(Date.now() - 2 * 60_000).toISOString(),
+  };
+  const longJobsCompleted = {
+    jobs: [{
+      id: 1100010, name: 'heavy-mac', status: 'completed',
+      labels: ['self-hosted', 'curiocity-mac'], runner_name: 'youngs-mac',
+      created_at: longRun.created_at, started_at: minsAgo(38),
+      completed_at: longRunCompleted.updated_at, conclusion: 'success',
+    }],
+  };
+
+  const execFn2 = async (endpoint) => {
+    if (!endpoint.includes(MAIN_REPO)) {
+      if (endpoint.includes('actions/runs')) return { workflow_runs: [] };
+      if (endpoint.includes('actions/runners')) return { runners: [] };
+      return {};
+    }
+    if (endpoint.includes('actions/runs?status=queued')) return { workflow_runs: [] };
+    if (endpoint.includes('actions/runs?status=in_progress')) return { workflow_runs: [] };
+    if (endpoint.includes('actions/runners')) return { runners: [] };
+    if (endpoint.includes('actions/runs?status=completed')) {
+      const m = endpoint.match(/created=>=([^&]+)/);
+      const sinceIso = m ? decodeURIComponent(m[1]) : null;
+      const all = [longRunCompleted, ...shortRuns];
+      return { workflow_runs: applyCreatedFilter(sinceIso, all) };
+    }
+    if (endpoint.includes(`actions/runs/${longRun.id}/jobs`)) return longJobsCompleted;
+    for (const r of shortRuns) {
+      if (endpoint.includes(`actions/runs/${r.id}/jobs`)) return shortJobsById[r.id];
+    }
+    return {};
+  };
+
+  const r2 = await fetchCiHealth({
+    execFn: execFn2,
+    repoRoot: tmpRoot,
+    repos: [MAIN_REPO],
+    overallDeadlineMs: 30_000,
+  });
+  assert.ok(!r2.error, `tick2 error: ${r2.error}`);
+  // long (new) + 2 remaining shorts (unprocessed in tick1, still unseen) must be recorded.
+  // The 10 shorts already in seen-set are skipped by runKey check.
+  assert.equal(
+    r2.jsonl_added,
+    3,
+    `tick2 must record long + 2 remaining shorts (regression: direct bug caused long=0). got ${r2.jsonl_added}`,
+  );
 });
