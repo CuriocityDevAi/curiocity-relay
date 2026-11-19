@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T14:30:38.522Z",
+  "at": "2026-11-19T14:35:44.307Z",
   "pid": 49838,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -35,11 +35,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.72,
-    "compressed_gb": 5.32,
-    "swap_used_gb": 10.8,
+    "used_gb": 15.8,
+    "compressed_gb": 5.57,
+    "swap_used_gb": 11.76,
     "pressure": "normal",
-    "at": "2026-11-19T14:30:29.544Z"
+    "at": "2026-11-19T14:35:11.231Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -47,31 +47,31 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T14:27:25.385Z",
+      "at": "2026-11-19T14:32:49.836Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport"
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 17,
+      "api_calls": 22,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 2,
+        "queued": 1,
         "queued_prs": [
-          399,
           400
         ],
-        "oldest_queued_min": 40,
-        "oldest_queued_pr": "storeport:#399",
+        "oldest_queued_min": 8,
+        "oldest_queued_pr": "storeport:#400",
         "in_progress": [
           {
             "repo": "CuriocityDevAi/storeport",
-            "pr": "#401",
-            "pr_display": "storeport:#401",
+            "pr": "#399",
+            "pr_display": "storeport:#399",
             "job": "pos-integration",
-            "step": "Run POS integration tests",
-            "running_min": 14,
+            "step": "Install (frozen-lockfile)",
+            "running_min": 2,
             "runner": "Youngkyus-MacBook-Pro-M1",
             "kind": "mac-heavy"
           }
@@ -83,49 +83,55 @@
         "oldest_queued_pr": null,
         "in_progress": []
       },
-      "cloud_in_progress": [],
+      "cloud_in_progress": [
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#207",
+          "pr_display": "fork:#207",
+          "job": "assertions",
+          "step": "Run assertions",
+          "running_min": 3,
+          "runner": "GitHub Actions 1000007455",
+          "kind": "cloud"
+        }
+      ],
       "runners": {
         "heavy_online": 1,
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 9,
+      "cloud_today": 12,
       "today": {
         "mac-heavy": {
-          "jobs": 146,
-          "avg_wait_min": 3.8,
-          "avg_run_min": 5.2,
-          "success_rate": 28.1,
-          "run_min_total": 763.9000000000001
+          "jobs": 152,
+          "avg_wait_min": 4,
+          "avg_run_min": 5.3,
+          "success_rate": 28.3,
+          "run_min_total": 801.3000000000001
         },
         "mac-light": {
-          "jobs": 236,
-          "avg_wait_min": 7.4,
+          "jobs": 239,
+          "avg_wait_min": 7.3,
           "avg_run_min": 2.1,
-          "success_rate": 87.3,
-          "run_min_total": 495.8000000000002
+          "success_rate": 87.4,
+          "run_min_total": 497.00000000000017
         },
         "cloud": {
-          "jobs": 267,
+          "jobs": 278,
           "avg_wait_min": 0,
           "avg_run_min": 2.3,
-          "success_rate": 68.5,
-          "run_min_total": 621.8000000000009
+          "success_rate": 69.1,
+          "run_min_total": 649.9000000000009
         },
-        "cloud_cost_est_usd": 6.232,
+        "cloud_cost_est_usd": 6.512,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 1046.5999999999992
+        "wasted_min": 1061.5999999999992
       },
-      "jsonl_added": 17,
-      "alerts": [
-        {
-          "type": "queue_wait",
-          "detail": "oldest heavy queued 40m (storeport:#399)"
-        }
-      ],
+      "jsonl_added": 20,
+      "alerts": [],
       "partial": true
     },
-    "took_ms": 23746,
-    "at": "2026-11-19T14:27:45.682Z"
+    "took_ms": 23864,
+    "at": "2026-11-19T14:33:09.868Z"
   }
 }
