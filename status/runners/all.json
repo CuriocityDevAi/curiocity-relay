@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T11:16:02.582Z",
+  "at": "2026-11-19T11:18:10.739Z",
   "pid": 42106,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -44,11 +44,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.84,
-    "compressed_gb": 5.89,
-    "swap_used_gb": 10,
+    "used_gb": 15.26,
+    "compressed_gb": 4.21,
+    "swap_used_gb": 9.89,
     "pressure": "normal",
-    "at": "2026-11-19T11:15:49.633Z"
+    "at": "2026-11-19T11:17:37.233Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -56,7 +56,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T11:11:13.082Z",
+      "at": "2026-11-19T11:16:20.156Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -72,7 +72,7 @@
           398,
           399
         ],
-        "oldest_queued_min": 15,
+        "oldest_queued_min": 21,
         "oldest_queued_pr": "#398",
         "in_progress": []
       },
@@ -87,7 +87,7 @@
           "pr": "#207",
           "job": "playwright",
           "step": "Run Playwright harnesses",
-          "running_min": 11,
+          "running_min": 16,
           "runner": "GitHub Actions 1000007374",
           "kind": "cloud"
         }
@@ -127,12 +127,16 @@
       "jsonl_added": 0,
       "alerts": [
         {
+          "type": "queue_wait",
+          "detail": "oldest heavy queued 21m (#398)"
+        },
+        {
           "type": "runner_idle",
-          "detail": "2 queued but 0 in_progress for 15m"
+          "detail": "2 queued but 0 in_progress for 21m"
         }
       ]
     },
-    "took_ms": 30371,
-    "at": "2026-11-19T11:11:40.446Z"
+    "took_ms": 29365,
+    "at": "2026-11-19T11:16:46.049Z"
   }
 }
