@@ -13,6 +13,14 @@
 //   M-2c: maxRuns 상한에 걸려 처리 못한 run 있으면 커서는 그 run 앞에서 멈춤 · partial (REQ2)
 //   M-3a: oldest_queued_pr 에 repo 표시 (예: `fork:ci/…`) (REQ3)
 //   M-3b: queued 분류·대기 시간은 완료되지 않은 job 의 created_at 기준 (REQ3)
+//
+// 커버리지 (O-*, M0-1119-O R0 재리뷰 CHANGES):
+//   O-1a: long/short 겹침 — tick1 cursor ≤ long.created_at, tick2 에 long run 기록됨 (REQ1)
+//   O-1b: completed 만 있고 active 없을 때 cursor = max 처리 run.created_at (REQ1)
+//   O-1c: active 만 있고 completed 없을 때 cursor = min active.created_at (REQ1)
+//   O-2a: computeExecTimeoutMs — 남은 시간 < 10s → 그 값으로 clamp (REQ2 nit)
+//   O-2b: computeExecTimeoutMs — 남은 시간 ≥ 10s → 10s cap (REQ2 nit)
+//   O-2c: computeExecTimeoutMs — 남은 시간 ≤ 0 → 0 (호출 거부 신호) (REQ2 nit)
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -28,6 +36,7 @@ import {
   updateHistoryCursor,
   setHistoryCursor,
   repoShort,
+  computeExecTimeoutMs,
   _resetCiHealthCache,
 } from '../lib/ci-health.mjs';
 
@@ -501,4 +510,255 @@ test('M-3b: queued 분류·대기 시간 — 완료된 job 제외 · 미완 job 
     `queued_min ${r.heavy.oldest_queued_min}m should be ~5m (incomplete job), not ~90m`);
   assert.ok(r.heavy.oldest_queued_min >= 4,
     `queued_min ${r.heavy.oldest_queued_min}m should be ≥ 4m`);
+});
+
+// ---- O-1: Long/short overlap regression (M0-1119-O REQ1) ----
+//
+// R0C-1119-V ② 재현 시나리오:
+//   - long run: T-40m 생성, 진행 중
+//   - short run: T-35m 생성, T-30m 완료
+//   - tick1: short 만 기록. 직전 구현은 cursor = short.completed_at (T-30m) → tick2 에
+//     `created>=T-30m` 필터가 long(T-40m 생성)을 제외해 영구 누락.
+//   - 수정: cursor = min(처리한 run 의 최대 run.created_at, 상태 단계 active 의 최소
+//     run.created_at) · seen-set 이 중복 방지 · 두 번째 tick 에 long run 기록.
+
+test('O-1a: long/short 겹침 — cursor ≤ long.created_at · 두 번째 tick 에 long 기록', async () => {
+  _resetCiHealthCache();
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-o1a-'));
+
+  const longRun = {
+    id: 90001,
+    name: 'long-ci',
+    status: 'in_progress',
+    created_at: minsAgo(40),
+    pull_requests: [{ number: 501 }],
+    head_branch: 'feat/long',
+    repository: { full_name: MAIN_REPO },
+  };
+  const shortRun = {
+    id: 90002,
+    name: 'short-ci',
+    status: 'completed',
+    created_at: minsAgo(35),
+    updated_at: minsAgo(30),
+    pull_requests: [{ number: 502 }],
+    head_branch: 'feat/short',
+    repository: { full_name: MAIN_REPO },
+  };
+
+  const shortJobs = {
+    jobs: [{
+      id: 900020,
+      name: 'build',
+      status: 'completed',
+      labels: ['ubuntu-latest'],
+      runner_name: 'GitHub Actions 1',
+      created_at: shortRun.created_at,
+      started_at: shortRun.created_at,
+      completed_at: shortRun.updated_at,
+      conclusion: 'success',
+    }],
+  };
+  const longJobsInProgress = {
+    jobs: [{
+      id: 900010,
+      name: 'heavy-mac',
+      status: 'in_progress',
+      labels: ['self-hosted', 'curiocity-mac'],
+      runner_name: 'youngs-mac',
+      created_at: longRun.created_at,
+      started_at: minsAgo(38),
+      completed_at: null,
+    }],
+  };
+
+  // ---- tick1 ----
+  const execFn1 = async (endpoint) => {
+    if (!endpoint.includes(MAIN_REPO)) {
+      if (endpoint.includes('actions/runs')) return { workflow_runs: [] };
+      if (endpoint.includes('actions/runners')) return { runners: [] };
+      return {};
+    }
+    if (endpoint.includes('actions/runs?status=queued')) return { workflow_runs: [] };
+    if (endpoint.includes('actions/runs?status=in_progress')) return { workflow_runs: [longRun] };
+    if (endpoint.includes('actions/runs?status=completed')) return { workflow_runs: [shortRun] };
+    if (endpoint.includes('actions/runners')) return { runners: [] };
+    if (endpoint.includes(`actions/runs/${shortRun.id}/jobs`)) return shortJobs;
+    if (endpoint.includes(`actions/runs/${longRun.id}/jobs`)) return longJobsInProgress;
+    return {};
+  };
+
+  const r1 = await fetchCiHealth({
+    execFn: execFn1,
+    repoRoot: tmpRoot,
+    repos: [MAIN_REPO],
+    overallDeadlineMs: 30_000,
+  });
+  assert.ok(!r1.error, `tick1 error: ${r1.error}`);
+  assert.equal(r1.jsonl_added, 1, 'tick1: only short run recorded');
+
+  const cursorPath = join(tmpRoot, '.cache', 'ci-history-cursor.json');
+  assert.ok(existsSync(cursorPath), 'cursor file exists after tick1');
+  const cursor1 = JSON.parse(readFileSync(cursorPath, 'utf8'));
+  const longCreatedMs = new Date(longRun.created_at).getTime();
+  const cursor1Ms = new Date(cursor1[MAIN_REPO]).getTime();
+  assert.ok(
+    cursor1Ms <= longCreatedMs,
+    `cursor ${cursor1[MAIN_REPO]} must be ≤ long.created_at ${longRun.created_at}`,
+  );
+
+  // ---- tick2: long run has completed. seen-set still holds short. ----
+  const longRunCompleted = {
+    ...longRun,
+    status: 'completed',
+    updated_at: new Date(Date.now() - 2 * 60_000).toISOString(),
+  };
+  const longJobsCompleted = {
+    jobs: [{
+      id: 900010,
+      name: 'heavy-mac',
+      status: 'completed',
+      labels: ['self-hosted', 'curiocity-mac'],
+      runner_name: 'youngs-mac',
+      created_at: longRun.created_at,
+      started_at: minsAgo(38),
+      completed_at: longRunCompleted.updated_at,
+      conclusion: 'success',
+    }],
+  };
+
+  const applyCreatedFilter = (iso, list) => {
+    if (!iso) return list;
+    const since = new Date(iso).getTime();
+    return list.filter((r) => new Date(r.created_at).getTime() >= since);
+  };
+
+  const execFn2 = async (endpoint) => {
+    if (!endpoint.includes(MAIN_REPO)) {
+      if (endpoint.includes('actions/runs')) return { workflow_runs: [] };
+      if (endpoint.includes('actions/runners')) return { runners: [] };
+      return {};
+    }
+    if (endpoint.includes('actions/runs?status=queued')) return { workflow_runs: [] };
+    if (endpoint.includes('actions/runs?status=in_progress')) return { workflow_runs: [] };
+    if (endpoint.includes('actions/runners')) return { runners: [] };
+    if (endpoint.includes('actions/runs?status=completed')) {
+      const m = endpoint.match(/created=>=([^&]+)/);
+      const sinceIso = m ? decodeURIComponent(m[1]) : null;
+      return { workflow_runs: applyCreatedFilter(sinceIso, [shortRun, longRunCompleted]) };
+    }
+    if (endpoint.includes(`actions/runs/${shortRun.id}/jobs`)) return shortJobs;
+    if (endpoint.includes(`actions/runs/${longRun.id}/jobs`)) return longJobsCompleted;
+    return {};
+  };
+
+  const r2 = await fetchCiHealth({
+    execFn: execFn2,
+    repoRoot: tmpRoot,
+    repos: [MAIN_REPO],
+    overallDeadlineMs: 30_000,
+  });
+  assert.ok(!r2.error, `tick2 error: ${r2.error}`);
+  assert.equal(
+    r2.jsonl_added,
+    1,
+    'tick2: long run must now be recorded (regression: direct bug caused 0 here)',
+  );
+});
+
+test('O-1b: completed 만 — cursor = max 처리 run.created_at (active 없음)', async () => {
+  _resetCiHealthCache();
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-o1b-'));
+  const runs = makeCompletedRuns(3, 70000);
+  const execFn = makeExecFnWithRuns(runs);
+
+  const r = await fetchCiHealth({
+    execFn, repoRoot: tmpRoot,
+    repos: [MAIN_REPO],
+    overallDeadlineMs: 30_000,
+  });
+  assert.ok(!r.error, `error: ${r.error}`);
+  assert.equal(r.jsonl_added, 3);
+
+  const cursor = JSON.parse(readFileSync(join(tmpRoot, '.cache', 'ci-history-cursor.json'), 'utf8'));
+  const sortedAsc = [...runs].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+  const maxCreated = sortedAsc[sortedAsc.length - 1].created_at;
+  assert.equal(cursor[MAIN_REPO], maxCreated,
+    'cursor = max processed run.created_at when no active runs');
+});
+
+test('O-1c: active 만 — cursor = min active.created_at (completed 없음)', async () => {
+  _resetCiHealthCache();
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-o1c-'));
+
+  const active1 = {
+    id: 80001, name: 'ci-a', status: 'in_progress',
+    created_at: minsAgo(55),
+    pull_requests: [{ number: 601 }],
+    head_branch: 'feat/a',
+  };
+  const active2 = {
+    id: 80002, name: 'ci-b', status: 'in_progress',
+    created_at: minsAgo(20),
+    pull_requests: [{ number: 602 }],
+    head_branch: 'feat/b',
+  };
+  const activeJobs = (run) => ({
+    jobs: [{
+      id: run.id * 10, name: 'heavy-mac', status: 'in_progress',
+      labels: ['self-hosted', 'curiocity-mac'], runner_name: 'youngs-mac',
+      created_at: run.created_at, started_at: run.created_at, completed_at: null,
+    }],
+  });
+
+  const execFn = async (endpoint) => {
+    if (!endpoint.includes(MAIN_REPO)) {
+      if (endpoint.includes('actions/runs')) return { workflow_runs: [] };
+      if (endpoint.includes('actions/runners')) return { runners: [] };
+      return {};
+    }
+    if (endpoint.includes('actions/runs?status=queued')) return { workflow_runs: [] };
+    if (endpoint.includes('actions/runs?status=in_progress')) return { workflow_runs: [active1, active2] };
+    if (endpoint.includes('actions/runs?status=completed')) return { workflow_runs: [] };
+    if (endpoint.includes('actions/runners')) return { runners: [] };
+    if (endpoint.includes(`actions/runs/${active1.id}/jobs`)) return activeJobs(active1);
+    if (endpoint.includes(`actions/runs/${active2.id}/jobs`)) return activeJobs(active2);
+    return {};
+  };
+
+  const r = await fetchCiHealth({
+    execFn, repoRoot: tmpRoot,
+    repos: [MAIN_REPO],
+    overallDeadlineMs: 30_000,
+  });
+  assert.ok(!r.error, `error: ${r.error}`);
+  assert.equal(r.jsonl_added, 0, 'no completed records');
+
+  const cursor = JSON.parse(readFileSync(join(tmpRoot, '.cache', 'ci-history-cursor.json'), 'utf8'));
+  assert.equal(cursor[MAIN_REPO], active1.created_at,
+    'cursor = min active.created_at = active1 (T-55m, older than active2 T-20m)');
+});
+
+// ---- O-2: execFile timeout clamp (M0-1119-O REQ2 nit) ----
+
+test('O-2a: computeExecTimeoutMs — 남은 시간 < 10s → 남은 시간으로 clamp', () => {
+  const deadline = Date.now() + 3_000;
+  const t = computeExecTimeoutMs(deadline);
+  assert.ok(t > 2_500 && t <= 3_000, `expected ~3000ms, got ${t}`);
+});
+
+test('O-2b: computeExecTimeoutMs — 남은 시간 ≥ 10s → 10s cap', () => {
+  const deadline = Date.now() + 30_000;
+  const t = computeExecTimeoutMs(deadline);
+  assert.equal(t, 10_000, 'max is PER_REPO_TIMEOUT_MS=10s');
+});
+
+test('O-2c: computeExecTimeoutMs — 남은 시간 ≤ 0 → 0 (호출 거부 신호)', () => {
+  assert.equal(computeExecTimeoutMs(Date.now() - 100), 0);
+  assert.equal(computeExecTimeoutMs(Date.now()), 0);
+});
+
+test('O-2d: computeExecTimeoutMs — deadline null → full max', () => {
+  assert.equal(computeExecTimeoutMs(null), 10_000);
+  assert.equal(computeExecTimeoutMs(undefined), 10_000);
 });

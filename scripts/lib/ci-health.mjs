@@ -32,6 +32,15 @@
 //   REQ3: queued run 분류·대기 시간 = 완료되지 않은 job 의 created_at 기준 ·
 //         완료된 job 은 kind 분류에서 제외 ·
 //         oldest_queued_pr / alert detail 에 repo 를 함께 표시 (예: `fork:ci/M2-…`).
+//
+// M0-1119-O (R0 재리뷰 CHANGES):
+//   REQ1: 커서 = min(처리한 run 의 최대 **created_at**, 상태 단계에서 본 queued/in_progress
+//         run 의 최소 created_at). seen-set 이 재처리 중복을 막아 줌.
+//         재발 차단: long run(T-40m, 진행 중) + short run(T-35m 생성·T-30m 완료) 겹침 시
+//         직전 구현은 커서를 완료 job 의 max completed_at (T-30m) 으로 올려 long run 을
+//         영구 누락. 이제는 min(long.created_at)=T-40m 으로 커서를 clamp.
+//   REQ2 (nit): execFile timeout = min(남은 시간, PER_REPO_TIMEOUT_MS).
+//         남은 시간 ≤ 0 이면 호출 자체를 거부.
 
 import { execFile } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
@@ -143,12 +152,25 @@ export function updateHistoryCursor(repoRoot, repo, completedRecords) {
 
 // ---- Internal helpers ----
 
-async function defaultExecFn(endpoint) {
-  const { stdout } = await execFileAsync('gh', ['api', endpoint, '-H', 'Accept: application/vnd.github+json'], {
-    timeout: PER_REPO_TIMEOUT_MS,
-    maxBuffer: 8 * 1024 * 1024,
-  });
-  return JSON.parse(stdout);
+// M0-1119-O REQ2 (nit): execFile timeout = min(remaining, PER_REPO_TIMEOUT_MS).
+// deadlineAt null → use the full per-repo timeout.
+export function computeExecTimeoutMs(deadlineAt, maxMs = PER_REPO_TIMEOUT_MS) {
+  if (deadlineAt == null) return maxMs;
+  const remaining = deadlineAt - Date.now();
+  if (remaining <= 0) return 0;
+  return Math.min(remaining, maxMs);
+}
+
+function makeDefaultExecFn(deadlineAt) {
+  return async (endpoint) => {
+    const timeoutMs = computeExecTimeoutMs(deadlineAt);
+    if (timeoutMs <= 0) throw new Error('ci-health: deadline exceeded before API call');
+    const { stdout } = await execFileAsync('gh', ['api', endpoint, '-H', 'Accept: application/vnd.github+json'], {
+      timeout: timeoutMs,
+      maxBuffer: 8 * 1024 * 1024,
+    });
+    return JSON.parse(stdout);
+  };
 }
 
 function makeBudget(max) {
@@ -210,13 +232,15 @@ function deadlineExceeded(deadlineAt) {
 }
 
 async function collectInProgress(execFn, repo, budget, deadlineAt) {
-  if (deadlineExceeded(deadlineAt)) return { entries: [], partial: true };
-  if (!budgetCheck(budget)) return { entries: [], partial: true };
+  if (deadlineExceeded(deadlineAt)) return { entries: [], partial: true, runCreatedAts: [] };
+  if (!budgetCheck(budget)) return { entries: [], partial: true, runCreatedAts: [] };
   const data = await execFn(`repos/${repo}/actions/runs?status=in_progress&per_page=100`);
   const runs = (data && data.workflow_runs) || [];
   const active = [];
+  const runCreatedAts = [];
   let partial = false;
   for (const run of runs) {
+    if (run.created_at) runCreatedAts.push(run.created_at);
     if (deadlineExceeded(deadlineAt)) { partial = true; break; }
     if (!budgetCheck(budget)) { partial = true; break; }
     try {
@@ -252,17 +276,19 @@ async function collectInProgress(execFn, repo, budget, deadlineAt) {
       });
     }
   }
-  return { entries: active, partial };
+  return { entries: active, partial, runCreatedAts };
 }
 
 async function collectQueued(execFn, repo, budget, deadlineAt) {
-  if (deadlineExceeded(deadlineAt)) return { entries: [], partial: true };
-  if (!budgetCheck(budget)) return { entries: [], partial: true };
+  if (deadlineExceeded(deadlineAt)) return { entries: [], partial: true, runCreatedAts: [] };
+  if (!budgetCheck(budget)) return { entries: [], partial: true, runCreatedAts: [] };
   const data = await execFn(`repos/${repo}/actions/runs?status=queued&per_page=100`);
   const runs = (data && data.workflow_runs) || [];
   const out = [];
+  const runCreatedAts = [];
   let partial = false;
   for (const run of runs) {
+    if (run.created_at) runCreatedAts.push(run.created_at);
     if (deadlineExceeded(deadlineAt)) { partial = true; break; }
     let kind = 'mac-heavy';
     let effectiveCreatedAt = run.created_at || null;
@@ -303,18 +329,23 @@ async function collectQueued(execFn, repo, budget, deadlineAt) {
       kind,
     });
   }
-  return { entries: out, partial };
+  return { entries: out, partial, runCreatedAts };
 }
 
-// M0-1119-M REQ2: collectCompletedJobs returns {records, partial, earliestUnprocessed}
+// M0-1119-M REQ2 · M0-1119-O REQ1: collectCompletedJobs returns
+//   { records, partial, earliestUnprocessed, latestProcessedRunCreatedAt }
 //   · `created=>=` filter (GitHub API does not support `updated` on list workflow runs).
 //   · Pre-API deadline check inside the loop so background 30s timer never fires mid-work.
 //   · Partial = true when maxRuns / deadline / budget cut us short; earliestUnprocessed =
 //     oldest run (by created_at) that we skipped, so the per-repo cursor can be clamped
 //     to just that time (older runs never permanently disappear).
+//   · latestProcessedRunCreatedAt = max run.created_at of runs we fully processed
+//     (added to seen-set). The caller uses this (not completed_at) to advance the cursor,
+//     so that a long run whose created_at precedes a short run's completed_at is not
+//     skipped by the `created=>=` filter on the next tick.
 async function collectCompletedJobs(execFn, repo, since, budget, maxRuns, deadlineAt) {
-  if (deadlineExceeded(deadlineAt)) return { records: [], partial: true, earliestUnprocessed: null };
-  if (!budgetCheck(budget)) return { records: [], partial: true, earliestUnprocessed: null };
+  if (deadlineExceeded(deadlineAt)) return { records: [], partial: true, earliestUnprocessed: null, latestProcessedRunCreatedAt: null };
+  if (!budgetCheck(budget)) return { records: [], partial: true, earliestUnprocessed: null, latestProcessedRunCreatedAt: null };
   const sinceParam = since ? `&created=>=${encodeURIComponent(since.toISOString())}` : '';
   const data = await execFn(`repos/${repo}/actions/runs?status=completed&per_page=100${sinceParam}`);
   const runs = (data && data.workflow_runs) || [];
@@ -325,6 +356,7 @@ async function collectCompletedJobs(execFn, repo, since, budget, maxRuns, deadli
   let processed = 0;
   let partial = false;
   let earliestUnprocessed = null;
+  let latestProcessedRunCreatedAt = null;
 
   const noteUnprocessed = (run) => {
     partial = true;
@@ -348,12 +380,27 @@ async function collectCompletedJobs(execFn, repo, since, budget, maxRuns, deadli
         if (job.status !== 'completed' || !job.completed_at) { allCompleted = false; continue; }
         records.push(jobToRecord(job, run));
       }
-      if (allCompleted) seenCompletedRunIds.add(runKey);
+      if (allCompleted) {
+        seenCompletedRunIds.add(runKey);
+        if (run.created_at) {
+          const t = new Date(run.created_at).getTime();
+          if (!isNaN(t) && (latestProcessedRunCreatedAt == null || t > latestProcessedRunCreatedAt)) {
+            latestProcessedRunCreatedAt = t;
+          }
+        }
+      }
     } catch {
       // retry next tick
     }
   }
-  return { records, partial, earliestUnprocessed };
+  return {
+    records,
+    partial,
+    earliestUnprocessed,
+    latestProcessedRunCreatedAt: latestProcessedRunCreatedAt != null
+      ? new Date(latestProcessedRunCreatedAt).toISOString()
+      : null,
+  };
 }
 
 function isMissingRepoError(err) {
@@ -364,16 +411,18 @@ function isMissingRepoError(err) {
 async function collectStateForRepo(execFn, repo, budget, warn, deadlineAt) {
   const todayStr = getWibDateStr();
   if (repoDailySkip.get(repo) === todayStr) {
-    return { repo, queued: [], in_progress: [], runners: null, error: null, skipped: 'daily-skip', partial: false };
+    return { repo, queued: [], in_progress: [], runners: null, error: null, skipped: 'daily-skip', partial: false, activeRunCreatedAts: [] };
   }
 
-  const out = { repo, queued: [], in_progress: [], runners: null, error: null, partial: false };
+  const out = { repo, queued: [], in_progress: [], runners: null, error: null, partial: false, activeRunCreatedAts: [] };
   try {
     const q = await collectQueued(execFn, repo, budget, deadlineAt);
     out.queued = q.entries;
+    if (q.runCreatedAts) out.activeRunCreatedAts.push(...q.runCreatedAts);
     if (q.partial) out.partial = true;
     const ip = await collectInProgress(execFn, repo, budget, deadlineAt);
     out.in_progress = ip.entries;
+    if (ip.runCreatedAts) out.activeRunCreatedAts.push(...ip.runCreatedAts);
     if (ip.partial) out.partial = true;
     if (!deadlineExceeded(deadlineAt) && budgetCheck(budget)) {
       try {
@@ -410,7 +459,7 @@ async function collectStateForRepo(execFn, repo, budget, warn, deadlineAt) {
 
 async function collectHistoryForRepo(execFn, repo, since, budget, maxRuns, warn, deadlineAt) {
   const todayStr = getWibDateStr();
-  if (repoDailySkip.get(repo) === todayStr) return { records: [], partial: false, earliestUnprocessed: null };
+  if (repoDailySkip.get(repo) === todayStr) return { records: [], partial: false, earliestUnprocessed: null, latestProcessedRunCreatedAt: null };
 
   try {
     return await collectCompletedJobs(execFn, repo, since, budget, maxRuns, deadlineAt);
@@ -422,14 +471,16 @@ async function collectHistoryForRepo(execFn, repo, since, budget, maxRuns, warn,
         warn(`[ci-health] repo 접근 실패 (오늘 재시도 안함): ${repo} · ${(e.message || e).toString().split('\n')[0]}`);
       }
     }
-    return { records: [], partial: false, earliestUnprocessed: null };
+    return { records: [], partial: false, earliestUnprocessed: null, latestProcessedRunCreatedAt: null };
   }
 }
 
 export async function fetchCiHealth(opts = {}, _legacy = null, _legacyRoot = null) {
   let execFn, repoRoot, repos, sinceMin, apiBudget, warn, overallDeadlineMs;
+  let userProvidedExecFn = false;
   if (typeof opts === 'function') {
     execFn = opts;
+    userProvidedExecFn = true;
     repoRoot = _legacyRoot || null;
     repos = DEFAULT_REPOS;
     sinceMin = DEFAULT_LOOKBACK_MIN;
@@ -437,7 +488,8 @@ export async function fetchCiHealth(opts = {}, _legacy = null, _legacyRoot = nul
     warn = (m) => process.stderr.write(m + '\n');
     overallDeadlineMs = DEFAULT_OVERALL_DEADLINE_MS;
   } else {
-    execFn = opts.execFn || defaultExecFn;
+    userProvidedExecFn = !!opts.execFn;
+    execFn = opts.execFn || null;
     repoRoot = opts.repoRoot || null;
     repos = opts.repos || DEFAULT_REPOS;
     sinceMin = opts.sinceMin || DEFAULT_LOOKBACK_MIN;
@@ -450,6 +502,8 @@ export async function fetchCiHealth(opts = {}, _legacy = null, _legacyRoot = nul
   const at = new Date().toISOString();
   const startMs = Date.now();
   const deadlineAt = startMs + overallDeadlineMs;
+  // M0-1119-O REQ2: default gh wrapper clamps execFile timeout to remaining budget.
+  if (!userProvidedExecFn) execFn = makeDefaultExecFn(deadlineAt);
   const budget = makeBudget(apiBudget);
 
   // ---- Phase 1: State (queued/in_progress/runners) — always runs first ----
@@ -527,25 +581,53 @@ export async function fetchCiHealth(opts = {}, _legacy = null, _legacyRoot = nul
   const stateElapsedMs = Date.now() - startMs;
   const historyBudgetMs = overallDeadlineMs - stateElapsedMs;
 
+  // M0-1119-O REQ1: pre-compute per-repo min(created_at) across queued + in_progress.
+  // This caps how far forward the cursor can advance so a long-running run (whose
+  // created_at precedes a shorter sibling's completion) is never filtered out on the
+  // next tick by `created=>=`.
+  const minActiveByRepo = new Map();
+  for (const sr of aliveState) {
+    if (!sr.activeRunCreatedAts || sr.activeRunCreatedAts.length === 0) continue;
+    let minT = null;
+    for (const iso of sr.activeRunCreatedAts) {
+      const t = new Date(iso).getTime();
+      if (isNaN(t)) continue;
+      if (minT == null || t < minT) minT = t;
+    }
+    if (minT != null) minActiveByRepo.set(sr.repo, new Date(minT).toISOString());
+  }
+
   if (historyBudgetMs > 500 && !budget.overflow) {
     try {
       for (const r of repos) {
         if (deadlineExceeded(deadlineAt)) { overallPartial = true; break; }
         // M0-1119-M REQ2: per-repo cursor
         const historySince = getHistorySince(root, r);
-        const { records, partial, earliestUnprocessed } = await collectHistoryForRepo(
-          execFn, r, historySince, budget, HISTORY_MAX_RUNS_PER_CALL, warn, deadlineAt,
-        );
+        const { records, partial, earliestUnprocessed, latestProcessedRunCreatedAt } =
+          await collectHistoryForRepo(
+            execFn, r, historySince, budget, HISTORY_MAX_RUNS_PER_CALL, warn, deadlineAt,
+          );
         completedRecords.push(...records);
         if (partial) overallPartial = true;
 
-        // Advance cursor per-repo (M0-1119-M REQ2):
-        //   - If partial: clamp to earliest unprocessed created_at so we never skip it.
-        //   - Else: advance to max completed_at of processed records.
+        // Advance cursor per-repo:
+        //   - partial: clamp to earliest unprocessed created_at so we never skip it. (M0-1119-M)
+        //   - else: cursor = min(latestProcessedRunCreatedAt, minActive created_at).
+        //     Using run.created_at (not completed_at) plus the active-min clamp guarantees
+        //     a concurrent long run is still re-queried next tick; the seen-set prevents
+        //     double-recording of runs we already processed. (M0-1119-O REQ1)
         if (partial && earliestUnprocessed) {
           setHistoryCursor(root, r, earliestUnprocessed);
-        } else if (records.length > 0) {
-          updateHistoryCursor(root, r, records);
+        } else {
+          const activeMinIso = minActiveByRepo.get(r) || null;
+          const candidates = [];
+          if (latestProcessedRunCreatedAt) candidates.push(latestProcessedRunCreatedAt);
+          if (activeMinIso) candidates.push(activeMinIso);
+          if (candidates.length > 0) {
+            const chosen = candidates.reduce((a, b) =>
+              new Date(a).getTime() <= new Date(b).getTime() ? a : b);
+            setHistoryCursor(root, r, chosen);
+          }
         }
       }
     } catch {
