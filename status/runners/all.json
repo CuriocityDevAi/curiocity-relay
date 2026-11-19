@@ -1,11 +1,11 @@
 {
-  "at": "2026-11-19T10:57:17.530Z",
+  "at": "2026-11-19T11:02:10.481Z",
   "pid": 42106,
   "runner": "v7.5",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": null,
+  "last_error": "blocked: runner-folder change pending Kyu install (m3/M3-1119-N-icon-compare.png)",
   "hubs": {
     "m0": {
       "current": "M0-1119-M",
@@ -46,122 +46,18 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.76,
-    "compressed_gb": 4.61,
-    "swap_used_gb": 9.74,
+    "used_gb": 15.17,
+    "compressed_gb": 4.12,
+    "swap_used_gb": 9.99,
     "pressure": "normal",
-    "at": "2026-11-19T10:56:40.435Z"
+    "at": "2026-11-19T11:01:37.563Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
     "used_gb": 15.92
   },
   "ci": {
-    "data": {
-      "at": "2026-11-19T10:55:17.459Z",
-      "repos_scanned": [
-        "CuriocityDevAi/storeport",
-        "CuriocityDevAi/agilo-medusa-pos-fork"
-      ],
-      "repos_failed": [],
-      "repos_skipped": [],
-      "api_calls": 16,
-      "api_budget": 40,
-      "api_overflow": false,
-      "heavy": {
-        "queued": 1,
-        "queued_prs": [
-          398
-        ],
-        "oldest_queued_min": 53,
-        "oldest_queued_pr": "#398",
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/storeport",
-            "pr": "main",
-            "job": "pos-integration",
-            "step": "Run POS integration tests",
-            "running_min": 7,
-            "runner": "Youngkyus-MacBook-Pro-M1",
-            "kind": "mac-heavy"
-          }
-        ]
-      },
-      "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "in_progress": []
-      },
-      "cloud_in_progress": [
-        {
-          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-          "pr": "#207",
-          "job": "flow-tests",
-          "step": "Install deps",
-          "running_min": 0,
-          "runner": "GitHub Actions 1000007364",
-          "kind": "cloud"
-        },
-        {
-          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-          "pr": "#207",
-          "job": "assertions",
-          "step": "Install deps",
-          "running_min": 0,
-          "runner": "GitHub Actions 1000007365",
-          "kind": "cloud"
-        },
-        {
-          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-          "pr": "#207",
-          "job": "lint",
-          "step": "Run npm ci --legacy-peer-deps",
-          "running_min": 1,
-          "runner": "GitHub Actions 1000007362",
-          "kind": "cloud"
-        }
-      ],
-      "runners": {
-        "heavy_online": 1,
-        "heavy_busy": 1,
-        "light_online": 1
-      },
-      "cloud_today": 10,
-      "today": {
-        "mac-heavy": {
-          "jobs": 87,
-          "avg_wait_min": 2.7,
-          "avg_run_min": 6,
-          "success_rate": 27.6,
-          "run_min_total": 526.2
-        },
-        "mac-light": {
-          "jobs": 156,
-          "avg_wait_min": 1.3,
-          "avg_run_min": 0.3,
-          "success_rate": 96.2,
-          "run_min_total": 50.29999999999999
-        },
-        "cloud": {
-          "jobs": 195,
-          "avg_wait_min": 0,
-          "avg_run_min": 2.4,
-          "success_rate": 67.7,
-          "run_min_total": 472.80000000000035
-        },
-        "cloud_cost_est_usd": 4.704,
-        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 465.0999999999999
-      },
-      "jsonl_added": 11,
-      "alerts": [
-        {
-          "type": "queue_wait",
-          "detail": "oldest heavy queued 53m (#398)"
-        }
-      ]
-    },
-    "took_ms": 27291,
-    "at": "2026-11-19T10:55:41.598Z"
+    "error": "deadline 30000ms",
+    "at": "2026-11-19T11:00:46.581Z"
   }
 }
