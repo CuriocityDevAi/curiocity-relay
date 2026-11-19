@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T17:42:12.948Z",
+  "at": "2026-11-19T17:47:43.919Z",
   "pid": 63036,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -24,10 +24,8 @@
       "last_activity": "2026-11-19T17:21:04.770Z"
     },
     "r0": {
-      "current": "R0-1119-K",
-      "started_at": "2026-11-19T17:38:46.410Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-19T16:56:37.766Z"
+      "current": null,
+      "last_activity": "2026-11-19T17:42:25.329Z"
     }
   },
   "pane_close_failures": {},
@@ -40,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.82,
-    "compressed_gb": 4.98,
-    "swap_used_gb": 10.5,
+    "used_gb": 15.92,
+    "compressed_gb": 4.68,
+    "swap_used_gb": 10.45,
     "pressure": "normal",
-    "at": "2026-11-19T17:41:40.675Z"
+    "at": "2026-11-19T17:47:11.765Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -52,14 +50,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T17:39:19.799Z",
+      "at": "2026-11-19T17:44:24.811Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 17,
+      "api_calls": 9,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -81,7 +79,7 @@
         "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 13,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 3,
@@ -91,11 +89,11 @@
           "run_min_total": 38.8
         },
         "mac-light": {
-          "jobs": 7,
-          "avg_wait_min": 1,
+          "jobs": 8,
+          "avg_wait_min": 0.9,
           "avg_run_min": 0.4,
           "success_rate": 100,
-          "run_min_total": 2.5999999999999996
+          "run_min_total": 2.8999999999999995
         },
         "cloud": {
           "jobs": 26,
@@ -108,11 +106,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 17,
+      "jsonl_added": 1,
       "alerts": []
     },
-    "took_ms": 15922,
-    "at": "2026-11-19T17:39:34.033Z"
+    "took_ms": 7220,
+    "at": "2026-11-19T17:44:30.246Z"
   },
   "gh_runner_alert": null
 }
