@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T14:22:00.427Z",
+  "at": "2026-11-19T14:23:51.367Z",
   "pid": 49838,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -39,11 +39,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.8,
-    "compressed_gb": 5.57,
-    "swap_used_gb": 10.45,
+    "used_gb": 15.77,
+    "compressed_gb": 5.95,
+    "swap_used_gb": 11.27,
     "pressure": "normal",
-    "at": "2026-11-19T14:21:28.213Z"
+    "at": "2026-11-19T14:23:16.179Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -51,13 +51,13 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T14:16:33.753Z",
+      "at": "2026-11-19T14:21:58.391Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 6,
+      "api_calls": 11,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -66,7 +66,7 @@
           400,
           399
         ],
-        "oldest_queued_min": 31,
+        "oldest_queued_min": 36,
         "oldest_queued_pr": "storeport:#400",
         "in_progress": [
           {
@@ -75,7 +75,7 @@
             "pr_display": "storeport:#401",
             "job": "pos-integration",
             "step": "Run POS integration tests",
-            "running_min": 3,
+            "running_min": 8,
             "runner": "Youngkyus-MacBook-Pro-M1",
             "kind": "mac-heavy"
           }
@@ -87,49 +87,60 @@
         "oldest_queued_pr": null,
         "in_progress": []
       },
-      "cloud_in_progress": [],
+      "cloud_in_progress": [
+        {
+          "repo": "CuriocityDevAi/storeport",
+          "pr": "#394",
+          "pr_display": "storeport:#394",
+          "job": "heavy-cloud",
+          "step": "Run ./.github/actions/heavy-steps",
+          "running_min": 2,
+          "runner": "GitHub Actions 1000007452",
+          "kind": "cloud"
+        }
+      ],
       "runners": {
         "heavy_online": 1,
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 0,
+      "cloud_today": 4,
       "today": {
         "mac-heavy": {
-          "jobs": 138,
+          "jobs": 139,
           "avg_wait_min": 4,
           "avg_run_min": 4.8,
-          "success_rate": 29,
-          "run_min_total": 660.8000000000001
+          "success_rate": 28.8,
+          "run_min_total": 663.1
         },
         "mac-light": {
-          "jobs": 229,
-          "avg_wait_min": 7.6,
-          "avg_run_min": 2.2,
-          "success_rate": 86.9,
-          "run_min_total": 493.00000000000017
+          "jobs": 230,
+          "avg_wait_min": 7.5,
+          "avg_run_min": 2.1,
+          "success_rate": 87,
+          "run_min_total": 493.3000000000002
         },
         "cloud": {
-          "jobs": 259,
+          "jobs": 263,
           "avg_wait_min": 0,
-          "avg_run_min": 2.4,
-          "success_rate": 68,
-          "run_min_total": 615.8000000000008
+          "avg_run_min": 2.3,
+          "success_rate": 68.1,
+          "run_min_total": 617.5000000000008
         },
-        "cloud_cost_est_usd": 6.144,
+        "cloud_cost_est_usd": 6.176,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 945.9999999999993
+        "wasted_min": 948.2999999999993
       },
-      "jsonl_added": 0,
+      "jsonl_added": 6,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 31m (storeport:#400)"
+          "detail": "oldest heavy queued 36m (storeport:#400)"
         }
       ],
       "partial": true
     },
-    "took_ms": 22957,
-    "at": "2026-11-19T14:16:53.751Z"
+    "took_ms": 23756,
+    "at": "2026-11-19T14:22:19.609Z"
   }
 }
