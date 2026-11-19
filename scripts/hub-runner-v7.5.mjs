@@ -50,6 +50,8 @@ import { sampleMem } from './lib/mem-sample.mjs';
 import { fetchCiHealth } from './lib/ci-health.mjs';
 import { maybeStartCiFetch, getLatestCi } from './lib/ci-background.mjs';
 import { computeSuspectDone } from './lib/ci-suspect.mjs';
+// M0-1119-T: Mac 수면 복귀 후 self-hosted runner 자동 재시작.
+import { runOnce as runGhWatchdog, getLatestAlert as getGhWatchdogAlert, DEFAULT_RUNNER_PATHS as GH_WATCHDOG_DEFAULT_PATHS } from './lib/gh-runner-watchdog.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
@@ -68,6 +70,10 @@ const RUNNER_VERSION = 'v7.5';
 const CI_FETCH_DEADLINE_MS = 30_000;
 // M0-1119-J REQ1: fireCi 최소 간격 — 마지막 시작 시각 기준 5분. tick(30s) × 10 회 skip.
 const CI_MIN_FIRE_INTERVAL_MS = 5 * 60_000;
+// M0-1119-T: gh-runner-watchdog knobs. runner-config.json 의 gh_runner_watchdog 블록으로 override 가능.
+const GH_WATCHDOG_STUCK_THRESHOLD_MIN = 8;
+const GH_WATCHDOG_COOLDOWN_MS = 30 * 60_000;
+const GH_WATCHDOG_MAX_FAILURES = 2;
 // M1-1117-K: Kyu 폴더 침범 감지 — 기본 감시 목록 (runner-config.json kyu_watch_dirs 로 덮어쓰기 가능).
 const DEFAULT_KYU_WATCH_DIRS = [
   join(homedir(), 'projects', 'agilo-fork-test'),
@@ -2402,6 +2408,8 @@ function writeHeartbeat(config) {
     mem_peak_today: memPeakToday.date ? memPeakToday : null,
     // M0-1119-I: CI 건강 (백그라운드 결과 · 없으면 null).
     ci: getLatestCi() || null,
+    // M0-1119-T: gh-runner-watchdog 이 2회 연속 실패 뒤에만 세팅. 조치 중이면 null.
+    gh_runner_alert: getGhWatchdogAlert() || null,
   };
   writeFileSync(ALL_HEARTBEAT, JSON.stringify(payload, null, 2) + '\n', 'utf8');
   // v6.8 REQ2: stage all.json — bundles into the next claim commit automatically.
@@ -2456,6 +2464,27 @@ function fireCi() {
   }
 }
 
+// M0-1119-T: tick 시작부 fire-and-forget. ci-health 캐시 결과를 재사용 (추가 API 호출 0).
+function fireGhWatchdog(config) {
+  try {
+    const latest = getLatestCi();
+    const ciData = latest && latest.data ? latest.data : null;
+    const wdCfg = (config && config.gh_runner_watchdog) || {};
+    const runnerPaths = wdCfg.runner_paths || GH_WATCHDOG_DEFAULT_PATHS;
+    runGhWatchdog({
+      ciData,
+      repoRoot: REPO_ROOT,
+      runnerPaths,
+      thresholdMin: wdCfg.stuck_threshold_min || GH_WATCHDOG_STUCK_THRESHOLD_MIN,
+      cooldownMs: wdCfg.cooldown_ms || GH_WATCHDOG_COOLDOWN_MS,
+      maxFailures: wdCfg.max_failures || GH_WATCHDOG_MAX_FAILURES,
+      warn: (m) => log('gh-watchdog', m),
+    }).catch((e) => log('gh-watchdog', `runOnce 예외: ${e.message || e}`));
+  } catch (e) {
+    log('gh-watchdog', `fire 실패: ${e.message || e}`);
+  }
+}
+
 async function tick(hubs) {
   if (!acquireLock()) {
     log('', `lock 획득 실패 · 다른 러너 작동 중 (${LOCK_FILE})`);
@@ -2466,6 +2495,8 @@ async function tick(hubs) {
     fireCi();
     safePull();
     const config = loadConfig();
+    // M0-1119-T: ci-health 캐시 결과로 stuck 러너 자동 재시작 (fire-and-forget).
+    fireGhWatchdog(config);
 
     if (config.display === 'cmux-split' && cmuxAlive(config.cmux_bin)) {
       const bootLog = join(RUNNER_HOME, 'hubs-split.log');
