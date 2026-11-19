@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-19T14:33:23.191Z",
+  "built_at": "2026-11-19T15:22:45.696Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-19T14:33:22.737Z"
+      "fetched_at": "2026-11-19T15:22:45.134Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-19T14:33:22.897Z"
+      "fetched_at": "2026-11-19T15:22:45.345Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6598,7 +6598,11 @@
               "summary": "리포 자동 검사 파이프라인 설정 묶음이다.",
               "files": [
                 ".github/workflows/**",
-                ".husky/**"
+                ".github/scripts/**",
+                ".github/actions/**",
+                ".github/actionlint.yaml",
+                ".husky/**",
+                "docs/ci-heavy-job.md"
               ],
               "status": "live"
             },
@@ -6844,7 +6848,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-19T14:33:23.190Z"
+      "fetched_at": "2026-11-19T15:22:45.695Z"
     }
   ],
   "rollup": {
