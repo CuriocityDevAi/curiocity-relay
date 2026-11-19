@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-19T01:52:45.646Z",
+  "built_at": "2026-11-19T03:23:02.623Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-19T01:52:45.290Z"
+      "fetched_at": "2026-11-19T03:23:02.165Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-19T01:52:45.405Z"
+      "fetched_at": "2026-11-19T03:23:02.301Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6227,7 +6227,7 @@
                 "apps/commerce-core/src/types/customer-display.ts",
                 "apps/commerce-core/integration-tests/pos/cd-pos-screen-sync.spec.ts"
               ],
-              "status": "planned"
+              "status": "live"
             },
             {
               "id": "customer-display-pairing",
@@ -6244,9 +6244,10 @@
                 "apps/commerce-core/src/api/customer-display/**",
                 "apps/customer-display/app/pair.tsx",
                 "apps/customer-display/src/lib/pairing.ts",
-                "apps/customer-display/src/lib/__tests__/pair-flow.test.ts"
+                "apps/customer-display/src/lib/__tests__/pair-flow.test.ts",
+                "apps/customer-display/src/lib/__tests__/pairing-persist.test.ts"
               ],
-              "status": "planned"
+              "status": "live"
             },
             {
               "id": "customer-display-live-connect",
@@ -6528,6 +6529,7 @@
                 "docs/process/**",
                 "docs/handoff/**",
                 "docs/plan-oss/**",
+                "docs/contracts/**",
                 "docs/requirements-tracking.md",
                 "docs/KNOWN_ISSUES.md",
                 "docs/feature-map.yaml",
@@ -6827,14 +6829,15 @@
                 "apps/customer-display/README.md",
                 "apps/customer-display/assets/**",
                 "apps/customer-display/e2e/**",
-                "apps/customer-display/scripts/**"
+                "apps/customer-display/scripts/**",
+                "apps/customer-display/screenshots/**"
               ],
-              "status": "planned"
+              "status": "live"
             }
           ]
         }
       ],
-      "fetched_at": "2026-11-19T01:52:45.645Z"
+      "fetched_at": "2026-11-19T03:23:02.623Z"
     }
   ],
   "rollup": {
