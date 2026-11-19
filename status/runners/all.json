@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T10:28:21.477Z",
+  "at": "2026-11-19T10:33:46.869Z",
   "pid": 42106,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -39,37 +39,46 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.46,
-    "compressed_gb": 5.36,
-    "swap_used_gb": 9.21,
+    "used_gb": 15.71,
+    "compressed_gb": 4.8,
+    "swap_used_gb": 9.65,
     "pressure": "normal",
-    "at": "2026-11-19T10:27:46.622Z"
+    "at": "2026-11-19T10:33:13.512Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
-    "used_gb": 15.89
+    "used_gb": 15.92
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T10:27:44.100Z",
+      "at": "2026-11-19T10:33:07.767Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 13,
+      "api_calls": 12,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 4,
+        "queued": 3,
         "queued_prs": [
-          398,
-          394
+          398
         ],
-        "oldest_queued_min": 206,
+        "oldest_queued_min": 211,
         "oldest_queued_pr": "ci/M2-1119-J-one-heavy",
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "#394",
+            "job": "heavy-mac",
+            "step": "Run ./.github/actions/heavy-steps",
+            "running_min": 3,
+            "runner": "Youngkyus-MacBook-Pro-M1",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -109,19 +118,15 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 221.79999999999987
       },
-      "jsonl_added": 1,
+      "jsonl_added": 0,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 206m (ci/M2-1119-J-one-heavy)"
-        },
-        {
-          "type": "runner_idle",
-          "detail": "4 queued but 0 in_progress for 206m"
+          "detail": "oldest heavy queued 211m (ci/M2-1119-J-one-heavy)"
         }
       ]
     },
-    "took_ms": 15740,
-    "at": "2026-11-19T10:27:57.116Z"
+    "took_ms": 19854,
+    "at": "2026-11-19T10:33:25.147Z"
   }
 }
