@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T15:41:07.316Z",
+  "at": "2026-11-19T15:46:11.887Z",
   "pid": 49838,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -35,11 +35,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.93,
-    "compressed_gb": 5.16,
-    "swap_used_gb": 11.06,
+    "used_gb": 15.79,
+    "compressed_gb": 4.57,
+    "swap_used_gb": 11.69,
     "pressure": "normal",
-    "at": "2026-11-19T15:40:56.992Z"
+    "at": "2026-11-19T15:45:38.767Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -47,12 +47,84 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T15:37:23.390Z",
-      "error": "Command failed: gh api repos/CuriocityDevAi/storeport/actions/runs?status=queued&per_page=100 -H Accept: application/vnd.github+json\ngh: API rate limit exceeded for user ID 250366334. If you reach out to GitHub Support for help, please include the request ID D672:F0612:2B2FF22:43FA611:6AFF17B3 and timestamp 2026-11-19 15:37:23 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) (HTTP 403)\n",
-      "api_calls": 2,
-      "api_budget": 40
+      "at": "2026-11-19T15:42:41.171Z",
+      "repos_scanned": [
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
+      ],
+      "repos_failed": [],
+      "repos_skipped": [],
+      "api_calls": 21,
+      "api_budget": 40,
+      "api_overflow": false,
+      "heavy": {
+        "queued": 1,
+        "queued_prs": [
+          402
+        ],
+        "oldest_queued_min": 52,
+        "oldest_queued_pr": "storeport:#402",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "#404",
+            "pr_display": "storeport:#404",
+            "job": "heavy-mac",
+            "step": "Post Checkout",
+            "running_min": 3,
+            "runner": "Youngkyus-MacBook-Pro-M1",
+            "kind": "mac-heavy"
+          }
+        ]
+      },
+      "light": {
+        "queued": 0,
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
+      },
+      "cloud_in_progress": [],
+      "runners": {
+        "heavy_online": 1,
+        "heavy_busy": 1,
+        "light_online": 1
+      },
+      "cloud_today": 7,
+      "today": {
+        "mac-heavy": {
+          "jobs": 175,
+          "avg_wait_min": 4.8,
+          "avg_run_min": 5.3,
+          "success_rate": 29.7,
+          "run_min_total": 935.9
+        },
+        "mac-light": {
+          "jobs": 280,
+          "avg_wait_min": 6.8,
+          "avg_run_min": 1.9,
+          "success_rate": 88.6,
+          "run_min_total": 518.1999999999998
+        },
+        "cloud": {
+          "jobs": 310,
+          "avg_wait_min": 0,
+          "avg_run_min": 2.2,
+          "success_rate": 68.1,
+          "run_min_total": 673.9000000000009
+        },
+        "cloud_cost_est_usd": 6.832,
+        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
+        "wasted_min": 1127.799999999999
+      },
+      "jsonl_added": 28,
+      "alerts": [
+        {
+          "type": "queue_wait",
+          "detail": "oldest heavy queued 52m (storeport:#402)"
+        }
+      ]
     },
-    "took_ms": 4110,
-    "at": "2026-11-19T15:37:24.636Z"
+    "took_ms": 21477,
+    "at": "2026-11-19T15:43:00.224Z"
   }
 }
