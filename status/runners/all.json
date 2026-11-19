@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T11:08:35.660Z",
+  "at": "2026-11-19T11:13:45.673Z",
   "pid": 42106,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -8,7 +8,9 @@
   "last_error": "blocked: runner-folder change pending Kyu install (m3/M3-1119-N-icon-compare.png)",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1119-N",
+      "started_at": "2026-11-19T11:13:44.205Z",
+      "model": "opus",
       "last_activity": "2026-11-19T11:08:04.897Z"
     },
     "m1": {
@@ -36,19 +38,19 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 15065,
-    "totalMs": 15065,
+    "lastMs": 16283,
+    "totalMs": 16283,
     "phase": "await-landing",
-    "at": "2026-11-19T11:06:48.146Z"
+    "at": "2026-11-19T11:09:26.427Z"
   },
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.86,
-    "compressed_gb": 4.62,
-    "swap_used_gb": 9.57,
+    "used_gb": 14.8,
+    "compressed_gb": 4.87,
+    "swap_used_gb": 9.65,
     "pressure": "normal",
-    "at": "2026-11-19T11:08:03.396Z"
+    "at": "2026-11-19T11:13:09.886Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -56,14 +58,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T11:05:59.192Z",
+      "at": "2026-11-19T11:11:13.082Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 15,
+      "api_calls": 11,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -72,7 +74,7 @@
           398,
           399
         ],
-        "oldest_queued_min": 10,
+        "oldest_queued_min": 15,
         "oldest_queued_pr": "#398",
         "in_progress": []
       },
@@ -86,8 +88,8 @@
           "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
           "pr": "#207",
           "job": "playwright",
-          "step": "Install Chromium system deps",
-          "running_min": 6,
+          "step": "Run Playwright harnesses",
+          "running_min": 11,
           "runner": "GitHub Actions 1000007374",
           "kind": "cloud"
         }
@@ -124,15 +126,15 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 492.89999999999986
       },
-      "jsonl_added": 11,
+      "jsonl_added": 0,
       "alerts": [
         {
           "type": "runner_idle",
-          "detail": "2 queued but 0 in_progress for 10m"
+          "detail": "2 queued but 0 in_progress for 15m"
         }
       ]
     },
-    "took_ms": 29636,
-    "at": "2026-11-19T11:06:26.077Z"
+    "took_ms": 30371,
+    "at": "2026-11-19T11:11:40.446Z"
   }
 }
