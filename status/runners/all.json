@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T15:34:28.086Z",
+  "at": "2026-11-19T15:39:42.407Z",
   "pid": 49838,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -35,11 +35,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.39,
-    "compressed_gb": 5.08,
-    "swap_used_gb": 12.27,
+    "used_gb": 15.73,
+    "compressed_gb": 5.52,
+    "swap_used_gb": 10.82,
     "pressure": "normal",
-    "at": "2026-11-19T15:33:55.180Z"
+    "at": "2026-11-19T15:39:09.404Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -47,12 +47,12 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T15:32:09.661Z",
-      "error": "Command failed: gh api repos/CuriocityDevAi/storeport/actions/runs?status=queued&per_page=100 -H Accept: application/vnd.github+json\ngh: API rate limit exceeded for user ID 250366334. If you reach out to GitHub Support for help, please include the request ID CCD5:12B42C:2AEC4E5:439E643:6AFF1679 and timestamp 2026-11-19 15:32:10 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) (HTTP 403)\n",
+      "at": "2026-11-19T15:37:23.390Z",
+      "error": "Command failed: gh api repos/CuriocityDevAi/storeport/actions/runs?status=queued&per_page=100 -H Accept: application/vnd.github+json\ngh: API rate limit exceeded for user ID 250366334. If you reach out to GitHub Support for help, please include the request ID D672:F0612:2B2FF22:43FA611:6AFF17B3 and timestamp 2026-11-19 15:37:23 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) (HTTP 403)\n",
       "api_calls": 2,
       "api_budget": 40
     },
-    "took_ms": 6325,
-    "at": "2026-11-19T15:32:13.142Z"
+    "took_ms": 4110,
+    "at": "2026-11-19T15:37:24.636Z"
   }
 }
