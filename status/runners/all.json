@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T13:22:16.333Z",
+  "at": "2026-11-19T13:40:37.572Z",
   "pid": 49838,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -12,15 +12,21 @@
       "last_activity": null
     },
     "m1": {
-      "current": null,
+      "current": "M1-1119-S",
+      "started_at": "2026-11-19T13:35:08.814Z",
+      "model": "sonnet",
       "last_activity": null
     },
     "m2": {
-      "current": null,
+      "current": "M2-1119-Y",
+      "started_at": "2026-11-19T13:35:13.568Z",
+      "model": "sonnet",
       "last_activity": null
     },
     "m3": {
-      "current": null,
+      "current": "M3-1119-U",
+      "started_at": "2026-11-19T13:35:15.737Z",
+      "model": "sonnet",
       "last_activity": null
     },
     "r0": {
@@ -33,18 +39,113 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.86,
-    "compressed_gb": 4.47,
-    "swap_used_gb": 9.4,
+    "used_gb": 15.87,
+    "compressed_gb": 4.28,
+    "swap_used_gb": 10.16,
     "pressure": "normal",
-    "at": "2026-11-19T13:21:37.122Z"
+    "at": "2026-11-19T13:39:59.575Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
     "used_gb": 15.9
   },
   "ci": {
-    "error": "deadline 30000ms",
-    "at": "2026-11-19T13:17:04.465Z"
+    "data": {
+      "at": "2026-11-19T13:38:43.521Z",
+      "repos_scanned": [
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
+      ],
+      "repos_failed": [],
+      "repos_skipped": [],
+      "api_calls": 20,
+      "api_budget": 40,
+      "api_overflow": false,
+      "heavy": {
+        "queued": 2,
+        "queued_prs": [
+          400,
+          399
+        ],
+        "oldest_queued_min": 24,
+        "oldest_queued_pr": "storeport:#400",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "#394",
+            "pr_display": "storeport:#394",
+            "job": "heavy-mac",
+            "step": null,
+            "running_min": 4,
+            "runner": "Youngkyus-MacBook-Pro-M1",
+            "kind": "mac-heavy"
+          }
+        ]
+      },
+      "light": {
+        "queued": 2,
+        "oldest_queued_min": 23,
+        "oldest_queued_pr": "storeport:main",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "main",
+            "pr_display": "storeport:main",
+            "job": "post",
+            "step": "Complete job",
+            "running_min": 0,
+            "runner": "curiocity-mac-light",
+            "kind": "mac-light"
+          }
+        ]
+      },
+      "cloud_in_progress": [],
+      "runners": {
+        "heavy_online": 1,
+        "heavy_busy": 1,
+        "light_online": 1
+      },
+      "cloud_today": 1,
+      "today": {
+        "mac-heavy": {
+          "jobs": 137,
+          "avg_wait_min": 3.6,
+          "avg_run_min": 4.8,
+          "success_rate": 30.7,
+          "run_min_total": 651.2000000000002
+        },
+        "mac-light": {
+          "jobs": 198,
+          "avg_wait_min": 2.3,
+          "avg_run_min": 2.4,
+          "success_rate": 84.8,
+          "run_min_total": 470.70000000000016
+        },
+        "cloud": {
+          "jobs": 256,
+          "avg_wait_min": 0,
+          "avg_run_min": 2.4,
+          "success_rate": 68,
+          "run_min_total": 612.4000000000008
+        },
+        "cloud_cost_est_usd": 6.104,
+        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
+        "wasted_min": 920.1999999999994
+      },
+      "jsonl_added": 9,
+      "alerts": [
+        {
+          "type": "queue_wait",
+          "detail": "oldest heavy queued 24m (storeport:#400)"
+        },
+        {
+          "type": "light_wait",
+          "detail": "oldest light queued 23m (storeport:main)"
+        }
+      ],
+      "partial": true
+    },
+    "took_ms": 23125,
+    "at": "2026-11-19T13:39:03.538Z"
   }
 }
