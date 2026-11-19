@@ -1336,3 +1336,229 @@ test('R-3: nit — in_progress 중간 break (sr.partial) 시 history cursor 전�
   }
   // hasCursor=false is also fine — means no cursor file was written at all.
 });
+
+// ---- S-1: AC §2-① — collectHistoryForRepo non-404 catch returns partial:true (M0-1119-S REQ1) ----
+//
+// R0C-1119-AC §2-① 재현 시나리오:
+//   - storeport state 는 정상 (queued/in_progress long run T-40m, runners 정상).
+//   - history 조회 (`actions/runs?status=completed`) 가 500 Internal Server Error 로 throw.
+//   - 직전 구현은 catch 에서 `{ partial: false, earliestUnprocessed: null, ... }` 반환
+//     → stateFullySeen=true, partial=false, earliestUnprocessed=null →
+//       candidates=[activeMin=T-40m] → cursor = T-40m → 다음 tick 에 `created>=T-40m`
+//       필터로 완료된 C(T-45m) 영구 누락.
+//   - 수정: catch 에서 non-404 → partial:true 반환 + 커서 블록 skip (REQ2).
+
+test('S-1: AC §2-① — history 조회 non-404 throw → cursor 전진 생략 · 다음 tick 재조회', async () => {
+  _resetCiHealthCache();
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-s1-'));
+
+  const longRun = {
+    id: 150001,
+    name: 'long-heavy',
+    status: 'in_progress',
+    created_at: minsAgo(40),
+    pull_requests: [{ number: 1101 }],
+    head_branch: 'feat/long',
+    repository: { full_name: MAIN_REPO },
+  };
+  const longJobsInProgress = {
+    jobs: [{
+      id: 1500010, name: 'heavy-mac', status: 'in_progress',
+      labels: ['self-hosted', 'curiocity-mac'], runner_name: 'youngs-mac',
+      created_at: longRun.created_at, started_at: minsAgo(39), completed_at: null,
+    }],
+  };
+  // C ran older than long (T-45m created, T-42m completed). After tick1 bug, cursor would be
+  // set to T-40m and tick2's `created>=T-40m` filter would exclude C → permanent loss.
+  const completedC = {
+    id: 150002,
+    name: 'ci-c',
+    status: 'completed',
+    created_at: minsAgo(45),
+    updated_at: minsAgo(42),
+    pull_requests: [{ number: 1102 }],
+    head_branch: 'feat/c',
+    repository: { full_name: MAIN_REPO },
+  };
+  const completedCJobs = {
+    jobs: [{
+      id: 1500020, name: 'build', status: 'completed',
+      labels: ['ubuntu-latest'], runner_name: 'GitHub Actions 1',
+      created_at: completedC.created_at, started_at: completedC.created_at,
+      completed_at: completedC.updated_at, conclusion: 'success',
+    }],
+  };
+
+  const applyCreatedFilter = (iso, list) => {
+    if (!iso) return list;
+    const since = new Date(iso).getTime();
+    return list.filter((r) => new Date(r.created_at).getTime() >= since);
+  };
+
+  // ---- tick1: completed list throws 500 ----
+  const execFn1 = async (endpoint) => {
+    if (!endpoint.includes(MAIN_REPO)) {
+      if (endpoint.includes('actions/runs')) return { workflow_runs: [] };
+      if (endpoint.includes('actions/runners')) return { runners: [] };
+      return {};
+    }
+    if (endpoint.includes('actions/runs?status=queued')) return { workflow_runs: [] };
+    if (endpoint.includes('actions/runs?status=in_progress')) return { workflow_runs: [longRun] };
+    if (endpoint.includes('actions/runners')) return { runners: [] };
+    if (endpoint.includes('actions/runs?status=completed')) {
+      throw new Error('500 Internal Server Error (simulated history failure)');
+    }
+    if (endpoint.includes(`actions/runs/${longRun.id}/jobs`)) return longJobsInProgress;
+    return {};
+  };
+
+  const r1 = await fetchCiHealth({
+    execFn: execFn1,
+    repoRoot: tmpRoot,
+    repos: [MAIN_REPO],
+    overallDeadlineMs: 30_000,
+  });
+  assert.ok(!r1.error, `tick1 error: ${r1.error}`);
+  assert.equal(r1.partial, true, 'tick1 partial=true (non-404 history catch)');
+  assert.equal(r1.jsonl_added, 0, 'tick1: history threw → 0 records');
+
+  // Key assertion: cursor NOT advanced to activeMin (long.created_at = T-40m).
+  // Without fix: cursor set to T-40m → tick2 filter excludes C(T-45m) → permanent loss.
+  const cursorPath = join(tmpRoot, '.cache', 'ci-history-cursor.json');
+  if (existsSync(cursorPath)) {
+    const cursor1 = JSON.parse(readFileSync(cursorPath, 'utf8'));
+    if (cursor1[MAIN_REPO]) {
+      const cursorMs = new Date(cursor1[MAIN_REPO]).getTime();
+      const completedCMs = new Date(completedC.created_at).getTime();
+      assert.ok(
+        cursorMs <= completedCMs,
+        `cursor ${cursor1[MAIN_REPO]} must be ≤ completedC.created_at ${completedC.created_at} (regression: cursor advanced to activeMin=${longRun.created_at} and skipped C)`,
+      );
+    }
+    // No cursor entry = also fine (never written).
+  }
+
+  // ---- tick2: completed list recovers · C is still fetchable ----
+  const execFn2 = async (endpoint) => {
+    if (!endpoint.includes(MAIN_REPO)) {
+      if (endpoint.includes('actions/runs')) return { workflow_runs: [] };
+      if (endpoint.includes('actions/runners')) return { runners: [] };
+      return {};
+    }
+    if (endpoint.includes('actions/runs?status=queued')) return { workflow_runs: [] };
+    if (endpoint.includes('actions/runs?status=in_progress')) return { workflow_runs: [longRun] };
+    if (endpoint.includes('actions/runners')) return { runners: [] };
+    if (endpoint.includes('actions/runs?status=completed')) {
+      const m = endpoint.match(/created=>=([^&]+)/);
+      const sinceIso = m ? decodeURIComponent(m[1]) : null;
+      return { workflow_runs: applyCreatedFilter(sinceIso, [completedC]) };
+    }
+    if (endpoint.includes(`actions/runs/${longRun.id}/jobs`)) return longJobsInProgress;
+    if (endpoint.includes(`actions/runs/${completedC.id}/jobs`)) return completedCJobs;
+    return {};
+  };
+
+  const r2 = await fetchCiHealth({
+    execFn: execFn2,
+    repoRoot: tmpRoot,
+    repos: [MAIN_REPO],
+    overallDeadlineMs: 30_000,
+  });
+  assert.ok(!r2.error, `tick2 error: ${r2.error}`);
+  assert.equal(
+    r2.jsonl_added,
+    1,
+    `tick2 must record C after history recovers (regression: cursor would have skipped past C). got ${r2.jsonl_added}`,
+  );
+});
+
+// ---- S-2: AC §2-② — collectCompletedJobs budget-exhaustion early return (M0-1119-S REQ2) ----
+//
+// R0C-1119-AC §2-② 재현 시나리오:
+//   - 2 repos. Main 의 history 가 budget 을 다 써서 fork 의 collectCompletedJobs
+//     진입 시점에 `!budgetCheck(budget)` 으로 조기 반환 (partial:true, earliestUnprocessed:null).
+//   - fork 는 state 단계에서 long run (T-40m) 을 봤으므로 activeMin = T-40m.
+//   - 직전 구현은 커서 블록이 partial:true + earliestUnprocessed=null 를 특별 처리하지 않아
+//     candidates=[activeMin] → cursor = T-40m → 다음 tick 에 `created>=T-40m` 필터로
+//     T-50m 완료 run (완료된 C) 영구 누락.
+//   - 수정: `if (partial && !earliestUnprocessed) continue;` 로 cursor 전진 생략 (REQ2).
+
+test('S-2: AC §2-② — collectCompletedJobs budget 조기 반환 → cursor 전진 생략', async () => {
+  _resetCiHealthCache();
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-s2-'));
+
+  const forkLongRun = {
+    id: 160001,
+    name: 'long-heavy',
+    status: 'in_progress',
+    created_at: minsAgo(40),
+    pull_requests: [{ number: 1201 }],
+    head_branch: 'feat/long',
+    repository: { full_name: FORK_REPO },
+  };
+  const forkLongJobsInProgress = {
+    jobs: [{
+      id: 1600010, name: 'heavy-mac', status: 'in_progress',
+      labels: ['self-hosted', 'curiocity-mac'], runner_name: 'youngs-mac',
+      created_at: forkLongRun.created_at, started_at: minsAgo(39), completed_at: null,
+    }],
+  };
+  // Main completed runs — just enough to consume budget so fork hits the early return.
+  const mainCompleted = makeCompletedRuns(5, 160100, MAIN_REPO);
+
+  const execFn = async (endpoint) => {
+    if (endpoint.includes(MAIN_REPO)) {
+      if (endpoint.includes('actions/runs?status=queued')) return { workflow_runs: [] };
+      if (endpoint.includes('actions/runs?status=in_progress')) return { workflow_runs: [] };
+      if (endpoint.includes('actions/runners')) return { runners: [] };
+      if (endpoint.includes('actions/runs?status=completed')) return { workflow_runs: mainCompleted };
+      for (const run of mainCompleted) {
+        if (endpoint.includes(`actions/runs/${run.id}/jobs`)) return makeJobForRun(run);
+      }
+      return {};
+    }
+    if (endpoint.includes(FORK_REPO)) {
+      if (endpoint.includes('actions/runs?status=queued')) return { workflow_runs: [] };
+      if (endpoint.includes('actions/runs?status=in_progress')) return { workflow_runs: [forkLongRun] };
+      if (endpoint.includes('actions/runners')) return { runners: [] };
+      if (endpoint.includes('actions/runs?status=completed')) return { workflow_runs: [] };
+      if (endpoint.includes(`actions/runs/${forkLongRun.id}/jobs`)) return forkLongJobsInProgress;
+      return {};
+    }
+    return {};
+  };
+
+  // Budget trace with apiBudget=11:
+  //   state: main queued(1), main in_progress(2), main runners(3),
+  //          fork queued(4), fork in_progress(5), fork in_progress jobs(6), fork runners(7)
+  //   history: main completed list(8), main run1 jobs(9), main run2 jobs(10), main run3 jobs(11)
+  //            → budget.overflow=true during run4's budgetCheck (noteUnprocessed path)
+  //   fork history enter: collectCompletedJobs line 369 budgetCheck fails → early return
+  //     { partial:true, earliestUnprocessed:null, latestProcessedRunCreatedAt:null }.
+  const r = await fetchCiHealth({
+    execFn,
+    repoRoot: tmpRoot,
+    repos: [MAIN_REPO, FORK_REPO],
+    overallDeadlineMs: 30_000,
+    apiBudget: 11,
+  });
+  assert.ok(!r.error, `error: ${r.error}`);
+  assert.equal(r.api_overflow, true, 'api_overflow=true (budget exhausted during history)');
+
+  // Key assertion: fork cursor NOT advanced to activeMin (forkLongRun.created_at = T-40m).
+  // Without REQ2: cursor set to T-40m (forkLongRun) → next tick filter would skip anything older.
+  // With REQ2: partial:true + earliestUnprocessed=null → continue → no cursor write.
+  const cursorPath = join(tmpRoot, '.cache', 'ci-history-cursor.json');
+  if (existsSync(cursorPath)) {
+    const cursor = JSON.parse(readFileSync(cursorPath, 'utf8'));
+    if (cursor[FORK_REPO]) {
+      const cursorMs = new Date(cursor[FORK_REPO]).getTime();
+      const longCreatedMs = new Date(forkLongRun.created_at).getTime();
+      assert.ok(
+        cursorMs < longCreatedMs,
+        `fork cursor ${cursor[FORK_REPO]} must be < forkLongRun.created_at ${forkLongRun.created_at} (regression: cursor advanced to activeMin via partial:true+null path)`,
+      );
+    }
+    // Also acceptable: fork cursor not written at all.
+  }
+});
