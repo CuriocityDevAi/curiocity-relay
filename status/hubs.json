@@ -1,23 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-19T11:19:08.918Z",
+  "built_at": "2026-11-19T11:22:18.635Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-19T11:19:01.891Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-19T11:19:01.891Z"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-19T11:18:14.025Z",
-      "session": "99e4e08c-85c6-4417-af66-0e9a1042115e",
-      "updated_at": "2026-11-19T11:19:01.891Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -29,17 +13,93 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-19T11:19:01.891Z"
+      "updated_at": "2026-11-19T11:19:01.891Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-19T11:19:01.891Z"
+      "updated_at": "2026-11-19T11:19:01.891Z",
+      "last_round": "K2-0916-B",
+      "last_report": "k2/K2-0916-B-report.md"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-19T11:18:14.025Z",
+      "session": "99e4e08c-85c6-4417-af66-0e9a1042115e",
+      "updated_at": "2026-11-19T11:19:01.891Z",
+      "last_round": "M0-1119-N",
+      "last_report": "m0/M0-1119-N-report.md",
+      "current_round": "M0-1119-N",
+      "current_state": "done",
+      "current_at": "2026-11-19T11:18:20.335Z",
+      "current_note": "ci failure diag"
+    },
+    "m1": {
+      "last_round": "M1-1119-M",
+      "last_report": "m1/M1-1119-M-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-19T11:22:18.635Z",
+      "current_round": "M1-1119-O",
+      "current_state": "blocked",
+      "current_at": "2026-11-19T11:16:02.775Z",
+      "current_note": "timeout 60m · runner-v7.5 cmux-split · pane 유지 (C-c + /exit 전송) · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1119-O.log"
+    },
+    "m2": {
+      "last_round": "M2-1119-S",
+      "last_report": "m2/M2-1119-S-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-19T11:22:18.635Z",
+      "current_round": "M2-1119-T",
+      "current_state": "started",
+      "current_at": "2026-11-19T10:50:25.736Z",
+      "current_note": "runner-v7.5 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1119-T.log"
+    },
+    "m3": {
+      "last_round": "M3-1119-O",
+      "last_report": "m3/M3-1119-O-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-19T11:22:18.635Z",
+      "current_round": "M3-1119-O",
+      "current_state": "done",
+      "current_at": "2026-11-19T11:22:18.573Z",
+      "current_note": "cd sync fix"
+    },
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-19T11:19:01.891Z",
+      "last_round": "N0-0914-C",
+      "last_report": "n0/N0-0914-C-report.md"
+    },
+    "r0": {
+      "last_round": "R0-1119-H",
+      "last_report": "r0/R0-1119-H-report.md",
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-19T11:22:18.635Z",
+      "current_round": "R0-1119-H",
+      "current_state": "done",
+      "current_at": "2026-11-19T03:00:06.012Z",
+      "current_note": "runner-v7.4 cmux-split · 리포트 확인 r0/R0-1119-H-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1119-H.log"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-19T11:19:01.891Z",
+      "last_round": "T0-0915-A",
+      "last_report": "t0/T0-0915-A-report.md"
     }
   }
 }
