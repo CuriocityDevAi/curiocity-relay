@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T15:23:53.673Z",
+  "at": "2026-11-19T15:28:08.969Z",
   "pid": 49838,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -37,11 +37,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.71,
-    "compressed_gb": 4.17,
-    "swap_used_gb": 13.14,
+    "used_gb": 15.07,
+    "compressed_gb": 3.86,
+    "swap_used_gb": 11.86,
     "pressure": "normal",
-    "at": "2026-11-19T15:23:19.384Z"
+    "at": "2026-11-19T15:27:35.530Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -49,85 +49,12 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-19T15:21:27.308Z",
-      "repos_scanned": [
-        "CuriocityDevAi/storeport"
-      ],
-      "repos_failed": [],
-      "repos_skipped": [],
-      "api_calls": 17,
-      "api_budget": 40,
-      "api_overflow": false,
-      "heavy": {
-        "queued": 3,
-        "queued_prs": [
-          402,
-          404
-        ],
-        "oldest_queued_min": 31,
-        "oldest_queued_pr": "storeport:#402",
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/storeport",
-            "pr": "#403",
-            "pr_display": "storeport:#403",
-            "job": "pos-integration",
-            "step": "Run POS integration tests",
-            "running_min": 14,
-            "runner": "Youngkyus-MacBook-Pro-M1",
-            "kind": "mac-heavy"
-          }
-        ]
-      },
-      "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "cloud_in_progress": [],
-      "runners": {
-        "heavy_online": 1,
-        "heavy_busy": 1,
-        "light_online": 1
-      },
-      "cloud_today": 7,
-      "today": {
-        "mac-heavy": {
-          "jobs": 167,
-          "avg_wait_min": 4.6,
-          "avg_run_min": 5.4,
-          "success_rate": 28.7,
-          "run_min_total": 899.0000000000001
-        },
-        "mac-light": {
-          "jobs": 267,
-          "avg_wait_min": 7.1,
-          "avg_run_min": 1.9,
-          "success_rate": 88.4,
-          "run_min_total": 510.5000000000001
-        },
-        "cloud": {
-          "jobs": 303,
-          "avg_wait_min": 0,
-          "avg_run_min": 2.2,
-          "success_rate": 68.6,
-          "run_min_total": 669.6000000000009
-        },
-        "cloud_cost_est_usd": 6.776,
-        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 1124.399999999999
-      },
-      "jsonl_added": 9,
-      "alerts": [
-        {
-          "type": "queue_wait",
-          "detail": "oldest heavy queued 31m (storeport:#402)"
-        }
-      ],
-      "partial": true
+      "at": "2026-11-19T15:26:56.618Z",
+      "error": "Command failed: gh api repos/CuriocityDevAi/storeport/actions/runs?status=queued&per_page=100 -H Accept: application/vnd.github+json\ngh: API rate limit exceeded for user ID 250366334. If you reach out to GitHub Support for help, please include the request ID C23E:2B2C6B:2A77AA4:430FE6F:6AFF1540 and timestamp 2026-11-19 15:26:57 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service) (HTTP 403)\n",
+      "api_calls": 2,
+      "api_budget": 40
     },
-    "took_ms": 23319,
-    "at": "2026-11-19T15:21:47.334Z"
+    "took_ms": 5237,
+    "at": "2026-11-19T15:26:59.096Z"
   }
 }
