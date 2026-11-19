@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-19T11:34:35.117Z",
+  "at": "2026-11-19T11:36:23.482Z",
   "pid": 42106,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -30,10 +30,8 @@
       "last_activity": "2026-11-19T11:24:58.463Z"
     },
     "m3": {
-      "current": "M3-1119-P",
-      "started_at": "2026-11-19T11:27:18.994Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-19T11:22:34.078Z"
+      "current": null,
+      "last_activity": "2026-11-19T11:35:36.513Z"
     },
     "r0": {
       "current": null,
@@ -42,19 +40,19 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 155803,
-    "totalMs": 188046,
+    "lastMs": 27695,
+    "totalMs": 45053,
     "phase": "await-landing",
-    "at": "2026-11-19T11:22:31.778Z"
+    "at": "2026-11-19T11:35:42.162Z"
   },
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.24,
-    "compressed_gb": 4.57,
-    "swap_used_gb": 10.26,
+    "used_gb": 15.78,
+    "compressed_gb": 4.8,
+    "swap_used_gb": 10.21,
     "pressure": "normal",
-    "at": "2026-11-19T11:33:54.423Z"
+    "at": "2026-11-19T11:35:46.252Z"
   },
   "mem_peak_today": {
     "date": "2026-11-19",
@@ -62,6 +60,6 @@
   },
   "ci": {
     "error": "deadline 30000ms",
-    "at": "2026-11-19T11:29:00.773Z"
+    "at": "2026-11-19T11:34:57.427Z"
   }
 }
