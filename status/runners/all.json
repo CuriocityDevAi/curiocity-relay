@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T05:36:15.987Z",
+  "at": "2026-11-20T05:50:02.967Z",
   "pid": 31970,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -8,13 +8,13 @@
   "last_error": "blocked: runner-folder change pending Kyu install (.cache/)",
   "hubs": {
     "m0": {
-      "current": "M0-1120-A",
-      "started_at": "2026-11-20T05:32:17.579Z",
-      "model": "opus",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-20T05:41:11.959Z"
     },
     "m1": {
-      "current": null,
+      "current": "M1-1120-B",
+      "started_at": "2026-11-20T05:47:13.634Z",
+      "model": "sonnet",
       "last_activity": "2026-11-20T05:25:48.271Z"
     },
     "m2": {
@@ -24,8 +24,10 @@
       "last_activity": "2026-11-20T05:30:50.713Z"
     },
     "m3": {
-      "current": null,
-      "last_activity": null
+      "current": "M3-1120-A",
+      "started_at": "2026-11-20T05:50:01.286Z",
+      "model": "sonnet",
+      "last_activity": "2026-11-20T05:47:23.949Z"
     },
     "r0": {
       "current": null,
@@ -37,11 +39,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.83,
-    "compressed_gb": 5.81,
-    "swap_used_gb": 9.06,
+    "used_gb": 15.76,
+    "compressed_gb": 5.3,
+    "swap_used_gb": 10.81,
     "pressure": "normal",
-    "at": "2026-11-20T05:35:48.213Z"
+    "at": "2026-11-20T05:49:29.940Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -49,14 +51,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T05:32:17.574Z",
+      "at": "2026-11-20T05:47:47.071Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 12,
+      "api_calls": 13,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -64,7 +66,18 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "#405",
+            "pr_display": "storeport:#405",
+            "job": "heavy-mac",
+            "step": "Run ./.github/actions/heavy-steps",
+            "running_min": 5,
+            "runner": "Youngkyus-MacBook-Pro-M1",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -75,7 +88,7 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 1,
-        "heavy_busy": 0,
+        "heavy_busy": 1,
         "light_online": 1
       },
       "cloud_today": 6,
@@ -88,17 +101,17 @@
           "run_min_total": 83.1
         },
         "mac-light": {
-          "jobs": 34,
+          "jobs": 36,
           "avg_wait_min": 0.9,
           "avg_run_min": 0.3,
           "success_rate": 100,
-          "run_min_total": 10.799999999999999
+          "run_min_total": 11.399999999999999
         },
         "cloud": {
-          "jobs": 45,
+          "jobs": 51,
           "avg_wait_min": 0,
-          "avg_run_min": 1,
-          "success_rate": 22.2,
+          "avg_run_min": 0.9,
+          "success_rate": 19.6,
           "run_min_total": 44.400000000000006
         },
         "cloud_cost_est_usd": 0.432,
@@ -106,10 +119,11 @@
         "wasted_min": 0
       },
       "jsonl_added": 6,
-      "alerts": []
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 15272,
-    "at": "2026-11-20T05:32:30.672Z"
+    "took_ms": 19045,
+    "at": "2026-11-20T05:48:04.838Z"
   },
   "gh_runner_alert": null
 }
