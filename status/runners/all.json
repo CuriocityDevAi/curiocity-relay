@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T10:54:02.005Z",
+  "at": "2026-11-20T10:59:32.231Z",
   "pid": 95884,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -59,11 +59,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.89,
-    "compressed_gb": 4.73,
-    "swap_used_gb": 8.46,
+    "used_gb": 15.43,
+    "compressed_gb": 4.86,
+    "swap_used_gb": 7.91,
     "pressure": "normal",
-    "at": "2026-11-20T10:53:23.759Z"
+    "at": "2026-11-20T10:59:00.283Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -71,21 +71,35 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T10:51:25.213Z",
+      "at": "2026-11-20T10:56:26.218Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport"
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 5,
+      "api_calls": 12,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
+        "queued": 3,
+        "queued_prs": [
+          219
+        ],
+        "oldest_queued_min": 35,
+        "oldest_queued_pr": "fork:master",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "master",
+            "pr_display": "fork:master",
+            "job": "lint",
+            "step": "Complete job",
+            "running_min": 35,
+            "runner": "curiocity-mac-fork",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -95,8 +109,8 @@
       },
       "cloud_in_progress": [],
       "runners": {
-        "heavy_online": 1,
-        "heavy_busy": 0,
+        "heavy_online": 2,
+        "heavy_busy": 1,
         "light_online": 1
       },
       "cloud_today": 0,
@@ -127,11 +141,20 @@
         "wasted_min": 13.8
       },
       "jsonl_added": 0,
-      "alerts": [],
+      "alerts": [
+        {
+          "type": "queue_wait",
+          "detail": "oldest heavy queued 35m (fork:master)"
+        },
+        {
+          "type": "long_job",
+          "detail": "lint running 35m (fork:master)"
+        }
+      ],
       "partial": true
     },
-    "took_ms": 18263,
-    "at": "2026-11-20T10:51:40.312Z"
+    "took_ms": 19172,
+    "at": "2026-11-20T10:56:42.313Z"
   },
   "gh_runner_alert": null
 }
