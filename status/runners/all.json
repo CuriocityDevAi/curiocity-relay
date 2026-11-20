@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T05:30:51.842Z",
+  "at": "2026-11-20T05:32:19.092Z",
   "pid": 31970,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -8,7 +8,9 @@
   "last_error": "blocked: runner-folder change pending Kyu install (.cache/)",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1120-A",
+      "started_at": "2026-11-20T05:32:17.579Z",
+      "model": "opus",
       "last_activity": null
     },
     "m1": {
@@ -33,11 +35,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.91,
-    "compressed_gb": 5,
-    "swap_used_gb": 9.4,
+    "used_gb": 15.78,
+    "compressed_gb": 5.26,
+    "swap_used_gb": 9.32,
     "pressure": "normal",
-    "at": "2026-11-20T05:30:38.645Z"
+    "at": "2026-11-20T05:31:45.394Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
