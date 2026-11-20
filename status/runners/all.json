@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T09:43:20.776Z",
+  "at": "2026-11-20T09:45:07.194Z",
   "pid": 95884,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -64,10 +64,10 @@
   "mem": {
     "total_gb": 16,
     "used_gb": 15.75,
-    "compressed_gb": 4.83,
-    "swap_used_gb": 11.81,
+    "compressed_gb": 5.38,
+    "swap_used_gb": 11.49,
     "pressure": "normal",
-    "at": "2026-11-20T09:42:47.345Z"
+    "at": "2026-11-20T09:44:34.465Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -75,14 +75,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T09:37:51.347Z",
+      "at": "2026-11-20T09:43:17.647Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 16,
+      "api_calls": 10,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -90,7 +90,7 @@
         "queued_prs": [
           216
         ],
-        "oldest_queued_min": 63,
+        "oldest_queued_min": 68,
         "oldest_queued_pr": "fork:#216",
         "in_progress": []
       },
@@ -107,7 +107,7 @@
           "pr_display": "fork:#215",
           "job": "assertions",
           "step": "Install ImageMagick",
-          "running_min": 3,
+          "running_min": 9,
           "runner": "GitHub Actions 1000007574",
           "kind": "cloud"
         }
@@ -117,7 +117,7 @@
         "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 3,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 10,
@@ -144,21 +144,21 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 10,
+      "jsonl_added": 0,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 63m (fork:#216)"
+          "detail": "oldest heavy queued 68m (fork:#216)"
         },
         {
           "type": "runner_idle",
-          "detail": "1 queued but 0 in_progress for 63m (fork:#216)"
+          "detail": "1 queued but 0 in_progress for 68m (fork:#216)"
         }
       ],
       "partial": true
     },
-    "took_ms": 20574,
-    "at": "2026-11-20T09:38:09.672Z"
+    "took_ms": 17433,
+    "at": "2026-11-20T09:43:32.185Z"
   },
   "gh_runner_alert": null
 }
