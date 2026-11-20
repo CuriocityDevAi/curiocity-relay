@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T05:32:19.092Z",
+  "at": "2026-11-20T05:33:29.547Z",
   "pid": 31970,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -18,7 +18,9 @@
       "last_activity": "2026-11-20T05:25:48.271Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1120-C",
+      "started_at": "2026-11-20T05:33:26.673Z",
+      "model": "sonnet",
       "last_activity": "2026-11-20T05:30:50.713Z"
     },
     "m3": {
@@ -26,7 +28,9 @@
       "last_activity": null
     },
     "r0": {
-      "current": null,
+      "current": "R0-1120-A",
+      "started_at": "2026-11-20T05:33:27.747Z",
+      "model": "sonnet",
       "last_activity": null
     }
   },
@@ -35,11 +39,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.78,
-    "compressed_gb": 5.26,
-    "swap_used_gb": 9.32,
+    "used_gb": 15.75,
+    "compressed_gb": 5.32,
+    "swap_used_gb": 9.18,
     "pressure": "normal",
-    "at": "2026-11-20T05:31:45.394Z"
+    "at": "2026-11-20T05:32:54.465Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -47,7 +51,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T05:27:13.448Z",
+      "at": "2026-11-20T05:32:17.574Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -93,10 +97,10 @@
           "run_min_total": 10.799999999999999
         },
         "cloud": {
-          "jobs": 39,
+          "jobs": 45,
           "avg_wait_min": 0,
-          "avg_run_min": 1.1,
-          "success_rate": 25.6,
+          "avg_run_min": 1,
+          "success_rate": 22.2,
           "run_min_total": 44.400000000000006
         },
         "cloud_cost_est_usd": 0.432,
@@ -106,8 +110,8 @@
       "jsonl_added": 6,
       "alerts": []
     },
-    "took_ms": 12947,
-    "at": "2026-11-20T05:27:24.465Z"
+    "took_ms": 15272,
+    "at": "2026-11-20T05:32:30.672Z"
   },
   "gh_runner_alert": null
 }
