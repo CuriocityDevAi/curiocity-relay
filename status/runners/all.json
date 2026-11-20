@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T10:23:59.974Z",
+  "at": "2026-11-20T10:29:14.710Z",
   "pid": 95884,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -38,10 +38,10 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 15263,
-    "totalMs": 116832,
+    "lastMs": 15205,
+    "totalMs": 141761,
     "phase": "await-landing",
-    "at": "2026-11-20T10:18:15.220Z"
+    "at": "2026-11-20T10:28:04.058Z"
   },
   "kyu_folder_intrusion": {
     "hub": "m2",
@@ -61,11 +61,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.82,
-    "compressed_gb": 6.3,
-    "swap_used_gb": 9.56,
+    "used_gb": 15.76,
+    "compressed_gb": 5.11,
+    "swap_used_gb": 9.55,
     "pressure": "normal",
-    "at": "2026-11-20T10:23:06.021Z"
+    "at": "2026-11-20T10:28:40.984Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -73,21 +73,21 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T10:19:23.195Z",
+      "at": "2026-11-20T10:24:34.982Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 9,
+      "api_calls": 11,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
+        "queued": 1,
         "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
+        "oldest_queued_min": 3,
+        "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
             "repo": "CuriocityDevAi/storeport",
@@ -95,8 +95,18 @@
             "pr_display": "storeport:#409",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 13,
+            "running_min": 19,
             "runner": "Youngkyus-MacBook-Pro-M1",
+            "kind": "mac-heavy"
+          },
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "master",
+            "pr_display": "fork:master",
+            "job": "lint",
+            "step": "Post Run actions/setup-node@v4",
+            "running_min": 3,
+            "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
         ]
@@ -110,7 +120,7 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 2,
-        "heavy_busy": 1,
+        "heavy_busy": 2,
         "light_online": 1
       },
       "cloud_today": 0,
@@ -141,10 +151,11 @@
         "wasted_min": 13.8
       },
       "jsonl_added": 0,
-      "alerts": []
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 12789,
-    "at": "2026-11-20T10:19:33.604Z"
+    "took_ms": 16495,
+    "at": "2026-11-20T10:24:48.710Z"
   },
   "gh_runner_alert": null
 }
