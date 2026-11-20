@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T11:21:04.339Z",
+  "at": "2026-11-20T11:26:34.928Z",
   "pid": 95884,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -34,10 +34,10 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 16932,
-    "totalMs": 190224,
+    "lastMs": 18858,
+    "totalMs": 209082,
     "phase": "await-landing",
-    "at": "2026-11-20T11:20:24.616Z"
+    "at": "2026-11-20T11:22:02.583Z"
   },
   "kyu_folder_intrusion": {
     "hub": "m2",
@@ -57,11 +57,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.68,
-    "compressed_gb": 4.22,
-    "swap_used_gb": 8.13,
+    "used_gb": 14.78,
+    "compressed_gb": 4.63,
+    "swap_used_gb": 8.09,
     "pressure": "normal",
-    "at": "2026-11-20T11:20:25.563Z"
+    "at": "2026-11-20T11:26:03.976Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -69,21 +69,35 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T11:18:35.993Z",
+      "at": "2026-11-20T11:23:50.059Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport"
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 2,
+      "api_calls": 16,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
+        "queued": 7,
+        "queued_prs": [
+          218
+        ],
+        "oldest_queued_min": 27,
+        "oldest_queued_pr": "fork:master",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "master",
+            "pr_display": "fork:master",
+            "job": "assertions",
+            "step": "Run actions/setup-node@v4",
+            "running_min": 10,
+            "runner": "curiocity-mac-fork",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -92,7 +106,11 @@
         "in_progress": []
       },
       "cloud_in_progress": [],
-      "runners": null,
+      "runners": {
+        "heavy_online": 2,
+        "heavy_busy": 1,
+        "light_online": 1
+      },
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
@@ -121,11 +139,16 @@
         "wasted_min": 13.8
       },
       "jsonl_added": 0,
-      "alerts": [],
+      "alerts": [
+        {
+          "type": "queue_wait",
+          "detail": "oldest heavy queued 27m (fork:master)"
+        }
+      ],
       "partial": true
     },
-    "took_ms": 25921,
-    "at": "2026-11-20T11:18:56.469Z"
+    "took_ms": 25255,
+    "at": "2026-11-20T11:24:10.075Z"
   },
   "gh_runner_alert": null
 }
