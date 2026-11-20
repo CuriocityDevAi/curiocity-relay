@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T23:43:14.080Z",
+  "at": "2026-11-20T23:47:15.572Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -18,7 +18,9 @@
       "last_activity": null
     },
     "m2": {
-      "current": null,
+      "current": "M2-1121-A",
+      "started_at": "2026-11-20T23:47:14.140Z",
+      "model": "sonnet",
       "last_activity": null
     },
     "m3": {
@@ -57,11 +59,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.81,
-    "compressed_gb": 4.01,
+    "used_gb": 15.73,
+    "compressed_gb": 4.79,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-20T23:42:39.240Z"
+    "at": "2026-11-20T23:46:42.384Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -69,22 +71,23 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T23:39:10.624Z",
+      "at": "2026-11-20T23:44:22.560Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 14,
+      "api_calls": 15,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 3,
+        "queued": 5,
         "queued_prs": [
-          218
+          218,
+          220
         ],
-        "oldest_queued_min": 5,
+        "oldest_queued_min": 10,
         "oldest_queued_pr": "fork:#218",
         "in_progress": [
           {
@@ -93,7 +96,7 @@
             "pr_display": "storeport:main",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 4,
+            "running_min": 9,
             "runner": "Youngkyus-MacBook-Pro-M1",
             "kind": "mac-heavy"
           },
@@ -103,7 +106,7 @@
             "pr_display": "fork:master",
             "job": "lint",
             "step": "Run actions/setup-node@v4",
-            "running_min": 5,
+            "running_min": 10,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -121,7 +124,7 @@
         "heavy_busy": 2,
         "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 0,
@@ -148,11 +151,12 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 1,
-      "alerts": []
+      "jsonl_added": 0,
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 14566,
-    "at": "2026-11-20T23:39:22.909Z"
+    "took_ms": 15592,
+    "at": "2026-11-20T23:44:35.537Z"
   },
   "gh_runner_alert": null
 }
