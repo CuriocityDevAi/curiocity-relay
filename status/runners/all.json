@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T09:35:12.030Z",
+  "at": "2026-11-20T09:39:18.836Z",
   "pid": 95884,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -8,10 +8,8 @@
   "last_error": "blocked: runner-folder change pending Kyu install (.cache/)",
   "hubs": {
     "m0": {
-      "current": "M0-1120-C",
-      "started_at": "2026-11-20T08:38:48.771Z",
-      "model": "opus",
-      "last_activity": "2026-11-20T08:32:43.540Z",
+      "current": null,
+      "last_activity": "2026-11-20T09:39:17.324Z",
       "suspect_done": {
         "since": "2026-11-20T08:38:52.475Z",
         "id": "M0-1120-C"
@@ -42,14 +40,36 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": null,
-  "kyu_folder_intrusion": null,
+  "kyu_folder_intrusion": {
+    "hub": "m0",
+    "prompt_id": "M0-1120-C",
+    "folder": [
+      "/Users/kyu.lee/projects/agilo-fork-test",
+      "/Users/kyu.lee/projects/kyu-display"
+    ],
+    "changed": [
+      {
+        "dir": "/Users/kyu.lee/projects/agilo-fork-test",
+        "fields": [
+          "HEAD"
+        ]
+      },
+      {
+        "dir": "/Users/kyu.lee/projects/kyu-display",
+        "fields": [
+          "HEAD"
+        ]
+      }
+    ],
+    "at": "2026-11-20T09:39:17.324Z"
+  },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.72,
-    "compressed_gb": 4.06,
-    "swap_used_gb": 12,
+    "used_gb": 15.92,
+    "compressed_gb": 4.3,
+    "swap_used_gb": 11.82,
     "pressure": "normal",
-    "at": "2026-11-20T09:35:00.841Z"
+    "at": "2026-11-20T09:39:09.230Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -57,14 +77,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T09:32:24.501Z",
+      "at": "2026-11-20T09:37:51.347Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 9,
+      "api_calls": 16,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -72,7 +92,7 @@
         "queued_prs": [
           216
         ],
-        "oldest_queued_min": 57,
+        "oldest_queued_min": 63,
         "oldest_queued_pr": "fork:#216",
         "in_progress": []
       },
@@ -82,54 +102,65 @@
         "oldest_queued_pr": null,
         "in_progress": []
       },
-      "cloud_in_progress": [],
+      "cloud_in_progress": [
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#215",
+          "pr_display": "fork:#215",
+          "job": "assertions",
+          "step": "Install ImageMagick",
+          "running_min": 3,
+          "runner": "GitHub Actions 1000007574",
+          "kind": "cloud"
+        }
+      ],
       "runners": {
         "heavy_online": 1,
         "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 0,
+      "cloud_today": 3,
       "today": {
         "mac-heavy": {
-          "jobs": 9,
-          "avg_wait_min": 1,
-          "avg_run_min": 13.5,
-          "success_rate": 88.9,
-          "run_min_total": 121.89999999999999
+          "jobs": 10,
+          "avg_wait_min": 0.9,
+          "avg_run_min": 12.4,
+          "success_rate": 90,
+          "run_min_total": 124.39999999999999
         },
         "mac-light": {
-          "jobs": 45,
-          "avg_wait_min": 0.9,
+          "jobs": 51,
+          "avg_wait_min": 0.8,
           "avg_run_min": 0.3,
           "success_rate": 100,
-          "run_min_total": 14.1
+          "run_min_total": 15.599999999999998
         },
         "cloud": {
-          "jobs": 71,
+          "jobs": 74,
           "avg_wait_min": 0,
-          "avg_run_min": 0.9,
-          "success_rate": 28.2,
-          "run_min_total": 60.80000000000002
+          "avg_run_min": 0.8,
+          "success_rate": 29.7,
+          "run_min_total": 62.50000000000002
         },
-        "cloud_cost_est_usd": 0.632,
+        "cloud_cost_est_usd": 0.656,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 0,
+      "jsonl_added": 10,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 57m (fork:#216)"
+          "detail": "oldest heavy queued 63m (fork:#216)"
         },
         {
           "type": "runner_idle",
-          "detail": "1 queued but 0 in_progress for 57m (fork:#216)"
+          "detail": "1 queued but 0 in_progress for 63m (fork:#216)"
         }
       ],
       "partial": true
     },
-    "took_ms": 16422,
-    "at": "2026-11-20T09:32:38.501Z"
+    "took_ms": 20574,
+    "at": "2026-11-20T09:38:09.672Z"
   },
   "gh_runner_alert": null
 }
