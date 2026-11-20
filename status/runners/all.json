@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T09:48:08.603Z",
+  "at": "2026-11-20T09:48:54.377Z",
   "pid": 95884,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -20,10 +20,8 @@
       "last_activity": "2026-11-20T08:35:40.394Z"
     },
     "m2": {
-      "current": "M2-1120-E",
-      "started_at": "2026-11-20T08:48:25.302Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-20T08:30:56.080Z"
+      "current": null,
+      "last_activity": "2026-11-20T09:48:52.564Z"
     },
     "m3": {
       "current": "M3-1120-D",
@@ -41,11 +39,10 @@
   "pane_close_failures": {},
   "last_sleep_gap": null,
   "kyu_folder_intrusion": {
-    "hub": "m0",
-    "prompt_id": "M0-1120-C",
+    "hub": "m2",
+    "prompt_id": "M2-1120-E",
     "folder": [
-      "/Users/kyu.lee/projects/agilo-fork-test",
-      "/Users/kyu.lee/projects/kyu-display"
+      "/Users/kyu.lee/projects/agilo-fork-test"
     ],
     "changed": [
       {
@@ -53,23 +50,17 @@
         "fields": [
           "HEAD"
         ]
-      },
-      {
-        "dir": "/Users/kyu.lee/projects/kyu-display",
-        "fields": [
-          "HEAD"
-        ]
       }
     ],
-    "at": "2026-11-20T09:39:17.324Z"
+    "at": "2026-11-20T09:48:52.563Z"
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.85,
-    "compressed_gb": 5.48,
-    "swap_used_gb": 10.53,
+    "used_gb": 15.78,
+    "compressed_gb": 5.92,
+    "swap_used_gb": 11.01,
     "pressure": "normal",
-    "at": "2026-11-20T09:47:35.355Z"
+    "at": "2026-11-20T09:48:50.532Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
