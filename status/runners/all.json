@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T01:43:15.170Z",
+  "at": "2026-11-20T01:48:52.089Z",
   "pid": 31970,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -35,11 +35,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.89,
-    "compressed_gb": 5.08,
-    "swap_used_gb": 9.79,
+    "used_gb": 15.44,
+    "compressed_gb": 5.11,
+    "swap_used_gb": 9.71,
     "pressure": "normal",
-    "at": "2026-11-20T01:42:41.536Z"
+    "at": "2026-11-20T01:48:19.986Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -47,14 +47,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T01:41:32.960Z",
+      "at": "2026-11-20T01:46:36.551Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 10,
+      "api_calls": 8,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -76,7 +76,7 @@
         "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 5,
@@ -103,11 +103,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 6,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 9564,
-    "at": "2026-11-20T01:41:40.475Z"
+    "took_ms": 10363,
+    "at": "2026-11-20T01:46:45.218Z"
   },
   "gh_runner_alert": null
 }
