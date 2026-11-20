@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T01:36:31.921Z",
+  "at": "2026-11-20T01:41:32.988Z",
   "pid": 31970,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -33,19 +33,19 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.74,
-    "compressed_gb": 5.55,
-    "swap_used_gb": 9.92,
+    "used_gb": 15.92,
+    "compressed_gb": 4.4,
+    "swap_used_gb": 9.8,
     "pressure": "normal",
-    "at": "2026-11-20T01:35:59.514Z"
+    "at": "2026-11-20T01:41:00.913Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
-    "used_gb": 15.89
+    "used_gb": 15.92
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T01:31:30.611Z",
+      "at": "2026-11-20T01:36:31.888Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -67,7 +67,7 @@
             "pr_display": "storeport:#356",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 9,
+            "running_min": 15,
             "runner": "Youngkyus-MacBook-Pro-M1",
             "kind": "mac-heavy"
           }
@@ -115,8 +115,8 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 9407,
-    "at": "2026-11-20T01:31:37.426Z"
+    "took_ms": 11510,
+    "at": "2026-11-20T01:36:41.027Z"
   },
   "gh_runner_alert": null
 }
