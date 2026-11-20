@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T04:14:37.061Z",
+  "at": "2026-11-20T04:19:47.223Z",
   "pid": 31970,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -33,11 +33,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.82,
-    "compressed_gb": 5.88,
-    "swap_used_gb": 9.3,
+    "used_gb": 15.86,
+    "compressed_gb": 5.34,
+    "swap_used_gb": 9.22,
     "pressure": "normal",
-    "at": "2026-11-20T04:14:04.268Z"
+    "at": "2026-11-20T04:19:15.359Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -45,7 +45,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T04:11:50.153Z",
+      "at": "2026-11-20T04:16:53.629Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -102,10 +102,11 @@
         "wasted_min": 0
       },
       "jsonl_added": 0,
-      "alerts": []
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 6636,
-    "at": "2026-11-20T04:11:54.928Z"
+    "took_ms": 15289,
+    "at": "2026-11-20T04:17:06.793Z"
   },
   "gh_runner_alert": null
 }
