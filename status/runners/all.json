@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T02:10:45.356Z",
+  "at": "2026-11-20T02:15:47.808Z",
   "pid": 31970,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -33,11 +33,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.79,
-    "compressed_gb": 5.13,
-    "swap_used_gb": 8.93,
+    "used_gb": 15.85,
+    "compressed_gb": 4.75,
+    "swap_used_gb": 9.31,
     "pressure": "normal",
-    "at": "2026-11-20T02:10:13.554Z"
+    "at": "2026-11-20T02:15:16.043Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -45,7 +45,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T02:07:58.461Z",
+      "at": "2026-11-20T02:13:02.788Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -60,7 +60,18 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "main",
+            "pr_display": "storeport:main",
+            "job": "heavy-mac",
+            "step": "Run ./.github/actions/heavy-steps",
+            "running_min": 1,
+            "runner": "Youngkyus-MacBook-Pro-M1",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -71,7 +82,7 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 1,
-        "heavy_busy": 0,
+        "heavy_busy": 1,
         "light_online": 1
       },
       "cloud_today": 1,
@@ -91,21 +102,21 @@
           "run_min_total": 9.499999999999998
         },
         "cloud": {
-          "jobs": 31,
+          "jobs": 32,
           "avg_wait_min": 0,
           "avg_run_min": 1.4,
-          "success_rate": 32.3,
+          "success_rate": 31.3,
           "run_min_total": 44.400000000000006
         },
         "cloud_cost_est_usd": 0.432,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 6,
+      "jsonl_added": 1,
       "alerts": []
     },
-    "took_ms": 9953,
-    "at": "2026-11-20T02:08:06.606Z"
+    "took_ms": 9600,
+    "at": "2026-11-20T02:13:08.636Z"
   },
   "gh_runner_alert": null
 }
