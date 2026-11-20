@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T05:35:46.600Z",
+  "at": "2026-11-20T05:41:12.798Z",
   "pid": 31970,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -8,10 +8,8 @@
   "last_error": "blocked: runner-folder change pending Kyu install (.cache/)",
   "hubs": {
     "m0": {
-      "current": "M0-1120-A",
-      "started_at": "2026-11-20T05:32:17.579Z",
-      "model": "opus",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-20T05:41:11.959Z"
     },
     "m1": {
       "current": null,
@@ -24,14 +22,14 @@
       "last_activity": "2026-11-20T05:30:50.713Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1120-A",
+      "started_at": "2026-11-20T05:40:57.520Z",
+      "model": "sonnet",
       "last_activity": null
     },
     "r0": {
-      "current": "R0-1120-A",
-      "started_at": "2026-11-20T05:33:27.747Z",
-      "model": "sonnet",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-20T05:36:14.948Z"
     }
   },
   "pane_close_failures": {},
@@ -40,10 +38,10 @@
   "mem": {
     "total_gb": 16,
     "used_gb": 15.76,
-    "compressed_gb": 5.42,
-    "swap_used_gb": 9.08,
+    "compressed_gb": 4.32,
+    "swap_used_gb": 10.55,
     "pressure": "normal",
-    "at": "2026-11-20T05:35:14.200Z"
+    "at": "2026-11-20T05:41:10.803Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -51,14 +49,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T05:32:17.574Z",
+      "at": "2026-11-20T05:37:29.449Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 12,
+      "api_calls": 8,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -80,7 +78,7 @@
         "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 6,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 7,
@@ -107,11 +105,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 6,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 15272,
-    "at": "2026-11-20T05:32:30.672Z"
+    "took_ms": 10002,
+    "at": "2026-11-20T05:37:37.444Z"
   },
   "gh_runner_alert": null
 }
