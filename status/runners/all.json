@@ -1,6 +1,6 @@
 {
-  "at": "2026-11-20T01:13:21.681Z",
-  "pid": 63036,
+  "at": "2026-11-20T01:16:18.328Z",
+  "pid": 31970,
   "runner": "v7.5",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
@@ -17,46 +17,22 @@
     },
     "m2": {
       "current": null,
-      "last_activity": "2026-11-19T18:15:55.892Z"
+      "last_activity": null
     },
     "m3": {
       "current": null,
-      "last_activity": "2026-11-19T17:21:04.770Z"
+      "last_activity": null
     },
     "r0": {
       "current": null,
-      "last_activity": "2026-11-19T17:42:25.329Z"
+      "last_activity": null
     }
   },
   "pane_close_failures": {},
-  "last_sleep_gap": {
-    "lastMs": 20666,
-    "totalMs": 20666,
-    "phase": "await-landing",
-    "at": "2026-11-19T17:09:27.162Z"
-  },
+  "last_sleep_gap": null,
   "kyu_folder_intrusion": null,
-  "mem": {
-    "total_gb": 16,
-    "used_gb": 15.91,
-    "compressed_gb": 4.56,
-    "swap_used_gb": 9.04,
-    "pressure": "normal",
-    "at": "2026-11-20T00:51:23.066Z"
-  },
-  "mem_peak_today": {
-    "date": "2026-11-20",
-    "used_gb": 15.91
-  },
-  "ci": {
-    "data": {
-      "at": "2026-11-20T00:50:51.228Z",
-      "error": "Command failed: gh api repos/CuriocityDevAi/storeport/actions/runs?status=queued&per_page=100 -H Accept: application/vnd.github+json\nerror connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n",
-      "api_calls": 2,
-      "api_budget": 40
-    },
-    "took_ms": 3906,
-    "at": "2026-11-20T00:50:51.653Z"
-  },
+  "mem": null,
+  "mem_peak_today": null,
+  "ci": null,
   "gh_runner_alert": null
 }
