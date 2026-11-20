@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T02:15:47.808Z",
+  "at": "2026-11-20T02:20:48.658Z",
   "pid": 31970,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -33,11 +33,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.85,
-    "compressed_gb": 4.75,
-    "swap_used_gb": 9.31,
+    "used_gb": 15.8,
+    "compressed_gb": 4.96,
+    "swap_used_gb": 9.28,
     "pressure": "normal",
-    "at": "2026-11-20T02:15:16.043Z"
+    "at": "2026-11-20T02:20:16.584Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -45,14 +45,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T02:13:02.788Z",
+      "at": "2026-11-20T02:18:02.230Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 10,
+      "api_calls": 9,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -67,7 +67,7 @@
             "pr_display": "storeport:main",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 1,
+            "running_min": 6,
             "runner": "Youngkyus-MacBook-Pro-M1",
             "kind": "mac-heavy"
           }
@@ -85,7 +85,7 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 6,
@@ -112,11 +112,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 1,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 9600,
-    "at": "2026-11-20T02:13:08.636Z"
+    "took_ms": 8947,
+    "at": "2026-11-20T02:18:08.920Z"
   },
   "gh_runner_alert": null
 }
