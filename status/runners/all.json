@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T09:21:42.052Z",
+  "at": "2026-11-20T09:27:00.541Z",
   "pid": 95884,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -45,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.76,
-    "compressed_gb": 5.22,
-    "swap_used_gb": 11.06,
+    "used_gb": 15.89,
+    "compressed_gb": 4.86,
+    "swap_used_gb": 11.07,
     "pressure": "normal",
-    "at": "2026-11-20T09:21:08.056Z"
+    "at": "2026-11-20T09:26:28.510Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -57,7 +57,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T09:16:21.333Z",
+      "at": "2026-11-20T09:21:39.109Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -72,7 +72,7 @@
         "queued_prs": [
           216
         ],
-        "oldest_queued_min": 41,
+        "oldest_queued_min": 47,
         "oldest_queued_pr": "fork:#216",
         "in_progress": []
       },
@@ -119,16 +119,17 @@
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 41m (fork:#216)"
+          "detail": "oldest heavy queued 47m (fork:#216)"
         },
         {
           "type": "runner_idle",
-          "detail": "1 queued but 0 in_progress for 41m (fork:#216)"
+          "detail": "1 queued but 0 in_progress for 47m (fork:#216)"
         }
-      ]
+      ],
+      "partial": true
     },
-    "took_ms": 12823,
-    "at": "2026-11-20T09:16:31.431Z"
+    "took_ms": 14910,
+    "at": "2026-11-20T09:21:51.475Z"
   },
   "gh_runner_alert": null
 }
