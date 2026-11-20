@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T13:14:54.340Z",
+  "at": "2026-11-20T13:20:50.521Z",
   "pid": 95884,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -57,19 +57,85 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.5,
-    "compressed_gb": 5.11,
+    "used_gb": 15.66,
+    "compressed_gb": 5.44,
     "swap_used_gb": 7.65,
     "pressure": "normal",
-    "at": "2026-11-20T12:59:13.753Z"
+    "at": "2026-11-20T13:14:59.913Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
     "used_gb": 15.93
   },
   "ci": {
-    "error": "deadline 30000ms",
-    "at": "2026-11-20T12:58:24.293Z"
+    "data": {
+      "at": "2026-11-20T13:14:52.438Z",
+      "repos_scanned": [
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
+      ],
+      "repos_failed": [],
+      "repos_skipped": [],
+      "api_calls": 9,
+      "api_budget": 40,
+      "api_overflow": false,
+      "heavy": {
+        "queued": 5,
+        "queued_prs": [],
+        "oldest_queued_min": 132,
+        "oldest_queued_pr": "fork:master",
+        "in_progress": []
+      },
+      "light": {
+        "queued": 0,
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
+      },
+      "cloud_in_progress": [],
+      "runners": null,
+      "cloud_today": 0,
+      "today": {
+        "mac-heavy": {
+          "jobs": 16,
+          "avg_wait_min": 5.2,
+          "avg_run_min": 12.8,
+          "success_rate": 87.5,
+          "run_min_total": 204.30000000000004
+        },
+        "mac-light": {
+          "jobs": 63,
+          "avg_wait_min": 0.8,
+          "avg_run_min": 0.3,
+          "success_rate": 98.4,
+          "run_min_total": 19.59999999999999
+        },
+        "cloud": {
+          "jobs": 94,
+          "avg_wait_min": 0,
+          "avg_run_min": 0.9,
+          "success_rate": 36.2,
+          "run_min_total": 86.6
+        },
+        "cloud_cost_est_usd": 0.928,
+        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
+        "wasted_min": 13.8
+      },
+      "jsonl_added": 0,
+      "alerts": [
+        {
+          "type": "queue_wait",
+          "detail": "oldest heavy queued 132m (fork:master)"
+        },
+        {
+          "type": "runner_idle",
+          "detail": "5 queued but 0 in_progress for 132m (fork:master)"
+        }
+      ],
+      "partial": true
+    },
+    "took_ms": 30920,
+    "at": "2026-11-20T13:15:17.196Z"
   },
   "gh_runner_alert": null
 }
