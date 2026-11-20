@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T21:02:19.067Z",
+  "at": "2026-11-20T21:07:21.382Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -33,11 +33,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.85,
-    "compressed_gb": 2.99,
+    "used_gb": 15.23,
+    "compressed_gb": 2.93,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-20T21:01:47.132Z"
+    "at": "2026-11-20T21:06:49.388Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -45,14 +45,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T20:57:15.406Z",
+      "at": "2026-11-20T21:02:19.036Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 8,
+      "api_calls": 9,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -84,11 +84,11 @@
           "run_min_total": 0
         },
         "mac-light": {
-          "jobs": 1,
+          "jobs": 2,
           "avg_wait_min": 0,
           "avg_run_min": 0.3,
           "success_rate": 100,
-          "run_min_total": 0.3
+          "run_min_total": 0.5
         },
         "cloud": {
           "jobs": 1,
@@ -101,11 +101,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 0,
+      "jsonl_added": 1,
       "alerts": []
     },
-    "took_ms": 11559,
-    "at": "2026-11-20T20:57:24.909Z"
+    "took_ms": 10401,
+    "at": "2026-11-20T21:02:27.667Z"
   },
   "gh_runner_alert": null
 }
