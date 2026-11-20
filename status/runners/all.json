@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T11:15:49.216Z",
+  "at": "2026-11-20T11:21:04.339Z",
   "pid": 95884,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -34,10 +34,10 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 15526,
-    "totalMs": 15526,
+    "lastMs": 16932,
+    "totalMs": 190224,
     "phase": "await-landing",
-    "at": "2026-11-20T11:05:38.793Z"
+    "at": "2026-11-20T11:20:24.616Z"
   },
   "kyu_folder_intrusion": {
     "hub": "m2",
@@ -57,11 +57,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.6,
-    "compressed_gb": 4.37,
-    "swap_used_gb": 8.17,
+    "used_gb": 15.68,
+    "compressed_gb": 4.22,
+    "swap_used_gb": 8.13,
     "pressure": "normal",
-    "at": "2026-11-20T11:15:13.166Z"
+    "at": "2026-11-20T11:20:25.563Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -69,13 +69,13 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T11:13:01.760Z",
+      "at": "2026-11-20T11:18:35.993Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 4,
+      "api_calls": 2,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -83,18 +83,7 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/storeport",
-            "pr": "#409",
-            "pr_display": "storeport:#409",
-            "job": "heavy-mac",
-            "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 11,
-            "runner": "Youngkyus-MacBook-Pro-M1",
-            "kind": "mac-heavy"
-          }
-        ]
+        "in_progress": []
       },
       "light": {
         "queued": 0,
@@ -103,11 +92,7 @@
         "in_progress": []
       },
       "cloud_in_progress": [],
-      "runners": {
-        "heavy_online": 1,
-        "heavy_busy": 1,
-        "light_online": 1
-      },
+      "runners": null,
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
@@ -139,8 +124,8 @@
       "alerts": [],
       "partial": true
     },
-    "took_ms": 25173,
-    "at": "2026-11-20T11:13:22.752Z"
+    "took_ms": 25921,
+    "at": "2026-11-20T11:18:56.469Z"
   },
   "gh_runner_alert": null
 }
