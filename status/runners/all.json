@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T05:41:12.798Z",
+  "at": "2026-11-20T05:46:37.357Z",
   "pid": 31970,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -37,11 +37,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.76,
-    "compressed_gb": 4.32,
-    "swap_used_gb": 10.55,
+    "used_gb": 15.82,
+    "compressed_gb": 4.57,
+    "swap_used_gb": 10.18,
     "pressure": "normal",
-    "at": "2026-11-20T05:41:10.803Z"
+    "at": "2026-11-20T05:46:06.826Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
@@ -49,14 +49,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T05:37:29.449Z",
+      "at": "2026-11-20T05:42:45.057Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 8,
+      "api_calls": 11,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -64,7 +64,18 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "#405",
+            "pr_display": "storeport:#405",
+            "job": "heavy-mac",
+            "step": "Checkout",
+            "running_min": 0,
+            "runner": "Youngkyus-MacBook-Pro-M1",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -75,7 +86,7 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 1,
-        "heavy_busy": 0,
+        "heavy_busy": 1,
         "light_online": 1
       },
       "cloud_today": 0,
@@ -88,11 +99,11 @@
           "run_min_total": 83.1
         },
         "mac-light": {
-          "jobs": 34,
+          "jobs": 36,
           "avg_wait_min": 0.9,
           "avg_run_min": 0.3,
           "success_rate": 100,
-          "run_min_total": 10.799999999999999
+          "run_min_total": 11.399999999999999
         },
         "cloud": {
           "jobs": 45,
@@ -105,11 +116,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 0,
+      "jsonl_added": 2,
       "alerts": []
     },
-    "took_ms": 10002,
-    "at": "2026-11-20T05:37:37.444Z"
+    "took_ms": 11343,
+    "at": "2026-11-20T05:42:54.795Z"
   },
   "gh_runner_alert": null
 }
