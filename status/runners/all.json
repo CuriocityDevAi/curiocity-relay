@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T20:41:49.399Z",
+  "at": "2026-11-20T20:46:50.778Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -33,79 +33,19 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.44,
-    "compressed_gb": 3.21,
+    "used_gb": 15.4,
+    "compressed_gb": 3.1,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-20T20:41:17.302Z"
+    "at": "2026-11-20T20:46:18.682Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
     "used_gb": 15.93
   },
   "ci": {
-    "data": {
-      "at": "2026-11-20T20:36:17.151Z",
-      "repos_scanned": [
-        "CuriocityDevAi/storeport",
-        "CuriocityDevAi/agilo-medusa-pos-fork"
-      ],
-      "repos_failed": [],
-      "repos_skipped": [],
-      "api_calls": 8,
-      "api_budget": 40,
-      "api_overflow": false,
-      "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "cloud_in_progress": [],
-      "runners": {
-        "heavy_online": 2,
-        "heavy_busy": 0,
-        "light_online": 1
-      },
-      "cloud_today": 0,
-      "today": {
-        "mac-heavy": {
-          "jobs": 0,
-          "avg_wait_min": 0,
-          "avg_run_min": 0,
-          "success_rate": null,
-          "run_min_total": 0
-        },
-        "mac-light": {
-          "jobs": 1,
-          "avg_wait_min": 0,
-          "avg_run_min": 0.3,
-          "success_rate": 100,
-          "run_min_total": 0.3
-        },
-        "cloud": {
-          "jobs": 1,
-          "avg_wait_min": 0,
-          "avg_run_min": 0.5,
-          "success_rate": 100,
-          "run_min_total": 0.5
-        },
-        "cloud_cost_est_usd": 0.008,
-        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 0
-      },
-      "jsonl_added": 0,
-      "alerts": []
-    },
-    "took_ms": 6983,
-    "at": "2026-11-20T20:36:21.914Z"
+    "error": "deadline 30000ms",
+    "at": "2026-11-20T20:42:24.699Z"
   },
   "gh_runner_alert": null
 }
