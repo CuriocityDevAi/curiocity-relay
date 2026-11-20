@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T08:24:09.618Z",
+  "at": "2026-11-20T08:27:45.961Z",
   "pid": 95884,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -39,8 +39,77 @@
   "pane_close_failures": {},
   "last_sleep_gap": null,
   "kyu_folder_intrusion": null,
-  "mem": null,
-  "mem_peak_today": null,
-  "ci": null,
+  "mem": {
+    "total_gb": 16,
+    "used_gb": 15.82,
+    "compressed_gb": 3.24,
+    "swap_used_gb": 12.34,
+    "pressure": "normal",
+    "at": "2026-11-20T08:27:12.656Z"
+  },
+  "mem_peak_today": {
+    "date": "2026-11-20",
+    "used_gb": 15.92
+  },
+  "ci": {
+    "data": {
+      "at": "2026-11-20T08:24:02.664Z",
+      "repos_scanned": [
+        "CuriocityDevAi/storeport"
+      ],
+      "repos_failed": [],
+      "repos_skipped": [],
+      "api_calls": 1,
+      "api_budget": 40,
+      "api_overflow": false,
+      "heavy": {
+        "queued": 0,
+        "queued_prs": [],
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
+      },
+      "light": {
+        "queued": 0,
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
+      },
+      "cloud_in_progress": [],
+      "runners": null,
+      "cloud_today": 0,
+      "today": {
+        "mac-heavy": {
+          "jobs": 8,
+          "avg_wait_min": 1,
+          "avg_run_min": 12.9,
+          "success_rate": 87.5,
+          "run_min_total": 103.19999999999999
+        },
+        "mac-light": {
+          "jobs": 41,
+          "avg_wait_min": 0.8,
+          "avg_run_min": 0.3,
+          "success_rate": 100,
+          "run_min_total": 12.999999999999998
+        },
+        "cloud": {
+          "jobs": 52,
+          "avg_wait_min": 0,
+          "avg_run_min": 0.9,
+          "success_rate": 19.2,
+          "run_min_total": 44.400000000000006
+        },
+        "cloud_cost_est_usd": 0.432,
+        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
+        "wasted_min": 0
+      },
+      "jsonl_added": 0,
+      "alerts": [],
+      "partial": true
+    },
+    "took_ms": 22856,
+    "at": "2026-11-20T08:24:23.044Z"
+  },
   "gh_runner_alert": null
 }
