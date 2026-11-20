@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T00:33:46.928Z",
+  "at": "2026-11-20T00:39:55.483Z",
   "pid": 63036,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -38,26 +38,26 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.88,
-    "compressed_gb": 4.57,
-    "swap_used_gb": 9.07,
+    "used_gb": 15.91,
+    "compressed_gb": 4.63,
+    "swap_used_gb": 9.06,
     "pressure": "normal",
-    "at": "2026-11-20T00:33:14.973Z"
+    "at": "2026-11-20T00:34:24.346Z"
   },
   "mem_peak_today": {
     "date": "2026-11-20",
-    "used_gb": 15.88
+    "used_gb": 15.91
   },
   "ci": {
     "data": {
-      "at": "2026-11-20T00:28:20.322Z",
+      "at": "2026-11-20T00:33:46.899Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 8,
+      "api_calls": 5,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -74,7 +74,11 @@
         "in_progress": []
       },
       "cloud_in_progress": [],
-      "runners": null,
+      "runners": {
+        "heavy_online": 1,
+        "heavy_busy": 0,
+        "light_online": 1
+      },
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
@@ -103,10 +107,11 @@
         "wasted_min": 0
       },
       "jsonl_added": 0,
-      "alerts": []
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 12936,
-    "at": "2026-11-20T00:28:30.762Z"
+    "took_ms": 23569,
+    "at": "2026-11-20T00:34:08.541Z"
   },
   "gh_runner_alert": null
 }
