@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T00:26:44.560Z",
+  "at": "2026-11-21T00:31:51.419Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -55,19 +55,19 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.5,
+    "used_gb": 14.73,
     "compressed_gb": 3.27,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T00:26:11.164Z"
+    "at": "2026-11-21T00:31:19.030Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
-    "used_gb": 14.67
+    "used_gb": 14.73
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T00:25:36.395Z",
+      "at": "2026-11-21T00:30:42.763Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -78,21 +78,20 @@
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 11,
+        "queued": 9,
         "queued_prs": [
-          218,
           220
         ],
-        "oldest_queued_min": 51,
-        "oldest_queued_pr": "fork:#218",
+        "oldest_queued_min": 36,
+        "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
             "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-            "pr": "master",
-            "pr_display": "fork:master",
-            "job": "flow-tests",
+            "pr": "#218",
+            "pr_display": "fork:#218",
+            "job": "lint",
             "step": "Run actions/setup-node@v4",
-            "running_min": 2,
+            "running_min": 0,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -104,20 +103,41 @@
         "oldest_queued_pr": null,
         "in_progress": []
       },
-      "cloud_in_progress": [],
+      "cloud_in_progress": [
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#218",
+          "pr_display": "fork:#218",
+          "job": "flow-tests",
+          "step": "Install deps",
+          "running_min": 1,
+          "runner": "GitHub Actions 1000007608",
+          "kind": "cloud"
+        },
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#218",
+          "pr_display": "fork:#218",
+          "job": "assertions",
+          "step": "Install ImageMagick (Linux)",
+          "running_min": 1,
+          "runner": "GitHub Actions 1000007609",
+          "kind": "cloud"
+        }
+      ],
       "runners": {
         "heavy_online": 2,
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 0,
+      "cloud_today": 1,
       "today": {
         "mac-heavy": {
-          "jobs": 7,
-          "avg_wait_min": 2,
-          "avg_run_min": 10.5,
-          "success_rate": 28.6,
-          "run_min_total": 73.4
+          "jobs": 12,
+          "avg_wait_min": 9.8,
+          "avg_run_min": 8.3,
+          "success_rate": 33.3,
+          "run_min_total": 99.60000000000002
         },
         "mac-light": {
           "jobs": 6,
@@ -127,27 +147,27 @@
           "run_min_total": 2.0999999999999996
         },
         "cloud": {
-          "jobs": 16,
+          "jobs": 17,
           "avg_wait_min": 0,
           "avg_run_min": 0.4,
-          "success_rate": 31.3,
+          "success_rate": 29.4,
           "run_min_total": 6.7
         },
         "cloud_cost_est_usd": 0.088,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 44.5
+        "wasted_min": 69.9
       },
-      "jsonl_added": 1,
+      "jsonl_added": 6,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 51m (fork:#218)"
+          "detail": "oldest heavy queued 36m (fork:master)"
         }
       ],
       "partial": true
     },
-    "took_ms": 16646,
-    "at": "2026-11-21T00:25:50.555Z"
+    "took_ms": 22582,
+    "at": "2026-11-21T00:31:01.698Z"
   },
   "gh_runner_alert": null
 }
