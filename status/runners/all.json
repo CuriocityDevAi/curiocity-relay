@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T17:47:24.884Z",
+  "at": "2026-11-21T17:52:28.962Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.51,
-    "compressed_gb": 5.1,
+    "used_gb": 15.39,
+    "compressed_gb": 5.07,
     "swap_used_gb": 0.99,
     "pressure": "normal",
-    "at": "2026-11-21T17:46:52.501Z"
+    "at": "2026-11-21T17:51:56.540Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -46,14 +46,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T17:43:27.945Z",
+      "at": "2026-11-21T17:48:34.404Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 8,
+      "api_calls": 9,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -69,7 +69,18 @@
         "oldest_queued_pr": null,
         "in_progress": []
       },
-      "cloud_in_progress": [],
+      "cloud_in_progress": [
+        {
+          "repo": "CuriocityDevAi/storeport",
+          "pr": "main",
+          "pr_display": "storeport:main",
+          "job": "linux-check (ubuntu · case-sensitive)",
+          "step": "Initialize containers",
+          "running_min": 0,
+          "runner": "GitHub Actions 1000007659",
+          "kind": "cloud"
+        }
+      ],
       "runners": {
         "heavy_online": 2,
         "heavy_busy": 0,
@@ -105,8 +116,8 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 9710,
-    "at": "2026-11-21T17:43:35.205Z"
+    "took_ms": 11569,
+    "at": "2026-11-21T17:48:43.413Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 1
