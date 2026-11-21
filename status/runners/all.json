@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T02:29:51.464Z",
+  "at": "2026-11-21T02:34:55.373Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -55,11 +55,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.49,
-    "compressed_gb": 4.97,
+    "used_gb": 14.76,
+    "compressed_gb": 4.93,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T02:29:19.080Z"
+    "at": "2026-11-21T02:34:22.824Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -67,24 +67,33 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T02:28:44.561Z",
+      "at": "2026-11-21T02:33:47.893Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 16,
+      "api_calls": 15,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 7,
-        "queued_prs": [
-          220
-        ],
-        "oldest_queued_min": 23,
-        "oldest_queued_pr": "fork:#220",
-        "in_progress": []
+        "queued": 6,
+        "queued_prs": [],
+        "oldest_queued_min": 22,
+        "oldest_queued_pr": "fork:master",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "#220",
+            "pr_display": "fork:#220",
+            "job": "assertions",
+            "step": "Run actions/setup-node@v4",
+            "running_min": 5,
+            "runner": "curiocity-mac-fork",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -125,20 +134,17 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 286.59999999999997
       },
-      "jsonl_added": 1,
+      "jsonl_added": 0,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 23m (fork:#220)"
-        },
-        {
-          "type": "runner_idle",
-          "detail": "7 queued but 0 in_progress for 23m (fork:#220)"
+          "detail": "oldest heavy queued 22m (fork:master)"
         }
-      ]
+      ],
+      "partial": true
     },
-    "took_ms": 12378,
-    "at": "2026-11-21T02:28:54.631Z"
+    "took_ms": 14121,
+    "at": "2026-11-21T02:33:59.627Z"
   },
   "gh_runner_alert": null
 }
