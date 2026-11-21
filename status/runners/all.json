@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T12:46:41.286Z",
+  "at": "2026-11-21T12:51:47.429Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.46,
-    "compressed_gb": 5.47,
+    "used_gb": 14.99,
+    "compressed_gb": 5.25,
     "swap_used_gb": 1.04,
     "pressure": "normal",
-    "at": "2026-11-21T12:46:08.730Z"
+    "at": "2026-11-21T12:51:15.062Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -46,20 +46,20 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T12:42:46.774Z",
+      "at": "2026-11-21T12:47:50.663Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 12,
+      "api_calls": 11,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
         "queued": 1,
         "queued_prs": [],
-        "oldest_queued_min": 6,
+        "oldest_queued_min": 11,
         "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
@@ -68,7 +68,7 @@
             "pr_display": "storeport:#411",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 5,
+            "running_min": 10,
             "runner": "Youngkyus-MacBook-Pro-M1",
             "kind": "mac-heavy"
           },
@@ -78,7 +78,7 @@
             "pr_display": "fork:#225",
             "job": "playwright",
             "step": "Run Playwright harnesses",
-            "running_min": 6,
+            "running_min": 11,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -123,11 +123,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 302.6
       },
-      "jsonl_added": 1,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 10599,
-    "at": "2026-11-21T12:42:54.913Z"
+    "took_ms": 11661,
+    "at": "2026-11-21T12:47:59.967Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 1
