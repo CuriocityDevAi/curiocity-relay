@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T00:06:17.197Z",
+  "at": "2026-11-21T00:11:24.237Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -55,19 +55,19 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 13.52,
-    "compressed_gb": 3.46,
+    "used_gb": 14.46,
+    "compressed_gb": 3.32,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T00:05:44.591Z"
+    "at": "2026-11-21T00:10:51.841Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
-    "used_gb": 14.02
+    "used_gb": 14.61
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T00:05:08.168Z",
+      "at": "2026-11-21T00:10:16.945Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -78,15 +78,25 @@
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 12,
+        "queued": 11,
         "queued_prs": [
           218,
-          221,
           220
         ],
-        "oldest_queued_min": 31,
+        "oldest_queued_min": 36,
         "oldest_queued_pr": "fork:#218",
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "#221",
+            "pr_display": "fork:#221",
+            "job": "lint",
+            "step": "Run actions/setup-node@v4",
+            "running_min": 2,
+            "runner": "curiocity-mac-fork",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -131,17 +141,13 @@
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 31m (fork:#218)"
-        },
-        {
-          "type": "runner_idle",
-          "detail": "12 queued but 0 in_progress for 31m (fork:#218)"
+          "detail": "oldest heavy queued 36m (fork:#218)"
         }
       ],
       "partial": true
     },
-    "took_ms": 19016,
-    "at": "2026-11-21T00:05:24.897Z"
+    "took_ms": 20179,
+    "at": "2026-11-21T00:10:33.866Z"
   },
   "gh_runner_alert": null
 }
