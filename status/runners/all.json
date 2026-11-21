@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T06:32:30.367Z",
+  "at": "2026-11-21T06:37:33.928Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -56,11 +56,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.85,
-    "compressed_gb": 5.65,
+    "used_gb": 15.33,
+    "compressed_gb": 5.45,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T06:31:57.930Z"
+    "at": "2026-11-21T06:37:01.659Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -68,20 +68,20 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T06:28:01.921Z",
+      "at": "2026-11-21T06:33:04.935Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 13,
+      "api_calls": 11,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
         "queued": 1,
         "queued_prs": [],
-        "oldest_queued_min": 3,
+        "oldest_queued_min": 9,
         "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
@@ -90,7 +90,7 @@
             "pr_display": "fork:master",
             "job": "playwright",
             "step": "Run Playwright harnesses",
-            "running_min": 3,
+            "running_min": 8,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -108,8 +108,8 @@
           "pr": "#220",
           "pr_display": "fork:#220",
           "job": "playwright",
-          "step": "Expo export web",
-          "running_min": 3,
+          "step": "Run Playwright harnesses",
+          "running_min": 8,
           "runner": "GitHub Actions 1000007645",
           "kind": "cloud"
         }
@@ -119,7 +119,7 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 2,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 101,
@@ -146,11 +146,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 302.6
       },
-      "jsonl_added": 3,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 11752,
-    "at": "2026-11-21T06:28:11.306Z"
+    "took_ms": 13014,
+    "at": "2026-11-21T06:33:15.536Z"
   },
   "gh_runner_alert": null
 }
