@@ -1,7 +1,8 @@
 {
   "id": "M0-1121-C-report",
   "hub": "m0",
-  "state": "started",
-  "at": "2026-11-21T04:30:32.355Z",
-  "note": "runner-v7.5 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1121-C-report.log"
+  "state": "blocked",
+  "at": "2026-11-21T05:30:47.737Z",
+  "note": "timeout 60m · runner-v7.5 cmux-split · pane 유지 (C-c + /exit 전송) · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1121-C-report.log",
+  "blocked_by": "oke"
 }
