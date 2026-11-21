@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T17:52:28.962Z",
+  "at": "2026-11-21T17:57:34.143Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.39,
+    "used_gb": 15.46,
     "compressed_gb": 5.07,
     "swap_used_gb": 0.99,
     "pressure": "normal",
-    "at": "2026-11-21T17:51:56.540Z"
+    "at": "2026-11-21T17:57:01.543Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -46,14 +46,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T17:48:34.404Z",
+      "at": "2026-11-21T17:53:37.923Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 9,
+      "api_calls": 10,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -69,24 +69,13 @@
         "oldest_queued_pr": null,
         "in_progress": []
       },
-      "cloud_in_progress": [
-        {
-          "repo": "CuriocityDevAi/storeport",
-          "pr": "main",
-          "pr_display": "storeport:main",
-          "job": "linux-check (ubuntu · case-sensitive)",
-          "step": "Initialize containers",
-          "running_min": 0,
-          "runner": "GitHub Actions 1000007659",
-          "kind": "cloud"
-        }
-      ],
+      "cloud_in_progress": [],
       "runners": {
         "heavy_online": 2,
         "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 0,
+      "cloud_today": 1,
       "today": {
         "mac-heavy": {
           "jobs": 0,
@@ -96,28 +85,28 @@
           "run_min_total": 0
         },
         "mac-light": {
-          "jobs": 1,
+          "jobs": 2,
           "avg_wait_min": 0,
           "avg_run_min": 0.3,
           "success_rate": 100,
-          "run_min_total": 0.3
+          "run_min_total": 0.6
         },
         "cloud": {
-          "jobs": 0,
+          "jobs": 1,
           "avg_wait_min": 0,
-          "avg_run_min": 0,
-          "success_rate": null,
-          "run_min_total": 0
+          "avg_run_min": 0.5,
+          "success_rate": 100,
+          "run_min_total": 0.5
         },
-        "cloud_cost_est_usd": 0,
+        "cloud_cost_est_usd": 0.008,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 0,
+      "jsonl_added": 2,
       "alerts": []
     },
-    "took_ms": 11569,
-    "at": "2026-11-21T17:48:43.413Z"
+    "took_ms": 10681,
+    "at": "2026-11-21T17:53:46.197Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 1
