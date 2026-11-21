@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T01:23:01.389Z",
+  "at": "2026-11-21T01:24:14.121Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -24,7 +24,9 @@
       "last_activity": null
     },
     "r0": {
-      "current": null,
+      "current": "R0-1121-C",
+      "started_at": "2026-11-21T01:24:12.627Z",
+      "model": "sonnet",
       "last_activity": "2026-11-21T00:00:41.129Z"
     }
   },
@@ -55,11 +57,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.66,
-    "compressed_gb": 3.69,
+    "used_gb": 15.36,
+    "compressed_gb": 3.66,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T01:22:28.854Z"
+    "at": "2026-11-21T01:23:39.671Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
