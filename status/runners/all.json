@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T06:37:33.928Z",
+  "at": "2026-11-21T06:42:39.699Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -56,11 +56,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.33,
-    "compressed_gb": 5.45,
+    "used_gb": 15.27,
+    "compressed_gb": 5.22,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T06:37:01.659Z"
+    "at": "2026-11-21T06:42:07.310Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -68,7 +68,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T06:33:04.935Z",
+      "at": "2026-11-21T06:38:10.561Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -81,7 +81,7 @@
       "heavy": {
         "queued": 1,
         "queued_prs": [],
-        "oldest_queued_min": 9,
+        "oldest_queued_min": 14,
         "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
@@ -90,7 +90,7 @@
             "pr_display": "fork:master",
             "job": "playwright",
             "step": "Run Playwright harnesses",
-            "running_min": 8,
+            "running_min": 13,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -109,7 +109,7 @@
           "pr_display": "fork:#220",
           "job": "playwright",
           "step": "Run Playwright harnesses",
-          "running_min": 8,
+          "running_min": 13,
           "runner": "GitHub Actions 1000007645",
           "kind": "cloud"
         }
@@ -149,8 +149,8 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 13014,
-    "at": "2026-11-21T06:33:15.536Z"
+    "took_ms": 10298,
+    "at": "2026-11-21T06:38:18.373Z"
   },
   "gh_runner_alert": null
 }
