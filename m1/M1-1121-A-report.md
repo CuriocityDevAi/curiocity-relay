@@ -1,6 +1,6 @@
 # M1-1121-A · hub-runner v7.6
 
-v7.6 last_error 해제 O · 침범 actor 판정 O · 리포트 자동 이동 O · selftest 3/3 · PR #(아래 참조)
+v7.6 last_error 해제 O · 침범 actor 판정 O · 리포트 자동 이동 O · selftest 3/3 · PR #11
 
 ---
 
