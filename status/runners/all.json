@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T06:47:47.656Z",
+  "at": "2026-11-21T06:52:55.958Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -56,11 +56,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.85,
-    "compressed_gb": 5.37,
+    "used_gb": 15.19,
+    "compressed_gb": 5.48,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T06:47:12.437Z"
+    "at": "2026-11-21T06:52:23.211Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -68,21 +68,21 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T06:43:14.785Z",
+      "at": "2026-11-21T06:48:24.544Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 13,
+      "api_calls": 11,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
+        "queued": 2,
         "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
+        "oldest_queued_min": 3,
+        "oldest_queued_pr": "fork:master",
         "in_progress": []
       },
       "light": {
@@ -94,10 +94,10 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 2,
-        "heavy_busy": 0,
+        "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 7,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 107,
@@ -107,11 +107,11 @@
           "run_min_total": 484.0000000000004
         },
         "mac-light": {
-          "jobs": 8,
-          "avg_wait_min": 0.3,
+          "jobs": 9,
+          "avg_wait_min": 0.2,
           "avg_run_min": 0.3,
           "success_rate": 100,
-          "run_min_total": 2.6999999999999993
+          "run_min_total": 3.099999999999999
         },
         "cloud": {
           "jobs": 69,
@@ -124,11 +124,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 302.6
       },
-      "jsonl_added": 13,
+      "jsonl_added": 1,
       "alerts": []
     },
-    "took_ms": 12956,
-    "at": "2026-11-21T06:43:25.176Z"
+    "took_ms": 10205,
+    "at": "2026-11-21T06:48:32.425Z"
   },
   "gh_runner_alert": null
 }
