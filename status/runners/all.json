@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T00:00:42.761Z",
+  "at": "2026-11-21T00:06:17.197Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -55,11 +55,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.02,
-    "compressed_gb": 3.55,
+    "used_gb": 13.52,
+    "compressed_gb": 3.46,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T00:00:39.806Z"
+    "at": "2026-11-21T00:05:44.591Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -67,14 +67,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T00:00:03.548Z",
+      "at": "2026-11-21T00:05:08.168Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 23,
+      "api_calls": 20,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -84,7 +84,7 @@
           221,
           220
         ],
-        "oldest_queued_min": 26,
+        "oldest_queued_min": 31,
         "oldest_queued_pr": "fork:#218",
         "in_progress": []
       },
@@ -100,7 +100,7 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 9,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 6,
@@ -127,21 +127,21 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 29.200000000000003
       },
-      "jsonl_added": 11,
+      "jsonl_added": 0,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 26m (fork:#218)"
+          "detail": "oldest heavy queued 31m (fork:#218)"
         },
         {
           "type": "runner_idle",
-          "detail": "12 queued but 0 in_progress for 26m (fork:#218)"
+          "detail": "12 queued but 0 in_progress for 31m (fork:#218)"
         }
       ],
       "partial": true
     },
-    "took_ms": 22095,
-    "at": "2026-11-21T00:00:23.262Z"
+    "took_ms": 19016,
+    "at": "2026-11-21T00:05:24.897Z"
   },
   "gh_runner_alert": null
 }
