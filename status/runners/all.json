@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T03:58:51.788Z",
+  "at": "2026-11-21T04:03:50.941Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -18,10 +18,8 @@
       "last_activity": null
     },
     "m2": {
-      "current": "M2-1121-C",
-      "started_at": "2026-11-21T03:58:50.269Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-21T01:54:44.506Z"
+      "current": null,
+      "last_activity": "2026-11-21T04:03:48.825Z"
     },
     "m3": {
       "current": null,
@@ -60,11 +58,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.37,
-    "compressed_gb": 4.74,
+    "used_gb": 15.75,
+    "compressed_gb": 5.11,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T03:58:17.367Z"
+    "at": "2026-11-21T04:03:37.637Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -72,7 +70,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T03:55:57.065Z",
+      "at": "2026-11-21T04:01:10.868Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -93,8 +91,8 @@
             "pr": "#223",
             "pr_display": "fork:#223",
             "job": "playwright",
-            "step": "Run Playwright harnesses",
-            "running_min": 9,
+            "step": "Post Cache Playwright browsers",
+            "running_min": 15,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -142,8 +140,8 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 11661,
-    "at": "2026-11-21T03:56:06.005Z"
+    "took_ms": 12917,
+    "at": "2026-11-21T04:01:20.700Z"
   },
   "gh_runner_alert": null
 }
