@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T12:20:19.768Z",
+  "at": "2026-11-21T12:25:23.304Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -36,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.25,
-    "compressed_gb": 5.66,
+    "used_gb": 15.6,
+    "compressed_gb": 5.51,
     "swap_used_gb": 0.74,
     "pressure": "normal",
-    "at": "2026-11-21T12:20:17.114Z"
+    "at": "2026-11-21T12:24:50.016Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -48,7 +48,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T12:16:41.604Z",
+      "at": "2026-11-21T12:21:56.897Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -61,7 +61,7 @@
       "heavy": {
         "queued": 1,
         "queued_prs": [],
-        "oldest_queued_min": 1,
+        "oldest_queued_min": 6,
         "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
@@ -69,8 +69,8 @@
             "pr": "#225",
             "pr_display": "fork:#225",
             "job": "playwright",
-            "step": "Expo export web",
-            "running_min": 1,
+            "step": "Run Playwright harnesses",
+            "running_min": 6,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -82,13 +82,34 @@
         "oldest_queued_pr": null,
         "in_progress": []
       },
-      "cloud_in_progress": [],
+      "cloud_in_progress": [
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#226",
+          "pr_display": "fork:#226",
+          "job": "flow-tests",
+          "step": "Install deps",
+          "running_min": 1,
+          "runner": "GitHub Actions 1000007653",
+          "kind": "cloud"
+        },
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#226",
+          "pr_display": "fork:#226",
+          "job": "assertions",
+          "step": "Install deps",
+          "running_min": 1,
+          "runner": "GitHub Actions 1000007651",
+          "kind": "cloud"
+        }
+      ],
       "runners": {
         "heavy_online": 2,
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 114,
@@ -115,12 +136,12 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 302.6
       },
-      "jsonl_added": 2,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 12281,
-    "at": "2026-11-21T12:16:51.358Z"
+    "took_ms": 10400,
+    "at": "2026-11-21T12:22:04.937Z"
   },
   "gh_runner_alert": null,
-  "misplaced_reports": null
+  "misplaced_reports": 1
 }
