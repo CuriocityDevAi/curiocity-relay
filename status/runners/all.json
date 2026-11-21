@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T01:37:56.340Z",
+  "at": "2026-11-21T01:43:08.013Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -57,11 +57,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.65,
-    "compressed_gb": 5.61,
+    "used_gb": 15.7,
+    "compressed_gb": 5.24,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T01:37:23.926Z"
+    "at": "2026-11-21T01:42:34.990Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -69,25 +69,37 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T01:37:22.297Z",
+      "at": "2026-11-21T01:42:31.966Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 15,
+      "api_calls": 17,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 6,
+        "queued": 7,
         "queued_prs": [
+          220,
           218,
-          220
+          222
         ],
-        "oldest_queued_min": 17,
-        "oldest_queued_pr": "fork:master",
-        "in_progress": []
+        "oldest_queued_min": 22,
+        "oldest_queued_pr": "fork:#220",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "#218",
+            "pr_display": "fork:#218",
+            "job": "lint",
+            "step": "Post Run actions/setup-node@v4",
+            "running_min": 2,
+            "runner": "curiocity-mac-fork",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -101,14 +113,14 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 0,
+      "cloud_today": 2,
       "today": {
         "mac-heavy": {
-          "jobs": 28,
-          "avg_wait_min": 34.1,
-          "avg_run_min": 5.9,
-          "success_rate": 64.3,
-          "run_min_total": 165.00000000000014
+          "jobs": 31,
+          "avg_wait_min": 32,
+          "avg_run_min": 5.5,
+          "success_rate": 61.3,
+          "run_min_total": 169.40000000000015
         },
         "mac-light": {
           "jobs": 7,
@@ -118,30 +130,27 @@
           "run_min_total": 2.3999999999999995
         },
         "cloud": {
-          "jobs": 26,
+          "jobs": 28,
           "avg_wait_min": 0,
           "avg_run_min": 0.6,
-          "success_rate": 38.5,
-          "run_min_total": 16.9
+          "success_rate": 39.3,
+          "run_min_total": 17
         },
-        "cloud_cost_est_usd": 0.208,
+        "cloud_cost_est_usd": 0.216,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 85.2
       },
-      "jsonl_added": 1,
+      "jsonl_added": 5,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 17m (fork:master)"
-        },
-        {
-          "type": "runner_idle",
-          "detail": "6 queued but 0 in_progress for 17m (fork:master)"
+          "detail": "oldest heavy queued 22m (fork:#220)"
         }
-      ]
+      ],
+      "partial": true
     },
-    "took_ms": 12964,
-    "at": "2026-11-21T01:37:32.592Z"
+    "took_ms": 16946,
+    "at": "2026-11-21T01:42:46.415Z"
   },
   "gh_runner_alert": null
 }
