@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T02:34:55.373Z",
+  "at": "2026-11-21T02:40:01.050Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -55,11 +55,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.76,
-    "compressed_gb": 4.93,
+    "used_gb": 14.85,
+    "compressed_gb": 4.92,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T02:34:22.824Z"
+    "at": "2026-11-21T02:39:28.563Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -67,7 +67,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T02:33:47.893Z",
+      "at": "2026-11-21T02:38:54.008Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -80,7 +80,7 @@
       "heavy": {
         "queued": 6,
         "queued_prs": [],
-        "oldest_queued_min": 22,
+        "oldest_queued_min": 27,
         "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
@@ -89,7 +89,7 @@
             "pr_display": "fork:#220",
             "job": "assertions",
             "step": "Run actions/setup-node@v4",
-            "running_min": 5,
+            "running_min": 10,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -138,13 +138,12 @@
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 22m (fork:master)"
+          "detail": "oldest heavy queued 27m (fork:master)"
         }
-      ],
-      "partial": true
+      ]
     },
-    "took_ms": 14121,
-    "at": "2026-11-21T02:33:59.627Z"
+    "took_ms": 11777,
+    "at": "2026-11-21T02:39:03.188Z"
   },
   "gh_runner_alert": null
 }
