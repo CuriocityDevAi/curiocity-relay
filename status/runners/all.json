@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T01:59:07.392Z",
+  "at": "2026-11-21T02:04:18.558Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -55,11 +55,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.97,
-    "compressed_gb": 4.61,
+    "used_gb": 15.26,
+    "compressed_gb": 4.84,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T01:58:44.386Z"
+    "at": "2026-11-21T02:03:46.077Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -67,14 +67,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T01:58:07.435Z",
+      "at": "2026-11-21T02:03:11.524Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 17,
+      "api_calls": 16,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -84,7 +84,7 @@
           218,
           222
         ],
-        "oldest_queued_min": 38,
+        "oldest_queued_min": 43,
         "oldest_queued_pr": "fork:#220",
         "in_progress": []
       },
@@ -127,20 +127,21 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 100.4
       },
-      "jsonl_added": 1,
+      "jsonl_added": 0,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 38m (fork:#220)"
+          "detail": "oldest heavy queued 43m (fork:#220)"
         },
         {
           "type": "runner_idle",
-          "detail": "8 queued but 0 in_progress for 38m (fork:#220)"
+          "detail": "8 queued but 0 in_progress for 43m (fork:#220)"
         }
-      ]
+      ],
+      "partial": true
     },
-    "took_ms": 14592,
-    "at": "2026-11-21T01:58:19.697Z"
+    "took_ms": 14596,
+    "at": "2026-11-21T02:03:23.751Z"
   },
   "gh_runner_alert": null
 }
