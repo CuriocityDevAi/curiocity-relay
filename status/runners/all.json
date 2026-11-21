@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T03:43:27.270Z",
+  "at": "2026-11-21T03:48:59.280Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -58,11 +58,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.72,
-    "compressed_gb": 5.07,
+    "used_gb": 14.12,
+    "compressed_gb": 4.92,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T03:43:19.442Z"
+    "at": "2026-11-21T03:48:27.272Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -70,24 +70,33 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T03:40:19.613Z",
+      "at": "2026-11-21T03:45:32.077Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 14,
+      "api_calls": 11,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 3,
-        "queued_prs": [
-          223
-        ],
-        "oldest_queued_min": 5,
-        "oldest_queued_pr": "fork:#223",
-        "in_progress": []
+        "queued": 2,
+        "queued_prs": [],
+        "oldest_queued_min": 10,
+        "oldest_queued_pr": "fork:master",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "#223",
+            "pr_display": "fork:#223",
+            "job": "assertions",
+            "step": "Post Run actions/setup-node@v4",
+            "running_min": 3,
+            "runner": "curiocity-mac-fork",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -101,7 +110,7 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 3,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 75,
@@ -128,11 +137,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 291.9
       },
-      "jsonl_added": 8,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 14737,
-    "at": "2026-11-21T03:40:31.817Z"
+    "took_ms": 13287,
+    "at": "2026-11-21T03:45:43.043Z"
   },
   "gh_runner_alert": null
 }
