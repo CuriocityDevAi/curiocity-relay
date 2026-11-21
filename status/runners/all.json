@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T00:47:09.740Z",
+  "at": "2026-11-21T00:52:14.919Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -55,26 +55,26 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.75,
-    "compressed_gb": 3.95,
+    "used_gb": 15.89,
+    "compressed_gb": 3.59,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T00:46:37.111Z"
+    "at": "2026-11-21T00:51:42.403Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
-    "used_gb": 15.76
+    "used_gb": 15.89
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T00:46:01.533Z",
+      "at": "2026-11-21T00:51:07.488Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 20,
+      "api_calls": 19,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -82,7 +82,7 @@
         "queued_prs": [
           220
         ],
-        "oldest_queued_min": 51,
+        "oldest_queued_min": 57,
         "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
@@ -91,7 +91,7 @@
             "pr_display": "fork:#220",
             "job": "lint",
             "step": "Post Run actions/setup-node@v4",
-            "running_min": 2,
+            "running_min": 7,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -136,17 +136,17 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 69.9
       },
-      "jsonl_added": 1,
+      "jsonl_added": 0,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 51m (fork:master)"
+          "detail": "oldest heavy queued 57m (fork:master)"
         }
       ],
       "partial": true
     },
-    "took_ms": 16193,
-    "at": "2026-11-21T00:46:15.052Z"
+    "took_ms": 18105,
+    "at": "2026-11-21T00:51:23.207Z"
   },
   "gh_runner_alert": null
 }
