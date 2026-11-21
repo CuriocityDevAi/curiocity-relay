@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-21T04:03:50.941Z",
+  "at": "2026-11-21T04:09:21.386Z",
   "pid": 1041,
   "runner": "v7.5",
   "poll_ms": 30000,
@@ -58,11 +58,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.75,
-    "compressed_gb": 5.11,
+    "used_gb": 15.7,
+    "compressed_gb": 5.54,
     "swap_used_gb": 0,
     "pressure": "normal",
-    "at": "2026-11-21T04:03:37.637Z"
+    "at": "2026-11-21T04:08:48.524Z"
   },
   "mem_peak_today": {
     "date": "2026-11-21",
@@ -70,21 +70,23 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-21T04:01:10.868Z",
+      "at": "2026-11-21T04:06:26.753Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 9,
+      "api_calls": 11,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
+        "queued": 2,
+        "queued_prs": [
+          224
+        ],
+        "oldest_queued_min": 3,
+        "oldest_queued_pr": "fork:#224",
         "in_progress": [
           {
             "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
@@ -92,7 +94,7 @@
             "pr_display": "fork:#223",
             "job": "playwright",
             "step": "Post Cache Playwright browsers",
-            "running_min": 15,
+            "running_min": 20,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -140,8 +142,8 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 12917,
-    "at": "2026-11-21T04:01:20.700Z"
+    "took_ms": 13340,
+    "at": "2026-11-21T04:06:37.639Z"
   },
   "gh_runner_alert": null
 }
