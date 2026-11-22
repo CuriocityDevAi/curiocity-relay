@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-22T04:09:03.056Z",
+  "at": "2026-11-22T04:14:07.815Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.83,
-    "compressed_gb": 4.16,
+    "used_gb": 15.71,
+    "compressed_gb": 4.15,
     "swap_used_gb": 0.91,
     "pressure": "normal",
-    "at": "2026-11-22T04:08:30.426Z"
+    "at": "2026-11-22T04:13:34.995Z"
   },
   "mem_peak_today": {
     "date": "2026-11-22",
@@ -46,7 +46,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-22T04:03:55.221Z",
+      "at": "2026-11-22T04:09:03.023Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -65,7 +65,7 @@
       },
       "light": {
         "queued": 2,
-        "oldest_queued_min": 265,
+        "oldest_queued_min": 270,
         "oldest_queued_pr": "storeport:main",
         "in_progress": []
       },
@@ -106,13 +106,19 @@
       "alerts": [
         {
           "type": "light_wait",
-          "detail": "oldest light queued 265m (storeport:main)"
+          "detail": "oldest light queued 270m (storeport:main)"
         }
       ]
     },
-    "took_ms": 12322,
-    "at": "2026-11-22T04:04:05.170Z"
+    "took_ms": 9933,
+    "at": "2026-11-22T04:09:10.359Z"
   },
-  "gh_runner_alert": null,
+  "gh_runner_alert": {
+    "at": "2026-11-22T04:09:01.942Z",
+    "kind": "mac-light",
+    "reason": "exec failed 2x: Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start",
+    "consecutive_failures": 2,
+    "oldest_queued_pr": "storeport:main"
+  },
   "misplaced_reports": 1
 }
