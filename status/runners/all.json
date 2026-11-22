@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-22T09:14:55.363Z",
+  "at": "2026-11-22T09:19:59.245Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.73,
-    "compressed_gb": 4.91,
+    "used_gb": 15.31,
+    "compressed_gb": 4.83,
     "swap_used_gb": 0.91,
     "pressure": "normal",
-    "at": "2026-11-22T09:14:23.010Z"
+    "at": "2026-11-22T09:19:26.804Z"
   },
   "mem_peak_today": {
     "date": "2026-11-22",
@@ -46,7 +46,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-22T09:09:49.050Z",
+      "at": "2026-11-22T09:14:55.334Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -65,7 +65,7 @@
       },
       "light": {
         "queued": 3,
-        "oldest_queued_min": 570,
+        "oldest_queued_min": 576,
         "oldest_queued_pr": "storeport:main",
         "in_progress": []
       },
@@ -106,12 +106,12 @@
       "alerts": [
         {
           "type": "light_wait",
-          "detail": "oldest light queued 570m (storeport:main)"
+          "detail": "oldest light queued 576m (storeport:main)"
         }
       ]
     },
-    "took_ms": 12468,
-    "at": "2026-11-22T09:09:59.219Z"
+    "took_ms": 10304,
+    "at": "2026-11-22T09:15:03.315Z"
   },
   "gh_runner_alert": {
     "at": "2026-11-22T04:09:01.942Z",
