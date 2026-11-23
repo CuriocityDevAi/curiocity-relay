@@ -1,7 +1,8 @@
 {
   "id": "M2-1123-A-report",
   "hub": "m2",
-  "state": "started",
-  "at": "2026-11-23T04:16:09.240Z",
-  "note": "runner-v7.6 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1123-A-report.log"
+  "state": "blocked",
+  "at": "2026-11-23T05:16:28.750Z",
+  "note": "timeout 60m · runner-v7.6 cmux-split · pane 유지 (C-c + /exit 전송) · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1123-A-report.log",
+  "blocked_by": "oke"
 }
