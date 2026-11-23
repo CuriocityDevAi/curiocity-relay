@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T12:28:43.772Z",
+  "at": "2026-11-23T12:50:54.164Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -41,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.5,
-    "compressed_gb": 4.51,
+    "used_gb": 15.47,
+    "compressed_gb": 5.42,
     "swap_used_gb": 2.36,
     "pressure": "normal",
-    "at": "2026-11-23T12:28:09.994Z"
+    "at": "2026-11-23T12:32:36.791Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -53,14 +53,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T12:27:00.031Z",
+      "at": "2026-11-23T12:32:01.792Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 17,
+      "api_calls": 16,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -70,7 +70,7 @@
           235,
           231
         ],
-        "oldest_queued_min": 11,
+        "oldest_queued_min": 16,
         "oldest_queued_pr": "fork:#234",
         "in_progress": [
           {
@@ -79,7 +79,7 @@
             "pr_display": "storeport:#414",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 5,
+            "running_min": 10,
             "runner": "Youngkyus-MacBook-Pro-M1",
             "kind": "mac-heavy"
           },
@@ -89,7 +89,7 @@
             "pr_display": "fork:#233",
             "job": "playwright",
             "step": "Run Playwright harnesses",
-            "running_min": 7,
+            "running_min": 12,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -134,12 +134,17 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 4846.500000000003
       },
-      "jsonl_added": 1,
-      "alerts": [],
+      "jsonl_added": 0,
+      "alerts": [
+        {
+          "type": "queue_wait",
+          "detail": "oldest heavy queued 16m (fork:#234)"
+        }
+      ],
       "partial": true
     },
-    "took_ms": 17442,
-    "at": "2026-11-23T12:27:15.438Z"
+    "took_ms": 16456,
+    "at": "2026-11-23T12:32:17.154Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 3
