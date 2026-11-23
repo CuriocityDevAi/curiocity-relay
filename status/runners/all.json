@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T23:38:16.345Z",
+  "at": "2026-11-23T23:45:26.644Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.86,
-    "compressed_gb": 3.98,
+    "used_gb": 15.81,
+    "compressed_gb": 3.27,
     "swap_used_gb": 3.28,
     "pressure": "normal",
-    "at": "2026-11-23T23:37:43.775Z"
+    "at": "2026-11-23T23:43:36.131Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -46,11 +46,11 @@
   },
   "ci": {
     "error": "deadline 30000ms",
-    "at": "2026-11-23T23:24:30.412Z"
+    "at": "2026-11-23T23:43:36.129Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 1,
-  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T17:40:59.584Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:41:32.421Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:claim 2026-11-23T17:42:06.406Z] M2-1123-L → done · runner-v7.8 cmux-split · 리포트 확인 m2/M2-1123-L-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1123-L.json · {\"id\":\"M2-1123-L\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-23T17:42:06.489Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m2/M2-1123-L-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1123-L.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/ci/2026-11-24.jsonl, m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:heartbeat 2026-11-23T17:52:14.809Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-23T17:52:45.070Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.8:gh-watchdog 2026-11-23T22:41:57.143Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T22:58:11.805Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:14:33.939Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-23T23:21:13.559Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Failed to connect to github.com port 443 after 6 ms: Couldn't connect to server\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:21:13.561Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:git 2026-11-23T23:25:00.556Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:25:00.560Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:state 2026-11-23T23:37:43.732Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:38:14.809Z] [gh-runner-watchdog] skip restart: no-ci-data",
+  "err_tail": "[hub-runner-v7.8:claim 2026-11-23T17:42:06.406Z] M2-1123-L → done · runner-v7.8 cmux-split · 리포트 확인 m2/M2-1123-L-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1123-L.json · {\"id\":\"M2-1123-L\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-23T17:42:06.489Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m2/M2-1123-L-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1123-L.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/ci/2026-11-24.jsonl, m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:heartbeat 2026-11-23T17:52:14.809Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-23T17:52:45.070Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.8:gh-watchdog 2026-11-23T22:41:57.143Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T22:58:11.805Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:14:33.939Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-23T23:21:13.559Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Failed to connect to github.com port 443 after 6 ms: Couldn't connect to server\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:21:13.561Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:git 2026-11-23T23:25:00.556Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:25:00.560Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:state 2026-11-23T23:37:43.732Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:38:14.809Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:state 2026-11-23T23:43:36.115Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:45:25.402Z] [gh-runner-watchdog] skip restart: no-ci-data",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -62,22 +62,22 @@
   "ci_runners": [
     {
       "name": "curiocity-mac-light",
-      "status": "online",
+      "status": "offline",
       "busy": false
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
-      "status": "online",
+      "status": "offline",
       "busy": false
     },
     {
       "name": "curiocity-mac-fork",
-      "status": "online",
+      "status": "offline",
       "busy": false
     },
     {
       "name": "curiocity-mac-fork-light",
-      "status": "online",
+      "status": "offline",
       "busy": false
     }
   ]
