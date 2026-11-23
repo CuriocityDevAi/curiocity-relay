@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T14:29:43.227Z",
+  "at": "2026-11-23T14:30:22.249Z",
   "pid": 52163,
   "runner": "v7.7",
   "poll_ms": 30000,
@@ -13,11 +13,15 @@
       "last_activity": "2026-11-23T14:21:23.747Z"
     },
     "m1": {
-      "current": null,
+      "current": "M1-1123-L",
+      "started_at": "2026-11-23T14:30:19.068Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T13:53:09.080Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1123-G",
+      "started_at": "2026-11-23T14:30:20.194Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T13:50:33.209Z"
     },
     "m3": {
@@ -36,11 +40,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.68,
-    "compressed_gb": 5.26,
+    "used_gb": 15.07,
+    "compressed_gb": 4.95,
     "swap_used_gb": 2.34,
     "pressure": "normal",
-    "at": "2026-11-23T14:29:11.613Z"
+    "at": "2026-11-23T14:29:46.740Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -124,7 +128,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.7:gh-watchdog 2026-11-23T14:25:45.015Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:26:16.858Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:26:16.860Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:26:51.152Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:26:51.154Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:heartbeat 2026-11-23T14:26:53.678Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.7:git 2026-11-23T14:27:23.859Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:27:23.861Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:heartbeat 2026-11-23T14:27:26.915Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.7:git 2026-11-23T14:27:59.318Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:27:59.320Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:heartbeat 2026-11-23T14:28:01.989Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.7:git 2026-11-23T14:28:32.206Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:28:32.208Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:heartbeat 2026-11-23T14:28:36.108Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.7:git 2026-11-23T14:29:08.441Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:29:08.442Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:heartbeat 2026-11-23T14:29:11.230Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.7:git 2026-11-23T14:29:41.510Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:29:41.511Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v7.7:heartbeat 2026-11-23T14:26:53.678Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.7:git 2026-11-23T14:27:23.859Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:27:23.861Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:heartbeat 2026-11-23T14:27:26.915Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.7:git 2026-11-23T14:27:59.318Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:27:59.320Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:heartbeat 2026-11-23T14:28:01.989Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.7:git 2026-11-23T14:28:32.206Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:28:32.208Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:heartbeat 2026-11-23T14:28:36.108Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.7:git 2026-11-23T14:29:08.441Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:29:08.442Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:heartbeat 2026-11-23T14:29:11.230Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.7:git 2026-11-23T14:29:41.510Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:29:41.511Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:heartbeat 2026-11-23T14:29:44.372Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.7:git 2026-11-23T14:30:16.678Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:30:17.527Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:m1 2026-11-23T14:30:19.068Z] pick · M1-1123-L · model=sonnet · display=cmux-split\n[hub-runner-v7.7:m2 2026-11-23T14:30:20.194Z] pick · M2-1123-G · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
