@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-23T13:40:57.603Z",
+  "built_at": "2026-11-23T15:11:14.735Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-23T13:40:56.952Z"
+      "fetched_at": "2026-11-23T15:11:14.132Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-23T13:40:57.104Z"
+      "fetched_at": "2026-11-23T15:11:14.361Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6217,16 +6217,18 @@
             {
               "id": "customer-display-snapshot",
               "name": "손님용 화면 OrderSnapshot v2 (M0-1105-CE · S1a)",
-              "summary": "손님 화면(iPad) 이 폴링하는 주문 스냅샷. OrderSnapshot v2 모델(snapshot_state=active|paid|expired · paid_at · link_open_until · pre_entry · customer_phone · polled_at · receipt · items/합계) · GET /admin/pos/loyalty/sessions/snapshots/active?register_id (TTL 10분 active · 보류 규칙 E paid · polled_at 갱신 · 응답 server_now) · PATCH /admin/pos/loyalty/sessions/snapshots/:id {typing:true} 또는 {phone,pre_entry:true} · Medusa subscriber(order.updated·payment.captured)가 payment_status=captured 시 snapshot_state=paid 로 멱등 전환(결제 라우트 파일 무수정) · 수명 판정과 응답 직렬화는 lifecycle.ts pure helper · S1b(link-phone 단일화)·R3 는 별도 라운드. M0-1118-J R1: `pos_screen`(16종 · nullable · 하위 호환) + `seq`(멱등성·순서 역전 방지) 필드 추가 · 뒤로=cart 유지는 `POST stage='cart'` 으로 서버 upsert · `POST /admin/pos/registers/:id/next-customer` (paid 10분 윈도우 즉시 해제 · idle snapshot 1건 재심기) · 폴링 1초 주기용 복합 인덱스 (register_session_id, updated_at desc). 정본 docs/plans/customer-display-server-contract.md + docs/plans/customer-display-sync.md §4 R1.",
+              "summary": "손님 화면(iPad) 이 폴링하는 주문 스냅샷. OrderSnapshot v2 모델(snapshot_state=active|paid|expired · paid_at · link_open_until · pre_entry · customer_phone · polled_at · receipt · items/합계) · GET /admin/pos/loyalty/sessions/snapshots/active?register_id (TTL 10분 active · 보류 규칙 E paid · polled_at 갱신 · 응답 server_now) · PATCH /admin/pos/loyalty/sessions/snapshots/:id {typing:true} 또는 {phone,pre_entry:true} · Medusa subscriber(order.updated·payment.captured)가 payment_status=captured 시 snapshot_state=paid 로 멱등 전환(결제 라우트 파일 무수정) · 수명 판정과 응답 직렬화는 lifecycle.ts pure helper · S1b(link-phone 단일화)·R3 는 별도 라운드. M0-1118-J R1: `pos_screen`(16종 · nullable · 하위 호환) + `seq`(멱등성·순서 역전 방지) 필드 추가 · 뒤로=cart 유지는 `POST stage='cart'` 으로 서버 upsert · `POST /admin/pos/registers/:id/next-customer` (paid 10분 윈도우 즉시 해제 · idle snapshot 1건 재심기) · 폴링 1초 주기용 복합 인덱스 (register_session_id, updated_at desc). M0-1123-F: `phone_deferred` 필드 + `POST /admin/pos/orders/:id/ask-phone-on-display` — 다른 손님 번호 입력 중에 결제된 paid 가 CD keypad 를 자동으로 가져가지 않도록 deferred=true 로 저장되고, 캐셔 수동 호출(규칙 B) 이 phone_deferred=false 로 해제해 승격한다. 409 = `phone_entry_busy` (+ entering_order_id) · `already_linked` · `link_window_closed`. 정본 docs/plans/customer-display-server-contract.md + docs/plans/customer-display-sync.md §4 R1 + docs/plans/pos-multi-customer-v3.md §7.",
               "files": [
                 "apps/commerce-core/src/modules/register_session/order_snapshot/model.ts",
                 "apps/commerce-core/src/modules/register_session/models/order-snapshot.ts",
                 "apps/commerce-core/src/modules/register_session/migrations/Migration20261115100000.ts",
                 "apps/commerce-core/src/modules/register_session/migrations/Migration20261118000001.ts",
+                "apps/commerce-core/src/modules/register_session/migrations/Migration20261123000001.ts",
                 "apps/commerce-core/src/modules/register_session/lifecycle.ts",
                 "apps/commerce-core/src/modules/register_session/__tests__/order-snapshot.unit.spec.ts",
                 "apps/commerce-core/src/api/admin/pos/loyalty/sessions/snapshots/**",
                 "apps/commerce-core/src/api/admin/pos/registers/[id]/next-customer/route.ts",
+                "apps/commerce-core/src/api/admin/pos/orders/[id]/ask-phone-on-display/**",
                 "apps/commerce-core/src/subscribers/order-snapshot-paid.ts",
                 "apps/commerce-core/src/types/customer-display.ts",
                 "apps/commerce-core/integration-tests/pos/cd-pos-screen-sync.spec.ts",
@@ -6858,7 +6860,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-23T13:40:57.603Z"
+      "fetched_at": "2026-11-23T15:11:14.735Z"
     }
   ],
   "rollup": {
