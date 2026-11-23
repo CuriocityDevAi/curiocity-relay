@@ -111,6 +111,18 @@ heartbeat 마다 GitHub API 에서 완료된 job 을 `status/ci/<YYYY-MM-DD WIB>
 
 ---
 
+## 감시 화면 (M1-1123-I)
+
+```
+node ~/projects/curiocity-relay/scripts/ci-watch.mjs
+```
+
+빨간 줄 뜻: `⚠ relay 충돌 · 사람 필요: <파일>` → git 충돌 Kyu 직접 해소 / `⚠ 러너 응답 없음(Mac 잠자기?)` → Mac 잠금 해제 필요 / `⚠ 미투입: <ID>` → 러너가 큐를 처리 못하는 중 / `⚠ GitHub에 못 올린 기록 N개` → push 지연.
+
+macOS 알림: 새 빨간 경보가 생길 때 1회 알림 (같은 경보 반복 안 함 · 해소되면 초기화).
+
+---
+
 ## 수동 실행 (디버그)
 
 ```bash
