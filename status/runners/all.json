@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T12:03:55.886Z",
+  "at": "2026-11-23T12:08:19.660Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -9,7 +9,9 @@
   "last_error_at": "2026-11-23T10:04:31.249Z",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1123-F",
+      "started_at": "2026-11-23T12:08:16.861Z",
+      "model": "opus",
       "last_activity": "2026-11-23T12:03:54.812Z"
     },
     "m1": {
@@ -17,7 +19,9 @@
       "last_activity": "2026-11-23T11:43:41.980Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1123-E",
+      "started_at": "2026-11-23T12:08:17.846Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T08:40:17.325Z"
     },
     "m3": {
@@ -41,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.34,
-    "compressed_gb": 4.84,
+    "used_gb": 15.48,
+    "compressed_gb": 4.48,
     "swap_used_gb": 2.36,
     "pressure": "normal",
-    "at": "2026-11-23T12:03:48.081Z"
+    "at": "2026-11-23T12:07:44.594Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -53,21 +57,24 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T12:00:41.567Z",
+      "at": "2026-11-23T12:06:00.172Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 9,
+      "api_calls": 13,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
+        "queued": 4,
+        "queued_prs": [
+          233,
+          234
+        ],
+        "oldest_queued_min": 3,
+        "oldest_queued_pr": "fork:#233",
         "in_progress": [
           {
             "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
@@ -75,7 +82,7 @@
             "pr_display": "fork:#231",
             "job": "playwright",
             "step": "Run Playwright harnesses",
-            "running_min": 14,
+            "running_min": 20,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -124,8 +131,8 @@
       "alerts": [],
       "partial": true
     },
-    "took_ms": 14447,
-    "at": "2026-11-23T12:00:54.144Z"
+    "took_ms": 15435,
+    "at": "2026-11-23T12:06:13.623Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 3
