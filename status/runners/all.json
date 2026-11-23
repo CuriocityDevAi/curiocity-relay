@@ -1,12 +1,12 @@
 {
-  "at": "2026-11-23T15:06:33.161Z",
+  "at": "2026-11-23T15:12:18.305Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
   "last_error": "blocked: runner-folder change pending Kyu install (m2/M2-1123-C-report.md)",
-  "last_error_at": "2026-11-23T14:55:35.049Z",
+  "last_error_at": "2026-11-23T15:12:14.842Z",
   "hubs": {
     "m0": {
       "current": "M0-1123-H",
@@ -40,19 +40,19 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.69,
-    "compressed_gb": 4.76,
-    "swap_used_gb": 3.01,
+    "used_gb": 15.27,
+    "compressed_gb": 3.93,
+    "swap_used_gb": 3.66,
     "pressure": "normal",
-    "at": "2026-11-23T15:06:25.041Z"
+    "at": "2026-11-23T15:11:45.229Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
-    "used_gb": 15.85
+    "used_gb": 15.88
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T15:00:55.730Z",
+      "at": "2026-11-23T15:11:38.246Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -64,10 +64,8 @@
       "api_overflow": false,
       "heavy": {
         "queued": 14,
-        "queued_prs": [
-          236
-        ],
-        "oldest_queued_min": 34,
+        "queued_prs": [],
+        "oldest_queued_min": 40,
         "oldest_queued_pr": "fork:master",
         "in_progress": []
       },
@@ -114,21 +112,21 @@
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 34m (fork:master)"
+          "detail": "oldest heavy queued 40m (fork:master)"
         },
         {
           "type": "runner_idle",
-          "detail": "14 queued but 0 in_progress for 34m (fork:master)"
+          "detail": "14 queued but 0 in_progress for 40m (fork:master)"
         }
       ],
       "partial": true
     },
-    "took_ms": 22042,
-    "at": "2026-11-23T15:01:15.840Z"
+    "took_ms": 21859,
+    "at": "2026-11-23T15:11:58.257Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T15:00:18.370Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:00:54.766Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:01:30.539Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:02:06.547Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:m2 2026-11-23T15:02:09.411Z] pick · M2-1123-H · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-23T15:02:11.904Z] M2-1123-H → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1123-H.json · {\"id\":\"M2-1123-H\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-23T15:02:11.998Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1123-H.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): queue/m2/M2-1123-H.md, m2/M2-1123-C-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/2)\rerror: could not apply 53f41529f... claim(m1): M1-1123-M started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:02:42.128Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:03:19.045Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:03:53.625Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:04:30.993Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:05:05.683Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:05:42.333Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:06:16.621Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:06:54.495Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:07:28.568Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:08:04.973Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-23T15:08:38.173Z] blocked: runner-folder change pending Kyu install · files=scripts/watch/ci-watch-render.mjs,m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:08:39.014Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-23T15:09:14.708Z] blocked: runner-folder change pending Kyu install · files=scripts/ci-watch.mjs,scripts/watch/ci-watch-render.mjs,m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:09:15.424Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:09:49.405Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-23T15:10:25.391Z] blocked: runner-folder change pending Kyu install · files=scripts/ci-watch.mjs,scripts/test/ci-watch-k.test.mjs,scripts/watch/ci-watch-render.mjs,m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:10:26.229Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:11:00.315Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:11:37.289Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:heartbeat 2026-11-23T15:11:44.542Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-23T15:12:14.753Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.8:git 2026-11-23T15:12:14.842Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:12:15.575Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -156,7 +154,7 @@
     {
       "name": "curiocity-mac-fork-light",
       "status": "online",
-      "busy": false
+      "busy": true
     }
   ]
 }
