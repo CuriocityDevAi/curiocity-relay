@@ -1,12 +1,12 @@
 {
-  "at": "2026-11-23T12:13:36.313Z",
+  "at": "2026-11-23T12:14:18.624Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
   "last_error": "blocked: runner-folder change pending Kyu install (m2/M2-1123-C-report.md)",
-  "last_error_at": "2026-11-23T10:04:31.249Z",
+  "last_error_at": "2026-11-23T12:14:17.665Z",
   "hubs": {
     "m0": {
       "current": "M0-1123-F",
@@ -29,10 +29,8 @@
       "last_activity": "2026-11-23T12:03:22.728Z"
     },
     "r0": {
-      "current": "R0-1123-G",
-      "started_at": "2026-11-23T11:50:06.956Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-23T11:42:32.228Z"
+      "current": null,
+      "last_activity": "2026-11-23T12:14:17.558Z"
     }
   },
   "pane_close_failures": {},
@@ -45,11 +43,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.04,
-    "compressed_gb": 5.01,
+    "used_gb": 14.48,
+    "compressed_gb": 5.17,
     "swap_used_gb": 2.36,
     "pressure": "normal",
-    "at": "2026-11-23T12:13:03.728Z"
+    "at": "2026-11-23T12:14:16.608Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
