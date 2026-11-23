@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T09:43:07.119Z",
+  "at": "2026-11-23T09:48:40.784Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.92,
-    "compressed_gb": 4.71,
+    "used_gb": 15.87,
+    "compressed_gb": 5.49,
     "swap_used_gb": 2.4,
     "pressure": "normal",
-    "at": "2026-11-23T09:42:35.387Z"
+    "at": "2026-11-23T09:48:08.816Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -46,7 +46,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T09:38:43.482Z",
+      "at": "2026-11-23T09:44:16.190Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -59,7 +59,7 @@
       "heavy": {
         "queued": 1,
         "queued_prs": [],
-        "oldest_queued_min": 13,
+        "oldest_queued_min": 19,
         "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
@@ -68,7 +68,7 @@
             "pr_display": "fork:master",
             "job": "playwright",
             "step": "Run Playwright harnesses",
-            "running_min": 13,
+            "running_min": 19,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -114,10 +114,15 @@
         "wasted_min": 4795.600000000003
       },
       "jsonl_added": 0,
-      "alerts": []
+      "alerts": [
+        {
+          "type": "queue_wait",
+          "detail": "oldest heavy queued 19m (fork:master)"
+        }
+      ]
     },
-    "took_ms": 7956,
-    "at": "2026-11-23T09:38:49.847Z"
+    "took_ms": 11108,
+    "at": "2026-11-23T09:44:25.459Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 2
