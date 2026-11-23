@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T14:21:23.990Z",
+  "at": "2026-11-23T14:26:52.607Z",
   "pid": 52163,
   "runner": "v7.7",
   "poll_ms": 30000,
@@ -36,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.2,
-    "compressed_gb": 4.9,
+    "used_gb": 15.57,
+    "compressed_gb": 4.59,
     "swap_used_gb": 2.34,
     "pressure": "normal",
-    "at": "2026-11-23T14:21:22.386Z"
+    "at": "2026-11-23T14:26:21.276Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -48,22 +48,22 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T14:18:23.596Z",
+      "at": "2026-11-23T14:23:32.249Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 17,
+      "api_calls": 24,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 13,
+        "queued": 20,
         "queued_prs": [
           237
         ],
-        "oldest_queued_min": 44,
+        "oldest_queued_min": 63,
         "oldest_queued_pr": "fork:master",
         "in_progress": []
       },
@@ -110,21 +110,21 @@
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 44m (fork:master)"
+          "detail": "oldest heavy queued 63m (fork:master)"
         },
         {
           "type": "runner_idle",
-          "detail": "13 queued but 0 in_progress for 44m (fork:master)"
+          "detail": "20 queued but 0 in_progress for 63m (fork:master)"
         }
       ],
       "partial": true
     },
-    "took_ms": 21826,
-    "at": "2026-11-23T14:18:43.606Z"
+    "took_ms": 21090,
+    "at": "2026-11-23T14:23:52.261Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.7:gh-watchdog 2026-11-23T14:16:04.769Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:16:40.057Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:16:40.866Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:17:13.198Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:17:13.952Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:17:48.728Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:17:49.535Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:18:21.914Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:18:22.628Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:19:00.791Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:19:01.579Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:19:34.010Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:19:34.917Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:20:09.710Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:20:11.416Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:20:43.967Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:20:44.642Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:21:19.118Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:21:19.120Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:21:23.795Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5",
+  "err_tail": "[hub-runner-v7.7:git 2026-11-23T14:21:51.520Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:21:51.521Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:22:25.481Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:22:25.483Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:22:57.156Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:22:57.157Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:23:31.260Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:23:31.261Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:24:04.611Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:24:04.612Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:24:38.641Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:24:38.643Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:25:10.293Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:25:10.294Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:25:45.013Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:25:45.015Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:26:16.858Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:26:16.860Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:26:51.152Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m0/M0-1123-G-report.md@91386fb5\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:26:51.154Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
