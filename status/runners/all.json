@@ -1,12 +1,12 @@
 {
-  "at": "2026-11-23T09:13:04.139Z",
+  "at": "2026-11-23T09:13:38.982Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": "blocked: runner-folder change pending Kyu install (m2/M2-1123-C-report.md)",
-  "last_error_at": "2026-11-23T09:13:01.484Z",
+  "last_error": "blocked: runner-folder change pending Kyu install (README.md)",
+  "last_error_at": "2026-11-23T09:13:36.388Z",
   "hubs": {
     "m0": {
       "current": null,
@@ -38,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.72,
-    "compressed_gb": 5.08,
+    "used_gb": 15.23,
+    "compressed_gb": 5.2,
     "swap_used_gb": 2.44,
     "pressure": "normal",
-    "at": "2026-11-23T09:12:31.649Z"
+    "at": "2026-11-23T09:13:07.335Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -50,14 +50,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T09:07:53.787Z",
+      "at": "2026-11-23T09:13:02.989Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 20,
+      "api_calls": 15,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -75,22 +75,12 @@
       },
       "cloud_in_progress": [
         {
-          "repo": "CuriocityDevAi/storeport",
-          "pr": "#413",
-          "pr_display": "storeport:#413",
-          "job": "heavy-cloud",
-          "step": "Run ./.github/actions/heavy-steps",
-          "running_min": 14,
-          "runner": "GitHub Actions 1000007742",
-          "kind": "cloud"
-        },
-        {
           "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
           "pr": "#228",
           "pr_display": "fork:#228",
           "job": "playwright",
           "step": "Run Playwright harnesses",
-          "running_min": 11,
+          "running_min": 16,
           "runner": "GitHub Actions 1000007743",
           "kind": "cloud"
         }
@@ -100,46 +90,39 @@
         "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 6,
+      "cloud_today": 4,
       "today": {
         "mac-heavy": {
-          "jobs": 36,
+          "jobs": 38,
           "avg_wait_min": 0.6,
-          "avg_run_min": 1.4,
-          "success_rate": 61.1,
-          "run_min_total": 49.39999999999999
+          "avg_run_min": 1.3,
+          "success_rate": 60.5,
+          "run_min_total": 49.599999999999994
         },
         "mac-light": {
-          "jobs": 36,
-          "avg_wait_min": 121.4,
-          "avg_run_min": 131.1,
-          "success_rate": 11.1,
-          "run_min_total": 4720.800000000002
+          "jobs": 40,
+          "avg_wait_min": 109.8,
+          "avg_run_min": 118.4,
+          "success_rate": 17.5,
+          "run_min_total": 4734.100000000002
         },
         "cloud": {
-          "jobs": 56,
+          "jobs": 60,
           "avg_wait_min": 0,
-          "avg_run_min": 1.3,
-          "success_rate": 69.6,
-          "run_min_total": 70.70000000000003
+          "avg_run_min": 1.5,
+          "success_rate": 71.7,
+          "run_min_total": 87.70000000000002
         },
-        "cloud_cost_est_usd": 0.816,
+        "cloud_cost_est_usd": 0.976,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 4757.800000000003
+        "wasted_min": 4770.300000000003
       },
-      "jsonl_added": 18,
-      "alerts": [],
-      "partial": true
+      "jsonl_added": 10,
+      "alerts": []
     },
-    "took_ms": 23227,
-    "at": "2026-11-23T09:08:14.618Z"
+    "took_ms": 15483,
+    "at": "2026-11-23T09:13:16.715Z"
   },
-  "gh_runner_alert": {
-    "at": "2026-11-22T04:09:01.942Z",
-    "kind": "mac-light",
-    "reason": "exec failed 2x: Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start",
-    "consecutive_failures": 2,
-    "oldest_queued_pr": "storeport:main"
-  },
+  "gh_runner_alert": null,
   "misplaced_reports": 2
 }
