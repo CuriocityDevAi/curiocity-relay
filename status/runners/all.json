@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T13:24:11.794Z",
+  "at": "2026-11-23T13:29:10.101Z",
   "pid": 52163,
   "runner": "v7.7",
   "poll_ms": 30000,
@@ -9,7 +9,9 @@
   "last_error_at": "2026-11-23T13:20:06.226Z",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1123-G",
+      "started_at": "2026-11-23T13:29:07.241Z",
+      "model": "opus",
       "last_activity": null
     },
     "m1": {
@@ -21,7 +23,9 @@
       "last_activity": null
     },
     "m3": {
-      "current": null,
+      "current": "M3-1123-I",
+      "started_at": "2026-11-23T13:29:08.268Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T13:24:10.770Z"
     },
     "r0": {
@@ -34,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.88,
-    "compressed_gb": 4.9,
+    "used_gb": 15.11,
+    "compressed_gb": 4.68,
     "swap_used_gb": 2.34,
     "pressure": "normal",
-    "at": "2026-11-23T13:24:09.308Z"
+    "at": "2026-11-23T13:28:35.165Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -46,33 +50,34 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T13:20:43.861Z",
+      "at": "2026-11-23T13:25:46.286Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 18,
+      "api_calls": 23,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 9,
+        "queued": 10,
         "queued_prs": [
-          235,
           231,
-          233
+          235,
+          233,
+          236
         ],
-        "oldest_queued_min": 65,
-        "oldest_queued_pr": "fork:#235",
+        "oldest_queued_min": 66,
+        "oldest_queued_pr": "fork:#231",
         "in_progress": [
           {
             "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-            "pr": "#234",
-            "pr_display": "fork:#234",
-            "job": "playwright",
-            "step": "Run Playwright harnesses",
-            "running_min": 23,
+            "pr": "#231",
+            "pr_display": "fork:#231",
+            "job": "lint",
+            "step": "Run npm ci --legacy-peer-deps",
+            "running_min": 0,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -90,14 +95,14 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 0,
+      "cloud_today": 7,
       "today": {
         "mac-heavy": {
-          "jobs": 59,
-          "avg_wait_min": 1.9,
-          "avg_run_min": 2.9,
-          "success_rate": 67.8,
-          "run_min_total": 168.9
+          "jobs": 69,
+          "avg_wait_min": 3.6,
+          "avg_run_min": 3,
+          "success_rate": 62.3,
+          "run_min_total": 204.6
         },
         "mac-light": {
           "jobs": 50,
@@ -107,31 +112,31 @@
           "run_min_total": 4737.000000000003
         },
         "cloud": {
-          "jobs": 78,
+          "jobs": 85,
           "avg_wait_min": 0,
-          "avg_run_min": 1.6,
-          "success_rate": 70.5,
-          "run_min_total": 121.39999999999996
+          "avg_run_min": 1.5,
+          "success_rate": 69.4,
+          "run_min_total": 124.79999999999997
         },
-        "cloud_cost_est_usd": 1.32,
+        "cloud_cost_est_usd": 1.36,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 4846.500000000003
+        "wasted_min": 4878.500000000003
       },
-      "jsonl_added": 0,
+      "jsonl_added": 17,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 65m (fork:#235)"
+          "detail": "oldest heavy queued 66m (fork:#231)"
         }
       ],
       "partial": true
     },
-    "took_ms": 17484,
-    "at": "2026-11-23T13:20:59.668Z"
+    "took_ms": 20312,
+    "at": "2026-11-23T13:26:04.927Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.7:git 2026-11-23T13:20:42.263Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:20:42.962Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:21:16.653Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:21:17.441Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:21:49.388Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:21:50.078Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:22:24.188Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:22:24.893Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:22:56.815Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:22:57.710Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:23:31.604Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:23:32.301Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:24:04.024Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:24:04.735Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:24:10.882Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2",
+  "err_tail": "[hub-runner-v7.7:git 2026-11-23T13:24:38.597Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:24:39.277Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:25:10.432Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:25:11.175Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:25:44.751Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:25:45.456Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:26:17.985Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:26:18.754Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:26:52.407Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:26:53.236Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:27:24.439Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:27:25.773Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:27:59.471Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:28:00.185Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:28:31.312Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:28:32.052Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:29:05.300Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:29:06.390Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:m0 2026-11-23T13:29:07.240Z] pick · M0-1123-G · model=opus · display=cmux-split\n[hub-runner-v7.7:m3 2026-11-23T13:29:08.268Z] pick · M3-1123-I · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
