@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T15:30:07.913Z",
+  "at": "2026-11-23T15:32:25.654Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -25,7 +25,9 @@
       "last_activity": "2026-11-23T15:17:33.172Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1123-Q",
+      "started_at": "2026-11-23T15:32:24.055Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T15:19:01.364Z"
     }
   },
@@ -34,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.62,
-    "compressed_gb": 3.78,
-    "swap_used_gb": 3.5,
+    "used_gb": 15.66,
+    "compressed_gb": 3.66,
+    "swap_used_gb": 3.49,
     "pressure": "normal",
-    "at": "2026-11-23T15:29:35.779Z"
+    "at": "2026-11-23T15:31:51.686Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -122,7 +124,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T15:20:27.568Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:21:02.185Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:21:34.749Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:22:09.674Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:22:43.377Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:23:17.772Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:23:49.769Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:24:27.024Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:heartbeat 2026-11-23T15:24:29.042Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-23T15:24:59.287Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:25:00.234Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:25:37.945Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:26:10.268Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:26:45.070Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:27:17.077Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:27:54.116Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:28:26.295Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:29:00.847Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:29:32.700Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:30:07.028Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T15:23:17.772Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:23:49.769Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:24:27.024Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:heartbeat 2026-11-23T15:24:29.042Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-23T15:24:59.287Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:25:00.234Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:25:37.945Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:26:10.268Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:26:45.070Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:27:17.077Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:27:54.116Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:28:26.295Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:29:00.847Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:29:32.700Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:30:07.028Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:30:42.070Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:31:16.435Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:31:48.478Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:32:23.073Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:r0 2026-11-23T15:32:24.055Z] pick · R0-1123-Q · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
