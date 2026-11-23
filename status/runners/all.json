@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T17:04:01.504Z",
+  "at": "2026-11-23T17:05:12.808Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -21,7 +21,9 @@
       "last_activity": "2026-11-23T16:37:56.009Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1123-N",
+      "started_at": "2026-11-23T17:05:11.085Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T16:32:31.365Z"
     },
     "r0": {
@@ -36,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.67,
-    "compressed_gb": 2.91,
+    "used_gb": 15.7,
+    "compressed_gb": 2.92,
     "swap_used_gb": 3.53,
     "pressure": "normal",
-    "at": "2026-11-23T17:03:29.341Z"
+    "at": "2026-11-23T17:04:38.710Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -113,7 +115,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T16:53:13.351Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:53:45.761Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:54:22.779Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:54:55.228Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:55:29.868Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:56:04.104Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:56:38.962Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:57:11.562Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:57:46.740Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:58:19.207Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:58:54.291Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:59:29.128Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:00:04.028Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:00:37.005Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:01:13.349Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:01:45.717Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:02:20.416Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:02:52.911Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:03:27.569Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:04:00.034Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T16:54:55.228Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:55:29.868Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:56:04.104Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:56:38.962Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:57:11.562Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:57:46.740Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:58:19.207Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:58:54.291Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:59:29.128Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:00:04.028Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:00:37.005Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:01:13.349Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:01:45.717Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:02:20.416Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:02:52.911Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:03:27.569Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:04:00.034Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:04:36.834Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:05:09.446Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:m3 2026-11-23T17:05:11.085Z] pick · M3-1123-N · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
