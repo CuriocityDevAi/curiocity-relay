@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>숲속의 과자점 — 달빛 숲 (실제 로고)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#90579A}a:hover{color:#6e3f77}
+@keyframes kDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes kMoon{from{transform:translateY(36px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes kSky{from{background-color:#e9e2f7}to{background-color:#fffaf5}}
+@keyframes kIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes kOut{from{opacity:1}to{opacity:0;transform:translateY(-30px)}}
+@keyframes kShow{0%,100%{opacity:0;transform:scale(1.04)}22%,78%{opacity:1;transform:scale(1)}}
+@keyframes kRise{from{opacity:0;transform:translateY(46px)}to{opacity:1;transform:none}}
+@keyframes kTwinkle{0%,100%{opacity:.25}50%{opacity:1}}
+.k-cine{view-timeline-name:--kc}
+.k-line{stroke-dasharray:1;stroke-dashoffset:1}
+.k-star{animation:kTwinkle 3s ease-in-out infinite}
+.k-reel{timeline-scope:--k0,--k1,--k2,--k3,--k4,--k5}
+.k-arch{transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.k-arch:hover{transform:translateY(-8px) rotate(-1deg)}
+.k-pola{transform:rotate(var(--r));transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s}
+.k-pola:hover,.k-pola:focus-visible{transform:translateY(-10px) rotate(0deg);box-shadow:0 26px 50px rgba(63,51,80,.22)}
+@media (prefers-reduced-motion: reduce){.k-pola{transition:none}}
+@supports (animation-timeline: view()){
+.k-sky{animation:kSky linear both;animation-timeline:--kc;animation-range:contain 40% contain 100%}
+.k-line{animation:kDraw linear both;animation-timeline:--kc;animation-range:contain 0% contain 45%}
+.k-moon{animation:kMoon linear both;animation-timeline:--kc;animation-range:contain 0% contain 30%}
+.k-t1{animation:kOut linear both;animation-timeline:--kc;animation-range:contain 30% contain 40%}
+.k-t2{animation:kIn linear both;animation-timeline:--kc;animation-range:contain 45% contain 58%}
+.k-t3{animation:kIn linear both;animation-timeline:--kc;animation-range:contain 62% contain 76%}
+.k-img{opacity:0;animation:kShow linear both}
+.k-i0{animation-timeline:--k0}.k-i1{animation-timeline:--k1}.k-i2{animation-timeline:--k2}.k-i3{animation-timeline:--k3}.k-i4{animation-timeline:--k4}.k-i5{animation-timeline:--k5}
+.k-img{animation-range:cover 18% cover 82%}
+.k-rise{animation:kRise linear both;animation-timeline:view();animation-range:entry 0% cover 25%}
+}
+@supports not (animation-timeline: view()){.k-line{stroke-dashoffset:0}.k-img{opacity:0}.k-i0{opacity:1}}
+@media (max-width: 760px){.k-reel-imgs{display:none !important}.k-step-img{display:block !important}}
+@media (prefers-reduced-motion: reduce){.k-line,.k-moon,.k-t1,.k-t2,.k-t3,.k-rise,.k-sky,.k-star{animation:none}.k-line{stroke-dashoffset:0}}
+</style>
+</helmet>
+<div style="font-family: 'Gowun Dodum', Nunito, system-ui, sans-serif; color: #3f3350; background: #fffaf5; overflow-x: clip">
+
+<header style="position: sticky; top: 0; z-index: 10; background: rgba(255,250,245,0.8); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(144,87,154,0.18)">
+<div style="max-width: 1180px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px">
+<a href="#k-top" aria-label="숲속의 과자점 home" style="display: inline-flex; align-items: center; text-decoration: none"><img src="/_blob/b6b5e026023c2b291fd5990b1b680860" alt="숲속의 과자점 · Make your day green" style="height: 42px; width: auto; display: block"></a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 4px; align-items: center; font-family: Nunito, sans-serif; font-size: 14px; font-weight: 700">
+<a href="#k-treats" style="padding: 10px 12px; color: #3f3350; text-decoration: none">Treats</a>
+<a href="#k-stores" style="padding: 10px 12px; color: #3f3350; text-decoration: none">Stores</a>
+<a href="https://wa.me/6285211572101" style="display: inline-flex; align-items: center; min-height: 42px; padding: 0 18px; border-radius: 999px; background: #90579A; color: #fffaf5; text-decoration: none">Order 주문</a>
+</nav>
+</div>
+</header>
+
+<section id="k-top" class="k-cine" style="height: 280vh; position: relative">
+<div class="k-sky" style="position: sticky; top: 0; height: 100vh; overflow: hidden; background-color: #e9e2f7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; padding: 0 24px">
+<span class="k-star" aria-hidden="true" style="position: absolute; left: 18%; top: 18%; width: 6px; height: 6px; border-radius: 50%; background: #b7a3d9"></span>
+<span class="k-star" aria-hidden="true" style="position: absolute; right: 22%; top: 26%; width: 5px; height: 5px; border-radius: 50%; background: #b7a3d9; animation-delay: -1.2s"></span>
+<span class="k-star" aria-hidden="true" style="position: absolute; left: 30%; top: 34%; width: 4px; height: 4px; border-radius: 50%; background: #b7a3d9; animation-delay: -2s"></span>
+<svg aria-hidden="true" viewBox="0 0 110 120" style="width: min(300px, 58vw); height: auto; color: #90579A" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+<g class="k-moon"><path class="k-line" pathLength="1" d="M28 18 C10 30 2 52 5 70 C9 96 30 115 56 115 C78 115 96 102 106 82 L91 91"/><path class="k-line" pathLength="1" d="M28 18 C22 40 27 64 44 80"/></g>
+<path class="k-line k-star" pathLength="1" fill="currentColor" stroke-width="1.2" d="M58 10 L60 17 L67 19 L60 21 L58 28 L56 21 L49 19 L56 17 Z"/>
+<path class="k-line" pathLength="1" d="M59 47 V101"/><path class="k-line" pathLength="1" d="M53 54 L59 47 L65 54"/><path class="k-line" pathLength="1" d="M51 67 L59 59 L67 67"/><path class="k-line" pathLength="1" d="M48 85 L59 73 L71 82"/>
+<path class="k-line" pathLength="1" d="M83 33 V96"/><path class="k-line" pathLength="1" d="M77 48 L83 41 L89 48"/><path class="k-line" pathLength="1" d="M75 62 L83 54 L91 62"/><path class="k-line" pathLength="1" d="M74 77 L83 69 L99 78"/>
+<path class="k-line" pathLength="1" d="M64.5 90.5 L77 92"/>
+</svg>
+<div style="position: relative; min-height: 210px; width: 100%; display: flex; justify-content: center">
+<div class="k-t1" style="position: absolute; display: flex; flex-direction: column; gap: 10px; align-items: center"><h1 style="margin: 0"><img src="/_blob/ad54094e6bea1c5c4509421fa5cda51d" alt="숲속의 과자점 · Make your day green" style="width: min(640px, 82vw); height: auto; display: block"></h1></div>
+<div style="position: absolute; display: flex; flex-direction: column; gap: 14px; align-items: center">
+<span class="k-t2" style="font-family: 'Gowun Batang', serif; font-size: clamp(36px, 5.6vw, 72px); font-weight: 700; line-height: 1.1">A little taste of Korea,<br>in Jakarta.</span>
+<span class="k-t3" style="font-family: Nunito, sans-serif; font-size: clamp(18px, 2vw, 24px); font-weight: 700; color: #90579A">Sweet, but never too sweet. Made with good things.</span>
+</div>
+</div>
+<span style="position: absolute; bottom: 28px; font-family: Nunito, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .2em; color: #8a7aa6">SCROLL · 스크롤</span>
+</div>
+</section>
+
+<section style="background: #fffaf5; padding: 100px 24px 60px">
+<div class="k-rise" style="max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px">
+<div style="padding: 30px; border-radius: 28px; background: #f3eefb; display: flex; flex-direction: column; gap: 10px"><span style="font-family: 'Gowun Batang', serif; font-size: 30px; font-weight: 700">좋은 재료</span><span style="font-family: Nunito, sans-serif; font-weight: 700; color: #90579A">Good ingredients</span><span style="line-height: 1.7">Real butter, fresh fruit and pistachio. We don't cut corners, so we don't cut prices either.</span></div>
+<div style="padding: 30px; border-radius: 28px; background: #e8f3ec; display: flex; flex-direction: column; gap: 10px"><span style="font-family: 'Gowun Batang', serif; font-size: 30px; font-weight: 700">덜 달게</span><span style="font-family: Nunito, sans-serif; font-weight: 700; color: #4f7d63">Gently sweet</span><span style="line-height: 1.7">Korean-style sweetness: soft and clean, so you taste the fruit and the butter.</span></div>
+<div style="padding: 30px; border-radius: 28px; background: #fbeef2; display: flex; flex-direction: column; gap: 10px"><span style="font-family: 'Gowun Batang', serif; font-size: 30px; font-weight: 700">정성으로</span><span style="font-family: Nunito, sans-serif; font-weight: 700; color: #a35a74">Made as if for our own kids</span><span style="line-height: 1.7">We bake every treat the way we would for our own children: good ingredients, gentle sweetness, nothing we wouldn't give them.</span></div>
+</div>
+</section>
+
+<section id="k-treats" class="k-reel" style="background: #fffaf5; padding: 40px 24px 100px">
+<div style="max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 56px">
+<div class="k-reel-imgs" style="flex: 1 1 440px; position: sticky; top: 90px; align-self: flex-start; height: calc(100vh - 130px); min-height: 520px; display: flex; align-items: center; justify-content: center">
+<div style="position: relative; width: min(100%, 460px); aspect-ratio: 4 / 5; border-radius: 230px 230px 32px 32px; overflow: hidden; background: #f3eefb; box-shadow: 0 40px 80px rgba(144,87,154,.18)">
+<sc-for list="{{ treats }}" as="t" hint-placeholder-count="6">
+<img class="{{ t.cls }}" src="{{ t.img }}" alt="{{ t.en }}: ingredients and finished treat" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+</sc-for>
+</div>
+</div>
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column">
+<sc-for list="{{ treats }}" as="t" hint-placeholder-count="6">
+<article style="{{ t.blockStyle }}">
+<img class="k-step-img" src="{{ t.img }}" alt="{{ t.en }}" style="display: none; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 160px 160px 24px 24px; margin-bottom: 20px">
+<span style="font-family: Nunito, sans-serif; font-size: 13px; font-weight: 800; letter-spacing: .2em; color: #8a7aa6">{{ t.num }}</span>
+<h2 style="margin: 0; font-family: 'Gowun Batang', serif; font-size: clamp(42px, 5vw, 64px); font-weight: 700; line-height: 1.05">{{ t.ko }}</h2>
+<span style="font-family: Nunito, sans-serif; font-size: 22px; font-weight: 800; color: #90579A">{{ t.en }}</span>
+<p style="margin: 0; font-size: 19px; line-height: 1.75; max-width: 30rem">{{ t.desc }}</p>
+</article>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section style="background: #f3eefb; padding: 100px 0">
+<div class="k-rise" style="max-width: 1180px; margin: 0 auto 30px; padding: 0 24px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+<h2 style="margin: 0; font-family: 'Gowun Batang', serif; font-size: clamp(36px, 4.6vw, 56px); font-weight: 700">요즘 숲속 · From our feed</h2>
+<a href="https://instagram.com/soopsok.sweets" style="display: inline-flex; align-items: center; min-height: 46px; padding: 0 20px; border-radius: 999px; border: 2px solid #90579A; text-decoration: none; font-family: Nunito, sans-serif; font-weight: 800">@soopsok.sweets</a>
+</div>
+<div style="display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 26px max(24px, calc((100% - 1132px) / 2)) 36px; scrollbar-width: none">
+<sc-for list="{{ feed }}" as="f" hint-placeholder-count="6">
+<a class="k-pola" href="https://instagram.com/soopsok.sweets" aria-label="{{ f.label }}" style="{{ f.polaStyle }}"><span style="position: relative; display: block"><img src="{{ f.img }}" alt="{{ f.label }}" style="{{ f.imgStyle }}"><span style="{{ f.badgeStyle }}"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>{{ f.badge }}</span></span><span style="display: flex; flex-direction: column; gap: 4px; padding: 14px 4px 4px"><span style="font-family: 'Gowun Dodum', sans-serif; font-size: 16px; line-height: 1.4; color: #3f3350; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden">[인스타 글 첫 줄]</span><span style="font-family: Nunito, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .06em; color: #8a7aa6">[게시일] · @soopsok.sweets</span></span></a>
+</sc-for>
+</div>
+</section>
+
+<section id="k-stores" class="k-rise" style="max-width: 1180px; margin: 0 auto; padding: 100px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px">
+<div style="padding: 36px; border-radius: 32px; border: 2px solid #e3d9f2; display: flex; flex-direction: column; gap: 10px"><span style="font-family: Nunito, sans-serif; font-weight: 800; letter-spacing: .2em; font-size: 12px; color: #8a7aa6">STORE 01</span><span style="font-family: 'Gowun Batang', serif; font-size: 34px; font-weight: 700">Pondok Indah Mall 3</span><span>LG floor · Jakarta Selatan · 매일 10:00–22:00</span><a href="https://maps.google.com/?q=Soopsok+Sweets+Pondok+Indah+Mall+3" style="font-family: Nunito, sans-serif; font-weight: 800">길찾기 Directions →</a></div>
+<div style="padding: 36px; border-radius: 32px; border: 2px solid #e3d9f2; display: flex; flex-direction: column; gap: 10px"><span style="font-family: Nunito, sans-serif; font-weight: 800; letter-spacing: .2em; font-size: 12px; color: #8a7aa6">STORE 02</span><span style="font-family: 'Gowun Batang', serif; font-size: 34px; font-weight: 700">Plaza Senayan</span><span>LG floor · Jakarta Pusat · 매일 10:00–22:00</span><a href="https://maps.google.com/?q=Soopsok+Sweets+Plaza+Senayan" style="font-family: Nunito, sans-serif; font-weight: 800">길찾기 Directions →</a></div>
+</section>
+
+<footer style="background: #3f3350; color: #f3eefb; padding: 56px 24px">
+<div style="max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 28px; font-family: Nunito, sans-serif; font-size: 14px; line-height: 1.7">
+<img src="/_blob/5c035fc6eca6e76201e685a5cd4df4ec" alt="숲속의 과자점 · Make your day green" style="height: 72px; width: auto; display: block">
+<div style="display: flex; flex-direction: column; max-width: 32rem"><span>PT. SOOPSOK GROUP INTERNATIONAL</span><span>Jl. Terogong Raya No. 36, Kel. Cilandak Barat, Kec. Cilandak, Kota Adm. Jakarta Selatan, DKI Jakarta 12430, Indonesia</span><span><a href="tel:+6285211572101" style="color: #f3eefb">+62 852-1157-2101</a> · <a href="https://instagram.com/soopsok.sweets" style="color: #f3eefb">@soopsok.sweets</a></span></div>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":5200}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var B = '/_blob/';
+    var R = ['-2.5deg', '1.8deg', '-1.2deg', '2.4deg', '-1.8deg', '1.2deg'];
+    var KIND = ['latest', 'video', 'photo', 'video', 'photo', 'photo'];
+    var T = [
+      ['마카롱', 'Macaron', 'a8a38bd79dfa7c8ca0a63769957ca248', 'Strawberries and egg whites, piped by hand into little hearts. Flavours change with the season.'],
+      ['소금빵', 'Salt Bread', '11976ce5584b7cdd89d04bdcae68a0fe', 'Good butter rolled inside, a pinch of salt on top. Crackly outside, soft and milky inside.'],
+      ['두쫀쿠', 'Dubai Chewy Ball', '14d05cd7e6fdf28084fe55b2aa00a627', 'Toasted kataifi and pistachio cream inside a chewy cocoa shell. Slow made, worth every bite.'],
+      ['휘낭시에', 'Financier', 'ed50f36b2fd46c7d3dc1ff42f35fa956', 'Butter, flour and fresh egg yolk, baked into little bears and cats.'],
+      ['두바이 케이크', 'Dubai Cake', '6f7fa60a7421d30daecdc39ac88b3fd2', 'Chocolate sponge layered with pistachio kataifi cream. A spoon cake for sharing.'],
+      ['구름 찹쌀떡', 'Cloud Chew', '94d2f2a2c4214408d44e491434d92f9b', 'Fresh fruit and light cream, hugged by soft mochi and wrapped like a little gift.']
+    ];
+    var BADGE = 'position: absolute; left: 10px; top: 10px; display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 999px; font-family: Nunito, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: .08em; ';
+    var feed = T.map(function (t, i) {
+      var k = KIND[i], big = k === 'latest';
+      return {
+        img: B + t[2],
+        label: big ? 'Latest Instagram video, plays automatically' : (k === 'video' ? 'Instagram video' : 'Instagram photo'),
+        badge: big ? 'LATEST · AUTO PLAY' : (k === 'video' ? 'VIDEO' : 'PHOTO'),
+        badgeStyle: BADGE + (big ? 'background: #90579A; color: #ffffff' : (k === 'video' ? 'background: rgba(63,51,80,.78); color: #ffffff' : 'display: none')),
+        imgStyle: 'width: 100%; aspect-ratio: ' + (big ? '9 / 16' : '1 / 1') + '; object-fit: cover; display: block; border-radius: 3px',
+        polaStyle: '--r: ' + R[i] + '; flex: 0 0 auto; width: ' + (big ? '300px' : '240px') + '; align-self: center; padding: 12px 12px 14px; background: #ffffff; border-radius: 6px; box-shadow: 0 14px 30px rgba(63,51,80,.14); scroll-snap-align: center; display: block; text-decoration: none'
+      };
+    });
+    return {
+      feed: feed,
+      treats: T.map(function (t, i) {
+        return { ko: t[0], en: t[1], img: B + t[2], desc: t[3], num: '0' + (i + 1) + ' / 06',
+          polaStyle: '--r: ' + R[i] + '; flex: 0 0 auto; width: 240px; padding: 12px 12px 14px; background: #ffffff; border-radius: 6px; box-shadow: 0 14px 30px rgba(63,51,80,.14); scroll-snap-align: center; display: block; text-decoration: none',
+          cls: 'k-img k-i' + i,
+          blockStyle: 'view-timeline-name: --k' + i + '; min-height: 78vh; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 40px 0' };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>
