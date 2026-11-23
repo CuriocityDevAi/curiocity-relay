@@ -1,5 +1,12 @@
 # Hub Runner · 큐 자동 투입 (M1-1105-S / Y · 단일 프로세스)
 
+> **v7.8 (M1-1123-L)**: v7.7 기반 + 충돌 판정 기준 수정 + 로그 폭주 방지.
+> `autoRecoverDivergence()` 의 "push 안 된 커밋 파일" 기준 → "실제 충돌(conflicted) 파일" 기준으로 변경.
+> 허브 리포트(m*/·r0/)·queue/·ledger/ 가 ahead 커밋에 있어도 멈추지 않음.
+> 연속 merge 실패 3회 → 로그 1줄 요약 + 반복 억제.
+> 침범 감지 로그 파일 집합 바뀔 때만 1회 기록.
+> 설치 TARGET=v7.8 · FALLBACK=v7.7.
+>
 > **v7.5 (M0-1119-I)**: v7.4 기반 + CI 상태·기록 + suspect_done 기록-only.
 > 추가 요소(전부 `v7.4` 와 **추가-only**):
 > - **백그라운드 CI 조회**: tick 과 분리된 fire-and-forget 1개(동시 1개만 · 전체 마감 30초).
@@ -159,13 +166,13 @@ node scripts/hub-runner.mjs --hub m2          # 단일 허브 (디버그)
 curiocity-relay/
 ├─ queue/<hub>/<ID>.md              ← 오케 발부
 ├─ scripts/hub-runner.mjs           ← 레거시 `-p` 러너 (운영 사용 중단 · 설치 target 아님)
-├─ scripts/hub-runner-v7.5.mjs      ← **현 설치 target (M0-1119-I · v7.4 + CI 추가-only)**
-├─ scripts/hub-runner-v7.4.mjs      ← 직전 버전 (fallback target · Kyu 폴더 감시)
+├─ scripts/hub-runner-v7.8.mjs      ← **현 설치 target (M1-1123-L · 충돌 판정 수정 + 로그 억제)**
+├─ scripts/hub-runner-v7.7.mjs      ← 직전 버전 (fallback target)
 ├─ scripts/lib/ci-health.mjs        ← storeport+fork CI 조회 (job.labels+runner_name 분류 · 완료-run 범위)
 ├─ scripts/lib/ci-history.mjs       ← jsonl + today 요약 + cloud_cost_est_usd (M0-1119-I · WIB per-job)
 ├─ scripts/lib/ci-background.mjs    ← 동시 1개 · 30s 마감 fire-and-forget 러너
 ├─ scripts/lib/ci-suspect.mjs       ← suspect_done 기록-only 판정 (tmux/busy/blocked 조작 금지)
-├─ scripts/hub-runner-install.sh    ← launchd 설치 (TARGET=hub-runner-v7.5.mjs · 인자 없음 = 전체)
+├─ scripts/hub-runner-install.sh    ← launchd 설치 (TARGET=hub-runner-v7.8.mjs · 인자 없음 = 전체)
 ├─ scripts/hub-runner-uninstall.sh  ← launchd 제거 (단일 + 레거시 plist 전부)
 ├─ scripts/claim.mjs                ← 라운드 state 1 줄 + --blocked-by 지원 (M1-1105-S)
 ├─ status/claims/<ID>.json          ← 라운드 state (started/blocked/done/cancelled)
