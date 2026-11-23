@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T13:30:27.704Z",
+  "at": "2026-11-23T13:35:50.477Z",
   "pid": 52163,
   "runner": "v7.7",
   "poll_ms": 30000,
@@ -36,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.72,
-    "compressed_gb": 4.78,
+    "used_gb": 15.7,
+    "compressed_gb": 5.54,
     "swap_used_gb": 2.34,
     "pressure": "normal",
-    "at": "2026-11-23T13:30:20.562Z"
+    "at": "2026-11-23T13:35:18.920Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -48,7 +48,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T13:25:46.286Z",
+      "at": "2026-11-23T13:30:50.327Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -59,23 +59,21 @@
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 10,
+        "queued": 14,
         "queued_prs": [
           231,
-          235,
-          233,
           236
         ],
-        "oldest_queued_min": 66,
+        "oldest_queued_min": 72,
         "oldest_queued_pr": "fork:#231",
         "in_progress": [
           {
             "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-            "pr": "#231",
-            "pr_display": "fork:#231",
-            "job": "lint",
-            "step": "Run npm ci --legacy-peer-deps",
-            "running_min": 0,
+            "pr": "#235",
+            "pr_display": "fork:#235",
+            "job": "playwright",
+            "step": "Run Playwright harnesses",
+            "running_min": 5,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -93,7 +91,7 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 7,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 69,
@@ -120,21 +118,21 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 4878.500000000003
       },
-      "jsonl_added": 17,
+      "jsonl_added": 0,
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 66m (fork:#231)"
+          "detail": "oldest heavy queued 72m (fork:#231)"
         }
       ],
       "partial": true
     },
-    "took_ms": 20312,
-    "at": "2026-11-23T13:26:04.927Z"
+    "took_ms": 21557,
+    "at": "2026-11-23T13:31:10.947Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.7:claim 2026-11-23T13:29:10.833Z] M3-1123-I → started · runner-v7.7 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1123-I.json · {\"id\":\"M3-1123-I\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-23T13:29:10.944Z\",\"note\":\"runner-v7.7 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1123-I.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): queue/m0/M0-1123-G.md, queue/m3/M3-1123-I.md, status/ci/2026-11-23.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v7.7:claim 2026-11-23T13:29:15.089Z] M0-1123-G → started · runner-v7.7 · cmux-split · model=opus · source=queue-line · pane foreground=clau\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1123-G.json · {\"id\":\"M0-1123-G\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-23T13:29:15.178Z\",\"note\":\"runner-v7.7 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1123-G.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.7:git 2026-11-23T13:29:40.339Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:29:41.117Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:30:15.823Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:30:17.042Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:30:27.501Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m3/M3-1123-I-report.md@95f5c0c7",
+  "err_tail": "[hub-runner-v7.7:git 2026-11-23T13:30:49.473Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m3/M3-1123-I-report.md@95f5c0c7\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:30:49.475Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:31:24.975Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m3/M3-1123-I-report.md@95f5c0c7\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:31:24.976Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:31:56.838Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m3/M3-1123-I-report.md@95f5c0c7\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:31:56.840Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:32:30.686Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m3/M3-1123-I-report.md@95f5c0c7\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:32:30.688Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:33:02.556Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m3/M3-1123-I-report.md@95f5c0c7\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:33:02.557Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:33:36.578Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m3/M3-1123-I-report.md@95f5c0c7\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:33:36.579Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:34:08.481Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m3/M3-1123-I-report.md@95f5c0c7\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:34:08.482Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:34:42.509Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m3/M3-1123-I-report.md@95f5c0c7\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:34:42.511Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:35:14.441Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m3/M3-1123-I-report.md@95f5c0c7\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:35:14.442Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:35:48.784Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=m3/M3-1123-I-report.md@95f5c0c7\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:35:48.785Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
