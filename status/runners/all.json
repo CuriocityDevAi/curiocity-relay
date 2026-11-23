@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T08:46:49.662Z",
+  "at": "2026-11-23T08:50:48.215Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -13,7 +13,9 @@
       "last_activity": "2026-11-23T08:41:24.061Z"
     },
     "m1": {
-      "current": null,
+      "current": "M1-1123-D",
+      "started_at": "2026-11-23T08:50:46.831Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T07:22:29.416Z"
     },
     "m2": {
@@ -34,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.83,
-    "compressed_gb": 4.25,
+    "used_gb": 15.8,
+    "compressed_gb": 5.14,
     "swap_used_gb": 2.54,
     "pressure": "normal",
-    "at": "2026-11-23T08:46:17.735Z"
+    "at": "2026-11-23T08:50:14.592Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -46,29 +48,40 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T08:41:19.296Z",
+      "at": "2026-11-23T08:46:49.632Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 24,
+      "api_calls": 28,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 1,
+        "queued": 0,
         "queued_prs": [],
-        "oldest_queued_min": 1184,
-        "oldest_queued_pr": "storeport:main",
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
         "in_progress": []
       },
       "light": {
-        "queued": 22,
-        "oldest_queued_min": 879,
+        "queued": 24,
+        "oldest_queued_min": 1345,
         "oldest_queued_pr": "storeport:main",
         "in_progress": []
       },
-      "cloud_in_progress": [],
+      "cloud_in_progress": [
+        {
+          "repo": "CuriocityDevAi/storeport",
+          "pr": "#413",
+          "pr_display": "storeport:#413",
+          "job": "heavy-cloud",
+          "step": "Run ./.github/actions/heavy-steps",
+          "running_min": 7,
+          "runner": "GitHub Actions 1000007733",
+          "kind": "cloud"
+        }
+      ],
       "runners": null,
       "cloud_today": 0,
       "today": {
@@ -100,22 +113,14 @@
       "jsonl_added": 0,
       "alerts": [
         {
-          "type": "queue_wait",
-          "detail": "oldest heavy queued 1184m (storeport:main)"
-        },
-        {
-          "type": "runner_idle",
-          "detail": "1 queued but 0 in_progress for 1184m (storeport:main)"
-        },
-        {
           "type": "light_wait",
-          "detail": "oldest light queued 879m (storeport:main)"
+          "detail": "oldest light queued 1345m (storeport:main)"
         }
       ],
       "partial": true
     },
-    "took_ms": 21732,
-    "at": "2026-11-23T08:41:39.308Z"
+    "took_ms": 21663,
+    "at": "2026-11-23T08:47:09.401Z"
   },
   "gh_runner_alert": {
     "at": "2026-11-22T04:09:01.942Z",
