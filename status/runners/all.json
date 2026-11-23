@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T06:55:29.961Z",
+  "at": "2026-11-23T06:59:37.224Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -9,11 +9,15 @@
   "last_error_at": null,
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1123-B",
+      "started_at": "2026-11-23T06:59:33.013Z",
+      "model": "opus",
       "last_activity": "2026-11-23T04:00:22.954Z"
     },
     "m1": {
-      "current": null,
+      "current": "M1-1123-B",
+      "started_at": "2026-11-23T06:59:34.039Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T06:46:24.138Z"
     },
     "m2": {
@@ -23,7 +27,9 @@
       "last_activity": "2026-11-23T06:14:15.106Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1123-A",
+      "started_at": "2026-11-23T06:59:34.973Z",
+      "model": "sonnet",
       "last_activity": "2026-11-21T12:33:58.097Z"
     },
     "r0": {
@@ -36,11 +42,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.74,
-    "compressed_gb": 4.98,
-    "swap_used_gb": 2.12,
+    "used_gb": 15.81,
+    "compressed_gb": 4.44,
+    "swap_used_gb": 2.49,
     "pressure": "normal",
-    "at": "2026-11-23T06:54:55.141Z"
+    "at": "2026-11-23T06:59:00.648Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -48,14 +54,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T06:53:45.826Z",
+      "at": "2026-11-23T06:58:57.004Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 14,
+      "api_calls": 20,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -63,28 +69,39 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "master",
+            "pr_display": "fork:master",
+            "job": "playwright",
+            "step": "Install deps",
+            "running_min": 0,
+            "runner": "curiocity-mac-fork",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
-        "queued": 6,
-        "oldest_queued_min": 1232,
+        "queued": 7,
+        "oldest_queued_min": 1237,
         "oldest_queued_pr": "storeport:main",
         "in_progress": []
       },
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 1,
-        "heavy_busy": 0,
+        "heavy_busy": 1,
         "light_online": 0
       },
-      "cloud_today": 0,
+      "cloud_today": 3,
       "today": {
         "mac-heavy": {
-          "jobs": 0,
-          "avg_wait_min": 0,
-          "avg_run_min": 0,
-          "success_rate": null,
-          "run_min_total": 0
+          "jobs": 2,
+          "avg_wait_min": 1,
+          "avg_run_min": 0.6,
+          "success_rate": 100,
+          "run_min_total": 1.2
         },
         "mac-light": {
           "jobs": 3,
@@ -94,26 +111,27 @@
           "run_min_total": 4320
         },
         "cloud": {
-          "jobs": 2,
+          "jobs": 5,
           "avg_wait_min": 0,
-          "avg_run_min": 0.5,
+          "avg_run_min": 0.2,
           "success_rate": 100,
-          "run_min_total": 0.9
+          "run_min_total": 1.2000000000000002
         },
-        "cloud_cost_est_usd": 0.016,
+        "cloud_cost_est_usd": 0.04,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 4320
       },
-      "jsonl_added": 0,
+      "jsonl_added": 5,
       "alerts": [
         {
           "type": "light_wait",
-          "detail": "oldest light queued 1232m (storeport:main)"
+          "detail": "oldest light queued 1237m (storeport:main)"
         }
-      ]
+      ],
+      "partial": true
     },
-    "took_ms": 11362,
-    "at": "2026-11-23T06:53:54.663Z"
+    "took_ms": 16609,
+    "at": "2026-11-23T06:59:11.421Z"
   },
   "gh_runner_alert": {
     "at": "2026-11-22T04:09:01.942Z",
