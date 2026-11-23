@@ -1,12 +1,12 @@
 {
-  "at": "2026-11-23T14:45:48.994Z",
+  "at": "2026-11-23T14:48:03.897Z",
   "pid": 52163,
   "runner": "v7.7",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
   "last_error": "blocked: runner-folder change pending Kyu install (m2/M2-1123-C-report.md)",
-  "last_error_at": "2026-11-23T14:45:46.122Z",
+  "last_error_at": "2026-11-23T14:48:01.661Z",
   "hubs": {
     "m0": {
       "current": null,
@@ -36,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.8,
-    "compressed_gb": 4.6,
+    "used_gb": 15.53,
+    "compressed_gb": 4.34,
     "swap_used_gb": 2.46,
     "pressure": "normal",
-    "at": "2026-11-23T14:45:14.327Z"
+    "at": "2026-11-23T14:47:31.696Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -125,7 +125,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.7:git 2026-11-23T14:44:00.971Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:44:01.993Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:44:33.715Z] 러너 폴더 침범 감지 · files=queue/r0/R0-1123-O.md,m2/M2-1123-C-report.md · guess_hub=r0\n[hub-runner-v7.7:git 2026-11-23T14:44:33.715Z] blocked: runner-folder change pending Kyu install · files=queue/r0/R0-1123-O.md,m2/M2-1123-C-report.md\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:44:34.949Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:45:11.560Z] 러너 폴더 침범 감지 · files=queue/r0/R0-1123-O.md,m2/M2-1123-C-report.md · guess_hub=r0\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:45:12.349Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:45:41.385Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=queue/r0/R0-1123-O.md@12e52b8e,r0/R0-1123-N-report.md@12e52b8e\n[hub-runner-v7.7:claim 2026-11-23T14:45:41.635Z] R0-1123-N → done · runner-v7.7 cmux-split · 리포트 확인 r0/R0-1123-N-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1123-N.json · {\"id\":\"R0-1123-N\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-23T14:45:41.724Z\",\"note\":\"runner-v7.7 cmux-split · 리포트 확인 r0/R0-1123-N-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1123-N.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v7.7:git 2026-11-23T14:45:46.122Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:git 2026-11-23T14:45:46.122Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:45:46.826Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:r0 2026-11-23T14:45:47.665Z] pick · R0-1123-O · model=sonnet · display=cmux-split",
+  "err_tail": "[hub-runner-v7.7:git 2026-11-23T14:45:46.122Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:git 2026-11-23T14:45:46.122Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:45:46.826Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:r0 2026-11-23T14:45:47.665Z] pick · R0-1123-O · model=sonnet · display=cmux-split\n[hub-runner-v7.7:claim 2026-11-23T14:45:51.439Z] R0-1123-O → started · runner-v7.7 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1123-O.json · {\"id\":\"R0-1123-O\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-23T14:45:51.546Z\",\"note\":\"runner-v7.7 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1123-O.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.7:git 2026-11-23T14:46:21.387Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:46:22.185Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:46:53.993Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:46:54.714Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:47:29.091Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:47:29.786Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:48:01.661Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,r0/R0-1123-O-report.md · guess_hub=m2\n[hub-runner-v7.7:git 2026-11-23T14:48:01.661Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1123-O-report.md\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:48:02.470Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
