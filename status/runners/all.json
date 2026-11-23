@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T17:37:36.458Z",
+  "at": "2026-11-23T17:39:53.808Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -17,7 +17,9 @@
       "last_activity": "2026-11-23T15:58:34.103Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1123-L",
+      "started_at": "2026-11-23T17:39:52.312Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T17:32:20.929Z"
     },
     "m3": {
@@ -34,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.45,
-    "compressed_gb": 3.6,
+    "used_gb": 14.06,
+    "compressed_gb": 3.58,
     "swap_used_gb": 3.52,
     "pressure": "normal",
-    "at": "2026-11-23T17:37:04.669Z"
+    "at": "2026-11-23T17:39:20.162Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -122,7 +124,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": 1,
-  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T17:30:50.898Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:31:24.384Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:32:02.190Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:claim 2026-11-23T17:32:22.060Z] M2-1123-K → done · runner-v7.8 cmux-split · 리포트 확인 m2/M2-1123-K-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1123-K.json · {\"id\":\"M2-1123-K\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-23T17:32:22.147Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m2/M2-1123-K-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1123-K.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:32:34.619Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:33:09.550Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:33:41.476Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:34:15.650Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:34:47.589Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:35:21.734Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:35:53.705Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:36:27.803Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:37:01.532Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:37:35.572Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:32:34.619Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:33:09.550Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:33:41.476Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:34:15.650Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:34:47.589Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:35:21.734Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:35:53.705Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:36:27.803Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:37:01.532Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:37:35.572Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:38:09.733Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:38:45.038Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:39:17.011Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:39:51.444Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:m2 2026-11-23T17:39:52.312Z] pick · M2-1123-L · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
