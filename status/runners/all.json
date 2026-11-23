@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T15:05:45.656Z",
+  "at": "2026-11-23T15:06:33.161Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -21,10 +21,8 @@
       "last_activity": null
     },
     "m2": {
-      "current": "M2-1123-H",
-      "started_at": "2026-11-23T15:02:09.412Z",
-      "model": "sonnet",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-23T15:06:32.093Z"
     },
     "m3": {
       "current": "M3-1123-K",
@@ -42,11 +40,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.31,
-    "compressed_gb": 5.74,
+    "used_gb": 15.69,
+    "compressed_gb": 4.76,
     "swap_used_gb": 3.01,
     "pressure": "normal",
-    "at": "2026-11-23T15:05:12.944Z"
+    "at": "2026-11-23T15:06:25.041Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -130,7 +128,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T14:59:44.079Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:00:18.370Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:00:54.766Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:01:30.539Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:02:06.547Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:m2 2026-11-23T15:02:09.411Z] pick · M2-1123-H · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-23T15:02:11.904Z] M2-1123-H → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1123-H.json · {\"id\":\"M2-1123-H\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-23T15:02:11.998Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1123-H.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): queue/m2/M2-1123-H.md, m2/M2-1123-C-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/2)\rerror: could not apply 53f41529f... claim(m1): M1-1123-M started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:02:42.128Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:03:19.045Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:03:53.625Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:04:30.993Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:05:05.683Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:05:42.333Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T15:00:18.370Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:00:54.766Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:01:30.539Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:02:06.547Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:m2 2026-11-23T15:02:09.411Z] pick · M2-1123-H · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-23T15:02:11.904Z] M2-1123-H → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1123-H.json · {\"id\":\"M2-1123-H\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-23T15:02:11.998Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1123-H.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): queue/m2/M2-1123-H.md, m2/M2-1123-C-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/2)\rerror: could not apply 53f41529f... claim(m1): M1-1123-M started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:02:42.128Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:03:19.045Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:03:53.625Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:04:30.993Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:05:05.683Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:05:42.333Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:06:16.621Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
