@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T06:19:39.167Z",
+  "at": "2026-11-23T06:24:53.814Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.91,
-    "compressed_gb": 5.11,
+    "used_gb": 15.74,
+    "compressed_gb": 5.57,
     "swap_used_gb": 1.75,
     "pressure": "normal",
-    "at": "2026-11-23T06:19:06.250Z"
+    "at": "2026-11-23T06:24:20.483Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -46,7 +46,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T06:17:22.674Z",
+      "at": "2026-11-23T06:22:36.437Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -64,8 +64,8 @@
         "in_progress": []
       },
       "light": {
-        "queued": 7,
-        "oldest_queued_min": 1440,
+        "queued": 6,
+        "oldest_queued_min": 1201,
         "oldest_queued_pr": "storeport:main",
         "in_progress": []
       },
@@ -85,11 +85,11 @@
           "run_min_total": 0
         },
         "mac-light": {
-          "jobs": 2,
+          "jobs": 3,
           "avg_wait_min": 0,
           "avg_run_min": 1440,
           "success_rate": 0,
-          "run_min_total": 2880
+          "run_min_total": 4320
         },
         "cloud": {
           "jobs": 2,
@@ -100,18 +100,18 @@
         },
         "cloud_cost_est_usd": 0.016,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 2880
+        "wasted_min": 4320
       },
-      "jsonl_added": 0,
+      "jsonl_added": 1,
       "alerts": [
         {
           "type": "light_wait",
-          "detail": "oldest light queued 1440m (storeport:main)"
+          "detail": "oldest light queued 1201m (storeport:main)"
         }
       ]
     },
-    "took_ms": 12826,
-    "at": "2026-11-23T06:17:32.843Z"
+    "took_ms": 14993,
+    "at": "2026-11-23T06:22:48.114Z"
   },
   "gh_runner_alert": {
     "at": "2026-11-22T04:09:01.942Z",
