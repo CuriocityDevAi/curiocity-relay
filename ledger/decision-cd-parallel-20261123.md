@@ -74,3 +74,5 @@ E. "takeaway, pre-order, delivery 버튼이 너무 세로 길이가 커. 내가 
 ## 12. CI 러너 (Kyu 11-23 20:35·20:36)
 - 20:35 "로컬 CI 처리기의 갯수를 대형1개 소형1개씩 늘리는건 어떄? 그러면 메모리를 많이먹ㄴ?" → 오케 권장: 포크 light 1대만 추가(16GB · 큰 검사 동시 실행은 오히려 느려짐) · 대형 추가는 Mac mini 도착 후
 - 20:36 "가벼운 검사 러너를 추가 하나더 추가하자." → Kyu 설치 완료 20:39: `~/actions-runner-fork-light` · 이름·라벨 `curiocity-mac-fork-light` · v2.338.2 · launchd KeepAlive · 라우팅 = M2-1123-F
+- 22:05 Kyu: 클라우드 한도는 하루 5건 유지("아니야 한도는 하루 5건으로 하고")
+- 22:05~22:10 아이맥(M1/8GB · 집 · 거의 미사용) CI 전용 러너 활용 논의 → Kyu 22:10 "일단 맥북의 로컬 ci 부터 정착시키고 아이맥 세팅에 들어가자" · 순서: 포크 heavy(playwright, workers 2) → storeport heavy · 원격 관리 = Tailscale+SSH · 효과는 metrics.md 발부→머지 리드타임 전후로 측정
