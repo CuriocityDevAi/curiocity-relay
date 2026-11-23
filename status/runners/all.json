@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T16:20:53.059Z",
+  "at": "2026-11-23T16:22:43.588Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -21,11 +21,15 @@
       "last_activity": "2026-11-23T15:52:35.167Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1123-M",
+      "started_at": "2026-11-23T16:22:40.713Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T16:20:52.047Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1123-S",
+      "started_at": "2026-11-23T16:22:41.761Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T16:14:05.687Z"
     }
   },
@@ -34,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.8,
-    "compressed_gb": 3.93,
+    "used_gb": 15.12,
+    "compressed_gb": 3.44,
     "swap_used_gb": 3.44,
     "pressure": "normal",
-    "at": "2026-11-23T16:20:30.098Z"
+    "at": "2026-11-23T16:22:08.277Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -122,7 +126,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T16:13:38.094Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:claim 2026-11-23T16:14:08.258Z] R0-1123-R → done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1123-R-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1123-R.json · {\"id\":\"R0-1123-R\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-23T16:14:08.346Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 r0/R0-1123-R-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1123-R.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:14:13.144Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:14:45.610Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:15:20.554Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:15:52.973Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:16:27.978Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:17:00.585Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:17:35.522Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:18:08.190Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:18:42.862Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:19:15.259Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:19:53.459Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:20:26.011Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T16:17:00.585Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:17:35.522Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:18:08.190Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:18:42.862Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:19:15.259Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:19:53.459Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:20:26.011Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:claim 2026-11-23T16:20:53.101Z] M3-1123-L → done · runner-v7.8 cmux-split · 리포트 확인 m3/M3-1123-L-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1123-L.json · {\"id\":\"M3-1123-L\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-23T16:20:53.190Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m3/M3-1123-L-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1123-L.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:21:00.832Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:21:32.826Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:22:07.067Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:22:39.844Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:m3 2026-11-23T16:22:40.712Z] pick · M3-1123-M · model=sonnet · display=cmux-split\n[hub-runner-v7.8:r0 2026-11-23T16:22:41.761Z] pick · R0-1123-S · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
