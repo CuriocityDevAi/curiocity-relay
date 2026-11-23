@@ -1,12 +1,12 @@
 {
-  "at": "2026-11-23T09:07:20.270Z",
+  "at": "2026-11-23T09:10:47.810Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
   "last_error": "blocked: runner-folder change pending Kyu install (m2/M2-1123-C-report.md)",
-  "last_error_at": "2026-11-23T06:59:47.219Z",
+  "last_error_at": "2026-11-23T09:10:44.773Z",
   "hubs": {
     "m0": {
       "current": null,
@@ -38,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.88,
-    "compressed_gb": 5.2,
-    "swap_used_gb": 2.46,
+    "used_gb": 15.61,
+    "compressed_gb": 5.46,
+    "swap_used_gb": 2.44,
     "pressure": "normal",
-    "at": "2026-11-23T09:06:46.883Z"
+    "at": "2026-11-23T09:10:15.155Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -50,14 +50,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T09:02:50.412Z",
+      "at": "2026-11-23T09:07:53.787Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 29,
+      "api_calls": 20,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -68,9 +68,9 @@
         "in_progress": []
       },
       "light": {
-        "queued": 6,
-        "oldest_queued_min": 1361,
-        "oldest_queued_pr": "storeport:main",
+        "queued": 0,
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
         "in_progress": []
       },
       "cloud_in_progress": [
@@ -80,7 +80,7 @@
           "pr_display": "storeport:#413",
           "job": "heavy-cloud",
           "step": "Run ./.github/actions/heavy-steps",
-          "running_min": 9,
+          "running_min": 14,
           "runner": "GitHub Actions 1000007742",
           "kind": "cloud"
         },
@@ -90,54 +90,49 @@
           "pr_display": "fork:#228",
           "job": "playwright",
           "step": "Run Playwright harnesses",
-          "running_min": 6,
+          "running_min": 11,
           "runner": "GitHub Actions 1000007743",
           "kind": "cloud"
         }
       ],
       "runners": {
-        "heavy_online": 1,
+        "heavy_online": 2,
         "heavy_busy": 0,
-        "light_online": 0
+        "light_online": 1
       },
-      "cloud_today": 8,
+      "cloud_today": 6,
       "today": {
         "mac-heavy": {
-          "jobs": 34,
+          "jobs": 36,
           "avg_wait_min": 0.6,
-          "avg_run_min": 1.5,
-          "success_rate": 64.7,
+          "avg_run_min": 1.4,
+          "success_rate": 61.1,
           "run_min_total": 49.39999999999999
         },
         "mac-light": {
-          "jobs": 26,
-          "avg_wait_min": 0,
-          "avg_run_min": 180.5,
-          "success_rate": 0,
-          "run_min_total": 4693.400000000004
+          "jobs": 36,
+          "avg_wait_min": 121.4,
+          "avg_run_min": 131.1,
+          "success_rate": 11.1,
+          "run_min_total": 4720.800000000002
         },
         "cloud": {
-          "jobs": 50,
+          "jobs": 56,
           "avg_wait_min": 0,
-          "avg_run_min": 1.1,
-          "success_rate": 70,
-          "run_min_total": 57.300000000000026
+          "avg_run_min": 1.3,
+          "success_rate": 69.6,
+          "run_min_total": 70.70000000000003
         },
-        "cloud_cost_est_usd": 0.68,
+        "cloud_cost_est_usd": 0.816,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 4718.700000000004
+        "wasted_min": 4757.800000000003
       },
-      "jsonl_added": 24,
-      "alerts": [
-        {
-          "type": "light_wait",
-          "detail": "oldest light queued 1361m (storeport:main)"
-        }
-      ],
+      "jsonl_added": 18,
+      "alerts": [],
       "partial": true
     },
-    "took_ms": 21759,
-    "at": "2026-11-23T09:03:10.429Z"
+    "took_ms": 23227,
+    "at": "2026-11-23T09:08:14.618Z"
   },
   "gh_runner_alert": {
     "at": "2026-11-22T04:09:01.942Z",
