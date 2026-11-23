@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T14:48:14.679Z",
+  "at": "2026-11-23T14:53:36.379Z",
   "pid": 52163,
   "runner": "v7.7",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.63,
-    "compressed_gb": 4.31,
-    "swap_used_gb": 2.46,
+    "used_gb": 15.61,
+    "compressed_gb": 4.11,
+    "swap_used_gb": 2.45,
     "pressure": "normal",
-    "at": "2026-11-23T14:48:07.518Z"
+    "at": "2026-11-23T14:53:04.208Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -46,23 +46,24 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T14:44:35.927Z",
+      "at": "2026-11-23T14:49:44.324Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 18,
+      "api_calls": 27,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 14,
+        "queued": 23,
         "queued_prs": [
+          237,
           239,
           236
         ],
-        "oldest_queued_min": 53,
+        "oldest_queued_min": 86,
         "oldest_queued_pr": "fork:master",
         "in_progress": []
       },
@@ -109,21 +110,21 @@
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 53m (fork:master)"
+          "detail": "oldest heavy queued 86m (fork:master)"
         },
         {
           "type": "runner_idle",
-          "detail": "14 queued but 0 in_progress for 53m (fork:master)"
+          "detail": "23 queued but 0 in_progress for 86m (fork:master)"
         }
       ],
       "partial": true
     },
-    "took_ms": 22350,
-    "at": "2026-11-23T14:44:55.938Z"
+    "took_ms": 21723,
+    "at": "2026-11-23T14:50:04.335Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.7:gh-watchdog 2026-11-23T14:45:46.826Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:r0 2026-11-23T14:45:47.665Z] pick · R0-1123-O · model=sonnet · display=cmux-split\n[hub-runner-v7.7:claim 2026-11-23T14:45:51.439Z] R0-1123-O → started · runner-v7.7 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1123-O.json · {\"id\":\"R0-1123-O\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-23T14:45:51.546Z\",\"note\":\"runner-v7.7 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1123-O.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.7:git 2026-11-23T14:46:21.387Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:46:22.185Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:46:53.993Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:46:54.714Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:47:29.091Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:47:29.786Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:48:01.661Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,r0/R0-1123-O-report.md · guess_hub=m2\n[hub-runner-v7.7:git 2026-11-23T14:48:01.661Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1123-O-report.md\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:48:02.470Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:48:13.688Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:git 2026-11-23T14:48:13.689Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md",
+  "err_tail": "[hub-runner-v7.7:git 2026-11-23T14:48:36.536Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:48:37.436Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:49:08.539Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:49:09.311Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:49:42.739Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:49:43.490Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:50:16.046Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:50:16.938Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:50:50.183Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:50:51.051Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:51:22.161Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:51:22.911Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:51:56.256Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:51:57.106Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:52:28.242Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:52:28.966Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:53:02.452Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:53:03.234Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:53:34.354Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:53:35.201Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
