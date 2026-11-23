@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T15:52:36.125Z",
+  "at": "2026-11-23T15:58:13.432Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -38,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.43,
-    "compressed_gb": 4.3,
+    "used_gb": 14.47,
+    "compressed_gb": 4.62,
     "swap_used_gb": 3.44,
     "pressure": "normal",
-    "at": "2026-11-23T15:52:28.325Z"
+    "at": "2026-11-23T15:57:41.526Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -50,20 +50,20 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T15:48:14.530Z",
+      "at": "2026-11-23T15:53:34.906Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 17,
+      "api_calls": 22,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 13,
+        "queued": 18,
         "queued_prs": [],
-        "oldest_queued_min": 36,
+        "oldest_queued_min": 53,
         "oldest_queued_pr": "fork:master",
         "in_progress": []
       },
@@ -110,21 +110,21 @@
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 36m (fork:master)"
+          "detail": "oldest heavy queued 53m (fork:master)"
         },
         {
           "type": "runner_idle",
-          "detail": "13 queued but 0 in_progress for 36m (fork:master)"
+          "detail": "18 queued but 0 in_progress for 53m (fork:master)"
         }
       ],
       "partial": true
     },
-    "took_ms": 22850,
-    "at": "2026-11-23T15:48:34.539Z"
+    "took_ms": 21598,
+    "at": "2026-11-23T15:53:54.913Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.8:m2 2026-11-23T15:45:52.732Z] pick · M2-1123-I · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-23T15:45:59.195Z] M2-1123-I → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1123-I.json · {\"id\":\"M2-1123-I\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-23T15:45:59.291Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1123-I.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): queue/m2/M2-1123-I.md, m2/M2-1123-C-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:46:28.768Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:47:02.682Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:47:38.657Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:48:13.681Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:48:50.745Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:49:25.469Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:50:02.583Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:50:36.564Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:51:12.796Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:51:48.944Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:52:24.949Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T15:51:12.796Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:51:48.944Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:52:24.949Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:claim 2026-11-23T15:52:36.168Z] M2-1123-I → done · runner-v7.8 cmux-split · 리포트 확인 m2/M2-1123-I-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1123-I.json · {\"id\":\"M2-1123-I\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-23T15:52:36.251Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m2/M2-1123-I-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1123-I.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:52:58.612Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:53:34.103Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:54:08.656Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:54:45.112Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:55:18.153Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:55:53.601Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:56:26.714Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:57:02.485Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:57:35.782Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:58:11.374Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
