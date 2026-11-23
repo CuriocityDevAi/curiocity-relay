@@ -4,6 +4,16 @@
 
 결정 정본 파일(원문 보존 · 유지): [decision-next-big-20261113](decision-next-big-20261113.md) · [decision-payment-icons-qris-sim-20261113](decision-payment-icons-qris-sim-20261113.md) · [decision-qris-20261112](decision-qris-20261112.md) · [decision-refund-nav-20261112](decision-refund-nav-20261112.md) · [decision-split-delivery-test-20261112](decision-split-delivery-test-20261112.md) · [decision-delivery-ui-20261110](decision-delivery-ui-20261110.md) · [decision-p6-20261110](decision-p6-20261110.md) · [decision-p6-split-20261111](decision-p6-split-20261111.md) · [decision-checkout-ui-20261111](decision-checkout-ui-20261111.md) · [decision-p6-test-20261111](decision-p6-test-20261111.md) · 장치 사건 [device-incidents](device-incidents.md) · 지표 [metrics](metrics.md)
 
+## 11-24 00:55 마감 (handoff-20261124 · 이 절이 최신)
+
+| 항목 | 허브 | 상태 | 이유 / 막힌 것 |
+|---|---|---|---|
+| 아침 실기 1부(어제 실패 재확인)·2부(규칙 B) | Kyu | 대기 | handoff-20261124 표 |
+| 아이맥 CI 전용 러너 | Kyu ↔ 오케 | 대기 | 맥북 CI 정착 후 |
+| 감시 화면 결함 3종 재확인 | Kyu 맥 → 오케 | 대기 | 오케 컨테이너 Actions API 차이 의심 |
+| 사이트 Business Profile · apex→www · Search Console | Kyu | 대기 | — |
+| ✅ 11-23 머지 | — | fork #231 #233~#245 · storeport #414 | — |
+
 ## 11-17 밤 마감 (handoff-20261117 · 이 절이 최신)
 
 | 항목 | 허브 | 상태 | 이유 / 막힌 것 |
