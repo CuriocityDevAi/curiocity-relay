@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T09:37:34.519Z",
+  "at": "2026-11-23T09:43:07.119Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.88,
-    "compressed_gb": 5.23,
-    "swap_used_gb": 2.41,
+    "used_gb": 15.92,
+    "compressed_gb": 4.71,
+    "swap_used_gb": 2.4,
     "pressure": "normal",
-    "at": "2026-11-23T09:37:02.534Z"
+    "at": "2026-11-23T09:42:35.387Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -46,20 +46,20 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T09:33:10.363Z",
+      "at": "2026-11-23T09:38:43.482Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 12,
+      "api_calls": 10,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
         "queued": 1,
         "queued_prs": [],
-        "oldest_queued_min": 8,
+        "oldest_queued_min": 13,
         "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
@@ -68,7 +68,7 @@
             "pr_display": "fork:master",
             "job": "playwright",
             "step": "Run Playwright harnesses",
-            "running_min": 8,
+            "running_min": 13,
             "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
@@ -86,7 +86,7 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 41,
@@ -113,11 +113,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 4795.600000000003
       },
-      "jsonl_added": 6,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 10009,
-    "at": "2026-11-23T09:33:18.384Z"
+    "took_ms": 7956,
+    "at": "2026-11-23T09:38:49.847Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 2
