@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T16:48:41.038Z",
+  "at": "2026-11-23T16:53:47.227Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -36,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.26,
-    "compressed_gb": 3.25,
+    "used_gb": 15.13,
+    "compressed_gb": 2.98,
     "swap_used_gb": 3.56,
     "pressure": "normal",
-    "at": "2026-11-23T16:48:08.761Z"
+    "at": "2026-11-23T16:53:15.106Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -48,14 +48,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T16:45:15.482Z",
+      "at": "2026-11-23T16:50:22.632Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 20,
+      "api_calls": 17,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -77,19 +77,9 @@
           "pr": "#245",
           "pr_display": "fork:#245",
           "job": "playwright",
-          "step": "Expo export web",
-          "running_min": 1,
+          "step": "Post Cache Playwright browsers",
+          "running_min": 6,
           "runner": "GitHub Actions 1000007842",
-          "kind": "cloud"
-        },
-        {
-          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-          "pr": "#244",
-          "pr_display": "fork:#244",
-          "job": "playwright",
-          "step": "Run Playwright harnesses",
-          "running_min": 3,
-          "runner": null,
           "kind": "cloud"
         }
       ],
@@ -101,11 +91,11 @@
       "cloud_today": 6,
       "today": {
         "mac-heavy": {
-          "jobs": 126,
-          "avg_wait_min": 22.7,
+          "jobs": 137,
+          "avg_wait_min": 22.5,
           "avg_run_min": 5.1,
-          "success_rate": 66.7,
-          "run_min_total": 647.9999999999994
+          "success_rate": 63.5,
+          "run_min_total": 702.7999999999995
         },
         "mac-light": {
           "jobs": 59,
@@ -115,26 +105,26 @@
           "run_min_total": 4740.000000000004
         },
         "cloud": {
-          "jobs": 129,
+          "jobs": 135,
           "avg_wait_min": -0.5,
           "avg_run_min": 0,
-          "success_rate": 59.7,
-          "run_min_total": 0.4999999999999618
+          "success_rate": 60,
+          "run_min_total": 4.599999999999961
         },
-        "cloud_cost_est_usd": 0.504,
+        "cloud_cost_est_usd": 0.56,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 5265.800000000003
+        "wasted_min": 5318.600000000002
       },
-      "jsonl_added": 20,
+      "jsonl_added": 17,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 21039,
-    "at": "2026-11-23T16:45:34.708Z"
+    "took_ms": 21773,
+    "at": "2026-11-23T16:50:42.677Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:38:24.314Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:38:56.721Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:39:31.539Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:40:04.332Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:40:41.233Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:41:13.827Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:41:48.905Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:42:21.487Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:42:56.491Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:43:29.042Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:44:07.225Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:44:39.704Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:45:14.630Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:45:48.728Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:46:23.805Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:46:56.265Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:47:32.204Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:48:04.781Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:48:39.561Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T16:42:56.491Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:43:29.042Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:44:07.225Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:44:39.704Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:45:14.630Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:45:48.728Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:46:23.805Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:46:56.265Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:47:32.204Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:48:04.781Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:48:39.561Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:49:14.475Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:49:49.326Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:50:21.780Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:50:58.258Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:51:30.719Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:52:05.343Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:52:38.080Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:53:13.351Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:53:45.761Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
