@@ -47,3 +47,18 @@
 - Kyu 원문: "난 너가 러너랑 CI 를 계속 모니터링 했으면 좋겠어. 너가 못하는거면, 내가 할테니까, 러너 모니터링 화면을 만들어줘."
 - 결정(오케): 둘 다 한다 — ① Kyu 용 터미널 화면(ci-watch 확장: 허브 러너 칸 + 러너 오류 로그 꼬리 + CI 러너 online/offline) ② 오케가 Mac 권한 없이 볼 수 있게 허브 러너가 heartbeat 때 launchd.err.log 꼬리 20줄 · gh 러너 상태를 relay status 로 push → 오케 감시 때 매번 heartbeat 나이(10분+ = 경보) · 오류 로그 · CI 러너 상태 확인
 - 원인 기록: storeport Mac CI 러너 2대 11-21 23:45Z TaskAgentSessionExpiredException · launchd plist KeepAlive 없음 → 미재시작 · 11-23 16:03 kickstart 후에도 offline
+
+## 11. 1차 실기 결과 (Kyu 11-23 16:54 · iPad · 원문 그대로)
+1. 정상
+2. "검은바가 아니라 흰바여서 존재감이 없음. view cart 를 누르면 카드가 올라오다가 말아."
+3. "칩을 길게 누르니 버리기 확인이 뜨는데, 버리기 확인뜰떄, 진동같은것을 추가할수 있을까? 너무 존재감이 떨어져 … Cancel this order? 이라고만 떠서, 내가 여러개의 칩을 보는경우 cancel 하려고 하는 Order가 Cancel 대상인지 여부가 불명확해. … Cancel this order #1 ? 이렇게 숫자를 보여주고, 추가로 간단히 어떤 상품이 cart 에 들어있는지를 명시해줘야"
+4. "미리보기를 누르니까, Route page 라고만 미리보기가 떴어.(버그)"
+5. 테스트 불가능 (미리보기 고장)
+6. "Payment Successful 화면에서 영수증이 보여지는데, 영수증 아래로 scroll 이 안되. 화면이 멈춰버림. Next customer 이라는 버튼은 먹어서, 그걸 눌러서, Sell 화면으로 돌아왔어."
+추가:
+A. "Sell 화면에서 Pickup Close 버튼이 너무 크게 있는데 … 하루에 한번 쓰는 기능일텐데 … Open Soopsok Store (Jakarta) 라고 한줄 써있는데, 그 줄에서 ... 버튼을 누르면 Pickup / Close 옵션이 나오도록 바꿔보자. 혹시 더 좋은아이디어있으면 알려줘."
+B. "Search Products 검색칸 오른쪽에 바코드 버튼 … 눌러도 뭘하는 버튼인지 모르겠어. 일단 QR 스캐너 기능이 켜지진 않음."
+C. "카트 1번을 이미 pay 했는데 아직도 카트가 남아있어. 이거 삭제되어야하는데, 남아있는게 버그야."
+D. "선택된 주문칩이 가장 앞으로 오게 되어있어 … 너무 헛갈려. 차라리 #1 (회색), #2(활성화), #3(회색) 이렇게 보이는게 더욱 직관적 … #2를 결제를 완료하면, #2는 칩에서 사라져야 … 다시 Sell 로 오면 그때는 #1, #2 이렇게 … #뒤에 숫자는, 현재 유효한 칩중에서 가장 먼저 생긴게 1번이고 그 다음에 생긴게 2번으로"
+E. "takeaway, pre-order, delivery 버튼이 너무 세로 길이가 커. 내가 그랬잖아. 기본적으로 모든버튼은, Pay 버튼과 같은 규격(최소한 세로길이) 이여야 한다고 … Pre-order 밑에 DP today 라는 txt … 없에줘 … Delivery 도 마찬가지야. Addr. on Checkout 도 없에줘." 🔴(버튼 높이 규격 재언급)
+발부: M3-1123-F(2·3·A·B·C·D) · M1-1123-F(4 미러 Route Page) · M0-1123-E(6·E)
