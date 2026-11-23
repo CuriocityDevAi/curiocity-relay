@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T11:50:08.679Z",
+  "at": "2026-11-23T11:55:22.219Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -45,19 +45,79 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.5,
-    "compressed_gb": 4.6,
+    "used_gb": 15.71,
+    "compressed_gb": 4.69,
     "swap_used_gb": 2.36,
     "pressure": "normal",
-    "at": "2026-11-23T11:49:33.776Z"
+    "at": "2026-11-23T11:54:49.968Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
     "used_gb": 15.94
   },
   "ci": {
-    "error": "deadline 30000ms",
-    "at": "2026-11-23T11:41:47.366Z"
+    "data": {
+      "at": "2026-11-23T11:50:05.355Z",
+      "repos_scanned": [
+        "CuriocityDevAi/storeport"
+      ],
+      "repos_failed": [],
+      "repos_skipped": [],
+      "api_calls": 7,
+      "api_budget": 40,
+      "api_overflow": false,
+      "heavy": {
+        "queued": 0,
+        "queued_prs": [],
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
+      },
+      "light": {
+        "queued": 0,
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
+      },
+      "cloud_in_progress": [],
+      "runners": {
+        "heavy_online": 1,
+        "heavy_busy": 0,
+        "light_online": 1
+      },
+      "cloud_today": 1,
+      "today": {
+        "mac-heavy": {
+          "jobs": 48,
+          "avg_wait_min": 1.1,
+          "avg_run_min": 2,
+          "success_rate": 66.7,
+          "run_min_total": 93.8
+        },
+        "mac-light": {
+          "jobs": 44,
+          "avg_wait_min": 99.9,
+          "avg_run_min": 107.6,
+          "success_rate": 25,
+          "run_min_total": 4735.100000000002
+        },
+        "cloud": {
+          "jobs": 71,
+          "avg_wait_min": 0,
+          "avg_run_min": 1.7,
+          "success_rate": 71.8,
+          "run_min_total": 118.09999999999998
+        },
+        "cloud_cost_est_usd": 1.272,
+        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
+        "wasted_min": 4821.000000000003
+      },
+      "jsonl_added": 3,
+      "alerts": [],
+      "partial": true
+    },
+    "took_ms": 17855,
+    "at": "2026-11-23T11:50:21.420Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 2
