@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T17:28:37.039Z",
+  "at": "2026-11-23T17:32:03.643Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -36,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.94,
+    "used_gb": 15.06,
     "compressed_gb": 2.99,
     "swap_used_gb": 3.52,
     "pressure": "normal",
-    "at": "2026-11-23T17:28:03.540Z"
+    "at": "2026-11-23T17:31:31.554Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -48,7 +48,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T17:26:19.517Z",
+      "at": "2026-11-23T17:31:25.237Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -59,11 +59,24 @@
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
+        "queued": 1,
+        "queued_prs": [
+          245
+        ],
+        "oldest_queued_min": 2,
+        "oldest_queued_pr": "fork:#245",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "master",
+            "pr_display": "fork:master",
+            "job": "post",
+            "step": "Complete job",
+            "running_min": 0,
+            "runner": "curiocity-mac-fork",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -74,7 +87,7 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 0,
+        "heavy_busy": 2,
         "light_online": 1
       },
       "cloud_today": 0,
@@ -104,16 +117,16 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 24,
+      "jsonl_added": 17,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 19039,
-    "at": "2026-11-23T17:26:36.894Z"
+    "took_ms": 22527,
+    "at": "2026-11-23T17:31:45.253Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 1,
-  "err_tail": "[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:24:04.204Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:24:36.614Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:25:11.341Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:25:43.888Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:26:18.677Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:26:53.317Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:claim 2026-11-23T17:27:15.279Z] R0-1123-T → done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1123-T-report.md · model=sonnet · 로그: /Use\n[hub-runner-v7.8:r0 2026-11-23T17:27:15.346Z] [report-relocate] status/r0/R0-1123-T-report.md → r0/R0-1123-T-report.md 이동 커밋 완료\n[hub-runner-v7.8:claim 2026-11-23T17:27:15.346Z] [report-relocate] R0-1123-T: 1건 오경로 리포트 이동 완료\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1123-T.json · {\"id\":\"R0-1123-T\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-23T17:27:15.431Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 r0/R0-1123-T-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1123-T.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:27:28.670Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:28:00.427Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:28:34.776Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:m2 2026-11-23T17:28:35.632Z] pick · M2-1123-K · model=sonnet · display=cmux-split",
+  "err_tail": "[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:27:28.670Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:28:00.427Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:28:34.776Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:m2 2026-11-23T17:28:35.632Z] pick · M2-1123-K · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-23T17:28:37.723Z] M2-1123-K → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1123-K.json · {\"id\":\"M2-1123-K\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-23T17:28:37.827Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1123-K.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): queue/m2/M2-1123-K.md, m2/M2-1123-C-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:29:08.022Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:29:42.932Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:30:15.479Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:30:50.898Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:31:24.384Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T17:32:02.190Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -136,12 +149,12 @@
     {
       "name": "curiocity-mac-fork",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "curiocity-mac-fork-light",
       "status": "online",
-      "busy": false
+      "busy": true
     }
   ]
 }
