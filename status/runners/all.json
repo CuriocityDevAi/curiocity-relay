@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T15:13:00.357Z",
+  "at": "2026-11-23T15:13:40.116Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -9,10 +9,8 @@
   "last_error_at": "2026-11-23T15:12:14.842Z",
   "hubs": {
     "m0": {
-      "current": "M0-1123-H",
-      "started_at": "2026-11-23T14:56:12.306Z",
-      "model": "opus",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-23T15:13:39.009Z"
     },
     "m1": {
       "current": null,
@@ -38,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.39,
-    "compressed_gb": 3.55,
+    "used_gb": 15.84,
+    "compressed_gb": 3.09,
     "swap_used_gb": 3.66,
     "pressure": "normal",
-    "at": "2026-11-23T15:12:25.161Z"
+    "at": "2026-11-23T15:13:37.504Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -124,7 +122,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T15:08:39.014Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-23T15:09:14.708Z] blocked: runner-folder change pending Kyu install · files=scripts/ci-watch.mjs,scripts/watch/ci-watch-render.mjs,m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:09:15.424Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:09:49.405Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-23T15:10:25.391Z] blocked: runner-folder change pending Kyu install · files=scripts/ci-watch.mjs,scripts/test/ci-watch-k.test.mjs,scripts/watch/ci-watch-render.mjs,m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:10:26.229Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:11:00.315Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:11:37.289Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:heartbeat 2026-11-23T15:11:44.542Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-23T15:12:14.753Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.8:git 2026-11-23T15:12:14.842Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:12:15.575Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:claim 2026-11-23T15:12:54.525Z] M1-1123-M → done · runner-v7.8 cmux-split · 리포트 확인 m1/M1-1123-M-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1123-M.json · {\"id\":\"M1-1123-M\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-23T15:12:54.614Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m1/M1-1123-M-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1123-M.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:12:58.297Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v7.8:git 2026-11-23T15:09:14.708Z] blocked: runner-folder change pending Kyu install · files=scripts/ci-watch.mjs,scripts/watch/ci-watch-render.mjs,m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:09:15.424Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:09:49.405Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-23T15:10:25.391Z] blocked: runner-folder change pending Kyu install · files=scripts/ci-watch.mjs,scripts/test/ci-watch-k.test.mjs,scripts/watch/ci-watch-render.mjs,m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:10:26.229Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:11:00.315Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:11:37.289Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:heartbeat 2026-11-23T15:11:44.542Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-23T15:12:14.753Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.8:git 2026-11-23T15:12:14.842Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:12:15.575Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:claim 2026-11-23T15:12:54.525Z] M1-1123-M → done · runner-v7.8 cmux-split · 리포트 확인 m1/M1-1123-M-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1123-M.json · {\"id\":\"M1-1123-M\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-23T15:12:54.614Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m1/M1-1123-M-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1123-M.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:12:58.297Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:13:31.588Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
