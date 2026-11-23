@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T01:02:03.940Z",
+  "at": "2026-11-23T01:27:49.658Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -34,19 +34,80 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.74,
-    "compressed_gb": 7.65,
+    "used_gb": 15.25,
+    "compressed_gb": 5.64,
     "swap_used_gb": 0.72,
     "pressure": "normal",
-    "at": "2026-11-23T00:53:01.507Z"
+    "at": "2026-11-23T01:02:08.739Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
     "used_gb": 15.88
   },
   "ci": {
-    "error": "deadline 30000ms",
-    "at": "2026-11-23T00:52:42.051Z"
+    "data": {
+      "at": "2026-11-23T01:02:03.865Z",
+      "repos_scanned": [
+        "CuriocityDevAi/storeport"
+      ],
+      "repos_failed": [],
+      "repos_skipped": [],
+      "api_calls": 13,
+      "api_budget": 40,
+      "api_overflow": false,
+      "heavy": {
+        "queued": 0,
+        "queued_prs": [],
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
+      },
+      "light": {
+        "queued": 8,
+        "oldest_queued_min": 1343,
+        "oldest_queued_pr": "storeport:main",
+        "in_progress": []
+      },
+      "cloud_in_progress": [],
+      "runners": null,
+      "cloud_today": 0,
+      "today": {
+        "mac-heavy": {
+          "jobs": 0,
+          "avg_wait_min": 0,
+          "avg_run_min": 0,
+          "success_rate": null,
+          "run_min_total": 0
+        },
+        "mac-light": {
+          "jobs": 1,
+          "avg_wait_min": 0,
+          "avg_run_min": 1440,
+          "success_rate": 0,
+          "run_min_total": 1440
+        },
+        "cloud": {
+          "jobs": 2,
+          "avg_wait_min": 0,
+          "avg_run_min": 0.5,
+          "success_rate": 100,
+          "run_min_total": 0.9
+        },
+        "cloud_cost_est_usd": 0.016,
+        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
+        "wasted_min": 1440
+      },
+      "jsonl_added": 0,
+      "alerts": [
+        {
+          "type": "light_wait",
+          "detail": "oldest light queued 1343m (storeport:main)"
+        }
+      ],
+      "partial": true
+    },
+    "took_ms": 22443,
+    "at": "2026-11-23T01:02:17.638Z"
   },
   "gh_runner_alert": {
     "at": "2026-11-22T04:09:01.942Z",
