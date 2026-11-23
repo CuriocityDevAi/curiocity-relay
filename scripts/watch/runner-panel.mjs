@@ -39,7 +39,7 @@ function fmtRunner(status, busy) {
   return `${RED}●OFF${RESET}`;
 }
 
-export function renderRunnerPanel(data) {
+export function renderRunnerPanel(data, { showErrTail = true } = {}) {
   const lines = [];
   if (!data) {
     lines.push(`${RED}[runner-panel] all.json 없음${RESET}`);
@@ -92,16 +92,18 @@ export function renderRunnerPanel(data) {
     lines.push(`  CI 러너: ${DIM}데이터 없음${RESET}`);
   }
 
-  lines.push('');
-  const errTail = data.err_tail;
-  if (errTail) {
-    const errLines = errTail.split('\n').filter(Boolean).slice(-8);
-    lines.push(`  오류 로그 (마지막 8줄):`);
-    for (const l of errLines) {
-      lines.push(`    ${DIM}${l}${RESET}`);
+  if (showErrTail) {
+    lines.push('');
+    const errTail = data.err_tail;
+    if (errTail) {
+      const errLines = errTail.split('\n').filter(Boolean).slice(-8);
+      lines.push(`  오류 로그 (마지막 8줄):`);
+      for (const l of errLines) {
+        lines.push(`    ${DIM}${l}${RESET}`);
+      }
+    } else {
+      lines.push(`  오류 로그: ${DIM}없음${RESET}`);
     }
-  } else {
-    lines.push(`  오류 로그: ${DIM}없음${RESET}`);
   }
 
   return lines;
