@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T14:38:47.836Z",
+  "at": "2026-11-23T14:39:08.471Z",
   "pid": 52163,
   "runner": "v7.7",
   "poll_ms": 30000,
@@ -19,10 +19,8 @@
       "last_activity": "2026-11-23T13:53:09.080Z"
     },
     "m2": {
-      "current": "M2-1123-G",
-      "started_at": "2026-11-23T14:30:20.194Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-23T13:50:33.209Z"
+      "current": null,
+      "last_activity": "2026-11-23T14:39:07.422Z"
     },
     "m3": {
       "current": "M3-1123-J",
@@ -42,11 +40,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.28,
-    "compressed_gb": 5.8,
+    "used_gb": 15.25,
+    "compressed_gb": 5.35,
     "swap_used_gb": 2.47,
     "pressure": "normal",
-    "at": "2026-11-23T14:38:14.058Z"
+    "at": "2026-11-23T14:38:49.702Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -130,7 +128,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.7:gh-watchdog 2026-11-23T14:33:17.778Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:33:53.675Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:33:54.464Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:34:29.432Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:git 2026-11-23T14:34:29.433Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:34:30.208Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:35:06.043Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:35:06.841Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:35:40.437Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:35:41.134Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:36:18.624Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:36:19.329Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:36:55.156Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:36:55.959Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:37:31.881Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:37:32.705Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:38:06.448Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:38:07.274Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:38:43.367Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:38:44.132Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v7.7:git 2026-11-23T14:33:53.675Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:33:54.464Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:34:29.432Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:git 2026-11-23T14:34:29.433Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:34:30.208Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:35:06.043Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:35:06.841Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:35:40.437Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:35:41.134Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:36:18.624Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:36:19.329Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:36:55.156Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:36:55.959Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:37:31.881Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:37:32.705Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:38:06.448Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:38:07.274Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:38:43.367Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:38:44.132Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:39:07.549Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,scripts/hub-runner-v7.8.mjs · guess_hub=m2",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -158,7 +156,7 @@
     {
       "name": "curiocity-mac-fork-light",
       "status": "online",
-      "busy": false
+      "busy": true
     }
   ]
 }
