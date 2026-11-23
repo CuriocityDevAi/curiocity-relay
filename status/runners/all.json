@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T22:20:16.553Z",
+  "at": "2026-11-23T22:25:18.398Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.69,
+    "used_gb": 15.88,
     "compressed_gb": 3.21,
     "swap_used_gb": 3.31,
     "pressure": "normal",
-    "at": "2026-11-23T22:19:44.783Z"
+    "at": "2026-11-23T22:24:46.362Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -46,14 +46,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T22:15:12.503Z",
+      "at": "2026-11-23T22:20:16.521Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 8,
+      "api_calls": 10,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -75,7 +75,7 @@
         "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 0,
+      "cloud_today": 1,
       "today": {
         "mac-heavy": {
           "jobs": 20,
@@ -85,28 +85,28 @@
           "run_min_total": 27.500000000000007
         },
         "mac-light": {
-          "jobs": 1,
+          "jobs": 2,
           "avg_wait_min": 0,
           "avg_run_min": 0.3,
           "success_rate": 100,
-          "run_min_total": 0.3
+          "run_min_total": 0.6
         },
         "cloud": {
-          "jobs": 11,
+          "jobs": 12,
           "avg_wait_min": 0,
           "avg_run_min": 0.1,
-          "success_rate": 72.7,
-          "run_min_total": 0.9
+          "success_rate": 75,
+          "run_min_total": 1.4
         },
-        "cloud_cost_est_usd": 0.064,
+        "cloud_cost_est_usd": 0.072,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 0,
+      "jsonl_added": 2,
       "alerts": []
     },
-    "took_ms": 11402,
-    "at": "2026-11-23T22:15:22.209Z"
+    "took_ms": 10090,
+    "at": "2026-11-23T22:20:24.877Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 1,
