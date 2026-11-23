@@ -9,6 +9,7 @@ import {
   mkdirSync,
   readFileSync,
   readdirSync,
+  statSync,
   writeFileSync,
 } from 'node:fs';
 import { homedir } from 'node:os';
@@ -21,6 +22,8 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
 
 import { getWibDateStr, readJsonlFile } from './lib/ci-history.mjs';
+import { renderRunnerPanel } from './watch/runner-panel.mjs';
+import { computeRunnerAlerts } from './watch/runner-alerts.mjs';
 
 const REFRESH_MS = 30_000;
 const RUNNER_REFRESH_MS = 120_000;
@@ -41,6 +44,8 @@ const PATHS = {
   allJson: join(REPO_ROOT, 'status', 'runners', 'all.json'),
   runnerHeavy: join(homedir(), 'actions-runner'),
   runnerLight: join(homedir(), 'actions-runner-light'),
+  queueRoot: join(REPO_ROOT, 'queue'),
+  claims: join(REPO_ROOT, 'status', 'claims'),
 };
 
 const REPOS = [
@@ -360,7 +365,20 @@ function gitPush() {
   } catch {}
 }
 
-function render(runState, runners, cloudInProgress, dateStr, cloudLimit) {
+function fmtCiRunner(name, kind, online, busy, jobs) {
+  const s = !online ? col('오프라인', C.red)
+    : busy ? col('BUSY', C.yellow) : col('온라인', C.green);
+  if (!jobs.length) return `  ${col(name, C.bold)} (${kind})  ${s}  잡: -`;
+  const j = jobs[0];
+  const pid = j.prompt_id || j.display || j.pr;
+  const rmin = j.running_min ?? '-';
+  const c = typeof rmin === 'number'
+    ? (rmin >= HEAVY_CRIT_MIN ? C.red : rmin >= HEAVY_WARN_MIN ? C.yellow : '') : '';
+  const stuck = typeof rmin === 'number' && rmin >= HEAVY_CRIT_MIN ? col(' ⚠멈춤의심', C.red) : '';
+  return `  ${col(name, C.bold)} (${kind})  ${s}  ${c}${pid}${C.reset} ${j.display} ${j.check} ${rmin}분${stuck}`;
+}
+
+function render(runState, runners, cloudInProgress, dateStr, cloudLimit, allJson, runnerAlerts) {
   const W = process.stdout.columns || 100;
   const hr = '─'.repeat(Math.min(W - 1, 100));
   const lines = [];
@@ -371,29 +389,36 @@ function render(runState, runners, cloudInProgress, dateStr, cloudLimit) {
     hour: '2-digit', minute: '2-digit', second: '2-digit',
   }).replace(',', '');
 
-  lines.push(col(`CI 감시 대시보드  ${nowStr} WIB`, C.bold));
+  lines.push(col(`CI·러너 감시 대시보드  ${nowStr} WIB`, C.bold));
   lines.push(hr);
 
-  lines.push(col('■ 1. 러너', C.bold, C.cyan));
+  // ■ 1. 러너 칸 (all.json 기반)
+  lines.push(col('■ 1. 러너 칸', C.bold, C.cyan));
+  const panelLines = renderRunnerPanel(allJson, { showErrTail: false });
+  lines.push(...panelLines);
+  lines.push(hr);
 
-  const fmtRunner = (name, kind, online, busy, jobs) => {
-    const s = !online ? col('오프라인', C.red)
-      : busy ? col('BUSY', C.yellow) : col('온라인', C.green);
-    if (!jobs.length) return `  ${col(name, C.bold)} (${kind})  ${s}  잡: -`;
-    const j = jobs[0];
-    const pid = j.prompt_id || j.display || j.pr;
-    const rmin = j.running_min ?? '-';
-    const c = typeof rmin === 'number'
-      ? (rmin >= HEAVY_CRIT_MIN ? C.red : rmin >= HEAVY_WARN_MIN ? C.yellow : '') : '';
-    const stuck = typeof rmin === 'number' && rmin >= HEAVY_CRIT_MIN ? col(' ⚠멈춤의심', C.red) : '';
-    return `  ${col(name, C.bold)} (${kind})  ${s}  ${c}${pid}${C.reset} ${j.display} ${j.check} ${rmin}분${stuck}`;
-  };
+  // ■ 2. 러너 이상 경보
+  lines.push(col('■ 2. 러너 이상 경보', C.bold, C.cyan));
+  if (!runnerAlerts || !runnerAlerts.length) {
+    lines.push(col('  이상 없음', C.green));
+  } else {
+    for (const a of runnerAlerts) {
+      lines.push(col(`  ⚠ ${a.msg}`, C.red, C.bold));
+    }
+  }
+  lines.push(hr);
 
-  lines.push(fmtRunner('curiocity-mac', 'heavy', runners.heavy_online > 0, runners.heavy_busy > 0, runState.heavy.inProgress));
-  lines.push(fmtRunner('curiocity-mac-light', 'light', runners.light_online > 0, false, runState.light.inProgress));
+  // ■ 3. CI 칸
+  lines.push(col('■ 3. CI 칸', C.bold, C.cyan));
   lines.push('');
 
-  lines.push(col('■ 2. 대기열', C.bold, C.cyan));
+  lines.push(col('  러너 (GitHub API)', C.bold));
+  lines.push(fmtCiRunner('curiocity-mac', 'heavy', runners.heavy_online > 0, runners.heavy_busy > 0, runState.heavy.inProgress));
+  lines.push(fmtCiRunner('curiocity-mac-light', 'light', runners.light_online > 0, false, runState.light.inProgress));
+  lines.push('');
+
+  lines.push(col('  대기열', C.bold));
   const cloudCount = countCloudToday(dateStr);
   const remaining = cloudLimit - cloudCount;
   const willCloud = runners.heavy_busy > 0 || runners.heavy_online === 0;
@@ -431,7 +456,7 @@ function render(runState, runners, cloudInProgress, dateStr, cloudLimit) {
   }
   lines.push('');
 
-  lines.push(col('■ 3. 클라우드 사용 (오늘)', C.bold, C.cyan));
+  lines.push(col('  클라우드 사용 (오늘)', C.bold));
 
   if (cloudInProgress.length) {
     lines.push('  진행중:');
@@ -461,15 +486,17 @@ function render(runState, runners, cloudInProgress, dateStr, cloudLimit) {
   } else {
     lines.push('  이력 없음 (ledger/ci-history.jsonl 없음)');
   }
-  lines.push('');
+  lines.push(hr);
 
-  lines.push(col('■ 4. 로그 (heavy 러너 · Worker.log 마지막 8줄)', C.bold, C.cyan));
-  const logPath = getLatestDiagLog(PATHS.runnerHeavy);
-  const logLines = logTail(logPath, 8);
-  if (logLines.length) {
-    for (const l of logLines) lines.push(col('  ' + l.slice(0, W - 4), C.dim));
+  // ■ 4. 로그 꼬리 (err_tail 마지막 5줄)
+  lines.push(col('■ 4. 로그 꼬리 (err_tail · 마지막 5줄)', C.bold, C.cyan));
+  const errLines = allJson?.err_tail
+    ? allJson.err_tail.split('\n').filter(Boolean).slice(-5)
+    : [];
+  if (errLines.length) {
+    for (const l of errLines) lines.push(col('  ' + l.slice(0, W - 4), C.dim));
   } else {
-    lines.push('  로그 없음');
+    lines.push(col('  없음', C.dim));
   }
   lines.push('');
   lines.push(col(`  갱신 30초  |  Ctrl+C 종료`, C.dim));
@@ -480,6 +507,61 @@ function render(runState, runners, cloudInProgress, dateStr, cloudLimit) {
 
 let cachedRunners = { heavy_online: 0, heavy_busy: 0, light_online: 0 };
 let runnersAt = 0;
+let aheadSinceMs = null;
+const notifiedAlertKeys = new Set();
+
+const QUEUE_HUBS = ['m0', 'm1', 'm2', 'm3', 'r0'];
+
+function scanUnclaimedIds() {
+  const result = [];
+  const nowMs = Date.now();
+  for (const hub of QUEUE_HUBS) {
+    const hubDir = join(PATHS.queueRoot, hub);
+    if (!existsSync(hubDir)) continue;
+    let files;
+    try { files = readdirSync(hubDir); } catch { continue; }
+    for (const f of files) {
+      if (!f.endsWith('.md')) continue;
+      const id = f.replace(/\.md$/, '');
+      const claimPath = join(PATHS.claims, `${id}.json`);
+      let claimed = false;
+      if (existsSync(claimPath)) {
+        try {
+          const c = JSON.parse(readFileSync(claimPath, 'utf8'));
+          if (c.state && c.state !== 'issued') claimed = true;
+        } catch {}
+      }
+      if (!claimed) {
+        try {
+          const st = statSync(join(hubDir, f));
+          const ageMin = Math.round((nowMs - st.mtimeMs) / 60000);
+          result.push({ id, ageMin });
+        } catch {}
+      }
+    }
+  }
+  return result;
+}
+
+function macNotify(title, body) {
+  if (process.platform !== 'darwin') return;
+  const safe = body.replace(/"/g, "'");
+  execFile('osascript', ['-e', `display notification "${safe}" with title "${title}"`], { timeout: 3000 }, () => {});
+}
+
+function updateRunnerAlertNotifications(currentAlerts) {
+  const currentKeys = new Set(currentAlerts.map(a => `${a.type}:${a.msg}`));
+  for (const a of currentAlerts) {
+    const key = `${a.type}:${a.msg}`;
+    if (!notifiedAlertKeys.has(key)) {
+      macNotify('러너 경보', a.msg);
+      notifiedAlertKeys.add(key);
+    }
+  }
+  for (const key of [...notifiedAlertKeys]) {
+    if (!currentKeys.has(key)) notifiedAlertKeys.delete(key);
+  }
+}
 
 async function tick() {
   const dateStr = getWibDateStr();
@@ -503,11 +585,19 @@ async function tick() {
   const alerts = computeAlerts(runState, cachedRunners);
   writeAlerts(alerts);
 
+  const unclaimedIds = scanUnclaimedIds();
+  const { alerts: runnerAlerts, aheadSinceMs: newAheadSinceMs } = computeRunnerAlerts(allJson, {
+    aheadSinceMs,
+    unclaimedIds,
+  });
+  aheadSinceMs = newAheadSinceMs;
+  updateRunnerAlertNotifications(runnerAlerts);
+
   if (Date.now() - lastPushAt > PUSH_INTERVAL_MS) {
     gitPush();
   }
 
-  render(runState, cachedRunners, cloudInProgress, dateStr, cloudLimit);
+  render(runState, cachedRunners, cloudInProgress, dateStr, cloudLimit, allJson, runnerAlerts);
 }
 
 import { pathToFileURL } from 'node:url';
