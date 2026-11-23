@@ -42,3 +42,8 @@
 ## 9. CI 감시 (Kyu 11-23 15:52 · 15:56 · 15:58)
 - 15:58 Kyu 원문: "자동 조치켜" → 멈춤 의심 잡 자동 취소 → 클라우드 재실행 ON (하루 5건 · 6건째 Kyu 문의 규칙 유지). M3-1123-E(경보까지) 착지 후 후속 프롬프트로 추가.
 - CI 감시 창 실행 위치 = Kyu Mac relay clone `~/projects/curiocity-relay`
+
+## 10. 러너·CI 상시 모니터링 (Kyu 11-23 16:03)
+- Kyu 원문: "난 너가 러너랑 CI 를 계속 모니터링 했으면 좋겠어. 너가 못하는거면, 내가 할테니까, 러너 모니터링 화면을 만들어줘."
+- 결정(오케): 둘 다 한다 — ① Kyu 용 터미널 화면(ci-watch 확장: 허브 러너 칸 + 러너 오류 로그 꼬리 + CI 러너 online/offline) ② 오케가 Mac 권한 없이 볼 수 있게 허브 러너가 heartbeat 때 launchd.err.log 꼬리 20줄 · gh 러너 상태를 relay status 로 push → 오케 감시 때 매번 heartbeat 나이(10분+ = 경보) · 오류 로그 · CI 러너 상태 확인
+- 원인 기록: storeport Mac CI 러너 2대 11-21 23:45Z TaskAgentSessionExpiredException · launchd plist KeepAlive 없음 → 미재시작 · 11-23 16:03 kickstart 후에도 offline
