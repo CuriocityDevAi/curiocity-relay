@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T14:02:09.208Z",
+  "at": "2026-11-23T14:07:58.366Z",
   "pid": 52163,
   "runner": "v7.7",
   "poll_ms": 30000,
@@ -38,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.71,
-    "compressed_gb": 5.31,
+    "used_gb": 15.64,
+    "compressed_gb": 5.1,
     "swap_used_gb": 2.34,
     "pressure": "normal",
-    "at": "2026-11-23T14:01:36.193Z"
+    "at": "2026-11-23T14:07:25.517Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -50,26 +50,37 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T13:57:26.086Z",
+      "at": "2026-11-23T14:02:45.629Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 20,
+      "api_calls": 23,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 16,
+        "queued": 18,
         "queued_prs": [
-          236,
+          231,
           237,
           238
         ],
-        "oldest_queued_min": 34,
-        "oldest_queued_pr": "fork:#236",
-        "in_progress": []
+        "oldest_queued_min": 105,
+        "oldest_queued_pr": "fork:#231",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "main",
+            "pr_display": "storeport:main",
+            "job": "heavy-mac",
+            "step": "Run ./.github/actions/heavy-steps",
+            "running_min": 3,
+            "runner": "Youngkyus-MacBook-Pro-M1",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -80,7 +91,7 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 1,
-        "heavy_busy": 0,
+        "heavy_busy": 1,
         "light_online": 1
       },
       "cloud_today": 0,
@@ -114,21 +125,17 @@
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 34m (fork:#236)"
-        },
-        {
-          "type": "runner_idle",
-          "detail": "16 queued but 0 in_progress for 34m (fork:#236)"
+          "detail": "oldest heavy queued 105m (fork:#231)"
         }
       ],
       "partial": true
     },
-    "took_ms": 21898,
-    "at": "2026-11-23T13:57:46.101Z"
+    "took_ms": 22134,
+    "at": "2026-11-23T14:03:05.640Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.7:git 2026-11-23T13:57:24.330Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:57:25.091Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:58:01.580Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:58:02.347Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:58:34.620Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:58:35.466Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:59:10.335Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:59:12.062Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T13:59:44.463Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T13:59:45.183Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:00:19.969Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:00:20.748Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:00:53.528Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:00:54.380Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:01:29.561Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:01:31.718Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:heartbeat 2026-11-23T14:01:35.713Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.7:git 2026-11-23T14:02:05.926Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.7:git 2026-11-23T14:02:06.020Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:02:06.871Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v7.7:git 2026-11-23T14:03:18.558Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:03:19.228Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:03:53.995Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:03:54.741Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:04:27.138Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:04:27.898Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:05:03.002Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:05:04.009Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:05:36.343Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:05:37.150Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:06:11.838Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:06:12.599Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:06:45.155Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:06:45.872Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:git 2026-11-23T14:07:20.966Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:07:21.738Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.7:heartbeat 2026-11-23T14:07:25.041Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.7:git 2026-11-23T14:07:55.240Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.7:git 2026-11-23T14:07:55.368Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.7:gh-watchdog 2026-11-23T14:07:56.183Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -146,7 +153,7 @@
     {
       "name": "Youngkyus-MacBook-Pro-M1",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "curiocity-mac-fork",
