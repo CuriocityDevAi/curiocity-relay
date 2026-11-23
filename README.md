@@ -41,6 +41,20 @@ node scripts/claim.mjs <ID> <started|blocked|done> [note...]
 
 ---
 
+## CI 감시 대시보드 (M3-1123-E)
+
+`scripts/ci-watch.mjs` 는 내부 CI 상태를 30초마다 갱신하는 터미널 대시보드입니다. 러너 상태 · 대기열 · 클라우드 사용 · 실행 로그를 한 화면에 표시합니다.
+
+cmux 분할 창에서 다음 명령으로 띄웁니다:
+
+```bash
+node ~/projects/curiocity-relay/scripts/ci-watch.mjs
+```
+
+종료는 `Ctrl+C`. 색상 기준: 정상 기본 · 30분 이상 지연 노랑 · 45분 이상 멈춤 의심 빨강.
+
+---
+
 ## 폴더 구조
 
 ```
