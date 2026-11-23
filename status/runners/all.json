@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T11:55:22.219Z",
+  "at": "2026-11-23T12:01:18.259Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -45,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.71,
-    "compressed_gb": 4.69,
+    "used_gb": 15.72,
+    "compressed_gb": 5.33,
     "swap_used_gb": 2.36,
     "pressure": "normal",
-    "at": "2026-11-23T11:54:49.968Z"
+    "at": "2026-11-23T12:00:45.898Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -57,13 +57,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T11:50:05.355Z",
+      "at": "2026-11-23T12:00:41.567Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport"
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 7,
+      "api_calls": 9,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -71,7 +72,18 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "#231",
+            "pr_display": "fork:#231",
+            "job": "playwright",
+            "step": "Run Playwright harnesses",
+            "running_min": 14,
+            "runner": "curiocity-mac-fork",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -81,11 +93,11 @@
       },
       "cloud_in_progress": [],
       "runners": {
-        "heavy_online": 1,
-        "heavy_busy": 0,
+        "heavy_online": 2,
+        "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 48,
@@ -112,12 +124,12 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 4821.000000000003
       },
-      "jsonl_added": 3,
+      "jsonl_added": 0,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 17855,
-    "at": "2026-11-23T11:50:21.420Z"
+    "took_ms": 14447,
+    "at": "2026-11-23T12:00:54.144Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 2
