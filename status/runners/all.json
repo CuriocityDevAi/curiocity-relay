@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T16:09:00.853Z",
+  "at": "2026-11-23T16:10:14.073Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -27,7 +27,9 @@
       "last_activity": "2026-11-23T15:17:33.172Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1123-R",
+      "started_at": "2026-11-23T16:10:12.621Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T15:36:20.386Z"
     }
   },
@@ -36,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.27,
-    "compressed_gb": 3.91,
+    "used_gb": 15.41,
+    "compressed_gb": 3.66,
     "swap_used_gb": 3.44,
     "pressure": "normal",
-    "at": "2026-11-23T16:08:28.693Z"
+    "at": "2026-11-23T16:09:39.868Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -48,20 +50,20 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T16:03:55.186Z",
+      "at": "2026-11-23T16:09:00.238Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 23,
+      "api_calls": 19,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 19,
+        "queued": 15,
         "queued_prs": [],
-        "oldest_queued_min": 63,
+        "oldest_queued_min": 48,
         "oldest_queued_pr": "fork:master",
         "in_progress": []
       },
@@ -108,21 +110,21 @@
       "alerts": [
         {
           "type": "queue_wait",
-          "detail": "oldest heavy queued 63m (fork:master)"
+          "detail": "oldest heavy queued 48m (fork:master)"
         },
         {
           "type": "runner_idle",
-          "detail": "19 queued but 0 in_progress for 63m (fork:master)"
+          "detail": "15 queued but 0 in_progress for 48m (fork:master)"
         }
       ],
       "partial": true
     },
-    "took_ms": 22002,
-    "at": "2026-11-23T16:04:15.566Z"
+    "took_ms": 21745,
+    "at": "2026-11-23T16:09:20.245Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:58:46.748Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:59:23.099Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T15:59:55.563Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:00:30.388Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:01:02.937Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:01:39.997Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:02:12.647Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:02:47.152Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:03:19.755Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:03:54.383Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:04:30.327Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:05:04.938Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:05:37.402Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:06:12.472Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:06:45.219Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:07:19.789Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:07:52.257Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:08:26.919Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:08:59.438Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T15:59:55.563Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:00:30.388Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:01:02.937Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:01:39.997Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:02:12.647Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:02:47.152Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:03:19.755Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:03:54.383Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:04:30.327Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:05:04.938Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:05:37.402Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:06:12.472Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:06:45.219Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:07:19.789Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:07:52.257Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:08:26.919Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:08:59.438Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:09:38.062Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T16:10:11.203Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:r0 2026-11-23T16:10:12.621Z] pick · R0-1123-R · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
