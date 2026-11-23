@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T08:05:39.139Z",
+  "at": "2026-11-23T08:09:42.559Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -36,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.88,
-    "compressed_gb": 4.68,
-    "swap_used_gb": 2.5,
+    "used_gb": 15.55,
+    "compressed_gb": 4.15,
+    "swap_used_gb": 2.47,
     "pressure": "normal",
-    "at": "2026-11-23T08:05:20.955Z"
+    "at": "2026-11-23T08:09:10.515Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -48,13 +48,13 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T08:00:37.643Z",
+      "at": "2026-11-23T08:05:47.381Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 16,
+      "api_calls": 22,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -65,51 +65,51 @@
         "in_progress": []
       },
       "light": {
-        "queued": 11,
-        "oldest_queued_min": 1299,
+        "queued": 13,
+        "oldest_queued_min": 1304,
         "oldest_queued_pr": "storeport:main",
         "in_progress": []
       },
       "cloud_in_progress": [],
       "runners": null,
-      "cloud_today": 0,
+      "cloud_today": 8,
       "today": {
         "mac-heavy": {
-          "jobs": 18,
-          "avg_wait_min": 0.8,
+          "jobs": 19,
+          "avg_wait_min": 0.7,
           "avg_run_min": 1.2,
-          "success_rate": 83.3,
+          "success_rate": 78.9,
           "run_min_total": 22.399999999999995
         },
         "mac-light": {
-          "jobs": 3,
+          "jobs": 7,
           "avg_wait_min": 0,
-          "avg_run_min": 1440,
+          "avg_run_min": 636.1,
           "success_rate": 0,
-          "run_min_total": 4320
+          "run_min_total": 4452.4000000000015
         },
         "cloud": {
-          "jobs": 24,
+          "jobs": 32,
           "avg_wait_min": 0,
-          "avg_run_min": 1.9,
-          "success_rate": 91.7,
-          "run_min_total": 45.70000000000001
+          "avg_run_min": 1.6,
+          "success_rate": 81.3,
+          "run_min_total": 51.80000000000001
         },
-        "cloud_cost_est_usd": 0.496,
+        "cloud_cost_est_usd": 0.56,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 4320
+        "wasted_min": 4452.4000000000015
       },
-      "jsonl_added": 0,
+      "jsonl_added": 13,
       "alerts": [
         {
           "type": "light_wait",
-          "detail": "oldest light queued 1299m (storeport:main)"
+          "detail": "oldest light queued 1304m (storeport:main)"
         }
       ],
       "partial": true
     },
-    "took_ms": 15423,
-    "at": "2026-11-23T08:00:51.485Z"
+    "took_ms": 18359,
+    "at": "2026-11-23T08:06:04.051Z"
   },
   "gh_runner_alert": {
     "at": "2026-11-22T04:09:01.942Z",
