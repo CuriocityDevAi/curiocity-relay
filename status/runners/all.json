@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T22:35:22.030Z",
+  "at": "2026-11-23T22:41:18.490Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.83,
-    "compressed_gb": 3.28,
+    "used_gb": 15.64,
+    "compressed_gb": 3.46,
     "swap_used_gb": 3.31,
     "pressure": "normal",
-    "at": "2026-11-23T22:34:49.886Z"
+    "at": "2026-11-23T22:35:26.580Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -46,7 +46,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T22:30:20.481Z",
+      "at": "2026-11-23T22:35:21.997Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -105,8 +105,8 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 9183,
-    "at": "2026-11-23T22:30:27.987Z"
+    "took_ms": 12201,
+    "at": "2026-11-23T22:35:32.088Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 1,
@@ -122,22 +122,22 @@
   "ci_runners": [
     {
       "name": "curiocity-mac-light",
-      "status": "online",
+      "status": "offline",
       "busy": false
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
-      "status": "online",
+      "status": "offline",
       "busy": false
     },
     {
       "name": "curiocity-mac-fork",
-      "status": "online",
+      "status": "offline",
       "busy": false
     },
     {
       "name": "curiocity-mac-fork-light",
-      "status": "online",
+      "status": "offline",
       "busy": false
     }
   ]
