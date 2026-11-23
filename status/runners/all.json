@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-23T07:14:51.011Z",
+  "at": "2026-11-23T07:18:02.336Z",
   "pid": 61245,
   "runner": "v7.6",
   "poll_ms": 30000,
@@ -15,7 +15,9 @@
       "last_activity": "2026-11-23T04:00:22.954Z"
     },
     "m1": {
-      "current": null,
+      "current": "M1-1123-C",
+      "started_at": "2026-11-23T07:17:59.552Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T07:07:26.853Z"
     },
     "m2": {
@@ -27,7 +29,9 @@
       "last_activity": "2026-11-23T07:14:50.044Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1123-B",
+      "started_at": "2026-11-23T07:18:00.615Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T06:42:45.083Z"
     }
   },
@@ -36,11 +40,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.64,
-    "compressed_gb": 5.04,
+    "used_gb": 15.66,
+    "compressed_gb": 4.67,
     "swap_used_gb": 2.46,
     "pressure": "normal",
-    "at": "2026-11-23T07:14:38.788Z"
+    "at": "2026-11-23T07:17:27.119Z"
   },
   "mem_peak_today": {
     "date": "2026-11-23",
@@ -48,38 +52,66 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-23T07:09:26.550Z",
+      "at": "2026-11-23T07:14:36.236Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport"
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 14,
+      "api_calls": 22,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
+        "queued": 2,
+        "queued_prs": [
+          228
+        ],
+        "oldest_queued_min": 1,
+        "oldest_queued_pr": "fork:#228",
         "in_progress": []
       },
       "light": {
         "queued": 8,
-        "oldest_queued_min": 1248,
+        "oldest_queued_min": 1253,
         "oldest_queued_pr": "storeport:main",
         "in_progress": []
       },
-      "cloud_in_progress": [],
-      "runners": null,
+      "cloud_in_progress": [
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#227",
+          "pr_display": "fork:#227",
+          "job": "playwright",
+          "step": "Run Playwright harnesses",
+          "running_min": 6,
+          "runner": "GitHub Actions 1000007696",
+          "kind": "cloud"
+        },
+        {
+          "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+          "pr": "#226",
+          "pr_display": "fork:#226",
+          "job": "playwright",
+          "step": "Run Playwright harnesses",
+          "running_min": 13,
+          "runner": "GitHub Actions 1000007689",
+          "kind": "cloud"
+        }
+      ],
+      "runners": {
+        "heavy_online": 1,
+        "heavy_busy": 1,
+        "light_online": 0
+      },
       "cloud_today": 2,
       "today": {
         "mac-heavy": {
-          "jobs": 2,
-          "avg_wait_min": 1,
-          "avg_run_min": 0.6,
+          "jobs": 5,
+          "avg_wait_min": 0.8,
+          "avg_run_min": 3.3,
           "success_rate": 100,
-          "run_min_total": 1.2
+          "run_min_total": 16.5
         },
         "mac-light": {
           "jobs": 3,
@@ -89,27 +121,27 @@
           "run_min_total": 4320
         },
         "cloud": {
-          "jobs": 7,
+          "jobs": 9,
           "avg_wait_min": 0,
-          "avg_run_min": 0.5,
-          "success_rate": 100,
-          "run_min_total": 3.4000000000000004
+          "avg_run_min": 0.4,
+          "success_rate": 88.9,
+          "run_min_total": 3.5000000000000004
         },
-        "cloud_cost_est_usd": 0.064,
+        "cloud_cost_est_usd": 0.072,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 4320
       },
-      "jsonl_added": 2,
+      "jsonl_added": 5,
       "alerts": [
         {
           "type": "light_wait",
-          "detail": "oldest light queued 1248m (storeport:main)"
+          "detail": "oldest light queued 1253m (storeport:main)"
         }
       ],
       "partial": true
     },
-    "took_ms": 13558,
-    "at": "2026-11-23T07:09:38.340Z"
+    "took_ms": 21812,
+    "at": "2026-11-23T07:14:56.248Z"
   },
   "gh_runner_alert": {
     "at": "2026-11-22T04:09:01.942Z",
