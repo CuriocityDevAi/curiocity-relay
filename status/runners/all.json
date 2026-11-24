@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T14:26:40.361Z",
+  "at": "2026-11-24T14:31:13.642Z",
   "pid": 21194,
   "runner": "v8.1",
   "poll_ms": 30000,
@@ -47,11 +47,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.89,
-    "compressed_gb": 4.49,
-    "swap_used_gb": 2.4,
+    "used_gb": 15.29,
+    "compressed_gb": 4.92,
+    "swap_used_gb": 2.39,
     "pressure": "normal",
-    "at": "2026-11-24T14:26:13.346Z"
+    "at": "2026-11-24T14:30:42.052Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -59,13 +59,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T14:23:04.488Z",
+      "at": "2026-11-24T14:28:23.246Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport"
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 7,
+      "api_calls": 10,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -73,7 +74,18 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "main",
+            "pr_display": "storeport:main",
+            "job": "heavy-mac",
+            "step": "Run ./.github/actions/heavy-steps",
+            "running_min": 3,
+            "runner": "Youngkyus-MacBook-Pro-M1",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -82,46 +94,49 @@
         "in_progress": []
       },
       "cloud_in_progress": [],
-      "runners": null,
+      "runners": {
+        "heavy_online": 3,
+        "heavy_busy": 1,
+        "light_online": 1
+      },
       "cloud_today": 1,
       "today": {
         "mac-heavy": {
-          "jobs": 120,
+          "jobs": 119,
           "avg_wait_min": 0.9,
-          "avg_run_min": 2.3,
-          "success_rate": 88.3,
-          "run_min_total": 280.4
+          "avg_run_min": 2.2,
+          "success_rate": 88.2,
+          "run_min_total": 267.5
         },
         "mac-light": {
-          "jobs": 60,
-          "avg_wait_min": 0.7,
+          "jobs": 56,
+          "avg_wait_min": 0.4,
           "avg_run_min": 0.3,
-          "success_rate": 98.3,
-          "run_min_total": 18.400000000000002
+          "success_rate": 98.2,
+          "run_min_total": 17.000000000000004
         },
         "cloud": {
           "jobs": 75,
           "avg_wait_min": 0,
           "avg_run_min": 0.6,
-          "success_rate": 65.3,
-          "run_min_total": 47.80000000000005
+          "success_rate": 66.7,
+          "run_min_total": 47.90000000000005
         },
-        "cloud_cost_est_usd": 0.728,
+        "cloud_cost_est_usd": 0.736,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 24.4
       },
-      "jsonl_added": 6,
-      "alerts": [],
-      "partial": true
+      "jsonl_added": 1,
+      "alerts": []
     },
-    "took_ms": 15613,
-    "at": "2026-11-24T14:23:18.028Z"
+    "took_ms": 11797,
+    "at": "2026-11-24T14:28:33.223Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 20,
   "branch_reports_recovered": 2,
-  "err_tail": "[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/12)\rerror: could not apply f39b542f5... claim(m0): M0-1124-I started · runner-v8.1 · cmux-split · model=opus · source=queue-line ·\n[hub-runner-v8.1:claim 2026-11-24T14:26:19.542Z] M1-1124-M → done · runner-v8.1 cmux-split · 리포트 확인 m1/M1-1124-M-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-M.json · {\"id\":\"M1-1124-M\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-24T14:26:19.638Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m1/M1-1124-M-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1124-M.log · report_src=legacy-root\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/13)\rerror: could not apply f39b542f5... claim(m0): M0-1124-I started · runner-v8.1 · cmux-split · model=opus · source=queue-line ·\n[hub-runner-v8.1:claim 2026-11-24T14:26:25.836Z] R0-1124-AB → done · runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AB-report.md · model=sonnet · 로그: /Us\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-AB.json · {\"id\":\"R0-1124-AB\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-24T14:26:25.925Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AB-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1124-AB.log · report_src=legacy-root\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/14)\rerror: could not apply f39b542f5... claim(m0): M0-1124-I started · runner-v8.1 · cmux-split · model=opus · source=queue-line ·\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:26:37.817Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:r0 2026-11-24T14:26:38.721Z] pick · R0-1124-AD · model=sonnet · display=cmux-split",
+  "err_tail": "[hub-runner-v8.1:claim 2026-11-24T14:26:25.836Z] R0-1124-AB → done · runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AB-report.md · model=sonnet · 로그: /Us\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-AB.json · {\"id\":\"R0-1124-AB\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-24T14:26:25.925Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AB-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1124-AB.log · report_src=legacy-root\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/14)\rerror: could not apply f39b542f5... claim(m0): M0-1124-I started · runner-v8.1 · cmux-split · model=opus · source=queue-line ·\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:26:37.817Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:r0 2026-11-24T14:26:38.721Z] pick · R0-1124-AD · model=sonnet · display=cmux-split\n[hub-runner-v8.1:claim 2026-11-24T14:26:46.629Z] R0-1124-AD → started · runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-AD.json · {\"id\":\"R0-1124-AD\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-24T14:26:46.764Z\",\"note\":\"runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1124-AD.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:27:14.935Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:27:47.458Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:28:22.431Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -133,22 +148,22 @@
   "ci_runners": [
     {
       "name": "curiocity-mac-light",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
-      "status": "offline",
-      "busy": false
+      "status": "online",
+      "busy": true
     },
     {
       "name": "curiocity-mac-fork",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
       "name": "curiocity-mac-fork-light",
-      "status": "offline",
+      "status": "online",
       "busy": false
     }
   ]
