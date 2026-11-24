@@ -128,6 +128,11 @@ node ~/projects/curiocity-relay/scripts/ci-watch.mjs
 
 macOS 알림: 새 빨간 경보가 생길 때 1회 알림 (같은 경보 반복 안 함 · 해소되면 초기화).
 
+**ci-watch 끄기**:
+- `Ctrl+C` — 래퍼·node 한 번에 완전 종료
+- `~/.hub-runner/bin/ci-watch.sh stop` — 다른 터미널에서 종료 (pid 파일 기반)
+- 비정상 종료 5회/60초 → 자동 루프 중단 + "고친 뒤 다시 실행하세요" 출력 (ERR_MODULE_NOT_FOUND 루프 방지)
+
 ---
 
 ## 수동 실행 (디버그)

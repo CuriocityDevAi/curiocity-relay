@@ -1,4 +1,4 @@
-// scripts/lib/self-update.mjs · M1-1124-H · v8 R2 (제안 D) 러너 자기 업데이트.
+// scripts/lib/self-update.mjs · M1-1124-K · v8 R3 (제안 D) 러너 자기 업데이트.
 //
 // 동작 요지:
 //   ① loop() 가 주기적으로 checkPendingUpdate() 호출 → origin/main 파일 vs 실행 중 바이트 비교.
@@ -227,22 +227,93 @@ export function deployCiWatch({ repoRoot, runnerHome }) {
   return { ok: true, changed: result.changed, src, dst, prev: result.prev };
 }
 
-const WRAPPER_BODY = `#!/bin/bash
-# ci-watch.sh · M1-1124-H v8 R2 · ci-watch 자가 재기동 래퍼.
-# ci-watch.mjs 가 자기 파일 바이트 변화를 감지하면 exit(0) → 이 래퍼가 2 초 뒤 다시 띄움.
+export const WRAPPER_BODY = `#!/bin/bash
+# ci-watch.sh · M1-1124-K · ci-watch 자가 재기동 래퍼
+# 끄기: Ctrl+C  또는  ci-watch.sh stop (다른 터미널)
 set -u
+
 SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
 CI_WATCH="$SELF_DIR/ci-watch.mjs"
-while :; do
+PID_FILE="$HOME/.hub-runner/ci-watch.pid"
+CRASH_WINDOW=60
+CRASH_LIMIT=5
+
+if [[ $# -ge 1 && "$1" = "stop" ]]; then
+  if [[ ! -f "$PID_FILE" ]]; then
+    echo "[ci-watch.sh] pid 파일 없음 · 실행 중이 아닐 수 있음"
+    exit 0
+  fi
+  pid="$(cat "$PID_FILE" 2>/dev/null)"
+  if [[ -n "$pid" ]] && kill -0 "$pid" 2>/dev/null; then
+    kill -TERM "$pid"
+    echo "[ci-watch.sh] stop 신호 전송 · pid=$pid"
+  else
+    echo "[ci-watch.sh] pid=$pid 프로세스 없음 · 이미 종료됨"
+    rm -f "$PID_FILE"
+  fi
+  exit 0
+fi
+
+mkdir -p "$(dirname "$PID_FILE")"
+echo $$ > "$PID_FILE"
+
+_CHILD_PID=""
+_STOPPING=0
+_cleanup() {
+  _STOPPING=1
+  if [[ -n "$_CHILD_PID" ]] && kill -0 "$_CHILD_PID" 2>/dev/null; then
+    kill -TERM "$_CHILD_PID" 2>/dev/null
+    wait "$_CHILD_PID" 2>/dev/null
+  fi
+  rm -f "$PID_FILE"
+  exit 0
+}
+trap _cleanup INT TERM
+
+echo "[ci-watch.sh] 시작 · 끄기: Ctrl+C  |  다른 터미널: ci-watch.sh stop" >&2
+
+crash_count=0
+crash_window_start=0
+
+while [[ "$_STOPPING" -eq 0 ]]; do
   if [[ ! -f "$CI_WATCH" ]]; then
     echo "[ci-watch.sh] 배포 파일 없음: $CI_WATCH · 10 초 뒤 재시도" >&2
-    sleep 10
+    sleep 10 & wait $!
     continue
   fi
-  node "$CI_WATCH" "$@"
-  echo "[ci-watch.sh] exited · 2 초 뒤 재기동" >&2
-  sleep 2
+
+  node "$CI_WATCH" "$@" &
+  _CHILD_PID=$!
+  wait "$_CHILD_PID"
+  exit_code=$?
+  _CHILD_PID=""
+
+  [[ "$_STOPPING" -eq 1 ]] && break
+
+  if [[ "$exit_code" -eq 0 ]]; then
+    echo "[ci-watch.sh] exit(0) · 즉시 재기동" >&2
+    continue
+  fi
+
+  now=$(date +%s)
+  if (( now - crash_window_start > CRASH_WINDOW )); then
+    crash_window_start=$now
+    crash_count=1
+  else
+    crash_count=$(( crash_count + 1 ))
+  fi
+
+  if (( crash_count >= CRASH_LIMIT )); then
+    echo "[ci-watch.sh] $CRASH_WINDOW s 내 비정상 종료 $CRASH_LIMIT 회 — 루프 중단. 고친 뒤 다시 실행하세요." >&2
+    rm -f "$PID_FILE"
+    exit 1
+  fi
+
+  echo "[ci-watch.sh] 비정상 종료(exit=$exit_code) · 2 초 뒤 재기동" >&2
+  sleep 2 & wait $!
 done
+
+rm -f "$PID_FILE"
 `;
 
 export function deployCiWatchWrapper({ runnerHome }) {
