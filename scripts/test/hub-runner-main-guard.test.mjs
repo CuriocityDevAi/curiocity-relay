@@ -1,4 +1,4 @@
-// scripts/test/hub-runner-main-guard.test.mjs · M1-1124-N
+// scripts/test/hub-runner-main-guard.test.mjs · M1-1124-Q
 //
 // 러너 폴더 사고 A·B·C 를 임시 git repo 에 재현하고 main-guard 가 자동으로 복구하는지 확인.
 // 각 case 는 한 함수. runner-v8.2 가 --selftest-main-guard-{a,b,c} 로 이 모듈을 import 해서 호출.
@@ -290,12 +290,108 @@ export function caseSleepTracker() {
   });
 }
 
+// --- Case D: rescue 브랜치 생성 실패 주입 ---
+
+export function caseD() {
+  console.log('[selftest-main-guard-d] 보존 실패: rescue 브랜치 생성 실패 → reset/checkout 차단');
+  return withTmp((tmp) => {
+    const { local } = initRemote(tmp);
+    const runnerHome = join(tmp, 'runner-home');
+    mkdirSync(runnerHome, { recursive: true });
+
+    // HEAD를 fix/* 브랜치로 (violated) + untracked file
+    g(local, ['checkout', '-b', 'fix/FAKE-D-branch-fail']);
+    mkdirSync(join(local, 'docs'), { recursive: true });
+    writeFileSync(join(local, 'docs', 'memo.md'), 'do not destroy\n');
+
+    const headBefore = g(local, ['rev-parse', 'HEAD']).trim();
+    const branchBefore = g(local, ['symbolic-ref', '--short', 'HEAD']).trim();
+
+    // rescue branch 생성 실패 주입
+    const baseImpl = createDefaultImpl(local);
+    const impl = {
+      ...baseImpl,
+      tryGit: (args, opts) => {
+        if (args[0] === 'branch' && args[1] === '-f' && args[2]?.startsWith('rescue-')) {
+          return { ok: false, err: 'injected: branch -f failed' };
+        }
+        return baseImpl.tryGit(args, opts);
+      },
+    };
+
+    const r = assertMainAtTickStart({ repoRoot: local, runnerHome, impl, logFn: (m) => console.log(`    [log] ${m}`) });
+
+    assert(r.rescue?.rescued === false, 'rescued=false');
+    assert(r.rescue?.aborted === true, 'aborted=true');
+    assert(r.ok === false, 'ok=false');
+
+    // 작업 트리·HEAD 미변경 확인
+    const headAfter = g(local, ['rev-parse', 'HEAD']).trim();
+    assert(headAfter === headBefore, `HEAD 미변경 · before=${headBefore} after=${headAfter}`);
+    const branchAfter = g(local, ['symbolic-ref', '--short', 'HEAD']).trim();
+    assert(branchAfter === branchBefore, `브랜치 미변경 · ${branchAfter}`);
+    assert(existsSync(join(local, 'docs', 'memo.md')), 'untracked 파일 유지');
+
+    // events/ 에 aborted 기록
+    const evFiles = readdirSync(join(local, 'events')).filter(f => f.includes('aborted'));
+    assert(evFiles.length >= 1, `events/ aborted 기록 · ${JSON.stringify(evFiles)}`);
+  });
+}
+
+// --- Case E: untracked 복사 실패 주입 ---
+
+export function caseE() {
+  console.log('[selftest-main-guard-e] 보존 실패: untracked 복사 실패 → reset/checkout 차단');
+  return withTmp((tmp) => {
+    const { local } = initRemote(tmp);
+    const runnerHome = join(tmp, 'runner-home');
+    mkdirSync(runnerHome, { recursive: true });
+
+    // HEAD를 fix/* 브랜치로 (violated) + untracked file
+    g(local, ['checkout', '-b', 'fix/FAKE-E-copy-fail']);
+    mkdirSync(join(local, 'docs'), { recursive: true });
+    writeFileSync(join(local, 'docs', 'notes.md'), 'important notes\n');
+
+    const headBefore = g(local, ['rev-parse', 'HEAD']).trim();
+    const branchBefore = g(local, ['symbolic-ref', '--short', 'HEAD']).trim();
+
+    // copyFileSync 실패 주입 (notes.md 복사 시도 시)
+    const baseImpl = createDefaultImpl(local);
+    const impl = {
+      ...baseImpl,
+      copyFileSync: (src, dst) => {
+        if (src.includes('notes.md')) throw new Error('injected: copy failed');
+        return baseImpl.copyFileSync(src, dst);
+      },
+    };
+
+    const r = assertMainAtTickStart({ repoRoot: local, runnerHome, impl, logFn: (m) => console.log(`    [log] ${m}`) });
+
+    assert(r.rescue?.rescued === false, 'rescued=false');
+    assert(r.rescue?.aborted === true, 'aborted=true');
+    assert(r.ok === false, 'ok=false');
+
+    // 작업 트리·HEAD 미변경 확인
+    const headAfter = g(local, ['rev-parse', 'HEAD']).trim();
+    assert(headAfter === headBefore, `HEAD 미변경 · before=${headBefore} after=${headAfter}`);
+    const branchAfter = g(local, ['symbolic-ref', '--short', 'HEAD']).trim();
+    assert(branchAfter === branchBefore, `브랜치 미변경 · ${branchAfter}`);
+    assert(existsSync(join(local, 'docs', 'notes.md')), 'untracked 파일 유지 (clean 차단됨)');
+
+    // events/ 에 aborted 기록
+    const evFiles = readdirSync(join(local, 'events')).filter(f => f.includes('aborted'));
+    assert(evFiles.length >= 1, `events/ aborted 기록 · ${JSON.stringify(evFiles)}`);
+  });
+}
+
 export async function runSelftest(which) {
   try {
     switch (which) {
       case 'A': caseA(); break;
       case 'B': caseB(); break;
       case 'C': caseC(); break;
+      case 'D': caseD(); break;
+      case 'E': caseE(); break;
       case 'safe-push': caseSafePush(); break;
       case 'hub-preamble': caseHubPreamble(); break;
       case 'sleep-tracker': caseSleepTracker(); break;

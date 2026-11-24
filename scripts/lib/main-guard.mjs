@@ -1,4 +1,4 @@
-// scripts/lib/main-guard.mjs · M1-1124-N
+// scripts/lib/main-guard.mjs · M1-1124-Q
 //
 // 러너 폴더 = 항상 main 보증 모듈.
 //
@@ -162,6 +162,21 @@ export function performRescue({ repoRoot, runnerHome, impl, logFn, now = new Dat
     actions: [],
   };
 
+  // 보존 단계 실패 시 reset/checkout/clean 없이 중단 + events/ 기록.
+  const abortRescue = (reason) => {
+    const evLine = `보존 실패로 복구 보류 · at=${now.toISOString()} · tag=${tag} · reason=${reason}`;
+    log(evLine);
+    try {
+      const eventsDir = join(repoRoot, 'events');
+      impl.mkdirSync(eventsDir, { recursive: true });
+      impl.writeFileSync(
+        join(eventsDir, `runner-main-guard-aborted-${tag}.md`),
+        `# 보존 실패로 복구 보류 · ${tag}\n\n${evLine}\n`,
+      );
+    } catch { /* noop */ }
+    return { rescued: false, aborted: true, reason };
+  };
+
   // (a) rebase/merge abort — 실패해도 진행.
   if (diag.rebaseMerge || diag.rebaseApply) {
     const a = impl.tryGit(['rebase', '--abort']);
@@ -182,24 +197,25 @@ export function performRescue({ repoRoot, runnerHome, impl, logFn, now = new Dat
     manifest.actions.push({ step: 'merge-abort', ok: a.ok, err: a.ok ? null : a.err?.split('\n')[0] });
   }
 
-  // (b) 현재 HEAD 를 rescue 브랜치로 보존 (ref 만).
+  // (b) 현재 HEAD 를 rescue 브랜치로 보존 (ref 만). — 실패 시 중단.
   const headSha = (() => {
     const r = impl.tryGit(['rev-parse', 'HEAD']);
     return r.ok ? r.stdout.trim() : null;
   })();
+  if (!headSha) return abortRescue('rev-parse HEAD failed');
   const rescueBranch = `rescue-${tag}`;
-  if (headSha) {
-    impl.tryGit(['branch', '-f', rescueBranch, headSha]);
-    manifest.actions.push({ step: 'rescue-branch', ref: rescueBranch, sha: headSha });
-  }
+  const brResult = impl.tryGit(['branch', '-f', rescueBranch, headSha]);
+  if (!brResult.ok) return abortRescue(`rescue-branch failed: ${(brResult.err || '').split('\n')[0]}`);
+  manifest.actions.push({ step: 'rescue-branch', ref: rescueBranch, sha: headSha });
 
-  // (c) RUNNER_SCOPE 밖 untracked/modified 파일 copy 보존.
+  // (c) RUNNER_SCOPE 밖 untracked/modified 파일 copy 보존. — 복사 실패 시 중단.
   //   untracked 는 `git ls-files --others --exclude-standard` 로 파일 단위 조회.
   //   modified 는 `git ls-files --modified` 로 조회.
   const preserved = [];
   const seen = new Set();
+  let copyError = null;
   const preserveOne = (p, code) => {
-    if (!p || seen.has(p)) return;
+    if (copyError || !p || seen.has(p)) return;
     seen.add(p);
     if (RUNNER_SCOPE_PREFIXES.some((pre) => p.startsWith(pre))) return;
     const abs = join(repoRoot, p);
@@ -210,21 +226,24 @@ export function performRescue({ repoRoot, runnerHome, impl, logFn, now = new Dat
       impl.copyFileSync(abs, dst);
       preserved.push({ path: p, code });
     } catch (e) {
-      preserved.push({ path: p, code, err: (e.message || '').split('\n')[0] });
+      copyError = { path: p, err: (e.message || '').split('\n')[0] };
     }
   };
   const uTracked = impl.tryGit(['ls-files', '--others', '--exclude-standard']);
   if (uTracked.ok) {
     for (const raw of uTracked.stdout.split('\n')) preserveOne(raw.trim(), '??');
   }
-  const mod = impl.tryGit(['ls-files', '--modified']);
-  if (mod.ok) {
-    for (const raw of mod.stdout.split('\n')) preserveOne(raw.trim(), 'M');
+  if (!copyError) {
+    const mod = impl.tryGit(['ls-files', '--modified']);
+    if (mod.ok) {
+      for (const raw of mod.stdout.split('\n')) preserveOne(raw.trim(), 'M');
+    }
   }
+  if (copyError) return abortRescue(`copy failed · ${copyError.path}: ${copyError.err}`);
   manifest.actions.push({ step: 'preserve-foreign', count: preserved.length });
   manifest.preserved = preserved;
 
-  // RUNNER_SCOPE 파일 보존 — 두 소스 결합:
+  // RUNNER_SCOPE 파일 보존 — 두 소스 결합 (best-effort):
   //   (1) 작업 트리에 pending 상태로 떠 있는 것 (status --porcelain)
   //   (2) 현재 HEAD 에는 있지만 origin/main 에는 없는 커밋된 것 (diff origin/main...HEAD)
   const savedRunner = new Set();
@@ -262,6 +281,13 @@ export function performRescue({ repoRoot, runnerHome, impl, logFn, now = new Dat
   }
   manifest.actions.push({ step: 'preserve-runner-scope', count: savedRunner.size });
 
+  // manifest 기록 — reset 전에 — 실패 시 중단.
+  try {
+    impl.writeFileSync(join(rescueDir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
+  } catch (e) {
+    return abortRescue(`manifest write failed: ${(e.message || '').split('\n')[0]}`);
+  }
+
   // (c-1) 작업 트리를 전부 정리 — untracked + modified 모두 날려야 checkout -f 가 걸린다.
   // 단, `.git/` 는 건드리지 않는다. runner scope 파일은 이미 savedRunner 로 백업됨.
   impl.tryGit(['reset', '--hard', 'HEAD']);
@@ -297,8 +323,10 @@ export function performRescue({ repoRoot, runnerHome, impl, logFn, now = new Dat
   }
   manifest.actions.push({ step: 'reapply-runner-scope', count: reapplied, files: reappliedFiles });
 
-  // (f) manifest + events 1줄.
-  impl.writeFileSync(join(rescueDir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
+  // (f) manifest 최종 갱신 (best-effort: reset 후 info 포함) + events 1줄.
+  try {
+    impl.writeFileSync(join(rescueDir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
+  } catch { /* noop */ }
   const evLine = `main-guard rescue · at=${now.toISOString()} · tag=${tag} · head_before=${diag.headRef} · rebase=${diag.rebaseMerge || diag.rebaseApply} · merge=${diag.mergeHead} · unmerged=${diag.unmerged.length} · foreign_preserved=${preserved.length} · runner_reapplied=${reapplied}`;
   log(evLine);
   try {
@@ -315,6 +343,7 @@ export function assertMainAtTickStart({ repoRoot, runnerHome, impl, logFn, now }
   const diag = detectViolation({ repoRoot, impl });
   if (!diag.violated) return { ok: true, diag };
   const res = performRescue({ repoRoot, runnerHome, impl, logFn, now });
+  if (res.aborted) return { ok: false, aborted: true, reason: res.reason, diag, rescue: res };
   const after = detectViolation({ repoRoot, impl });
   return { ok: !after.violated, diag, after, rescue: res };
 }
