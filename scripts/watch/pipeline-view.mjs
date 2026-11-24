@@ -185,6 +185,7 @@ export function buildPipelineView({
   }
 
   // --- 6) r0 리뷰 (mtime < reviewRecentHr 시간) → review 칸.
+  // predicted=true: 로컬만으로 머지 여부를 확인할 수 없으므로 경보 집계 제외.
   const reviews = scanR0Reviews(paths);
   const reviewRecentMs = reviewRecentHr * 3600_000;
   for (const [targetId, info] of reviews.entries()) {
@@ -194,6 +195,7 @@ export function buildPipelineView({
     const card = ensure(targetId);
     if (card.column === 'merge') continue;
     card.column = 'review';
+    card.predicted = true; // 머지 여부 로컬 미확인 → 경보 집계 제외
     card.since = new Date(info.mtimeMs);
     card.ageMin = Math.max(0, Math.round((nowMs - info.mtimeMs) / 60000));
     card.extra = { ...(card.extra || {}), review: info };
@@ -226,6 +228,21 @@ export function buildPipelineView({
     }
     if (shouldHideAfterMerge(card.column, card.ageMin, hideMin)) {
       doneToday += 1;
+      continue;
+    }
+    // predicted review: 경보 집계 제외.
+    // APPROVE + 90분 → 머지 추정으로 숨김; 그 외 → level 강제 green.
+    if (card.predicted && card.column === 'review') {
+      const firstLine = card.extra?.review?.firstLine;
+      if (firstLine === 'APPROVE' && card.ageMin >= 90) {
+        doneToday += 1;
+        continue; // 머지 추정 숨김
+      }
+      card.level = 'green';
+      card.mark = '●';
+      card.column_label = labelOf(card.column);
+      card.reason = '예측·머지 여부 모름';
+      cards.push(card);
       continue;
     }
     const cls = classifyAge(card.column, card.ageMin, card.thresholdOverride);

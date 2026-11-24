@@ -133,8 +133,17 @@ export function readReportFirstLine(reportPath) {
   } catch { return null; }
 }
 
+// 일반적인 섹션 헤딩 — 제목으로 사용하면 의미 없음.
+const GENERIC_HEADINGS = new Set([
+  '요약', '결과', '개요', '내용', '변경사항', '성능', '테스트', '작업', '완료',
+  '현황', '경과', '분석', '검토', '리뷰', '수정', '배포', '확인', '구현', '문제',
+  'summary', 'results', 'overview', 'changes', 'notes',
+]);
+
 /**
- * 리포트 본문에서 한 줄 제목 뽑기 — 첫 "# 제목" 또는 PR URL 다음 줄 등.
+ * 리포트 본문에서 한 줄 제목 뽑기 — 첫 "# 제목" (일반 헤딩 건너뜀).
+ * - `# 요약` 같은 일반 헤딩은 건너뛰고 다음 의미 있는 `#` 헤딩을 사용.
+ * - `#` 헤딩이 없으면 첫 비-상태코드·비-헤딩 줄.
  */
 export function extractReportTitle(reportPath) {
   if (!reportPath || !existsSync(reportPath)) return null;
@@ -143,23 +152,41 @@ export function extractReportTitle(reportPath) {
     const lines = body.split('\n').slice(0, 40);
     for (const l of lines) {
       const s = l.trim();
-      if (s.startsWith('# ')) return s.slice(2).trim();
+      if (s.startsWith('#')) {
+        const text = s.replace(/^#+\s*/, '').trim();
+        if (text && !GENERIC_HEADINGS.has(text.toLowerCase()) && text.length >= 3) return text;
+        continue; // 일반 헤딩 건너뜀
+      }
     }
     for (const l of lines) {
       const s = l.trim();
-      if (s && !/^(PASS|FAIL|APPROVE|CHANGES|SPEC|PLAN)\b/.test(s) && s.length < 120) return s;
+      if (s && !/^(PASS|FAIL|APPROVE|CHANGES|SPEC|PLAN)\b/.test(s)
+          && !s.startsWith('#') && s.length < 120) return s;
     }
   } catch {}
   return null;
 }
 
 /**
- * 큐 파일 1줄 제목 (첫 비공란 라인).
+ * 큐 파일 1줄 제목.
+ * `원장 대사:` 줄이 있으면 따옴표 안 텍스트를 우선 사용, 없으면 첫 비공란 라인.
  */
 export function readQueueTitle(filePath) {
   if (!filePath || !existsSync(filePath)) return null;
   try {
-    const first = (readFileSync(filePath, 'utf8').split('\n', 1)[0] || '').trim();
+    const lines = readFileSync(filePath, 'utf8').split('\n').slice(0, 6);
+    for (const l of lines) {
+      const s = l.trim();
+      if (s.startsWith('원장 대사:')) {
+        const rest = s.slice('원장 대사:'.length).trim();
+        const quoted = rest.match(/"([^"]{4,80})"/);
+        if (quoted) return quoted[1];
+        // 따옴표 없으면 첫 세그먼트 (— 또는 · 이전)
+        const seg = rest.replace(/—.*$/, '').replace(/·.*$/, '').trim();
+        if (seg.length >= 4) return seg.slice(0, 80);
+      }
+    }
+    const first = (lines[0] || '').trim();
     return first || null;
   } catch { return null; }
 }

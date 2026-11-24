@@ -172,7 +172,8 @@ test('T-5c: buildPipelineView — 오래된 ID 는 큐에서 제외', () => {
   const root = makeFixture();
   writeFileSync(join(root, 'queue', 'm1', 'M1-1105-AA.md'), '오래된 작업');
   const view = buildPipelineView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
-  assert.equal(view.cards.length, 0);
+  // 날짜 코드 1105 ≠ {1124, 1123} → M1-1105-AA 는 카드로 출현하지 않아야 함.
+  assert.equal(view.cards.find(c => c.id === 'M1-1105-AA'), undefined);
 });
 
 test('T-5d: buildPipelineView — 리포트 PR URL → pr 칸, CI jsonl → ci_result', () => {
@@ -273,6 +274,39 @@ test('T-6c: renderV2 — 노/빨 카드는 이유 줄 포함', () => {
   const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
   const text = lines.map(stripAnsi).join('\n');
   assert.ok(text.includes('허브작업 45분'));
+});
+
+// ---------- predicted review 경보 집계 제외 ----------
+
+test('T-8a: buildPipelineView — review predicted=true: level green, 경보 집계 제외', () => {
+  const root = makeFixture();
+  const r0 = join(root, 'r0', 'R0-1124-KK-report.md');
+  // APPROVE 리뷰 리포트, 45분 전 (review 창 2h 이내, 90분 미만)
+  writeFileSync(r0, 'APPROVE\n\nR0-1124-KK — M1-1124-ZZ 리뷰\nPR: x');
+  stamp(r0, NOW_MS - 45 * 60_000);
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+
+  const view = buildPipelineView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const card = view.cards.find(c => c.id === 'M1-1124-ZZ');
+  assert.ok(card, 'review card should exist');
+  assert.equal(card.column, 'review');
+  assert.equal(card.predicted, true, 'predicted should be true');
+  assert.equal(card.level, 'green', 'level must be green (경보 집계 제외)');
+  assert.equal(card.mark, '●');
+  assert.equal(card.reason, '예측·머지 여부 모름');
+});
+
+test('T-8b: buildPipelineView — review APPROVE 90분+ → 숨김 (doneToday 증가)', () => {
+  const root = makeFixture();
+  const r0 = join(root, 'r0', 'R0-1124-KM-report.md');
+  // 95분 전 — reviewRecentHr=2 창 안이지만 APPROVE + 90분 초과
+  writeFileSync(r0, 'APPROVE\n\nR0-1124-KM — M1-1124-ZM 리뷰\nPR: x');
+  stamp(r0, NOW_MS - 95 * 60_000);
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+
+  const view = buildPipelineView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  assert.equal(view.cards.find(c => c.id === 'M1-1124-ZM'), undefined, 'card should be hidden');
+  assert.equal(view.doneToday, 1, 'doneToday should increment');
 });
 
 // ---------- COLUMNS/LABELS 안전 ----------
