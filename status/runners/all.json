@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T16:43:51.995Z",
+  "at": "2026-11-24T16:48:21.462Z",
   "pid": 87453,
   "runner": "v8.1",
   "poll_ms": 30000,
@@ -56,11 +56,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.93,
-    "compressed_gb": 3.79,
-    "swap_used_gb": 1.92,
+    "used_gb": 15.71,
+    "compressed_gb": 3.41,
+    "swap_used_gb": 1.91,
     "pressure": "normal",
-    "at": "2026-11-24T16:43:49.148Z"
+    "at": "2026-11-24T16:47:49.117Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -68,7 +68,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T16:38:57.741Z",
+      "at": "2026-11-24T16:44:16.330Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -97,44 +97,44 @@
         "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 128,
+          "jobs": 127,
           "avg_wait_min": 0.9,
-          "avg_run_min": 2.3,
-          "success_rate": 89.1,
-          "run_min_total": 292.6000000000001
+          "avg_run_min": 2.2,
+          "success_rate": 89,
+          "run_min_total": 278.1000000000001
         },
         "mac-light": {
-          "jobs": 62,
-          "avg_wait_min": 0.5,
+          "jobs": 60,
+          "avg_wait_min": 0.4,
           "avg_run_min": 0.3,
-          "success_rate": 98.4,
-          "run_min_total": 18.900000000000006
+          "success_rate": 98.3,
+          "run_min_total": 18.200000000000006
         },
         "cloud": {
-          "jobs": 81,
+          "jobs": 80,
           "avg_wait_min": 0,
           "avg_run_min": 0.6,
-          "success_rate": 66.7,
+          "success_rate": 67.5,
           "run_min_total": 51.400000000000055
         },
         "cloud_cost_est_usd": 0.792,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 24.4
       },
-      "jsonl_added": 5,
+      "jsonl_added": 1,
       "alerts": []
     },
-    "took_ms": 12317,
-    "at": "2026-11-24T16:39:08.116Z"
+    "took_ms": 15349,
+    "at": "2026-11-24T16:44:29.836Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 13,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:claim 2026-11-24T16:40:20.972Z] M2-1124-T → started · runner-v8.1 · cmux-split · model=opus · source=queue-line · pane foreground=clau\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-T.json · {\"id\":\"M2-1124-T\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-24T16:40:21.059Z\",\"note\":\"runner-v8.1 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1124-T.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:claim 2026-11-24T16:40:29.710Z] M1-1124-R → done · runner-v8.1 cmux-split · 리포트 확인 m1/M1-1124-R-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-R.json · {\"id\":\"M1-1124-R\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-24T16:40:32.196Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m1/M1-1124-R-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1124-R.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:m0 2026-11-24T16:43:48.509Z] [report-path] M0-1124-M: REPORT_PATH 격리 리포트 수거·push",
+  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:claim 2026-11-24T16:40:29.710Z] M1-1124-R → done · runner-v8.1 cmux-split · 리포트 확인 m1/M1-1124-R-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-R.json · {\"id\":\"M1-1124-R\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-24T16:40:32.196Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m1/M1-1124-R-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1124-R.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:m0 2026-11-24T16:43:48.509Z] [report-path] M0-1124-M: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:claim 2026-11-24T16:43:52.043Z] M0-1124-M → done · runner-v8.1 cmux-split · 리포트 확인 m0/M0-1124-M-report.md · model=opus · 로그: /Users\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1124-M.json · {\"id\":\"M0-1124-M\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-24T16:43:52.128Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m0/M0-1124-M-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1124-M.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed",
   "git_state": {
     "ahead": 0,
     "behind": 0,
