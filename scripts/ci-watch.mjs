@@ -14,6 +14,7 @@ import {
   existsSync,
   readFileSync,
   readdirSync,
+  realpathSync,
   statSync,
 } from 'node:fs';
 import { homedir } from 'node:os';
@@ -34,7 +35,14 @@ const CI_WATCH_VERSION = '1.4';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(HERE, '..');
+// M1-1124-H: ci-watch 는 `~/.hub-runner/bin/ci-watch.mjs` 로 배포돼 실행될 수 있다.
+// 그 경우 REPO_ROOT 는 ~/.hub-runner 가 아니라 실제 clone (~/projects/curiocity-relay) 이어야 한다.
+// 배포 경로 식별 규칙: HERE 가 `.hub-runner/bin` 와 같으면 배포본으로 간주.
+const CI_WATCH_DEPLOY_HOME_BIN = join(homedir(), '.hub-runner', 'bin');
+const CI_WATCH_IS_DEPLOYED = HERE === CI_WATCH_DEPLOY_HOME_BIN;
+const REPO_ROOT = CI_WATCH_IS_DEPLOYED
+  ? join(homedir(), 'projects', 'curiocity-relay')
+  : resolve(HERE, '..');
 const THIS_FILE = fileURLToPath(import.meta.url);
 
 const LOCAL_REFRESH_MS = 3_000;              // 화면 갱신 · 로컬 전용 · GitHub 호출 없음
@@ -752,6 +760,18 @@ function getDiskFileHash() {
   try { return createHash('md5').update(readFileSync(THIS_FILE)).digest('hex'); } catch { return ''; }
 }
 
+// M1-1124-H: 자기 파일 변화 감지 시 exit(0) → ci-watch.sh 래퍼가 재기동.
+// 배포본일 때만 자동 재기동(원본 실행은 Kyu 가 Ctrl+C 로 결정하도록 v1.4 경고 유지).
+function exitIfSelfChanged(tag = 'tick') {
+  if (!runningCodeHash) return;
+  const now = getDiskFileHash();
+  if (!now || now === runningCodeHash) return;
+  if (!CI_WATCH_IS_DEPLOYED) return;
+  process.stdout.write('\x1b[?25h\n');
+  process.stderr.write(`[ci-watch:self-update] 파일 변화 감지(${tag}) · exit(0) · 래퍼가 재기동\n`);
+  process.exit(0);
+}
+
 // --- M2-1124-H: 카운트다운 + 키 입력 ---
 
 let nextGhRefreshMs = 0;        // GH 큐 다음 갱신 시각 (카운트다운 표시용)
@@ -980,10 +1000,15 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   process.on('SIGTERM', () => { cleanupTerminal(); process.exit(0); });
   process.stdout.write('\x1b[?25l');
 
+  // M1-1124-H: boot 로그 — 배포본 여부 · boot hash.
+  process.stderr.write(`[ci-watch:boot] deployed=${CI_WATCH_IS_DEPLOYED} · self=${THIS_FILE} · hash=${(runningCodeHash || '').slice(0, 12)}\n`);
+
   function scheduleNext() {
     if (refreshTimer) clearTimeout(refreshTimer);
     refreshTimer = setTimeout(() => {
       if (isRendering) { scheduleNext(); return; }
+      // M1-1124-H: tick 호출 전 자기 파일 변화 체크 → 배포본이면 exit(0) → 래퍼 재기동.
+      exitIfSelfChanged('tick');
       tick(fullMode).catch(() => {}).finally(scheduleNext);
     }, LOCAL_REFRESH_MS);
   }
@@ -1015,6 +1040,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   }
 
   (async () => {
+    exitIfSelfChanged('boot');
     await initFileCommitDate();
     await tick(fullMode).catch(() => {});
     scheduleNext();

@@ -1,5 +1,5 @@
 #!/bin/bash
-# scripts/hub-runner-install.sh · launchd 단일 plist 설치 (M1-1105-S / X)
+# scripts/hub-runner-install.sh · launchd 단일 plist 설치 (M1-1105-S / X / M1-1124-H)
 #
 # Usage:
 #   bash scripts/hub-runner-install.sh          (no args = --all 로 5 허브 동시 처리)
@@ -7,6 +7,12 @@
 # 산출:
 #   ~/Library/LaunchAgents/com.curiocity.hub-runner.plist   (단일 Label)
 #   ~/.hub-runner/launchd.{out,err}.log                     (launchd stdio)
+#   ~/.hub-runner/bin/hub-runner.mjs                        (심링크 → scripts/<TARGET>)
+#   ~/.hub-runner/bin/ci-watch.mjs + ci-watch.sh            (ci-watch 배포본 + 자가 재기동 래퍼)
+#
+# M1-1124-H (v8 R2): plist ProgramArguments 가 더이상 scripts/<TARGET> 를 직접 가리키지 않고
+# `~/.hub-runner/bin/hub-runner.mjs` 심링크를 가리킨다. 러너가 origin/main 변화를 감지하면
+# 심링크를 새 target 으로 갱신한 뒤 exit(0) → launchd KeepAlive 가 재기동 → 이후 Kyu 재설치 불필요.
 #
 # 기존 허브별 plist (com.curiocity.hub-runner.<hub>) 가 남아 있으면 bootout + 삭제.
 # runner-config.json 의 cwd 가 실제로 존재하는지 선실측.
@@ -14,8 +20,8 @@
 
 set -euo pipefail
 
-TARGET_RUNNER="${TARGET:-hub-runner-v7.8.mjs}"
-FALLBACK_RUNNER="${FALLBACK:-hub-runner-v7.7.mjs}"
+TARGET_RUNNER="${TARGET:-hub-runner-v8.1.mjs}"
+FALLBACK_RUNNER="${FALLBACK:-hub-runner-v8.0.mjs}"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -82,6 +88,47 @@ if ! "$NODE_BIN" --check "$REPO_ROOT/scripts/$TARGET_RUNNER" >/dev/null 2>&1; th
 fi
 echo "[install] node --check scripts/$TARGET_RUNNER · OK"
 
+# M1-1124-H (v8 R2): 자기 업데이트용 bin 디렉터리 + 심링크 + ci-watch 배포.
+#   ProgramArguments 가 심링크를 가리키므로, 러너가 심링크만 교체하면 launchd 재기동 시 새 target 실행.
+BIN_DIR="$HOME/.hub-runner/bin"
+mkdir -p "$BIN_DIR"
+RUNNER_LINK="$BIN_DIR/hub-runner.mjs"
+TARGET_ABS="$REPO_ROOT/scripts/$TARGET_RUNNER"
+if [[ -L "$RUNNER_LINK" || -e "$RUNNER_LINK" ]]; then
+  rm -f "$RUNNER_LINK"
+fi
+ln -s "$TARGET_ABS" "$RUNNER_LINK"
+echo "[install] 심링크 생성 · $RUNNER_LINK → $TARGET_ABS"
+
+CI_WATCH_SRC="$REPO_ROOT/scripts/ci-watch.mjs"
+CI_WATCH_DST="$BIN_DIR/ci-watch.mjs"
+CI_WATCH_SH="$BIN_DIR/ci-watch.sh"
+if [[ -f "$CI_WATCH_SRC" ]]; then
+  cp "$CI_WATCH_SRC" "$CI_WATCH_DST"
+  chmod 755 "$CI_WATCH_DST"
+  echo "[install] ci-watch 배포 · $CI_WATCH_DST"
+fi
+cat > "$CI_WATCH_SH" <<'SHEOF'
+#!/bin/bash
+# ci-watch.sh · M1-1124-H v8 R2 · ci-watch 자가 재기동 래퍼.
+# ci-watch.mjs 가 자기 파일 바이트 변화를 감지하면 exit(0) → 이 래퍼가 2 초 뒤 다시 띄움.
+set -u
+SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
+CI_WATCH="$SELF_DIR/ci-watch.mjs"
+while :; do
+  if [[ ! -f "$CI_WATCH" ]]; then
+    echo "[ci-watch.sh] 배포 파일 없음: $CI_WATCH · 10 초 뒤 재시도" >&2
+    sleep 10
+    continue
+  fi
+  node "$CI_WATCH" "$@"
+  echo "[ci-watch.sh] exited · 2 초 뒤 재기동" >&2
+  sleep 2
+done
+SHEOF
+chmod 755 "$CI_WATCH_SH"
+echo "[install] ci-watch 래퍼 · $CI_WATCH_SH"
+
 PATH_LINE="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
 # M1-1105-BA(d): Mac 잠금 시 bg 모드에서 setInterval(5s) 이 23분 지연된 사건(handoff-20261112-early) 고침.
@@ -98,6 +145,11 @@ PATH_LINE="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 # heredoc 에는 변수 치환만 필요한 뼈대만 유지. 테스트(test/hub-runner-install.test.mjs) 로 재발 감시.
 write_plist() {
   local runner="$1"
+  # M1-1124-H: ProgramArguments 는 심링크(`~/.hub-runner/bin/hub-runner.mjs`) 를 가리킨다.
+  # 러너 자기 업데이트가 심링크만 갱신하면 launchd 재기동 시 새 버전이 로드된다.
+  # fallback 경로에서도 심링크를 바꿔 끼운다.
+  if [[ -L "$RUNNER_LINK" || -e "$RUNNER_LINK" ]]; then rm -f "$RUNNER_LINK"; fi
+  ln -s "$REPO_ROOT/scripts/$runner" "$RUNNER_LINK"
   cat > "$PLIST_FILE" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -108,7 +160,7 @@ write_plist() {
   <key>ProgramArguments</key>
   <array>
     <string>$NODE_BIN</string>
-    <string>$REPO_ROOT/scripts/$runner</string>
+    <string>$RUNNER_LINK</string>
     <string>--all</string>
   </array>
   <key>WorkingDirectory</key>
@@ -118,7 +170,7 @@ write_plist() {
   <key>KeepAlive</key>
   <true/>
   <key>ThrottleInterval</key>
-  <integer>60</integer>
+  <integer>30</integer>
   <key>ProcessType</key>
   <string>Interactive</string>
   <key>LowPriorityIO</key>
@@ -139,7 +191,7 @@ write_plist() {
 </dict>
 </plist>
 PLIST
-  echo "[install] plist 작성 · runner=scripts/$runner"
+  echo "[install] plist 작성 · ProgramArguments=$RUNNER_LINK → scripts/$runner"
 }
 
 load_plist() {
