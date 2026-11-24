@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T07:35:47.573Z",
+  "at": "2026-11-24T07:41:01.082Z",
   "pid": 37338,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -38,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.83,
-    "compressed_gb": 3.81,
-    "swap_used_gb": 4.34,
+    "used_gb": 15.75,
+    "compressed_gb": 4.07,
+    "swap_used_gb": 4.67,
     "pressure": "normal",
-    "at": "2026-11-24T07:35:12.861Z"
+    "at": "2026-11-24T07:40:29.183Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -50,14 +50,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T07:32:16.165Z",
+      "at": "2026-11-24T07:37:29.840Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 8,
+      "api_calls": 11,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -65,7 +65,28 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "master",
+            "pr_display": "fork:master",
+            "job": "lint",
+            "step": "Run npm ci --legacy-peer-deps",
+            "running_min": 1,
+            "runner": "curiocity-mac-fork-light",
+            "kind": "mac-heavy"
+          },
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "master",
+            "pr_display": "fork:master",
+            "job": "playwright",
+            "step": "Install deps",
+            "running_min": 1,
+            "runner": "curiocity-mac-fork",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -76,10 +97,10 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 0,
+        "heavy_busy": 2,
         "light_online": 1
       },
-      "cloud_today": 0,
+      "cloud_today": 1,
       "today": {
         "mac-heavy": {
           "jobs": 58,
@@ -96,25 +117,26 @@
           "run_min_total": 6.7
         },
         "cloud": {
-          "jobs": 32,
+          "jobs": 33,
           "avg_wait_min": 0,
-          "avg_run_min": 0.7,
-          "success_rate": 65.6,
-          "run_min_total": 21.200000000000003
+          "avg_run_min": 0.6,
+          "success_rate": 66.7,
+          "run_min_total": 21.300000000000004
         },
-        "cloud_cost_est_usd": 0.312,
+        "cloud_cost_est_usd": 0.32,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 0,
-      "alerts": []
+      "jsonl_added": 1,
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 9317,
-    "at": "2026-11-24T07:32:23.163Z"
+    "took_ms": 14353,
+    "at": "2026-11-24T07:37:41.807Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 2,
-  "err_tail": "[hub-runner-v7.8:heartbeat 2026-11-24T07:29:24.833Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:claim 2026-11-24T07:29:40.862Z] M2-1124-H → blocked · timeout 60m · runner-v7.8 cmux-split · pane 유지 (C-c + /exit 전송) · model=sonnet ·\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-H.json · {\"id\":\"M2-1124-H\",\"hub\":\"m2\",\"state\":\"blocked\",\"at\":\"2026-11-24T07:29:40.946Z\",\"note\":\"timeout 60m · runner-v7.8 cmux-split · pane 유지 (C-c + /exit 전송) · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1124-H.log\",\"blocked_by\":\"oke\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/38)\rRebasing (2/38)\rerror: could not apply f660ca25c... claim(r0): R0-1124-G done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · mod\n[hub-runner-v7.8:m2 2026-11-24T07:29:59.093Z] pick · M2-1124-I · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-24T07:30:01.848Z] M2-1124-I → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-I.json · {\"id\":\"M2-1124-I\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-24T07:30:01.955Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1124-I.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/39)\rRebasing (2/39)\rerror: could not apply f660ca25c... claim(r0): R0-1124-G done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · mod\n[hub-runner-v7.8:git 2026-11-24T07:34:33.620Z] lastError 해제 (safePull 성공) · 이전 오류: blocked: runner-folder change pending Kyu install (m2/M2-1123-C-report.md)\n[hub-runner-v7.8:r0 2026-11-24T07:35:46.069Z] pick · R0-1124-I · model=sonnet · display=cmux-split",
+  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/39)\rRebasing (2/39)\rerror: could not apply f660ca25c... claim(r0): R0-1124-G done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · mod\n[hub-runner-v7.8:git 2026-11-24T07:34:33.620Z] lastError 해제 (safePull 성공) · 이전 오류: blocked: runner-folder change pending Kyu install (m2/M2-1123-C-report.md)\n[hub-runner-v7.8:r0 2026-11-24T07:35:46.069Z] pick · R0-1124-I · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-24T07:35:48.712Z] R0-1124-I → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-I.json · {\"id\":\"R0-1124-I\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-24T07:35:48.809Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1124-I.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-24T07:38:06.494Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T07:38:40.053Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T07:39:15.811Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T07:39:49.614Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T07:40:25.247Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T07:40:58.888Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -137,12 +159,12 @@
     {
       "name": "curiocity-mac-fork",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "curiocity-mac-fork-light",
       "status": "online",
-      "busy": false
+      "busy": true
     }
   ]
 }
