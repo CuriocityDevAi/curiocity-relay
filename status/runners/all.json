@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T04:33:57.280Z",
+  "at": "2026-11-24T04:35:06.478Z",
   "pid": 75067,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -23,7 +23,9 @@
       "last_activity": "2026-11-24T04:15:00.467Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1124-B",
+      "started_at": "2026-11-24T04:35:05.224Z",
+      "model": "sonnet",
       "last_activity": null
     },
     "r0": {
@@ -36,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.81,
-    "compressed_gb": 4.5,
+    "used_gb": 15.91,
+    "compressed_gb": 4.61,
     "swap_used_gb": 3.1,
     "pressure": "normal",
-    "at": "2026-11-24T04:33:23.558Z"
+    "at": "2026-11-24T04:34:32.461Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -112,7 +114,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:git 2026-11-24T04:10:22.476Z] blocked: runner-folder change pending Kyu install · files=scripts/ci-watch.mjs,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md\n[hub-runner-v7.8:git 2026-11-24T04:11:33.051Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md\n[hub-runner-v7.8:git 2026-11-24T04:14:21.602Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.8:git 2026-11-24T04:14:54.039Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,m2/M2-1124-A-report.md,r0/R0-1124-A-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T04:14:54.039Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,m2/M2-1124-A-report.md,r0/R0-1124-A-report.md\n[hub-runner-v7.8:git 2026-11-24T04:15:00.600Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T04:15:00.601Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md\n[hub-runner-v7.8:claim 2026-11-24T04:15:01.909Z] M2-1124-A → done · runner-v7.8 cmux-split · 리포트 확인 m2/M2-1124-A-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-A.json · {\"id\":\"M2-1124-A\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-24T04:15:01.995Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m2/M2-1124-A-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1124-A.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:heartbeat 2026-11-24T04:20:29.224Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-24T04:21:01.544Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.8:m0 2026-11-24T04:33:55.848Z] pick · M0-1124-A · model=opus · display=cmux-split",
+  "err_tail": "[hub-runner-v7.8:git 2026-11-24T04:15:00.601Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md\n[hub-runner-v7.8:claim 2026-11-24T04:15:01.909Z] M2-1124-A → done · runner-v7.8 cmux-split · 리포트 확인 m2/M2-1124-A-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-A.json · {\"id\":\"M2-1124-A\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-24T04:15:01.995Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m2/M2-1124-A-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1124-A.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:heartbeat 2026-11-24T04:20:29.224Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-24T04:21:01.544Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.8:m0 2026-11-24T04:33:55.848Z] pick · M0-1124-A · model=opus · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-24T04:33:59.840Z] M0-1124-A → started · runner-v7.8 · cmux-split · model=opus · source=queue-line · pane foreground=clau\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1124-A.json · {\"id\":\"M0-1124-A\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-24T04:33:59.939Z\",\"note\":\"runner-v7.8 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1124-A.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m0/M0-1124-A.md, m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v7.8:m3 2026-11-24T04:35:05.223Z] pick · M3-1124-B · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
