@@ -1,123 +1,45 @@
 {
-  "at": "2026-11-24T15:13:56.403Z",
-  "pid": 21194,
+  "at": "2026-11-24T15:15:53.642Z",
+  "pid": 87453,
   "runner": "v8.1",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
   "last_error": "blocked: runner-folder change pending Kyu install (m0/M0-1124-J-report.md)",
-  "last_error_at": "2026-11-24T13:54:55.348Z",
+  "last_error_at": "2026-11-24T15:15:51.734Z",
   "hubs": {
     "m0": {
       "current": null,
-      "last_activity": "2026-11-24T14:38:52.426Z"
+      "last_activity": null
     },
     "m1": {
       "current": null,
-      "last_activity": "2026-11-24T15:13:55.261Z"
+      "last_activity": null
     },
     "m2": {
       "current": null,
-      "last_activity": "2026-11-24T15:02:15.841Z"
+      "last_activity": null
     },
     "m3": {
       "current": null,
-      "last_activity": "2026-11-24T14:54:13.345Z"
+      "last_activity": null
     },
     "r0": {
       "current": null,
-      "last_activity": "2026-11-24T15:01:17.934Z"
+      "last_activity": null
     }
   },
   "pane_close_failures": {},
-  "last_sleep_gap": {
-    "lastMs": 370837,
-    "totalMs": 923728,
-    "phase": "await-landing",
-    "at": "2026-11-24T14:23:02.166Z"
-  },
+  "last_sleep_gap": null,
   "kyu_folder_intrusion": null,
-  "mem": {
-    "total_gb": 16,
-    "used_gb": 15.88,
-    "compressed_gb": 3.17,
-    "swap_used_gb": 2.45,
-    "pressure": "normal",
-    "at": "2026-11-24T15:13:30.088Z"
-  },
-  "mem_peak_today": {
-    "date": "2026-11-24",
-    "used_gb": 15.93
-  },
-  "ci": {
-    "data": {
-      "at": "2026-11-24T15:10:03.536Z",
-      "repos_scanned": [
-        "CuriocityDevAi/storeport",
-        "CuriocityDevAi/agilo-medusa-pos-fork"
-      ],
-      "repos_failed": [],
-      "repos_skipped": [],
-      "api_calls": 8,
-      "api_budget": 40,
-      "api_overflow": false,
-      "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "cloud_in_progress": [],
-      "runners": {
-        "heavy_online": 3,
-        "heavy_busy": 0,
-        "light_online": 1
-      },
-      "cloud_today": 0,
-      "today": {
-        "mac-heavy": {
-          "jobs": 127,
-          "avg_wait_min": 0.9,
-          "avg_run_min": 2.2,
-          "success_rate": 89,
-          "run_min_total": 278.1000000000001
-        },
-        "mac-light": {
-          "jobs": 56,
-          "avg_wait_min": 0.4,
-          "avg_run_min": 0.3,
-          "success_rate": 98.2,
-          "run_min_total": 17.000000000000004
-        },
-        "cloud": {
-          "jobs": 79,
-          "avg_wait_min": 0,
-          "avg_run_min": 0.6,
-          "success_rate": 67.1,
-          "run_min_total": 48.20000000000005
-        },
-        "cloud_cost_est_usd": 0.76,
-        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 24.4
-      },
-      "jsonl_added": 0,
-      "alerts": []
-    },
-    "took_ms": 11003,
-    "at": "2026-11-24T15:10:11.987Z"
-  },
+  "mem": null,
+  "mem_peak_today": null,
+  "ci": null,
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 30,
-  "branch_reports_recovered": 2,
-  "err_tail": "[claim] committed\n[claim] pushed\n[hub-runner-v8.1:r0 2026-11-24T15:01:15.696Z] [report-path] R0-1124-AH: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:claim 2026-11-24T15:01:19.270Z] R0-1124-AH → done · runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AH-report.md · model=sonnet · 로그: /Us\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-AH.json · {\"id\":\"R0-1124-AH\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-24T15:01:19.364Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AH-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1124-AH.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:m2 2026-11-24T15:02:13.902Z] [report-path] M2-1124-R: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:claim 2026-11-24T15:02:17.069Z] M2-1124-R → done · runner-v8.1 cmux-split · 리포트 확인 m2/M2-1124-R-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-R.json · {\"id\":\"M2-1124-R\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-24T15:02:17.158Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m2/M2-1124-R-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1124-R.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:self-update 2026-11-24T15:05:29.226Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.1:m1 2026-11-24T15:13:53.338Z] [report-path] M1-1124-N: REPORT_PATH 격리 리포트 수거·push",
+  "isolated_reports_collected": null,
+  "branch_reports_recovered": null,
+  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:self-update 2026-11-24T15:15:44.589Z] ci-watch.sh 래퍼 배포\n[hub-runner-v8.1:self-update 2026-11-24T15:15:44.622Z] 변화 감지 · target=hub-runner-v8.1.mjs renamed=false bytesDiffer=true\n[hub-runner-v8.1:self-update 2026-11-24T15:15:44.924Z] node --check hub-runner-v8.1.mjs → status=0\n[hub-runner-v8.1:self-update 2026-11-24T15:15:44.924Z] selftest --selftest-stale-lock → status=0 [selftest-stale-lock] OK · 사망 PID lock 즉시 stale 처리 · 10분 대기 없음\n[hub-runner-v8.1:self-update 2026-11-24T15:15:44.924Z] selftest --selftest-merge-fail3 → status=0 [selftest-merge-fail3] OK · 연속 3회 → summarized=true · 4회 반복 억제 · 키 변경 시 리셋\n[hub-runner-v8.1:self-update 2026-11-24T15:15:44.924Z] selftest --selftest-report-path-off → status=0 [selftest-report-path-off] OK · flag off → false · 기본 on · ${ABS_PATH} 치환 정상\n[hub-runner-v8.1:self-update 2026-11-24T15:15:44.925Z] 심링크 동일 · /Users/kyu.lee/.hub-runner/bin/hub-runner.mjs → /Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v8.1.mjs · prev=/Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v8.1.mjs\n[hub-runner-v8.1:self-update 2026-11-24T15:15:44.925Z] pending 기록 · prev=hub-runner-v8.1.mjs next=hub-runner-v8.1.mjs · 2 초 뒤 exit(0)\n[hub-runner-v8.1 2026-11-24T15:15:47.104Z] 시작 · v8.1 · script=hub-runner-v8.1.mjs · boot_sha=a2c86fbd4b87 · mode=--all · once=false · dry-run=false · poll=30000ms · claude=/Users/kyu.lee/.local/bin/claude · version=2.1.128 (Claude Code) · model=opus · display=cmux-split · cmux=/Applications/cmux.app/Contents/Resources/bin/cmux · cmux_password=*** · heartbeat=30m · run_timeout=60m · self_update=10m\n[hub-runner-v8.1:self-update 2026-11-24T15:15:47.106Z] boot confirm · count=1 · 180 s 내 heartbeat 필요\n[hub-runner-v8.1:self-update 2026-11-24T15:15:49.228Z] boot heartbeat OK · pending 정리 · prev=hub-runner-v8.1.mjs next=hub-runner-v8.1.mjs\n[hub-runner-v8.1:self-update 2026-11-24T15:15:51.562Z] ci-watch 배포 갱신\n[hub-runner-v8.1:self-update 2026-11-24T15:15:51.564Z] ci-watch.sh 래퍼 배포\n[hub-runner-v8.1:git 2026-11-24T15:15:51.733Z] 러너 폴더 침범 감지 · files=m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md,r0/R0-1124-K-report.md · guess_hub=m0\n[hub-runner-v8.1:git 2026-11-24T15:15:51.734Z] blocked: runner-folder change pending Kyu install · files=m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md,r0/R0-1124-K-report.md\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:15:52.718Z] [gh-runner-watchdog] skip restart: no-ci-data",
   "git_state": {
     "ahead": 0,
     "behind": 0,
