@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T11:21:22.761Z",
+  "at": "2026-11-24T11:22:17.511Z",
   "pid": 21194,
   "runner": "v8.1",
   "poll_ms": 30000,
@@ -43,11 +43,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.44,
-    "compressed_gb": 4.95,
+    "used_gb": 15.52,
+    "compressed_gb": 3.87,
     "swap_used_gb": 2.34,
     "pressure": "normal",
-    "at": "2026-11-24T11:21:12.067Z"
+    "at": "2026-11-24T11:21:44.627Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -133,7 +133,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 13,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): r0/R0-1124-K-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:18:41.033Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:19:18.534Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:r0 2026-11-24T11:19:20.957Z] pick · R0-1124-Z · model=sonnet · display=cmux-split\n[hub-runner-v8.1:claim 2026-11-24T11:19:24.633Z] R0-1124-Z → started · runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-Z.json · {\"id\":\"R0-1124-Z\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-24T11:19:24.747Z\",\"note\":\"runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1124-Z.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/r0/R0-1124-Z.md, status/ci/2026-11-24.jsonl, r0/R0-1124-K-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:19:53.919Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:20:30.901Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:21:05.091Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m2 2026-11-24T11:21:19.477Z] [report-path] M2-1124-P: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:m2 2026-11-24T11:21:21.552Z] [kyu-intrusion] Kyu 폴더 HEAD 변경 감지 · 모두 kyu dev-refresh 패턴 · 경보 생략: /Users/kyu.lee/projects/agilo-fork-test, /Users/kyu.lee/projects/kyu-display",
+  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/r0/R0-1124-Z.md, status/ci/2026-11-24.jsonl, r0/R0-1124-K-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:19:53.919Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:20:30.901Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:21:05.091Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m2 2026-11-24T11:21:19.477Z] [report-path] M2-1124-P: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:m2 2026-11-24T11:21:21.552Z] [kyu-intrusion] Kyu 폴더 HEAD 변경 감지 · 모두 kyu dev-refresh 패턴 · 경보 생략: /Users/kyu.lee/projects/agilo-fork-test, /Users/kyu.lee/projects/kyu-display\n[hub-runner-v8.1:claim 2026-11-24T11:21:22.807Z] M2-1124-P → done · runner-v8.1 cmux-split · 리포트 확인 m2/M2-1124-P-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-P.json · {\"id\":\"M2-1124-P\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-24T11:21:22.896Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m2/M2-1124-P-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1124-P.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): r0/R0-1124-K-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:21:41.794Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:22:15.196Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
