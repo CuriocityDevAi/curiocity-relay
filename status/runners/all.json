@@ -1,12 +1,12 @@
 {
-  "at": "2026-11-24T06:47:18.131Z",
+  "at": "2026-11-24T06:47:34.460Z",
   "pid": 37338,
   "runner": "v7.8",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
   "last_error": "blocked: runner-folder change pending Kyu install (m2/M2-1123-C-report.md)",
-  "last_error_at": "2026-11-24T06:46:04.917Z",
+  "last_error_at": "2026-11-24T06:47:33.524Z",
   "hubs": {
     "m0": {
       "current": "M0-1124-B",
@@ -15,10 +15,8 @@
       "last_activity": null
     },
     "m1": {
-      "current": "M1-1124-E",
-      "started_at": "2026-11-24T06:41:56.540Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-24T06:41:36.985Z"
+      "current": null,
+      "last_activity": "2026-11-24T06:47:33.334Z"
     },
     "m2": {
       "current": "M2-1124-H",
@@ -40,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.49,
-    "compressed_gb": 4.2,
+    "used_gb": 15.63,
+    "compressed_gb": 4.64,
     "swap_used_gb": 5.06,
     "pressure": "normal",
-    "at": "2026-11-24T06:46:45.958Z"
+    "at": "2026-11-24T06:47:20.691Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -138,7 +136,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": 2,
-  "err_tail": "[hub-runner-v7.8:claim 2026-11-24T06:42:02.319Z] M1-1124-E → started · runner-v7.8 · cmux-split · model=opus · source=queue-line · pane foreground=clau\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-E.json · {\"id\":\"M1-1124-E\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-24T06:42:02.467Z\",\"note\":\"runner-v7.8 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1124-E.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/5)\rRebasing (2/5)\rerror: could not apply f660ca25c... claim(r0): R0-1124-G done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · mod\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:42:32.527Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:43:06.525Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:43:42.322Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:44:16.547Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:44:52.798Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T06:45:26.802Z] pull --rebase origin main 실패: error: Pulling is not possible because you have unmerged files. · hint: Fix them up in the work tree, and then use 'git add/rm <file>' · hint: as appropriate to mark resolution and make a commit. · rebase --abort\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:45:27.070Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T06:46:04.916Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,queue/m2/M2-1124-I.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T06:46:04.917Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,queue/m2/M2-1124-I.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:46:05.601Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:46:39.571Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:47:15.437Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/5)\rRebasing (2/5)\rerror: could not apply f660ca25c... claim(r0): R0-1124-G done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · mod\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:42:32.527Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:43:06.525Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:43:42.322Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:44:16.547Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:44:52.798Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T06:45:26.802Z] pull --rebase origin main 실패: error: Pulling is not possible because you have unmerged files. · hint: Fix them up in the work tree, and then use 'git add/rm <file>' · hint: as appropriate to mark resolution and make a commit. · rebase --abort\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:45:27.070Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T06:46:04.916Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,queue/m2/M2-1124-I.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T06:46:04.917Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,queue/m2/M2-1124-I.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:46:05.601Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:46:39.571Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:47:15.437Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:heartbeat 2026-11-24T06:47:19.043Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-24T06:47:33.524Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T06:47:33.524Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md",
   "git_state": {
     "ahead": 0,
     "behind": 0,
