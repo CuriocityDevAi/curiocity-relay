@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T10:31:49.180Z",
+  "at": "2026-11-24T10:37:21.739Z",
   "pid": 21194,
   "runner": "v8.1",
   "poll_ms": 30000,
@@ -37,19 +37,19 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 111756,
-    "totalMs": 264529,
+    "lastMs": 28045,
+    "totalMs": 292574,
     "phase": "await-landing",
-    "at": "2026-11-24T10:31:28.230Z"
+    "at": "2026-11-24T10:32:01.286Z"
   },
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.88,
-    "compressed_gb": 4.59,
-    "swap_used_gb": 3.53,
+    "used_gb": 15.77,
+    "compressed_gb": 4.15,
+    "swap_used_gb": 3.44,
     "pressure": "normal",
-    "at": "2026-11-24T10:29:32.485Z"
+    "at": "2026-11-24T10:36:48.627Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -57,7 +57,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T10:24:14.318Z",
+      "at": "2026-11-24T10:36:43.421Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -117,14 +117,14 @@
       "alerts": [],
       "partial": true
     },
-    "took_ms": 13995,
-    "at": "2026-11-24T10:24:26.657Z"
+    "took_ms": 14547,
+    "at": "2026-11-24T10:36:56.255Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 5,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.1:gh-watchdog 2026-11-24T10:25:22.605Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:25:57.769Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:git 2026-11-24T10:26:36.623Z] blocked: runner-folder change pending Kyu install · files=scripts/ci-watch.mjs,scripts/hub-runner-install.sh,scripts/hub-runner-v8.1.mjs,scripts/lib/self-update.mjs,r0/R0-1124-K-report.md…\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:26:37.491Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m1 2026-11-24T10:28:47.763Z] sleep gap 감지 114s · 예산 보정 · 누적 114s · phase=await-landing\n[hub-runner-v8.1:r0 2026-11-24T10:28:58.024Z] sleep gap 감지 124s · 예산 보정 · 누적 124s · phase=await-landing\n[hub-runner-v8.1:git 2026-11-24T10:29:00.314Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Failed to connect to github.com port 443 after 4 ms: Couldn't connect to server\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:29:00.316Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:heartbeat 2026-11-24T10:29:30.162Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Failed to connect to github.com port 443 after 6 ms: Couldn't connect to server\n[hub-runner-v8.1:state 2026-11-24T10:29:30.713Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.1:self-update 2026-11-24T10:29:30.719Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.1:m1 2026-11-24T10:29:30.720Z] sleep gap 감지 38s · 예산 보정 · 누적 152s · phase=await-landing\n[hub-runner-v8.1:r0 2026-11-24T10:29:31.475Z] sleep gap 감지 28s · 예산 보정 · 누적 153s · phase=await-landing\n[hub-runner-v8.1:m1 2026-11-24T10:31:27.601Z] sleep gap 감지 112s · 예산 보정 · 누적 264s · phase=await-landing\n[hub-runner-v8.1:r0 2026-11-24T10:31:28.230Z] sleep gap 감지 112s · 예산 보정 · 누적 265s · phase=await-landing\n[hub-runner-v8.1:git 2026-11-24T10:31:39.253Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.1:git 2026-11-24T10:31:39.658Z] 러너 폴더 침범 감지 · files=r0/R0-1124-K-report.md · guess_hub=r0\n[hub-runner-v8.1:git 2026-11-24T10:31:39.658Z] blocked: runner-folder change pending Kyu install · files=r0/R0-1124-K-report.md,scripts/test/ci-watch-deploy.test.mjs\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:31:45.317Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m3 2026-11-24T10:31:47.720Z] pick · M3-1124-J · model=sonnet · display=cmux-split",
+  "err_tail": "[hub-runner-v8.1:heartbeat 2026-11-24T10:31:57.964Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.1:m1 2026-11-24T10:32:00.928Z] sleep gap 감지 28s · 예산 보정 · 누적 293s · phase=await-landing\n[hub-runner-v8.1:r0 2026-11-24T10:32:01.286Z] sleep gap 감지 28s · 예산 보정 · 누적 293s · phase=await-landing\n[hub-runner-v8.1:claim 2026-11-24T10:32:01.760Z] M3-1124-J → started · runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1124-J.json · {\"id\":\"M3-1124-J\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-24T10:32:01.866Z\",\"note\":\"runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1124-J.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json unchanged · skip write\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): r0/R0-1124-K-report.md, scripts/test/ci-watch-deploy.test.mjs\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:32:32.793Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:33:07.612Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:33:47.728Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:34:22.006Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:34:58.850Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:35:32.874Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:36:08.907Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:36:42.619Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:37:19.048Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -136,22 +136,22 @@
   "ci_runners": [
     {
       "name": "curiocity-mac-light",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
       "name": "curiocity-mac-fork",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
       "name": "curiocity-mac-fork-light",
-      "status": "offline",
+      "status": "online",
       "busy": false
     }
   ]
