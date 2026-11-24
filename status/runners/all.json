@@ -1,19 +1,21 @@
 {
-  "at": "2026-11-24T17:35:52.686Z",
+  "at": "2026-11-24T17:40:58.049Z",
   "pid": 56897,
   "runner": "v8.2",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": "blocked: runner-folder change pending Kyu install (events/runner-main-guard-20261124T173048Z.md)",
-  "last_error_at": "2026-11-24T17:30:50.321Z",
+  "last_error": "blocked: runner-folder change pending Kyu install (queue/m1/M1-1124-U.md)",
+  "last_error_at": "2026-11-24T17:39:49.855Z",
   "hubs": {
     "m0": {
       "current": null,
       "last_activity": null
     },
     "m1": {
-      "current": null,
+      "current": "M1-1124-U",
+      "started_at": "2026-11-24T17:39:18.081Z",
+      "model": "sonnet",
       "last_activity": null
     },
     "m2": {
@@ -34,26 +36,26 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.74,
-    "compressed_gb": 3.65,
+    "used_gb": 14.58,
+    "compressed_gb": 4.17,
     "swap_used_gb": 1.9,
     "pressure": "normal",
-    "at": "2026-11-24T17:35:20.686Z"
+    "at": "2026-11-24T17:40:26.271Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
-    "used_gb": 15.5
+    "used_gb": 15.71
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T17:30:51.951Z",
+      "at": "2026-11-24T17:35:52.651Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 11,
+      "api_calls": 10,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -61,18 +63,7 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/storeport",
-            "pr": "main",
-            "pr_display": "storeport:main",
-            "job": "heavy-mac",
-            "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 10,
-            "runner": "Youngkyus-MacBook-Pro-M1",
-            "kind": "mac-heavy"
-          }
-        ]
+        "in_progress": []
       },
       "light": {
         "queued": 0,
@@ -83,47 +74,47 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 1,
+        "heavy_busy": 0,
         "light_online": 1
       },
       "cloud_today": 1,
       "today": {
         "mac-heavy": {
-          "jobs": 5,
-          "avg_wait_min": 1,
-          "avg_run_min": 1.8,
+          "jobs": 6,
+          "avg_wait_min": 0.8,
+          "avg_run_min": 3.7,
           "success_rate": 100,
-          "run_min_total": 9.200000000000001
+          "run_min_total": 21.9
         },
         "mac-light": {
-          "jobs": 0,
-          "avg_wait_min": 0,
-          "avg_run_min": 0,
-          "success_rate": null,
-          "run_min_total": 0
+          "jobs": 4,
+          "avg_wait_min": 0.5,
+          "avg_run_min": 0.4,
+          "success_rate": 100,
+          "run_min_total": 1.4000000000000001
         },
         "cloud": {
-          "jobs": 4,
+          "jobs": 5,
           "avg_wait_min": 0,
           "avg_run_min": 0.1,
-          "success_rate": 75,
+          "success_rate": 60,
           "run_min_total": 0.4
         },
         "cloud_cost_est_usd": 0.024,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 1,
+      "jsonl_added": 6,
       "alerts": []
     },
-    "took_ms": 11668,
-    "at": "2026-11-24T17:31:01.730Z"
+    "took_ms": 14408,
+    "at": "2026-11-24T17:36:05.202Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": null,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.416Z] 변화 감지 · target=hub-runner-v8.2.mjs renamed=true bytesDiffer=true\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.730Z] node --check hub-runner-v8.2.mjs → status=0\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.730Z] selftest --selftest-stale-lock → status=0 [selftest-stale-lock] OK · 사망 PID lock 즉시 stale 처리 · 10분 대기 없음\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.730Z] selftest --selftest-merge-fail3 → status=0 [selftest-merge-fail3] OK · 연속 3회 → summarized=true · 4회 반복 억제 · 키 변경 시 리셋\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.730Z] selftest --selftest-report-path-off → status=0 [selftest-report-path-off] OK · flag off → false · 기본 on · ${ABS_PATH} 치환 정상\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.732Z] 심링크 갱신 · /Users/kyu.lee/.hub-runner/bin/hub-runner.mjs → /Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v8.2.mjs · prev=/Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v8.1.mjs\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.732Z] pending 기록 · prev=hub-runner-v8.1.mjs next=hub-runner-v8.2.mjs · 2 초 뒤 exit(0)\n[hub-runner-v8.2 2026-11-24T17:30:44.134Z] 시작 · v8.2 · script=hub-runner-v8.2.mjs · boot_sha=40bdc0463aa1 · mode=--all · once=false · dry-run=false · poll=30000ms · claude=/Users/kyu.lee/.local/bin/claude · version=2.1.128 (Claude Code) · model=opus · display=cmux-split · cmux=/Applications/cmux.app/Contents/Resources/bin/cmux · cmux_password=*** · heartbeat=30m · run_timeout=60m · self_update=10m\n[hub-runner-v8.2:self-update 2026-11-24T17:30:44.135Z] boot confirm · count=1 · 180 s 내 heartbeat 필요\n[hub-runner-v8.2:self-update 2026-11-24T17:30:45.646Z] boot heartbeat OK · pending 정리 · prev=hub-runner-v8.1.mjs next=hub-runner-v8.2.mjs\n[hub-runner-v8.2:main-guard 2026-11-24T17:30:49.998Z] main-guard rescue · at=2026-11-24T17:30:48.019Z · tag=20261124T173048Z · head_before=(detached) · rebase=true · merge=false · unmerged=0 · foreign_preserved=5 · runner_reapplied=1\n[hub-runner-v8.2:main-guard 2026-11-24T17:30:50.062Z] 복구 성공 · tag=20261124T173048Z · reapplied=1 · preserved=5\n[hub-runner-v8.2:git 2026-11-24T17:30:50.252Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.2:git 2026-11-24T17:30:50.321Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:30:51.062Z] [gh-runner-watchdog] skip restart: no-ci-data",
+  "err_tail": "[claim] committed\n[claim] pushed\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.416Z] 변화 감지 · target=hub-runner-v8.2.mjs renamed=true bytesDiffer=true\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.730Z] node --check hub-runner-v8.2.mjs → status=0\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.730Z] selftest --selftest-stale-lock → status=0 [selftest-stale-lock] OK · 사망 PID lock 즉시 stale 처리 · 10분 대기 없음\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.730Z] selftest --selftest-merge-fail3 → status=0 [selftest-merge-fail3] OK · 연속 3회 → summarized=true · 4회 반복 억제 · 키 변경 시 리셋\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.730Z] selftest --selftest-report-path-off → status=0 [selftest-report-path-off] OK · flag off → false · 기본 on · ${ABS_PATH} 치환 정상\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.732Z] 심링크 갱신 · /Users/kyu.lee/.hub-runner/bin/hub-runner.mjs → /Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v8.2.mjs · prev=/Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v8.1.mjs\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.732Z] pending 기록 · prev=hub-runner-v8.1.mjs next=hub-runner-v8.2.mjs · 2 초 뒤 exit(0)\n[hub-runner-v8.2 2026-11-24T17:30:44.134Z] 시작 · v8.2 · script=hub-runner-v8.2.mjs · boot_sha=40bdc0463aa1 · mode=--all · once=false · dry-run=false · poll=30000ms · claude=/Users/kyu.lee/.local/bin/claude · version=2.1.128 (Claude Code) · model=opus · display=cmux-split · cmux=/Applications/cmux.app/Contents/Resources/bin/cmux · cmux_password=*** · heartbeat=30m · run_timeout=60m · self_update=10m\n[hub-runner-v8.2:self-update 2026-11-24T17:30:44.135Z] boot confirm · count=1 · 180 s 내 heartbeat 필요\n[hub-runner-v8.2:self-update 2026-11-24T17:30:45.646Z] boot heartbeat OK · pending 정리 · prev=hub-runner-v8.1.mjs next=hub-runner-v8.2.mjs\n[hub-runner-v8.2:main-guard 2026-11-24T17:30:49.998Z] main-guard rescue · at=2026-11-24T17:30:48.019Z · tag=20261124T173048Z · head_before=(detached) · rebase=true · merge=false · unmerged=0 · foreign_preserved=5 · runner_reapplied=1\n[hub-runner-v8.2:main-guard 2026-11-24T17:30:50.062Z] 복구 성공 · tag=20261124T173048Z · reapplied=1 · preserved=5\n[hub-runner-v8.2:git 2026-11-24T17:30:50.252Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.2:git 2026-11-24T17:30:50.321Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:30:51.062Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.2:m1 2026-11-24T17:39:18.080Z] pick · M1-1124-U · model=sonnet · display=cmux-split\n[hub-runner-v8.2:git 2026-11-24T17:39:49.855Z] 러너 폴더 침범 감지 · files=queue/m1/M1-1124-U.md · guess_hub=m1\n[hub-runner-v8.2:git 2026-11-24T17:39:49.855Z] blocked: runner-folder change pending Kyu install · files=queue/m1/M1-1124-U.md,events/runner-main-guard-20261124T173048Z.md",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -146,12 +137,12 @@
     {
       "name": "curiocity-mac-fork",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "curiocity-mac-fork-light",
       "status": "online",
-      "busy": false
+      "busy": true
     }
   ]
 }
