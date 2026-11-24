@@ -1,22 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-24T07:30:02.013Z",
+  "built_at": "2026-11-24T07:35:48.869Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-24T07:00:33.421Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-24T07:00:33.421Z"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-24T06:55:15.266Z",
-      "updated_at": "2026-11-24T07:00:33.421Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -28,12 +13,16 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-24T07:00:33.421Z"
+      "updated_at": "2026-11-24T07:00:33.421Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
@@ -54,8 +43,8 @@
       "current_note": "runner-v7.8 cmux-split · 리포트 확인 m0/M0-1124-B-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1124-B.log"
     },
     "m1": {
-      "last_round": "M1-1124-D",
-      "last_report": "m1/M1-1124-D-report.md",
+      "last_round": "M1-1124-F",
+      "last_report": "m1/M1-1124-F-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-24T06:35:56.384Z",
@@ -99,10 +88,10 @@
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-24T06:35:56.384Z",
-      "current_round": "R0-1124-H",
-      "current_state": "done",
-      "current_at": "2026-11-24T07:07:38.267Z",
-      "current_note": "runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-H-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1124-H.log"
+      "current_round": "R0-1124-I",
+      "current_state": "started",
+      "current_at": "2026-11-24T07:35:48.809Z",
+      "current_note": "runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1124-I.log"
     },
     "t0": {
       "state": "idle",
