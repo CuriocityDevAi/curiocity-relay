@@ -15,6 +15,10 @@
 //
 // 이 preamble 은 프롬프트 맨 앞에 붙어 허브(= claude 세션) 가 러너 폴더를 수정하지 않도록
 // 강하게 유도한다. runtime 가드(main-guard) 가 사후 복구를 맡으므로 2중 방어.
+//
+// ⚠ 11-25 사고(오케 긴급 수정): preamble 은 cmux 화면에 셸 명령 인자('...')로 타이핑된다.
+//   조항 사이를 '\n\n' 으로 이으면 줄바꿈이 Enter 로 들어가 zsh 가 `quote>` 상태에 갇히고
+//   claude 가 시작되지 않는다(전 허브 정지 · pane busy 로 오판). 반드시 한 줄로 이을 것.
 
 export const DEFAULT_REPORT_PATH_PREFIX =
   '리포트는 반드시 ${ABS_PATH} 에만 쓴다. 어떤 git 리포 안에도 리포트를 쓰지 말고 리포트를 commit/push 하지 말 것(올리는 건 러너). 프롬프트 [REPORT] 의 경로 지시보다 이 문구가 우선.';
@@ -37,5 +41,5 @@ export function buildHubPreamble({
     parts.push(t.replace(/\$\{ABS_PATH\}/g, absReportPath));
   }
   if (includeWorktreeRule && worktreeRule) parts.push(worktreeRule);
-  return parts.join('\n\n');
+  return parts.join(' ').replace(/[\r\n]+/g, ' ');
 }
