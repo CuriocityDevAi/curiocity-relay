@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T14:53:51.283Z",
+  "at": "2026-11-24T14:54:14.540Z",
   "pid": 21194,
   "runner": "v8.1",
   "poll_ms": 30000,
@@ -21,10 +21,8 @@
       "last_activity": "2026-11-24T14:43:05.396Z"
     },
     "m3": {
-      "current": "M3-1124-N",
-      "started_at": "2026-11-24T14:43:13.440Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-24T14:31:44.747Z"
+      "current": null,
+      "last_activity": "2026-11-24T14:54:13.345Z"
     },
     "r0": {
       "current": "R0-1124-AF",
@@ -43,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.63,
-    "compressed_gb": 4.06,
+    "used_gb": 15.29,
+    "compressed_gb": 4.19,
     "swap_used_gb": 2.5,
     "pressure": "normal",
-    "at": "2026-11-24T14:53:18.689Z"
+    "at": "2026-11-24T14:53:52.487Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -133,9 +131,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 24,
+  "isolated_reports_collected": 25,
   "branch_reports_recovered": 2,
-  "err_tail": "[hub-runner-v8.1:gh-watchdog 2026-11-24T14:48:26.970Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:heartbeat 2026-11-24T14:48:30.334Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.1:git 2026-11-24T14:49:03.663Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:49:04.556Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:49:42.226Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:50:18.030Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:50:51.218Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:51:27.311Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:52:00.376Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:52:37.638Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:53:10.674Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m1 2026-11-24T14:53:12.233Z] 복구 · M1-1124-M started 60m · pane shell · blocked 처리\n[hub-runner-v8.1:claim 2026-11-24T14:53:13.480Z] M1-1124-M → blocked · timeout 60m · 러너 재시작 복구 · elapsed=60m · runner-v8.1 · pane empty\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-M.json · {\"id\":\"M1-1124-M\",\"hub\":\"m1\",\"state\":\"blocked\",\"at\":\"2026-11-24T14:53:13.636Z\",\"note\":\"timeout 60m · 러너 재시작 복구 · elapsed=60m · runner-v8.1 · pane empty\",\"blocked_by\":\"oke\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:53:49.232Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v8.1:heartbeat 2026-11-24T14:48:30.334Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.1:git 2026-11-24T14:49:03.663Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:49:04.556Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:49:42.226Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:50:18.030Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:50:51.218Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:51:27.311Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:52:00.376Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:52:37.638Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:53:10.674Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m1 2026-11-24T14:53:12.233Z] 복구 · M1-1124-M started 60m · pane shell · blocked 처리\n[hub-runner-v8.1:claim 2026-11-24T14:53:13.480Z] M1-1124-M → blocked · timeout 60m · 러너 재시작 복구 · elapsed=60m · runner-v8.1 · pane empty\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-M.json · {\"id\":\"M1-1124-M\",\"hub\":\"m1\",\"state\":\"blocked\",\"at\":\"2026-11-24T14:53:13.636Z\",\"note\":\"timeout 60m · 러너 재시작 복구 · elapsed=60m · runner-v8.1 · pane empty\",\"blocked_by\":\"oke\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:53:49.232Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m3 2026-11-24T14:54:11.398Z] [report-path] M3-1124-N: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -158,12 +156,12 @@
     {
       "name": "curiocity-mac-fork",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "curiocity-mac-fork-light",
       "status": "online",
-      "busy": true
+      "busy": false
     }
   ]
 }
