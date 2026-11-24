@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-24T07:48:27.030Z",
+  "built_at": "2026-11-24T08:58:30.082Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-24T07:48:26.518Z"
+      "fetched_at": "2026-11-24T08:58:29.524Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-24T07:48:26.731Z"
+      "fetched_at": "2026-11-24T08:58:29.727Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6051,6 +6051,18 @@
               "status": "live"
             },
             {
+              "id": "order-number",
+              "name": "긴 주문 번호 · 매장 닉네임 (M0-1124-A)",
+              "summary": "매장(stock_location)별 닉네임 2~4자 영문 대문자 + 월별 시작번호(기본 1000 · 다음 달부터 적용)로 Medusa 2.17 custom_display_id 를 발급한다. 형식 {NICK}{YY}{MONTH}{SERIAL}, MONTH = 1..9 · A(10월) · B(11월) · C(12월) · WIB 자정 경계. 원자성 = (stock_location_id, yyyymm) UPSERT ON CONFLICT DO UPDATE last_serial+1 RETURNING. 9999 초과는 5자리 이상 자연 확장. 닉네임은 번호 발급 뒤 자동 잠금 · 다른 매장과 중복 금지. 닉네임 없음 = custom_display_id null (주문 성공 · 기존 display_id fallback · Admin 배너 안내). medusa-config 의 @medusajs/medusa/order 모듈 옵션 generateCustomDisplayId 로 wiring. POS 주문·조회·목록 응답에 custom_display_id 포함 · Admin Orders 목록은 코어 View Configurations 사용.",
+              "files": [
+                "apps/commerce-core/src/modules/order_number/**",
+                "apps/commerce-core/src/api/admin/order-numbers/**",
+                "apps/commerce-core/src/admin/routes/order-numbers/**",
+                "apps/commerce-core/integration-tests/pos/order-number.spec.ts"
+              ],
+              "status": "live"
+            },
+            {
               "id": "pos-settings",
               "name": "POS 설정 (Admin)",
               "summary": "Admin 조정 가능 설정 (선결제 DP%·세금 라벨/%·영수증 헤더/푸터·재인쇄 제한·반올림·UI 언어). 기본값 ADDENDUM §2 영어 · 세금 null · rounding off · reprint_limit 3. API GET/PUT /admin/pos/settings.",
@@ -6223,12 +6235,15 @@
                 "apps/commerce-core/src/modules/register_session/models/order-snapshot.ts",
                 "apps/commerce-core/src/modules/register_session/migrations/Migration20261115100000.ts",
                 "apps/commerce-core/src/modules/register_session/migrations/Migration20261118000001.ts",
+                "apps/commerce-core/src/modules/register_session/migrations/Migration20261119000001.ts",
                 "apps/commerce-core/src/modules/register_session/migrations/Migration20261123000001.ts",
+                "apps/commerce-core/src/modules/register_session/migrations/Migration20261124000001.ts",
                 "apps/commerce-core/src/modules/register_session/lifecycle.ts",
                 "apps/commerce-core/src/modules/register_session/__tests__/order-snapshot.unit.spec.ts",
                 "apps/commerce-core/src/api/admin/pos/loyalty/sessions/snapshots/**",
                 "apps/commerce-core/src/api/admin/pos/registers/[id]/next-customer/route.ts",
                 "apps/commerce-core/src/api/admin/pos/orders/[id]/ask-phone-on-display/**",
+                "apps/commerce-core/src/api/admin/pos/customer-display/snapshots/[id]/route.ts",
                 "apps/commerce-core/src/subscribers/order-snapshot-paid.ts",
                 "apps/commerce-core/src/types/customer-display.ts",
                 "apps/commerce-core/integration-tests/pos/cd-pos-screen-sync.spec.ts",
@@ -6779,7 +6794,8 @@
                 "apps/customer-display/src/lib/__tests__/display-machine.test.ts",
                 "apps/customer-display/src/lib/__tests__/display-sync-scenarios.test.ts",
                 "apps/customer-display/src/screens/DoneScreen.tsx",
-                "apps/customer-display/src/screens/ReceiptScreen.tsx"
+                "apps/customer-display/src/screens/ReceiptScreen.tsx",
+                "apps/customer-display/src/components/PosChipBadge.tsx"
               ],
               "status": "live"
             },
@@ -6860,7 +6876,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-24T07:48:27.030Z"
+      "fetched_at": "2026-11-24T08:58:30.082Z"
     }
   ],
   "rollup": {
