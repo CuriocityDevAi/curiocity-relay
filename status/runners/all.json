@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T05:40:08.052Z",
+  "at": "2026-11-24T05:40:24.013Z",
   "pid": 37338,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -29,7 +29,9 @@
       "last_activity": "2026-11-24T05:32:59.052Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1124-C",
+      "started_at": "2026-11-24T05:40:22.662Z",
+      "model": "sonnet",
       "last_activity": "2026-11-24T05:40:07.046Z"
     }
   },
@@ -114,7 +116,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": 1,
-  "err_tail": "[hub-runner-v7.8:git 2026-11-24T05:37:23.400Z] blocked: runner-folder change pending Kyu install · files=queue/r0/R0-1124-E.md,m1/M1-1124-B-report.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md\n[hub-runner-v7.8:heartbeat 2026-11-24T05:38:36.917Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-24T05:39:09.071Z] 러너 폴더 침범 감지 · files=m1/M1-1124-B-report.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md · guess_hub=m1\n[hub-runner-v7.8:git 2026-11-24T05:39:09.071Z] blocked: runner-folder change pending Kyu install · files=m1/M1-1124-B-report.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md\n[hub-runner-v7.8:heartbeat 2026-11-24T05:39:13.416Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:claim 2026-11-24T05:39:33.495Z] M2-1124-D → done · runner-v7.8 cmux-split · 리포트 확인 m2/M2-1124-D-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-D.json · {\"id\":\"M2-1124-D\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-24T05:39:33.578Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m2/M2-1124-D-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1124-D.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m1/M1-1124-B-report.md, m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:m2 2026-11-24T05:39:46.203Z] pick · M2-1124-E · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-24T05:39:50.371Z] M2-1124-E → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-E.json · {\"id\":\"M2-1124-E\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-24T05:39:50.456Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1124-E.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m1/M1-1124-B-report.md, m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed",
+  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m1/M1-1124-B-report.md, m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:m2 2026-11-24T05:39:46.203Z] pick · M2-1124-E · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-24T05:39:50.371Z] M2-1124-E → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-E.json · {\"id\":\"M2-1124-E\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-24T05:39:50.456Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1124-E.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m1/M1-1124-B-report.md, m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:claim 2026-11-24T05:40:08.097Z] R0-1124-B → done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-B-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-B.json · {\"id\":\"R0-1124-B\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-24T05:40:08.180Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-B-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1124-B.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m1/M1-1124-B-report.md, m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:r0 2026-11-24T05:40:22.661Z] pick · R0-1124-C · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
