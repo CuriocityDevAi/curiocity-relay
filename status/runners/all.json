@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T23:01:32.842Z",
+  "at": "2026-11-24T23:02:01.251Z",
   "pid": 74805,
   "runner": "v8.2",
   "poll_ms": 30000,
@@ -15,10 +15,8 @@
       "last_activity": null
     },
     "m1": {
-      "current": "M1-1125-A",
-      "started_at": "2026-11-24T22:56:07.064Z",
-      "model": "sonnet",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-24T23:02:00.128Z"
     },
     "m2": {
       "current": null,
@@ -40,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.37,
-    "compressed_gb": 3.94,
+    "used_gb": 15.63,
+    "compressed_gb": 3.88,
     "swap_used_gb": 1.87,
     "pressure": "normal",
-    "at": "2026-11-24T23:01:00.472Z"
+    "at": "2026-11-24T23:01:36.686Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -52,13 +50,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T22:56:06.092Z",
+      "at": "2026-11-24T23:01:30.994Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport"
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 4,
+      "api_calls": 13,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -66,18 +65,40 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "#423",
+            "pr_display": "storeport:#423",
+            "job": "heavy-mac",
+            "step": "Checkout",
+            "running_min": 0,
+            "runner": "Youngkyus-MacBook-Pro-M1",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "main",
+            "pr_display": "storeport:main",
+            "job": "post",
+            "step": "Build table and upsert comment",
+            "running_min": 0,
+            "runner": "curiocity-mac-light",
+            "kind": "mac-light"
+          }
+        ]
       },
       "cloud_in_progress": [],
       "runners": {
-        "heavy_online": 1,
-        "heavy_busy": 0,
+        "heavy_online": 3,
+        "heavy_busy": 1,
         "light_online": 1
       },
       "cloud_today": 0,
@@ -90,11 +111,11 @@
           "run_min_total": 31.3
         },
         "mac-light": {
-          "jobs": 5,
-          "avg_wait_min": 0.4,
-          "avg_run_min": 0.3,
+          "jobs": 6,
+          "avg_wait_min": 0.5,
+          "avg_run_min": 0.4,
           "success_rate": 100,
-          "run_min_total": 1.7000000000000002
+          "run_min_total": 2.2
         },
         "cloud": {
           "jobs": 10,
@@ -107,18 +128,18 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 0,
+      "jsonl_added": 1,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 24841,
-    "at": "2026-11-24T22:56:29.220Z"
+    "took_ms": 16784,
+    "at": "2026-11-24T23:01:46.020Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": null,
+  "isolated_reports_collected": 2,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): queue/m3/M3-1125-B.md, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/1)\rerror: could not apply d1d4262d2... claim(m3): M3-1125-B started · runner-v8.2 · cmux-split · model=opus · source=queue-line ·\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:59:06.197Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:59:40.674Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m2 2026-11-24T23:00:12.357Z] [report-path] M2-1125-A: safe push 실패 (push-failed) · 다음 tick 재시도\n[hub-runner-v8.2:claim 2026-11-24T23:00:16.025Z] M2-1125-A → done · runner-v8.2 cmux-split · 리포트 확인 m2/M2-1125-A-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1125-A.json · {\"id\":\"M2-1125-A\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-24T23:00:16.115Z\",\"note\":\"runner-v8.2 cmux-split · 리포트 확인 m2/M2-1125-A-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1125-A.log · report_src=legacy-root\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/3)\rerror: could not apply d1d4262d2... claim(m3): M3-1125-B started · runner-v8.2 · cmux-split · model=opus · source=queue-line ·\n[hub-runner-v8.2:gh-watchdog 2026-11-24T23:00:20.112Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T23:00:54.038Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T23:01:30.207Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): queue/m3/M3-1125-B.md, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/1)\rerror: could not apply d1d4262d2... claim(m3): M3-1125-B started · runner-v8.2 · cmux-split · model=opus · source=queue-line ·\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:59:06.197Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:59:40.674Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m2 2026-11-24T23:00:12.357Z] [report-path] M2-1125-A: safe push 실패 (push-failed) · 다음 tick 재시도\n[hub-runner-v8.2:claim 2026-11-24T23:00:16.025Z] M2-1125-A → done · runner-v8.2 cmux-split · 리포트 확인 m2/M2-1125-A-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1125-A.json · {\"id\":\"M2-1125-A\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-24T23:00:16.115Z\",\"note\":\"runner-v8.2 cmux-split · 리포트 확인 m2/M2-1125-A-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1125-A.log · report_src=legacy-root\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/3)\rerror: could not apply d1d4262d2... claim(m3): M3-1125-B started · runner-v8.2 · cmux-split · model=opus · source=queue-line ·\n[hub-runner-v8.2:gh-watchdog 2026-11-24T23:00:20.112Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T23:00:54.038Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T23:01:30.207Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m1 2026-11-24T23:01:54.178Z] [report-path] M1-1125-A: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.2:m0 2026-11-24T23:01:58.221Z] [report-path] M0-1125-A: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 0,
