@@ -171,6 +171,8 @@ const DEFAULT_SELF_UPDATE_PREFLIGHT = [
   '--selftest-stale-lock',
   '--selftest-merge-fail3',
   '--selftest-report-path-off',
+  '--selftest-main-guard-d',
+  '--selftest-main-guard-e',
 ];
 // 심링크 자체 경로 — M1-1124-H install 가 ProgramArguments 에 꽂는 파일.
 const SELF_SCRIPT_URL = import.meta.url;
@@ -364,6 +366,8 @@ const SELFTEST_SELFUPDATE_NO_PREV = argv.includes('--selftest-selfupdate-no-prev
 const SELFTEST_MAIN_GUARD_A = argv.includes('--selftest-main-guard-a');
 const SELFTEST_MAIN_GUARD_B = argv.includes('--selftest-main-guard-b');
 const SELFTEST_MAIN_GUARD_C = argv.includes('--selftest-main-guard-c');
+const SELFTEST_MAIN_GUARD_D = argv.includes('--selftest-main-guard-d');
+const SELFTEST_MAIN_GUARD_E = argv.includes('--selftest-main-guard-e');
 const SELFTEST_SAFE_PUSH = argv.includes('--selftest-safe-push');
 const SELFTEST_HUB_PREAMBLE = argv.includes('--selftest-hub-preamble');
 const SELFTEST_SLEEP_TRACKER = argv.includes('--selftest-sleep-tracker');
@@ -416,6 +420,8 @@ if (
   !SELFTEST_MAIN_GUARD_A &&
   !SELFTEST_MAIN_GUARD_B &&
   !SELFTEST_MAIN_GUARD_C &&
+  !SELFTEST_MAIN_GUARD_D &&
+  !SELFTEST_MAIN_GUARD_E &&
   !SELFTEST_SAFE_PUSH &&
   !SELFTEST_HUB_PREAMBLE &&
   !SELFTEST_SLEEP_TRACKER
@@ -3208,6 +3214,8 @@ async function tick(hubs) {
     // M1-1124-N REQ1·3: 매 tick 시작에 main-guard — 러너 폴더가 항상 main 인지 보증.
     //   HEAD != main · rebase/merge 진행 · unmerged 중 하나라도 있으면 즉시 복구.
     //   sleep/wake 에서 rebase 중단되어도 다음 tick 에 여기서 복구된다.
+    // M1-1124-S: !g.ok 이면 이 tick 의 허브 픽업을 건너뜀 + needs_human=true.
+    let mainGuardBlocked = false;
     try {
       const g = mainGuardAssert({
         repoRoot: REPO_ROOT,
@@ -3215,10 +3223,16 @@ async function tick(hubs) {
         impl: mainGuardImpl(REPO_ROOT),
         logFn: (msg) => log('main-guard', msg),
       });
-      if (!g.ok && g.after) {
+      if (!g.ok && g.aborted) {
+        log('main-guard', `보존 실패로 복구 보류 · reason=${g.rescue?.reason || 'unknown'}`);
+        mainGuardBlocked = true;
+        lastGitState = { ...collectRelayGitState(), needs_human: true };
+      } else if (!g.ok && g.after) {
         log('main-guard', `복구 후에도 위반 남음 · head=${g.after.headRef} · rebase=${g.after.rebaseMerge} · merge=${g.after.mergeHead}`);
+        mainGuardBlocked = true;
+        lastGitState = { ...collectRelayGitState(), needs_human: true };
       } else if (g.rescue) {
-        log('main-guard', `복구 성공 · tag=${g.rescue.tag} · reapplied=${g.rescue.reapplied} · preserved=${g.rescue.preserved.length}`);
+        log('main-guard', `복구 성공 · tag=${g.rescue.tag} · reapplied=${g.rescue.reapplied} · preserved=${g.rescue?.preserved?.length ?? 0}`);
       }
     } catch (e) {
       log('main-guard', `예외: ${e.message.split('\n')[0]}`);
@@ -3252,6 +3266,11 @@ async function tick(hubs) {
 
     for (const hub of hubs) {
       if (busy.has(hub)) continue;
+      if (mainGuardBlocked) {
+        log(hub, `main-guard blocked · 다음 tick 재시도`);
+        setHubDecision(hub, 'skip:main-guard-blocked');
+        continue;
+      }
       const cfg = config.hubs[hub];
       if (!cfg?.cwd) {
         log(hub, `runner-config 에 cwd 없음 · skip`);
@@ -5718,15 +5737,17 @@ process.stdin.resume();
     }
   })();
 
-} else if (SELFTEST_MAIN_GUARD_A || SELFTEST_MAIN_GUARD_B || SELFTEST_MAIN_GUARD_C || SELFTEST_SAFE_PUSH || SELFTEST_HUB_PREAMBLE || SELFTEST_SLEEP_TRACKER) {
+} else if (SELFTEST_MAIN_GUARD_A || SELFTEST_MAIN_GUARD_B || SELFTEST_MAIN_GUARD_C || SELFTEST_MAIN_GUARD_D || SELFTEST_MAIN_GUARD_E || SELFTEST_SAFE_PUSH || SELFTEST_HUB_PREAMBLE || SELFTEST_SLEEP_TRACKER) {
   // M1-1124-N: 러너 폴더 사고 A·B·C 재현 + main-guard 자동 복구 검증.
+  // M1-1124-S: D·E (aborted·persistent-violation) 추가.
   //   테스트 하네스는 scripts/test/hub-runner-main-guard.test.mjs 에 분리.
-  //   여기서는 플래그를 파일로 전달.
   (async () => {
     const mod = await import('./test/hub-runner-main-guard.test.mjs');
     const which = SELFTEST_MAIN_GUARD_A ? 'A'
       : SELFTEST_MAIN_GUARD_B ? 'B'
       : SELFTEST_MAIN_GUARD_C ? 'C'
+      : SELFTEST_MAIN_GUARD_D ? 'D'
+      : SELFTEST_MAIN_GUARD_E ? 'E'
       : SELFTEST_SAFE_PUSH ? 'safe-push'
       : SELFTEST_HUB_PREAMBLE ? 'hub-preamble'
       : 'sleep-tracker';
