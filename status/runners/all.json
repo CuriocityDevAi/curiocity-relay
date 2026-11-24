@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T03:53:54.975Z",
+  "at": "2026-11-24T03:59:03.755Z",
   "pid": 75067,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -38,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.72,
-    "compressed_gb": 4.41,
+    "used_gb": 15.78,
+    "compressed_gb": 4.64,
     "swap_used_gb": 3.11,
     "pressure": "normal",
-    "at": "2026-11-24T03:53:20.159Z"
+    "at": "2026-11-24T03:58:31.446Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -50,7 +50,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T03:51:40.205Z",
+      "at": "2026-11-24T03:56:45.916Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -109,12 +109,12 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 6654,
-    "at": "2026-11-24T03:51:45.082Z"
+    "took_ms": 9091,
+    "at": "2026-11-24T03:56:53.388Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.8 2026-11-24T02:46:25.635Z] 시작 · v7.8 · mode=--all · once=false · dry-run=false · poll=30000ms · claude=/Users/kyu.lee/.local/bin/claude · version=2.1.128 (Claude Code) · model=opus · display=cmux-split · cmux=/Applications/cmux.app/Contents/Resources/bin/cmux · cmux_password=*** · heartbeat=30m · run_timeout=60m\n[hub-runner-v7.8:git 2026-11-24T02:46:29.621Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T02:46:29.621Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T02:46:30.266Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:24:59.346Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:25:31.162Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:26:04.880Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T03:26:36.084Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,m3/M3-1124-A-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T03:26:36.085Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,m3/M3-1124-A-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:26:36.849Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T03:27:10.369Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T03:27:10.369Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:27:11.430Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:27:43.727Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:28:17.514Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:28:49.695Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:29:24.828Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:29:58.657Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:m1 2026-11-24T03:53:52.256Z] pick · M1-1124-A · model=sonnet · display=cmux-split\n[hub-runner-v7.8:r0 2026-11-24T03:53:53.270Z] pick · R0-1124-A · model=sonnet · display=cmux-split",
+  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-24T03:28:49.695Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:29:24.828Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:29:58.657Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:m1 2026-11-24T03:53:52.256Z] pick · M1-1124-A · model=sonnet · display=cmux-split\n[hub-runner-v7.8:r0 2026-11-24T03:53:53.270Z] pick · R0-1124-A · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-24T03:53:55.671Z] R0-1124-A → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-A.json · {\"id\":\"R0-1124-A\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-24T03:53:55.764Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1124-A.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m1/M1-1124-A.md, queue/r0/R0-1124-A.md, m2/M2-1123-C-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v7.8:claim 2026-11-24T03:54:00.135Z] M1-1124-A → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-A.json · {\"id\":\"M1-1124-A\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-24T03:54:00.224Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1124-A.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): m2/M2-1123-C-report.md\n[claim] committed\n[claim] pushed",
   "git_state": {
     "ahead": 0,
     "behind": 0,
