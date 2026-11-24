@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T03:29:25.688Z",
+  "at": "2026-11-24T03:34:57.753Z",
   "pid": 75067,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.53,
-    "compressed_gb": 5.05,
+    "used_gb": 15.79,
+    "compressed_gb": 4.27,
     "swap_used_gb": 3.11,
     "pressure": "normal",
-    "at": "2026-11-24T03:28:53.995Z"
+    "at": "2026-11-24T03:34:25.914Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -46,14 +46,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T03:24:25.858Z",
+      "at": "2026-11-24T03:29:59.460Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 8,
+      "api_calls": 12,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -75,14 +75,14 @@
         "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 0,
+      "cloud_today": 3,
       "today": {
         "mac-heavy": {
-          "jobs": 20,
-          "avg_wait_min": 0.9,
-          "avg_run_min": 1.4,
-          "success_rate": 95,
-          "run_min_total": 27.500000000000007
+          "jobs": 26,
+          "avg_wait_min": 0.8,
+          "avg_run_min": 1.2,
+          "success_rate": 88.5,
+          "run_min_total": 30.40000000000001
         },
         "mac-light": {
           "jobs": 2,
@@ -92,26 +92,25 @@
           "run_min_total": 0.6
         },
         "cloud": {
-          "jobs": 12,
+          "jobs": 15,
           "avg_wait_min": 0,
           "avg_run_min": 0.1,
-          "success_rate": 75,
-          "run_min_total": 1.4
+          "success_rate": 73.3,
+          "run_min_total": 1.6
         },
-        "cloud_cost_est_usd": 0.072,
+        "cloud_cost_est_usd": 0.088,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 0,
-      "alerts": [],
-      "partial": true
+      "jsonl_added": 9,
+      "alerts": []
     },
-    "took_ms": 14520,
-    "at": "2026-11-24T03:24:38.611Z"
+    "took_ms": 10750,
+    "at": "2026-11-24T03:30:08.536Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v7.8 2026-11-24T02:46:25.635Z] 시작 · v7.8 · mode=--all · once=false · dry-run=false · poll=30000ms · claude=/Users/kyu.lee/.local/bin/claude · version=2.1.128 (Claude Code) · model=opus · display=cmux-split · cmux=/Applications/cmux.app/Contents/Resources/bin/cmux · cmux_password=*** · heartbeat=30m · run_timeout=60m\n[hub-runner-v7.8:git 2026-11-24T02:46:29.621Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T02:46:29.621Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T02:46:30.266Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:24:59.346Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:25:31.162Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:26:04.880Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T03:26:36.084Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,m3/M3-1124-A-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T03:26:36.085Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,m3/M3-1124-A-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:26:36.849Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T03:27:10.369Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T03:27:10.369Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:27:11.430Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:27:43.727Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:28:17.514Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:28:49.695Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:29:24.828Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v7.8 2026-11-24T02:46:25.635Z] 시작 · v7.8 · mode=--all · once=false · dry-run=false · poll=30000ms · claude=/Users/kyu.lee/.local/bin/claude · version=2.1.128 (Claude Code) · model=opus · display=cmux-split · cmux=/Applications/cmux.app/Contents/Resources/bin/cmux · cmux_password=*** · heartbeat=30m · run_timeout=60m\n[hub-runner-v7.8:git 2026-11-24T02:46:29.621Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T02:46:29.621Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T02:46:30.266Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:24:59.346Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:25:31.162Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:26:04.880Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T03:26:36.084Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,m3/M3-1124-A-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T03:26:36.085Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,m3/M3-1124-A-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:26:36.849Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T03:27:10.369Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T03:27:10.369Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:27:11.430Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:27:43.727Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:28:17.514Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:28:49.695Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:29:24.828Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T03:29:58.657Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -133,12 +132,12 @@
     },
     {
       "name": "curiocity-mac-fork",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
       "name": "curiocity-mac-fork-light",
-      "status": "offline",
+      "status": "online",
       "busy": false
     }
   ]
