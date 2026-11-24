@@ -220,7 +220,7 @@ test('K-4b: renderCompact — 필수 섹션 포함 확인', () => {
   assert.ok(text.includes('m0'), 'hub m0 포함');
   assert.ok(text.includes('storeport-heavy'), 'storeport-heavy 러너 행 포함');
   assert.ok(text.includes('fork-light'), 'fork-light 러너 행 포함');
-  assert.ok(text.includes('cloud 오늘'), '클라우드 섹션 포함');
+  assert.ok(text.includes('cloud 잡 오늘'), '클라우드 섹션 포함');
   assert.ok(text.includes('⚠'), '경보 포함');
 });
 
