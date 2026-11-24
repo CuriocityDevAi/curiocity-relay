@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-24T15:51:05.518Z",
+  "built_at": "2026-11-24T18:02:17.051Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-24T15:51:04.951Z"
+      "fetched_at": "2026-11-24T18:02:16.452Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-24T15:51:05.107Z"
+      "fetched_at": "2026-11-24T18:02:16.647Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6052,13 +6052,14 @@
             },
             {
               "id": "order-number",
-              "name": "긴 주문 번호 · 매장 닉네임 (M0-1124-A)",
-              "summary": "매장(stock_location)별 닉네임 2~4자 영문 대문자 + 월별 시작번호(기본 1000 · 다음 달부터 적용)로 Medusa 2.17 custom_display_id 를 발급한다. 형식 {NICK}{YY}{MONTH}{SERIAL}, MONTH = 1..9 · A(10월) · B(11월) · C(12월) · WIB 자정 경계. 원자성 = (stock_location_id, yyyymm) UPSERT ON CONFLICT DO UPDATE last_serial+1 RETURNING. 9999 초과는 5자리 이상 자연 확장. 닉네임은 번호 발급 뒤 자동 잠금 · 다른 매장과 중복 금지. 닉네임 없음 = custom_display_id null (주문 성공 · 기존 display_id fallback · Admin 배너 안내). medusa-config 의 @medusajs/medusa/order 모듈 옵션 generateCustomDisplayId 로 wiring. POS 주문·조회·목록 응답에 custom_display_id 포함 · Admin Orders 목록은 코어 View Configurations 사용.",
+              "name": "긴 주문 번호 · 매장 닉네임 (M0-1124-A · M0-1124-I)",
+              "summary": "매장(stock_location)별 닉네임 2~4자 영문 대문자 + 월별 시작번호(기본 1000 · 다음 달부터 적용)로 Medusa 2.17 custom_display_id 를 발급한다. 형식 {NICK}{YY}{MONTH}{SERIAL}, MONTH = 1..9 · A(10월) · B(11월) · C(12월) · WIB 자정 경계. 원자성 = (stock_location_id, yyyymm) UPSERT ON CONFLICT DO UPDATE last_serial+1 RETURNING. 9999 초과는 5자리 이상 자연 확장. 닉네임은 번호 발급 뒤 자동 잠금 · 다른 매장과 중복 금지. 닉네임 없음 = custom_display_id null (주문 성공 · 기존 display_id fallback · Admin 배너 안내). medusa-config 의 @medusajs/medusa/order 모듈 옵션 generateCustomDisplayId 로 wiring. POS 주문·조회·목록 응답에 custom_display_id 포함 · Admin Orders 목록은 코어 View Configurations 사용. M0-1124-I · 매장 식별 fallback 체인 추가 (metadata → shipping → sales_channel 단일 링크). 영수증 snapshot 에 order_custom_display_id 키 포함 — 앱·프린터가 snapshot 만으로 긴 번호 표시. M0-1124-K · fallback 4 (닉네임 설정 매장 1 개) 제거 — PS 매장이 PIM 번호를 받는 혼동 위험 방지 · 모호하면 null 반환 (주문은 성공 · 번호 없음) · 뿌리 해법은 POS 앱이 draft 생성 때 metadata.stock_location_id 를 보내는 것 (M3-1124-M).",
               "files": [
                 "apps/commerce-core/src/modules/order_number/**",
                 "apps/commerce-core/src/api/admin/order-numbers/**",
                 "apps/commerce-core/src/admin/routes/order-numbers/**",
-                "apps/commerce-core/integration-tests/pos/order-number.spec.ts"
+                "apps/commerce-core/integration-tests/pos/order-number.spec.ts",
+                "apps/commerce-core/integration-tests/pos/order-number-receipt.spec.ts"
               ],
               "status": "live"
             },
@@ -6877,7 +6878,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-24T15:51:05.517Z"
+      "fetched_at": "2026-11-24T18:02:17.050Z"
     }
   ],
   "rollup": {
