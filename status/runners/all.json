@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T14:49:06.555Z",
+  "at": "2026-11-24T14:52:39.700Z",
   "pid": 21194,
   "runner": "v8.1",
   "poll_ms": 30000,
@@ -43,11 +43,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.9,
-    "compressed_gb": 3.88,
+    "used_gb": 15.29,
+    "compressed_gb": 4.2,
     "swap_used_gb": 2.5,
     "pressure": "normal",
-    "at": "2026-11-24T14:48:33.998Z"
+    "at": "2026-11-24T14:52:06.837Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -55,22 +55,35 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T14:43:48.426Z",
+      "at": "2026-11-24T14:49:05.350Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 12,
+      "api_calls": 10,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
+        "queued": 1,
+        "queued_prs": [
+          252
+        ],
+        "oldest_queued_min": 1,
+        "oldest_queued_pr": "fork:#252",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "#252",
+            "pr_display": "fork:#252",
+            "job": "assertions",
+            "step": "Set up job",
+            "running_min": 0,
+            "runner": "curiocity-mac-fork-light",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -81,48 +94,48 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 0,
+        "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 3,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 126,
-          "avg_wait_min": 0.8,
-          "avg_run_min": 2.3,
-          "success_rate": 88.9,
-          "run_min_total": 293.8
+          "jobs": 121,
+          "avg_wait_min": 0.9,
+          "avg_run_min": 2.2,
+          "success_rate": 88.4,
+          "run_min_total": 268.8
         },
         "mac-light": {
-          "jobs": 60,
+          "jobs": 56,
           "avg_wait_min": 0.4,
           "avg_run_min": 0.3,
-          "success_rate": 98.3,
-          "run_min_total": 18.300000000000004
+          "success_rate": 98.2,
+          "run_min_total": 17.000000000000004
         },
         "cloud": {
-          "jobs": 79,
+          "jobs": 76,
           "avg_wait_min": 0,
           "avg_run_min": 0.6,
-          "success_rate": 65.8,
-          "run_min_total": 48.10000000000005
+          "success_rate": 67.1,
+          "run_min_total": 48.00000000000005
         },
-        "cloud_cost_est_usd": 0.752,
+        "cloud_cost_est_usd": 0.744,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 24.4
       },
-      "jsonl_added": 12,
+      "jsonl_added": 0,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 17120,
-    "at": "2026-11-24T14:44:03.316Z"
+    "took_ms": 20069,
+    "at": "2026-11-24T14:49:23.612Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 24,
   "branch_reports_recovered": 2,
-  "err_tail": "[hub-runner-v8.1:claim 2026-11-24T14:43:19.609Z] R0-1124-AF → started · runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-AF.json · {\"id\":\"R0-1124-AF\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-24T14:43:19.703Z\",\"note\":\"runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1124-AF.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:43:47.471Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:44:25.686Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:self-update 2026-11-24T14:44:27.884Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:44:58.860Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:45:35.820Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:46:08.886Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:46:44.318Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:47:18.263Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:47:53.688Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:48:26.970Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:heartbeat 2026-11-24T14:48:30.334Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.1:git 2026-11-24T14:49:03.663Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:49:04.556Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:43:47.471Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:44:25.686Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:self-update 2026-11-24T14:44:27.884Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:44:58.860Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:45:35.820Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:46:08.886Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:46:44.318Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:47:18.263Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:47:53.688Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:48:26.970Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:heartbeat 2026-11-24T14:48:30.334Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.1:git 2026-11-24T14:49:03.663Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:49:04.556Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:49:42.226Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:50:18.030Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:50:51.218Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:51:27.311Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:52:00.376Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T14:52:37.638Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
