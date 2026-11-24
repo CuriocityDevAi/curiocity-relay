@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T02:57:02.202Z",
+  "at": "2026-11-24T03:02:35.190Z",
   "pid": 75067,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.87,
-    "compressed_gb": 4.21,
+    "used_gb": 15.57,
+    "compressed_gb": 4.22,
     "swap_used_gb": 3.13,
     "pressure": "normal",
-    "at": "2026-11-24T02:56:30.234Z"
+    "at": "2026-11-24T03:02:03.264Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -46,7 +46,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T02:52:02.736Z",
+      "at": "2026-11-24T02:57:38.047Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -105,8 +105,8 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 10093,
-    "at": "2026-11-24T02:52:10.965Z"
+    "took_ms": 7967,
+    "at": "2026-11-24T02:57:44.100Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
@@ -132,12 +132,12 @@
     },
     {
       "name": "curiocity-mac-fork",
-      "status": "online",
+      "status": "offline",
       "busy": false
     },
     {
       "name": "curiocity-mac-fork-light",
-      "status": "online",
+      "status": "offline",
       "busy": false
     }
   ]
