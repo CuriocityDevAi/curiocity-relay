@@ -6,7 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 //
 // !! ci-watch 를 바꾸는 모든 프롬프트는 CI_WATCH_VERSION 을 올릴 것.
-// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I
+// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K
 
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -21,6 +21,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { promisify } from 'node:util';
 import { getWibDateStr, readJsonlFile } from './lib/ci-history.mjs';
+import { readAllLocalRunnerStates } from './lib/local-ci.mjs';
 import { computeRunnerAlerts } from './watch/runner-alerts.mjs';
 import {
   isMarkerJob,
@@ -29,17 +30,19 @@ import {
   renderCompact,
 } from './watch/ci-watch-render.mjs';
 
-const CI_WATCH_VERSION = '1.3';
+const CI_WATCH_VERSION = '1.4';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, '..');
 const THIS_FILE = fileURLToPath(import.meta.url);
 
-const REFRESH_MS = 30_000;
-const RUNNER_REFRESH_MS = 120_000;
+const LOCAL_REFRESH_MS = 3_000;              // 화면 갱신 · 로컬 전용 · GitHub 호출 없음
+const GH_QUEUE_REFRESH_MS = 30_000;          // GitHub 대기열+클라우드 조회 간격
+const GH_IDLE_REFRESH_MS = 5 * 60_000;       // 러너 전부 idle 시 GitHub 간격 (5분)
+const RATE_LIMIT_SLOW_THRESHOLD = 500;        // rate_limit 잔여 < 500 → GH_IDLE_REFRESH_MS
 const CLOUD_DAILY_LIMIT = 5;
-const CI_LAST_CACHE_MS = 120_000; // gh run list 2분 캐시
+const CI_LAST_CACHE_MS = 120_000;             // gh run list 2분 캐시
 
 // --- err_tail 오류 허용 목록 판정 (M2-1124-A) ---
 // 이 목록에 매칭되는 줄만 ⚠. 나머지는 정상 정보 줄.
@@ -194,12 +197,19 @@ async function fetchBusyPromptId(repo, prNum) {
   return promptId;
 }
 
-async function buildBusyJobMap(allJson) {
+async function buildBusyJobMap(allJson, localStates) {
   const result = new Map(); // runnerName → { pr, promptId, jobName, runningMin }
-  const inProgressAll = [
+  const fromAllJson = [
     ...(allJson?.ci?.data?.heavy?.in_progress || []),
     ...(allJson?.ci?.data?.light?.in_progress || []),
   ];
+  // 로컬 상태로 보완: allJson 미반영 러너가 local 에서 running 이면 추가
+  const coveredRunners = new Set(fromAllJson.filter(j => j.runner).map(j => j.runner));
+  const localExtra = (localStates || [])
+    .filter(s => s.running && !coveredRunners.has(s.name))
+    .map(s => ({ runner: s.name, repo: s.repo, pr: '-', job: s.jobName || '', running_min: s.runningMin ?? null }));
+  const inProgressAll = [...fromAllJson, ...localExtra];
+
   await Promise.all(inProgressAll.filter(j => j.runner).map(async j => {
     const prNum = (j.pr || '').replace('#', '');
     const promptId = await fetchBusyPromptId(j.repo, prNum || null);
@@ -245,29 +255,13 @@ function enhanceBusyLines(lines, busyJobMap) {
   });
 }
 
-async function fetchRunsForRepo(repo) {
-  const [ipData, qData] = await Promise.all([
-    ghApi(`repos/${repo}/actions/runs?status=in_progress&per_page=20`).catch(() => null),
+// GitHub 에서 대기열(queued) + 클라우드 실행중(in_progress) 만 조회.
+// 로컬 self-hosted 실행 중인 잡은 local-ci.mjs 에서 직접 읽음 → GitHub 호출 불필요.
+async function fetchQueuedForRepo(repo) {
+  const [qData, ipData] = await Promise.all([
     ghApi(`repos/${repo}/actions/runs?status=queued&per_page=20`).catch(() => null),
+    ghApi(`repos/${repo}/actions/runs?status=in_progress&per_page=20`).catch(() => null),
   ]);
-
-  const inProgress = [];
-  for (const run of ((ipData && ipData.workflow_runs) || [])) {
-    const prNum = run.pull_requests?.[0]?.number || null;
-    const prStr = prNum ? `#${prNum}` : (run.head_branch || '-');
-    const promptId = extractPromptId(run.head_branch) || extractPromptId(run.name) || null;
-    if (prNum) cachePrPrompt(repo, String(prNum), run.head_branch);
-    inProgress.push({
-      repo, prNum, pr: prStr,
-      display: `${repoShort(repo)}${prStr}`,
-      prompt_id: promptId,
-      check: run.name || '',
-      running_min: minSince(run.run_started_at || run.created_at),
-      head_branch: run.head_branch,
-      run_id: run.id,
-      light: isLightWorkflow(run.name),
-    });
-  }
 
   const queued = [];
   for (const run of ((qData && qData.workflow_runs) || [])) {
@@ -289,26 +283,54 @@ async function fetchRunsForRepo(repo) {
     });
   }
 
-  return { inProgress, queued };
+  // GitHub 에서 보이는 in_progress 는 클라우드 잡일 수 있음.
+  // 로컬 러너 이름과 대조해 로컬 잡은 tick() 에서 제외 처리.
+  const cloudInProgress = [];
+  for (const run of ((ipData && ipData.workflow_runs) || [])) {
+    const prNum = run.pull_requests?.[0]?.number || null;
+    const prStr = prNum ? `#${prNum}` : (run.head_branch || '-');
+    const promptId = extractPromptId(run.head_branch) || extractPromptId(run.name) || null;
+    if (prNum) cachePrPrompt(repo, String(prNum), run.head_branch);
+    cloudInProgress.push({
+      repo, prNum, pr: prStr,
+      display: `${repoShort(repo)}${prStr}`,
+      prompt_id: promptId,
+      check: run.name || '',
+      running_min: minSince(run.run_started_at || run.created_at),
+      head_branch: run.head_branch,
+      run_id: run.id,
+      light: isLightWorkflow(run.name),
+      runner: run.runner?.name || null,
+    });
+  }
+
+  return { queued, cloudInProgress };
 }
 
-async function fetchAllRunState() {
-  const results = await Promise.all(REPOS.map(r => fetchRunsForRepo(r).catch(() => ({ inProgress: [], queued: [] }))));
-  const heavy = { inProgress: [], queued: [] };
-  const light = { inProgress: [], queued: [] };
+async function fetchGhQueueAndCloud() {
+  const results = await Promise.all(REPOS.map(r => fetchQueuedForRepo(r).catch(() => ({ queued: [], cloudInProgress: [] }))));
+  const heavy = { queued: [] };
+  const light = { queued: [] };
+  const cloudInProgress = [];
 
-  for (const { inProgress, queued } of results) {
-    for (const j of inProgress) {
-      (j.light ? light : heavy).inProgress.push(j);
-    }
-    for (const q of queued) {
-      (q.light ? light : heavy).queued.push(q);
-    }
+  for (const { queued, cloudInProgress: cip } of results) {
+    for (const q of queued) (q.light ? light : heavy).queued.push(q);
+    cloudInProgress.push(...cip);
   }
 
   heavy.queued.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
   light.queued.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-  return { heavy, light };
+  return { heavy, light, cloudInProgress };
+}
+
+// rate_limit 잔여량 확인 (1분 캐시)
+async function checkRateLimit() {
+  if (Date.now() - rateLimitCheckedAt < 60_000) return;
+  try {
+    const data = await ghApi('rate_limit');
+    rateLimitRemaining = data?.resources?.core?.remaining ?? Infinity;
+    rateLimitCheckedAt = Date.now();
+  } catch {}
 }
 
 function readAllJson() {
@@ -657,9 +679,13 @@ function computeCiAlerts(runState) {
   return alerts;
 }
 
-let cachedRunState = { heavy: { inProgress: [], queued: [] }, light: { inProgress: [], queued: [] } };
+// GitHub 에서 가져온 대기열+클라우드 캐시 (30s or 5min 간격 갱신)
+let cachedGhData = { heavy: { queued: [] }, light: { queued: [] }, cloudInProgress: [], fetchedAt: 0 };
+let ghDataFetchedAt = 0;
+let ghIgnoreCache = false;      // r 키로 GitHub 캐시 무시
+let rateLimitRemaining = Infinity;
+let rateLimitCheckedAt = 0;
 let aheadSinceMs = null;
-let runStateAt = 0;
 
 // --- M2-1124-I: 버전 표시 · 최신 아님 경고 · 파일 갱신 경고 ---
 
@@ -728,23 +754,26 @@ function getDiskFileHash() {
 
 // --- M2-1124-H: 카운트다운 + 키 입력 ---
 
-let nextRefreshMs = 0;
+let nextGhRefreshMs = 0;        // GH 큐 다음 갱신 시각 (카운트다운 표시용)
 let countdownTimer = null;
 let refreshTimer = null;
 let isRendering = false;
 let lastForceRefreshMs = 0;
 const KEY_REFRESH_COOLDOWN_MS = 10_000;
 
-function fmtCountdownLine(remainSec, fullMode) {
-  return `\x1b[2m  다음 갱신 ${remainSec}초 | r 지금 갱신 · q 종료${fullMode ? '' : '  --full: 전체 목록'}\x1b[0m`;
+function fmtCountdownLine(remainSec, fullMode, ghAgeStr, rateLimitWarn) {
+  const extra = fullMode ? '' : '  --full: 전체 목록';
+  const ghPart = ghAgeStr ? `  \x1b[2m${ghAgeStr}\x1b[0m` : '';
+  const rlPart = rateLimitWarn ? `  \x1b[33m${rateLimitWarn}\x1b[0m` : '';
+  return `\x1b[2m  로컬 3초 | GH큐 갱신 ${remainSec}초 | r GH캐시무시+즉시 · q 종료${extra}\x1b[0m${ghPart}${rlPart}`;
 }
 
-function startCountdownTimer(fullMode) {
+function startCountdownTimer(fullMode, ghAgeStr, rateLimitWarn) {
   if (countdownTimer) clearInterval(countdownTimer);
   countdownTimer = setInterval(() => {
     if (isRendering) return;
-    const remain = Math.max(0, Math.round((nextRefreshMs - Date.now()) / 1000));
-    process.stdout.write('\x1b[1A\r\x1b[2K' + fmtCountdownLine(remain, fullMode) + '\n');
+    const remain = Math.max(0, Math.round((nextGhRefreshMs - Date.now()) / 1000));
+    process.stdout.write('\x1b[1A\r\x1b[2K' + fmtCountdownLine(remain, fullMode, ghAgeStr, rateLimitWarn) + '\n');
   }, 1000);
 }
 
@@ -777,17 +806,35 @@ async function tick(fullMode) {
   const dateStr = getWibDateStr();
   const cloudLimit = getCloudQuota(dateStr);
 
-  if (Date.now() - runStateAt > RUNNER_REFRESH_MS) {
+  // === 1. 로컬 러너 상태 (3초마다 · GitHub 호출 없음) ===
+  const localStates = readAllLocalRunnerStates();
+  const allRunnersIdle = localStates.every(s => !s.running);
+
+  // === 2. GitHub 대기열+클라우드 (30초 or idle 시 5분) ===
+  const ghInterval = rateLimitRemaining < RATE_LIMIT_SLOW_THRESHOLD
+    ? GH_IDLE_REFRESH_MS
+    : (allRunnersIdle ? GH_IDLE_REFRESH_MS : GH_QUEUE_REFRESH_MS);
+
+  if (ghIgnoreCache || Date.now() - ghDataFetchedAt > ghInterval) {
+    ghIgnoreCache = false;
     try {
-      cachedRunState = await fetchAllRunState();
-      runStateAt = Date.now();
+      const freshData = await fetchGhQueueAndCloud();
+      cachedGhData = { ...freshData, fetchedAt: Date.now() };
+      ghDataFetchedAt = Date.now();
     } catch {}
+    checkRateLimit().catch(() => {});
   }
 
+  // GH 캐시 나이 문자열 (회색 표시용)
+  const ghAgeSec = ghDataFetchedAt > 0 ? Math.round((Date.now() - ghDataFetchedAt) / 1000) : null;
+  const ghAgeStr = ghAgeSec !== null
+    ? (ghAgeSec > 600 ? `\x1b[33mGH ${ghAgeSec}초 전\x1b[0m\x1b[2m` : `GH ${ghAgeSec}초 전`)
+    : 'GH 미조회';
+  const rateLimitWarn = rateLimitRemaining < RATE_LIMIT_SLOW_THRESHOLD
+    ? `rate_limit ${rateLimitRemaining} → 5분 간격` : null;
+
   const allJson = readAllJson();
-
   const cloudData = readRealCloudData(dateStr, cloudLimit);
-
   const rawUnclaimed = scanUnclaimedIds();
   const freshUnclaimed = filterFreshUnclaimed(rawUnclaimed);
 
@@ -809,7 +856,48 @@ async function tick(fullMode) {
   const runnerAlerts = [...rawRunnerAlerts, ...errAlerts.filter(a => !a.resolved)];
   updateRunnerAlertNotifications(runnerAlerts);
 
-  const ciAlerts = computeCiAlerts(cachedRunState);
+  // === 3. 로컬 inProgress → runState (로컬 우선) ===
+  const localInProgress = localStates
+    .filter(s => s.running)
+    .map(s => ({
+      repo: s.repo,
+      pr: '-',
+      display: `${repoShort(s.repo)}(로컬)`,
+      prompt_id: null,
+      check: s.jobName || '',
+      running_min: s.runningMin ?? 0,
+      head_branch: null,
+      run_id: null,
+      light: s.name.includes('light'),
+      runner: s.name,
+      job: s.jobName || '',
+      source: 'local',
+    }));
+
+  // 로컬 running 러너는 GitHub cloudInProgress 에서 제외 (충돌 → 로컬 우선)
+  const localRunningRunners = new Set(localStates.filter(s => s.running).map(s => s.name));
+  const cloudInProgress = (cachedGhData.cloudInProgress || []).filter(j => !localRunningRunners.has(j.runner));
+
+  const runState = {
+    heavy: {
+      inProgress: [...localInProgress.filter(j => !j.light), ...cloudInProgress.filter(j => !j.light)],
+      queued: cachedGhData.heavy?.queued || [],
+    },
+    light: {
+      inProgress: [...localInProgress.filter(j => j.light), ...cloudInProgress.filter(j => j.light)],
+      queued: cachedGhData.light?.queued || [],
+    },
+  };
+
+  // === 4. ci_runners 충돌 해소: 로컬 running → busy=true 강제 ===
+  const localStateByRunner = new Map(localStates.map(s => [s.name, s]));
+  const mergedCiRunners = (allJson?.ci_runners || []).map(r => {
+    const ls = localStateByRunner.get(r.name);
+    if (ls?.running && !r.busy) return { ...r, busy: true, status: 'online' };
+    return r;
+  });
+
+  const ciAlerts = computeCiAlerts(runState);
 
   const lastCiByRepo = await getLastCiByRepo(dateStr).catch(() => []);
   const ciSummaryAlerts = computeCiSummaryAlerts(allJson, lastCiByRepo, dateStr);
@@ -824,6 +912,10 @@ async function tick(fullMode) {
     const resolvedNote = resolvedErrAlerts.map(a => `[해소됨] ${a.msg}`).join('\n');
     renderAllJson = { ...allJson, err_tail: (tail ? tail + '\n' : '') + resolvedNote };
   }
+  // ci_runners 충돌 해소 적용
+  if (mergedCiRunners.length > 0 && mergedCiRunners !== allJson?.ci_runners) {
+    renderAllJson = { ...(renderAllJson || allJson), ci_runners: mergedCiRunners };
+  }
 
   const nowStr = new Date().toLocaleString('en', {
     timeZone: 'Asia/Jakarta', hour12: false,
@@ -837,15 +929,15 @@ async function tick(fullMode) {
   }
   const hubNotifs = tickQueueDiff();
 
-  // REQ 1 (M2-1124-F): BUSY 러너 잡 상세 조회 (2분 캐시)
-  const busyJobMap = await buildBusyJobMap(allJson);
+  // BUSY 러너 잡 상세 조회 (2분 캐시) · 로컬 상태 보완 포함
+  const busyJobMap = await buildBusyJobMap(allJson, localStates);
 
   isRendering = true;
-  nextRefreshMs = Date.now() + REFRESH_MS;
+  nextGhRefreshMs = ghDataFetchedAt + ghInterval;
 
   const rawLines = renderCompact({
     allJson: renderAllJson,
-    runState: cachedRunState,
+    runState,
     cloudData,
     runnerAlerts,
     ciAlerts: [...ciAlerts, ...ciSummaryAlerts.filter(a => !a.dim)],
@@ -856,7 +948,7 @@ async function tick(fullMode) {
     cloudTodayCount,
     cloudLimit,
     lastCiByRepo,
-    countdownSec: Math.round(REFRESH_MS / 1000),
+    countdownSec: Math.round(ghInterval / 1000),
     hubReportStatus: computeHubReportStatus(allJson),
   });
 
@@ -877,7 +969,7 @@ async function tick(fullMode) {
   process.stdout.write('\x1b[2J\x1b[H');
   process.stdout.write(finalLines.join('\n') + '\n');
 
-  startCountdownTimer(fullMode);
+  startCountdownTimer(fullMode, ghAgeStr, rateLimitWarn);
   isRendering = false;
 }
 
@@ -893,16 +985,18 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     refreshTimer = setTimeout(() => {
       if (isRendering) { scheduleNext(); return; }
       tick(fullMode).catch(() => {}).finally(scheduleNext);
-    }, REFRESH_MS);
+    }, LOCAL_REFRESH_MS);
   }
 
   function forceRefresh() {
     if (isRendering) return;
     if (refreshTimer) clearTimeout(refreshTimer);
+    // r 키: GitHub 캐시 무시 (10초 쿨다운)
+    ghIgnoreCache = true;
     tick(fullMode).catch(() => {}).finally(scheduleNext);
   }
 
-  // stdin raw mode — r: 즉시 갱신 · q/Ctrl+C: 종료 (M2-1124-H REQ 1)
+  // stdin raw mode — r: GitHub 캐시무시+즉시갱신 · q/Ctrl+C: 종료 (M2-1124-H REQ 1)
   if (process.stdin.isTTY) {
     process.stdin.setRawMode(true);
     process.stdin.resume();
