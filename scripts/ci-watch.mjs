@@ -33,6 +33,7 @@ import {
 const REFRESH_MS = 30_000;
 const RUNNER_REFRESH_MS = 120_000;
 const CLOUD_DAILY_LIMIT = 5;
+const CI_LAST_CACHE_MS = 120_000; // gh run list 2분 캐시
 
 // --- err_tail 오류 허용 목록 판정 (M2-1124-A) ---
 // 이 목록에 매칭되는 줄만 ⚠. 나머지는 정상 정보 줄.
@@ -224,6 +225,103 @@ function readAllJson() {
   catch { return null; }
 }
 
+// --- 마지막 완료 CI (JSONL + gh run list 폴백) ---
+
+const lastCiGhCache = new Map(); // repo → { data, fetchedAt }
+
+function readLastCiFromJsonl(dateStr) {
+  const jsonlPath = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (!existsSync(jsonlPath)) return {};
+  try {
+    const records = readJsonlFile(jsonlPath);
+    const byRepo = {};
+    for (const r of records) {
+      if (!r.completed_at || !r.repo || isMarkerJob(r.job)) continue;
+      if (!byRepo[r.repo] || r.completed_at > byRepo[r.repo].completed_at) {
+        byRepo[r.repo] = r;
+      }
+    }
+    return byRepo;
+  } catch { return {}; }
+}
+
+async function fetchLastCiGh(repo) {
+  const cached = lastCiGhCache.get(repo);
+  if (cached && Date.now() - cached.fetchedAt < CI_LAST_CACHE_MS) return cached.data;
+  try {
+    const { stdout } = await execFileAsync(
+      'gh', ['run', 'list', '--repo', repo, '--status', 'completed', '--limit', '1',
+             '--json', 'databaseId,name,conclusion,updatedAt,headBranch,event,workflowName,number'],
+      { timeout: 10_000, maxBuffer: 512 * 1024 },
+    );
+    const runs = JSON.parse(stdout);
+    const data = runs[0] || null;
+    lastCiGhCache.set(repo, { data, fetchedAt: Date.now() });
+    return data;
+  } catch {
+    if (cached) return cached.data;
+    lastCiGhCache.set(repo, { data: null, fetchedAt: Date.now() });
+    return null;
+  }
+}
+
+async function getLastCiByRepo(dateStr) {
+  const jsonlData = readLastCiFromJsonl(dateStr);
+  return Promise.all(REPOS.map(async repo => {
+    const r = jsonlData[repo];
+    if (r) {
+      return { repo, completed_at: r.completed_at, conclusion: r.conclusion, workflow: r.workflow, job: r.job, pr: r.pr };
+    }
+    const run = await fetchLastCiGh(repo).catch(() => null);
+    if (!run) return { repo, completed_at: null, conclusion: null, workflow: null, job: null, pr: null };
+    return { repo, completed_at: run.updatedAt, conclusion: run.conclusion, workflow: run.workflowName || run.name, job: null, pr: null };
+  }));
+}
+
+// --- CI 요약 경보: 멈춤 의심 · playwright 건너뜀 ---
+
+function computeCiSummaryAlerts(allJson, lastCiByRepo, dateStr) {
+  const alerts = [];
+  const heavyQueued = allJson?.ci?.data?.heavy?.queued || 0;
+  const lightQueued = allJson?.ci?.data?.light?.queued || 0;
+  const heavyOldestMin = allJson?.ci?.data?.heavy?.oldest_queued_min || 0;
+  const lightOldestMin = allJson?.ci?.data?.light?.oldest_queued_min || 0;
+  const worstQueueMin = Math.max(heavyOldestMin, lightOldestMin);
+  const anyActive = heavyQueued > 0 || lightQueued > 0 ||
+    (allJson?.ci?.data?.heavy?.in_progress?.length || 0) > 0 ||
+    (allJson?.ci?.data?.cloud_in_progress?.length || 0) > 0;
+
+  // CI 멈춤: 활성 잡이 있는데 마지막 완료가 30분+ 이상 전
+  if (anyActive && lastCiByRepo.length > 0) {
+    const completedMins = lastCiByRepo
+      .filter(x => x.completed_at)
+      .map(x => Math.round((Date.now() - new Date(x.completed_at).getTime()) / 60_000));
+    const minSinceCompleted = completedMins.length ? Math.min(...completedMins) : null;
+    if (minSinceCompleted !== null && minSinceCompleted > 30) {
+      alerts.push({ type: 'ci_stall', msg: `CI 멈춤 의심 (마지막 완료 ${minSinceCompleted}분 전)`, detail: `CI 멈춤 의심 (마지막 완료 ${minSinceCompleted}분 전)` });
+    }
+  }
+  // CI 멈춤: 큐 대기 30분+
+  if (worstQueueMin >= 30) {
+    alerts.push({ type: 'ci_stall_queue', msg: `CI 멈춤 의심 (대기 ${worstQueueMin}분)`, detail: `CI 멈춤 의심 (대기 ${worstQueueMin}분)` });
+  }
+
+  // playwright 건너뜀 → dim 안내
+  const jsonlPath = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (existsSync(jsonlPath)) {
+    try {
+      const records = readJsonlFile(jsonlPath);
+      const playwrightJobs = records.filter(r => r.job === 'playwright');
+      const lastPlaywright = playwrightJobs[playwrightJobs.length - 1];
+      if (lastPlaywright?.conclusion === 'skipped') {
+        alerts.push({ type: 'playwright_skip', msg: 'heavy 미실행(선행 실패)', dim: true });
+      }
+    } catch {}
+  }
+
+  return alerts;
+}
+
 /**
  * status/ci/<date>.jsonl 에서 실제 검사 잡(마커 제외)만 집계
  */
@@ -365,6 +463,11 @@ async function tick(fullMode) {
 
   const ciAlerts = computeCiAlerts(cachedRunState);
 
+  const lastCiByRepo = await getLastCiByRepo(dateStr).catch(() => []);
+  const ciSummaryAlerts = computeCiSummaryAlerts(allJson, lastCiByRepo, dateStr);
+  const todayStats = allJson?.ci?.data?.today || null;
+  const cloudTodayCount = allJson?.ci?.data?.cloud_today ?? null;
+
   // 해소됨 오류 → err_tail 표시 영역(회색 줄)에 추가 · 경보 카운트 제외
   const resolvedErrAlerts = errAlerts.filter(a => a.resolved);
   let renderAllJson = allJson;
@@ -385,9 +488,14 @@ async function tick(fullMode) {
     runState: cachedRunState,
     cloudData,
     runnerAlerts,
-    ciAlerts,
+    ciAlerts: [...ciAlerts, ...ciSummaryAlerts.filter(a => !a.dim)],
+    ciDimAlerts: ciSummaryAlerts.filter(a => a.dim),
     timeStr: nowStr,
     fullMode,
+    todayStats,
+    cloudTodayCount,
+    cloudLimit,
+    lastCiByRepo,
   });
 
   process.stdout.write('\x1b[2J\x1b[H');
