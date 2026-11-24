@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T15:41:19.850Z",
+  "at": "2026-11-24T15:41:36.877Z",
   "pid": 87453,
   "runner": "v8.1",
   "poll_ms": 30000,
@@ -31,10 +31,8 @@
       "last_activity": null
     },
     "r0": {
-      "current": "R0-1124-AI",
-      "started_at": "2026-11-24T15:34:02.109Z",
-      "model": "sonnet",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-24T15:41:35.723Z"
     }
   },
   "pane_close_failures": {},
@@ -42,11 +40,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 13.33,
-    "compressed_gb": 5.53,
+    "used_gb": 15.63,
+    "compressed_gb": 5.74,
     "swap_used_gb": 2.43,
     "pressure": "normal",
-    "at": "2026-11-24T15:40:50.131Z"
+    "at": "2026-11-24T15:41:23.734Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -118,9 +116,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 1,
+  "isolated_reports_collected": 2,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/3)\rerror: could not apply facf213c7... claim(m1): M1-1124-O started · runner-v8.1 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v8.1:self-update 2026-11-24T15:36:40.654Z] 보류 · busy=5 claimQueue=0 processing=false\n[hub-runner-v8.1:m0 2026-11-24T15:36:43.293Z] [report-path] M0-1124-L: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:claim 2026-11-24T15:36:48.261Z] M0-1124-L → done · runner-v8.1 cmux-split · 리포트 확인 m0/M0-1124-L-report.md · model=opus · 로그: /Users\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1124-L.json · {\"id\":\"M0-1124-L\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-24T15:36:49.730Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m0/M0-1124-L-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1124-L.log · report_src=isolated\"}\n[build-hubs] status/hubs.json 부재 · 신규 생성\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 6건 (건드리지 않음): status/ci/2026-11-24.jsonl, m0/M0-1124-J-report.md, m1/M1-1124-M-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:37:12.221Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:37:45.706Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:38:22.518Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:38:56.238Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:39:33.499Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:40:07.204Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:40:44.499Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:41:17.739Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/3)\rerror: could not apply facf213c7... claim(m1): M1-1124-O started · runner-v8.1 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v8.1:self-update 2026-11-24T15:36:40.654Z] 보류 · busy=5 claimQueue=0 processing=false\n[hub-runner-v8.1:m0 2026-11-24T15:36:43.293Z] [report-path] M0-1124-L: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:claim 2026-11-24T15:36:48.261Z] M0-1124-L → done · runner-v8.1 cmux-split · 리포트 확인 m0/M0-1124-L-report.md · model=opus · 로그: /Users\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1124-L.json · {\"id\":\"M0-1124-L\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-24T15:36:49.730Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m0/M0-1124-L-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1124-L.log · report_src=isolated\"}\n[build-hubs] status/hubs.json 부재 · 신규 생성\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 6건 (건드리지 않음): status/ci/2026-11-24.jsonl, m0/M0-1124-J-report.md, m1/M1-1124-M-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:37:12.221Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:37:45.706Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:38:22.518Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:38:56.238Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:39:33.499Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:40:07.204Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:40:44.499Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:41:17.739Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:r0 2026-11-24T15:41:32.071Z] [report-path] R0-1124-AI: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -138,7 +136,7 @@
     {
       "name": "Youngkyus-MacBook-Pro-M1",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "curiocity-mac-fork",
@@ -148,7 +146,7 @@
     {
       "name": "curiocity-mac-fork-light",
       "status": "online",
-      "busy": false
+      "busy": true
     }
   ]
 }
