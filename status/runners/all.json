@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T17:45:51.250Z",
+  "at": "2026-11-24T17:51:12.672Z",
   "pid": 56897,
   "runner": "v8.2",
   "poll_ms": 30000,
@@ -34,11 +34,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.69,
-    "compressed_gb": 4.04,
+    "used_gb": 15.11,
+    "compressed_gb": 3.58,
     "swap_used_gb": 1.9,
     "pressure": "normal",
-    "at": "2026-11-24T17:45:41.010Z"
+    "at": "2026-11-24T17:50:40.820Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -46,43 +46,22 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T17:40:58.002Z",
+      "at": "2026-11-24T17:46:12.548Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 11,
+      "api_calls": 12,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
+        "queued": 1,
         "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-            "pr": "master",
-            "pr_display": "fork:master",
-            "job": "playwright",
-            "step": "Run actions/checkout@v4",
-            "running_min": 0,
-            "runner": "curiocity-mac-fork",
-            "kind": "mac-heavy"
-          },
-          {
-            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-            "pr": "master",
-            "pr_display": "fork:master",
-            "job": "lint",
-            "step": "Run actions/checkout@v4",
-            "running_min": 0,
-            "runner": "curiocity-mac-fork-light",
-            "kind": "mac-heavy"
-          }
-        ]
+        "oldest_queued_min": 4,
+        "oldest_queued_pr": "fork:master",
+        "in_progress": []
       },
       "light": {
         "queued": 0,
@@ -93,17 +72,17 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 2,
+        "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 3,
       "today": {
         "mac-heavy": {
-          "jobs": 6,
+          "jobs": 10,
           "avg_wait_min": 0.8,
-          "avg_run_min": 3.7,
+          "avg_run_min": 3.1,
           "success_rate": 100,
-          "run_min_total": 21.9
+          "run_min_total": 30.7
         },
         "mac-light": {
           "jobs": 4,
@@ -113,28 +92,27 @@
           "run_min_total": 1.4000000000000001
         },
         "cloud": {
-          "jobs": 6,
+          "jobs": 9,
           "avg_wait_min": 0,
           "avg_run_min": 0.1,
           "success_rate": 66.7,
-          "run_min_total": 0.5
+          "run_min_total": 0.7
         },
-        "cloud_cost_est_usd": 0.032,
+        "cloud_cost_est_usd": 0.048,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 1,
-      "alerts": [],
-      "partial": true
+      "jsonl_added": 7,
+      "alerts": []
     },
-    "took_ms": 15517,
-    "at": "2026-11-24T17:41:11.723Z"
+    "took_ms": 11129,
+    "at": "2026-11-24T17:46:22.052Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": null,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.2:self-update 2026-11-24T17:41:03.843Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.2:git 2026-11-24T17:41:34.116Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:41:34.992Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:41:36.961Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:42:08.113Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:42:10.135Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:m1 2026-11-24T17:42:22.170Z] pane busy (1st) · 다음 tick 1회 재시도 예약 · M1-1124-U\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:42:43.739Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m1 2026-11-24T17:42:44.621Z] pick · M1-1124-U · model=sonnet · display=cmux-split\n[hub-runner-v8.2:heartbeat 2026-11-24T17:42:46.913Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:43:18.178Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:43:20.067Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:43:53.506Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:43:55.505Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:44:26.825Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:44:28.924Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:45:02.946Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:45:05.084Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:45:36.692Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:45:38.574Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git",
+  "err_tail": "[hub-runner-v8.2:heartbeat 2026-11-24T17:42:46.913Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:43:18.178Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:43:20.067Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:43:53.506Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:43:55.505Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:44:26.825Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:44:28.924Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:45:02.946Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:45:05.084Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:45:36.692Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:45:38.574Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:claim 2026-11-24T17:45:51.296Z] M1-1124-U → blocked · pane busy (2nd · 재시도 소진) · runner-v8.2 cmux-split · dispatch=claude-foreground-t\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-U.json · {\"id\":\"M1-1124-U\",\"hub\":\"m1\",\"state\":\"blocked\",\"at\":\"2026-11-24T17:45:51.387Z\",\"note\":\"pane busy (2nd · 재시도 소진) · runner-v8.2 cmux-split · dispatch=claude-foreground-timeout · initial=- · last=- · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1124-U.log\",\"blocked_by\":\"kyu\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:46:11.709Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -157,12 +135,12 @@
     {
       "name": "curiocity-mac-fork",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "curiocity-mac-fork-light",
       "status": "online",
-      "busy": true
+      "busy": false
     }
   ]
 }
