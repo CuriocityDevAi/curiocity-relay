@@ -121,10 +121,13 @@ function fmtQueueRow(label, queueItems) {
  *   cloudTodayCount: allJson.ci.data.cloud_today (nullable)
  *   cloudLimit: number
  *   lastCiByRepo: [{repo,completed_at,conclusion,workflow,job,pr}]
+ *   countdownSec: number — 다음 갱신까지 남은 초 (M2-1124-H)
+ *   hubReportStatus: { [hub]: { workMin, waitMin, reportExists } } — ended_at 기반 (M2-1124-H)
  */
 export function renderCompact(data) {
   const { allJson, runState, cloudData, runnerAlerts, ciAlerts, ciDimAlerts,
-          timeStr, fullMode, todayStats, cloudTodayCount, cloudLimit, lastCiByRepo } = data;
+          timeStr, fullMode, todayStats, cloudTodayCount, cloudLimit, lastCiByRepo,
+          countdownSec, hubReportStatus } = data;
   const W = 100;
   const hr = '─'.repeat(W - 1);
   const lines = [];
@@ -147,9 +150,25 @@ export function renderCompact(data) {
     }
     const cur = h.current;
     if (cur) {
-      const startMs = h.started_at ? Date.now() - new Date(h.started_at).getTime() : null;
-      const elapMin = startMs !== null ? Math.round(startMs / 60000) : '?';
-      lines.push(`  ${col(hub, C.bold)}  ${col(cur, C.yellow)}  ${elapMin}분`);
+      const rptStatus = hubReportStatus?.[hub];
+      if (rptStatus && !rptStatus.reportExists) {
+        // ended_at 있고 리포트 미착지 — 작업시간 · 착지대기 분리 표시 (M2-1124-H REQ 3)
+        const wc = rptStatus.workMin >= 60 ? C.red : rptStatus.workMin >= 30 ? C.yellow : '';
+        const workStr = wc ? `${wc}작업 ${rptStatus.workMin}분${C.reset}` : `작업 ${rptStatus.workMin}분`;
+        const wt = rptStatus.waitMin >= 5 ? C.red : C.yellow;
+        const waitStr = `${wt}⚠ 리포트 미착지 ${rptStatus.waitMin}분${C.reset}`;
+        lines.push(`  ${col(hub, C.bold)}  ${col(cur, C.yellow)}  ${workStr} · ${waitStr}`);
+      } else {
+        const startMs = h.started_at ? Date.now() - new Date(h.started_at).getTime() : null;
+        const elapMin = startMs !== null ? Math.round(startMs / 60000) : null;
+        // 30분+ 노랑 · 60분+ 빨강 (M2-1124-H REQ 4)
+        const ec = elapMin !== null && elapMin >= 60 ? C.red
+          : elapMin !== null && elapMin >= 30 ? C.yellow : '';
+        const elapStr = elapMin !== null
+          ? (ec ? `${ec}${elapMin}분${C.reset}` : `${elapMin}분`)
+          : '?분';
+        lines.push(`  ${col(hub, C.bold)}  ${col(cur, C.yellow)}  ${elapStr}`);
+      }
     } else {
       lines.push(`  ${col(hub, C.bold)}  ${col('idle', C.green)}`);
     }
@@ -295,7 +314,8 @@ export function renderCompact(data) {
     for (const l of errLines) lines.push(col('  ' + l.slice(0, W - 4), C.dim));
   }
 
-  lines.push(col('  갱신 30초 | Ctrl+C 종료' + (fullMode ? '' : '  --full: 전체 목록'), C.dim));
+  const cdSec = typeof countdownSec === 'number' ? countdownSec : 30;
+  lines.push(col(`  다음 갱신 ${cdSec}초 | r 지금 갱신 · q 종료${fullMode ? '' : '  --full: 전체 목록'}`, C.dim));
 
   return lines;
 }
