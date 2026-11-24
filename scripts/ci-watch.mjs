@@ -656,6 +656,53 @@ let cachedRunState = { heavy: { inProgress: [], queued: [] }, light: { inProgres
 let aheadSinceMs = null;
 let runStateAt = 0;
 
+// --- M2-1124-H: 카운트다운 + 키 입력 ---
+
+let nextRefreshMs = 0;
+let countdownTimer = null;
+let refreshTimer = null;
+let isRendering = false;
+let lastForceRefreshMs = 0;
+const KEY_REFRESH_COOLDOWN_MS = 10_000;
+
+function fmtCountdownLine(remainSec, fullMode) {
+  return `\x1b[2m  다음 갱신 ${remainSec}초 | r 지금 갱신 · q 종료${fullMode ? '' : '  --full: 전체 목록'}\x1b[0m`;
+}
+
+function startCountdownTimer(fullMode) {
+  if (countdownTimer) clearInterval(countdownTimer);
+  countdownTimer = setInterval(() => {
+    if (isRendering) return;
+    const remain = Math.max(0, Math.round((nextRefreshMs - Date.now()) / 1000));
+    process.stdout.write('\x1b[1A\r\x1b[2K' + fmtCountdownLine(remain, fullMode) + '\n');
+  }, 1000);
+}
+
+function cleanupTerminal() {
+  if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+  if (refreshTimer) { clearTimeout(refreshTimer); refreshTimer = null; }
+  try {
+    if (process.stdin.isTTY && process.stdin.isRaw) process.stdin.setRawMode(false);
+  } catch {}
+  process.stdout.write('\x1b[?25h\n');
+}
+
+// ended_at 이 all.json 에 기록된 경우에만 작업시간·착지대기 분리 (M2-1124-H REQ 3)
+function computeHubReportStatus(allJson) {
+  const result = {};
+  for (const hub of QUEUE_HUBS) {
+    const h = allJson?.hubs?.[hub];
+    if (!h?.current || !h?.ended_at) continue;
+    const startMs = new Date(h.started_at).getTime();
+    const endMs = new Date(h.ended_at).getTime();
+    const workMin = Math.round((endMs - startMs) / 60000);
+    const waitMin = Math.round((Date.now() - endMs) / 60000);
+    const reportExists = existsSync(join(REPO_ROOT, hub, `${h.current}-report.md`));
+    result[hub] = { workMin, waitMin, reportExists };
+  }
+  return result;
+}
+
 async function tick(fullMode) {
   const dateStr = getWibDateStr();
   const cloudLimit = getCloudQuota(dateStr);
@@ -723,6 +770,9 @@ async function tick(fullMode) {
   // REQ 1 (M2-1124-F): BUSY 러너 잡 상세 조회 (2분 캐시)
   const busyJobMap = await buildBusyJobMap(allJson);
 
+  isRendering = true;
+  nextRefreshMs = Date.now() + REFRESH_MS;
+
   const rawLines = renderCompact({
     allJson: renderAllJson,
     runState: cachedRunState,
@@ -736,21 +786,58 @@ async function tick(fullMode) {
     cloudTodayCount,
     cloudLimit,
     lastCiByRepo,
+    countdownSec: Math.round(REFRESH_MS / 1000),
+    hubReportStatus: computeHubReportStatus(allJson),
   });
 
   process.stdout.write('\x1b[2J\x1b[H');
   process.stdout.write(appendHubPending(enhanceBusyLines(rawLines, busyJobMap), hubPending, hubNotifs).join('\n') + '\n');
+
+  startCountdownTimer(fullMode);
+  isRendering = false;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const fullMode = process.argv.includes('--full');
 
-  process.on('SIGINT', () => { process.stdout.write('\x1b[?25h\n'); process.exit(0); });
+  process.on('SIGINT', () => { cleanupTerminal(); process.exit(0); });
+  process.on('SIGTERM', () => { cleanupTerminal(); process.exit(0); });
   process.stdout.write('\x1b[?25l');
 
+  function scheduleNext() {
+    if (refreshTimer) clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(() => {
+      if (isRendering) { scheduleNext(); return; }
+      tick(fullMode).catch(() => {}).finally(scheduleNext);
+    }, REFRESH_MS);
+  }
+
+  function forceRefresh() {
+    if (isRendering) return;
+    if (refreshTimer) clearTimeout(refreshTimer);
+    tick(fullMode).catch(() => {}).finally(scheduleNext);
+  }
+
+  // stdin raw mode — r: 즉시 갱신 · q/Ctrl+C: 종료 (M2-1124-H REQ 1)
+  if (process.stdin.isTTY) {
+    process.stdin.setRawMode(true);
+    process.stdin.resume();
+    process.stdin.setEncoding('utf8');
+    process.stdin.on('data', key => {
+      if (key === '') { cleanupTerminal(); process.exit(0); }
+      else if (key === 'q' || key === 'Q') { cleanupTerminal(); process.exit(0); }
+      else if (key === 'r' || key === 'R') {
+        const now = Date.now();
+        if (now - lastForceRefreshMs >= KEY_REFRESH_COOLDOWN_MS) {
+          lastForceRefreshMs = now;
+          forceRefresh();
+        }
+      }
+    });
+  }
+
   (async () => {
-    await tick(fullMode);
-    const loop = () => tick(fullMode).catch(() => {}).then(() => setTimeout(loop, REFRESH_MS));
-    setTimeout(loop, REFRESH_MS);
+    await tick(fullMode).catch(() => {});
+    scheduleNext();
   })();
 }
