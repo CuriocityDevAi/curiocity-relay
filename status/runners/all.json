@@ -1,12 +1,12 @@
 {
-  "at": "2026-11-24T07:30:00.447Z",
+  "at": "2026-11-24T07:35:08.340Z",
   "pid": 37338,
   "runner": "v7.8",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": "blocked: runner-folder change pending Kyu install (m2/M2-1123-C-report.md)",
-  "last_error_at": "2026-11-24T07:28:12.075Z",
+  "last_error": null,
+  "last_error_at": null,
   "hubs": {
     "m0": {
       "current": null,
@@ -36,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.68,
-    "compressed_gb": 3.59,
-    "swap_used_gb": 4.47,
+    "used_gb": 15.36,
+    "compressed_gb": 3.74,
+    "swap_used_gb": 4.45,
     "pressure": "normal",
-    "at": "2026-11-24T07:29:27.127Z"
+    "at": "2026-11-24T07:34:35.929Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -48,7 +48,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T07:27:03.532Z",
+      "at": "2026-11-24T07:32:16.165Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -107,12 +107,12 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 10849,
-    "at": "2026-11-24T07:27:12.242Z"
+    "took_ms": 9317,
+    "at": "2026-11-24T07:32:23.163Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 2,
-  "err_tail": "[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/33)\rRebasing (2/33)\rerror: could not apply f660ca25c... claim(r0): R0-1124-G done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · mod\n[hub-runner-v7.8:git 2026-11-24T07:23:37.777Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,queue/m2/M2-1124-K.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T07:23:37.777Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,queue/m2/M2-1124-K.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md\n[hub-runner-v7.8:heartbeat 2026-11-24T07:27:41.351Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-24T07:28:12.074Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T07:28:12.075Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md\n[hub-runner-v7.8:heartbeat 2026-11-24T07:28:15.135Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:heartbeat 2026-11-24T07:28:50.984Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:heartbeat 2026-11-24T07:29:24.833Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:claim 2026-11-24T07:29:40.862Z] M2-1124-H → blocked · timeout 60m · runner-v7.8 cmux-split · pane 유지 (C-c + /exit 전송) · model=sonnet ·\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-H.json · {\"id\":\"M2-1124-H\",\"hub\":\"m2\",\"state\":\"blocked\",\"at\":\"2026-11-24T07:29:40.946Z\",\"note\":\"timeout 60m · runner-v7.8 cmux-split · pane 유지 (C-c + /exit 전송) · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1124-H.log\",\"blocked_by\":\"oke\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/38)\rRebasing (2/38)\rerror: could not apply f660ca25c... claim(r0): R0-1124-G done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · mod\n[hub-runner-v7.8:m2 2026-11-24T07:29:59.093Z] pick · M2-1124-I · model=sonnet · display=cmux-split",
+  "err_tail": "[hub-runner-v7.8:heartbeat 2026-11-24T07:28:50.984Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:heartbeat 2026-11-24T07:29:24.833Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:claim 2026-11-24T07:29:40.862Z] M2-1124-H → blocked · timeout 60m · runner-v7.8 cmux-split · pane 유지 (C-c + /exit 전송) · model=sonnet ·\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-H.json · {\"id\":\"M2-1124-H\",\"hub\":\"m2\",\"state\":\"blocked\",\"at\":\"2026-11-24T07:29:40.946Z\",\"note\":\"timeout 60m · runner-v7.8 cmux-split · pane 유지 (C-c + /exit 전송) · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1124-H.log\",\"blocked_by\":\"oke\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/38)\rRebasing (2/38)\rerror: could not apply f660ca25c... claim(r0): R0-1124-G done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · mod\n[hub-runner-v7.8:m2 2026-11-24T07:29:59.093Z] pick · M2-1124-I · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-24T07:30:01.848Z] M2-1124-I → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-I.json · {\"id\":\"M2-1124-I\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-24T07:30:01.955Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1124-I.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/39)\rRebasing (2/39)\rerror: could not apply f660ca25c... claim(r0): R0-1124-G done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · mod\n[hub-runner-v7.8:git 2026-11-24T07:34:33.620Z] lastError 해제 (safePull 성공) · 이전 오류: blocked: runner-folder change pending Kyu install (m2/M2-1123-C-report.md)",
   "git_state": {
     "ahead": 0,
     "behind": 0,
