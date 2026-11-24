@@ -1,26 +1,28 @@
 {
-  "at": "2026-11-24T15:55:45.478Z",
+  "at": "2026-11-24T15:58:04.423Z",
   "pid": 87453,
   "runner": "v8.1",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": "blocked: runner-folder change pending Kyu install (m0/M0-1124-J-report.md)",
-  "last_error_at": "2026-11-24T15:15:51.734Z",
+  "last_error": "blocked: runner-folder change pending Kyu install (queue/m2/M2-1124-T.md)",
+  "last_error_at": "2026-11-24T15:58:00.993Z",
   "hubs": {
     "m0": {
       "current": null,
       "last_activity": "2026-11-24T15:36:45.764Z"
     },
     "m1": {
-      "current": null,
+      "current": "M1-1124-P",
+      "started_at": "2026-11-24T15:58:02.964Z",
+      "model": "sonnet",
       "last_activity": "2026-11-24T15:51:51.506Z"
     },
     "m2": {
-      "current": "M2-1124-S",
-      "started_at": "2026-11-24T15:34:01.160Z",
+      "current": "M2-1124-T",
+      "started_at": "2026-11-24T15:56:52.840Z",
       "model": "sonnet",
-      "last_activity": null
+      "last_activity": "2026-11-24T15:55:59.601Z"
     },
     "m3": {
       "current": null,
@@ -36,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.27,
-    "compressed_gb": 3.25,
+    "used_gb": 15.61,
+    "compressed_gb": 2.92,
     "swap_used_gb": 2.31,
     "pressure": "normal",
-    "at": "2026-11-24T15:55:13.211Z"
+    "at": "2026-11-24T15:57:30.941Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -48,14 +50,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T15:52:19.658Z",
+      "at": "2026-11-24T15:57:26.472Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 14,
+      "api_calls": 12,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -63,28 +65,7 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/storeport",
-            "pr": "#421",
-            "pr_display": "storeport:#421",
-            "job": "heavy-mac",
-            "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 14,
-            "runner": "Youngkyus-MacBook-Pro-M1",
-            "kind": "mac-heavy"
-          },
-          {
-            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-            "pr": "#254",
-            "pr_display": "fork:#254",
-            "job": "lint",
-            "step": "Run npm ci --legacy-peer-deps",
-            "running_min": 0,
-            "runner": "curiocity-mac-fork-light",
-            "kind": "mac-heavy"
-          }
-        ]
+        "in_progress": []
       },
       "light": {
         "queued": 0,
@@ -95,47 +76,47 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 2,
+        "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 5,
+      "cloud_today": 2,
       "today": {
         "mac-heavy": {
-          "jobs": 134,
+          "jobs": 137,
           "avg_wait_min": 0.9,
-          "avg_run_min": 2.1,
-          "success_rate": 88.1,
-          "run_min_total": 283.0000000000001
+          "avg_run_min": 2.2,
+          "success_rate": 88.3,
+          "run_min_total": 299.6000000000001
         },
         "mac-light": {
-          "jobs": 59,
+          "jobs": 63,
           "avg_wait_min": 0.4,
           "avg_run_min": 0.3,
-          "success_rate": 98.3,
-          "run_min_total": 17.900000000000006
+          "success_rate": 98.4,
+          "run_min_total": 19.400000000000002
         },
         "cloud": {
-          "jobs": 85,
+          "jobs": 87,
           "avg_wait_min": 0,
           "avg_run_min": 0.7,
-          "success_rate": 68.2,
-          "run_min_total": 62.000000000000064
+          "success_rate": 67.8,
+          "run_min_total": 62.100000000000065
         },
-        "cloud_cost_est_usd": 0.904,
+        "cloud_cost_est_usd": 0.912,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 24.4
       },
-      "jsonl_added": 12,
+      "jsonl_added": 9,
       "alerts": []
     },
-    "took_ms": 14753,
-    "at": "2026-11-24T15:52:32.388Z"
+    "took_ms": 14481,
+    "at": "2026-11-24T15:57:38.857Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 3,
+  "isolated_reports_collected": 4,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.1:claim 2026-11-24T15:50:23.691Z] M3-1124-O → done · runner-v8.1 cmux-split · 리포트 확인 m3/M3-1124-O-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1124-O.json · {\"id\":\"M3-1124-O\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-24T15:50:23.785Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m3/M3-1124-O-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1124-O.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:50:35.750Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:51:11.010Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:51:43.634Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m1 2026-11-24T15:51:49.522Z] [report-path] M1-1124-O: 수거 실패 · To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.1:claim 2026-11-24T15:51:52.732Z] M1-1124-O → done · runner-v8.1 cmux-split · 리포트 확인 m1/M1-1124-O-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-O.json · {\"id\":\"M1-1124-O\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-24T15:51:52.823Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m1/M1-1124-O-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1124-O.log · report_src=legacy-root\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD fatal: It seems that there is already a rebase-merge directory, and\n[hub-runner-v8.1:gh-watchdog 2026-11-24T15:52:18.781Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-S.json · {\"id\":\"M2-1124-S\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-24T15:56:02.173Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m2/M2-1124-S-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1124-S.log · report_src=isolated\"}\n[build-hubs] status/hubs.json 부재 · 신규 생성\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:m2 2026-11-24T15:56:52.839Z] pick · M2-1124-T · model=sonnet · display=cmux-split\n[hub-runner-v8.1:claim 2026-11-24T15:56:55.642Z] M2-1124-T → started · runner-v8.1 · cmux-split · model=opus · source=queue-line · pane foreground=clau\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-T.json · {\"id\":\"M2-1124-T\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-24T15:56:55.750Z\",\"note\":\"runner-v8.1 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1124-T.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 6건 (건드리지 않음): queue/m2/M2-1124-T.md, m0/M0-1124-J-report.md, m1/M1-1124-M-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD fatal: It seems that there is already a rebase-merge directory, and\n[hub-runner-v8.1:self-update 2026-11-24T15:57:30.703Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.1:git 2026-11-24T15:58:00.993Z] 러너 폴더 침범 감지 · files=queue/m2/M2-1124-T.md,m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md,r0/R0-1124-K-report.md · guess_hub=m2\n[hub-runner-v8.1:git 2026-11-24T15:58:00.993Z] blocked: runner-folder change pending Kyu install · files=queue/m2/M2-1124-T.md,m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md…\n[hub-runner-v8.1:m1 2026-11-24T15:58:02.964Z] pick · M1-1124-P · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -153,7 +134,7 @@
     {
       "name": "Youngkyus-MacBook-Pro-M1",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "curiocity-mac-fork",
@@ -163,7 +144,7 @@
     {
       "name": "curiocity-mac-fork-light",
       "status": "online",
-      "busy": true
+      "busy": false
     }
   ]
 }
