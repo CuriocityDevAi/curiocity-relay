@@ -38,7 +38,11 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 // 그 경우 REPO_ROOT 는 ~/.hub-runner 가 아니라 실제 clone (~/projects/curiocity-relay) 이어야 한다.
 // 배포 경로 식별 규칙: HERE 가 `.hub-runner/bin` 와 같으면 배포본으로 간주.
 const CI_WATCH_DEPLOY_HOME_BIN = join(homedir(), '.hub-runner', 'bin');
-const CI_WATCH_IS_DEPLOYED = HERE === CI_WATCH_DEPLOY_HOME_BIN;
+// M1-1124-L F1: import.meta.url 은 심링크를 resolve → HERE 는 항상 scripts/.
+// 배포 판정은 process.argv[1](심링크 경로 그대로) 의 dirname 으로 한다.
+const CI_WATCH_IS_DEPLOYED = process.argv[1]
+  ? dirname(resolve(process.argv[1])) === CI_WATCH_DEPLOY_HOME_BIN
+  : false;
 const REPO_ROOT = CI_WATCH_IS_DEPLOYED
   ? join(homedir(), 'projects', 'curiocity-relay')
   : resolve(HERE, '..');
@@ -990,6 +994,15 @@ async function tick(fullMode) {
 
   startCountdownTimer(fullMode, ghAgeStr, rateLimitWarn);
   isRendering = false;
+}
+
+// M1-1124-L F2: --once / CI_WATCH_ONCE=1 — import 연결 스모크 테스트용.
+// 심링크 실행 시 import.meta.url(resolve 완료)과 argv[1](심링크 경로) 불일치로
+// 아래 main 블록에 진입하지 않으므로 module 최상위에서 처리.
+// ERR_MODULE_NOT_FOUND 가 있으면 여기 오기 전에 프로세스가 비정상 종료한다.
+if (process.argv.includes('--once') || process.env.CI_WATCH_ONCE === '1') {
+  process.stderr.write('[ci-watch:once] imports ok\n');
+  process.exit(0);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

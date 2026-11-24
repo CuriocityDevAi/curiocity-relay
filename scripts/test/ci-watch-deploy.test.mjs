@@ -16,6 +16,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
 import {
+  copyFileSync,
   existsSync,
   lstatSync,
   mkdtempSync,
@@ -109,30 +110,49 @@ test('T4 소스 파일 변경 후 심링크 통해 최신 내용이 보임 (추�
   }
 });
 
-test('T5 실제 ci-watch.mjs 심링크 배포 후 node --check 통과 (ERR_MODULE_NOT_FOUND 없음)', () => {
-  // 이 테스트가 버그의 핵심 재현: 복사본이면 lib/ 를 찾지 못해 node --check 도 실패한다.
+test('T5 실제 실행 스모크 — 심링크 배포: CI_WATCH_ONCE=1 exit 0 · 복사본: ERR_MODULE_NOT_FOUND', { timeout: 20_000 }, () => {
+  // M1-1124-L F2: node --check 는 import 를 해석하지 않아 ERR_MODULE_NOT_FOUND 를 잡지 못한다.
+  // CI_WATCH_ONCE=1 (--once 플래그 동등) 으로 실제 실행 — import 성공 시 exit 0, 실패 시 비정상 종료.
+  // 복사본 배포(기존 버그)로 실행하면 반드시 실패해야 한다.
   const tmp = mkdtempSync(join(tmpdir(), 'ciw-deploy-t5-'));
   try {
     assert.ok(existsSync(REAL_CI_WATCH), `실제 ci-watch.mjs 없음: ${REAL_CI_WATCH}`);
-    // REPO_ROOT 를 실제 clone 으로 사용 — symlink 가 scripts/ 를 가리켜야 lib/ 를 찾음.
-    const fakeHome = join(tmp, 'home');
+
+    // ① 심링크 배포 → CI_WATCH_ONCE=1 → exit 0 (ERR_MODULE_NOT_FOUND 없음).
+    const fakeHome = join(tmp, 'home-sym');
     mkdirSync(fakeHome, { recursive: true });
-    const result = deployCiWatch({ repoRoot: REPO_ROOT, runnerHome: fakeHome });
-    assert.ok(result.ok, `deployCiWatch 실패 · ${JSON.stringify(result)}`);
-    const deployedPath = join(fakeHome, 'bin', 'ci-watch.mjs');
-    // 심링크인지 확인.
-    const st = lstatSync(deployedPath);
-    assert.ok(st.isSymbolicLink(), '심링크 아님');
-    // node --check — ERR_MODULE_NOT_FOUND 가 발생하면 status != 0.
-    const res = spawnSync(process.execPath, ['--check', deployedPath], {
+    const symResult = deployCiWatch({ repoRoot: REPO_ROOT, runnerHome: fakeHome });
+    assert.ok(symResult.ok, `symlink deployCiWatch 실패 · ${JSON.stringify(symResult)}`);
+    const symPath = join(fakeHome, 'bin', 'ci-watch.mjs');
+    assert.ok(lstatSync(symPath).isSymbolicLink(), '심링크 아님');
+
+    const symRes = spawnSync(process.execPath, [symPath], {
+      env: { ...process.env, CI_WATCH_ONCE: '1', HOME: fakeHome },
       stdio: ['ignore', 'pipe', 'pipe'],
-      timeout: 20_000,
+      timeout: 15_000,
     });
-    const stderr = res.stderr?.toString() || '';
+    const symStderr = symRes.stderr?.toString() || '';
     assert.equal(
-      res.status,
-      0,
-      `node --check 실패 (ERR_MODULE_NOT_FOUND 의심) · status=${res.status} · stderr=${stderr}`,
+      symRes.status, 0,
+      `심링크 실행 실패 (ERR_MODULE_NOT_FOUND 의심) · status=${symRes.status} · stderr=${symStderr.slice(0, 300)}`,
+    );
+    assert.ok(symStderr.includes('imports ok'), `once 메시지 없음 · stderr=${symStderr}`);
+
+    // ② 복사본 배포(기존 버그 재현) → 반드시 비정상 종료.
+    const fakeHome2 = join(tmp, 'home-copy');
+    mkdirSync(join(fakeHome2, 'bin'), { recursive: true });
+    const copyPath = join(fakeHome2, 'bin', 'ci-watch.mjs');
+    // copyFileSync 로 복사본 배포 — lib/ 없어 ERR_MODULE_NOT_FOUND 발생해야 함.
+    copyFileSync(REAL_CI_WATCH, copyPath);
+
+    const copyRes = spawnSync(process.execPath, [copyPath], {
+      env: { ...process.env, CI_WATCH_ONCE: '1', HOME: fakeHome2 },
+      stdio: ['ignore', 'pipe', 'pipe'],
+      timeout: 15_000,
+    });
+    assert.notEqual(
+      copyRes.status, 0,
+      `복사본이 exit 0 (ERR_MODULE_NOT_FOUND 미발생 — 회귀)`,
     );
   } finally {
     rmSync(tmp, { recursive: true, force: true });
