@@ -1,5 +1,23 @@
 # Hub Runner · 큐 자동 투입 (M1-1105-S / Y · 단일 프로세스)
 
+> **v8.2 (M1-1124-N)**: v8.1 기반 + 러너 폴더 main-guard · 자기 push rebase 제거 · 허브 preamble worktree 강제 · sleep 보정.
+>
+> 2026-11-24 러너 폴더 사고 3건이 뿌리.
+>
+> - **A**: 허브가 러너 폴더에서 `fix/*` 브랜치 + 커밋 → 러너 claim push 가 그 위에 쌓임 → `pull --rebase` 충돌 → "unmerged files" 로 push 전면 정지(18:47~20:55 WIB).
+> - **B**: 노트북 뚜껑 닫힘 → rebase 중단 → `.git/rebase-merge` 디렉터리 잔존 → "already a rebase-merge directory" 로 push 정지. abort 시 HEAD 가 다시 fix/* 로 복귀.
+> - **C**: 오케가 되돌려 둔 untracked 파일 때문에 `rebase --abort` 가 "would be overwritten by merge" 로 실패.
+>
+> 변경 사항:
+> - **tick 시작 main-guard** (`scripts/lib/main-guard.mjs`): 매 tick 시작에 HEAD/rebase/merge/unmerged 를 검사해 위반이면 (a) rebase/merge abort — 실패 시 `.git/rebase-merge` 수동 제거, (b) `rescue-<ts>` 브랜치 ref 로 현재 HEAD 보존, (c) RUNNER_SCOPE 밖 파일 copy → `~/.hub-runner/rescue/<ts>/files/`, (d) `checkout -f main` + `reset --hard origin/main`, (e) runner scope 재적용 (ahead 커밋에서 추출), (f) `events/runner-main-guard-<ts>.md` 1줄 기록.
+> - **ours-merge push** (`scripts/lib/safe-push.mjs`): `runnerProxyLand` · `collectIsolatedReport` 의 `pull --rebase` 를 fetch + `merge -X ours origin/main` + push 로 교체. 어떤 경우에도 `.git/rebase-merge` 디렉터리를 남기지 않는다.
+> - **worktree-only hub preamble** (`scripts/lib/hub-preamble.mjs`): REPORT_PATH 조항 뒤에 "relay 작업은 `~/projects/curiocity-relay-wts/<ID>` worktree 에서만, 러너 폴더에서는 브랜치/커밋/rebase 금지" 를 자동 삽입. 허브가 러너 폴더에 브랜치 만드는 사고 A 1차 차단.
+> - **sleep 보정 60m 상한** (`scripts/lib/sleep-tracker.mjs`): tick 간 벽시계 점프를 감지해 `~/.hub-runner/sleep-events.ndjson` 에 기록. `recoverStuckStartedClaims` 가 `Date.now()-stuck.at` 에서 누적 sleep 을 빼 '실제 돌았던 시간' 기준으로 60m 상한 판정.
+>
+> Selftests: `--selftest-main-guard-{a,b,c}` · `--selftest-safe-push` · `--selftest-hub-preamble` · `--selftest-sleep-tracker` 6종 추가. 기존 preflight 3종(stale-lock · merge-fail3 · report-path-off) 통과 유지.
+>
+> 설치 TARGET=`hub-runner-v8.2.mjs` · FALLBACK=`hub-runner-v8.1.mjs`. self-update 로 배포.
+>
 > **v7.8 (M1-1123-L)**: v7.7 기반 + 충돌 판정 기준 수정 + 로그 폭주 방지.
 > `autoRecoverDivergence()` 의 "push 안 된 커밋 파일" 기준 → "실제 충돌(conflicted) 파일" 기준으로 변경.
 > 허브 리포트(m*/·r0/)·queue/·ledger/ 가 ahead 커밋에 있어도 멈추지 않음.
