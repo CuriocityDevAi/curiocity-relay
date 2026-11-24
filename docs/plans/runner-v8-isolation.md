@@ -174,7 +174,98 @@ REPORT_PATH=~/.hub-runner/<hub>/<ID>/report.md
 
 **Kyu 손작업**: ⓐ 는 아이맥 1회 셋업(gh-runner 등록). ⓑ 는 0.
 
-## 8. 전체 마이그레이션 타임라인 (하루 내 안전 전환)
+## 8. 제안 G — 프롬프트 파이프라인 기록 + 화면
+
+**아이디어**: 큐 발부부터 PR 머지까지 프롬프트가 거치는 9단계를 **단일 이벤트 로그**(append-only)에 기록하고, 감시 화면은 그 로그만 소스로 삼아 9칸 표로 렌더. 추측(브랜치명→ID · 미착지 추정) 제거.
+
+### 8.1 이벤트 기록 (append-only)
+
+- 위치: `status/pipeline/<ID>.jsonl` — 프롬프트당 1파일, append-only. 재작성·수정 금지. (단일 파일 안도 가능하나 파일별이 git 충돌 최소화에 유리.)
+- **러너가 남기는 이벤트**(세션 쪽):
+  - `queued` — 큐 파일 등장 시각
+  - `claimed` — claim 파일 작성
+  - `session_start` — 투입(허브·모델·CWD)
+  - `session_end` — 세션 종료
+  - `report_uploaded` — 리포트 push 완료
+  - `artifact` — **세션 종료 시 러너가 결정적으로 수집**: `repo`, `branch`, `head_sha`, `pr_number`. 수집 방법 = 세션 CWD 에서 `git rev-parse HEAD` + `gh pr view --head <branch> --json number,url`. **브랜치명 추측 금지** — 러너가 CWD/세션을 알고 있으므로 결정적.
+- **CI 수집기가 같은 ID 파일에 붙이는 이벤트**(head sha 로 매칭):
+  - `ci_pending` — workflow queued
+  - `ci_running` — workflow in_progress(러너 이름)
+  - `ci_result` — workflow completed · 결과(`success`/`failure`/`cancelled`) · 실패 job 이름 배열 + ⏭ 건너뜀 job 이름 배열
+- **R0·머지 쪽**:
+  - `review_start` — R0 프롬프트 ID 와 함께
+  - `review_done` — 판정(`approve`/`changes_requested`/`comment`)
+  - `merged` — 머지 시각
+- 각 이벤트는 `{ts, kind, ...}` 평탄 JSON 한 줄. 파싱은 라인 단위 `JSON.parse`.
+
+### 8.2 감시 화면 표 (9칸)
+
+- 칸 순서 = **큐 → 허브작업 → 리포트 → PR → CI대기 → CI실행 → CI결과 → 리뷰 → 머지**.
+- 허브별 묶음: 각 허브의 진행 중 1줄 + 대기 1·2번째. 큐 칸에 `⏳ 1번째 (I 뒤)` 식으로 대기 순서 표기.
+- 끝난 줄은 **머지 완료 10분 후 숨김**. 상단에 **오늘 완료 N** 배지.
+- 줄 왼쪽 끝 ID, 오른쪽 끝 이유 문구(색이 녹이 아닐 때만).
+
+### 8.3 색 = 현 위치만
+
+- 녹● 정상 / 노▲ 느림 / 빨■ 비정상. **색과 기호 병기**(색맹·단색 터미널 대비).
+- 현재 머무르는 칸 **하나에만** 상태 색을 입힘. 통과한 칸은 무색(지나간 것으로 간주).
+- 노·빨일 때 줄 끝 이유 예: `상한 30분 초과` · `평소 4분인데 12분째` · `CI job test-e2e 실패`.
+
+### 8.4 예상치 로직 (오케 초안 — Kyu 타당성 검토)
+
+| 칸 | 노랑 기준 | 빨강 기준 | 이력 사용 |
+| --- | --- | --- | --- |
+| 큐 | 허브 idle 인데 2분 이상 미집음 | 5분 이상 | — |
+| 허브작업 | 프롬프트 헤더 `상한 N분` × 70% | 상한 초과 | `history.json` 의 (허브·모델) 평균·p90 로 보정 |
+| 리포트 | 2분 | 5분 | (세션 종료→업로드) 간격 이력 |
+| CI대기 | 오늘 평균 ×3 | 10분 | (repo·workflow) 별 오늘 queued 시간 |
+| CI실행 | 같은 repo·job 이력 p90 | p90 ×2 | (repo·job) 별 p90, 롤링 7일 |
+| 리뷰 | R0 프롬프트 `상한 N분` × 70% | 상한 초과 | — |
+| 머지 | 승인+초록 후 10분 | 20분 | — |
+
+- **이력 저장**: `status/pipeline/history.json` — key = `<hub>:<model>` 또는 `<repo>:<job>`, value = `{p50, p90, samples, updated_at}`. 러너 postmortem 단계에서 완료된 pipeline.jsonl 을 읽어 롤링 갱신(최근 7일). ci-watch 는 읽기 전용.
+- **샘플 3건 미만**이면 기본값: 허브작업 상한 100%/120%, CI 5분/10분, 리포트 3분/5분.
+- 계산은 **완료 시점 1회**(러너). ci-watch 가 매 틱 재계산하지 않음(비용·부하).
+
+### 8.5 ci-watch(M2-1124-C~I)와의 관계
+
+- 상단 **허브 요약 줄 유지**(기존 포맷 그대로). 그 아래에 본 9칸 표를 붙임.
+- **추측 기반 로직 제거 순서**:
+  1. 브랜치명→ID 추출(`feat/M1-1124-B-*` → `M1-1124-B`) — pipeline.jsonl 의 `artifact.pr_number`·`head_sha` 로 역참조 가능해지는 즉시 제거.
+  2. "미착지 추정"(push 없이 경과 시간으로 상태 추정) — `report_uploaded` 이벤트가 쌓이면 즉시 제거.
+  3. 두 가지 모두 제거된 뒤 ci-watch 는 **pipeline.jsonl 만** 소스로 사용.
+- **ci-watch 파일도 v8 자가 업데이트 대상에 포함**. 오늘(11-24) 발생한 "맥에 옛 ci-watch dist 가 남아 신 버전과 다른 출력" 문제는 §5 D(launchd KeepAlive + self-update) 범위에 **ci-watch 바이너리를 포함**하여 해결. 러너 self-update 가 ci-watch dist 도 교체.
+
+### 8.6 바뀔 파일 (주인 분리)
+
+- **러너 쪽** (주인 = B·C·D 라운드와 동일):
+  - `runner/src/pipeline-log.ts` (신규) — append-only 이벤트 writer
+  - `runner/src/postmortem.ts` (신규) — 세션 종료 시 git/gh 결정 수집 + history.json 롤링
+  - `runner/src/relay-client.ts` — `status/pipeline/*.jsonl` push 경로 추가
+- **CI 수집기 쪽** (주인 = ci-watch 메인테이너):
+  - `ci-watch/src/pipeline-joiner.ts` (신규) — head sha 매칭으로 ci_* 이벤트 append
+  - `ci-watch/src/gh-runs.ts` — 기존 폴링 로직 재사용(수정 최소)
+- **감시 화면 쪽** (주인 = ci-watch 메인테이너):
+  - `ci-watch/src/pipeline-view.ts` (신규) — 9칸 표 렌더
+  - `ci-watch/src/thresholds.ts` (신규) — history.json 읽어 노·빨 판정
+  - `ci-watch/src/summary.ts` — 상단 요약 줄만 담당(변경 최소)
+
+### 8.7 마이그레이션 순서
+
+1. 러너 쪽 `pipeline-log` + `postmortem` 먼저 enable → 이벤트만 쌓음(화면 변화 없음). 1일 관찰로 포맷 확정.
+2. CI 수집기 `pipeline-joiner` enable → head sha 매칭 적중률 확인(목표 ≥95%).
+3. 감시 화면 `pipeline-view` 를 기존 ci-watch **하단에 추가**(기존 화면 유지).
+4. 추측 로직 2종 제거(§8.5).
+5. ci-watch 를 §5 D 의 self-update 대상에 포함 — 맥 간 버전 drift 종결.
+
+**Kyu 손작업**: 0(설치 1회로 끝. D 의 launchd 설치 외 추가 없음).
+
+**대안·반론**:
+- (a) "pipeline.jsonl 없이 ci-watch 가 매 틱 git/gh 조회" — 매 틱 네트워크·레이트 리밋 + 이력 재계산 비용. 기각.
+- (b) "표 대신 간트 차트" — 터미널 폭·가독성 낮음. 기각.
+- (c) "현재 칸 외 지난 칸도 색 유지" — 눈이 어디 봐야 할지 흐려짐. 색은 **현 위치만**.
+
+## 9. 전체 마이그레이션 타임라인 (하루 내 안전 전환)
 
 | 라운드 | 내용 | 파일 겹침 | 소요 | 혼재 안전 |
 | --- | --- | --- | --- | --- |
@@ -185,49 +276,56 @@ REPORT_PATH=~/.hub-runner/<hub>/<ID>/report.md
 | R5 | **E(1단계)** — stray + queue-path 복구 enable (관찰) | runner/src/recovery/{stray,queue-path} | 30분 | 감지만, 조치 off |
 | R6 | **E(2단계)** — drift + divergence 복구 enable | runner/src/recovery/{drift,divergence} | 30분 | 1일 관찰 후 |
 | R7 | **E(3단계)** — no-report + ci-busy 복구 | runner/src/recovery/{no-report,ci-busy} | 45분 | 조치 enable |
-| R8 | **D** — launchd KeepAlive + self-update | launchd/*.plist, runner/src/{self-update,health} | 45분 | Kyu 1회 수동 설치 |
-| R9 | **F-ⓐ** — 아이맥 CI 러너 등록 | scripts/ci-runner-register.sh, launchd | 45분 | 아이맥 1회 셋업 |
-| R10 | **F-ⓑ** — scheduler swap 가드 | runner/src/scheduler | 30분 | — |
-| R11 | A 의 shim 제거 (적중 100% 확인 후) | prompts, runner/src/report-upload | 30분 | — |
+| **R8** | **G(1단계)** — 러너 pipeline-log + postmortem(이벤트만 쌓음) | runner/src/{pipeline-log,postmortem,relay-client} | 45분 | 화면 변화 없음, 로그만 적립 |
+| **R9** | **G(2단계)** — CI 수집기 pipeline-joiner(head sha 매칭) | ci-watch/src/{pipeline-joiner,gh-runs} | 45분 | ci_* 이벤트가 jsonl 에 붙기 시작, 화면은 아직 레거시 |
+| **R10** | **G(3단계)** — pipeline-view + thresholds + 추측 로직 제거 | ci-watch/src/{pipeline-view,thresholds,summary} | 60분 | 상단 요약 줄 유지, 9칸 표를 그 아래 추가 |
+| R11 | **D** — launchd KeepAlive + self-update (**ci-watch dist 포함**) | launchd/*.plist, runner/src/{self-update,health} | 45분 | Kyu 1회 수동 설치 |
+| R12 | **F-ⓐ** — 아이맥 CI 러너 등록 | scripts/ci-runner-register.sh, launchd | 45분 | 아이맥 1회 셋업 |
+| R13 | **F-ⓑ** — scheduler swap 가드 | runner/src/scheduler | 30분 | — |
+| R14 | A 의 shim 제거 (적중 100% 확인 후) | prompts, runner/src/report-upload | 30분 | — |
 
 - R1~R4 는 **같은 날 순차**, 각 라운드 완료 시 러너 재시작 1회.
 - R5~R7 은 하루 간격.
-- R8 은 라운드 중 유일하게 Kyu 손작업 필요(plist).
-- R9 는 아이맥 접근 가능할 때.
+- **R8~R10 은 러너와 ci-watch 주인이 분리**되어 병렬 착수 가능(R9 는 R8 이벤트 포맷 확정 뒤 시작).
+- R11 은 라운드 중 유일하게 Kyu 손작업 필요(plist). **ci-watch dist 도 self-update 범위에 포함**.
+- R12 는 아이맥 접근 가능할 때.
 
 **혼재 안전 핵심**:
 - 모든 라운드는 **feature flag**(`runner.config.json`) 로 on/off. 구 버전 러너가 플래그를 모르면 레거시 경로를 탄다.
 - 러너 clone(§3)과 사용자 clone(`~/projects/curiocity-relay`) 은 **디스크 상 완전 별도** → 어떤 라운드도 사용자 작업을 깨지 않음.
 
-## 9. 사고 번호별 커버리지 매트릭스
+## 10. 사고 번호별 커버리지 매트릭스
 
-| 사고 | A | B | C | D | E | F |
-| --- | --- | --- | --- | --- | --- | --- |
-| ① 러너 폴더 브랜치 변경 | — | ✓ | ✓ | — | 드리프트 복구 | — |
-| ② heartbeat 가 main 커밋 | ✓ | ✓ | — | — | — | — |
-| ③ 리포트 오경로 | ✓ | — | — | — | queue-path 복구 | — |
-| ④ 미push 반복 | — | ✓ | — | ✓ | stray 복구 | — |
-| ⑤ fork 리포 push | ✓ | ✓ | ✓ | — | — | — |
-| ⑥ 로컬 main 갈라짐 | — | ✓ | ✓ | — | divergence 복구 | — |
-| (부가) 메모리 피크 | — | — | — | — | — | ✓ |
+| 사고 | A | B | C | D | E | F | G |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| ① 러너 폴더 브랜치 변경 | — | ✓ | ✓ | — | 드리프트 복구 | — | 가시화 |
+| ② heartbeat 가 main 커밋 | ✓ | ✓ | — | — | — | — | 가시화 |
+| ③ 리포트 오경로 | ✓ | — | — | — | queue-path 복구 | — | 가시화 |
+| ④ 미push 반복 | — | ✓ | — | ✓ | stray 복구 | — | 가시화(리포트 칸 빨강) |
+| ⑤ fork 리포 push | ✓ | ✓ | ✓ | — | — | — | 가시화 |
+| ⑥ 로컬 main 갈라짐 | — | ✓ | ✓ | — | divergence 복구 | — | 가시화 |
+| (부가) 메모리 피크 | — | — | — | — | — | ✓ | — |
+| (부가) ci-watch 버전 drift | — | — | — | ✓(self-update) | — | — | ✓(ci-watch 포함) |
 
-6건 모두 A+B+C+E 조합으로 구조적으로 막힘. D·F 는 "다시 안 생기게"하는 상위 가드.
+6건 모두 A+B+C+E 조합으로 구조적으로 막힘. D·F 는 "다시 안 생기게"하는 상위 가드. **G 는 사고를 막지 않고 보이게 만든다** — 조기 감지·회고·지표가 목적.
 
-## 10. Kyu 손작업 총계
+## 11. Kyu 손작업 총계
 
-- **1회**(R8 launchd plist).
-- **1회**(R9 아이맥 CI 러너 등록).
-- 이후 모든 라운드는 러너 자가 전환.
+- **1회**(R11 launchd plist — ci-watch dist 포함).
+- **1회**(R12 아이맥 CI 러너 등록).
+- G(R8~R10) 포함, 이후 모든 라운드는 러너 자가 전환.
 
 > 오늘 상태처럼 '러너가 막혀서 Kyu 손 기다림' 이 반복되는 패턴을 **구조적으로 2회 미만** 으로 줄임.
 
-## 11. Kyu 결정 필요 포인트 (최대 3)
+## 12. Kyu 결정 필요 포인트 (최대 3)
 
 1. **격리 방향 (A + B + C) 전체 승인?** — 러너·허브·사람 git 폴더 분리. v8 의 가장 큰 패러다임 변경. "예" 면 R1~R4 바로 착수.
-2. **F-ⓐ 아이맥 CI 전용 전환 승인?** — 맥북 16GB 포화 해소의 유일한 비-과금 안. "예" 면 R9 를 R4 와 병렬로 진행.
-3. **D(launchd KeepAlive 자가 업데이트) 승인?** — Kyu 1회 plist 설치 비용으로 '설치 pending' 상태 영구 제거. 거부 시 R8 생략(자가 복구 E 만으로도 사고 대부분 커버).
+2. **F-ⓐ 아이맥 CI 전용 전환 승인?** — 맥북 16GB 포화 해소의 유일한 비-과금 안. "예" 면 R12 를 R4 와 병렬로 진행.
+3. **D(launchd KeepAlive 자가 업데이트) 승인?** — Kyu 1회 plist 설치 비용으로 '설치 pending' + ci-watch 버전 drift 영구 제거. 거부 시 R11 생략(자가 복구 E 만으로도 사고 대부분 커버, 단 G 의 ci-watch 자동 전환은 사라짐).
 
-## 12. 파기·대안 요약
+> **G(§8) 는 별도 승인 불요** — 로그 적립·화면 추가는 기존 ci-watch 하단에 비파괴로 붙음. §8.4 예상치 로직만 타당성 검토 부탁(특히 큐 2분/5분, CI대기 평균×3, 샘플 3건 미만 기본값).
+
+## 13. 파기·대안 요약
 
 - 지금 폴더 안에서 lock 만 추가: ① 외 5건 미해결. 기각.
 - 모든 레포에 worktree 강제: pos 포크 흐름과 중복. relay 에만.
