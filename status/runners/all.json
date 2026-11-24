@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T17:43:54.364Z",
+  "at": "2026-11-24T17:44:27.676Z",
   "pid": 56897,
   "runner": "v8.2",
   "poll_ms": 30000,
@@ -36,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.28,
-    "compressed_gb": 4.37,
+    "used_gb": 15.48,
+    "compressed_gb": 4.1,
     "swap_used_gb": 1.9,
     "pressure": "normal",
-    "at": "2026-11-24T17:43:22.571Z"
+    "at": "2026-11-24T17:43:55.758Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -136,7 +136,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": null,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.2:git 2026-11-24T17:30:50.252Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.2:git 2026-11-24T17:30:50.321Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:30:51.062Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.2:m1 2026-11-24T17:39:18.080Z] pick · M1-1124-U · model=sonnet · display=cmux-split\n[hub-runner-v8.2:git 2026-11-24T17:39:49.855Z] 러너 폴더 침범 감지 · files=queue/m1/M1-1124-U.md · guess_hub=m1\n[hub-runner-v8.2:git 2026-11-24T17:39:49.855Z] blocked: runner-folder change pending Kyu install · files=queue/m1/M1-1124-U.md,events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.2:heartbeat 2026-11-24T17:41:01.252Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:self-update 2026-11-24T17:41:03.843Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.2:git 2026-11-24T17:41:34.116Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:41:34.992Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:41:36.961Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:42:08.113Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:42:10.135Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:m1 2026-11-24T17:42:22.170Z] pane busy (1st) · 다음 tick 1회 재시도 예약 · M1-1124-U\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:42:43.739Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m1 2026-11-24T17:42:44.621Z] pick · M1-1124-U · model=sonnet · display=cmux-split\n[hub-runner-v8.2:heartbeat 2026-11-24T17:42:46.913Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:43:18.178Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:43:20.067Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:43:53.506Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v8.2:gh-watchdog 2026-11-24T17:30:51.062Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.2:m1 2026-11-24T17:39:18.080Z] pick · M1-1124-U · model=sonnet · display=cmux-split\n[hub-runner-v8.2:git 2026-11-24T17:39:49.855Z] 러너 폴더 침범 감지 · files=queue/m1/M1-1124-U.md · guess_hub=m1\n[hub-runner-v8.2:git 2026-11-24T17:39:49.855Z] blocked: runner-folder change pending Kyu install · files=queue/m1/M1-1124-U.md,events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.2:heartbeat 2026-11-24T17:41:01.252Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:self-update 2026-11-24T17:41:03.843Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.2:git 2026-11-24T17:41:34.116Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:41:34.992Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:41:36.961Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:42:08.113Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:42:10.135Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:m1 2026-11-24T17:42:22.170Z] pane busy (1st) · 다음 tick 1회 재시도 예약 · M1-1124-U\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:42:43.739Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m1 2026-11-24T17:42:44.621Z] pick · M1-1124-U · model=sonnet · display=cmux-split\n[hub-runner-v8.2:heartbeat 2026-11-24T17:42:46.913Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:43:18.178Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:43:20.067Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:43:53.506Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T17:43:55.505Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:44:26.825Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
