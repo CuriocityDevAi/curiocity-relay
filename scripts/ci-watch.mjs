@@ -34,6 +34,54 @@ const REFRESH_MS = 30_000;
 const RUNNER_REFRESH_MS = 120_000;
 const CLOUD_DAILY_LIMIT = 5;
 
+// --- err_tail 오류 허용 목록 판정 (M2-1124-A) ---
+// 이 목록에 매칭되는 줄만 ⚠. 나머지는 정상 정보 줄.
+const ERR_PATTERNS = [
+  /실패/,
+  /\bfatal\b/i,
+  /\bError\b/,
+  /\berror:/i,
+  /\bblocked\b/i,
+  /침범/,
+  /\btimeout\b/i,
+  /\bconflict\b/i,
+  /\bneeds_human\b/,
+  /Could not resolve host/i,
+];
+
+function isErrLine(line) {
+  return ERR_PATTERNS.some(p => p.test(line));
+}
+
+/**
+ * err_tail 에서 허용 목록 패턴에 해당하는 줄만 집계.
+ * resolved=true 이면 경보 카운트 제외 · err_tail 표시 영역에 "[해소됨]" 으로 표기.
+ */
+function computeErrTailAlerts(allJson) {
+  if (!allJson?.err_tail) return [];
+  const lines = allJson.err_tail.split('\n').filter(Boolean);
+  const errLines = lines.filter(isErrLine);
+  if (!errLines.length) return [];
+
+  const counts = new Map();
+  for (const l of errLines) counts.set(l, (counts.get(l) || 0) + 1);
+
+  const gs = allJson.git_state;
+  const gitClean = gs && !gs.needs_human && !(gs.conflicted?.length) && (gs.ahead || 0) === 0;
+  const lastLine = lines[lines.length - 1];
+  const recoveredByLog = !!(lastLine && !isErrLine(lastLine));
+  const resolved = gitClean && recoveredByLog;
+
+  const alerts = [];
+  for (const [line, count] of counts) {
+    if (count >= 3) {
+      const summary = line.length > 80 ? line.slice(0, 80) + '…' : line;
+      alerts.push({ type: resolved ? 'err_repeat_resolved' : 'err_repeat', msg: `오류 ${count}회 반복: ${summary}`, resolved });
+    }
+  }
+  return alerts;
+}
+
 const PROMPT_ID_RE = /([MRTNK]\d-\d{4}-[A-Z]+)/;
 
 const PATHS = {
@@ -303,14 +351,28 @@ async function tick(fullMode) {
   const rawUnclaimed = scanUnclaimedIds();
   const freshUnclaimed = filterFreshUnclaimed(rawUnclaimed);
 
-  const { alerts: runnerAlerts, aheadSinceMs: newAheadSinceMs } = computeRunnerAlerts(allJson, {
+  // err_tail 은 허용 목록 방식으로 직접 판정 → computeRunnerAlerts 에는 넘기지 않음
+  const allJsonNoErr = allJson ? { ...allJson, err_tail: '' } : allJson;
+  const { alerts: rawRunnerAlerts, aheadSinceMs: newAheadSinceMs } = computeRunnerAlerts(allJsonNoErr, {
     aheadSinceMs,
     unclaimedIds: freshUnclaimed,
   });
   aheadSinceMs = newAheadSinceMs;
+
+  const errAlerts = computeErrTailAlerts(allJson);
+  const runnerAlerts = [...rawRunnerAlerts, ...errAlerts.filter(a => !a.resolved)];
   updateRunnerAlertNotifications(runnerAlerts);
 
   const ciAlerts = computeCiAlerts(cachedRunState);
+
+  // 해소됨 오류 → err_tail 표시 영역(회색 줄)에 추가 · 경보 카운트 제외
+  const resolvedErrAlerts = errAlerts.filter(a => a.resolved);
+  let renderAllJson = allJson;
+  if (resolvedErrAlerts.length > 0) {
+    const tail = allJson?.err_tail?.split('\n').filter(Boolean).slice(-1).join('\n') || '';
+    const resolvedNote = resolvedErrAlerts.map(a => `[해소됨] ${a.msg}`).join('\n');
+    renderAllJson = { ...allJson, err_tail: (tail ? tail + '\n' : '') + resolvedNote };
+  }
 
   const nowStr = new Date().toLocaleString('en', {
     timeZone: 'Asia/Jakarta', hour12: false,
@@ -319,7 +381,7 @@ async function tick(fullMode) {
   }).replace(',', '');
 
   const lines = renderCompact({
-    allJson,
+    allJson: renderAllJson,
     runState: cachedRunState,
     cloudData,
     runnerAlerts,
