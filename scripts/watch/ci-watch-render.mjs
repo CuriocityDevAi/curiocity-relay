@@ -107,19 +107,24 @@ function fmtQueueRow(label, queueItems) {
 }
 
 /**
- * 압축 렌더 — 최대 40줄
+ * 압축 렌더 — 최대 60줄
  * @param {object} data
  *   allJson: status/runners/all.json 파싱 결과 (nullable)
  *   runState: { heavy:{inProgress,queued}, light:{inProgress,queued} }
  *   cloudData: { realCount, limit, totalMin, last3:[{job,conclusion,run_min}] }
  *   runnerAlerts: [{type,msg}]
  *   ciAlerts: [{type,detail}]
- *   unclaimedFresh: [{id,ageMin}]
+ *   ciDimAlerts: [{type,msg,dim:true}] — 회색 안내 (경보 카운트 제외)
  *   timeStr: string
  *   fullMode: boolean
+ *   todayStats: allJson.ci.data.today (nullable)
+ *   cloudTodayCount: allJson.ci.data.cloud_today (nullable)
+ *   cloudLimit: number
+ *   lastCiByRepo: [{repo,completed_at,conclusion,workflow,job,pr}]
  */
 export function renderCompact(data) {
-  const { allJson, runState, cloudData, runnerAlerts, ciAlerts, timeStr, fullMode } = data;
+  const { allJson, runState, cloudData, runnerAlerts, ciAlerts, ciDimAlerts,
+          timeStr, fullMode, todayStats, cloudTodayCount, cloudLimit, lastCiByRepo } = data;
   const W = 100;
   const hr = '─'.repeat(W - 1);
   const lines = [];
@@ -211,13 +216,73 @@ export function renderCompact(data) {
   }
   lines.push(hr);
 
-  // 6. 경보 최대 5줄
+  // 5.5. 오늘 누적 (WIB)
+  if (todayStats) {
+    lines.push(col('  오늘 누적 (WIB)', C.bold));
+    for (const kind of ['mac-heavy', 'mac-light']) {
+      const s = todayStats[kind];
+      if (!s) continue;
+      const sr = typeof s.success_rate === 'number' ? s.success_rate.toFixed(1) : '?';
+      const aw = typeof s.avg_wait_min === 'number' ? s.avg_wait_min.toFixed(1) : '?';
+      const ar = typeof s.avg_run_min === 'number' ? s.avg_run_min.toFixed(1) : '?';
+      const sc = typeof s.success_rate === 'number' && s.success_rate < 70 ? C.red
+        : typeof s.success_rate === 'number' && s.success_rate < 90 ? C.yellow : '';
+      lines.push(`  ${kind.padEnd(14)}  ${String(s.jobs).padStart(3)}잡  대기${aw}분  실행${ar}분  ${sc}성공${sr}%${C.reset}`);
+    }
+    // cloud(경로포함) — cloud.jobs 는 마커잡 포함 전체
+    const cl = todayStats['cloud'];
+    if (cl) {
+      const sr = typeof cl.success_rate === 'number' ? cl.success_rate.toFixed(1) : '?';
+      const ar = typeof cl.avg_run_min === 'number' ? cl.avg_run_min.toFixed(1) : '?';
+      const sc = typeof cl.success_rate === 'number' && cl.success_rate < 70 ? C.red
+        : typeof cl.success_rate === 'number' && cl.success_rate < 90 ? C.yellow : '';
+      lines.push(`  ${'cloud(경로포함)'.padEnd(14)}  ${String(cl.jobs).padStart(3)}잡  실행${ar}분  ${sc}성공${sr}%${C.reset}`);
+    }
+    // cloud 한도 — cloud_today 는 넘기기 한도 카운트 (마커잡 제외)
+    if (cloudTodayCount !== null) {
+      const lim = cloudLimit || 5;
+      const rem = Math.max(0, lim - cloudTodayCount);
+      const costStr = todayStats.cloud_cost_est_usd != null ? `  $${todayStats.cloud_cost_est_usd.toFixed(2)}` : '';
+      lines.push(`  ${'cloud 한도'.padEnd(14)}  ${cloudTodayCount}/${lim}건${costStr}  잔여 ${rem}`);
+    }
+    lines.push(hr);
+  }
+
+  // 5.6. 마지막 완료 CI
+  if (lastCiByRepo && lastCiByRepo.length > 0) {
+    lines.push(col('  마지막 완료 CI', C.bold));
+    for (const item of lastCiByRepo) {
+      const shortRepo = fmtRepoShort(item.repo);
+      if (!item.completed_at) {
+        lines.push(`  ${shortRepo.padEnd(10)}  ${col('데이터 없음', C.dim)}`);
+        continue;
+      }
+      const minsAgo = Math.round((Date.now() - new Date(item.completed_at).getTime()) / 60_000);
+      const wibTime = new Date(item.completed_at).toLocaleString('en', {
+        timeZone: 'Asia/Jakarta', hour12: false, hour: '2-digit', minute: '2-digit',
+      });
+      const resIcon = item.conclusion === 'success' ? col('✅', C.green)
+        : item.conclusion === 'failure' ? col('❌', C.red)
+        : item.conclusion === 'cancelled' ? col('취소', C.dim)
+        : col(item.conclusion || '?', C.dim);
+      const wf = (item.workflow || '-').slice(0, 20);
+      const prStr = item.pr ? `  PR#${item.pr}` : '';
+      const mc = minsAgo > 30 ? C.red : minsAgo > 15 ? C.yellow : '';
+      lines.push(`  ${shortRepo.padEnd(10)}  ${wibTime} WIB  (${mc}${minsAgo}분 전${C.reset})  ${resIcon}  ${wf}${prStr}`);
+    }
+    lines.push(hr);
+  }
+
+  // 6. 경보 최대 5줄 + dim 안내
   const alertsToShow = allAlerts.slice(0, 5);
-  if (alertsToShow.length === 0) {
+  if (alertsToShow.length === 0 && !(ciDimAlerts && ciDimAlerts.length)) {
     lines.push(col('  경보 없음', C.green));
   } else {
     for (const a of alertsToShow) {
       lines.push(col(`  ⚠ ${a.msg || a.detail || ''}`, C.red, C.bold));
+    }
+    for (const a of (ciDimAlerts || [])) {
+      lines.push(col(`  ⏭ ${a.msg}`, C.dim));
     }
   }
   lines.push(hr);
@@ -239,4 +304,11 @@ function repoShortLocal(repo) {
   if (!repo) return 'storeport';
   const last = String(repo).split('/').pop();
   return last.endsWith('-fork') ? 'fork' : last.startsWith('agilo') ? 'fork' : 'storeport';
+}
+
+function fmtRepoShort(repo) {
+  if (!repo) return '?';
+  const last = String(repo).split('/').pop();
+  if (last.endsWith('-fork') || last.startsWith('agilo')) return 'fork';
+  return last.length > 10 ? last.slice(0, 10) : last;
 }
