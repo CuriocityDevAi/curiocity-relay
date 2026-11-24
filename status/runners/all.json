@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T06:07:15.699Z",
+  "at": "2026-11-24T06:10:45.204Z",
   "pid": 37338,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -9,19 +9,27 @@
   "last_error_at": "2026-11-24T05:50:38.075Z",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1124-B",
+      "started_at": "2026-11-24T06:10:39.838Z",
+      "model": "opus",
       "last_activity": null
     },
     "m1": {
-      "current": null,
+      "current": "M1-1124-D",
+      "started_at": "2026-11-24T06:10:40.808Z",
+      "model": "sonnet",
       "last_activity": "2026-11-24T05:50:37.963Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1124-G",
+      "started_at": "2026-11-24T06:10:41.719Z",
+      "model": "sonnet",
       "last_activity": "2026-11-24T05:56:43.416Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1124-E",
+      "started_at": "2026-11-24T06:10:42.676Z",
+      "model": "sonnet",
       "last_activity": "2026-11-24T05:32:59.052Z"
     },
     "r0": {
@@ -36,19 +44,19 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.87,
-    "compressed_gb": 3.46,
+    "used_gb": 15.85,
+    "compressed_gb": 3.8,
     "swap_used_gb": 3.82,
     "pressure": "normal",
-    "at": "2026-11-24T06:06:43.504Z"
+    "at": "2026-11-24T06:10:07.489Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
-    "used_gb": 15.9
+    "used_gb": 15.92
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T06:02:45.656Z",
+      "at": "2026-11-24T06:07:51.560Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -107,12 +115,12 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 10284,
-    "at": "2026-11-24T06:02:54.353Z"
+    "took_ms": 7847,
+    "at": "2026-11-24T06:07:57.815Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 1,
-  "err_tail": "[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): m1/M1-1124-B-report.md, m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:git 2026-11-24T05:50:38.074Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T05:50:38.075Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md\n[hub-runner-v7.8:claim 2026-11-24T05:50:38.986Z] M1-1124-C → done · runner-v7.8 cmux-split · 리포트 확인 m1/M1-1124-C-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-C.json · {\"id\":\"M1-1124-C\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-24T05:50:39.064Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m1/M1-1124-C-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1124-C.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:claim 2026-11-24T05:56:44.369Z] M2-1124-F → done · runner-v7.8 cmux-split · 리포트 확인 m2/M2-1124-F-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-F.json · {\"id\":\"M2-1124-F\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-24T05:56:44.449Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m2/M2-1124-F-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1124-F.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:m2 2026-11-24T05:57:08.068Z] 복구 보류 · M2-1124-C stale(옛 started) · pane title=\"M2 · ✓ M2-1124-F\" (다른 ID: M2-1124-F) · 칸 무접촉",
+  "err_tail": "[hub-runner-v7.8:git 2026-11-24T05:50:38.075Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md\n[hub-runner-v7.8:claim 2026-11-24T05:50:38.986Z] M1-1124-C → done · runner-v7.8 cmux-split · 리포트 확인 m1/M1-1124-C-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-C.json · {\"id\":\"M1-1124-C\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-24T05:50:39.064Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m1/M1-1124-C-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1124-C.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:claim 2026-11-24T05:56:44.369Z] M2-1124-F → done · runner-v7.8 cmux-split · 리포트 확인 m2/M2-1124-F-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-F.json · {\"id\":\"M2-1124-F\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-24T05:56:44.449Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m2/M2-1124-F-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1124-F.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:m2 2026-11-24T05:57:08.068Z] 복구 보류 · M2-1124-C stale(옛 started) · pane title=\"M2 · ✓ M2-1124-F\" (다른 ID: M2-1124-F) · 칸 무접촉\n[hub-runner-v7.8:m0 2026-11-24T06:10:39.837Z] pick · M0-1124-B · model=opus · display=cmux-split\n[hub-runner-v7.8:m1 2026-11-24T06:10:40.808Z] pick · M1-1124-D · model=sonnet · display=cmux-split\n[hub-runner-v7.8:m2 2026-11-24T06:10:41.719Z] pick · M2-1124-G · model=sonnet · display=cmux-split\n[hub-runner-v7.8:m3 2026-11-24T06:10:42.676Z] pick · M3-1124-E · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
