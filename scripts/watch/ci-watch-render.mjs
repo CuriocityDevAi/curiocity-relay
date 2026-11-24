@@ -226,7 +226,7 @@ export function renderCompact(data) {
   // 5. 클라우드 (실제 검사 잡만)
   const cd = cloudData || { realCount: 0, limit: 5, totalMin: 0, last3: [] };
   const remaining = Math.max(0, cd.limit - cd.realCount);
-  lines.push(`  ${col('cloud 오늘', C.bold)}  ${cd.realCount}/${cd.limit}건  총 ${cd.totalMin.toFixed(1)}분  잔여: ${remaining}`);
+  lines.push(`  ${col('cloud 잡 오늘', C.bold)}  ${cd.realCount}건(간단 판정 포함)  총 ${cd.totalMin.toFixed(1)}분  잔여: ${remaining}`);
   if (cd.last3 && cd.last3.length) {
     for (const j of cd.last3.slice(0, 3)) {
       const res = j.conclusion === 'success' ? col('✓', C.green) : j.conclusion === 'skipped' ? col('-', C.dim) : col('✗', C.red);
@@ -262,7 +262,7 @@ export function renderCompact(data) {
       const lim = cloudLimit || 5;
       const rem = Math.max(0, lim - cloudTodayCount);
       const costStr = todayStats.cloud_cost_est_usd != null ? `  $${todayStats.cloud_cost_est_usd.toFixed(2)}` : '';
-      lines.push(`  ${'cloud 한도'.padEnd(14)}  ${cloudTodayCount}/${lim}건${costStr}  잔여 ${rem}`);
+      lines.push(`  ${'클라우드 넘기기 한도'.padEnd(10)}  ${cloudTodayCount}/${lim}${costStr}  잔여 ${rem}`);
     }
     lines.push(hr);
   }
