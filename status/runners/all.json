@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T05:50:38.944Z",
+  "at": "2026-11-24T05:55:58.673Z",
   "pid": 37338,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -38,11 +38,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.68,
-    "compressed_gb": 4.11,
+    "used_gb": 15.72,
+    "compressed_gb": 3.45,
     "swap_used_gb": 3.83,
     "pressure": "normal",
-    "at": "2026-11-24T05:50:24.101Z"
+    "at": "2026-11-24T05:55:26.261Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -50,14 +50,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T05:47:20.997Z",
+      "at": "2026-11-24T05:52:32.938Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 11,
+      "api_calls": 10,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -65,18 +65,7 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-            "pr": "#247",
-            "pr_display": "fork:#247",
-            "job": "playwright",
-            "step": "Run Playwright harnesses",
-            "running_min": 3,
-            "runner": "curiocity-mac-fork",
-            "kind": "mac-heavy"
-          }
-        ]
+        "in_progress": []
       },
       "light": {
         "queued": 0,
@@ -87,17 +76,17 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 1,
+        "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 2,
       "today": {
         "mac-heavy": {
-          "jobs": 35,
+          "jobs": 39,
           "avg_wait_min": 0.7,
-          "avg_run_min": 1.1,
-          "success_rate": 91.4,
-          "run_min_total": 39.70000000000002
+          "avg_run_min": 1.2,
+          "success_rate": 89.7,
+          "run_min_total": 46.00000000000002
         },
         "mac-light": {
           "jobs": 4,
@@ -107,25 +96,25 @@
           "run_min_total": 1
         },
         "cloud": {
-          "jobs": 19,
+          "jobs": 21,
           "avg_wait_min": 0,
           "avg_run_min": 0.1,
-          "success_rate": 73.7,
-          "run_min_total": 1.9000000000000004
+          "success_rate": 71.4,
+          "run_min_total": 2.0000000000000004
         },
-        "cloud_cost_est_usd": 0.112,
+        "cloud_cost_est_usd": 0.12,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 3,
+      "jsonl_added": 6,
       "alerts": []
     },
-    "took_ms": 12015,
-    "at": "2026-11-24T05:47:31.480Z"
+    "took_ms": 13662,
+    "at": "2026-11-24T05:52:45.001Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 1,
-  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-24T05:46:44.576Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T05:47:20.212Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T05:49:03.292Z] 러너 폴더 침범 감지 · files=m1/M1-1124-B-report.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md · guess_hub=m1\n[hub-runner-v7.8:claim 2026-11-24T05:49:47.715Z] R0-1124-D → done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-D-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-D.json · {\"id\":\"R0-1124-D\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-24T05:49:47.804Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-D-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1124-D.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): m1/M1-1124-B-report.md, m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:r0 2026-11-24T05:50:17.158Z] pick · R0-1124-E · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-24T05:50:21.894Z] R0-1124-E → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-E.json · {\"id\":\"R0-1124-E\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-24T05:50:21.981Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1124-E.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): m1/M1-1124-B-report.md, m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:git 2026-11-24T05:50:38.074Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T05:50:38.075Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md",
+  "err_tail": "[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): m1/M1-1124-B-report.md, m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:r0 2026-11-24T05:50:17.158Z] pick · R0-1124-E · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-24T05:50:21.894Z] R0-1124-E → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-E.json · {\"id\":\"R0-1124-E\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-24T05:50:21.981Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1124-E.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): m1/M1-1124-B-report.md, m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:git 2026-11-24T05:50:38.074Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T05:50:38.075Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md\n[hub-runner-v7.8:claim 2026-11-24T05:50:38.986Z] M1-1124-C → done · runner-v7.8 cmux-split · 리포트 확인 m1/M1-1124-C-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-C.json · {\"id\":\"M1-1124-C\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-24T05:50:39.064Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m1/M1-1124-C-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1124-C.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] pushed",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -148,7 +137,7 @@
     {
       "name": "curiocity-mac-fork",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "curiocity-mac-fork-light",
