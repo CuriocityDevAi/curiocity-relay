@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T16:24:57.623Z",
+  "at": "2026-11-24T16:25:33.417Z",
   "pid": 87453,
   "runner": "v8.1",
   "poll_ms": 30000,
@@ -33,7 +33,9 @@
       "last_activity": "2026-11-24T15:50:22.557Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1124-AK",
+      "started_at": "2026-11-24T16:25:31.999Z",
+      "model": "sonnet",
       "last_activity": "2026-11-24T16:24:56.337Z"
     }
   },
@@ -58,11 +60,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.87,
-    "compressed_gb": 4.37,
+    "used_gb": 14.89,
+    "compressed_gb": 4.17,
     "swap_used_gb": 2.31,
     "pressure": "normal",
-    "at": "2026-11-24T16:24:22.070Z"
+    "at": "2026-11-24T16:25:02.519Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -148,7 +150,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 7,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.1:gh-watchdog 2026-11-24T16:18:42.962Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:git 2026-11-24T16:19:17.674Z] 러너 폴더 침범 감지 · files=queue/m0/M0-1124-M.md,queue/m1/M1-1124-Q.md,queue/m2/M2-1124-U.md,queue/m3/M3-1124-P.md,queue/r0/R0-1124-AJ.md,queue/r0/R0-1124-AK.md,m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md,r0/R0-1124-K-report.md · guess_hub=m0\n[hub-runner-v8.1:git 2026-11-24T16:19:17.674Z] blocked: runner-folder change pending Kyu install · files=queue/m0/M0-1124-M.md,queue/m1/M1-1124-Q.md,queue/m2/M2-1124-U.md,queue/m3/M3-1124-P.md,queue/r0/R0-1124-AJ.md…\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:19:18.483Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:19:58.027Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:20:33.586Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:21:12.148Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:21:46.932Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:22:24.125Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:22:59.044Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:23:37.245Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:heartbeat 2026-11-24T16:23:42.938Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.1:git 2026-11-24T16:24:13.523Z] 러너 폴더 침범 감지 · files=m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md,r0/R0-1124-K-report.md · guess_hub=m0\n[hub-runner-v8.1:git 2026-11-24T16:24:13.523Z] blocked: runner-folder change pending Kyu install · files=m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md,r0/R0-1124-K-report.md\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:24:14.240Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:heartbeat 2026-11-24T16:24:18.566Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.1:r0 2026-11-24T16:24:49.230Z] [report-path] R0-1124-AJ: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:24:53.860Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:heartbeat 2026-11-24T16:24:54.800Z] standalone push 실패: error: Committing is not possible because you have unmerged files.\n[hub-runner-v8.1:r0 2026-11-24T16:24:56.337Z] [kyu-intrusion] 허브 r0(R0-1124-AJ) 실행 중 Kyu 폴더 변경 감지: /Users/kyu.lee/projects/agilo-fork-test(actor=unknown)",
+  "err_tail": "[hub-runner-v8.1:gh-watchdog 2026-11-24T16:23:37.245Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:heartbeat 2026-11-24T16:23:42.938Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.1:git 2026-11-24T16:24:13.523Z] 러너 폴더 침범 감지 · files=m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md,r0/R0-1124-K-report.md · guess_hub=m0\n[hub-runner-v8.1:git 2026-11-24T16:24:13.523Z] blocked: runner-folder change pending Kyu install · files=m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md,r0/R0-1124-K-report.md\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:24:14.240Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:heartbeat 2026-11-24T16:24:18.566Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.1:r0 2026-11-24T16:24:49.230Z] [report-path] R0-1124-AJ: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:24:53.860Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:heartbeat 2026-11-24T16:24:54.800Z] standalone push 실패: error: Committing is not possible because you have unmerged files.\n[hub-runner-v8.1:r0 2026-11-24T16:24:56.337Z] [kyu-intrusion] 허브 r0(R0-1124-AJ) 실행 중 Kyu 폴더 변경 감지: /Users/kyu.lee/projects/agilo-fork-test(actor=unknown)\n[hub-runner-v8.1:claim 2026-11-24T16:24:57.689Z] R0-1124-AJ → done · runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AJ-report.md · model=sonnet · 로그: /Us\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-AJ.json · {\"id\":\"R0-1124-AJ\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-24T16:24:59.034Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AJ-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1124-AJ.log · report_src=isolated\"}\n[build-hubs] status/hubs.json 부재 · 신규 생성\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:25:31.192Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:r0 2026-11-24T16:25:31.999Z] pick · R0-1124-AK · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
