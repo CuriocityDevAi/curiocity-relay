@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T06:39:12.432Z",
+  "at": "2026-11-24T06:41:22.873Z",
   "pid": 37338,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -40,11 +40,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.47,
-    "compressed_gb": 5.14,
-    "swap_used_gb": 4.34,
+    "used_gb": 15.83,
+    "compressed_gb": 4.71,
+    "swap_used_gb": 4.32,
     "pressure": "normal",
-    "at": "2026-11-24T06:39:03.063Z"
+    "at": "2026-11-24T06:40:49.508Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -52,13 +52,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T06:34:44.259Z",
+      "at": "2026-11-24T06:40:09.689Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport"
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 7,
+      "api_calls": 15,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -66,23 +67,12 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/storeport",
-            "pr": "#415",
-            "pr_display": "storeport:#415",
-            "job": "heavy-mac",
-            "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 16,
-            "runner": "Youngkyus-MacBook-Pro-M1",
-            "kind": "mac-heavy"
-          }
-        ]
+        "in_progress": []
       },
       "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
+        "queued": 2,
+        "oldest_queued_min": 0,
+        "oldest_queued_pr": "storeport:#415",
         "in_progress": []
       },
       "cloud_in_progress": [
@@ -92,53 +82,53 @@
           "pr_display": "storeport:#416",
           "job": "heavy-cloud",
           "step": "Run ./.github/actions/heavy-steps",
-          "running_min": 13,
+          "running_min": 18,
           "runner": "GitHub Actions 1000007884",
           "kind": "cloud"
         }
       ],
       "runners": {
-        "heavy_online": 1,
-        "heavy_busy": 1,
+        "heavy_online": 3,
+        "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 0,
+      "cloud_today": 3,
       "today": {
         "mac-heavy": {
-          "jobs": 45,
-          "avg_wait_min": 0.7,
-          "avg_run_min": 1.2,
-          "success_rate": 91.1,
-          "run_min_total": 54.40000000000003
+          "jobs": 50,
+          "avg_wait_min": 0.6,
+          "avg_run_min": 1.6,
+          "success_rate": 88,
+          "run_min_total": 80.10000000000004
         },
         "mac-light": {
-          "jobs": 8,
-          "avg_wait_min": 0.4,
+          "jobs": 12,
+          "avg_wait_min": 0.5,
           "avg_run_min": 0.3,
           "success_rate": 100,
-          "run_min_total": 2.3000000000000003
+          "run_min_total": 3.4
         },
         "cloud": {
-          "jobs": 24,
+          "jobs": 27,
           "avg_wait_min": 0,
           "avg_run_min": 0.1,
-          "success_rate": 70.8,
-          "run_min_total": 2.2000000000000006
+          "success_rate": 66.7,
+          "run_min_total": 2.3000000000000007
         },
-        "cloud_cost_est_usd": 0.136,
+        "cloud_cost_est_usd": 0.144,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 0,
+      "jsonl_added": 12,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 13738,
-    "at": "2026-11-24T06:34:56.294Z"
+    "took_ms": 18342,
+    "at": "2026-11-24T06:40:26.043Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 2,
-  "err_tail": "[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:35:59.449Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:r0 2026-11-24T06:36:02.050Z] pick · R0-1124-G · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-24T06:36:06.569Z] R0-1124-G → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-G.json · {\"id\":\"R0-1124-G\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-24T06:36:06.662Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1124-G.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:36:36.591Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T06:37:10.162Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,queue/m1/M1-1124-E.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T06:37:10.164Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,queue/m1/M1-1124-E.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:37:10.816Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:37:47.324Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:38:21.692Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:38:58.190Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T06:39:11.352Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T06:39:11.352Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md",
+  "err_tail": "[hub-runner-v7.8:git 2026-11-24T06:37:10.162Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,queue/m1/M1-1124-E.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T06:37:10.164Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,queue/m1/M1-1124-E.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:37:10.816Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:37:47.324Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:38:21.692Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:38:58.190Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T06:39:11.352Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T06:39:11.352Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md,r0/R0-1124-D-report.md\n[hub-runner-v7.8:claim 2026-11-24T06:39:12.514Z] R0-1124-G → done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-G.json · {\"id\":\"R0-1124-G\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-24T06:39:12.606Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1124-G.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/2)\rRebasing (2/2)\rerror: could not apply f660ca25c... claim(r0): R0-1124-G done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · mod\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:39:32.632Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:40:08.788Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:40:43.998Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:41:19.792Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -151,17 +141,17 @@
     {
       "name": "curiocity-mac-light",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "curiocity-mac-fork",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "curiocity-mac-fork-light",
