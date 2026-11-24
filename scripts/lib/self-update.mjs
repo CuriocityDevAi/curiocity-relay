@@ -33,6 +33,7 @@ export const CI_WATCH_DEPLOY = 'ci-watch.mjs';
 export const CI_WATCH_WRAPPER = 'ci-watch.sh';
 export const BOOT_HEALTH_WINDOW_MS = 3 * 60 * 1000;
 export const BOOT_FAILURE_THRESHOLD = 1;
+export const BLOCKED_FILE = 'selfupdate-blocked.json';
 
 export function sha256(buf) {
   return createHash('sha256').update(buf).digest('hex');
@@ -161,6 +162,25 @@ export function clearPending(runnerHome) {
   } catch {
     /* noop */
   }
+}
+
+export function blockedFile(runnerHome) {
+  return join(runnerHome, BLOCKED_FILE);
+}
+
+export function readBlockedSha(runnerHome) {
+  const f = blockedFile(runnerHome);
+  if (!existsSync(f)) return null;
+  try {
+    return JSON.parse(readFileSync(f, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+export function writeBlockedSha(runnerHome, record) {
+  mkdirSync(runnerHome, { recursive: true });
+  writeFileSync(blockedFile(runnerHome), JSON.stringify(record, null, 2) + '\n', 'utf8');
 }
 
 export function binDir(runnerHome) {

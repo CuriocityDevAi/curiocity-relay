@@ -14,7 +14,6 @@ import {
   existsSync,
   readFileSync,
   readdirSync,
-  realpathSync,
   statSync,
 } from 'node:fs';
 import { homedir } from 'node:os';

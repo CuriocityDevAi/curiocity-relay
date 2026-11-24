@@ -101,6 +101,8 @@ import {
   writeBlockedEvent as selfUpdateWriteBlocked,
   sha256File as selfUpdateSha256File,
   binDir as selfUpdateBinDir,
+  readBlockedSha as selfUpdateReadBlockedSha,
+  writeBlockedSha as selfUpdateWriteBlockedSha,
   RUNNER_SYMLINK as SELF_UPDATE_RUNNER_SYMLINK,
   CI_WATCH_WRAPPER as SELF_UPDATE_CI_WATCH_WRAPPER,
 } from './lib/self-update.mjs';
@@ -119,6 +121,8 @@ const DEFAULT_CLAUDE_BIN = '/Users/kyu.lee/.local/bin/claude';
 // M1-1105-BA(d): all.json 러너 버전 표기 버그 — 한 곳에서만 관리.
 const RUNNER_VERSION = 'v8.1';
 // M1-1124-H: 자기 업데이트 기본값 — runner-config.selfUpdate 로 덮어쓸 수 있다.
+// M1-1124-I: prev 부재 시 되돌릴 안전판 버전.
+const SELF_UPDATE_FALLBACK_RUNNER = 'hub-runner-v8.0.mjs';
 const DEFAULT_SELF_UPDATE_POLL_MIN = 10;
 const DEFAULT_SELF_UPDATE_BOOT_HEALTH_MS = 3 * 60 * 1000;
 // M1-1124-H: preflight 핵심 3 selftest — v8.0 이 도입한 세 가지 (REPORT_PATH off · merge-fail3 · stale-lock).
@@ -315,6 +319,9 @@ const SELFTEST_SELFUPDATE_PREFLIGHT = argv.includes('--selftest-selfupdate-prefl
 const SELFTEST_SELFUPDATE_BUSY_WAIT = argv.includes('--selftest-selfupdate-busy-wait');
 const SELFTEST_SELFUPDATE_ROLLBACK = argv.includes('--selftest-selfupdate-rollback');
 const SELFTEST_SELFUPDATE_CIWATCH = argv.includes('--selftest-selfupdate-ciwatch');
+// v8.1+ 신규 셀프테스트 (M1-1124-I)
+const SELFTEST_SELFUPDATE_LOOP_GUARD = argv.includes('--selftest-selfupdate-loop-guard');
+const SELFTEST_SELFUPDATE_NO_PREV = argv.includes('--selftest-selfupdate-no-prev');
 const hubFlag = (() => {
   const i = argv.indexOf('--hub');
   return i >= 0 ? argv[i + 1] : null;
@@ -358,10 +365,12 @@ if (
   !SELFTEST_SELFUPDATE_PREFLIGHT &&
   !SELFTEST_SELFUPDATE_BUSY_WAIT &&
   !SELFTEST_SELFUPDATE_ROLLBACK &&
-  !SELFTEST_SELFUPDATE_CIWATCH
+  !SELFTEST_SELFUPDATE_CIWATCH &&
+  !SELFTEST_SELFUPDATE_LOOP_GUARD &&
+  !SELFTEST_SELFUPDATE_NO_PREV
 ) {
   console.error(
-    'Usage: node scripts/hub-runner-v8.1.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-split --hub <hub> --id <ID> | --selftest-timeout --hub <hub> --id <ID> | --selftest-layout --hub <hub> --id <ID> | --selftest-busy --hub <hub> --id <ID> | --selftest-respawn --hub <hub> --id <ID> | --selftest-stale-lock | --selftest-dirty-push | --selftest-state-dirty | --selftest-auto-recover | --selftest-human-files | --selftest-folder-guard | --selftest-local-landing | --selftest-recovery-done | --selftest-recovery-timeout | --selftest-stale-recovery | --selftest-stuck | --selftest-intruder | --selftest-stray | --selftest-recovery-empty-pane | --selftest-kyu-intrusion | --selftest-lasterror-clear | --selftest-intrusion-actor | --selftest-report-relocate | --selftest-merge-conflict-auto | --selftest-merge-conflict-human | --selftest-merge-fail3 | --selftest-report-path-collect | --selftest-report-path-shim | --selftest-report-path-off | --selftest-selfupdate-detect | --selftest-selfupdate-preflight | --selftest-selfupdate-busy-wait | --selftest-selfupdate-rollback | --selftest-selfupdate-ciwatch',
+    'Usage: node scripts/hub-runner-v8.1.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-split --hub <hub> --id <ID> | --selftest-timeout --hub <hub> --id <ID> | --selftest-layout --hub <hub> --id <ID> | --selftest-busy --hub <hub> --id <ID> | --selftest-respawn --hub <hub> --id <ID> | --selftest-stale-lock | --selftest-dirty-push | --selftest-state-dirty | --selftest-auto-recover | --selftest-human-files | --selftest-folder-guard | --selftest-local-landing | --selftest-recovery-done | --selftest-recovery-timeout | --selftest-stale-recovery | --selftest-stuck | --selftest-intruder | --selftest-stray | --selftest-recovery-empty-pane | --selftest-kyu-intrusion | --selftest-lasterror-clear | --selftest-intrusion-actor | --selftest-report-relocate | --selftest-merge-conflict-auto | --selftest-merge-conflict-human | --selftest-merge-fail3 | --selftest-report-path-collect | --selftest-report-path-shim | --selftest-report-path-off | --selftest-selfupdate-detect | --selftest-selfupdate-preflight | --selftest-selfupdate-busy-wait | --selftest-selfupdate-rollback | --selftest-selfupdate-ciwatch | --selftest-selfupdate-loop-guard | --selftest-selfupdate-no-prev',
   );
   process.exit(2);
 }
@@ -3408,6 +3417,14 @@ function maybeSelfUpdate(cfg) {
     return { tried: false, reason: 'detect-error' };
   }
   if (!diff.changed) return { tried: false, reason: diff.reason };
+  // M1-1124-I: 롤백 후 무한 루프 방지 — 차단된 sha 는 origin/main 이 새 sha 로 바뀌기 전까지 재시도 안 함.
+  {
+    const blocked = selfUpdateReadBlockedSha(RUNNER_HOME);
+    if (blocked && blocked.sha === diff.originSha) {
+      log('self-update', `blocked sha · target=${diff.originTargetName} sha=${diff.originSha?.slice(0, 12)} · origin/main 이 새 sha 로 바뀌면 재시도`);
+      return { tried: false, reason: 'blocked-sha' };
+    }
+  }
   log('self-update', `변화 감지 · target=${diff.originTargetName} renamed=${diff.renamed} bytesDiffer=${diff.bytesDiffer}`);
   const nextRunnerPath = diff.diskPath;
   if (!existsSync(nextRunnerPath)) {
@@ -3484,14 +3501,67 @@ function handleBootPendingAtStart(cfg) {
   }
   if (r.action === 'rollback') {
     const prev = r.prev;
+    const failedSha = r.pending?.origin_sha;
+    const failedTarget = r.pending?.origin_target;
     const binDirAbs = selfUpdateBinDir(RUNNER_HOME);
     const linkPath = join(binDirAbs, SELF_UPDATE_RUNNER_SYMLINK);
     log('self-update', `boot 롤백 · 이전 version 으로 심링크 되돌림 · prev=${basename(prev || '?')}`);
+    // M1-1124-I: 차단 sha 기록 + blocked event 1회 기록 (루프 방지).
+    if (failedSha) {
+      try {
+        const existing = selfUpdateReadBlockedSha(RUNNER_HOME);
+        const alreadyWritten = existing?.sha === failedSha && existing.event_written === true;
+        selfUpdateWriteBlockedSha(RUNNER_HOME, {
+          sha: failedSha,
+          target: failedTarget,
+          blocked_at: new Date().toISOString(),
+          event_written: alreadyWritten,
+        });
+        if (!alreadyWritten) {
+          try {
+            const f = selfUpdateWriteBlocked({
+              relayRoot: REPO_ROOT,
+              runnerVersion: RUNNER_VERSION,
+              reason: `롤백 후 루프 차단 · target=${failedTarget}`,
+              preflightLog: [],
+              originTargetName: failedTarget,
+              originSha: failedSha,
+            });
+            log('self-update', `rollback blocked event 기록 · ${f}`);
+            selfUpdateWriteBlockedSha(RUNNER_HOME, {
+              sha: failedSha,
+              target: failedTarget,
+              blocked_at: new Date().toISOString(),
+              event_written: true,
+            });
+            try {
+              git(['add', '--', `events/${basename(f)}`]);
+              git(['commit', '-m', `events(runner-${RUNNER_VERSION}): rollback blocked · ${failedTarget}`]);
+              git(['push', 'origin', 'HEAD:main']);
+            } catch (ge) {
+              log('self-update', `blocked event push 실패: ${ge.message}`);
+            }
+          } catch (e) {
+            log('self-update', `blocked event 쓰기 예외: ${e.message}`);
+          }
+        }
+      } catch (e) {
+        log('self-update', `blocked sha 기록 예외: ${e.message}`);
+      }
+    }
     try {
       if (prev && existsSync(prev)) {
         selfUpdateEnsureSymlink({ linkPath, targetPath: prev });
       } else {
-        log('self-update', `prev 파일 부재(${prev}) · 심링크 유지 · pending 만 정리`);
+        // M1-1124-I: prev 부재 → fallback 버전으로 복원 (깨진 버전 반복 재기동 방지).
+        const fallbackPath = join(HERE, SELF_UPDATE_FALLBACK_RUNNER);
+        log('self-update', `prev 파일 부재(${prev || '없음'}) · fallback=${SELF_UPDATE_FALLBACK_RUNNER} 로 심링크 복원`);
+        if (existsSync(fallbackPath)) {
+          selfUpdateEnsureSymlink({ linkPath, targetPath: fallbackPath });
+          log('self-update', `fallback 심링크 적용 · ${fallbackPath}`);
+        } else {
+          log('self-update', `fallback 도 없음(${fallbackPath}) · 심링크 유지`);
+        }
       }
     } catch (e) {
       log('self-update', `롤백 심링크 예외: ${e.message}`);
@@ -5452,6 +5522,104 @@ process.stdin.resume();
       process.exit(0);
     } catch (e) {
       console.error(`[selftest-selfupdate-ciwatch] FAIL · ${e.message}`);
+      process.exit(1);
+    } finally {
+      try { rmSync(tmp, { recursive: true, force: true }); } catch { /* noop */ }
+    }
+  })();
+
+} else if (SELFTEST_SELFUPDATE_LOOP_GUARD) {
+  // ⑥ blocked sha 기록 · 같은 sha 재시도 안 함 · 새 sha 는 시도.
+  (() => {
+    const tmp = execFileSync('mktemp', ['-d', '-t', 'hr-v81-loop-XXXXX'], { stdio: 'pipe' }).toString().trim();
+    try {
+      // 1) 초기: blocked sha 없으면 null.
+      const r0 = selfUpdateReadBlockedSha(tmp);
+      if (r0 !== null) {
+        console.error(`[selftest-selfupdate-loop-guard] FAIL (초기 null 기대) · ${JSON.stringify(r0)}`); process.exit(1);
+      }
+      // 2) 차단 기록 → 같은 sha 는 blocked 판정.
+      const SHA1 = 'aaaa1111bbbb2222cccc3333dddd4444eeee5555ffff6666aaaa1111bbbb';
+      const SHA2 = 'zzzz9999yyyy8888xxxx7777wwww6666vvvv5555uuuu4444tttt3333ssss';
+      selfUpdateWriteBlockedSha(tmp, { sha: SHA1, target: 'hub-runner-v9.0.mjs', blocked_at: new Date().toISOString(), event_written: false });
+      const r1 = selfUpdateReadBlockedSha(tmp);
+      if (!r1 || r1.sha !== SHA1) {
+        console.error(`[selftest-selfupdate-loop-guard] FAIL (read) · ${JSON.stringify(r1)}`); process.exit(1);
+      }
+      // 3) 같은 sha → 차단.
+      if (r1.sha !== SHA1) {
+        console.error('[selftest-selfupdate-loop-guard] FAIL (same sha check)'); process.exit(1);
+      }
+      // 4) 다른 sha → 차단 안 됨.
+      if (r1.sha === SHA2) {
+        console.error('[selftest-selfupdate-loop-guard] FAIL (new sha should not be blocked)'); process.exit(1);
+      }
+      // 5) event_written 갱신.
+      selfUpdateWriteBlockedSha(tmp, { sha: SHA1, target: 'hub-runner-v9.0.mjs', blocked_at: new Date().toISOString(), event_written: true });
+      const r2 = selfUpdateReadBlockedSha(tmp);
+      if (!r2 || r2.event_written !== true) {
+        console.error(`[selftest-selfupdate-loop-guard] FAIL (event_written) · ${JSON.stringify(r2)}`); process.exit(1);
+      }
+      // 6) 새 sha 로 덮으면 event_written=false.
+      selfUpdateWriteBlockedSha(tmp, { sha: SHA2, target: 'hub-runner-v9.1.mjs', blocked_at: new Date().toISOString(), event_written: false });
+      const r3 = selfUpdateReadBlockedSha(tmp);
+      if (!r3 || r3.sha !== SHA2 || r3.event_written !== false) {
+        console.error(`[selftest-selfupdate-loop-guard] FAIL (sha2 write) · ${JSON.stringify(r3)}`); process.exit(1);
+      }
+      console.log('[selftest-selfupdate-loop-guard] OK · 같은 sha 재시도 안 함 · 새 sha 는 시도 · event_written 갱신');
+      process.exit(0);
+    } catch (e) {
+      console.error(`[selftest-selfupdate-loop-guard] FAIL · ${e.message}`);
+      process.exit(1);
+    } finally {
+      try { rmSync(tmp, { recursive: true, force: true }); } catch { /* noop */ }
+    }
+  })();
+
+} else if (SELFTEST_SELFUPDATE_NO_PREV) {
+  // ⑦ rollback 시 prev 부재 → fallback 버전 경로 계산 검증.
+  (() => {
+    const tmp = execFileSync('mktemp', ['-d', '-t', 'hr-v81-noprev-XXXXX'], { stdio: 'pipe' }).toString().trim();
+    try {
+      // 1) pending: boot_count >= BOOT_FAILURE_THRESHOLD(1) → rollback, prev 는 존재하지 않는 경로.
+      const fakeNext = join(tmp, 'fake-next.mjs');
+      const fakePrev = join(tmp, 'fake-prev-nonexistent.mjs');  // 파일 생성 안 함
+      writeFileSync(fakeNext, '// fake next\n', 'utf8');
+      selfUpdateWritePending(tmp, {
+        prev_abs: fakePrev,
+        next_abs: fakeNext,
+        origin_sha: 'deadbeef1234',
+        origin_target: 'hub-runner-v9.0.mjs',
+        recorded_at: new Date().toISOString(),
+        boot_count: 1,
+      });
+      // 2) handleBootPending 가 rollback 판정 내는지 확인.
+      const r1 = selfUpdateHandleBoot({ runnerHome: tmp, currentScriptAbs: fakeNext });
+      if (r1.action !== 'rollback') {
+        console.error(`[selftest-selfupdate-no-prev] FAIL (rollback 판정) · ${JSON.stringify(r1)}`); process.exit(1);
+      }
+      if (r1.prev !== fakePrev) {
+        console.error(`[selftest-selfupdate-no-prev] FAIL (prev 경로) · ${JSON.stringify(r1)}`); process.exit(1);
+      }
+      // 3) prev 파일이 실제로 없는지 확인.
+      if (existsSync(fakePrev)) {
+        console.error('[selftest-selfupdate-no-prev] FAIL · fakePrev 가 존재해서는 안 됨'); process.exit(1);
+      }
+      // 4) fallback 경로: HERE/hub-runner-v8.0.mjs 형태이어야 함.
+      const fallbackPath = join(HERE, SELF_UPDATE_FALLBACK_RUNNER);
+      if (!fallbackPath.endsWith(SELF_UPDATE_FALLBACK_RUNNER)) {
+        console.error(`[selftest-selfupdate-no-prev] FAIL (fallback 경로 접미 오류) · ${fallbackPath}`); process.exit(1);
+      }
+      // 5) blocked sha 기록 경로 (runnerHome 최상단 selfupdate-blocked.json).
+      selfUpdateWriteBlockedSha(tmp, { sha: 'deadbeef1234', target: 'hub-runner-v9.0.mjs', blocked_at: new Date().toISOString(), event_written: false });
+      const blocked = selfUpdateReadBlockedSha(tmp);
+      if (!blocked || blocked.sha !== 'deadbeef1234') {
+        console.error(`[selftest-selfupdate-no-prev] FAIL (blocked sha 기록) · ${JSON.stringify(blocked)}`); process.exit(1);
+      }
+      console.log(`[selftest-selfupdate-no-prev] OK · rollback prev 부재 → fallback=${SELF_UPDATE_FALLBACK_RUNNER} · blocked sha 기록 정상`);
+      process.exit(0);
+    } catch (e) {
+      console.error(`[selftest-selfupdate-no-prev] FAIL · ${e.message}`);
       process.exit(1);
     } finally {
       try { rmSync(tmp, { recursive: true, force: true }); } catch { /* noop */ }
