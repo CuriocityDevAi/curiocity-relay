@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T05:39:33.447Z",
+  "at": "2026-11-24T05:39:47.604Z",
   "pid": 37338,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -19,7 +19,9 @@
       "last_activity": null
     },
     "m2": {
-      "current": null,
+      "current": "M2-1124-E",
+      "started_at": "2026-11-24T05:39:46.203Z",
+      "model": "sonnet",
       "last_activity": "2026-11-24T05:39:32.364Z"
     },
     "m3": {
@@ -114,7 +116,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": 1,
-  "err_tail": "[hub-runner-v7.8:claim 2026-11-24T05:33:00.109Z] [report-relocate] M3-1124-D: 1건 오경로 리포트 이동 완료\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1124-D.json · {\"id\":\"M3-1124-D\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-24T05:33:00.195Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m3/M3-1124-D-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1124-D.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m1/M1-1124-B-report.md, m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-24T05:33:21.625Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T05:33:55.131Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T05:34:30.914Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T05:35:04.434Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T05:35:39.934Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T05:36:13.450Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T05:36:48.966Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T05:37:23.400Z] 러너 폴더 침범 감지 · files=queue/r0/R0-1124-E.md,m1/M1-1124-B-report.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md · guess_hub=r0\n[hub-runner-v7.8:git 2026-11-24T05:37:23.400Z] blocked: runner-folder change pending Kyu install · files=queue/r0/R0-1124-E.md,m1/M1-1124-B-report.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md\n[hub-runner-v7.8:heartbeat 2026-11-24T05:38:36.917Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-24T05:39:09.071Z] 러너 폴더 침범 감지 · files=m1/M1-1124-B-report.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md · guess_hub=m1\n[hub-runner-v7.8:git 2026-11-24T05:39:09.071Z] blocked: runner-folder change pending Kyu install · files=m1/M1-1124-B-report.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md\n[hub-runner-v7.8:heartbeat 2026-11-24T05:39:13.416Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git",
+  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-24T05:33:55.131Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T05:34:30.914Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T05:35:04.434Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T05:35:39.934Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T05:36:13.450Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T05:36:48.966Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T05:37:23.400Z] 러너 폴더 침범 감지 · files=queue/r0/R0-1124-E.md,m1/M1-1124-B-report.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md · guess_hub=r0\n[hub-runner-v7.8:git 2026-11-24T05:37:23.400Z] blocked: runner-folder change pending Kyu install · files=queue/r0/R0-1124-E.md,m1/M1-1124-B-report.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md\n[hub-runner-v7.8:heartbeat 2026-11-24T05:38:36.917Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-24T05:39:09.071Z] 러너 폴더 침범 감지 · files=m1/M1-1124-B-report.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md · guess_hub=m1\n[hub-runner-v7.8:git 2026-11-24T05:39:09.071Z] blocked: runner-folder change pending Kyu install · files=m1/M1-1124-B-report.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md\n[hub-runner-v7.8:heartbeat 2026-11-24T05:39:13.416Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:claim 2026-11-24T05:39:33.495Z] M2-1124-D → done · runner-v7.8 cmux-split · 리포트 확인 m2/M2-1124-D-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-D.json · {\"id\":\"M2-1124-D\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-24T05:39:33.578Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m2/M2-1124-D-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1124-D.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m1/M1-1124-B-report.md, m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:m2 2026-11-24T05:39:46.203Z] pick · M2-1124-E · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
