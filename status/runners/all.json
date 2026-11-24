@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T22:59:44.006Z",
+  "at": "2026-11-24T23:00:15.980Z",
   "pid": 74805,
   "runner": "v8.2",
   "poll_ms": 30000,
@@ -21,10 +21,8 @@
       "last_activity": null
     },
     "m2": {
-      "current": "M2-1125-A",
-      "started_at": "2026-11-24T22:56:08.027Z",
-      "model": "sonnet",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-24T23:00:14.843Z"
     },
     "m3": {
       "current": "M3-1125-B",
@@ -42,11 +40,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.82,
-    "compressed_gb": 5.55,
+    "used_gb": 15.49,
+    "compressed_gb": 4.51,
     "swap_used_gb": 1.87,
     "pressure": "normal",
-    "at": "2026-11-24T22:59:11.143Z"
+    "at": "2026-11-24T22:59:48.032Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -120,7 +118,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": null,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:56:45.525Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:57:19.361Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:57:55.332Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:58:29.074Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m3 2026-11-24T22:58:31.689Z] pick · M3-1125-B · model=sonnet · display=cmux-split\n[hub-runner-v8.2:claim 2026-11-24T22:58:55.361Z] M3-1125-B → started · runner-v8.2 · cmux-split · model=opus · source=queue-line · pane foreground=clau\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1125-B.json · {\"id\":\"M3-1125-B\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-24T22:58:55.474Z\",\"note\":\"runner-v8.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1125-B.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): queue/m3/M3-1125-B.md, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/1)\rerror: could not apply d1d4262d2... claim(m3): M3-1125-B started · runner-v8.2 · cmux-split · model=opus · source=queue-line ·\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:59:06.197Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:59:40.674Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:56:45.525Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:57:19.361Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:57:55.332Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:58:29.074Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m3 2026-11-24T22:58:31.689Z] pick · M3-1125-B · model=sonnet · display=cmux-split\n[hub-runner-v8.2:claim 2026-11-24T22:58:55.361Z] M3-1125-B → started · runner-v8.2 · cmux-split · model=opus · source=queue-line · pane foreground=clau\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1125-B.json · {\"id\":\"M3-1125-B\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-24T22:58:55.474Z\",\"note\":\"runner-v8.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1125-B.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): queue/m3/M3-1125-B.md, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/1)\rerror: could not apply d1d4262d2... claim(m3): M3-1125-B started · runner-v8.2 · cmux-split · model=opus · source=queue-line ·\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:59:06.197Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-24T22:59:40.674Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m2 2026-11-24T23:00:12.357Z] [report-path] M2-1125-A: safe push 실패 (push-failed) · 다음 tick 재시도",
   "git_state": {
     "ahead": 0,
     "behind": 0,
