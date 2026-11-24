@@ -376,6 +376,47 @@ function scanUnclaimedIds() {
   return result;
 }
 
+// --- 허브 대기 큐 판정 (M2-1124-D) ---
+// hub-runner-v7.8 의 listQueue + pickNext 규칙을 읽기 전용으로 복제.
+// 러너 규칙과 다르면 표시가 틀릴 수 있음.
+function listHubPendingIds(hub) {
+  const hubDir = join(PATHS.queueRoot, hub);
+  if (!existsSync(hubDir)) return [];
+  let files;
+  try { files = readdirSync(hubDir); } catch { return []; }
+
+  const ids = files
+    .filter(f => f.endsWith('.md') && !f.endsWith('-report.md') && !f.endsWith('-selftest.md'))
+    .map(f => f.replace(/\.md$/, ''))
+    .sort((a, b) => a.localeCompare(b));
+
+  const pending = [];
+  for (const id of ids) {
+    const claimPath = join(PATHS.claims, `${id}.json`);
+    if (!existsSync(claimPath)) { pending.push(id); continue; }
+    try {
+      const c = JSON.parse(readFileSync(claimPath, 'utf8'));
+      if (c.state === 'issued') pending.push(id);
+    } catch { /* 파싱 실패 → non-pending 취급 */ }
+  }
+  return pending;
+}
+
+const ANSI_RE = /\x1b\[[0-9;]*m/g;
+const HUB_LINE_RE = /^  ([a-z][0-9])  /;
+const HUB_LINE_SET = new Set(['m0', 'm1', 'm2', 'm3', 'r0']);
+
+function appendHubPending(lines, hubPending) {
+  return lines.map(line => {
+    const stripped = line.replace(ANSI_RE, '');
+    const m = stripped.match(HUB_LINE_RE);
+    if (!m || !HUB_LINE_SET.has(m[1])) return line;
+    const pending = hubPending[m[1]];
+    if (!pending || !pending.length) return line;
+    return line + `  \x1b[2m[${pending.join(', ')}]\x1b[0m`;
+  });
+}
+
 function macNotify(title, body) {
   if (process.platform !== 'darwin') return;
   const safe = body.replace(/"/g, "'");
@@ -483,6 +524,11 @@ async function tick(fullMode) {
     hour: '2-digit', minute: '2-digit', second: '2-digit',
   }).replace(',', '');
 
+  const hubPending = {};
+  for (const hub of QUEUE_HUBS) {
+    hubPending[hub] = listHubPendingIds(hub);
+  }
+
   const lines = renderCompact({
     allJson: renderAllJson,
     runState: cachedRunState,
@@ -499,7 +545,7 @@ async function tick(fullMode) {
   });
 
   process.stdout.write('\x1b[2J\x1b[H');
-  process.stdout.write(lines.join('\n') + '\n');
+  process.stdout.write(appendHubPending(lines, hubPending).join('\n') + '\n');
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
