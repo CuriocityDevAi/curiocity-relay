@@ -111,6 +111,13 @@ function repoShort(repo) {
   return last.endsWith('-fork') ? 'fork' : last;
 }
 
+// REQ 2 (M2-1124-F): 프롬프트 ID에서 허브 코드 추출 ("M2-1124-F" → "m2")
+function extractHubFromId(id) {
+  const m = String(id || '').match(/^([A-Za-z])(\d)/);
+  if (!m) return null;
+  return m[1].toLowerCase() + m[2];
+}
+
 function minSince(iso) {
   if (!iso) return null;
   const ms = Date.now() - new Date(iso).getTime();
@@ -152,6 +159,85 @@ function cachePrPrompt(repo, prNum, headBranch) {
 function lookupPrPrompt(repo, prNum) {
   if (!prNum) return null;
   return prPromptCache.get(`${repo}:${prNum}`) || null;
+}
+
+// --- REQ 1 (M2-1124-F): BUSY 러너 실행 중 잡 표시 ---
+
+const busyPrPromptCache = new Map(); // "repo:prNum" → { promptId, fetchedAt }
+const BUSY_CACHE_MS = 120_000;
+
+async function fetchBusyPromptId(repo, prNum) {
+  if (!repo || !prNum) return null;
+  const key = `${repo}:${prNum}`;
+  const cached = busyPrPromptCache.get(key);
+  if (cached && Date.now() - cached.fetchedAt < BUSY_CACHE_MS) return cached.promptId;
+
+  // prPromptCache 에 이미 있으면 기본값으로 사용
+  let promptId = lookupPrPrompt(repo, String(prNum)) || null;
+
+  try {
+    // 마지막 커밋 메시지 ID 우선 (stacked PR 대응)
+    const commits = await ghApi(`repos/${repo}/pulls/${prNum}/commits?per_page=100`);
+    if (Array.isArray(commits) && commits.length > 0) {
+      const lastMsg = commits[commits.length - 1].commit?.message || '';
+      const commitId = extractPromptId(lastMsg);
+      if (commitId) promptId = commitId;
+    }
+  } catch {}
+
+  busyPrPromptCache.set(key, { promptId, fetchedAt: Date.now() });
+  return promptId;
+}
+
+async function buildBusyJobMap(allJson) {
+  const result = new Map(); // runnerName → { pr, promptId, jobName, runningMin }
+  const inProgressAll = [
+    ...(allJson?.ci?.data?.heavy?.in_progress || []),
+    ...(allJson?.ci?.data?.light?.in_progress || []),
+  ];
+  await Promise.all(inProgressAll.filter(j => j.runner).map(async j => {
+    const prNum = (j.pr || '').replace('#', '');
+    const promptId = await fetchBusyPromptId(j.repo, prNum || null);
+    result.set(j.runner, {
+      pr: j.pr || '-',
+      promptId,
+      jobName: j.job || '',
+      runningMin: j.running_min ?? null,
+    });
+  }));
+  return result;
+}
+
+const BUSY_MARKER = '\x1b[33m●BUSY\x1b[0m';
+
+function enhanceBusyLines(lines, busyJobMap) {
+  if (!busyJobMap || !busyJobMap.size) return lines;
+  return lines.map(line => {
+    const busyIdx = line.indexOf(BUSY_MARKER);
+    if (busyIdx === -1) return line;
+
+    // prefix 에서 러너 이름 추출 (ANSI 제거 후 두 번째 토큰)
+    const prefix = line.slice(0, busyIdx);
+    const plainPrefix = prefix.replace(/\x1b\[[0-9;]*m/g, '');
+    const tokens = plainPrefix.trim().split(/\s+/);
+    // tokens[0] = "fork-heavy", tokens[1] = "curiocity-mac-fork"
+    const runnerName = tokens[1];
+    if (!runnerName) return line;
+
+    const details = busyJobMap.get(runnerName);
+    if (!details) return line;
+
+    const { pr, promptId, jobName, runningMin } = details;
+    const parts = [pr || '-'];
+    if (promptId) parts.push(promptId);
+    if (jobName) parts.push(jobName);
+    if (runningMin != null) parts.push(`${runningMin}분째`);
+
+    const jobStr = parts.join(' · ');
+    const colorCode = typeof runningMin === 'number' && runningMin >= 25 ? '\x1b[31m'
+      : typeof runningMin === 'number' && runningMin >= 15 ? '\x1b[33m' : '';
+    return prefix + BUSY_MARKER + '  ' + colorCode + jobStr + '\x1b[0m';
+  });
 }
 
 async function fetchRunsForRepo(repo) {
@@ -588,11 +674,17 @@ async function tick(fullMode) {
   const rawUnclaimed = scanUnclaimedIds();
   const freshUnclaimed = filterFreshUnclaimed(rawUnclaimed);
 
+  // REQ 2 (M2-1124-F): 허브 BUSY 중이면 대기 큐 항목은 정상 대기 — idle 허브만 미투입 판정
+  const idleUnclaimed = freshUnclaimed.filter(({ id }) => {
+    const hub = extractHubFromId(id);
+    return hub ? !allJson?.hubs?.[hub]?.current : true;
+  });
+
   // err_tail 은 허용 목록 방식으로 직접 판정 → computeRunnerAlerts 에는 넘기지 않음
   const allJsonNoErr = allJson ? { ...allJson, err_tail: '' } : allJson;
   const { alerts: rawRunnerAlerts, aheadSinceMs: newAheadSinceMs } = computeRunnerAlerts(allJsonNoErr, {
     aheadSinceMs,
-    unclaimedIds: freshUnclaimed,
+    unclaimedIds: idleUnclaimed,
   });
   aheadSinceMs = newAheadSinceMs;
 
@@ -628,7 +720,10 @@ async function tick(fullMode) {
   }
   const hubNotifs = tickQueueDiff();
 
-  const lines = renderCompact({
+  // REQ 1 (M2-1124-F): BUSY 러너 잡 상세 조회 (2분 캐시)
+  const busyJobMap = await buildBusyJobMap(allJson);
+
+  const rawLines = renderCompact({
     allJson: renderAllJson,
     runState: cachedRunState,
     cloudData,
@@ -644,7 +739,7 @@ async function tick(fullMode) {
   });
 
   process.stdout.write('\x1b[2J\x1b[H');
-  process.stdout.write(appendHubPending(lines, hubPending, hubNotifs).join('\n') + '\n');
+  process.stdout.write(appendHubPending(enhanceBusyLines(rawLines, busyJobMap), hubPending, hubNotifs).join('\n') + '\n');
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
