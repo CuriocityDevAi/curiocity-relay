@@ -4,6 +4,9 @@
 //
 // 화면 전용 · 읽기 전용 — relay git 쓰기 없음.
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
+//
+// !! ci-watch 를 바꾸는 모든 프롬프트는 CI_WATCH_VERSION 을 올릴 것.
+// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I
 
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -17,11 +20,6 @@ import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { promisify } from 'node:util';
-
-const execFileAsync = promisify(execFile);
-const HERE = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(HERE, '..');
-
 import { getWibDateStr, readJsonlFile } from './lib/ci-history.mjs';
 import { computeRunnerAlerts } from './watch/runner-alerts.mjs';
 import {
@@ -30,6 +28,13 @@ import {
   buildRunnerRows,
   renderCompact,
 } from './watch/ci-watch-render.mjs';
+
+const CI_WATCH_VERSION = '1.3';
+
+const execFileAsync = promisify(execFile);
+const HERE = dirname(fileURLToPath(import.meta.url));
+const REPO_ROOT = resolve(HERE, '..');
+const THIS_FILE = fileURLToPath(import.meta.url);
 
 const REFRESH_MS = 30_000;
 const RUNNER_REFRESH_MS = 120_000;
@@ -656,6 +661,71 @@ let cachedRunState = { heavy: { inProgress: [], queued: [] }, light: { inProgres
 let aheadSinceMs = null;
 let runStateAt = 0;
 
+// --- M2-1124-I: 버전 표시 · 최신 아님 경고 · 파일 갱신 경고 ---
+
+function isNewerVersion(v1, v2) {
+  const p1 = v1.split('.').map(Number);
+  const p2 = v2.split('.').map(Number);
+  for (let i = 0; i < Math.max(p1.length, p2.length); i++) {
+    const a = p1[i] ?? 0;
+    const b = p2[i] ?? 0;
+    if (a > b) return true;
+    if (a < b) return false;
+  }
+  return false;
+}
+
+// 기동 시 1회 · git commit date (WIB) · 없으면 mtime
+let fileCommitDate = '';
+async function initFileCommitDate() {
+  try {
+    const { stdout } = await execFileAsync(
+      'git', ['log', '-1', '--format=%cd', '--date=format-local:%Y%m%d', '--', 'scripts/ci-watch.mjs'],
+      { cwd: REPO_ROOT, timeout: 5000, env: { ...process.env, TZ: 'Asia/Jakarta' } },
+    );
+    const d = stdout.trim();
+    if (/^\d{8}$/.test(d)) { fileCommitDate = d; return; }
+  } catch {}
+  try {
+    const st = statSync(THIS_FILE);
+    const wibMs = st.mtimeMs + 7 * 3600 * 1000;
+    const wd = new Date(wibMs);
+    fileCommitDate = `${wd.getUTCFullYear()}${String(wd.getUTCMonth() + 1).padStart(2, '0')}${String(wd.getUTCDate()).padStart(2, '0')}`;
+  } catch {}
+}
+
+// origin/main 버전 확인 · 5분 캐시 · fetch 금지
+let originVersionCache = { version: null, different: false, checkedAt: 0 };
+const ORIGIN_VERSION_CACHE_MS = 5 * 60 * 1000;
+
+async function checkOriginVersion() {
+  if (Date.now() - originVersionCache.checkedAt < ORIGIN_VERSION_CACHE_MS) {
+    return originVersionCache;
+  }
+  try {
+    const { stdout } = await execFileAsync(
+      'git', ['show', 'origin/main:scripts/ci-watch.mjs'],
+      { cwd: REPO_ROOT, timeout: 5000, maxBuffer: 1024 * 1024 },
+    );
+    const m = stdout.match(/\bCI_WATCH_VERSION\s*=\s*['"]([^'"]+)['"]/);
+    const originVersion = m ? m[1] : null;
+    let thisContent = '';
+    try { thisContent = readFileSync(THIS_FILE, 'utf8'); } catch {}
+    originVersionCache = { version: originVersion, different: stdout !== thisContent, checkedAt: Date.now() };
+  } catch {
+    originVersionCache = { ...originVersionCache, checkedAt: Date.now() };
+  }
+  return originVersionCache;
+}
+
+// 기동 시 실행 중 코드 해시 1회 고정 — 이후 디스크 변경 감지용
+let runningCodeHash = '';
+try { runningCodeHash = createHash('md5').update(readFileSync(THIS_FILE)).digest('hex'); } catch {}
+
+function getDiskFileHash() {
+  try { return createHash('md5').update(readFileSync(THIS_FILE)).digest('hex'); } catch { return ''; }
+}
+
 // --- M2-1124-H: 카운트다운 + 키 입력 ---
 
 let nextRefreshMs = 0;
@@ -790,8 +860,22 @@ async function tick(fullMode) {
     hubReportStatus: computeHubReportStatus(allJson),
   });
 
+  // 타이틀 줄: 버전 · 날짜 · 최신 아님 경고 · 파일 갱신 경고
+  const originInfo = await checkOriginVersion();
+  const fileChanged = runningCodeHash && getDiskFileHash() !== runningCodeHash;
+  let titleLine = `\x1b[1mRunner/CI Monitoring v${CI_WATCH_VERSION} (${fileCommitDate || '?'})\x1b[0m`;
+  if (originInfo.version && isNewerVersion(originInfo.version, CI_WATCH_VERSION)) {
+    titleLine += `  \x1b[33m⚠ 최신 v${originInfo.version} 있음 — Ctrl+C 후 재시작\x1b[0m`;
+  } else if (originInfo.different) {
+    titleLine += `  \x1b[33m⚠ 최신 내용 다름 — Ctrl+C 후 재시작\x1b[0m`;
+  }
+  if (fileChanged) {
+    titleLine += `  \x1b[33m⚠ 파일 갱신됨 — 재시작 필요\x1b[0m`;
+  }
+
+  const finalLines = [titleLine, ...appendHubPending(enhanceBusyLines(rawLines, busyJobMap), hubPending, hubNotifs)];
   process.stdout.write('\x1b[2J\x1b[H');
-  process.stdout.write(appendHubPending(enhanceBusyLines(rawLines, busyJobMap), hubPending, hubNotifs).join('\n') + '\n');
+  process.stdout.write(finalLines.join('\n') + '\n');
 
   startCountdownTimer(fullMode);
   isRendering = false;
@@ -837,6 +921,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   }
 
   (async () => {
+    await initFileCommitDate();
     await tick(fullMode).catch(() => {});
     scheduleNext();
   })();
