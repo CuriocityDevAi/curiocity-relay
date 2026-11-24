@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T10:01:33.549Z",
+  "at": "2026-11-24T10:02:50.533Z",
   "pid": 21194,
   "runner": "v8.1",
   "poll_ms": 30000,
@@ -36,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.85,
-    "compressed_gb": 3.69,
+    "used_gb": 13.73,
+    "compressed_gb": 4.61,
     "swap_used_gb": 3.87,
     "pressure": "normal",
-    "at": "2026-11-24T10:01:11.917Z"
+    "at": "2026-11-24T10:02:18.283Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -114,7 +114,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 3,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.1:claim 2026-11-24T09:48:04.220Z] M3-1124-I → started · runner-v8.1 · cmux-split · model=opus · source=queue-line · pane foreground=clau\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1124-I.json · {\"id\":\"M3-1124-I\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-24T09:48:04.311Z\",\"note\":\"runner-v8.1 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1124-I.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json unchanged · skip write\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): r0/R0-1124-K-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:54:16.217Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:54:49.150Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:55:24.437Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:55:57.370Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:56:32.261Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:57:05.227Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:57:40.484Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:58:13.819Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:self-update 2026-11-24T09:58:21.676Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:58:52.441Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m0 2026-11-24T10:01:30.596Z] [report-path] M0-1124-G: REPORT_PATH 격리 리포트 수거·push",
+  "err_tail": "[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:54:16.217Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:54:49.150Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:55:24.437Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:55:57.370Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:56:32.261Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:57:05.227Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:57:40.484Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:58:13.819Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:self-update 2026-11-24T09:58:21.676Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.1:gh-watchdog 2026-11-24T09:58:52.441Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m0 2026-11-24T10:01:30.596Z] [report-path] M0-1124-G: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:claim 2026-11-24T10:01:33.595Z] M0-1124-G → done · runner-v8.1 cmux-split · 리포트 확인 m0/M0-1124-G-report.md · model=opus · 로그: /Users\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1124-G.json · {\"id\":\"M0-1124-G\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-24T10:01:33.687Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m0/M0-1124-G-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1124-G.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): r0/R0-1124-K-report.md\n[claim] committed\n[claim] pushed",
   "git_state": {
     "ahead": 0,
     "behind": 0,
