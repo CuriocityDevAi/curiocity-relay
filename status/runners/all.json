@@ -1,18 +1,16 @@
 {
-  "at": "2026-11-24T04:48:47.152Z",
+  "at": "2026-11-24T04:49:08.699Z",
   "pid": 75067,
   "runner": "v7.8",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": "blocked: runner-folder change pending Kyu install (queue/m2/M2-1124-E.md)",
-  "last_error_at": "2026-11-24T04:44:32.634Z",
+  "last_error": "blocked: runner-folder change pending Kyu install (m2/M2-1123-C-report.md)",
+  "last_error_at": "2026-11-24T04:49:07.866Z",
   "hubs": {
     "m0": {
-      "current": "M0-1124-A",
-      "started_at": "2026-11-24T04:33:55.849Z",
-      "model": "opus",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-24T04:49:07.685Z"
     },
     "m1": {
       "current": "M1-1124-B",
@@ -43,10 +41,10 @@
   "mem": {
     "total_gb": 16,
     "used_gb": 15.87,
-    "compressed_gb": 4.12,
-    "swap_used_gb": 4.13,
+    "compressed_gb": 5.23,
+    "swap_used_gb": 3.92,
     "pressure": "normal",
-    "at": "2026-11-24T04:48:15.700Z"
+    "at": "2026-11-24T04:48:49.326Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -54,13 +52,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T04:43:22.685Z",
+      "at": "2026-11-24T04:48:44.738Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport"
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 9,
+      "api_calls": 10,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -71,18 +70,29 @@
         "in_progress": []
       },
       "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
+        "queued": 1,
+        "oldest_queued_min": 1,
+        "oldest_queued_pr": "storeport:#415",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "#415",
+            "pr_display": "storeport:#415",
+            "job": "check",
+            "step": "Set up job",
+            "running_min": 0,
+            "runner": "curiocity-mac-light",
+            "kind": "mac-light"
+          }
+        ]
       },
       "cloud_in_progress": [],
       "runners": {
-        "heavy_online": 1,
+        "heavy_online": 3,
         "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 3,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 32,
@@ -109,16 +119,16 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 9,
+      "jsonl_added": 0,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 16341,
-    "at": "2026-11-24T04:43:37.470Z"
+    "took_ms": 14506,
+    "at": "2026-11-24T04:48:57.411Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-24T04:43:21.895Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:m3 2026-11-24T04:43:24.480Z] pick · M3-1124-C · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-24T04:43:29.572Z] M3-1124-C → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1124-C.json · {\"id\":\"M3-1124-C\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-24T04:43:29.659Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1124-C.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json unchanged · skip write\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:43:58.950Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T04:44:32.633Z] 러너 폴더 침범 감지 · files=queue/m2/M2-1124-E.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T04:44:32.634Z] blocked: runner-folder change pending Kyu install · files=queue/m2/M2-1124-E.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:44:33.268Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:45:09.815Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:45:44.093Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:46:20.516Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:46:54.678Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:47:32.421Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:48:07.164Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:48:43.967Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1124-C.json · {\"id\":\"M3-1124-C\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-24T04:43:29.659Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1124-C.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json unchanged · skip write\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:43:58.950Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T04:44:32.633Z] 러너 폴더 침범 감지 · files=queue/m2/M2-1124-E.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T04:44:32.634Z] blocked: runner-folder change pending Kyu install · files=queue/m2/M2-1124-E.md,m2/M2-1123-C-report.md,r0/R0-1124-A-report.md\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:44:33.268Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:45:09.815Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:45:44.093Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:46:20.516Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:46:54.678Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:47:32.421Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:48:07.164Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T04:48:43.967Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:heartbeat 2026-11-24T04:48:48.438Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:git 2026-11-24T04:49:07.866Z] 러너 폴더 침범 감지 · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md · guess_hub=m2\n[hub-runner-v7.8:git 2026-11-24T04:49:07.866Z] blocked: runner-folder change pending Kyu install · files=m2/M2-1123-C-report.md,r0/R0-1124-A-report.md",
   "git_state": {
     "ahead": 0,
     "behind": 0,
