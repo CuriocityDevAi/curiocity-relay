@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T06:33:35.989Z",
+  "at": "2026-11-24T06:30:01.359Z",
   "pid": 37338,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -44,11 +44,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.66,
-    "compressed_gb": 4.81,
-    "swap_used_gb": 4.46,
+    "used_gb": 15.8,
+    "compressed_gb": 5.92,
+    "swap_used_gb": 4.1,
     "pressure": "normal",
-    "at": "2026-11-24T06:33:03.283Z"
+    "at": "2026-11-24T06:29:31.373Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -138,7 +138,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": 2,
-  "err_tail": "[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/3)\rerror: could not apply dba6c3e26... claim(m2): M2-1124-H started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:29:56.647Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:r0 2026-11-24T06:29:59.940Z] pick · R0-1124-F · model=sonnet · display=cmux-split\n[hub-runner-v7.8:claim 2026-11-24T06:30:04.817Z] R0-1124-F → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-F.json · {\"id\":\"R0-1124-F\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-24T06:30:04.907Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1124-F.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/4)\rerror: could not apply dba6c3e26... claim(m2): M2-1124-H started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:30:34.880Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:31:10.058Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:31:47.507Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:32:22.428Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:32:58.258Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:git 2026-11-24T06:33:31.626Z] 자동 복구 완료 · ahead=2 · dropped=0 · reapplied=2\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:33:32.543Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/1)\rerror: could not apply dba6c3e26... claim(m2): M2-1124-H started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v7.8:claim 2026-11-24T06:29:27.724Z] M3-1124-F → started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1124-F.json · {\"id\":\"M3-1124-F\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-24T06:29:27.830Z\",\"note\":\"runner-v7.8 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1124-F.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json unchanged · skip write\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/2)\rerror: could not apply dba6c3e26... claim(m2): M2-1124-H started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v7.8:claim 2026-11-24T06:29:35.562Z] R0-1124-E → done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-E-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-E.json · {\"id\":\"R0-1124-E\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-24T06:29:35.647Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-E-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1124-E.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/3)\rerror: could not apply dba6c3e26... claim(m2): M2-1124-H started · runner-v7.8 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:29:56.647Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:r0 2026-11-24T06:29:59.940Z] pick · R0-1124-F · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
