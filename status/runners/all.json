@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T02:40:08.786Z",
+  "at": "2026-11-24T02:42:58.553Z",
   "pid": 25605,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -21,7 +21,9 @@
       "last_activity": "2026-11-23T17:42:05.334Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1124-A",
+      "started_at": "2026-11-24T02:42:57.060Z",
+      "model": "sonnet",
       "last_activity": "2026-11-23T17:06:38.298Z"
     },
     "r0": {
@@ -34,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.72,
-    "compressed_gb": 3.61,
+    "used_gb": 15.55,
+    "compressed_gb": 3.97,
     "swap_used_gb": 3.13,
     "pressure": "normal",
-    "at": "2026-11-24T02:39:37.016Z"
+    "at": "2026-11-24T02:42:24.920Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -46,7 +48,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T02:34:36.010Z",
+      "at": "2026-11-24T02:40:08.756Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -105,12 +107,12 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 9500,
-    "at": "2026-11-24T02:34:43.873Z"
+    "took_ms": 9173,
+    "at": "2026-11-24T02:40:16.189Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": 1,
-  "err_tail": "[hub-runner-v7.8:git 2026-11-23T23:21:13.559Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Failed to connect to github.com port 443 after 6 ms: Couldn't connect to server\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:21:13.561Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:git 2026-11-23T23:25:00.556Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:25:00.560Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:state 2026-11-23T23:37:43.732Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:38:14.809Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:state 2026-11-23T23:43:36.115Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:45:25.402Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:46:05.140Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:46:38.477Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:state 2026-11-24T00:43:16.556Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v7.8:gh-watchdog 2026-11-24T00:43:47.797Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T00:46:45.492Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:gh-watchdog 2026-11-24T00:49:40.740Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:git 2026-11-24T00:56:40.490Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v7.8:gh-watchdog 2026-11-24T00:56:40.495Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:heartbeat 2026-11-24T01:08:27.277Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v7.8:state 2026-11-24T01:17:35.044Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v7.8:git 2026-11-24T01:18:05.396Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.8:gh-watchdog 2026-11-24T01:18:06.243Z] [gh-runner-watchdog] skip restart: no-ci-data",
+  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-23T23:21:13.561Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:git 2026-11-23T23:25:00.556Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:25:00.560Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:state 2026-11-23T23:37:43.732Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:38:14.809Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:state 2026-11-23T23:43:36.115Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:45:25.402Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:46:05.140Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-23T23:46:38.477Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:state 2026-11-24T00:43:16.556Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v7.8:gh-watchdog 2026-11-24T00:43:47.797Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T00:46:45.492Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:gh-watchdog 2026-11-24T00:49:40.740Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:git 2026-11-24T00:56:40.490Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v7.8:gh-watchdog 2026-11-24T00:56:40.495Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:heartbeat 2026-11-24T01:08:27.277Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v7.8:state 2026-11-24T01:17:35.044Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v7.8:git 2026-11-24T01:18:05.396Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v7.8:gh-watchdog 2026-11-24T01:18:06.243Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v7.8:m3 2026-11-24T02:42:57.059Z] pick · M3-1124-A · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
