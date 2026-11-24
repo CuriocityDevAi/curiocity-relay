@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T07:00:27.178Z",
+  "at": "2026-11-24T07:01:03.150Z",
   "pid": 37338,
   "runner": "v7.8",
   "poll_ms": 30000,
@@ -36,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.87,
-    "compressed_gb": 3.43,
+    "used_gb": 15.65,
+    "compressed_gb": 3.68,
     "swap_used_gb": 4.56,
     "pressure": "normal",
-    "at": "2026-11-24T06:59:55.626Z"
+    "at": "2026-11-24T07:00:30.553Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -112,7 +112,7 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": 2,
-  "err_tail": "[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/7)\rRebasing (2/7)\rerror: could not apply f660ca25c... claim(r0): R0-1124-G done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · mod\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:47:50.018Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:48:25.200Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:48:58.328Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:49:33.642Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:50:06.725Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:50:41.877Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:r0 2026-11-24T06:50:43.175Z] 복구 보류 · R0-1124-E stale(옛 started) · pane title=\"R0 · ✓ R0-1124-G\" (다른 ID: R0-1124-G) · 칸 무접촉\n[hub-runner-v7.8:heartbeat 2026-11-24T06:53:04.475Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:heartbeat 2026-11-24T06:53:38.545Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:heartbeat 2026-11-24T06:54:14.775Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:heartbeat 2026-11-24T06:54:48.804Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:claim 2026-11-24T06:55:19.336Z] M0-1124-B → done · runner-v7.8 cmux-split · 리포트 확인 m0/M0-1124-B-report.md · model=opus · 로그: /Users\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1124-B.json · {\"id\":\"M0-1124-B\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-24T06:55:19.421Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m0/M0-1124-B-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1124-B.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/13)\rRebasing (2/13)\rerror: could not apply f660ca25c... claim(r0): R0-1124-G done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · mod",
+  "err_tail": "[hub-runner-v7.8:gh-watchdog 2026-11-24T06:47:50.018Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:48:25.200Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:48:58.328Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:49:33.642Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:50:06.725Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:gh-watchdog 2026-11-24T06:50:41.877Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v7.8:r0 2026-11-24T06:50:43.175Z] 복구 보류 · R0-1124-E stale(옛 started) · pane title=\"R0 · ✓ R0-1124-G\" (다른 ID: R0-1124-G) · 칸 무접촉\n[hub-runner-v7.8:heartbeat 2026-11-24T06:53:04.475Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:heartbeat 2026-11-24T06:53:38.545Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:heartbeat 2026-11-24T06:54:14.775Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:heartbeat 2026-11-24T06:54:48.804Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v7.8:claim 2026-11-24T06:55:19.336Z] M0-1124-B → done · runner-v7.8 cmux-split · 리포트 확인 m0/M0-1124-B-report.md · model=opus · 로그: /Users\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1124-B.json · {\"id\":\"M0-1124-B\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-24T06:55:19.421Z\",\"note\":\"runner-v7.8 cmux-split · 리포트 확인 m0/M0-1124-B-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1124-B.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): m2/M2-1123-C-report.md, r0/R0-1124-A-report.md, r0/R0-1124-D-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/13)\rRebasing (2/13)\rerror: could not apply f660ca25c... claim(r0): R0-1124-G done · runner-v7.8 cmux-split · 리포트 확인 r0/R0-1124-G-report.md · mod\n[hub-runner-v7.8:heartbeat 2026-11-24T07:00:28.213Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git",
   "git_state": {
     "ahead": 0,
     "behind": 0,
