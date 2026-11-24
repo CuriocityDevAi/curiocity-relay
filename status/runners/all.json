@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T11:13:22.118Z",
+  "at": "2026-11-24T11:14:36.246Z",
   "pid": 21194,
   "runner": "v8.1",
   "poll_ms": 30000,
@@ -21,7 +21,9 @@
       "last_activity": "2026-11-24T10:40:31.787Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1124-P",
+      "started_at": "2026-11-24T11:14:34.749Z",
+      "model": "sonnet",
       "last_activity": null
     },
     "m3": {
@@ -45,11 +47,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.72,
-    "compressed_gb": 3.98,
+    "used_gb": 15.01,
+    "compressed_gb": 3.63,
     "swap_used_gb": 2.57,
     "pressure": "normal",
-    "at": "2026-11-24T11:12:49.897Z"
+    "at": "2026-11-24T11:14:02.621Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -57,21 +59,33 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T11:07:58.667Z",
+      "at": "2026-11-24T11:13:20.209Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport"
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 7,
+      "api_calls": 10,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
+        "queued": 1,
         "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
+        "oldest_queued_min": 4,
+        "oldest_queued_pr": "fork:master",
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "#251",
+            "pr_display": "fork:#251",
+            "job": "playwright",
+            "step": "Run Playwright harnesses",
+            "running_min": 5,
+            "runner": "curiocity-mac-fork",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -81,8 +95,8 @@
       },
       "cloud_in_progress": [],
       "runners": {
-        "heavy_online": 1,
-        "heavy_busy": 0,
+        "heavy_online": 3,
+        "heavy_busy": 1,
         "light_online": 1
       },
       "cloud_today": 0,
@@ -112,18 +126,18 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 24.4
       },
-      "jsonl_added": 2,
+      "jsonl_added": 0,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 19563,
-    "at": "2026-11-24T11:08:15.586Z"
+    "took_ms": 14628,
+    "at": "2026-11-24T11:13:33.085Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 10,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.1:gh-watchdog 2026-11-24T11:07:57.816Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m3 2026-11-24T11:07:59.912Z] pick · M3-1124-K · model=sonnet · display=cmux-split\n[hub-runner-v8.1:claim 2026-11-24T11:08:05.602Z] M3-1124-K → started · runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1124-K.json · {\"id\":\"M3-1124-K\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-24T11:08:05.690Z\",\"note\":\"runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1124-K.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): queue/m3/M3-1124-K.md, r0/R0-1124-K-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:08:35.005Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:09:08.987Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:09:45.707Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:10:19.594Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:10:56.007Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:11:30.256Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:12:06.691Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:self-update 2026-11-24T11:12:09.880Z] 보류 · busy=3 claimQueue=0 processing=false\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:12:41.371Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:13:19.366Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1124-K.json · {\"id\":\"M3-1124-K\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-24T11:08:05.690Z\",\"note\":\"runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1124-K.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): queue/m3/M3-1124-K.md, r0/R0-1124-K-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:08:35.005Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:09:08.987Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:09:45.707Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:10:19.594Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:10:56.007Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:11:30.256Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:12:06.691Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:self-update 2026-11-24T11:12:09.880Z] 보류 · busy=3 claimQueue=0 processing=false\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:12:41.371Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:13:19.366Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:13:55.563Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T11:14:32.012Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m2 2026-11-24T11:14:34.749Z] pick · M2-1124-P · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
