@@ -1,22 +1,20 @@
 {
-  "at": "2026-11-24T10:40:16.584Z",
+  "at": "2026-11-24T10:40:32.885Z",
   "pid": 21194,
   "runner": "v8.1",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": "blocked: runner-folder change pending Kyu install (scripts/ci-watch.mjs)",
-  "last_error_at": "2026-11-24T10:38:31.931Z",
+  "last_error": "blocked: runner-folder change pending Kyu install (r0/R0-1124-K-report.md)",
+  "last_error_at": "2026-11-24T10:40:31.891Z",
   "hubs": {
     "m0": {
       "current": null,
       "last_activity": "2026-11-24T10:01:32.595Z"
     },
     "m1": {
-      "current": "M1-1124-J",
-      "started_at": "2026-11-24T10:22:27.328Z",
-      "model": "sonnet",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-24T10:40:31.787Z"
     },
     "m2": {
       "current": null,
@@ -45,11 +43,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.89,
-    "compressed_gb": 4.01,
+    "used_gb": 15.49,
+    "compressed_gb": 4.54,
     "swap_used_gb": 3.44,
     "pressure": "normal",
-    "at": "2026-11-24T10:39:45.880Z"
+    "at": "2026-11-24T10:40:19.839Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -122,9 +120,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 5,
+  "isolated_reports_collected": 6,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.1:gh-watchdog 2026-11-24T10:33:47.728Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:34:22.006Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:34:58.850Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:35:32.874Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:36:08.907Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:36:42.619Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:37:19.048Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:git 2026-11-24T10:37:55.938Z] 러너 폴더 침범 감지 · files=scripts/hub-runner-install.sh,r0/R0-1124-K-report.md · guess_hub=unknown\n[hub-runner-v8.1:git 2026-11-24T10:37:55.938Z] blocked: runner-folder change pending Kyu install · files=scripts/ci-watch.mjs,scripts/hub-runner-install.sh,scripts/lib/self-update.mjs,r0/R0-1124-K-report.md,scripts/test/ci-watch-deploy.test.mjs\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:37:56.712Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:git 2026-11-24T10:38:31.931Z] 러너 폴더 침범 감지 · files=scripts/hub-runner-install.sh,scripts/hub-runner-v8.1.mjs,r0/R0-1124-K-report.md · guess_hub=unknown\n[hub-runner-v8.1:git 2026-11-24T10:38:31.931Z] blocked: runner-folder change pending Kyu install · files=scripts/ci-watch.mjs,scripts/hub-runner-install.sh,scripts/hub-runner-v8.1.mjs,scripts/lib/self-update.mjs,r0/R0-1124-K-report.md…\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:38:32.711Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:git 2026-11-24T10:39:05.628Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=scripts/ci-watch.mjs@e59919b2,scripts/hub-runner-install.sh@e59919b2,scripts/hub-runner-v8.1.mjs@e59919b2,scripts/lib/self-update.mjs@e59919b2,scripts/test/ci-watch-deploy.test.mjs@e59919b2\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:39:05.629Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:git 2026-11-24T10:39:40.879Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=scripts/ci-watch.mjs@e59919b2,scripts/hub-runner-install.sh@e59919b2,scripts/hub-runner-v8.1.mjs@e59919b2,scripts/lib/self-update.mjs@e59919b2,scripts/test/ci-watch-deploy.test.mjs@e59919b2\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:39:40.881Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:self-update 2026-11-24T10:39:43.782Z] 보류 · busy=3 claimQueue=0 processing=false\n[hub-runner-v8.1:git 2026-11-24T10:40:13.856Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=scripts/ci-watch.mjs@e59919b2,scripts/hub-runner-install.sh@e59919b2,scripts/hub-runner-v8.1.mjs@e59919b2,scripts/lib/self-update.mjs@e59919b2,scripts/test/ci-watch-deploy.test.mjs@e59919b2\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:40:13.857Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[hub-runner-v8.1:gh-watchdog 2026-11-24T10:35:32.874Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:36:08.907Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:36:42.619Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:37:19.048Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:git 2026-11-24T10:37:55.938Z] 러너 폴더 침범 감지 · files=scripts/hub-runner-install.sh,r0/R0-1124-K-report.md · guess_hub=unknown\n[hub-runner-v8.1:git 2026-11-24T10:37:55.938Z] blocked: runner-folder change pending Kyu install · files=scripts/ci-watch.mjs,scripts/hub-runner-install.sh,scripts/lib/self-update.mjs,r0/R0-1124-K-report.md,scripts/test/ci-watch-deploy.test.mjs\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:37:56.712Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:git 2026-11-24T10:38:31.931Z] 러너 폴더 침범 감지 · files=scripts/hub-runner-install.sh,scripts/hub-runner-v8.1.mjs,r0/R0-1124-K-report.md · guess_hub=unknown\n[hub-runner-v8.1:git 2026-11-24T10:38:31.931Z] blocked: runner-folder change pending Kyu install · files=scripts/ci-watch.mjs,scripts/hub-runner-install.sh,scripts/hub-runner-v8.1.mjs,scripts/lib/self-update.mjs,r0/R0-1124-K-report.md…\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:38:32.711Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:git 2026-11-24T10:39:05.628Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=scripts/ci-watch.mjs@e59919b2,scripts/hub-runner-install.sh@e59919b2,scripts/hub-runner-v8.1.mjs@e59919b2,scripts/lib/self-update.mjs@e59919b2,scripts/test/ci-watch-deploy.test.mjs@e59919b2\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:39:05.629Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:git 2026-11-24T10:39:40.879Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=scripts/ci-watch.mjs@e59919b2,scripts/hub-runner-install.sh@e59919b2,scripts/hub-runner-v8.1.mjs@e59919b2,scripts/lib/self-update.mjs@e59919b2,scripts/test/ci-watch-deploy.test.mjs@e59919b2\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:39:40.881Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:self-update 2026-11-24T10:39:43.782Z] 보류 · busy=3 claimQueue=0 processing=false\n[hub-runner-v8.1:git 2026-11-24T10:40:13.856Z] 자동 복구 중단 · 사람/허브 파일 혼입 · files=scripts/ci-watch.mjs@e59919b2,scripts/hub-runner-install.sh@e59919b2,scripts/hub-runner-v8.1.mjs@e59919b2,scripts/lib/self-update.mjs@e59919b2,scripts/test/ci-watch-deploy.test.mjs@e59919b2\n[hub-runner-v8.1:gh-watchdog 2026-11-24T10:40:13.857Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m1 2026-11-24T10:40:28.814Z] [report-path] M1-1124-J: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:git 2026-11-24T10:40:31.891Z] 러너 폴더 침범 감지 · files=r0/R0-1124-K-report.md · guess_hub=r0\n[hub-runner-v8.1:git 2026-11-24T10:40:31.891Z] blocked: runner-folder change pending Kyu install · files=r0/R0-1124-K-report.md",
   "git_state": {
     "ahead": 0,
     "behind": 0,
