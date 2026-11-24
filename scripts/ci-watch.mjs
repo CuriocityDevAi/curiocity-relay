@@ -6,6 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 
 import { execFile } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import {
   existsSync,
   readFileSync,
@@ -379,42 +380,139 @@ function scanUnclaimedIds() {
 // --- 허브 대기 큐 판정 (M2-1124-D) ---
 // hub-runner-v7.8 의 listQueue + pickNext 규칙을 읽기 전용으로 복제.
 // 러너 규칙과 다르면 표시가 틀릴 수 있음.
-function listHubPendingIds(hub) {
-  const hubDir = join(PATHS.queueRoot, hub);
-  if (!existsSync(hubDir)) return [];
-  let files;
-  try { files = readdirSync(hubDir); } catch { return []; }
 
-  const ids = files
+function fileContentHash(filePath) {
+  try {
+    return createHash('md5').update(readFileSync(filePath)).digest('hex').slice(0, 8);
+  } catch { return ''; }
+}
+
+function readClaimState(id) {
+  const p = join(PATHS.claims, `${id}.json`);
+  if (!existsSync(p)) return null;
+  try { return JSON.parse(readFileSync(p, 'utf8')).state || null; }
+  catch { return null; }
+}
+
+// Returns { ids: string[], hashes: Map<id, string> } for a hub's pending queue.
+function listHubPendingState(hub) {
+  const hubDir = join(PATHS.queueRoot, hub);
+  if (!existsSync(hubDir)) return { ids: [], hashes: new Map() };
+  let files;
+  try { files = readdirSync(hubDir); } catch { return { ids: [], hashes: new Map() }; }
+
+  const sorted = files
     .filter(f => f.endsWith('.md') && !f.endsWith('-report.md') && !f.endsWith('-selftest.md'))
     .map(f => f.replace(/\.md$/, ''))
     .sort((a, b) => a.localeCompare(b));
 
-  const pending = [];
-  for (const id of ids) {
-    const claimPath = join(PATHS.claims, `${id}.json`);
-    if (!existsSync(claimPath)) { pending.push(id); continue; }
-    try {
-      const c = JSON.parse(readFileSync(claimPath, 'utf8'));
-      if (c.state === 'issued') pending.push(id);
-    } catch { /* 파싱 실패 → non-pending 취급 */ }
+  const ids = [];
+  const hashes = new Map();
+  for (const id of sorted) {
+    const state = readClaimState(id);
+    if (state !== null && state !== 'issued') continue;
+    ids.push(id);
+    hashes.set(id, fileContentHash(join(hubDir, `${id}.md`)));
   }
-  return pending;
+  return { ids, hashes };
+}
+
+function listHubPendingIds(hub) {
+  return listHubPendingState(hub).ids;
+}
+
+// --- 대기 큐 변경 알림 (M2-1124-E) ---
+// 직전 갱신 대비 추가·삭제·수정·순서 변경을 30초간 표시.
+
+const prevHubQueue = new Map(); // hub → { ids: string[], hashes: Map }
+const activeQueueNotifs = [];   // { hub, label, detectedAt }
+
+function diffHubQueue(hub, prev, curr) {
+  const labels = [];
+  const prevSet = new Set(prev.ids);
+  const currSet = new Set(curr.ids);
+
+  for (const id of curr.ids) {
+    if (!prevSet.has(id)) labels.push(`\x1b[32m+\x1b[0m ${id} 추가`);
+  }
+
+  for (const id of prev.ids) {
+    if (!currSet.has(id)) {
+      const st = readClaimState(id);
+      if (st === 'started' || st === 'done') {
+        labels.push(`\x1b[36m▶\x1b[0m ${id} 시작`);
+      } else {
+        labels.push(`\x1b[31m✕\x1b[0m ${id} 삭제`);
+      }
+    }
+  }
+
+  for (const id of curr.ids) {
+    if (prevSet.has(id) && prev.hashes.get(id) !== curr.hashes.get(id)) {
+      labels.push(`\x1b[33m✎\x1b[0m ${id} 내용 수정`);
+    }
+  }
+
+  // 순서 변경: 공통 항목의 상대 순서 비교
+  const commonPrev = prev.ids.filter(id => currSet.has(id));
+  const commonCurr = curr.ids.filter(id => prevSet.has(id));
+  if (commonPrev.length > 1 && commonPrev.join(',') !== commonCurr.join(',')) {
+    labels.push(`\x1b[35m↕\x1b[0m 순서 변경: ${commonPrev.join(',')} → ${commonCurr.join(',')}`);
+  }
+
+  return labels;
+}
+
+function tickQueueDiff() {
+  const now = Date.now();
+  const NOTIF_TTL = 30_000;
+
+  // 만료 제거
+  let i = activeQueueNotifs.length;
+  while (i--) {
+    if (now - activeQueueNotifs[i].detectedAt >= NOTIF_TTL) activeQueueNotifs.splice(i, 1);
+  }
+
+  for (const hub of QUEUE_HUBS) {
+    const curr = listHubPendingState(hub);
+    const prev = prevHubQueue.get(hub);
+    if (prev !== undefined) {
+      for (const label of diffHubQueue(hub, prev, curr)) {
+        activeQueueNotifs.push({ hub, label, detectedAt: now });
+      }
+    }
+    prevHubQueue.set(hub, curr);
+  }
+
+  // hub별 현재 알림 목록 반환
+  const byHub = {};
+  for (const n of activeQueueNotifs) {
+    if (!byHub[n.hub]) byHub[n.hub] = [];
+    byHub[n.hub].push(n.label);
+  }
+  return byHub;
 }
 
 const ANSI_RE = /\x1b\[[0-9;]*m/g;
 const HUB_LINE_RE = /^  ([a-z][0-9])  /;
 const HUB_LINE_SET = new Set(['m0', 'm1', 'm2', 'm3', 'r0']);
 
-function appendHubPending(lines, hubPending) {
-  return lines.map(line => {
+function appendHubPending(lines, hubPending, hubNotifs) {
+  const result = [];
+  for (const line of lines) {
     const stripped = line.replace(ANSI_RE, '');
     const m = stripped.match(HUB_LINE_RE);
-    if (!m || !HUB_LINE_SET.has(m[1])) return line;
-    const pending = hubPending[m[1]];
-    if (!pending || !pending.length) return line;
-    return line + `  \x1b[2m[${pending.join(', ')}]\x1b[0m`;
-  });
+    if (!m || !HUB_LINE_SET.has(m[1])) { result.push(line); continue; }
+    const hub = m[1];
+    const pending = hubPending[hub];
+    result.push(pending && pending.length
+      ? line + `  \x1b[2m[${pending.join(', ')}]\x1b[0m`
+      : line);
+    for (const label of (hubNotifs[hub] || [])) {
+      result.push(`       \x1b[2m${label}\x1b[0m`);
+    }
+  }
+  return result;
 }
 
 function macNotify(title, body) {
@@ -528,6 +626,7 @@ async function tick(fullMode) {
   for (const hub of QUEUE_HUBS) {
     hubPending[hub] = listHubPendingIds(hub);
   }
+  const hubNotifs = tickQueueDiff();
 
   const lines = renderCompact({
     allJson: renderAllJson,
@@ -545,7 +644,7 @@ async function tick(fullMode) {
   });
 
   process.stdout.write('\x1b[2J\x1b[H');
-  process.stdout.write(appendHubPending(lines, hubPending).join('\n') + '\n');
+  process.stdout.write(appendHubPending(lines, hubPending, hubNotifs).join('\n') + '\n');
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
