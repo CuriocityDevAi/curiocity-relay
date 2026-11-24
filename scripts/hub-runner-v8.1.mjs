@@ -53,10 +53,12 @@ import {
   appendFileSync,
   copyFileSync,
   existsSync,
+  lstatSync,
   mkdirSync,
   readFileSync,
   readdirSync,
   realpathSync,
+  readlinkSync,
   rmSync,
   statSync,
   writeFileSync,
@@ -5489,7 +5491,8 @@ process.stdin.resume();
   })();
 
 } else if (SELFTEST_SELFUPDATE_CIWATCH) {
-  // ⑤ deployCiWatch — 소스가 바뀌면 copy, 같으면 no-op. 래퍼 배포 확인.
+  // ⑤ deployCiWatch — M1-1124-J: 복사 대신 심링크. 첫 배포 → changed:true · 2nd → changed:false(no-op).
+  //    소스 파일이 바뀌어도 심링크 경로는 동일하므로 추가 deploy 불필요 — 심링크가 항상 최신 소스를 가리킴.
   (() => {
     const tmp = execFileSync('mktemp', ['-d', '-t', 'hr-v81-ciw-XXXXX'], { stdio: 'pipe' }).toString().trim();
     try {
@@ -5499,18 +5502,22 @@ process.stdin.resume();
       mkdirSync(fakeHome, { recursive: true });
       writeFileSync(join(fakeRepo, 'scripts', 'ci-watch.mjs'), '// ci-watch body v1\n', 'utf8');
       const d1 = selfUpdateDeployCiWatch({ repoRoot: fakeRepo, runnerHome: fakeHome });
-      if (!d1.ok || !d1.changed) { console.error(`[selftest-selfupdate-ciwatch] FAIL (1st copy) · ${JSON.stringify(d1)}`); process.exit(1); }
+      if (!d1.ok || !d1.changed) { console.error(`[selftest-selfupdate-ciwatch] FAIL (1st symlink) · ${JSON.stringify(d1)}`); process.exit(1); }
       const deployedPath = join(fakeHome, 'bin', 'ci-watch.mjs');
       if (!existsSync(deployedPath)) { console.error('[selftest-selfupdate-ciwatch] FAIL · deployed 파일 부재'); process.exit(1); }
-      // 2nd call — 동일 바이트면 changed=false.
+      // 심링크 확인.
+      const st = lstatSync(deployedPath);
+      if (!st.isSymbolicLink()) { console.error('[selftest-selfupdate-ciwatch] FAIL · 심링크 아님'); process.exit(1); }
+      const target = readlinkSync(deployedPath);
+      const expectedTarget = join(fakeRepo, 'scripts', 'ci-watch.mjs');
+      if (target !== expectedTarget) { console.error(`[selftest-selfupdate-ciwatch] FAIL · 심링크 target 오류 · got=${target} want=${expectedTarget}`); process.exit(1); }
+      // 2nd call — 같은 target 이면 changed=false (no-op).
       const d2 = selfUpdateDeployCiWatch({ repoRoot: fakeRepo, runnerHome: fakeHome });
       if (!d2.ok || d2.changed) { console.error(`[selftest-selfupdate-ciwatch] FAIL (no-op) · ${JSON.stringify(d2)}`); process.exit(1); }
-      // 소스 변경 후 → 다시 copy.
+      // 소스 변경 후 → 심링크 경로는 동일하므로 추가 deploy 불필요. 심링크 통해 최신 내용 읽힘.
       writeFileSync(join(fakeRepo, 'scripts', 'ci-watch.mjs'), '// ci-watch body v2\n', 'utf8');
-      const d3 = selfUpdateDeployCiWatch({ repoRoot: fakeRepo, runnerHome: fakeHome });
-      if (!d3.ok || !d3.changed) { console.error(`[selftest-selfupdate-ciwatch] FAIL (v2 copy) · ${JSON.stringify(d3)}`); process.exit(1); }
       const body = readFileSync(deployedPath, 'utf8');
-      if (!body.includes('v2')) { console.error('[selftest-selfupdate-ciwatch] FAIL · 갱신 body 확인 실패'); process.exit(1); }
+      if (!body.includes('v2')) { console.error('[selftest-selfupdate-ciwatch] FAIL · 심링크 통해 최신 소스 확인 실패'); process.exit(1); }
       // 래퍼 배포.
       const w1 = selfUpdateDeployCiWatchWrapper({ runnerHome: fakeHome });
       if (!w1.ok || !w1.changed) { console.error(`[selftest-selfupdate-ciwatch] FAIL (wrapper 1st) · ${JSON.stringify(w1)}`); process.exit(1); }
@@ -5518,7 +5525,7 @@ process.stdin.resume();
       if (!existsSync(wrapPath)) { console.error('[selftest-selfupdate-ciwatch] FAIL · wrapper 부재'); process.exit(1); }
       const w2 = selfUpdateDeployCiWatchWrapper({ runnerHome: fakeHome });
       if (!w2.ok || w2.changed) { console.error(`[selftest-selfupdate-ciwatch] FAIL (wrapper no-op) · ${JSON.stringify(w2)}`); process.exit(1); }
-      console.log('[selftest-selfupdate-ciwatch] OK · copy·no-op·갱신·래퍼 4 분기 정상');
+      console.log('[selftest-selfupdate-ciwatch] OK · symlink·no-op·소스갱신투명·래퍼 4 분기 정상');
       process.exit(0);
     } catch (e) {
       console.error(`[selftest-selfupdate-ciwatch] FAIL · ${e.message}`);

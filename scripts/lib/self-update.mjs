@@ -214,16 +214,17 @@ export function deployCiWatch({ repoRoot, runnerHome }) {
   const src = join(repoRoot, 'scripts', 'ci-watch.mjs');
   const dst = join(bin, CI_WATCH_DEPLOY);
   if (!existsSync(src)) return { ok: false, reason: 'src-missing', src };
-  const srcSha = sha256File(src);
-  const dstSha = existsSync(dst) ? sha256File(dst) : null;
-  if (srcSha === dstSha) return { ok: true, changed: false, srcSha };
-  copyFileSync(src, dst);
+  // M1-1124-J: 복사(copy) 대신 심링크 사용 — ci-watch.mjs 는 ./lib/ci-history.mjs 등 상대 경로
+  // import 를 가지므로, 복사본을 ~/.hub-runner/bin/ 에 두면 Node 가 해당 경로에서 lib/ 를 찾아
+  // ERR_MODULE_NOT_FOUND 를 일으킨다. 심링크로 배포하면 Node 가 실제 파일(scripts/)을 기준으로
+  // 상대 경로를 해석하여 lib/ 를 올바르게 찾는다. hub-runner.mjs 배포와 동일한 방식.
+  const result = ensureSymlink({ linkPath: dst, targetPath: src });
   try {
-    execFileSync('chmod', ['755', dst]);
+    execFileSync('chmod', ['755', src]);
   } catch {
     /* noop */
   }
-  return { ok: true, changed: true, srcSha, prevSha: dstSha };
+  return { ok: true, changed: result.changed, src, dst, prev: result.prev };
 }
 
 const WRAPPER_BODY = `#!/bin/bash

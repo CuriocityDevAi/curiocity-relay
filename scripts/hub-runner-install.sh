@@ -103,10 +103,17 @@ echo "[install] 심링크 생성 · $RUNNER_LINK → $TARGET_ABS"
 CI_WATCH_SRC="$REPO_ROOT/scripts/ci-watch.mjs"
 CI_WATCH_DST="$BIN_DIR/ci-watch.mjs"
 CI_WATCH_SH="$BIN_DIR/ci-watch.sh"
+# M1-1124-J: cp → ln -s. ci-watch.mjs 는 ./lib/ci-history.mjs 등 상대 경로 import 를 가지므로
+# 복사본을 ~/.hub-runner/bin/ 에 두면 Node 가 lib/ 를 찾지 못해 ERR_MODULE_NOT_FOUND 를 일으킨다.
+# 심링크로 배포하면 Node 가 실제 파일(scripts/)을 기준으로 상대 경로를 해석한다.
+# hub-runner.mjs 배포(ln -s "$TARGET_ABS" "$RUNNER_LINK")와 동일한 방식.
 if [[ -f "$CI_WATCH_SRC" ]]; then
-  cp "$CI_WATCH_SRC" "$CI_WATCH_DST"
-  chmod 755 "$CI_WATCH_DST"
-  echo "[install] ci-watch 배포 · $CI_WATCH_DST"
+  if [[ -L "$CI_WATCH_DST" || -e "$CI_WATCH_DST" ]]; then
+    rm -f "$CI_WATCH_DST"
+  fi
+  ln -s "$CI_WATCH_SRC" "$CI_WATCH_DST"
+  chmod 755 "$CI_WATCH_SRC"
+  echo "[install] ci-watch 심링크 · $CI_WATCH_DST → $CI_WATCH_SRC"
 fi
 cat > "$CI_WATCH_SH" <<'SHEOF'
 #!/bin/bash
