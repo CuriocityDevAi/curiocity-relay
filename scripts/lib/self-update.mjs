@@ -11,7 +11,6 @@
 import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
-  copyFileSync,
   existsSync,
   lstatSync,
   mkdirSync,
@@ -200,8 +199,8 @@ export function ensureSymlink({ linkPath, targetPath }) {
   if (existsSync(linkPath) || current !== null) {
     try {
       rmSync(linkPath, { force: true });
-    } catch {
-      /* noop */
+    } catch (e) {
+      return { changed: false, prev: current, error: e.message };
     }
   }
   symlinkSync(targetPath, linkPath);
@@ -209,22 +208,28 @@ export function ensureSymlink({ linkPath, targetPath }) {
 }
 
 export function deployCiWatch({ repoRoot, runnerHome }) {
-  const bin = binDir(runnerHome);
-  mkdirSync(bin, { recursive: true });
-  const src = join(repoRoot, 'scripts', 'ci-watch.mjs');
-  const dst = join(bin, CI_WATCH_DEPLOY);
-  if (!existsSync(src)) return { ok: false, reason: 'src-missing', src };
-  // M1-1124-J: 복사(copy) 대신 심링크 사용 — ci-watch.mjs 는 ./lib/ci-history.mjs 등 상대 경로
-  // import 를 가지므로, 복사본을 ~/.hub-runner/bin/ 에 두면 Node 가 해당 경로에서 lib/ 를 찾아
-  // ERR_MODULE_NOT_FOUND 를 일으킨다. 심링크로 배포하면 Node 가 실제 파일(scripts/)을 기준으로
-  // 상대 경로를 해석하여 lib/ 를 올바르게 찾는다. hub-runner.mjs 배포와 동일한 방식.
-  const result = ensureSymlink({ linkPath: dst, targetPath: src });
   try {
-    execFileSync('chmod', ['755', src]);
-  } catch {
-    /* noop */
+    const bin = binDir(runnerHome);
+    mkdirSync(bin, { recursive: true });
+    const src = join(repoRoot, 'scripts', 'ci-watch.mjs');
+    const dst = join(bin, CI_WATCH_DEPLOY);
+    if (!existsSync(src)) return { ok: false, reason: 'src-missing', src };
+    // M1-1124-J: 복사(copy) 대신 심링크 사용 — ci-watch.mjs 는 ./lib/ci-history.mjs 등 상대 경로
+    // import 를 가지므로, 복사본을 ~/.hub-runner/bin/ 에 두면 Node 가 해당 경로에서 lib/ 를 찾아
+    // ERR_MODULE_NOT_FOUND 를 일으킨다. 심링크로 배포하면 Node 가 실제 파일(scripts/)을 기준으로
+    // 상대 경로를 해석하여 lib/ 를 올바르게 찾는다. hub-runner.mjs 배포와 동일한 방식.
+    const result = ensureSymlink({ linkPath: dst, targetPath: src });
+    if (result.error) return { ok: false, reason: 'rmSync-error', error: result.error, src, dst };
+    try {
+      execFileSync('chmod', ['755', src]);
+    } catch {
+      /* noop */
+    }
+    return { ok: true, changed: result.changed, src, dst, prev: result.prev };
+  } catch (e) {
+    // M1-1124-L F4: 예외가 러너 전체를 죽이지 않도록 catch — 다음 tick 에서 재시도.
+    return { ok: false, reason: 'exception', error: e.message };
   }
-  return { ok: true, changed: result.changed, src, dst, prev: result.prev };
 }
 
 export const WRAPPER_BODY = `#!/bin/bash

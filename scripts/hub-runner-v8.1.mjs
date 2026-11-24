@@ -3391,24 +3391,24 @@ async function tick(hubs) {
   }
 }
 
-// M1-1124-H: self-update tick — loop() 가 tick 뒤에 호출. idle · interval · origin 변화 세 조건이 모두 맞을 때만
-// pre-flight 실행. preflight 통과하면 심링크 교체 → writePending → process.exit(0) → launchd 재기동.
+// M1-1124-L REQ1: self-update tick — ci-watch 배포(심링크·래퍼)는 busy 여부와 무관하게 매 tick 수행.
+// 러너 본체 심링크 교체·exit 는 기존처럼 idle 때만.
 function maybeSelfUpdate(cfg) {
   if (!cfg.self_update_enabled) return { tried: false, reason: 'disabled' };
   if (Date.now() < nextSelfUpdateAt) return { tried: false, reason: 'cooldown' };
   nextSelfUpdateAt = Date.now() + cfg.self_update_poll_ms;
-  if (busy.size > 0 || claimQueue.length > 0 || processingClaim) {
-    log('self-update', `보류 · busy=${busy.size} claimQueue=${claimQueue.length} processing=${processingClaim}`);
-    return { tried: false, reason: 'busy' };
-  }
-  // ci-watch 배포는 tick 마다 (idle 조건과 무관하게 cheap copy 라 그대로 진행).
+  // ci-watch 배포는 busy 여부와 상관없이 매 tick (심링크·래퍼 갱신 — 러너 재기동과 무관).
   try {
     const dep = selfUpdateDeployCiWatch({ repoRoot: REPO_ROOT, runnerHome: RUNNER_HOME });
-    if (dep.changed) log('self-update', `ci-watch 배포 갱신 · sha=${dep.srcSha?.slice(0, 12)}`);
+    if (dep.changed) log('self-update', `ci-watch 배포 갱신`);
     const wrap = selfUpdateDeployCiWatchWrapper({ runnerHome: RUNNER_HOME });
     if (wrap.changed) log('self-update', `ci-watch.sh 래퍼 배포`);
   } catch (e) {
     log('self-update', `ci-watch 배포 예외: ${e.message}`);
+  }
+  if (busy.size > 0 || claimQueue.length > 0 || processingClaim) {
+    log('self-update', `보류 · busy=${busy.size} claimQueue=${claimQueue.length} processing=${processingClaim}`);
+    return { tried: false, reason: 'busy' };
   }
   // origin/main 과의 차이 감지.
   let diff;
