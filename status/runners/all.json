@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T16:26:45.765Z",
+  "at": "2026-11-24T16:26:54.677Z",
   "pid": 87453,
   "runner": "v8.1",
   "poll_ms": 30000,
@@ -15,10 +15,8 @@
       "last_activity": "2026-11-24T15:36:45.764Z"
     },
     "m1": {
-      "current": "M1-1124-Q",
-      "started_at": "2026-11-24T16:17:58.407Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-24T16:13:10.050Z"
+      "current": null,
+      "last_activity": "2026-11-24T16:26:53.521Z"
     },
     "m2": {
       "current": "M2-1124-U",
@@ -42,8 +40,8 @@
   "pane_close_failures": {},
   "last_sleep_gap": null,
   "kyu_folder_intrusion": {
-    "hub": "r0",
-    "prompt_id": "R0-1124-AJ",
+    "hub": "m1",
+    "prompt_id": "M1-1124-Q",
     "folder": [
       "/Users/kyu.lee/projects/agilo-fork-test"
     ],
@@ -56,15 +54,15 @@
         "actor": "unknown"
       }
     ],
-    "at": "2026-11-24T16:24:56.337Z"
+    "at": "2026-11-24T16:26:53.521Z"
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.64,
-    "compressed_gb": 4.45,
+    "used_gb": 15.46,
+    "compressed_gb": 5.34,
     "swap_used_gb": 2.31,
     "pressure": "normal",
-    "at": "2026-11-24T16:26:11.539Z"
+    "at": "2026-11-24T16:26:53.003Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -148,9 +146,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 8,
+  "isolated_reports_collected": 9,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.1:claim 2026-11-24T16:24:57.689Z] R0-1124-AJ → done · runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AJ-report.md · model=sonnet · 로그: /Us\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-AJ.json · {\"id\":\"R0-1124-AJ\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-24T16:24:59.034Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AJ-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1124-AJ.log · report_src=isolated\"}\n[build-hubs] status/hubs.json 부재 · 신규 생성\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:25:31.192Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:r0 2026-11-24T16:25:31.999Z] pick · R0-1124-AK · model=sonnet · display=cmux-split\n[hub-runner-v8.1:claim 2026-11-24T16:25:39.283Z] R0-1124-AK → started · runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-AK.json · {\"id\":\"R0-1124-AK\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-24T16:25:39.384Z\",\"note\":\"runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1124-AK.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:26:09.294Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m1 2026-11-24T16:26:42.702Z] [report-path] M1-1124-Q: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:26:44.347Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[build-hubs] status/hubs.json 부재 · 신규 생성\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:25:31.192Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:r0 2026-11-24T16:25:31.999Z] pick · R0-1124-AK · model=sonnet · display=cmux-split\n[hub-runner-v8.1:claim 2026-11-24T16:25:39.283Z] R0-1124-AK → started · runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-AK.json · {\"id\":\"R0-1124-AK\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-24T16:25:39.384Z\",\"note\":\"runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1124-AK.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:26:09.294Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m1 2026-11-24T16:26:42.702Z] [report-path] M1-1124-Q: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:gh-watchdog 2026-11-24T16:26:44.347Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m2 2026-11-24T16:26:51.511Z] [report-path] M2-1124-U: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:m1 2026-11-24T16:26:53.521Z] [kyu-intrusion] 허브 m1(M1-1124-Q) 실행 중 Kyu 폴더 변경 감지: /Users/kyu.lee/projects/agilo-fork-test(actor=unknown)",
   "git_state": {
     "ahead": 0,
     "behind": 0,
