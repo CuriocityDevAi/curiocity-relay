@@ -6,6 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 
 import { execFile } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import {
   existsSync,
   readFileSync,
@@ -33,6 +34,7 @@ import {
 const REFRESH_MS = 30_000;
 const RUNNER_REFRESH_MS = 120_000;
 const CLOUD_DAILY_LIMIT = 5;
+const CI_LAST_CACHE_MS = 120_000; // gh run list 2분 캐시
 
 // --- err_tail 오류 허용 목록 판정 (M2-1124-A) ---
 // 이 목록에 매칭되는 줄만 ⚠. 나머지는 정상 정보 줄.
@@ -109,6 +111,13 @@ function repoShort(repo) {
   return last.endsWith('-fork') ? 'fork' : last;
 }
 
+// REQ 2 (M2-1124-F): 프롬프트 ID에서 허브 코드 추출 ("M2-1124-F" → "m2")
+function extractHubFromId(id) {
+  const m = String(id || '').match(/^([A-Za-z])(\d)/);
+  if (!m) return null;
+  return m[1].toLowerCase() + m[2];
+}
+
 function minSince(iso) {
   if (!iso) return null;
   const ms = Date.now() - new Date(iso).getTime();
@@ -150,6 +159,85 @@ function cachePrPrompt(repo, prNum, headBranch) {
 function lookupPrPrompt(repo, prNum) {
   if (!prNum) return null;
   return prPromptCache.get(`${repo}:${prNum}`) || null;
+}
+
+// --- REQ 1 (M2-1124-F): BUSY 러너 실행 중 잡 표시 ---
+
+const busyPrPromptCache = new Map(); // "repo:prNum" → { promptId, fetchedAt }
+const BUSY_CACHE_MS = 120_000;
+
+async function fetchBusyPromptId(repo, prNum) {
+  if (!repo || !prNum) return null;
+  const key = `${repo}:${prNum}`;
+  const cached = busyPrPromptCache.get(key);
+  if (cached && Date.now() - cached.fetchedAt < BUSY_CACHE_MS) return cached.promptId;
+
+  // prPromptCache 에 이미 있으면 기본값으로 사용
+  let promptId = lookupPrPrompt(repo, String(prNum)) || null;
+
+  try {
+    // 마지막 커밋 메시지 ID 우선 (stacked PR 대응)
+    const commits = await ghApi(`repos/${repo}/pulls/${prNum}/commits?per_page=100`);
+    if (Array.isArray(commits) && commits.length > 0) {
+      const lastMsg = commits[commits.length - 1].commit?.message || '';
+      const commitId = extractPromptId(lastMsg);
+      if (commitId) promptId = commitId;
+    }
+  } catch {}
+
+  busyPrPromptCache.set(key, { promptId, fetchedAt: Date.now() });
+  return promptId;
+}
+
+async function buildBusyJobMap(allJson) {
+  const result = new Map(); // runnerName → { pr, promptId, jobName, runningMin }
+  const inProgressAll = [
+    ...(allJson?.ci?.data?.heavy?.in_progress || []),
+    ...(allJson?.ci?.data?.light?.in_progress || []),
+  ];
+  await Promise.all(inProgressAll.filter(j => j.runner).map(async j => {
+    const prNum = (j.pr || '').replace('#', '');
+    const promptId = await fetchBusyPromptId(j.repo, prNum || null);
+    result.set(j.runner, {
+      pr: j.pr || '-',
+      promptId,
+      jobName: j.job || '',
+      runningMin: j.running_min ?? null,
+    });
+  }));
+  return result;
+}
+
+const BUSY_MARKER = '\x1b[33m●BUSY\x1b[0m';
+
+function enhanceBusyLines(lines, busyJobMap) {
+  if (!busyJobMap || !busyJobMap.size) return lines;
+  return lines.map(line => {
+    const busyIdx = line.indexOf(BUSY_MARKER);
+    if (busyIdx === -1) return line;
+
+    // prefix 에서 러너 이름 추출 (ANSI 제거 후 두 번째 토큰)
+    const prefix = line.slice(0, busyIdx);
+    const plainPrefix = prefix.replace(/\x1b\[[0-9;]*m/g, '');
+    const tokens = plainPrefix.trim().split(/\s+/);
+    // tokens[0] = "fork-heavy", tokens[1] = "curiocity-mac-fork"
+    const runnerName = tokens[1];
+    if (!runnerName) return line;
+
+    const details = busyJobMap.get(runnerName);
+    if (!details) return line;
+
+    const { pr, promptId, jobName, runningMin } = details;
+    const parts = [pr || '-'];
+    if (promptId) parts.push(promptId);
+    if (jobName) parts.push(jobName);
+    if (runningMin != null) parts.push(`${runningMin}분째`);
+
+    const jobStr = parts.join(' · ');
+    const colorCode = typeof runningMin === 'number' && runningMin >= 25 ? '\x1b[31m'
+      : typeof runningMin === 'number' && runningMin >= 15 ? '\x1b[33m' : '';
+    return prefix + BUSY_MARKER + '  ' + colorCode + jobStr + '\x1b[0m';
+  });
 }
 
 async function fetchRunsForRepo(repo) {
@@ -224,6 +312,103 @@ function readAllJson() {
   catch { return null; }
 }
 
+// --- 마지막 완료 CI (JSONL + gh run list 폴백) ---
+
+const lastCiGhCache = new Map(); // repo → { data, fetchedAt }
+
+function readLastCiFromJsonl(dateStr) {
+  const jsonlPath = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (!existsSync(jsonlPath)) return {};
+  try {
+    const records = readJsonlFile(jsonlPath);
+    const byRepo = {};
+    for (const r of records) {
+      if (!r.completed_at || !r.repo || isMarkerJob(r.job)) continue;
+      if (!byRepo[r.repo] || r.completed_at > byRepo[r.repo].completed_at) {
+        byRepo[r.repo] = r;
+      }
+    }
+    return byRepo;
+  } catch { return {}; }
+}
+
+async function fetchLastCiGh(repo) {
+  const cached = lastCiGhCache.get(repo);
+  if (cached && Date.now() - cached.fetchedAt < CI_LAST_CACHE_MS) return cached.data;
+  try {
+    const { stdout } = await execFileAsync(
+      'gh', ['run', 'list', '--repo', repo, '--status', 'completed', '--limit', '1',
+             '--json', 'databaseId,name,conclusion,updatedAt,headBranch,event,workflowName,number'],
+      { timeout: 10_000, maxBuffer: 512 * 1024 },
+    );
+    const runs = JSON.parse(stdout);
+    const data = runs[0] || null;
+    lastCiGhCache.set(repo, { data, fetchedAt: Date.now() });
+    return data;
+  } catch {
+    if (cached) return cached.data;
+    lastCiGhCache.set(repo, { data: null, fetchedAt: Date.now() });
+    return null;
+  }
+}
+
+async function getLastCiByRepo(dateStr) {
+  const jsonlData = readLastCiFromJsonl(dateStr);
+  return Promise.all(REPOS.map(async repo => {
+    const r = jsonlData[repo];
+    if (r) {
+      return { repo, completed_at: r.completed_at, conclusion: r.conclusion, workflow: r.workflow, job: r.job, pr: r.pr };
+    }
+    const run = await fetchLastCiGh(repo).catch(() => null);
+    if (!run) return { repo, completed_at: null, conclusion: null, workflow: null, job: null, pr: null };
+    return { repo, completed_at: run.updatedAt, conclusion: run.conclusion, workflow: run.workflowName || run.name, job: null, pr: null };
+  }));
+}
+
+// --- CI 요약 경보: 멈춤 의심 · playwright 건너뜀 ---
+
+function computeCiSummaryAlerts(allJson, lastCiByRepo, dateStr) {
+  const alerts = [];
+  const heavyQueued = allJson?.ci?.data?.heavy?.queued || 0;
+  const lightQueued = allJson?.ci?.data?.light?.queued || 0;
+  const heavyOldestMin = allJson?.ci?.data?.heavy?.oldest_queued_min || 0;
+  const lightOldestMin = allJson?.ci?.data?.light?.oldest_queued_min || 0;
+  const worstQueueMin = Math.max(heavyOldestMin, lightOldestMin);
+  const anyActive = heavyQueued > 0 || lightQueued > 0 ||
+    (allJson?.ci?.data?.heavy?.in_progress?.length || 0) > 0 ||
+    (allJson?.ci?.data?.cloud_in_progress?.length || 0) > 0;
+
+  // CI 멈춤: 활성 잡이 있는데 마지막 완료가 30분+ 이상 전
+  if (anyActive && lastCiByRepo.length > 0) {
+    const completedMins = lastCiByRepo
+      .filter(x => x.completed_at)
+      .map(x => Math.round((Date.now() - new Date(x.completed_at).getTime()) / 60_000));
+    const minSinceCompleted = completedMins.length ? Math.min(...completedMins) : null;
+    if (minSinceCompleted !== null && minSinceCompleted > 30) {
+      alerts.push({ type: 'ci_stall', msg: `CI 멈춤 의심 (마지막 완료 ${minSinceCompleted}분 전)`, detail: `CI 멈춤 의심 (마지막 완료 ${minSinceCompleted}분 전)` });
+    }
+  }
+  // CI 멈춤: 큐 대기 30분+
+  if (worstQueueMin >= 30) {
+    alerts.push({ type: 'ci_stall_queue', msg: `CI 멈춤 의심 (대기 ${worstQueueMin}분)`, detail: `CI 멈춤 의심 (대기 ${worstQueueMin}분)` });
+  }
+
+  // playwright 건너뜀 → dim 안내
+  const jsonlPath = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (existsSync(jsonlPath)) {
+    try {
+      const records = readJsonlFile(jsonlPath);
+      const playwrightJobs = records.filter(r => r.job === 'playwright');
+      const lastPlaywright = playwrightJobs[playwrightJobs.length - 1];
+      if (lastPlaywright?.conclusion === 'skipped') {
+        alerts.push({ type: 'playwright_skip', msg: 'heavy 미실행(선행 실패)', dim: true });
+      }
+    } catch {}
+  }
+
+  return alerts;
+}
+
 /**
  * status/ci/<date>.jsonl 에서 실제 검사 잡(마커 제외)만 집계
  */
@@ -273,6 +458,144 @@ function scanUnclaimedIds() {
           result.push({ id, ageMin });
         } catch {}
       }
+    }
+  }
+  return result;
+}
+
+// --- 허브 대기 큐 판정 (M2-1124-D) ---
+// hub-runner-v7.8 의 listQueue + pickNext 규칙을 읽기 전용으로 복제.
+// 러너 규칙과 다르면 표시가 틀릴 수 있음.
+
+function fileContentHash(filePath) {
+  try {
+    return createHash('md5').update(readFileSync(filePath)).digest('hex').slice(0, 8);
+  } catch { return ''; }
+}
+
+function readClaimState(id) {
+  const p = join(PATHS.claims, `${id}.json`);
+  if (!existsSync(p)) return null;
+  try { return JSON.parse(readFileSync(p, 'utf8')).state || null; }
+  catch { return null; }
+}
+
+// Returns { ids: string[], hashes: Map<id, string> } for a hub's pending queue.
+function listHubPendingState(hub) {
+  const hubDir = join(PATHS.queueRoot, hub);
+  if (!existsSync(hubDir)) return { ids: [], hashes: new Map() };
+  let files;
+  try { files = readdirSync(hubDir); } catch { return { ids: [], hashes: new Map() }; }
+
+  const sorted = files
+    .filter(f => f.endsWith('.md') && !f.endsWith('-report.md') && !f.endsWith('-selftest.md'))
+    .map(f => f.replace(/\.md$/, ''))
+    .sort((a, b) => a.localeCompare(b));
+
+  const ids = [];
+  const hashes = new Map();
+  for (const id of sorted) {
+    const state = readClaimState(id);
+    if (state !== null && state !== 'issued') continue;
+    ids.push(id);
+    hashes.set(id, fileContentHash(join(hubDir, `${id}.md`)));
+  }
+  return { ids, hashes };
+}
+
+function listHubPendingIds(hub) {
+  return listHubPendingState(hub).ids;
+}
+
+// --- 대기 큐 변경 알림 (M2-1124-E) ---
+// 직전 갱신 대비 추가·삭제·수정·순서 변경을 30초간 표시.
+
+const prevHubQueue = new Map(); // hub → { ids: string[], hashes: Map }
+const activeQueueNotifs = [];   // { hub, label, detectedAt }
+
+function diffHubQueue(hub, prev, curr) {
+  const labels = [];
+  const prevSet = new Set(prev.ids);
+  const currSet = new Set(curr.ids);
+
+  for (const id of curr.ids) {
+    if (!prevSet.has(id)) labels.push(`\x1b[32m+\x1b[0m ${id} 추가`);
+  }
+
+  for (const id of prev.ids) {
+    if (!currSet.has(id)) {
+      const st = readClaimState(id);
+      if (st === 'started' || st === 'done') {
+        labels.push(`\x1b[36m▶\x1b[0m ${id} 시작`);
+      } else {
+        labels.push(`\x1b[31m✕\x1b[0m ${id} 삭제`);
+      }
+    }
+  }
+
+  for (const id of curr.ids) {
+    if (prevSet.has(id) && prev.hashes.get(id) !== curr.hashes.get(id)) {
+      labels.push(`\x1b[33m✎\x1b[0m ${id} 내용 수정`);
+    }
+  }
+
+  // 순서 변경: 공통 항목의 상대 순서 비교
+  const commonPrev = prev.ids.filter(id => currSet.has(id));
+  const commonCurr = curr.ids.filter(id => prevSet.has(id));
+  if (commonPrev.length > 1 && commonPrev.join(',') !== commonCurr.join(',')) {
+    labels.push(`\x1b[35m↕\x1b[0m 순서 변경: ${commonPrev.join(',')} → ${commonCurr.join(',')}`);
+  }
+
+  return labels;
+}
+
+function tickQueueDiff() {
+  const now = Date.now();
+  const NOTIF_TTL = 30_000;
+
+  // 만료 제거
+  let i = activeQueueNotifs.length;
+  while (i--) {
+    if (now - activeQueueNotifs[i].detectedAt >= NOTIF_TTL) activeQueueNotifs.splice(i, 1);
+  }
+
+  for (const hub of QUEUE_HUBS) {
+    const curr = listHubPendingState(hub);
+    const prev = prevHubQueue.get(hub);
+    if (prev !== undefined) {
+      for (const label of diffHubQueue(hub, prev, curr)) {
+        activeQueueNotifs.push({ hub, label, detectedAt: now });
+      }
+    }
+    prevHubQueue.set(hub, curr);
+  }
+
+  // hub별 현재 알림 목록 반환
+  const byHub = {};
+  for (const n of activeQueueNotifs) {
+    if (!byHub[n.hub]) byHub[n.hub] = [];
+    byHub[n.hub].push(n.label);
+  }
+  return byHub;
+}
+
+const ANSI_RE = /\x1b\[[0-9;]*m/g;
+const HUB_LINE_RE = /^  ([a-z][0-9])  /;
+const HUB_LINE_SET = new Set(['m0', 'm1', 'm2', 'm3', 'r0']);
+
+function appendHubPending(lines, hubPending, hubNotifs) {
+  const result = [];
+  for (const line of lines) {
+    const stripped = line.replace(ANSI_RE, '');
+    const m = stripped.match(HUB_LINE_RE);
+    if (!m || !HUB_LINE_SET.has(m[1])) { result.push(line); continue; }
+    const hub = m[1];
+    const pending = hubPending[hub];
+    result.push(pending && pending.length
+      ? line + `  \x1b[2m[${pending.join(', ')}]\x1b[0m`
+      : line);
+    for (const label of (hubNotifs[hub] || [])) {
+      result.push(`       \x1b[2m${label}\x1b[0m`);
     }
   }
   return result;
@@ -351,11 +674,17 @@ async function tick(fullMode) {
   const rawUnclaimed = scanUnclaimedIds();
   const freshUnclaimed = filterFreshUnclaimed(rawUnclaimed);
 
+  // REQ 2 (M2-1124-F): 허브 BUSY 중이면 대기 큐 항목은 정상 대기 — idle 허브만 미투입 판정
+  const idleUnclaimed = freshUnclaimed.filter(({ id }) => {
+    const hub = extractHubFromId(id);
+    return hub ? !allJson?.hubs?.[hub]?.current : true;
+  });
+
   // err_tail 은 허용 목록 방식으로 직접 판정 → computeRunnerAlerts 에는 넘기지 않음
   const allJsonNoErr = allJson ? { ...allJson, err_tail: '' } : allJson;
   const { alerts: rawRunnerAlerts, aheadSinceMs: newAheadSinceMs } = computeRunnerAlerts(allJsonNoErr, {
     aheadSinceMs,
-    unclaimedIds: freshUnclaimed,
+    unclaimedIds: idleUnclaimed,
   });
   aheadSinceMs = newAheadSinceMs;
 
@@ -364,6 +693,11 @@ async function tick(fullMode) {
   updateRunnerAlertNotifications(runnerAlerts);
 
   const ciAlerts = computeCiAlerts(cachedRunState);
+
+  const lastCiByRepo = await getLastCiByRepo(dateStr).catch(() => []);
+  const ciSummaryAlerts = computeCiSummaryAlerts(allJson, lastCiByRepo, dateStr);
+  const todayStats = allJson?.ci?.data?.today || null;
+  const cloudTodayCount = allJson?.ci?.data?.cloud_today ?? null;
 
   // 해소됨 오류 → err_tail 표시 영역(회색 줄)에 추가 · 경보 카운트 제외
   const resolvedErrAlerts = errAlerts.filter(a => a.resolved);
@@ -380,18 +714,32 @@ async function tick(fullMode) {
     hour: '2-digit', minute: '2-digit', second: '2-digit',
   }).replace(',', '');
 
-  const lines = renderCompact({
+  const hubPending = {};
+  for (const hub of QUEUE_HUBS) {
+    hubPending[hub] = listHubPendingIds(hub);
+  }
+  const hubNotifs = tickQueueDiff();
+
+  // REQ 1 (M2-1124-F): BUSY 러너 잡 상세 조회 (2분 캐시)
+  const busyJobMap = await buildBusyJobMap(allJson);
+
+  const rawLines = renderCompact({
     allJson: renderAllJson,
     runState: cachedRunState,
     cloudData,
     runnerAlerts,
-    ciAlerts,
+    ciAlerts: [...ciAlerts, ...ciSummaryAlerts.filter(a => !a.dim)],
+    ciDimAlerts: ciSummaryAlerts.filter(a => a.dim),
     timeStr: nowStr,
     fullMode,
+    todayStats,
+    cloudTodayCount,
+    cloudLimit,
+    lastCiByRepo,
   });
 
   process.stdout.write('\x1b[2J\x1b[H');
-  process.stdout.write(lines.join('\n') + '\n');
+  process.stdout.write(appendHubPending(enhanceBusyLines(rawLines, busyJobMap), hubPending, hubNotifs).join('\n') + '\n');
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
