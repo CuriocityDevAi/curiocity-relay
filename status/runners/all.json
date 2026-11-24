@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T17:25:08.682Z",
+  "at": "2026-11-24T17:26:07.273Z",
   "pid": 87453,
   "runner": "v8.1",
   "poll_ms": 30000,
@@ -54,11 +54,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.27,
-    "compressed_gb": 4.55,
+    "used_gb": 15.04,
+    "compressed_gb": 4.17,
     "swap_used_gb": 1.9,
     "pressure": "normal",
-    "at": "2026-11-24T17:25:06.573Z"
+    "at": "2026-11-24T17:25:35.603Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -143,7 +143,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 20,
   "branch_reports_recovered": 1,
-  "err_tail": "[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD fatal: It seems that there is already a rebase-merge directory, and\n[hub-runner-v8.1:claim 2026-11-24T17:20:21.296Z] R0-1124-AN → started · runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-AN.json · {\"id\":\"R0-1124-AN\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-24T17:20:21.392Z\",\"note\":\"runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1124-AN.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/39)\rerror: could not apply facf213c7... claim(m1): M1-1124-O started · runner-v8.1 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v8.1:git 2026-11-24T17:21:25.340Z] 러너 폴더 침범 감지 · files=queue/m1/M1-1124-T.md,queue/r0/R0-1124-AN.md,m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md,r0/R0-1124-K-report.md · guess_hub=m1\n[hub-runner-v8.1:git 2026-11-24T17:21:25.353Z] blocked: runner-folder change pending Kyu install · files=queue/m1/M1-1124-T.md,queue/r0/R0-1124-AN.md,m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md…\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:22:02.909Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:22:37.151Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:23:13.346Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:23:47.499Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:24:23.808Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:24:57.915Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:r0 2026-11-24T17:25:04.652Z] [report-path] R0-1124-AN: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:git 2026-11-24T17:25:07.749Z] 러너 폴더 침범 감지 · files=m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md,r0/R0-1124-K-report.md · guess_hub=m0\n[hub-runner-v8.1:git 2026-11-24T17:25:07.749Z] blocked: runner-folder change pending Kyu install · files=m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md,r0/R0-1124-K-report.md",
+  "err_tail": "[hub-runner-v8.1:git 2026-11-24T17:21:25.353Z] blocked: runner-folder change pending Kyu install · files=queue/m1/M1-1124-T.md,queue/r0/R0-1124-AN.md,m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md…\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:22:02.909Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:22:37.151Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:23:13.346Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:23:47.499Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:24:23.808Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:24:57.915Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:r0 2026-11-24T17:25:04.652Z] [report-path] R0-1124-AN: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:git 2026-11-24T17:25:07.749Z] 러너 폴더 침범 감지 · files=m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md,r0/R0-1124-K-report.md · guess_hub=m0\n[hub-runner-v8.1:git 2026-11-24T17:25:07.749Z] blocked: runner-folder change pending Kyu install · files=m0/M0-1124-J-report.md,m1/M1-1124-M-report.md,r0/R0-1124-AB-report.md,r0/R0-1124-AC-report.md,r0/R0-1124-K-report.md\n[hub-runner-v8.1:claim 2026-11-24T17:25:08.729Z] R0-1124-AN → done · runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AN-report.md · model=sonnet · 로그: /Us\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-AN.json · {\"id\":\"R0-1124-AN\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-24T17:25:09.991Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AN-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1124-AN.log · report_src=isolated\"}\n[build-hubs] status/hubs.json 부재 · 신규 생성\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 6건 (건드리지 않음): status/ci/2026-11-24.jsonl, m0/M0-1124-J-report.md, m1/M1-1124-M-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:25:34.462Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:26:06.392Z] [gh-runner-watchdog] skip restart: data-partial",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -166,7 +166,7 @@
     {
       "name": "curiocity-mac-fork",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "curiocity-mac-fork-light",
