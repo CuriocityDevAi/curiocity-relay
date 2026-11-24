@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-24T09:09:20.271Z",
+  "built_at": "2026-11-24T10:00:08.046Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-24T09:09:19.907Z"
+      "fetched_at": "2026-11-24T10:00:07.459Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-24T09:09:20.018Z"
+      "fetched_at": "2026-11-24T10:00:07.656Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6361,6 +6361,7 @@
               "summary": "Admin 사이드바 최상단 \"Orders\" 화면에서 주문 목록·전화번호 클릭·번호 검색·페이지네이션을 제공한다.",
               "files": [
                 "apps/commerce-core/src/api/admin/pos/orders-list/route.ts",
+                "apps/commerce-core/src/api/admin/pos/orders-list/__tests__/route.unit.spec.ts",
                 "id: pos-orders-list-ui",
                 "apps/commerce-core/src/admin/routes/pos-orders/page.tsx",
                 "apps/commerce-core/src/admin/widgets/nav-hide.tsx"
@@ -6876,7 +6877,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-24T09:09:20.271Z"
+      "fetched_at": "2026-11-24T10:00:08.045Z"
     }
   ],
   "rollup": {
