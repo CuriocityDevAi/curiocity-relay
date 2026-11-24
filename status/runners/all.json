@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-24T17:11:41.183Z",
+  "at": "2026-11-24T17:17:24.536Z",
   "pid": 87453,
   "runner": "v8.1",
   "poll_ms": 30000,
@@ -52,11 +52,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.76,
-    "compressed_gb": 4.58,
+    "used_gb": 14.86,
+    "compressed_gb": 3.93,
     "swap_used_gb": 1.9,
     "pressure": "normal",
-    "at": "2026-11-24T17:11:12.958Z"
+    "at": "2026-11-24T17:16:52.953Z"
   },
   "mem_peak_today": {
     "date": "2026-11-24",
@@ -64,7 +64,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-24T17:11:09.393Z",
+      "at": "2026-11-24T17:16:17.129Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -75,22 +75,11 @@
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 1,
+        "queued": 0,
         "queued_prs": [],
-        "oldest_queued_min": 1,
-        "oldest_queued_pr": "fork:master",
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-            "pr": "#254",
-            "pr_display": "fork:#254",
-            "job": "playwright",
-            "step": "Run Playwright harnesses",
-            "running_min": 3,
-            "runner": "curiocity-mac-fork",
-            "kind": "mac-heavy"
-          }
-        ]
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
       },
       "light": {
         "queued": 0,
@@ -101,17 +90,17 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 1,
+        "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 2,
       "today": {
         "mac-heavy": {
-          "jobs": 1,
-          "avg_wait_min": 2,
-          "avg_run_min": 1.1,
-          "success_rate": 100,
-          "run_min_total": 1.1
+          "jobs": 6,
+          "avg_wait_min": 1,
+          "avg_run_min": 1.6,
+          "success_rate": 83.3,
+          "run_min_total": 9.600000000000001
         },
         "mac-light": {
           "jobs": 0,
@@ -121,27 +110,27 @@
           "run_min_total": 0
         },
         "cloud": {
-          "jobs": 1,
+          "jobs": 3,
           "avg_wait_min": 0,
-          "avg_run_min": 0.2,
-          "success_rate": 100,
-          "run_min_total": 0.2
+          "avg_run_min": 0.1,
+          "success_rate": 66.7,
+          "run_min_total": 0.4
         },
-        "cloud_cost_est_usd": 0.008,
+        "cloud_cost_est_usd": 0.016,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 0
       },
-      "jsonl_added": 2,
+      "jsonl_added": 7,
       "alerts": []
     },
-    "took_ms": 13184,
-    "at": "2026-11-24T17:11:20.743Z"
+    "took_ms": 9692,
+    "at": "2026-11-24T17:16:24.918Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 19,
   "branch_reports_recovered": 1,
-  "err_tail": "[hub-runner-v8.1:m3 2026-11-24T17:09:13.405Z] [report-path] M3-1124-Q: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:m0 2026-11-24T17:09:18.421Z] claim 이미 done (허브 설정) · 덮어쓰기 금지\n[hub-runner-v8.1:claim 2026-11-24T17:09:20.275Z] M3-1124-Q → done · runner-v8.1 cmux-split · 리포트 확인 m3/M3-1124-Q-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1124-Q.json · {\"id\":\"M3-1124-Q\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-24T17:09:21.584Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m3/M3-1124-Q-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1124-Q.log · report_src=isolated\"}\n[build-hubs] status/hubs.json 부재 · 신규 생성\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 6건 (건드리지 않음): status/ci/2026-11-24.jsonl, m0/M0-1124-J-report.md, m1/M1-1124-M-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:m1 2026-11-24T17:09:26.017Z] pick · M1-1124-S · model=sonnet · display=cmux-split\n[hub-runner-v8.1:claim 2026-11-24T17:09:29.139Z] M1-1124-S → started · runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-S.json · {\"id\":\"M1-1124-S\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-24T17:09:29.254Z\",\"note\":\"runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1124-S.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:self-update 2026-11-24T17:10:03.171Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.1:m1 2026-11-24T17:11:36.904Z] [report-path] M1-1124-S: REPORT_PATH 격리 리포트 수거·push",
+  "err_tail": "[claim] pushed\n[hub-runner-v8.1:m1 2026-11-24T17:09:26.017Z] pick · M1-1124-S · model=sonnet · display=cmux-split\n[hub-runner-v8.1:claim 2026-11-24T17:09:29.139Z] M1-1124-S → started · runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-S.json · {\"id\":\"M1-1124-S\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-24T17:09:29.254Z\",\"note\":\"runner-v8.1 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1124-S.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:self-update 2026-11-24T17:10:03.171Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.1:m1 2026-11-24T17:11:36.904Z] [report-path] M1-1124-S: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:claim 2026-11-24T17:11:41.231Z] M1-1124-S → done · runner-v8.1 cmux-split · 리포트 확인 m1/M1-1124-S-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1124-S.json · {\"id\":\"M1-1124-S\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-24T17:11:41.316Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m1/M1-1124-S-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1124-S.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 6건 (건드리지 않음): status/ci/2026-11-25.jsonl, m0/M0-1124-J-report.md, m1/M1-1124-M-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:heartbeat 2026-11-24T17:16:50.228Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.1:git 2026-11-24T17:17:22.830Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -164,7 +153,7 @@
     {
       "name": "curiocity-mac-fork",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "curiocity-mac-fork-light",
