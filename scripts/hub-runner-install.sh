@@ -102,6 +102,8 @@ echo "[install] 심링크 생성 · $RUNNER_LINK → $TARGET_ABS"
 
 CI_WATCH_SRC="$REPO_ROOT/scripts/ci-watch.mjs"
 CI_WATCH_DST="$BIN_DIR/ci-watch.mjs"
+CI_WATCH_V2_SRC="$REPO_ROOT/scripts/ci-watch-v2.mjs"
+CI_WATCH_V2_DST="$BIN_DIR/ci-watch-v2.mjs"
 CI_WATCH_SH="$BIN_DIR/ci-watch.sh"
 # M1-1124-J: cp → ln -s. ci-watch.mjs 는 ./lib/ci-history.mjs 등 상대 경로 import 를 가지므로
 # 복사본을 ~/.hub-runner/bin/ 에 두면 Node 가 lib/ 를 찾지 못해 ERR_MODULE_NOT_FOUND 를 일으킨다.
@@ -115,14 +117,34 @@ if [[ -f "$CI_WATCH_SRC" ]]; then
   chmod 755 "$CI_WATCH_SRC"
   echo "[install] ci-watch 심링크 · $CI_WATCH_DST → $CI_WATCH_SRC"
 fi
+# M1-1124-P: ci-watch v2 (9칸 칸반) 심링크. ci-watch.sh --v2 로 분기.
+if [[ -f "$CI_WATCH_V2_SRC" ]]; then
+  if [[ -L "$CI_WATCH_V2_DST" || -e "$CI_WATCH_V2_DST" ]]; then
+    rm -f "$CI_WATCH_V2_DST"
+  fi
+  ln -s "$CI_WATCH_V2_SRC" "$CI_WATCH_V2_DST"
+  chmod 755 "$CI_WATCH_V2_SRC"
+  echo "[install] ci-watch-v2 심링크 · $CI_WATCH_V2_DST → $CI_WATCH_V2_SRC"
+fi
 cat > "$CI_WATCH_SH" <<'SHEOF'
 #!/bin/bash
 # ci-watch.sh · M1-1124-K · ci-watch 자가 재기동 래퍼
+# M1-1124-P: --v2 플래그 분기 (기본은 v1.4 유지).
 # 끄기: Ctrl+C  또는  ci-watch.sh stop (다른 터미널)
 set -u
 
 SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
 CI_WATCH="$SELF_DIR/ci-watch.mjs"
+# M1-1124-P: --v2 는 ci-watch-v2.mjs 를 띄운다. 인자 리스트에서는 소비 (ci-watch-v2 에 중복 전달 방지).
+_CI_WATCH_ARGS=()
+for a in "$@"; do
+  if [[ "$a" = "--v2" ]]; then
+    CI_WATCH="$SELF_DIR/ci-watch-v2.mjs"
+    continue
+  fi
+  _CI_WATCH_ARGS+=("$a")
+done
+set -- "${_CI_WATCH_ARGS[@]+${_CI_WATCH_ARGS[@]}}"
 PID_FILE="$HOME/.hub-runner/ci-watch.pid"
 CRASH_WINDOW=60
 CRASH_LIMIT=5
