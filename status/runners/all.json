@@ -1,149 +1,49 @@
 {
-  "at": "2026-11-24T17:28:56.097Z",
-  "pid": 87453,
-  "runner": "v8.1",
+  "at": "2026-11-24T17:30:51.998Z",
+  "pid": 56897,
+  "runner": "v8.2",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": "blocked: runner-folder change pending Kyu install (m0/M0-1124-J-report.md)",
-  "last_error_at": "2026-11-24T17:25:07.749Z",
+  "last_error": "blocked: runner-folder change pending Kyu install (events/runner-main-guard-20261124T173048Z.md)",
+  "last_error_at": "2026-11-24T17:30:50.321Z",
   "hubs": {
     "m0": {
       "current": null,
-      "last_activity": "2026-11-24T17:09:17.407Z"
+      "last_activity": null
     },
     "m1": {
       "current": null,
-      "last_activity": "2026-11-24T17:28:55.023Z"
+      "last_activity": null
     },
     "m2": {
       "current": null,
-      "last_activity": "2026-11-24T17:26:16.397Z"
+      "last_activity": null
     },
     "m3": {
       "current": null,
-      "last_activity": "2026-11-24T17:09:19.047Z"
+      "last_activity": null
     },
     "r0": {
       "current": null,
-      "last_activity": "2026-11-24T17:25:07.575Z"
+      "last_activity": null
     }
   },
   "pane_close_failures": {},
   "last_sleep_gap": null,
-  "kyu_folder_intrusion": {
-    "hub": "m0",
-    "prompt_id": "M0-1124-M",
-    "folder": [
-      "/Users/kyu.lee/projects/agilo-fork-test"
-    ],
-    "changed": [
-      {
-        "dir": "/Users/kyu.lee/projects/agilo-fork-test",
-        "fields": [
-          "node_modules-mtime"
-        ],
-        "actor": "unknown"
-      }
-    ],
-    "at": "2026-11-24T16:39:40.662Z"
-  },
-  "mem": {
-    "total_gb": 16,
-    "used_gb": 15.51,
-    "compressed_gb": 3.85,
-    "swap_used_gb": 1.9,
-    "pressure": "normal",
-    "at": "2026-11-24T17:28:24.895Z"
-  },
-  "mem_peak_today": {
-    "date": "2026-11-24",
-    "used_gb": 15.93
-  },
-  "ci": {
-    "data": {
-      "at": "2026-11-24T17:26:43.313Z",
-      "repos_scanned": [
-        "CuriocityDevAi/storeport",
-        "CuriocityDevAi/agilo-medusa-pos-fork"
-      ],
-      "repos_failed": [],
-      "repos_skipped": [],
-      "api_calls": 11,
-      "api_budget": 40,
-      "api_overflow": false,
-      "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/storeport",
-            "pr": "main",
-            "pr_display": "storeport:main",
-            "job": "heavy-mac",
-            "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 6,
-            "runner": "Youngkyus-MacBook-Pro-M1",
-            "kind": "mac-heavy"
-          }
-        ]
-      },
-      "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "cloud_in_progress": [],
-      "runners": {
-        "heavy_online": 3,
-        "heavy_busy": 1,
-        "light_online": 1
-      },
-      "cloud_today": 2,
-      "today": {
-        "mac-heavy": {
-          "jobs": 5,
-          "avg_wait_min": 1,
-          "avg_run_min": 1.8,
-          "success_rate": 100,
-          "run_min_total": 9.200000000000001
-        },
-        "mac-light": {
-          "jobs": 0,
-          "avg_wait_min": 0,
-          "avg_run_min": 0,
-          "success_rate": null,
-          "run_min_total": 0
-        },
-        "cloud": {
-          "jobs": 3,
-          "avg_wait_min": 0,
-          "avg_run_min": 0.1,
-          "success_rate": 66.7,
-          "run_min_total": 0.30000000000000004
-        },
-        "cloud_cost_est_usd": 0.016,
-        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 0
-      },
-      "jsonl_added": 6,
-      "alerts": []
-    },
-    "took_ms": 9188,
-    "at": "2026-11-24T17:26:50.697Z"
-  },
+  "kyu_folder_intrusion": null,
+  "mem": null,
+  "mem_peak_today": null,
+  "ci": null,
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 22,
-  "branch_reports_recovered": 1,
-  "err_tail": "[hub-runner-v8.1:claim 2026-11-24T17:25:08.729Z] R0-1124-AN → done · runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AN-report.md · model=sonnet · 로그: /Us\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1124-AN.json · {\"id\":\"R0-1124-AN\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-24T17:25:09.991Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 r0/R0-1124-AN-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1124-AN.log · report_src=isolated\"}\n[build-hubs] status/hubs.json 부재 · 신규 생성\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 6건 (건드리지 않음): status/ci/2026-11-24.jsonl, m0/M0-1124-J-report.md, m1/M1-1124-M-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:25:34.462Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:26:06.392Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m2 2026-11-24T17:26:14.427Z] [report-path] M2-1124-V: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.1:claim 2026-11-24T17:26:17.647Z] M2-1124-V → done · runner-v8.1 cmux-split · 리포트 확인 m2/M2-1124-V-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1124-V.json · {\"id\":\"M2-1124-V\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-24T17:26:17.734Z\",\"note\":\"runner-v8.1 cmux-split · 리포트 확인 m2/M2-1124-V-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1124-V.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:gh-watchdog 2026-11-24T17:26:42.486Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.1:m1 2026-11-24T17:28:53.047Z] [report-path] M1-1124-T: REPORT_PATH 격리 리포트 수거·push",
+  "isolated_reports_collected": null,
+  "branch_reports_recovered": null,
+  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): m0/M0-1124-J-report.md, m1/M1-1124-M-report.md, r0/R0-1124-AB-report.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.416Z] 변화 감지 · target=hub-runner-v8.2.mjs renamed=true bytesDiffer=true\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.730Z] node --check hub-runner-v8.2.mjs → status=0\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.730Z] selftest --selftest-stale-lock → status=0 [selftest-stale-lock] OK · 사망 PID lock 즉시 stale 처리 · 10분 대기 없음\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.730Z] selftest --selftest-merge-fail3 → status=0 [selftest-merge-fail3] OK · 연속 3회 → summarized=true · 4회 반복 억제 · 키 변경 시 리셋\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.730Z] selftest --selftest-report-path-off → status=0 [selftest-report-path-off] OK · flag off → false · 기본 on · ${ABS_PATH} 치환 정상\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.732Z] 심링크 갱신 · /Users/kyu.lee/.hub-runner/bin/hub-runner.mjs → /Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v8.2.mjs · prev=/Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v8.1.mjs\n[hub-runner-v8.1:self-update 2026-11-24T17:30:41.732Z] pending 기록 · prev=hub-runner-v8.1.mjs next=hub-runner-v8.2.mjs · 2 초 뒤 exit(0)\n[hub-runner-v8.2 2026-11-24T17:30:44.134Z] 시작 · v8.2 · script=hub-runner-v8.2.mjs · boot_sha=40bdc0463aa1 · mode=--all · once=false · dry-run=false · poll=30000ms · claude=/Users/kyu.lee/.local/bin/claude · version=2.1.128 (Claude Code) · model=opus · display=cmux-split · cmux=/Applications/cmux.app/Contents/Resources/bin/cmux · cmux_password=*** · heartbeat=30m · run_timeout=60m · self_update=10m\n[hub-runner-v8.2:self-update 2026-11-24T17:30:44.135Z] boot confirm · count=1 · 180 s 내 heartbeat 필요\n[hub-runner-v8.2:self-update 2026-11-24T17:30:45.646Z] boot heartbeat OK · pending 정리 · prev=hub-runner-v8.1.mjs next=hub-runner-v8.2.mjs\n[hub-runner-v8.2:main-guard 2026-11-24T17:30:49.998Z] main-guard rescue · at=2026-11-24T17:30:48.019Z · tag=20261124T173048Z · head_before=(detached) · rebase=true · merge=false · unmerged=0 · foreign_preserved=5 · runner_reapplied=1\n[hub-runner-v8.2:main-guard 2026-11-24T17:30:50.062Z] 복구 성공 · tag=20261124T173048Z · reapplied=1 · preserved=5\n[hub-runner-v8.2:git 2026-11-24T17:30:50.252Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.2:git 2026-11-24T17:30:50.321Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.2:gh-watchdog 2026-11-24T17:30:51.062Z] [gh-runner-watchdog] skip restart: no-ci-data",
   "git_state": {
     "ahead": 0,
     "behind": 0,
-    "rebase_in_progress": false,
+    "rebase_in_progress": true,
     "merge_in_progress": false,
     "conflicted": [],
     "needs_human": false
