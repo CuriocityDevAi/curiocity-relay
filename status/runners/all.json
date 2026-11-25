@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T11:27:30.470Z",
+  "at": "2026-11-25T11:27:40.431Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -31,10 +31,8 @@
       "last_activity": "2026-11-25T08:35:20.472Z"
     },
     "r0": {
-      "current": "R0-1125-AF",
-      "started_at": "2026-11-25T11:06:56.677Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-25T09:38:09.562Z"
+      "current": null,
+      "last_activity": "2026-11-25T11:27:39.364Z"
     }
   },
   "pane_close_failures": {},
@@ -47,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.72,
-    "compressed_gb": 5.62,
+    "used_gb": 15.8,
+    "compressed_gb": 5.39,
     "swap_used_gb": 2.36,
     "pressure": "normal",
-    "at": "2026-11-25T11:26:57.526Z"
+    "at": "2026-11-25T11:27:37.754Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -134,9 +132,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 65,
+  "isolated_reports_collected": 66,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:m2 2026-11-25T11:25:20.234Z] [report-path] M2-1125-U: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-25T11:25:27.571Z] M2-1125-U → done · runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1125-U-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1125-U.json · {\"id\":\"M2-1125-U\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-25T11:25:27.687Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1125-U-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1125-U.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M2-1125-U.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:25:44.153Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:25:44.153Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:25:44.852Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:25:44.852Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:20.596Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:20.596Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:21.376Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:21.376Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:57.526Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:57.526Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:58.191Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:58.192Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online",
+  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M2-1125-U.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:25:44.153Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:25:44.153Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:25:44.852Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:25:44.852Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:20.596Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:20.596Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:21.376Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:21.376Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:57.526Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:57.526Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:58.191Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:26:58.192Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:r0 2026-11-25T11:27:34.360Z] [report-path] R0-1125-AF: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:27:37.754Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:27:37.755Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online",
   "git_state": {
     "ahead": 0,
     "behind": 0,
