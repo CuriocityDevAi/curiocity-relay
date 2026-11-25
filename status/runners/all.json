@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T10:42:56.064Z",
+  "at": "2026-11-25T10:46:58.474Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -9,7 +9,9 @@
   "last_error_at": "2026-11-25T08:38:44.276Z",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1125-Q",
+      "started_at": "2026-11-25T10:46:56.750Z",
+      "model": "opus",
       "last_activity": "2026-11-25T09:19:14.153Z"
     },
     "m1": {
@@ -34,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.56,
-    "compressed_gb": 4.83,
-    "swap_used_gb": 2.51,
+    "used_gb": 15.79,
+    "compressed_gb": 5.23,
+    "swap_used_gb": 2.41,
     "pressure": "normal",
-    "at": "2026-11-25T10:42:24.105Z"
+    "at": "2026-11-25T10:46:24.151Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -46,7 +48,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-25T10:40:10.097Z",
+      "at": "2026-11-25T10:45:14.099Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -105,14 +107,14 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 10993,
-    "at": "2026-11-25T10:40:18.380Z"
+    "took_ms": 9786,
+    "at": "2026-11-25T10:45:21.889Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 64,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:08:45.233Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:08:46.133Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:08:46.133Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:09:17.404Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:09:17.404Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:09:18.317Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:09:18.317Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:heartbeat 2026-11-25T10:25:14.561Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-25T10:25:44.822Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:git 2026-11-25T10:32:53.637Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Failed to connect to github.com port 443 after 6 ms: Couldn't connect to server\n[hub-runner-v8.3.2:state 2026-11-25T10:32:56.197Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.3.2:git 2026-11-25T10:35:19.654Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:heartbeat 2026-11-25T10:37:12.413Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Failed to connect to github.com port 443 after 3237 ms: Couldn't connect to server\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T10:37:45.574Z] sleep observed · gap=176s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-25T10:37:45.685Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:37:55.041Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:38:25.293Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:39:00.793Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:39:32.980Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:40:08.850Z] [gh-runner-watchdog] skip restart: no-ci-data",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:08:46.133Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:08:46.133Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:09:17.404Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:09:17.404Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:09:18.317Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:09:18.317Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:heartbeat 2026-11-25T10:25:14.561Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-25T10:25:44.822Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:git 2026-11-25T10:32:53.637Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Failed to connect to github.com port 443 after 6 ms: Couldn't connect to server\n[hub-runner-v8.3.2:state 2026-11-25T10:32:56.197Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.3.2:git 2026-11-25T10:35:19.654Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:heartbeat 2026-11-25T10:37:12.413Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Failed to connect to github.com port 443 after 3237 ms: Couldn't connect to server\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T10:37:45.574Z] sleep observed · gap=176s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-25T10:37:45.685Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:37:55.041Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:38:25.293Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:39:00.793Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:39:32.980Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:40:08.850Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:m0 2026-11-25T10:46:56.750Z] pick · M0-1125-Q · model=opus · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
