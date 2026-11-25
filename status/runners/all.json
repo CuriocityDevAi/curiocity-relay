@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T19:49:56.915Z",
+  "at": "2026-11-25T20:00:51.408Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -39,25 +39,82 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.87,
-    "compressed_gb": 4.7,
-    "swap_used_gb": 3.54,
+    "used_gb": 15.78,
+    "compressed_gb": 4.74,
+    "swap_used_gb": 3.53,
     "pressure": "normal",
-    "at": "2026-11-25T19:39:49.144Z"
+    "at": "2026-11-25T19:50:04.010Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
     "used_gb": 15.94
   },
   "ci": {
-    "error": "deadline 30000ms",
-    "at": "2026-11-25T19:36:08.437Z"
+    "data": {
+      "at": "2026-11-25T19:49:56.778Z",
+      "repos_scanned": [
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
+      ],
+      "repos_failed": [],
+      "repos_skipped": [],
+      "api_calls": 9,
+      "api_budget": 40,
+      "api_overflow": false,
+      "heavy": {
+        "queued": 0,
+        "queued_prs": [],
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
+      },
+      "light": {
+        "queued": 0,
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
+      },
+      "cloud_in_progress": [],
+      "runners": null,
+      "cloud_today": 0,
+      "today": {
+        "mac-heavy": {
+          "jobs": 9,
+          "avg_wait_min": 1.2,
+          "avg_run_min": 2.9,
+          "success_rate": 88.9,
+          "run_min_total": 26.3
+        },
+        "mac-light": {
+          "jobs": 13,
+          "avg_wait_min": 5.4,
+          "avg_run_min": 1.2,
+          "success_rate": 92.3,
+          "run_min_total": 15.2
+        },
+        "cloud": {
+          "jobs": 7,
+          "avg_wait_min": 0,
+          "avg_run_min": 1.4,
+          "success_rate": 42.9,
+          "run_min_total": 9.6
+        },
+        "cloud_cost_est_usd": 0.104,
+        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
+        "wasted_min": 13.5
+      },
+      "jsonl_added": 1,
+      "alerts": [],
+      "partial": true
+    },
+    "took_ms": 17058,
+    "at": "2026-11-25T19:50:10.503Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 103,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:33:58.718Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/agilo-medusa-pos-fork): Command failed: gh api repos/CuriocityDevAi/agilo-medusa-pos-fork/actions/runners\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:33:58.719Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T19:34:18.901Z] sleep observed · gap=320s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-25T19:34:19.169Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:git 2026-11-25T19:34:49.473Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:heartbeat 2026-11-25T19:35:37.842Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:state 2026-11-25T19:36:08.416Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:36:08.438Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/storeport): Command failed: gh api repos/CuriocityDevAi/storeport/actions/runners\nerror connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:36:18.453Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/agilo-medusa-pos-fork): Command failed: gh api repos/CuriocityDevAi/agilo-medusa-pos-fork/actions/runners\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:36:18.453Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T19:37:38.392Z] sleep observed · gap=199s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-25T19:37:38.495Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:git 2026-11-25T19:38:08.607Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:39:49.144Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/storeport): Command failed: gh api repos/CuriocityDevAi/storeport/actions/runners\nerror connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:39:56.229Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T19:49:53.444Z] sleep observed · gap=735s · threshold=120s",
+  "err_tail": "[hub-runner-v8.3.2:git 2026-11-25T19:34:49.473Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:heartbeat 2026-11-25T19:35:37.842Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:state 2026-11-25T19:36:08.416Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:36:08.438Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/storeport): Command failed: gh api repos/CuriocityDevAi/storeport/actions/runners\nerror connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:36:18.453Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/agilo-medusa-pos-fork): Command failed: gh api repos/CuriocityDevAi/agilo-medusa-pos-fork/actions/runners\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:36:18.453Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T19:37:38.392Z] sleep observed · gap=199s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-25T19:37:38.495Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:git 2026-11-25T19:38:08.607Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:39:49.144Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/storeport): Command failed: gh api repos/CuriocityDevAi/storeport/actions/runners\nerror connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:39:56.229Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T19:49:53.444Z] sleep observed · gap=735s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:50:04.056Z] [gh-runner-watchdog] wake: mac-heavy Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:50:04.099Z] [gh-runner-watchdog] wake: mac-light Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:50:09.296Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T20:00:49.151Z] sleep observed · gap=656s · threshold=120s",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -70,7 +127,7 @@
     {
       "name": "curiocity-mac-light",
       "status": "offline",
-      "busy": true
+      "busy": false
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
