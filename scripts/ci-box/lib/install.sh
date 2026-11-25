@@ -37,12 +37,16 @@ install_homebrew() {
         return 0
     fi
     _step "Installing Homebrew..."
-    _run /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    # 현재 세션 PATH 에 brew 추가 (새 셸에선 자동이지만 현 세션은 명시적으로 필요)
+    # command substitution $(curl ...) is evaluated before _run sees it, so guard DRY_RUN first
     if [ "${DRY_RUN:-0}" = "1" ]; then
+        _dry '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
         _dry "eval \"\$(${HOMEBREW_PREFIX}/bin/brew shellenv)\""
-    elif [ -x "${HOMEBREW_PREFIX}/bin/brew" ]; then
-        eval "$("${HOMEBREW_PREFIX}/bin/brew" shellenv)"
+    else
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        # 현재 세션 PATH 에 brew 추가 (새 셸에선 자동이지만 현 세션은 명시적으로 필요)
+        if [ -x "${HOMEBREW_PREFIX}/bin/brew" ]; then
+            eval "$("${HOMEBREW_PREFIX}/bin/brew" shellenv)"
+        fi
     fi
     _ok "Homebrew installed"
 }
@@ -53,7 +57,12 @@ install_nvm_node() {
         _skip "nvm already installed"
     else
         _step "Installing nvm..."
-        _run curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+        # pipe after _run passes "[DRY] ..." to bash in dry-run → guard before the pipe
+        if [ "${DRY_RUN:-0}" = "1" ]; then
+            _dry 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash'
+        else
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+        fi
         _ok "nvm installed"
     fi
 
@@ -96,7 +105,7 @@ install_postgres() {
         _ok "postgresql@$PG_VERSION installed"
     fi
 
-    if brew services list | grep -q "postgresql@$PG_VERSION.*started"; then
+    if brew services list 2>/dev/null | grep -q "postgresql@$PG_VERSION.*started"; then
         _skip "postgresql@$PG_VERSION service already running"
     else
         _step "Starting postgresql@$PG_VERSION service..."
