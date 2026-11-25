@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts/hub-runner-v8.3.mjs · M1-1125-C · v8.2 기반 + landing 오탐 수정 + safe-push HEAD-on-main 가드 + pull-rebase 잔재 제거 + foreground-timeout 분리 + preamble 개행 어설션.
+// scripts/hub-runner-v8.3.mjs · M1-1125-E · v8.3.1 · pipeline-log 이벤트 기록 (M1-1125-C 기반).
 //
 // v8.2 과의 차이 (M1-1125-B·C · 5건):
 //   ① **landing 오탐 수정**: land-detect-v2.mjs 에 isPaneIdle / headTouchesReport 콜백 주입.
@@ -137,6 +137,12 @@ import {
   DEFAULT_WORKTREE_RULE,
 } from './lib/hub-preamble.mjs';
 import { createSleepTracker } from './lib/sleep-tracker.mjs';
+// M1-1125-E: 프롬프트 일생 기록 — status/pipeline/<ID>.jsonl.
+import {
+  appendPipelineEvent,
+  extractArtifactFromReport,
+  archiveOldPipelineLogs,
+} from './lib/pipeline-log.mjs';
 // M1-1124-H: 러너 자기 업데이트 (v8 R2 · 제안 D).
 import {
   detectUpdate as selfUpdateDetect,
@@ -170,7 +176,7 @@ const SIGKILL_GRACE_MS = 5 * 1000;
 const CMUX_WAIT_MS = 10 * 60 * 1000;
 const DEFAULT_CLAUDE_BIN = '/Users/kyu.lee/.local/bin/claude';
 // M1-1105-BA(d): all.json 러너 버전 표기 버그 — 한 곳에서만 관리.
-const RUNNER_VERSION = 'v8.3';
+const RUNNER_VERSION = 'v8.3.1';
 // M1-1124-H: 자기 업데이트 기본값 — runner-config.selfUpdate 로 덮어쓸 수 있다.
 // M1-1125-C: prev 부재 시 되돌릴 안전판 버전.
 const SELF_UPDATE_FALLBACK_RUNNER = 'hub-runner-v8.2.mjs';
@@ -392,6 +398,8 @@ const SELFTEST_HEAD_MOVED_UNRELATED = argv.includes('--selftest-head-moved-unrel
 const SELFTEST_SAFE_PUSH_DETACHED = argv.includes('--selftest-safe-push-detached');
 const SELFTEST_PREAMBLE_NEWLINE = argv.includes('--selftest-preamble-newline');
 const SELFTEST_FG_TIMEOUT_ISOLATED = argv.includes('--selftest-fg-timeout-isolated');
+// v8.3.1 신규 셀프테스트 (M1-1125-E)
+const SELFTEST_PIPELINE_LOG = argv.includes('--selftest-pipeline-log');
 const hubFlag = (() => {
   const i = argv.indexOf('--hub');
   return i >= 0 ? argv[i + 1] : null;
@@ -449,7 +457,8 @@ if (
   !SELFTEST_HEAD_MOVED_UNRELATED &&
   !SELFTEST_SAFE_PUSH_DETACHED &&
   !SELFTEST_PREAMBLE_NEWLINE &&
-  !SELFTEST_FG_TIMEOUT_ISOLATED
+  !SELFTEST_FG_TIMEOUT_ISOLATED &&
+  !SELFTEST_PIPELINE_LOG
 ) {
   console.error(
     'Usage: node scripts/hub-runner-v8.3.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-* (see docs/hub-runner.md).',
@@ -717,7 +726,8 @@ function checkFolderGuardWithConfig(config) {
 }
 
 // M0-1119-I: status/ci/ 추가 — jsonl 이 safePull 의 out-of-scope 로 오인되지 않게.
-const RUNNER_SCOPE_PREFIXES = ['status/claims/', 'status/runners/', 'status/hubs.json', 'status/ci/'];
+// M1-1125-E: status/pipeline/ 추가 — pipeline-log jsonl 이 out-of-scope 오인 차단.
+const RUNNER_SCOPE_PREFIXES = ['status/claims/', 'status/runners/', 'status/hubs.json', 'status/ci/', 'status/pipeline/'];
 // M1-1123-E REQ2: 충돌 자동 해소 대상 — 자동 생성 파일만 여기 해당.
 const AUTO_RESOLVE_PREFIXES = ['status/', 'hubs.json', 'index'];
 // M1-1123-L REQ1: 허브가 쓰는 파일 — ahead 커밋에 있어도 'manual' 로 중단하지 않는다.
@@ -1198,6 +1208,37 @@ async function runClaim({ id, state, note, blockedBy, hub: claimHub }) {
     }
     lastReportSource.delete(id);
   }
+  // M1-1125-E: pipeline 이벤트 기록 (non-fatal) + claim 커밋에 번들.
+  try {
+    const h = claimHub || readClaim(id)?.hub || '?';
+    if (state === 'started') {
+      appendPipelineEvent(REPO_ROOT, id, h, 'started');
+    } else if (state === 'done') {
+      const rp = reportPath(h, id);
+      if (existsSync(rp)) {
+        appendPipelineEvent(REPO_ROOT, id, h, 'report');
+        try {
+          const reportText = readFileSync(rp, 'utf8');
+          const art = extractArtifactFromReport(reportText);
+          if (art) {
+            let head_sha = null;
+            try {
+              const r = spawnSync(
+                'gh', ['pr', 'view', String(art.pr_number), '--repo', art.repo, '--json', 'headRefOid', '--jq', '.headRefOid'],
+                { stdio: ['ignore', 'pipe', 'pipe'], timeout: 6000 },
+              );
+              head_sha = r.stdout?.toString().trim() || null;
+            } catch { /* noop */ }
+            appendPipelineEvent(REPO_ROOT, id, h, 'artifact', { ...art, head_sha });
+          }
+        } catch { /* noop */ }
+      }
+      appendPipelineEvent(REPO_ROOT, id, h, 'done');
+    } else if (state === 'blocked') {
+      appendPipelineEvent(REPO_ROOT, id, h, 'blocked', { reason: blockedBy || null });
+    }
+    git(['add', `status/pipeline/${id}.jsonl`]);
+  } catch { /* noop */ }
   const args = [join(HERE, 'claim.mjs'), id, state];
   if (blockedBy) {
     args.push('--blocked-by', blockedBy);
@@ -3366,6 +3407,8 @@ async function tick(hubs) {
       queueSeen.add(item.id);
       setHubDecision(hub, 'picked', { current: item.id });
       busy.set(hub, { id: item.id, startedAt: Date.now(), model });
+      // M1-1125-E: pipeline queued 이벤트 (non-fatal).
+      appendPipelineEvent(REPO_ROOT, item.id, hub, 'queued', { model });
       // M2-1105-V: "started" 사전 발행 금지 — spawnClaudeForItem 내부 dispatchInPane 이
       // pane foreground 를 claude 로 확인한 뒤에만 enqueueClaim(started) 호출.
       // cmux-tab · background 경로도 동일 (아래 각 분기에서 발행).
@@ -5947,6 +5990,19 @@ process.stdin.resume();
       process.exit(0);
     } catch (e) {
       console.error(`[selftest-fg-timeout-isolated] FAIL · ${e.message}`);
+      process.exit(1);
+    }
+  })();
+
+} else if (SELFTEST_PIPELINE_LOG) {
+  // M1-1125-E: pipeline-log 이벤트 5종 기록·순서·기록 실패 non-fatal 검증.
+  (async () => {
+    try {
+      const mod = await import('./test/hub-runner-pipeline-log.test.mjs');
+      const ok = mod.runSelftest();
+      process.exit(ok ? 0 : 1);
+    } catch (e) {
+      console.error(`[selftest-pipeline-log] FAIL · ${e.message}`);
       process.exit(1);
     }
   })();
