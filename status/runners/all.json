@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T03:13:56.281Z",
+  "at": "2026-11-25T03:14:13.419Z",
   "pid": 74805,
   "runner": "v8.2",
   "poll_ms": 30000,
@@ -9,10 +9,8 @@
   "last_error_at": "2026-11-24T22:56:04.463Z",
   "hubs": {
     "m0": {
-      "current": "M0-1125-E",
-      "started_at": "2026-11-25T02:45:11.824Z",
-      "model": "opus",
-      "last_activity": "2026-11-25T02:31:34.548Z"
+      "current": null,
+      "last_activity": "2026-11-25T03:14:12.305Z"
     },
     "m1": {
       "current": "M1-1125-E",
@@ -43,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.94,
-    "compressed_gb": 5.21,
+    "used_gb": 15.62,
+    "compressed_gb": 4.65,
     "swap_used_gb": 1.99,
     "pressure": "normal",
-    "at": "2026-11-25T03:13:23.619Z"
+    "at": "2026-11-25T03:13:58.316Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -151,9 +149,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 23,
+  "isolated_reports_collected": 24,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.2:self-update 2026-11-25T03:05:23.526Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:05:54.560Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:06:27.155Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:07:02.012Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:07:36.481Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:08:11.437Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:08:43.930Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:09:18.676Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:09:51.004Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:10:27.171Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-25T03:12:09.319Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:git 2026-11-25T03:12:41.804Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.2:m1 2026-11-25T03:12:44.036Z] pick · M1-1125-E · model=sonnet · display=cmux-split\n[hub-runner-v8.2:claim 2026-11-25T03:12:48.902Z] M1-1125-E → started · runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1125-E.json · {\"id\":\"M1-1125-E\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-25T03:12:49.065Z\",\"note\":\"runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1125-E.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed",
+  "err_tail": "[hub-runner-v8.2:gh-watchdog 2026-11-25T03:05:54.560Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:06:27.155Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:07:02.012Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:07:36.481Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:08:11.437Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:08:43.930Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:09:18.676Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:09:51.004Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T03:10:27.171Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-25T03:12:09.319Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:git 2026-11-25T03:12:41.804Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.2:m1 2026-11-25T03:12:44.036Z] pick · M1-1125-E · model=sonnet · display=cmux-split\n[hub-runner-v8.2:claim 2026-11-25T03:12:48.902Z] M1-1125-E → started · runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1125-E.json · {\"id\":\"M1-1125-E\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-25T03:12:49.065Z\",\"note\":\"runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1125-E.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:m0 2026-11-25T03:14:10.079Z] [report-path] M0-1125-E: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 0,
