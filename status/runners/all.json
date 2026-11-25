@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T01:35:45.109Z",
+  "at": "2026-11-25T01:36:16.278Z",
   "pid": 74805,
   "runner": "v8.2",
   "poll_ms": 30000,
@@ -19,10 +19,8 @@
       "last_activity": "2026-11-24T23:02:00.128Z"
     },
     "m2": {
-      "current": "M2-1125-B",
-      "started_at": "2026-11-25T01:26:20.553Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-24T23:00:14.843Z"
+      "current": null,
+      "last_activity": "2026-11-25T01:36:15.335Z"
     },
     "m3": {
       "current": "M3-1125-B",
@@ -45,11 +43,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.28,
-    "compressed_gb": 4.74,
+    "used_gb": 15.43,
+    "compressed_gb": 4.4,
     "swap_used_gb": 1.76,
     "pressure": "normal",
-    "at": "2026-11-25T01:35:12.181Z"
+    "at": "2026-11-25T01:35:46.437Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -121,9 +119,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 2,
+  "isolated_reports_collected": 3,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.2:sleep-tracker 2026-11-25T01:11:53.171Z] sleep observed · gap=5746s · threshold=120s\n[hub-runner-v8.2:git 2026-11-25T01:12:23.367Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.2:gh-watchdog 2026-11-25T01:12:23.372Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.2:self-update 2026-11-25T01:23:13.055Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.2:m3 2026-11-25T01:23:13.057Z] sleep gap 감지 676s · 예산 보정 · 누적 7889s · phase=await-landing\n[hub-runner-v8.2:m1 2026-11-25T01:23:15.099Z] sleep gap 감지 677s · 예산 보정 · 누적 7887s · phase=await-landing\n[hub-runner-v8.2:sleep-tracker 2026-11-25T01:23:55.150Z] sleep observed · gap=722s · threshold=120s\n[hub-runner-v8.2:gh-watchdog 2026-11-25T01:23:56.055Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.2:m3 2026-11-25T01:24:02.149Z] sleep gap 감지 19s · 예산 보정 · 누적 7908s · phase=await-landing\n[hub-runner-v8.2:m1 2026-11-25T01:24:02.367Z] sleep gap 감지 16s · 예산 보정 · 누적 7903s · phase=await-landing\n[hub-runner-v8.2:m2 2026-11-25T01:26:20.552Z] pick · M2-1125-B · model=sonnet · display=cmux-split\n[hub-runner-v8.2:claim 2026-11-25T01:26:23.468Z] M2-1125-B → started · runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1125-B.json · {\"id\":\"M2-1125-B\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-25T01:26:23.646Z\",\"note\":\"runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1125-B.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m2/M2-1125-B.md, status/ci/2026-11-25.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.2:self-update 2026-11-25T01:33:25.285Z] 보류 · busy=3 claimQueue=0 processing=false",
+  "err_tail": "[hub-runner-v8.2:git 2026-11-25T01:12:23.367Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.2:gh-watchdog 2026-11-25T01:12:23.372Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.2:self-update 2026-11-25T01:23:13.055Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.2:m3 2026-11-25T01:23:13.057Z] sleep gap 감지 676s · 예산 보정 · 누적 7889s · phase=await-landing\n[hub-runner-v8.2:m1 2026-11-25T01:23:15.099Z] sleep gap 감지 677s · 예산 보정 · 누적 7887s · phase=await-landing\n[hub-runner-v8.2:sleep-tracker 2026-11-25T01:23:55.150Z] sleep observed · gap=722s · threshold=120s\n[hub-runner-v8.2:gh-watchdog 2026-11-25T01:23:56.055Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.2:m3 2026-11-25T01:24:02.149Z] sleep gap 감지 19s · 예산 보정 · 누적 7908s · phase=await-landing\n[hub-runner-v8.2:m1 2026-11-25T01:24:02.367Z] sleep gap 감지 16s · 예산 보정 · 누적 7903s · phase=await-landing\n[hub-runner-v8.2:m2 2026-11-25T01:26:20.552Z] pick · M2-1125-B · model=sonnet · display=cmux-split\n[hub-runner-v8.2:claim 2026-11-25T01:26:23.468Z] M2-1125-B → started · runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1125-B.json · {\"id\":\"M2-1125-B\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-25T01:26:23.646Z\",\"note\":\"runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1125-B.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m2/M2-1125-B.md, status/ci/2026-11-25.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.2:self-update 2026-11-25T01:33:25.285Z] 보류 · busy=3 claimQueue=0 processing=false\n[hub-runner-v8.2:m2 2026-11-25T01:36:13.217Z] [report-path] M2-1125-B: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 0,
