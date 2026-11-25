@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T10:52:48.503Z",
+  "at": "2026-11-25T10:58:01.417Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -36,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.7,
-    "compressed_gb": 4.61,
-    "swap_used_gb": 2.35,
+    "used_gb": 15.87,
+    "compressed_gb": 5.88,
+    "swap_used_gb": 2.34,
     "pressure": "normal",
-    "at": "2026-11-25T10:52:15.540Z"
+    "at": "2026-11-25T10:57:29.183Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -48,14 +48,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-25T10:50:29.126Z",
+      "at": "2026-11-25T10:55:42.399Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 8,
+      "api_calls": 12,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -63,7 +63,18 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "#443",
+            "pr_display": "storeport:#443",
+            "job": "heavy-mac",
+            "step": "Checkout",
+            "running_min": 1,
+            "runner": "Youngkyus-MacBook-Pro-M1",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -71,10 +82,21 @@
         "oldest_queued_pr": null,
         "in_progress": []
       },
-      "cloud_in_progress": [],
+      "cloud_in_progress": [
+        {
+          "repo": "CuriocityDevAi/storeport",
+          "pr": "#443",
+          "pr_display": "storeport:#443",
+          "job": "docker-build-commerce-core (ubuntu)",
+          "step": "docker build -f apps/commerce-core/Dockerfile .",
+          "running_min": 3,
+          "runner": "GitHub Actions 1000008125",
+          "kind": "cloud"
+        }
+      ],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 0,
+        "heavy_busy": 1,
         "light_online": 1
       },
       "cloud_today": 0,
@@ -87,11 +109,11 @@
           "run_min_total": 618.9000000000001
         },
         "mac-light": {
-          "jobs": 222,
+          "jobs": 224,
           "avg_wait_min": 1.9,
           "avg_run_min": 0.6,
-          "success_rate": 95,
-          "run_min_total": 137.00000000000009
+          "success_rate": 95.1,
+          "run_min_total": 137.60000000000008
         },
         "cloud": {
           "jobs": 148,
@@ -104,17 +126,18 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 153.69999999999993
       },
-      "jsonl_added": 0,
-      "alerts": []
+      "jsonl_added": 2,
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 10780,
-    "at": "2026-11-25T10:50:37.415Z"
+    "took_ms": 16963,
+    "at": "2026-11-25T10:55:57.068Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 64,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:heartbeat 2026-11-25T10:37:12.413Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Failed to connect to github.com port 443 after 3237 ms: Couldn't connect to server\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T10:37:45.574Z] sleep observed · gap=176s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-25T10:37:45.685Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:37:55.041Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:38:25.293Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:39:00.793Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:39:32.980Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:40:08.850Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:m0 2026-11-25T10:46:56.750Z] pick · M0-1125-Q · model=opus · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-25T10:46:59.936Z] M0-1125-Q → started · runner-v8.3.2 · cmux-split · model=opus · source=hub-default · pane foreground=c\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1125-Q.json · {\"id\":\"M0-1125-Q\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-25T10:47:00.154Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1125-Q.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m0/M0-1125-Q.md, status/pipeline/M0-1125-Q.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:self-update 2026-11-25T10:47:34.586Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:heartbeat 2026-11-25T10:52:12.263Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-25T10:52:45.335Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m0/M0-1125-Q.md, status/pipeline/M0-1125-Q.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:self-update 2026-11-25T10:47:34.586Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:heartbeat 2026-11-25T10:52:12.263Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-25T10:52:45.335Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:56:20.078Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:56:20.086Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:56:21.105Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:56:21.106Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:56:56.189Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:56:56.189Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:56:57.162Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:56:57.162Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:57:29.182Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:57:29.182Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:57:29.954Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T10:57:29.954Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -127,7 +150,7 @@
     {
       "name": "curiocity-mac-light",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
