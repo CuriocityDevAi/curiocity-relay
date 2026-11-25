@@ -146,7 +146,7 @@ function renderCaution(view, opts) {
     lines.push(`    ${C.dim}└ ${truncateWidth(a.reason || '', Math.max(4, w - 6))}${C.reset}`);
   }
 
-  // 일반 경보 (기존 카드 주의)
+  // 일반 경보 (기존 카드 주의) — 주의 줄에는 "왜 주의인지(reason)" 표시, 제목은 진행 중 표에만
   for (const c of caution) {
     const col    = cl(c.level);
     const mark   = c.mark || '■';
@@ -156,7 +156,6 @@ function renderCaution(view, opts) {
     const prPart = c.extra?.pr?.number ? `  #${c.extra.pr.number}` : '';
     const FIXED  = displayWidth(mark) + 1 + 12 + 1 + 2 + 2 + displayWidth(strip) + 2
       + displayWidth(stage) + 2 + displayWidth(ageStr) + displayWidth(prPart);
-    const title  = truncateWidth(c.title || '', Math.max(4, w - FIXED));
     const idPad  = padEndWidth(c.id, 12);
     const hubPad = padEndWidth(c.hub || '', 2);
 
@@ -164,13 +163,14 @@ function renderCaution(view, opts) {
     let reviewChip = '';
     if (c.reviewResult === 'APPROVE') reviewChip = ` ${C.green}[APPROVE]${C.reset}`;
     else if (c.reviewResult === 'CHANGES') reviewChip = ` ${C.yellow}[CHANGES]${C.reset}`;
+    const chipW  = c.reviewResult ? displayWidth(`[${c.reviewResult}]`) + 1 : 0;
+
+    // reason 을 주의 줄 오른쪽에 표시 (제목 대신)
+    const reason = truncateWidth(c.reason || '', Math.max(4, w - FIXED - chipW - 2));
 
     lines.push(
-      `${col}${mark}${C.reset} ${idPad} ${hubPad}  ${strip}  ${stage}  ${ageStr}${prPart}${reviewChip}  ${col}${title}${C.reset}`
+      `${col}${mark}${C.reset} ${idPad} ${hubPad}  ${strip}  ${stage}  ${ageStr}${prPart}${reviewChip}  ${col}${reason}${C.reset}`
     );
-    if (c.reason) {
-      lines.push(`  ${C.dim}└ ${truncateWidth(c.reason, Math.max(4, w - 6))}${C.reset}`);
-    }
   }
   return lines;
 }
@@ -293,12 +293,15 @@ function renderCiPool(view, opts, state = {}) {
     } else if (data.queued === 0 && (data.inProgressItems || []).length === 0) {
       lines.push(`  ${labelPad}  —`);
     } else {
-      // 대기 칩
+      // 대기 칩 — { number, repoAbbr, promptId } 객체 또는 숫자 모두 처리
       let chipsStr = '';
-      for (const pr of (data.queuedPrs || [])) {
-        const prId   = `#${pr}`;
-        const minStr = data.oldestMin != null ? ` ${data.oldestMin}분` : '';
-        const chip   = `[${prId}${minStr}]`;
+      for (const item of (data.queuedPrs || [])) {
+        const num      = typeof item === 'object' ? item.number : item;
+        const abbr     = typeof item === 'object' ? (item.repoAbbr || 'sp') : 'sp';
+        const pid      = typeof item === 'object' ? item.promptId : null;
+        const prId     = `${abbr}#${num}${pid ? ` (${pid})` : ''}`;
+        const minStr   = data.oldestMin != null ? ` ${data.oldestMin}분` : '';
+        const chip     = `[${prId}${minStr}]`;
         chipsStr += isCong ? `${C.red}${chip}${C.reset}` : chip;
       }
       if (chipsStr || data.queued > 0) {
@@ -308,18 +311,22 @@ function renderCiPool(view, opts, state = {}) {
       }
     }
 
-    // 실행 중 └ 행 — 풀 이름은 행 머리(pool 레이블)로 이미 보이므로 반복하지 않음
+    // 실행 중 └ 행 — repoAbbr#prNum (promptId) 형식, 머지된 PR 은 회색 "머지 후 실행"
     for (const item of (data.inProgressItems || [])) {
-      const sp      = spinnerChar(spinnerFrame);
-      // ID: 프롬프트 ID 우선, 없으면 PR 번호
-      const idStr   = item.promptId || `#${item.prNumber}`;
-      // PR 번호: 프롬프트 ID 가 있을 때만 함께 표시
-      const prPart  = (item.promptId && item.prNumber) ? ` #${item.prNumber}` : '';
-      // 잡 레이블: 사람이 읽는 말로 (mac-light → 가벼운 검사), 풀 이름은 반복 안 함
-      const jLabel  = humanJobLabel(item.runnerKind) || item.runnerKind || '';
-      const ageStr  = item.ageMin != null ? ` ${item.ageMin}분` : '';
-      const inner   = `${sp} ${idStr}${prPart}  ${jLabel}${ageStr}`;
-      lines.push(`    ${C.dim}└${C.reset} ${truncateWidth(inner, Math.max(4, w - 6))}`);
+      const abbr   = item.repoAbbr || 'sp';
+      const prStr  = item.prNumber ? `${abbr}#${item.prNumber}` : null;
+      const pidPart = item.promptId ? ` (${item.promptId})` : '';
+      const idStr  = prStr ? `${prStr}${pidPart}` : (item.promptId || '?');
+      const jLabel = humanJobLabel(item.runnerKind) || item.runnerKind || '';
+      const ageStr = item.ageMin != null ? ` ${item.ageMin}분` : '';
+      if (item.isMerged) {
+        const inner = `[머지 후 실행] ${idStr}  ${jLabel}${ageStr}`;
+        lines.push(`    ${C.dim}└ ${truncateWidth(inner, Math.max(4, w - 6))}${C.reset}`);
+      } else {
+        const sp    = spinnerChar(spinnerFrame);
+        const inner = `${sp} ${idStr}  ${jLabel}${ageStr}`;
+        lines.push(`    ${C.dim}└${C.reset} ${truncateWidth(inner, Math.max(4, w - 6))}`);
+      }
     }
   }
 
@@ -329,13 +336,20 @@ function renderCiPool(view, opts, state = {}) {
     const uLabel = padEndWidth('미배정', POOL_LABEL_W);
     lines.push(`  ${C.yellow}${uLabel}${C.reset}`);
     for (const item of unassignedData.inProgressItems) {
-      const sp     = spinnerChar(spinnerFrame);
-      const idStr  = item.promptId || `#${item.prNumber}`;
-      const prPart = (item.promptId && item.prNumber) ? ` #${item.prNumber}` : '';
-      const jLabel = humanJobLabel(item.runnerKind) || item.runnerKind || '';
-      const ageStr = item.ageMin != null ? ` ${item.ageMin}분` : '';
-      const inner  = `${sp} ${idStr}${prPart}  ${jLabel}${ageStr}`;
-      lines.push(`    ${C.dim}└${C.reset} ${C.yellow}${truncateWidth(inner, Math.max(4, w - 6))}${C.reset}`);
+      const abbr    = item.repoAbbr || 'sp';
+      const prStr   = item.prNumber ? `${abbr}#${item.prNumber}` : null;
+      const pidPart = item.promptId ? ` (${item.promptId})` : '';
+      const idStr   = prStr ? `${prStr}${pidPart}` : (item.promptId || '?');
+      const jLabel  = humanJobLabel(item.runnerKind) || item.runnerKind || '';
+      const ageStr  = item.ageMin != null ? ` ${item.ageMin}분` : '';
+      if (item.isMerged) {
+        const inner = `[머지 후 실행] ${idStr}  ${jLabel}${ageStr}`;
+        lines.push(`    ${C.dim}└ ${truncateWidth(inner, Math.max(4, w - 6))}${C.reset}`);
+      } else {
+        const sp    = spinnerChar(spinnerFrame);
+        const inner = `${sp} ${idStr}  ${jLabel}${ageStr}`;
+        lines.push(`    ${C.dim}└${C.reset} ${C.yellow}${truncateWidth(inner, Math.max(4, w - 6))}${C.reset}`);
+      }
     }
   }
 

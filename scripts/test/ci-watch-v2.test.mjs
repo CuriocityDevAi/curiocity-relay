@@ -1439,7 +1439,7 @@ test('T-GH2: ci_pending 카드가 어떤 pool 에도 없으면 storeport-heavy q
 
   const heavy = view.ciPools.get('storeport-heavy');
   assert.ok(heavy, 'storeport-heavy pool 존재');
-  assert.ok((heavy.queuedPrs || []).includes(888), 'ci_pending PR 888 이 storeport-heavy queuedPrs 에 추가됨');
+  assert.ok((heavy.queuedPrs || []).some(it => (typeof it === 'object' ? it.number : it) === 888), 'ci_pending PR 888 이 storeport-heavy queuedPrs 에 추가됨');
   assert.ok(heavy.queued > 0, 'queued 카운트 증가');
 
   const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
@@ -1506,7 +1506,7 @@ test('T-GH4: fetchForkRuns 주입 → fork-heavy queuedPrs 추가, CI 큐 FH 1 �
 
   const forkPool = view.ciPools.get('fork-heavy');
   assert.ok(forkPool, 'fork-heavy pool 존재');
-  assert.ok((forkPool.queuedPrs || []).includes(301), 'fork-heavy queuedPrs 에 PR 301 추가');
+  assert.ok((forkPool.queuedPrs || []).some(it => (typeof it === 'object' ? it.number : it) === 301), 'fork-heavy queuedPrs 에 PR 301 추가');
   assert.ok(forkPool.queued > 0, 'queued 카운트 > 0');
 
   const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });

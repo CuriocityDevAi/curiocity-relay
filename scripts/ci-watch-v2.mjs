@@ -104,11 +104,23 @@ function redraw(view) {
 let refreshTimer = null;
 let spinnerTimer  = null;
 
+// scheduleNext: 로컬 렌더(skipFetch)로만 3초마다 갱신, git fetch 는 비동기로 분리
+// → 이렇게 해야 git fetch(최대 10초) 가 이벤트 루프를 막아 스피너가 멈추는 현상 방지
 function scheduleNext() {
   if (refreshTimer) clearTimeout(refreshTimer);
   refreshTimer = setTimeout(() => {
     if (!uiState.filterMode && !uiState.detailCard) {
-      try { tickOnce(); } catch (e) { process.stderr.write(`[ci-watch-v2] tick: ${e?.message}\n`); }
+      try { tickOnce({ skipFetch: true }); } catch (e) { process.stderr.write(`[ci-watch-v2] tick: ${e?.message}\n`); }
+      // 30초 간격 비동기 fetch (maybeGitFetchAsync 내부 인터벌 가드 있음)
+      if (!_fetchingBackground) {
+        _fetchingBackground = true;
+        maybeGitFetchAsync(REPO_ROOT, Date.now(), 10_000).then(() => {
+          _fetchingBackground = false;
+          if (!uiState.filterMode && !uiState.detailCard) {
+            try { tickOnce({ skipFetch: true }); } catch {}
+          }
+        }).catch(() => { _fetchingBackground = false; });
+      }
     }
     scheduleNext();
   }, LOCAL_REFRESH_MS);

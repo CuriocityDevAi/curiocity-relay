@@ -18,6 +18,34 @@ import {
   gitCatFileBatch,
 } from './sources-git.mjs';
 
+// ── CI 없는 레포 (PR CI 워크플로 없음 → ci_pending 건너뜀) ───────────────
+const NO_CI_REPOS = new Set(['curiocity-relay']);
+
+/** PR 정보 → 레포 약칭 (sp · fk · rl) */
+function getRepoAbbr(prInfo) {
+  if (!prInfo) return 'sp';
+  const owner = prInfo.owner || '';
+  const repo = prInfo.repo || (prInfo.url ? (prInfo.url.split('/').slice(-2)[0] || '') : '');
+  if (repo === 'curiocity-relay') return 'rl';
+  if (owner === 'narisolutions' || repo.includes('fork') || repo.includes('agilo')) return 'fk';
+  return 'sp';
+}
+
+/** PR 번호 → 큐 아이템 객체 { number, repoAbbr, promptId } */
+function toPrQueueItem(pr, prToCard) {
+  const num = typeof pr === 'object' && pr !== null
+    ? (pr.number ?? Number(String(pr).replace(/^#/, '')))
+    : Number(String(pr ?? '').replace(/^#/, ''));
+  if (isNaN(num) || num <= 0) return null;
+  const card = prToCard.get(num);
+  return { number: num, repoAbbr: getRepoAbbr(card?.extra?.pr), promptId: card?.id || null };
+}
+
+/** queuedPrs 에서 PR 번호 비교 (숫자 또는 { number } 객체 모두 처리) */
+function queuedHasPr(queuedPrs, prNum) {
+  return (queuedPrs || []).some(it => (typeof it === 'object' ? it.number : it) === prNum);
+}
+
 // ── 큐 정체 판정 기준 상수 ────────────────────────────────────────────────
 export const HUB_PICKUP_RED_SEC = 60;
 export const CI_PICKUP_RED_SEC  = 60;
@@ -346,6 +374,19 @@ export function buildExtendedView({
     }
   }
 
+  // 2.1) CI 없는 레포 PR → ci_pending 건너뛰고 review 로 승격
+  for (const card of base.cards) {
+    if (card.column !== 'ci_pending') continue;
+    const pr = card.extra?.pr;
+    if (!pr) continue;
+    const repo = pr.repo || (pr.url ? pr.url.split('/').slice(-2)[0] : null);
+    if (repo && NO_CI_REPOS.has(repo)) {
+      card.column   = 'review';
+      card.predicted = true;
+      card.reason   = null;
+    }
+  }
+
   // 2.5) 비-큐 카드 claims 단일 배치 프리로드 (git cat-file --batch 1회)
   // null(git 없음/실패) → 캐싱 않음 → 로컬 폴백. queue 카드는 pipeline-view 에서 처리 완료.
   const _claimCache = new Map(); // id → claim object (null 미저장 → 로컬 폴백)
@@ -462,14 +503,23 @@ export function buildExtendedView({
         ageMin:      runningMin ?? card?.ageMin ?? null,
         actualPool,
         runner_name: runnerName,
+        repoAbbr:    getRepoAbbr(card?.extra?.pr),
+        isMerged:    card?.column === 'merge',
       };
     }).filter(x => x.prNumber !== null);
   }
 
+  // storeport 풀 대기열 — 각 항목을 { number, repoAbbr, promptId } 객체로 변환
+  // relay/fork PR 이 runner 데이터 오류로 섞이더라도 올바른 레포 접두를 표시하기 위해
+  const spHeavyQueued = (heavyData.queued_prs || [])
+    .map(pr => toPrQueueItem(pr, prToCard)).filter(Boolean);
+  const spLightQueued = (lightData.queued_prs || [])
+    .map(pr => toPrQueueItem(pr, prToCard)).filter(Boolean);
+
   const ciPools = new Map([
     ['storeport-heavy', {
-      queued:           (heavyData.queued_prs || []).length,
-      queuedPrs:        heavyData.queued_prs || [],
+      queued:           spHeavyQueued.length,
+      queuedPrs:        spHeavyQueued,
       oldestMin:        heavyData.oldest_queued_min ?? null,
       oldestSec:        heavyData.oldest_queued_min != null ? heavyData.oldest_queued_min * 60 : null,
       inProgressItems:  mapInProgress(heavyData.in_progress, 'heavy-mac'),
@@ -478,8 +528,8 @@ export function buildExtendedView({
       congested:        false,
     }],
     ['storeport-light', {
-      queued:           (lightData.queued_prs || []).length,
-      queuedPrs:        lightData.queued_prs || [],
+      queued:           spLightQueued.length,
+      queuedPrs:        spLightQueued,
       oldestMin:        lightData.oldest_queued_min ?? null,
       oldestSec:        lightData.oldest_queued_min != null ? lightData.oldest_queued_min * 60 : null,
       inProgressItems:  mapInProgress(lightData.in_progress, 'light-mac'),
@@ -532,7 +582,7 @@ export function buildExtendedView({
     if (!pr) continue;
     let inAnyPool = false;
     for (const pd of ciPools.values()) {
-      if ((pd.queuedPrs || []).includes(pr)) { inAnyPool = true; break; }
+      if (queuedHasPr(pd.queuedPrs, pr)) { inAnyPool = true; break; }
       if ((pd.inProgressItems || []).some(i => i.prNumber === pr)) { inAnyPool = true; break; }
     }
     if (inAnyPool) continue;
@@ -542,7 +592,8 @@ export function buildExtendedView({
     const targetPool = isFork ? 'fork-heavy' : 'storeport-heavy';
     const td = ciPools.get(targetPool);
     if (td) {
-      td.queuedPrs = [...(td.queuedPrs || []), pr];
+      const qItem = toPrQueueItem(pr, prToCard);
+      td.queuedPrs = [...(td.queuedPrs || []), qItem || pr];
       td.queued    = (td.queued || 0) + 1;
       if (td.oldestMin == null || (card.ageMin != null && card.ageMin > td.oldestMin)) {
         td.oldestMin = card.ageMin;
@@ -563,8 +614,10 @@ export function buildExtendedView({
         const forkPool = run.kind === 'fork-light' ? 'fork-light' : 'fork-heavy';
         const fd = ciPools.get(forkPool);
         if (!fd) continue;
-        if (!(fd.queuedPrs || []).includes(run.prNumber)) {
-          fd.queuedPrs = [...(fd.queuedPrs || []), run.prNumber];
+        if (!queuedHasPr(fd.queuedPrs, run.prNumber)) {
+          const qItem = toPrQueueItem(run.prNumber, prToCard)
+            || { number: run.prNumber, repoAbbr: 'fk', promptId: null };
+          fd.queuedPrs = [...(fd.queuedPrs || []), qItem];
           fd.queued    = (fd.queued || 0) + 1;
         }
         if (run.ageMin != null && (fd.oldestMin == null || run.ageMin > fd.oldestMin)) {
@@ -585,6 +638,8 @@ export function buildExtendedView({
             promptId:   card?.id || null,
             runnerKind: run.runner_name || forkPool,
             ageMin:     run.ageMin,
+            repoAbbr:   'fk',
+            isMerged:   card?.column === 'merge',
           }];
         }
         const card = prToCard.get(run.prNumber);
@@ -727,11 +782,15 @@ export function buildExtendedView({
       const threshold = pool.startsWith('fork') ? CLOUD_PICKUP_RED_SEC : CI_PICKUP_RED_SEC;
       if (oldestSec != null && oldestSec > threshold) {
         data.congested = true;
+        const firstPr = data.queuedPrs?.[0];
+        const firstPrId = firstPr
+          ? (typeof firstPr === 'object' ? `${firstPr.repoAbbr}#${firstPr.number}` : `#${firstPr}`)
+          : null;
         congestionAlerts.push({
           kind:     'ci_queue',
           pool,
           poolAbbr: POOL_ABBR[pool] || pool,
-          id:       data.queuedPrs[0] ? `#${data.queuedPrs[0]}` : null,
+          id:       firstPrId,
           ageSec:   oldestSec,
           ageMin:   data.oldestMin,
           reason:   `${POOL_ABBR[pool]} 러너 idle 인데 ${data.oldestMin}분째 queued — 러너 재연결 필요`,
@@ -762,17 +821,18 @@ export function buildExtendedView({
       const isForkPr = card.extra.pr.owner === 'narisolutions'
         || (card.extra.pr.repo || '').includes('fork');
       const isInForkPool = pool.startsWith('fork');
+      const prAbbr = item.repoAbbr || (isForkPr ? 'fk' : 'sp');
       if (isForkPr && !isInForkPool) {
         congestionAlerts.push({
           kind: 'pool_assign_error', pool, poolAbbr: POOL_ABBR[pool] || pool,
-          id: `#${item.prNumber}`, ageSec: null, ageMin: null,
-          reason: `fork PR #${item.prNumber} 가 ${POOL_ABBR[pool] || pool}(storeport) 풀에 배정 — 오류`,
+          id: `${prAbbr}#${item.prNumber}`, ageSec: null, ageMin: null,
+          reason: `fork PR ${prAbbr}#${item.prNumber} 가 ${POOL_ABBR[pool] || pool}(storeport) 풀에 배정 — 오류`,
         });
       } else if (!isForkPr && isInForkPool) {
         congestionAlerts.push({
           kind: 'pool_assign_error', pool, poolAbbr: POOL_ABBR[pool] || pool,
-          id: `#${item.prNumber}`, ageSec: null, ageMin: null,
-          reason: `storeport PR #${item.prNumber} 가 ${POOL_ABBR[pool] || pool}(fork) 풀에 배정 — 오류`,
+          id: `${prAbbr}#${item.prNumber}`, ageSec: null, ageMin: null,
+          reason: `storeport PR ${prAbbr}#${item.prNumber} 가 ${POOL_ABBR[pool] || pool}(fork) 풀에 배정 — 오류`,
         });
       }
     }
@@ -792,4 +852,4 @@ export function buildExtendedView({
   };
 }
 
-export { POOL_ORDER as _POOL_ORDER, IN_PROGRESS_STAGES, QUEUE_HUBS };
+export { POOL_ORDER as _POOL_ORDER, IN_PROGRESS_STAGES, QUEUE_HUBS, getRepoAbbr, NO_CI_REPOS };
