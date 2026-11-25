@@ -1,8 +1,10 @@
-// scripts/watch/sources-git.mjs  M2-1125-Q — 배치 읽기 + 날짜 필터로 부팅 가속
+// scripts/watch/sources-git.mjs  M2-1125-T — async git reads (스피너 freeze 방지)
 // relay 작업 트리 대신 origin/main git 오브젝트에서 데이터를 읽어 stale 방지.
 // 러너 폴더(~/projects/curiocity-relay)가 origin/main 보다 뒤처져도 최신 데이터를 보장.
 
-import { execFileSync, spawn } from 'node:child_process';
+import { execFileSync, spawn, execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+const _execFileAsync = promisify(execFile);
 
 // ── 모듈 레벨 fetch 상태 ─────────────────────────────────────────────────
 const _fs = {
@@ -73,6 +75,11 @@ export function getDataOrigin(nowMs = Date.now()) {
   };
 }
 
+/** fetch 인터벌 가드 리셋 — 측정/테스트용 강제 재fetch 에 사용. */
+export function resetFetchGuard() {
+  _fs.fetchedAt = 0;
+}
+
 // ── 저수준 git 읽기 ──────────────────────────────────────────────────────
 
 export function gitShowText(repoRoot, relPath) {
@@ -109,6 +116,28 @@ export function gitListPaths(repoRoot, prefix) {
 }
 
 /**
+ * git cat-file --batch 응답 버퍼를 파싱해 Map<path, text|null> 로 변환.
+ * sync/async 양쪽에서 공유.
+ */
+function _parseCatFileBatch(raw, relPaths) {
+  const result = new Map();
+  let pos = 0;
+  for (const p of relPaths) {
+    const nl = raw.indexOf(0x0a, pos);
+    if (nl < 0) { result.set(p, null); continue; }
+    const header = raw.slice(pos, nl).toString('utf8');
+    pos = nl + 1;
+    const parts = header.split(' ');
+    if (parts[1] === 'missing' || parts.length < 3) { result.set(p, null); continue; }
+    const size = parseInt(parts[2], 10);
+    if (isNaN(size) || size < 0) { result.set(p, null); continue; }
+    result.set(p, raw.slice(pos, pos + size).toString('utf8'));
+    pos += size + 1;
+  }
+  return result;
+}
+
+/**
  * git cat-file --batch 로 여러 경로를 프로세스 1개로 한 번에 읽기.
  * @param {string} repoRoot
  * @param {string[]} relPaths  'status/claims/X.json' 형태
@@ -129,23 +158,7 @@ export function gitCatFileBatch(repoRoot, relPaths) {
     for (const p of relPaths) result.set(p, null);
     return result;
   }
-  let pos = 0;
-  for (const p of relPaths) {
-    const nl = raw.indexOf(0x0a, pos);
-    if (nl < 0) { result.set(p, null); continue; }
-    const header = raw.slice(pos, nl).toString('utf8');
-    pos = nl + 1;
-    const parts = header.split(' ');
-    if (parts[1] === 'missing' || parts.length < 3) {
-      result.set(p, null);
-      continue;
-    }
-    const size = parseInt(parts[2], 10);
-    if (isNaN(size) || size < 0) { result.set(p, null); continue; }
-    result.set(p, raw.slice(pos, pos + size).toString('utf8'));
-    pos += size + 1; // +1 for trailing \n after content
-  }
-  return result;
+  return _parseCatFileBatch(raw, relPaths);
 }
 
 // ── 고수준 relay 데이터 접근 ─────────────────────────────────────────────
@@ -214,4 +227,90 @@ export function scanClaimsDirGitFast(repoRoot, mmddSet = null) {
 
 export function scanClaimsDirGit(repoRoot) {
   return scanClaimsDirGitFast(repoRoot, null);
+}
+
+// ── 비동기 git 읽기 (이벤트 루프 비차단 — 스피너 freeze 방지) ──────────────
+
+export async function gitShowTextAsync(repoRoot, relPath) {
+  try {
+    const { stdout } = await _execFileAsync(
+      'git', ['-C', repoRoot, 'show', `origin/main:${relPath}`],
+      { timeout: 5_000, maxBuffer: 4 * 1024 * 1024 },
+    );
+    return stdout;
+  } catch { return null; }
+}
+
+export async function gitListPathsAsync(repoRoot, prefix) {
+  try {
+    const { stdout } = await _execFileAsync(
+      'git', ['-C', repoRoot, 'ls-tree', '-r', '--name-only', 'origin/main', prefix],
+      { timeout: 5_000, maxBuffer: 2 * 1024 * 1024 },
+    );
+    return stdout.split('\n').filter(Boolean);
+  } catch { return []; }
+}
+
+export async function gitCatFileBatchAsync(repoRoot, relPaths) {
+  if (relPaths.length === 0) return new Map();
+  const input = relPaths.map(p => `origin/main:${p}`).join('\n') + '\n';
+  return new Promise(resolve => {
+    const child = spawn('git', ['-C', repoRoot, 'cat-file', '--batch'], {
+      stdio: ['pipe', 'pipe', 'ignore'],
+    });
+    const chunks = [];
+    child.stdout.on('data', c => chunks.push(c));
+    const timer = setTimeout(() => {
+      try { child.kill(); } catch {}
+      const r = new Map();
+      for (const p of relPaths) r.set(p, null);
+      resolve(r);
+    }, 15_000);
+    child.on('close', () => {
+      clearTimeout(timer);
+      resolve(_parseCatFileBatch(Buffer.concat(chunks), relPaths));
+    });
+    child.on('error', () => {
+      clearTimeout(timer);
+      const r = new Map();
+      for (const p of relPaths) r.set(p, null);
+      resolve(r);
+    });
+    child.stdin.write(input);
+    child.stdin.end();
+  });
+}
+
+export async function readAllJsonGitAsync(repoRoot) {
+  const txt = await gitShowTextAsync(repoRoot, 'status/runners/all.json');
+  if (!txt) return null;
+  try { return JSON.parse(txt); } catch { return null; }
+}
+
+export async function readClaimGitAsync(repoRoot, id) {
+  const txt = await gitShowTextAsync(repoRoot, `status/claims/${id}.json`);
+  if (!txt) return null;
+  try { return JSON.parse(txt); } catch { return null; }
+}
+
+export async function scanClaimsDirGitFastAsync(repoRoot, mmddSet = null) {
+  const paths = await gitListPathsAsync(repoRoot, 'status/claims');
+  const filtered = paths.filter(p => {
+    if (!p.endsWith('.json')) return false;
+    const id = p.split('/').pop().replace(/\.json$/, '');
+    if (!_PROMPT_ID_RE.test(id)) return false;
+    if (mmddSet) {
+      const m = id.match(/-(\d{4})-/);
+      if (!m || !mmddSet.has(m[1])) return false;
+    }
+    return true;
+  });
+  if (filtered.length === 0) return [];
+  const contents = await gitCatFileBatchAsync(repoRoot, filtered);
+  const out = [];
+  for (const [, text] of contents) {
+    if (!text) continue;
+    try { const d = JSON.parse(text); if (d) out.push(d); } catch {}
+  }
+  return out;
 }

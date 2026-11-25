@@ -115,10 +115,18 @@ function renderSummaryBar(view, opts) {
   return left + right;
 }
 
-function renderDataOriginLine(dataOrigin) {
+function renderDataOriginLine(dataOrigin, nowMs = Date.now()) {
   if (!dataOrigin) return null;
   const shaStr = dataOrigin.sha ? `@${dataOrigin.sha}` : '@(unknown)';
-  const ageStr = dataOrigin.ageSec != null ? `${dataOrigin.ageSec}s 전 fetch` : 'fetch 미완';
+  let ageStr;
+  if (dataOrigin.builtAt) {
+    const ageS = Math.round((nowMs - dataOrigin.builtAt) / 1000);
+    ageStr = `${ageS}s 전`;
+  } else if (dataOrigin.ageSec != null) {
+    ageStr = `${dataOrigin.ageSec}s 전 fetch`;
+  } else {
+    ageStr = '수집 중';
+  }
   return `${C.dim}data origin/main ${shaStr} · ${ageStr}${C.reset}`;
 }
 
@@ -630,12 +638,14 @@ function renderNarrow(view, options) {
 
 /**
  * @param {object} view  buildExtendedView() 또는 buildPipelineView() 결과
- * @param {object} opts  { terminalWidth?, timeStr?, version?, alertCount?, extraKeys?, board? }
+ * @param {object} opts  { terminalWidth?, timeStr?, version?, alertCount?, extraKeys?, board?, nowMs? }
  *   board=true → 9칸 박스 칸반 (M2-1125-H 호환)
+ *   nowMs → 데이터 나이 계산용 현재 시각 (스피너 타이머마다 업데이트)
  * @param {object} state { cursor?, filter?, doneExpanded?, detailCard?, spinnerFrame? }
  */
 export function renderV2(view, opts = {}, state = {}) {
   const width = opts.terminalWidth || 100;
+  const nowMs = opts.nowMs ?? Date.now();
 
   // 박스 칸반 모드 (--board, M2-1125-H 호환)
   if (opts.board) {
@@ -649,7 +659,7 @@ export function renderV2(view, opts = {}, state = {}) {
 
   const lines = [];
   lines.push(renderSummaryBar(v, { ...opts, terminalWidth: width }));
-  const originLine = renderDataOriginLine(v.dataOrigin);
+  const originLine = renderDataOriginLine(v.dataOrigin, nowMs);
   if (originLine) lines.push(originLine);
   lines.push(...renderCaution(v, { terminalWidth: width }));
   lines.push(...renderHubQueue(v, { terminalWidth: width }, state));
