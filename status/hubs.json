@@ -2,10 +2,26 @@
   "schema_version": 1,
   "built_at": "2026-11-25T07:51:45.241Z",
   "hubs": {
+    "n0": {
+      "state": "idle",
+      "last_activity": null,
+      "updated_at": "2026-11-25T07:48:04.857Z"
+    },
+    "t0": {
+      "state": "idle",
+      "last_activity": "2026-10-06T09:39:56.722Z",
+      "updated_at": "2026-11-25T07:48:04.857Z"
+    },
+    "m0": {
+      "state": "running",
+      "last_activity": "2026-11-25T07:47:44.597Z",
+      "session": "a7ca08e4-a8f6-450e-baa2-fccf8734026c",
+      "updated_at": "2026-11-25T07:48:04.857Z"
+    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
-      "updated_at": "2026-11-25T07:44:14.463Z",
+      "updated_at": "2026-11-25T07:48:04.857Z",
       "inquiry_files": [
         "K0-0807-U-inquiry.md",
         "K0-0807-W-inquiry.md",
@@ -13,16 +29,12 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ],
-      "last_round": "K0-0918-F",
-      "last_report": "k0/K0-0918-F-report.md"
+      ]
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-25T07:44:14.463Z",
-      "last_round": "K1-0918-H",
-      "last_report": "k1/K1-0918-H-report.md"
+      "updated_at": "2026-11-25T07:48:04.857Z"
     },
     "k2": {
       "state": "idle",
