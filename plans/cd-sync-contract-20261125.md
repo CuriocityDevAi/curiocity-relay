@@ -1,8 +1,10 @@
-# 계약서: 손님화면(CD) ↔ POS 동기화 — v1 (2026-11-25 · 오케)
+# 계약서: 손님화면(CD) ↔ POS 동기화 — v1.1 (2026-11-25 · 오케)
 
 정본 흐름: `ledger/decision-cd-pos-sync-flow-20261125.md` · 디자인: `ledger/decision-cd-pos-sync-design-20261125.md` · 캔버스 https://claude.ai/artifact/VFoyrbxnvgB7akmS3xHvVW
 
 **이 문서가 세 PR(서버 M0 · CD M1 · POS M3)의 단일 계약.** 필드·값 이름을 바꾸려면 PR 본문에 사유를 쓰고 이 파일 개정을 오케에게 요청(임의 변경 금지). 오늘 #438↔#263 처럼 서로 다르게 가정하는 일을 막기 위함.
+
+개정 이력: v1.1 (19:00) — `source` 는 `state === 'none'` 일 때 `null` 허용(R0-1125-AH 지적, 오케 개정). 그 외 v1 그대로.
 
 ## 1. 두 갈래 상태 (CD snapshot 에 실림)
 ```ts
@@ -20,13 +22,13 @@ type CustomerFlowState =
 
 interface CustomerFlow {
   state: CustomerFlowState;
-  phone: string | null;          // 숫자만. entering/first_visit/confirming 동안만 전체, 그 외 서버가 마스킹 문자열 별도 제공
+  phone: string | null;          // 숫자만. entering/first_visit/confirming 동안만 전체, 그 외 null (phone_masked 사용)
   phone_masked: string | null;   // 예 "0813-••••-42480"
   is_first_visit: boolean;
   points_balance: number | null; // 현재 적립금(IDR, 정수)
   points_to_earn: number | null; // 이번 주문 적립 예정 (세전 금액 기준 기존 규칙)
-  points_earned: number | null;  // 실제 적립 완료 시에만 값
-  source: 'cd' | 'pos';
+  points_earned: number | null;  // 실제 적립 완료 시에만 값, 그 외 null
+  source: 'cd' | 'pos' | null;   // v1.1: state === 'none' 일 때만 null
   updated_at: string;
 }
 
@@ -47,17 +49,18 @@ interface CdSnapshot {             // 기존 snapshot 에 필드 추가 (기존 
 | CD | `continue_first_visit` | first_visit → confirming |
 | CD | `change_number` | first_visit/confirming → entering (phone 비움) |
 | CD | `confirm` | confirming → confirmed |
-| CD | `skip` | entering → skipped |
+| CD | `skip` | entering → skipped (none 에서는 거부) |
 | CD | `confirm_timeout` | confirming → unconfirmed |
 | POS | `link_phone {phone}` | 아무 상태 → confirming (source pos) |
 | POS | `reset` | 아무 상태 → none (Next customer anyway · 다음 주문) |
 
-엔드포인트 경로는 **기존 CD·로열티 엔드포인트를 먼저 재사용**(M0 대사표). 새로 만들면 `POST /customer-display/customer-flow` (CD 인증) · `POST /admin/pos/customer-flow` (POS 인증), body `{ action, phone? }`, 응답 `200 { ok: true, customer_flow }` · 허용 안 되는 전이 `200 { ok: false, reason: 'invalid_transition', customer_flow }` (상태 코드로 분기하지 않음 — #438 방식).
+엔드포인트: `POST /customer-display/customer-flow` (CD 인증) · `POST /admin/pos/customer-flow` (POS 인증), body `{ action, phone? }`, 응답 `200 { ok: true, customer_flow }` · 허용 안 되는 전이 `200 { ok: false, reason: 'invalid_transition', customer_flow }` (상태 코드로 분기하지 않음 — #438 방식). 추가 필드(snapshot 등)는 허용.
 
 ## 3. 포인트 적립 규칙 (서버 단독 · 멱등)
 - 적립 = `payment_phase === 'paid'` **AND** `customer_flow.state === 'confirmed'`. 둘 중 나중에 도달한 쪽 이벤트에서 1회 적립(멱등 키 = order_id). 적립 시 `points_earned` 채움.
 - `unconfirmed`/`skipped`/`none` 으로 결제 완료 → 적립 없음. POS 칩에 "Not confirmed · Link customer".
 - `confirmed` 인데 결제 `failed/cancelled` → 적립 없음, CD 는 "Payment was not completed".
+- customer_flow_state 가 없는 기존 주문(POS Link customer 옛 경로)은 기존 적립 동작 유지.
 
 ## 4. CD 화면 선택 (CD 앱 단독 규칙 · 레이아웃 = 모든 경우 좌 1/3 + 우 2/3 통일, Kyu 18:00)
 - 우 2/3 = customer_flow (entering → 키패드 · first_visit → 첫 방문 · confirming → 확인 · confirmed → 결제 전이면 "Points will be added once payment is done", paid 면 Points earned · failed/cancelled 면 Payment was not completed)
