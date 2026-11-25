@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T12:54:48.755Z",
+  "at": "2026-11-25T12:57:40.722Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -25,7 +25,9 @@
       "last_activity": "2026-11-25T12:49:22.733Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1125-AK",
+      "started_at": "2026-11-25T12:57:39.355Z",
+      "model": "sonnet",
       "last_activity": "2026-11-25T12:26:24.610Z"
     }
   },
@@ -39,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.74,
-    "compressed_gb": 3.46,
+    "used_gb": 15.8,
+    "compressed_gb": 2.94,
     "swap_used_gb": 3.9,
     "pressure": "normal",
-    "at": "2026-11-25T12:54:16.430Z"
+    "at": "2026-11-25T12:57:06.941Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -51,32 +53,30 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-25T12:50:51.561Z",
+      "at": "2026-11-25T12:55:58.633Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 14,
+      "api_calls": 11,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 1,
-        "queued_prs": [
-          266
-        ],
-        "oldest_queued_min": 2,
-        "oldest_queued_pr": "fork:#266",
+        "queued": 0,
+        "queued_prs": [],
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
         "in_progress": [
           {
             "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
             "pr": "#266",
             "pr_display": "fork:#266",
-            "job": "lint",
-            "step": "Run npm run lint",
-            "running_min": 1,
-            "runner": "curiocity-mac-fork-light",
+            "job": "playwright",
+            "step": "Run Playwright harnesses",
+            "running_min": 2,
+            "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
         ]
@@ -93,14 +93,14 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 2,
+      "cloud_today": 1,
       "today": {
         "mac-heavy": {
-          "jobs": 239,
-          "avg_wait_min": 2.5,
+          "jobs": 241,
+          "avg_wait_min": 2.4,
           "avg_run_min": 3.1,
-          "success_rate": 72,
-          "run_min_total": 751.9999999999999
+          "success_rate": 71.8,
+          "run_min_total": 753.3999999999999
         },
         "mac-light": {
           "jobs": 277,
@@ -110,27 +110,27 @@
           "run_min_total": 174.70000000000044
         },
         "cloud": {
-          "jobs": 175,
+          "jobs": 176,
           "avg_wait_min": 0,
           "avg_run_min": 1.6,
-          "success_rate": 60,
-          "run_min_total": 277.19999999999965
+          "success_rate": 60.2,
+          "run_min_total": 277.29999999999967
         },
-        "cloud_cost_est_usd": 2.896,
+        "cloud_cost_est_usd": 2.904,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 193.6999999999999
       },
-      "jsonl_added": 12,
+      "jsonl_added": 3,
       "alerts": []
     },
-    "took_ms": 17211,
-    "at": "2026-11-25T12:51:06.191Z"
+    "took_ms": 10332,
+    "at": "2026-11-25T12:56:07.078Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 81,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:45:48.122Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:45:48.123Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:45:48.826Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:45:48.826Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:m1 2026-11-25T12:47:16.584Z] [report-path] M1-1125-U: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-25T12:47:20.197Z] M1-1125-U → done · runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1125-U-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1125-U.json · {\"id\":\"M1-1125-U\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-25T12:47:21.058Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1125-U-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1125-U.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M1-1125-U.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m3 2026-11-25T12:49:20.486Z] [report-path] M3-1125-S: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-25T12:49:23.939Z] M3-1125-S → done · runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1125-S-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1125-S.json · {\"id\":\"M3-1125-S\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-25T12:49:24.044Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1125-S-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1125-S.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M3-1125-S.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:45:48.123Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:45:48.826Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:45:48.826Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:m1 2026-11-25T12:47:16.584Z] [report-path] M1-1125-U: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-25T12:47:20.197Z] M1-1125-U → done · runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1125-U-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1125-U.json · {\"id\":\"M1-1125-U\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-25T12:47:21.058Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1125-U-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1125-U.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M1-1125-U.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m3 2026-11-25T12:49:20.486Z] [report-path] M3-1125-S: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-25T12:49:23.939Z] M3-1125-S → done · runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1125-S-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1125-S.json · {\"id\":\"M3-1125-S\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-25T12:49:24.044Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1125-S-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1125-S.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M3-1125-S.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-25T12:57:39.355Z] pick · R0-1125-AK · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -153,12 +153,12 @@
     {
       "name": "curiocity-mac-fork",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "curiocity-mac-fork-light",
       "status": "online",
-      "busy": true
+      "busy": false
     }
   ]
 }
