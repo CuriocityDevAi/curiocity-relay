@@ -38,6 +38,12 @@ install_homebrew() {
     fi
     _step "Installing Homebrew..."
     _run /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # 현재 세션 PATH 에 brew 추가 (새 셸에선 자동이지만 현 세션은 명시적으로 필요)
+    if [ "${DRY_RUN:-0}" = "1" ]; then
+        _dry "eval \"\$(${HOMEBREW_PREFIX}/bin/brew shellenv)\""
+    elif [ -x "${HOMEBREW_PREFIX}/bin/brew" ]; then
+        eval "$("${HOMEBREW_PREFIX}/bin/brew" shellenv)"
+    fi
     _ok "Homebrew installed"
 }
 
