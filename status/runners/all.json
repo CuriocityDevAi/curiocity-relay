@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T23:38:32.618Z",
+  "at": "2026-11-25T23:38:53.481Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -19,10 +19,8 @@
       "last_activity": "2026-11-25T17:15:48.068Z"
     },
     "m2": {
-      "current": "M2-1125-AC",
-      "started_at": "2026-11-25T22:54:16.474Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-25T16:29:31.171Z"
+      "current": null,
+      "last_activity": "2026-11-25T23:38:49.476Z"
     },
     "m3": {
       "current": null,
@@ -35,10 +33,10 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 25132,
-    "totalMs": 2215434,
+    "lastMs": 26837,
+    "totalMs": 2242271,
     "phase": "await-landing",
-    "at": "2026-11-25T23:37:36.047Z"
+    "at": "2026-11-25T23:38:41.330Z"
   },
   "kyu_folder_intrusion": null,
   "mem": {
@@ -115,9 +113,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 104,
+  "isolated_reports_collected": 105,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1125-AS.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T23:18:05.423Z] sleep observed · gap=1107s · threshold=120s\n[hub-runner-v8.3.2:heartbeat 2026-11-25T23:21:21.211Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:state 2026-11-25T23:28:15.659Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.3.2:self-update 2026-11-25T23:28:15.683Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m2 2026-11-25T23:28:15.685Z] sleep gap 감지 1682s · 예산 보정 · 누적 1682s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-25T23:28:16.514Z] sleep gap 감지 1681s · 예산 보정 · 누적 1681s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-25T23:37:05.340Z] sleep gap 감지 512s · 예산 보정 · 누적 2193s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-25T23:37:05.914Z] sleep gap 감지 509s · 예산 보정 · 누적 2190s · phase=await-landing\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T23:37:15.143Z] sleep observed · gap=1150s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-25T23:37:15.504Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m1 2026-11-25T23:37:31.899Z] sleep gap 감지 22s · 예산 보정 · 누적 2215s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-25T23:37:36.047Z] sleep gap 감지 25s · 예산 보정 · 누적 2215s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:37:45.710Z] [gh-runner-watchdog] wake: mac-light Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:37:55.164Z] [gh-runner-watchdog] wake: mac-light Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:37:56.206Z] [gh-runner-watchdog] skip restart: data-stale\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:37:56.207Z] [gh-runner-watchdog] skip restart: no-ci-data",
+  "err_tail": "[hub-runner-v8.3.2:sleep-tracker 2026-11-25T23:18:05.423Z] sleep observed · gap=1107s · threshold=120s\n[hub-runner-v8.3.2:heartbeat 2026-11-25T23:21:21.211Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:state 2026-11-25T23:28:15.659Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.3.2:self-update 2026-11-25T23:28:15.683Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m2 2026-11-25T23:28:15.685Z] sleep gap 감지 1682s · 예산 보정 · 누적 1682s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-25T23:28:16.514Z] sleep gap 감지 1681s · 예산 보정 · 누적 1681s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-25T23:37:05.340Z] sleep gap 감지 512s · 예산 보정 · 누적 2193s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-25T23:37:05.914Z] sleep gap 감지 509s · 예산 보정 · 누적 2190s · phase=await-landing\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T23:37:15.143Z] sleep observed · gap=1150s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-25T23:37:15.504Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m1 2026-11-25T23:37:31.899Z] sleep gap 감지 22s · 예산 보정 · 누적 2215s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-25T23:37:36.047Z] sleep gap 감지 25s · 예산 보정 · 누적 2215s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:37:45.710Z] [gh-runner-watchdog] wake: mac-light Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:37:55.164Z] [gh-runner-watchdog] wake: mac-light Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:37:56.206Z] [gh-runner-watchdog] skip restart: data-stale\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:37:56.207Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:self-update 2026-11-25T23:38:36.423Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m1 2026-11-25T23:38:36.425Z] sleep gap 감지 26s · 예산 보정 · 누적 2241s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-25T23:38:41.330Z] sleep gap 감지 27s · 예산 보정 · 누적 2242s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-25T23:38:45.568Z] [report-path] M2-1125-AC: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 0,
