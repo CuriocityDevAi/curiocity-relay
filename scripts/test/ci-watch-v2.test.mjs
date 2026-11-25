@@ -352,6 +352,35 @@ test('T-W2: truncateWidth — 한글 포함 자르기', () => {
   assert.equal(truncateWidth('abc', 0), '');
 });
 
+test('T-W5: displayWidth — 경계 케이스 (VS-16 · ZWJ · 결합문자 · 피부색)', () => {
+  // U+FE0F 변형선택자 → 0칸 · ☎️(☎+VS-16) = 2
+  assert.equal(displayWidth('☎️'), 2, '☎️(☎+VS-16)=2 (현재 3이면 버그)');
+  // U+200D ZWJ 단독 → 0칸
+  assert.equal(displayWidth('‍'), 0, 'ZWJ 단독 0');
+  // 결합 발음 부호 U+0300 → 0칸 · 'è'(e+U+0300) = 1
+  assert.equal(displayWidth('è'), 1, 'è(e+U+0300)=1');
+  // 피부색 수식어 U+1F3FB → 0칸 · 👋🏾 = 2
+  assert.equal(displayWidth('\u{1F44B}\u{1F3FB}'), 2, '👋🏾=2 (skin tone 0칸)');
+  // ZWJ 이모지 묶음 → 2칸 한 덩어리
+  assert.equal(displayWidth('\u{1F468}‍\u{1F469}‍\u{1F467}'), 2, '👨‍👩‍👧=2 (ZWJ 묶음)');
+  // 추가 결합 범위 1AB0·20D0·FE20
+  assert.equal(displayWidth('a\u{1AB0}'), 1, 'U+1AB0 결합 0칸');
+  assert.equal(displayWidth('a⃐'), 1, 'U+20D0 Combining Enclosing 0칸');
+  assert.equal(displayWidth('a︠'), 1, 'U+FE20 Combining Half Mark 0칸');
+});
+
+test('T-W6: truncateWidth — grapheme cluster 경계 보존', () => {
+  const family = '\u{1F468}‍\u{1F469}‍\u{1F467}'; // 👨‍👩‍👧 width=2
+  // a(1)+family(2)+b(1) total=4, maxCols=3
+  // a fits(1), family fits(3), b overflows → pop family(2)→w=1, 1+2=3≤3 → 'a…'
+  assert.equal(truncateWidth('a' + family + 'b', 3), 'a…', 'ZWJ 묶음 통째로 팝');
+  // decomposed è: grapheme boundary 보존
+  const eGrave = 'è'; // è (e + combining grave)
+  // ab+è+cd total displayWidth=5, maxCols=4
+  // a(1)+b(1)+è(1→e는 첫cp)=3+c(1)=4, d overflows → 4+2=6>4 pop c(1)→3, 3+2=5>4 pop è(1)→2, 2+2=4 → 'ab…'
+  assert.equal(truncateWidth('ab' + eGrave + 'cd', 4), 'ab…', 'è grapheme 통째로 팝');
+});
+
 test('T-W3: padEndWidth — EAW 기준 패딩', () => {
   const p1 = padEndWidth('한', 5); // 2 → 3 spaces
   assert.equal(displayWidth(p1), 5, '한(2)+3spaces=5');
