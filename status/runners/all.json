@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T02:45:17.259Z",
+  "at": "2026-11-25T02:50:05.271Z",
   "pid": 74805,
   "runner": "v8.2",
   "poll_ms": 30000,
@@ -47,11 +47,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.63,
-    "compressed_gb": 3.84,
-    "swap_used_gb": 1.96,
+    "used_gb": 15.34,
+    "compressed_gb": 4.58,
+    "swap_used_gb": 1.89,
     "pressure": "normal",
-    "at": "2026-11-25T02:44:39.445Z"
+    "at": "2026-11-25T02:49:33.023Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -59,14 +59,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-25T02:44:05.173Z",
+      "at": "2026-11-25T02:49:28.344Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 24,
+      "api_calls": 14,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -74,80 +74,80 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "light": {
-        "queued": 3,
-        "oldest_queued_min": 1,
-        "oldest_queued_pr": "storeport:main",
         "in_progress": [
           {
             "repo": "CuriocityDevAi/storeport",
-            "pr": "#428",
-            "pr_display": "storeport:#428",
-            "job": "route",
-            "step": "Decide heavy runner placement",
-            "running_min": 1,
-            "runner": "curiocity-mac-light",
-            "kind": "mac-light"
+            "pr": "main",
+            "pr_display": "storeport:main",
+            "job": "heavy-mac",
+            "step": "Run ./.github/actions/heavy-steps",
+            "running_min": 4,
+            "runner": "Youngkyus-MacBook-Pro-M1",
+            "kind": "mac-heavy"
           }
         ]
+      },
+      "light": {
+        "queued": 0,
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
       },
       "cloud_in_progress": [
         {
           "repo": "CuriocityDevAi/storeport",
-          "pr": "#427",
-          "pr_display": "storeport:#427",
+          "pr": "#428",
+          "pr_display": "storeport:#428",
           "job": "heavy-cloud",
           "step": "Run ./.github/actions/heavy-steps",
-          "running_min": 18,
-          "runner": "GitHub Actions 1000007990",
+          "running_min": 5,
+          "runner": "GitHub Actions 1000007997",
           "kind": "cloud"
         }
       ],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 0,
+        "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 6,
+      "cloud_today": 1,
       "today": {
         "mac-heavy": {
-          "jobs": 24,
-          "avg_wait_min": 1.2,
-          "avg_run_min": 4,
-          "success_rate": 70.8,
+          "jobs": 25,
+          "avg_wait_min": 1.1,
+          "avg_run_min": 3.9,
+          "success_rate": 68,
           "run_min_total": 96.60000000000001
         },
         "mac-light": {
-          "jobs": 46,
-          "avg_wait_min": 1.5,
+          "jobs": 52,
+          "avg_wait_min": 1.6,
           "avg_run_min": 0.8,
-          "success_rate": 97.8,
-          "run_min_total": 38.79999999999998
+          "success_rate": 98.1,
+          "run_min_total": 41.59999999999997
         },
         "cloud": {
-          "jobs": 22,
+          "jobs": 23,
           "avg_wait_min": 0,
-          "avg_run_min": 1.5,
-          "success_rate": 59.1,
-          "run_min_total": 32.800000000000004
+          "avg_run_min": 2.2,
+          "success_rate": 56.5,
+          "run_min_total": 51
         },
-        "cloud_cost_est_usd": 0.344,
+        "cloud_cost_est_usd": 0.496,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 12.8
       },
-      "jsonl_added": 22,
+      "jsonl_added": 8,
       "alerts": []
     },
-    "took_ms": 18024,
-    "at": "2026-11-25T02:44:21.562Z"
+    "took_ms": 14814,
+    "at": "2026-11-25T02:49:41.516Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 16,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:41:49.442Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m2 2026-11-25T02:42:17.260Z] [report-path] M2-1125-F: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.2:claim 2026-11-25T02:42:20.794Z] M2-1125-F → done · runner-v8.2 cmux-split · 리포트 확인 m2/M2-1125-F-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1125-F.json · {\"id\":\"M2-1125-F\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-25T02:42:20.883Z\",\"note\":\"runner-v8.2 cmux-split · 리포트 확인 m2/M2-1125-F-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1125-F.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:42:24.593Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:42:56.672Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:43:31.102Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:44:04.328Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m0 2026-11-25T02:45:11.824Z] pick · M0-1125-E · model=opus · display=cmux-split\n[hub-runner-v8.2:m2 2026-11-25T02:45:12.813Z] pick · M2-1125-G · model=sonnet · display=cmux-split\n[hub-runner-v8.2:m3 2026-11-25T02:45:13.721Z] pick · M3-1125-D · model=sonnet · display=cmux-split\n[hub-runner-v8.2:r0 2026-11-25T02:45:14.630Z] pick · R0-1125-E · model=sonnet · display=cmux-split",
+  "err_tail": "[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1125-G.json · {\"id\":\"M2-1125-G\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-25T02:45:24.837Z\",\"note\":\"runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1125-G.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:claim 2026-11-25T02:45:27.464Z] M3-1125-D → started · runner-v8.2 · cmux-split · model=opus · source=queue-line · pane foreground=clau\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1125-D.json · {\"id\":\"M3-1125-D\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-25T02:45:27.554Z\",\"note\":\"runner-v8.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1125-D.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:claim 2026-11-25T02:45:30.248Z] R0-1125-E → started · runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-E.json · {\"id\":\"R0-1125-E\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-25T02:45:30.341Z\",\"note\":\"runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-E.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -160,7 +160,7 @@
     {
       "name": "curiocity-mac-light",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
