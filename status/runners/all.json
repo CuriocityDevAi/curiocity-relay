@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T12:29:31.514Z",
+  "at": "2026-11-25T12:29:59.209Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -9,10 +9,8 @@
   "last_error_at": "2026-11-25T11:03:07.920Z",
   "hubs": {
     "m0": {
-      "current": "M0-1125-T",
-      "started_at": "2026-11-25T12:15:17.719Z",
-      "model": "opus",
-      "last_activity": "2026-11-25T12:08:42.344Z"
+      "current": null,
+      "last_activity": "2026-11-25T12:29:58.137Z"
     },
     "m1": {
       "current": null,
@@ -41,11 +39,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.83,
-    "compressed_gb": 3.6,
+    "used_gb": 14.74,
+    "compressed_gb": 3.29,
     "swap_used_gb": 3.93,
     "pressure": "normal",
-    "at": "2026-11-25T12:28:59.208Z"
+    "at": "2026-11-25T12:29:32.816Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -129,9 +127,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 77,
+  "isolated_reports_collected": 78,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:26:41.626Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:26:41.626Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:26:42.302Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:26:42.302Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:15.701Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:15.701Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:16.385Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:16.385Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:49.817Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:49.818Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:50.887Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:50.887Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:28:23.134Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:28:23.135Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:28:23.833Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:28:23.833Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:28:59.206Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:28:59.207Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:29:00.179Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:29:00.179Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:15.701Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:16.385Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:16.385Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:49.817Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:49.818Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:50.887Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:27:50.887Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:28:23.134Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:28:23.135Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:28:23.833Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:28:23.833Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:28:59.206Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:28:59.207Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:29:00.179Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:29:00.179Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:29:32.811Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:29:32.815Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:29:33.544Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:29:33.544Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:m0 2026-11-25T12:29:55.291Z] [report-path] M0-1125-T: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -144,7 +142,7 @@
     {
       "name": "curiocity-mac-light",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
