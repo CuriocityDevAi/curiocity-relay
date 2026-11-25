@@ -1,23 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-25T02:30:04.821Z",
+  "built_at": "2026-11-25T02:31:36.491Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-25T02:30:55.921Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-25T02:30:55.921Z"
-    },
-    "m0": {
-      "state": "running",
-      "last_activity": "2026-11-25T02:30:07.202Z",
-      "session": "62e5801d-d1d8-4624-aad1-98e2d0c08181",
-      "updated_at": "2026-11-25T02:30:55.921Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -29,12 +13,16 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-25T02:30:55.921Z"
+      "updated_at": "2026-11-25T02:30:55.921Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
@@ -48,12 +36,12 @@
       "last_activity": "2026-11-25T01:38:53.539Z",
       "session": "18df6118-e497-4514-ae05-ad6cbaecf2e9",
       "updated_at": "2026-11-25T01:38:58.985Z",
-      "last_round": "M0-1125-C",
-      "last_report": "m0/M0-1125-C-report.md",
+      "last_round": "M0-1125-D",
+      "last_report": "m0/M0-1125-D-report.md",
       "current_round": "M0-1125-D",
-      "current_state": "started",
-      "current_at": "2026-11-25T02:29:22.277Z",
-      "current_note": "runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1125-D.log"
+      "current_state": "done",
+      "current_at": "2026-11-25T02:31:36.420Z",
+      "current_note": "runner-v8.2 cmux-split · 리포트 확인 m0/M0-1125-D-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1125-D.log · report_src=isolated"
     },
     "m1": {
       "last_round": "M1-1125-A",
@@ -78,8 +66,8 @@
       "current_note": "runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1125-F.log"
     },
     "m3": {
-      "last_round": "M3-1124-O",
-      "last_report": "m3/M3-1124-O-report.md",
+      "last_round": "M3-1125-C",
+      "last_report": "m3/M3-1125-C-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-25T01:56:53.000Z",
