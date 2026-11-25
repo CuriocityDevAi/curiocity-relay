@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-25T10:59:56.438Z",
+  "built_at": "2026-11-25T15:11:50.513Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T10:59:56.026Z"
+      "fetched_at": "2026-11-25T15:11:50.036Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T10:59:56.191Z"
+      "fetched_at": "2026-11-25T15:11:50.192Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6253,6 +6253,7 @@
                 "apps/commerce-core/src/api/admin/pos/customer-display/snapshots/[id]/route.ts",
                 "apps/commerce-core/src/subscribers/order-snapshot-paid.ts",
                 "apps/commerce-core/src/types/customer-display.ts",
+                "apps/commerce-core/src/types/__tests__/customer-display-types.unit.spec.ts",
                 "apps/commerce-core/integration-tests/pos/cd-pos-screen-sync.spec.ts",
                 "apps/commerce-core/integration-tests/pos/cd-parallel-pay.spec.ts",
                 "apps/commerce-core/integration-tests/loyalty/cd-snapshot-skip.spec.ts"
@@ -6276,6 +6277,24 @@
                 "apps/customer-display/src/lib/pairing.ts",
                 "apps/customer-display/src/lib/__tests__/pair-flow.test.ts",
                 "apps/customer-display/src/lib/__tests__/pairing-persist.test.ts"
+              ],
+              "status": "live"
+            },
+            {
+              "id": "customer-display-customer-flow",
+              "name": "손님화면↔POS 동기화 계약 (M0-1125-R · CD ↔ POS sync)",
+              "summary": "CD ↔ POS 동기화 계약 §1~§3 서버 구현. 손님 진행 상태 9종(none/entering/first_visit/confirming/confirmed/skipped/unconfirmed) · 결제 단계 5종(building/tendering/paid/failed/cancelled) · tender(remaining·qr_string) · receipt(#437 full) 을 snapshot DTO 에 싣는다. 9종 행동(start_entry·submit_phone·continue_first_visit·change_number·confirm·skip·confirm_timeout·link_phone·reset) 을 POST /customer-display/customer-flow (CD) · POST /admin/pos/customer-flow (POS) 에서 접수 → 전이표(lib/customer-flow/transitions.ts) 로 허용/거부 판정 → 거부시 200 {ok:false, reason:'invalid_transition'}. 적립 규칙(§3): paid AND confirmed 일 때 1회 적립(멱등 order_id) · 둘 중 나중 이벤트에서 처리 · 실패/취소/미확인은 적립 없음. 적립 subscriber 는 customer_flow_state='confirmed' 만 통과(기존 customer_id 가드 뒤에 가드 추가). PB1 라벨: display-config 가 `pb1_pct > 0` 이면 라벨 \"PB1\" + rate=pb1_pct 로 승격(실제 적용 세율과 동일 소스) — CD 하드코딩 fallback \"11%\" 미노출. 정본 curiocity-relay/plans/cd-sync-contract-20261125.md.",
+              "files": [
+                "apps/commerce-core/src/lib/customer-flow/transitions.ts",
+                "apps/commerce-core/src/lib/customer-flow/orchestrator.ts",
+                "apps/commerce-core/src/lib/customer-flow/__tests__/transitions.unit.spec.ts",
+                "apps/commerce-core/src/lib/customer-flow/__tests__/orchestrator.unit.spec.ts",
+                "apps/commerce-core/src/api/customer-display/customer-flow/route.ts",
+                "apps/commerce-core/src/api/admin/pos/customer-flow/route.ts",
+                "apps/commerce-core/src/api/admin/pos/customer-flow/__tests__/route.unit.spec.ts",
+                "apps/commerce-core/src/modules/register_session/migrations/Migration20261125000001.ts",
+                "apps/commerce-core/src/modules/register_session/__tests__/customer-flow-dto.unit.spec.ts",
+                "apps/commerce-core/src/modules/customer_display_settings/__tests__/display-config-pb1.unit.spec.ts"
               ],
               "status": "live"
             },
@@ -6827,6 +6846,22 @@
               "status": "planned"
             },
             {
+              "id": "cd-sync-flow",
+              "name": "CD ↔ POS 동기화 신설계 (M1-1125-T)",
+              "summary": "payment_phase × customer_flow 두 갈래 상태 조합으로 CD 화면을 결정하는 새 흐름. 좌 1/3(결제 컨텍스트) + 우 2/3(전화번호 흐름 패널) 통일 레이아웃. OrderListScreen(품목 32px·합계 64px) · PhoneFlowScreen 래퍼 · selectCdView 순수 함수(5×7 조합) · KeypadPanel/FirstVisitPanel/ConfirmPanel/WaitingPanel/EarnedPanel/FailedPanel/LeftPaymentPanel · mock 어댑터 URL 파라미터 확장. 계약서: plans/cd-sync-contract-20261125.md.",
+              "files": [
+                "apps/customer-display/app/cd-sync.tsx",
+                "apps/customer-display/src/lib/cd-screen-selector.ts",
+                "apps/customer-display/src/lib/__tests__/cd-screen-selector.test.ts",
+                "apps/customer-display/src/screens/OrderListScreen.tsx",
+                "apps/customer-display/src/screens/PhoneFlowScreen.tsx",
+                "apps/customer-display/src/components/cd-sync/**",
+                "apps/customer-display/src/types/cd-sync-contract.ts",
+                "apps/customer-display/e2e/cd-sync-flow.spec.ts"
+              ],
+              "status": "live"
+            },
+            {
               "id": "cd-consent",
               "name": "첫 방문 동의 화면 (4)",
               "summary": "처음 방문한 고객에게 개인정보 보관 범위를 안내하고 동의를 받는 화면.",
@@ -6888,7 +6923,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T10:59:56.438Z"
+      "fetched_at": "2026-11-25T15:11:50.512Z"
     }
   ],
   "rollup": {
