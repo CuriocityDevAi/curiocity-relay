@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T22:56:09.824Z",
+  "at": "2026-11-25T22:58:32.557Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -45,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.8,
-    "compressed_gb": 2.83,
-    "swap_used_gb": 4.16,
+    "used_gb": 15.79,
+    "compressed_gb": 3.36,
+    "swap_used_gb": 4.13,
     "pressure": "normal",
-    "at": "2026-11-25T22:55:30.628Z"
+    "at": "2026-11-25T22:58:00.256Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -57,7 +57,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-25T22:52:29.299Z",
+      "at": "2026-11-25T22:57:55.570Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -82,9 +82,9 @@
       },
       "cloud_in_progress": [],
       "runners": {
-        "heavy_online": 3,
+        "heavy_online": 4,
         "heavy_busy": 0,
-        "light_online": 1
+        "light_online": 2
       },
       "cloud_today": 0,
       "today": {
@@ -116,14 +116,14 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 10769,
-    "at": "2026-11-25T22:52:37.924Z"
+    "took_ms": 11753,
+    "at": "2026-11-25T22:58:05.452Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 103,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T22:26:37.926Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T22:26:38.632Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T22:26:38.633Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:heartbeat 2026-11-25T22:27:12.431Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T22:27:12.498Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T22:27:12.499Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T22:27:13.134Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T22:27:13.134Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:git 2026-11-25T22:27:42.724Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m2 2026-11-25T22:54:16.474Z] pick · M2-1125-AC · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-25T22:54:19.459Z] M2-1125-AC → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1125-AC.json · {\"id\":\"M2-1125-AC\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-25T22:54:19.643Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1125-AC.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m2/M2-1125-AC.md, status/pipeline/M2-1125-AC.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:m1 2026-11-25T22:56:06.827Z] pick · M1-1125-AD · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:r0 2026-11-25T22:56:07.910Z] pick · R0-1125-AS · model=sonnet · display=cmux-split",
+  "err_tail": "[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:m1 2026-11-25T22:56:06.827Z] pick · M1-1125-AD · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:r0 2026-11-25T22:56:07.910Z] pick · R0-1125-AS · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-25T22:56:13.072Z] M1-1125-AD → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1125-AD.json · {\"id\":\"M1-1125-AD\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-25T22:56:13.205Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1125-AD.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): queue/m1/M1-1125-AD.md, queue/r0/R0-1125-AS.md, status/pipeline/M1-1125-AD.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:claim 2026-11-25T22:56:19.262Z] R0-1125-AS → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-AS.json · {\"id\":\"R0-1125-AS\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-25T22:56:19.374Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-AS.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1125-AS.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -135,12 +135,12 @@
   "ci_runners": [
     {
       "name": "ci-box-storeport-heavy-imac",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
       "name": "ci-box-storeport-light-imac",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
@@ -155,12 +155,12 @@
     },
     {
       "name": "ci-box-fork-heavy-imac",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
       "name": "ci-box-fork-light-imac",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
