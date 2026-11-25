@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T23:38:53.481Z",
+  "at": "2026-11-25T23:46:42.594Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -33,19 +33,19 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 26837,
-    "totalMs": 2242271,
+    "lastMs": 415633,
+    "totalMs": 2689938,
     "phase": "await-landing",
-    "at": "2026-11-25T23:38:41.330Z"
+    "at": "2026-11-25T23:46:25.431Z"
   },
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.69,
-    "compressed_gb": 3.22,
-    "swap_used_gb": 4.12,
+    "used_gb": 15.85,
+    "compressed_gb": 5.46,
+    "swap_used_gb": 4.11,
     "pressure": "normal",
-    "at": "2026-11-25T23:37:45.713Z"
+    "at": "2026-11-25T23:39:27.883Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -115,7 +115,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 105,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:sleep-tracker 2026-11-25T23:18:05.423Z] sleep observed · gap=1107s · threshold=120s\n[hub-runner-v8.3.2:heartbeat 2026-11-25T23:21:21.211Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:state 2026-11-25T23:28:15.659Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.3.2:self-update 2026-11-25T23:28:15.683Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m2 2026-11-25T23:28:15.685Z] sleep gap 감지 1682s · 예산 보정 · 누적 1682s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-25T23:28:16.514Z] sleep gap 감지 1681s · 예산 보정 · 누적 1681s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-25T23:37:05.340Z] sleep gap 감지 512s · 예산 보정 · 누적 2193s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-25T23:37:05.914Z] sleep gap 감지 509s · 예산 보정 · 누적 2190s · phase=await-landing\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T23:37:15.143Z] sleep observed · gap=1150s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-25T23:37:15.504Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m1 2026-11-25T23:37:31.899Z] sleep gap 감지 22s · 예산 보정 · 누적 2215s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-25T23:37:36.047Z] sleep gap 감지 25s · 예산 보정 · 누적 2215s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:37:45.710Z] [gh-runner-watchdog] wake: mac-light Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:37:55.164Z] [gh-runner-watchdog] wake: mac-light Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:37:56.206Z] [gh-runner-watchdog] skip restart: data-stale\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:37:56.207Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:self-update 2026-11-25T23:38:36.423Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m1 2026-11-25T23:38:36.425Z] sleep gap 감지 26s · 예산 보정 · 누적 2241s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-25T23:38:41.330Z] sleep gap 감지 27s · 예산 보정 · 누적 2242s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-25T23:38:45.568Z] [report-path] M2-1125-AC: REPORT_PATH 격리 리포트 수거·push",
+  "err_tail": "[hub-runner-v8.3.2:m1 2026-11-25T23:38:36.425Z] sleep gap 감지 26s · 예산 보정 · 누적 2241s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-25T23:38:41.330Z] sleep gap 감지 27s · 예산 보정 · 누적 2242s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-25T23:38:45.568Z] [report-path] M2-1125-AC: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-25T23:38:53.663Z] M2-1125-AC → done · runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1125-AC-report.md · model=sonnet · 로그: /\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1125-AC.json · {\"id\":\"M2-1125-AC\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-25T23:38:54.813Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1125-AC-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1125-AC.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M2-1125-AC.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:38:59.486Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:38:59.486Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:m1 2026-11-25T23:38:59.489Z] sleep gap 감지 18s · 예산 보정 · 누적 2259s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:39:03.246Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:39:03.246Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:m1 2026-11-25T23:39:24.799Z] sleep gap 감지 15s · 예산 보정 · 누적 2274s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:39:27.881Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:39:27.881Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:m1 2026-11-25T23:46:25.431Z] sleep gap 감지 416s · 예산 보정 · 누적 2690s · phase=await-landing\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T23:46:27.147Z] sleep observed · gap=439s · threshold=120s",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -137,13 +137,13 @@
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
-      "status": "online",
-      "busy": false
+      "status": "offline",
+      "busy": true
     },
     {
       "name": "curiocity-mac-light",
-      "status": "online",
-      "busy": true
+      "status": "offline",
+      "busy": false
     },
     {
       "name": "ci-box-fork-heavy-imac",
@@ -157,12 +157,12 @@
     },
     {
       "name": "curiocity-mac-fork",
-      "status": "online",
+      "status": "offline",
       "busy": false
     },
     {
       "name": "curiocity-mac-fork-light",
-      "status": "online",
+      "status": "offline",
       "busy": true
     }
   ]
