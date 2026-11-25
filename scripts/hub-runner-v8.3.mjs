@@ -2559,6 +2559,20 @@ function clearPaneBusyExhausted(id) {
   try { rmSync(paneBusyExhaustedFile(id), { force: true }); } catch { /* noop */ }
 }
 
+// M1-1125-C: claude-foreground-timeout 1회 자동 재시도 마크 (pane-busy 와 분리).
+//   pane 은 shell 로 복귀했는데 claude 포어그라운드 전환이 시간 내 안 끝난 경우 — pane busy 는 아님.
+//   workspace 재생성 + 1회 재시도 후에도 실패하면 blocked(kyu).
+const CLAUDE_FG_RETRY_DIR = join(RUNNER_HOME, 'claude-fg-retry');
+mkdirSync(CLAUDE_FG_RETRY_DIR, { recursive: true });
+function claudeFgRetryFile(id) { return join(CLAUDE_FG_RETRY_DIR, id); }
+function hasClaudeFgRetry(id) { return existsSync(claudeFgRetryFile(id)); }
+function markClaudeFgRetry(id) {
+  try { writeFileSync(claudeFgRetryFile(id), ts() + '\n', 'utf8'); } catch { /* noop */ }
+}
+function clearClaudeFgRetry(id) {
+  try { rmSync(claudeFgRetryFile(id), { force: true }); } catch { /* noop */ }
+}
+
 // v6.8 REQ1: 허브 멈춤 감지 — started claim 보유 허브의 pane 텍스트를 주기적으로 검사.
 const API_ERROR_RE = /api.?error|exceeded|rate.?limit/i;
 const ASKING_USER_RE = /[?？]\s*$|승인|진행하면|하시겠습니까/m;
@@ -3421,10 +3435,28 @@ async function tick(hubs) {
 
         if (result.mode === 'cmux-split') {
           if (result.dispatchFailed) {
-            // pane-busy: exhausted 마크 있으면 즉시 blocked (oké 재발부 뒤 2-tick 사이클 방지 ③).
-            // 없으면: 첫 번째 → retry 마크 저장(다음 tick 재투입) · 두 번째 → blocked.
-            if (hasPaneBusyExhausted(item.id)) {
-              // oké 재발부 후에도 pane 여전히 busy → 즉시 blocked (1-tick).
+            // M1-1125-C: claude-foreground-timeout 은 pane-busy 와 분리된 경로로 처리.
+            //   pane 은 shell 로 복귀해 있지만 claude 포어그라운드 전환 시간 초과 → workspace 재생성(레이아웃 리셋)
+            //   후 다음 tick 에 1회 재시도. 그래도 실패하면 blocked(kyu). pane-busy 마크와 섞이지 않음.
+            if (result.dispatchReason === 'claude-foreground-timeout') {
+              if (hasClaudeFgRetry(item.id)) {
+                clearClaudeFgRetry(item.id);
+                enqueueClaim({
+                  id: item.id,
+                  state: 'blocked',
+                  note: `claude-foreground-timeout (2nd · workspace 재생성 후 재시도 소진) · runner-${RUNNER_VERSION} cmux-split · dispatch=${result.dispatchReason} · initial=${result.initial || '-'} · last=${result.last || '-'} · 로그: ${logFile}`,
+                  blockedBy: 'kyu',
+                });
+                markSplit('blocked');
+              } else {
+                markClaudeFgRetry(item.id);
+                try { clearHubsLayout(); } catch { /* noop */ }
+                log(hub, `claude-foreground-timeout (1st) · workspace 재생성 + 다음 tick 1회 재시도 예약 · ${item.id}`);
+                appendLine(logFile, `[dispatch-fg-timeout] ${item.id} · 첫 fg-timeout · workspace layout 리셋 · retry 마크 저장 · 다음 tick 재투입`);
+                markSplit('blocked');
+              }
+            } else if (hasPaneBusyExhausted(item.id)) {
+              // pane-busy: oké 재발부 후에도 pane 여전히 busy → 즉시 blocked (1-tick).
               clearPaneBusyRetry(item.id);
               enqueueClaim({
                 id: item.id,
@@ -3452,6 +3484,7 @@ async function tick(hubs) {
           } else if (result.timedOut) {
             clearPaneBusyRetry(item.id);
             clearPaneBusyExhausted(item.id);
+            clearClaudeFgRetry(item.id);
             enqueueClaim({
               id: item.id,
               state: 'blocked',
@@ -3462,6 +3495,7 @@ async function tick(hubs) {
           } else if (isReportLanding(result.landingReason)) {
             clearPaneBusyRetry(item.id);
             clearPaneBusyExhausted(item.id);
+            clearClaudeFgRetry(item.id);
             enqueueClaim({
               id: item.id,
               hub, // M1-1121-A REQ3
@@ -3472,6 +3506,7 @@ async function tick(hubs) {
           } else {
             clearPaneBusyRetry(item.id);
             clearPaneBusyExhausted(item.id);
+            clearClaudeFgRetry(item.id);
             enqueueClaim({
               id: item.id,
               state: 'blocked',
