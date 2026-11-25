@@ -8,11 +8,12 @@
 // import: M3 ci-watch.mjs 가 import { renderRunnerPanel } from './runner-panel.mjs' 로 사용.
 
 import { readFileSync, existsSync } from 'node:fs';
-import { join, dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
+import { homedir } from 'node:os';
 
-const HERE = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = resolve(HERE, '../..');
+// cwd 독립: 스크립트 위치가 아닌 환경변수/homedir 기반으로 계산
+const REPO_ROOT = process.env.CI_WATCH_RELAY_ROOT
+  || `${homedir()}/projects/curiocity-relay`;
 const ALL_JSON = join(REPO_ROOT, 'status', 'runners', 'all.json');
 
 const HUBS = ['m0', 'm1', 'm2', 'm3', 'r0'];
@@ -124,6 +125,8 @@ function render() {
   process.stdout.write(`\n  ${DIM}${new Date().toISOString()} · 30초마다 갱신${RESET}\n`);
 }
 
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 const IS_MAIN = process.argv[1] && resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url));
 if (IS_MAIN) {
   render();

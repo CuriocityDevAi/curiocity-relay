@@ -86,6 +86,48 @@ export function defaultFetchPrState(prNumber, fullRepo) {
   } catch { return null; }
 }
 
+// ── GitHub Actions CI 큐 조회 (fork 리포, 30초 캐시) — M2-1125-M ───────────
+
+const _ghForkCiCache = { data: null, fetchedAt: 0 };
+const GH_FORK_REPO = 'narisolutions/agilo-medusa-pos-fork';
+
+export function fetchGhForkRuns(nowMs = Date.now()) {
+  if (_ghForkCiCache.data && nowMs - _ghForkCiCache.fetchedAt < 30_000) {
+    return _ghForkCiCache.data;
+  }
+  const result = { queued: [], inProgress: [] };
+  for (const status of ['queued', 'in_progress']) {
+    try {
+      const out = execSync(
+        `gh api repos/${GH_FORK_REPO}/actions/runs?status=${status}&per_page=30 2>/dev/null`,
+        { timeout: 5000, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] },
+      );
+      const data = JSON.parse(out);
+      for (const run of (data.workflow_runs || [])) {
+        const prs = run.pull_requests || [];
+        const prNumber = prs.length > 0 ? Number(prs[0].number) : null;
+        const createdMs = run.created_at ? new Date(run.created_at).getTime() : null;
+        const ageMin = createdMs ? Math.max(0, Math.round((nowMs - createdMs) / 60_000)) : null;
+        const rn = String(run.runner_name || '').toLowerCase();
+        const kind = (rn.includes('light') || rn.includes('fork-light')) ? 'fork-light' : 'fork-heavy';
+        const entry = {
+          prNumber,
+          repo: GH_FORK_REPO,
+          kind,
+          run_id: run.id,
+          runner_name: run.runner_name || null,
+          ageMin,
+        };
+        if (status === 'queued') result.queued.push(entry);
+        else result.inProgress.push(entry);
+      }
+    } catch {}
+  }
+  _ghForkCiCache.data = result;
+  _ghForkCiCache.fetchedAt = nowMs;
+  return result;
+}
+
 // ── ID → PR 검색 (gh pr list --search, 30초 캐시, 3개 리포) ───────────────
 const _prSearchCache = new Map();
 const _SEARCH_REPOS = [
@@ -181,6 +223,7 @@ export function buildExtendedView({
   nowMs = Date.now(),
   allJson: allJsonOverride,
   fetchPrState = defaultFetchPrState,
+  fetchForkRuns = fetchGhForkRuns,
 } = {}) {
   // git 오브젝트에서 최신 relay 데이터 읽기 (30초 간격 fetch)
   if (repoRoot) maybeGitFetch(repoRoot, nowMs);
@@ -385,6 +428,94 @@ export function buildExtendedView({
       congested:        false,
     }],
   ]);
+
+  // 7.5a) all.json inProgressItems → ci_pending 카드를 ci_running 으로 승격 — M2-1125-M
+  for (const [pool, poolData] of ciPools) {
+    for (const item of (poolData.inProgressItems || [])) {
+      if (!item.prNumber) continue;
+      const card = prToCard.get(item.prNumber);
+      if (!card) continue;
+      if (card.column === 'ci_pending' || card.column === 'pr') {
+        const startedMs = item.ageMin != null ? nowMs - item.ageMin * 60_000 : nowMs;
+        card.column = 'ci_running';
+        card.since  = new Date(startedMs);
+        card.ageMin = item.ageMin ?? card.ageMin;
+        card.extra  = { ...(card.extra || {}), ci: { runner_kind: item.runnerKind, pool } };
+      }
+    }
+  }
+
+  // 7.5b) ci_pending 카드가 어떤 pool 에도 없으면 → PR 리포 기반 pool 에 pre-queue 추가
+  for (const card of base.cards) {
+    if (card.column !== 'ci_pending') continue;
+    const pr = card.extra?.pr?.number;
+    if (!pr) continue;
+    let inAnyPool = false;
+    for (const pd of ciPools.values()) {
+      if ((pd.queuedPrs || []).includes(pr)) { inAnyPool = true; break; }
+      if ((pd.inProgressItems || []).some(i => i.prNumber === pr)) { inAnyPool = true; break; }
+    }
+    if (inAnyPool) continue;
+    const owner = card.extra?.pr?.owner;
+    const repo  = card.extra?.pr?.repo;
+    const isFork = owner === 'narisolutions' || (repo || '').includes('fork');
+    const targetPool = isFork ? 'fork-heavy' : 'storeport-heavy';
+    const td = ciPools.get(targetPool);
+    if (td) {
+      td.queuedPrs = [...(td.queuedPrs || []), pr];
+      td.queued    = (td.queued || 0) + 1;
+      if (td.oldestMin == null || (card.ageMin != null && card.ageMin > td.oldestMin)) {
+        td.oldestMin = card.ageMin;
+        td.oldestSec = card.ageMin != null ? card.ageMin * 60 : null;
+      }
+    }
+  }
+
+  // 7.5c) GH fork runs (agilo-medusa-pos-fork) 로 fork-heavy/fork-light 보강 — M2-1125-M
+  const hasCiPendingOrFork = base.cards.some(c =>
+    c.column === 'ci_pending' || (c.extra?.pr?.owner === 'narisolutions')
+  );
+  if (hasCiPendingOrFork && typeof fetchForkRuns === 'function') {
+    try {
+      const ghFork = fetchForkRuns(nowMs);
+      for (const run of (ghFork.queued || [])) {
+        if (!run.prNumber) continue;
+        const forkPool = run.kind === 'fork-light' ? 'fork-light' : 'fork-heavy';
+        const fd = ciPools.get(forkPool);
+        if (!fd) continue;
+        if (!(fd.queuedPrs || []).includes(run.prNumber)) {
+          fd.queuedPrs = [...(fd.queuedPrs || []), run.prNumber];
+          fd.queued    = (fd.queued || 0) + 1;
+        }
+        if (run.ageMin != null && (fd.oldestMin == null || run.ageMin > fd.oldestMin)) {
+          fd.oldestMin = run.ageMin;
+          fd.oldestSec = run.ageMin * 60;
+        }
+      }
+      for (const run of (ghFork.inProgress || [])) {
+        if (!run.prNumber) continue;
+        const forkPool = run.kind === 'fork-light' ? 'fork-light' : 'fork-heavy';
+        const fd = ciPools.get(forkPool);
+        if (!fd) continue;
+        const exists = (fd.inProgressItems || []).some(i => i.prNumber === run.prNumber);
+        if (!exists) {
+          const card = prToCard.get(run.prNumber);
+          fd.inProgressItems = [...(fd.inProgressItems || []), {
+            prNumber:   run.prNumber,
+            promptId:   card?.id || null,
+            runnerKind: run.runner_name || forkPool,
+            ageMin:     run.ageMin,
+          }];
+        }
+        const card = prToCard.get(run.prNumber);
+        if (card && (card.column === 'ci_pending' || card.column === 'pr')) {
+          card.column = 'ci_running';
+          card.extra  = { ...(card.extra || {}), ci: { runner_kind: run.runner_name || forkPool, pool: forkPool } };
+          if (run.ageMin != null) card.ageMin = run.ageMin;
+        }
+      }
+    } catch {}
+  }
 
   // 8) 허브 큐 (미착수 프롬프트, 허브별 · ageSec 포함)
   const hubQueue = new Map();

@@ -6,7 +6,8 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, utimesSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, execSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
 import {
   classifyAge,
@@ -1383,4 +1384,163 @@ test('T-L5: R0 타겟 카드 제목 없을 때 → 큐 파일 원장 대사 폴�
   // R0-1125-XU: done+무PR → inProgress 미포함 (오늘 완료)
   assert.equal(view.inProgress.find(c => c.id === 'R0-1125-XU'), undefined,
     'R0-1125-XU done+무PR → inProgress 미포함');
+});
+
+// ========== M2-1125-M 신규 테스트 — CI 큐 한 출처 통일 ==========
+
+// ---------- CI 큐 한 출처 통일: all.json in_progress → ci_running 승격 ----------
+
+test('T-GH1: all.json in_progress → ci_pending 카드 ci_running 으로 승격', () => {
+  const root = makeFullFixture();
+  const rptPath = join(root, 'm1', 'M1-1124-GA-report.md');
+  writeFileSync(rptPath, 'PASS\nPR: https://github.com/CuriocityDevAi/storeport/pull/777\n');
+  stamp(rptPath, NOW_MS - 5 * 60_000);
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), JSON.stringify({
+    ci: { data: {
+      heavy: {
+        queued: 0, queued_prs: [], oldest_queued_min: null,
+        in_progress: [{ pr: '#777', job: 'ci-test', running_min: 3 }],
+      },
+      light: { queued: 0, queued_prs: [], oldest_queued_min: null, in_progress: [] },
+    }},
+  }));
+
+  const view = buildExtendedView({
+    repoRoot: root, now: NOW, nowMs: NOW_MS,
+    fetchPrState: () => null,
+    fetchForkRuns: () => ({ queued: [], inProgress: [] }),
+  });
+
+  const card = view.inProgress.find(c => c.id === 'M1-1124-GA');
+  assert.ok(card, 'M1-1124-GA 카드 존재');
+  assert.equal(card.column, 'ci_running', 'ci_pending → ci_running 승격');
+  assert.equal(card.ageMin, 3, 'ageMin = running_min');
+});
+
+// ---------- CI 큐 한 출처 통일: ci_pending → 풀에 없으면 pre-queue ----------
+
+test('T-GH2: ci_pending 카드가 어떤 pool 에도 없으면 storeport-heavy queuedPrs 에 추가', () => {
+  const root = makeFullFixture();
+  const rptPath = join(root, 'm1', 'M1-1124-GB-report.md');
+  writeFileSync(rptPath, 'PASS\nPR: https://github.com/CuriocityDevAi/storeport/pull/888\n');
+  stamp(rptPath, NOW_MS - 2 * 60_000);
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), JSON.stringify({
+    ci: { data: {
+      heavy: { queued: 0, queued_prs: [], oldest_queued_min: null, in_progress: [] },
+      light: { queued: 0, queued_prs: [], oldest_queued_min: null, in_progress: [] },
+    }},
+  }));
+
+  const view = buildExtendedView({
+    repoRoot: root, now: NOW, nowMs: NOW_MS,
+    fetchPrState: () => null,
+    fetchForkRuns: () => ({ queued: [], inProgress: [] }),
+  });
+
+  const heavy = view.ciPools.get('storeport-heavy');
+  assert.ok(heavy, 'storeport-heavy pool 존재');
+  assert.ok((heavy.queuedPrs || []).includes(888), 'ci_pending PR 888 이 storeport-heavy queuedPrs 에 추가됨');
+  assert.ok(heavy.queued > 0, 'queued 카운트 증가');
+
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('SH 1') || /SH [1-9]/.test(text), 'CI 큐 헤더에 SH 1+ 표시');
+  assert.ok(text.includes('#888'), 'CI 큐에 #888 칩 표시');
+});
+
+// ---------- CI 큐 한 출처 통일: fork PR queued → FH 칩 ----------
+
+test('T-GH3: fetchForkRuns 주입 → fork-heavy inProgressItems 추가, 카드 ci_running 승격', () => {
+  const root = makeFullFixture();
+  mkdirSync(join(root, 'm1'), { recursive: true });
+  const rptPath = join(root, 'm1', 'M1-1124-FRK-report.md');
+  writeFileSync(rptPath, 'PASS\nPR: https://github.com/narisolutions/agilo-medusa-pos-fork/pull/300\n');
+  stamp(rptPath, NOW_MS - 3 * 60_000);
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+
+  const mockForkRuns = () => ({
+    queued: [],
+    inProgress: [{
+      prNumber: 300, repo: 'narisolutions/agilo-medusa-pos-fork', kind: 'fork-heavy',
+      runner_name: 'fork-runner-heavy', ageMin: 3,
+    }],
+  });
+
+  const view = buildExtendedView({
+    repoRoot: root, now: NOW, nowMs: NOW_MS,
+    fetchPrState: () => null,
+    fetchForkRuns: mockForkRuns,
+  });
+
+  const forkPool = view.ciPools.get('fork-heavy');
+  assert.ok(forkPool, 'fork-heavy pool 존재');
+  assert.ok((forkPool.inProgressItems || []).some(i => i.prNumber === 300),
+    'fork-heavy inProgressItems 에 PR 300 존재');
+
+  const card = view.inProgress.find(c => c.id === 'M1-1124-FRK');
+  assert.ok(card, 'M1-1124-FRK 카드 존재');
+  assert.equal(card.column, 'ci_running', 'fork card ci_running 으로 승격');
+});
+
+test('T-GH4: fetchForkRuns 주입 → fork-heavy queuedPrs 추가, CI 큐 FH 1 표시', () => {
+  const root = makeFullFixture();
+  mkdirSync(join(root, 'm1'), { recursive: true });
+  const rptPath = join(root, 'm1', 'M1-1124-FQ-report.md');
+  writeFileSync(rptPath, 'PASS\nPR: https://github.com/narisolutions/agilo-medusa-pos-fork/pull/301\n');
+  stamp(rptPath, NOW_MS - 1 * 60_000);
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+
+  const mockForkRuns = () => ({
+    queued: [{
+      prNumber: 301, repo: 'narisolutions/agilo-medusa-pos-fork', kind: 'fork-heavy',
+      runner_name: null, ageMin: 1,
+    }],
+    inProgress: [],
+  });
+
+  const view = buildExtendedView({
+    repoRoot: root, now: NOW, nowMs: NOW_MS,
+    fetchPrState: () => null,
+    fetchForkRuns: mockForkRuns,
+  });
+
+  const forkPool = view.ciPools.get('fork-heavy');
+  assert.ok(forkPool, 'fork-heavy pool 존재');
+  assert.ok((forkPool.queuedPrs || []).includes(301), 'fork-heavy queuedPrs 에 PR 301 추가');
+  assert.ok(forkPool.queued > 0, 'queued 카운트 > 0');
+
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('FH 1') || /FH [1-9]/.test(text), 'CI 큐 헤더에 FH 1+ 표시');
+  assert.ok(text.includes('#301'), 'CI 큐에 #301 칩 표시');
+});
+
+// ---------- cwd 독립성 ----------
+
+test('T-CWD1: --once cwd 독립 — /tmp 와 fixture root 에서 실행 결과 동일', () => {
+  const root = makeFullFixture();
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+  const qPath = join(root, 'queue', 'm1', 'M1-1124-CWD.md');
+  writeFileSync(qPath, '원장 대사: "cwd 테스트"\n');
+  stamp(qPath, NOW_MS - 2 * 60_000);
+
+  const scriptPath = fileURLToPath(new URL('../ci-watch-v2.mjs', import.meta.url));
+  const env   = { ...process.env, CI_WATCH_RELAY_ROOT: root };
+  const gopts = { encoding: 'utf8', timeout: 15000, stdio: ['ignore', 'pipe', 'ignore'] };
+
+  let fromTmp, fromFixture;
+  try {
+    fromTmp = execSync(`node "${scriptPath}" --once --width=80`, { ...gopts, cwd: tmpdir(), env });
+  } catch (e) {
+    assert.fail(`/tmp 에서 실행 실패: ${e?.message || e}`);
+  }
+  try {
+    fromFixture = execSync(`node "${scriptPath}" --once --width=80`, { ...gopts, cwd: root, env });
+  } catch (e) {
+    assert.fail(`fixture root 에서 실행 실패: ${e?.message || e}`);
+  }
+
+  const norm = s => s.replace(/\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}/g, 'TIME');
+  assert.equal(norm(fromTmp), norm(fromFixture),
+    'cwd 독립: /tmp 와 fixture root 실행 결과 동일해야 함');
 });
