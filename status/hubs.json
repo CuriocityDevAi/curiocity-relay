@@ -1,22 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-25T07:02:33.335Z",
+  "built_at": "2026-11-25T07:03:18.603Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-25T07:01:19.074Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-25T07:01:19.074Z"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-25T06:55:40.011Z",
-      "updated_at": "2026-11-25T07:01:19.074Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -28,12 +13,16 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-25T07:01:19.074Z"
+      "updated_at": "2026-11-25T07:01:19.074Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
@@ -95,15 +84,15 @@
       "last_report": "n0/N0-0914-C-report.md"
     },
     "r0": {
-      "last_round": "R0-1125-T",
-      "last_report": "r0/R0-1125-T-report.md",
+      "last_round": "R0-1125-U",
+      "last_report": "r0/R0-1125-U-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-25T06:43:19.814Z",
       "current_round": "R0-1125-U",
-      "current_state": "started",
-      "current_at": "2026-11-25T06:48:51.382Z",
-      "current_note": "runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-U.log"
+      "current_state": "done",
+      "current_at": "2026-11-25T07:03:18.522Z",
+      "current_note": "runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1125-U-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1125-U.log · report_src=isolated"
     },
     "t0": {
       "state": "idle",
