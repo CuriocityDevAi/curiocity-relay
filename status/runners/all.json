@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T02:06:47.390Z",
+  "at": "2026-11-25T02:06:56.117Z",
   "pid": 74805,
   "runner": "v8.2",
   "poll_ms": 30000,
@@ -21,10 +21,8 @@
       "last_activity": "2026-11-24T23:02:00.128Z"
     },
     "m2": {
-      "current": "M2-1125-D",
-      "started_at": "2026-11-25T01:57:09.430Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-25T01:56:51.742Z"
+      "current": null,
+      "last_activity": "2026-11-25T02:06:55.165Z"
     },
     "m3": {
       "current": "M3-1125-B",
@@ -49,11 +47,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.04,
-    "compressed_gb": 5.3,
+    "used_gb": 14.87,
+    "compressed_gb": 4.99,
     "swap_used_gb": 1.75,
     "pressure": "normal",
-    "at": "2026-11-25T02:06:14.486Z"
+    "at": "2026-11-25T02:06:54.252Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -137,9 +135,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 5,
+  "isolated_reports_collected": 6,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:03:42.436Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m0 2026-11-25T02:03:45.709Z] pick · M0-1125-C · model=opus · display=cmux-split\n[hub-runner-v8.2:self-update 2026-11-25T02:03:49.367Z] 보류 · busy=5 claimQueue=0 processing=false\n[hub-runner-v8.2:claim 2026-11-25T02:03:50.413Z] M0-1125-C → started · runner-v8.2 · cmux-split · model=opus · source=queue-line · pane foreground=clau\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1125-C.json · {\"id\":\"M0-1125-C\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-25T02:03:50.497Z\",\"note\":\"runner-v8.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1125-C.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:04:20.186Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:04:55.012Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:05:32.039Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:06:06.787Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:06:43.598Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:03:42.436Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m0 2026-11-25T02:03:45.709Z] pick · M0-1125-C · model=opus · display=cmux-split\n[hub-runner-v8.2:self-update 2026-11-25T02:03:49.367Z] 보류 · busy=5 claimQueue=0 processing=false\n[hub-runner-v8.2:claim 2026-11-25T02:03:50.413Z] M0-1125-C → started · runner-v8.2 · cmux-split · model=opus · source=queue-line · pane foreground=clau\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1125-C.json · {\"id\":\"M0-1125-C\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-25T02:03:50.497Z\",\"note\":\"runner-v8.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1125-C.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:04:20.186Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:04:55.012Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:05:32.039Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:06:06.787Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:06:43.598Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m2 2026-11-25T02:06:51.940Z] [report-path] M2-1125-D: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 0,
