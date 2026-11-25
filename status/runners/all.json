@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T02:31:41.825Z",
+  "at": "2026-11-25T02:33:05.763Z",
   "pid": 74805,
   "runner": "v8.2",
   "poll_ms": 30000,
@@ -45,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.91,
-    "compressed_gb": 5.03,
+    "used_gb": 15.5,
+    "compressed_gb": 4.4,
     "swap_used_gb": 1.74,
     "pressure": "normal",
-    "at": "2026-11-25T02:31:32.631Z"
+    "at": "2026-11-25T02:32:33.382Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -145,7 +145,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 13,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/3)\rerror: could not apply 13fc7ae63... claim(m0): M0-1125-D started · runner-v8.2 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v8.2:m2 2026-11-25T02:29:56.061Z] pick · M2-1125-F · model=sonnet · display=cmux-split\n[hub-runner-v8.2:claim 2026-11-25T02:30:04.574Z] M2-1125-F → started · runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1125-F.json · {\"id\":\"M2-1125-F\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-25T02:30:04.722Z\",\"note\":\"runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1125-F.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): queue/m2/M2-1125-F.md, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/4)\rerror: could not apply 13fc7ae63... claim(m0): M0-1125-D started · runner-v8.2 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v8.2:m3 2026-11-25T02:31:24.399Z] [report-path] M3-1125-C: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.2:m0 2026-11-25T02:31:29.585Z] [report-path] M0-1125-D: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.2:claim 2026-11-25T02:31:36.259Z] M0-1125-D → done · runner-v8.2 cmux-split · 리포트 확인 m0/M0-1125-D-report.md · model=opus · 로그: /Users\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1125-D.json · {\"id\":\"M0-1125-D\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-25T02:31:36.420Z\",\"note\":\"runner-v8.2 cmux-split · 리포트 확인 m0/M0-1125-D-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1125-D.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed",
+  "err_tail": "[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): queue/m2/M2-1125-F.md, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/4)\rerror: could not apply 13fc7ae63... claim(m0): M0-1125-D started · runner-v8.2 · cmux-split · model=sonnet · source=queue-line\n[hub-runner-v8.2:m3 2026-11-25T02:31:24.399Z] [report-path] M3-1125-C: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.2:m0 2026-11-25T02:31:29.585Z] [report-path] M0-1125-D: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.2:claim 2026-11-25T02:31:36.259Z] M0-1125-D → done · runner-v8.2 cmux-split · 리포트 확인 m0/M0-1125-D-report.md · model=opus · 로그: /Users\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1125-D.json · {\"id\":\"M0-1125-D\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-25T02:31:36.420Z\",\"note\":\"runner-v8.2 cmux-split · 리포트 확인 m0/M0-1125-D-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1125-D.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:claim 2026-11-25T02:31:41.889Z] M3-1125-C → done · runner-v8.2 cmux-split · 리포트 확인 m3/M3-1125-C-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1125-C.json · {\"id\":\"M3-1125-C\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-25T02:31:42.010Z\",\"note\":\"runner-v8.2 cmux-split · 리포트 확인 m3/M3-1125-C-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1125-C.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -168,12 +168,12 @@
     {
       "name": "curiocity-mac-fork",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "curiocity-mac-fork-light",
       "status": "online",
-      "busy": false
+      "busy": true
     }
   ]
 }
