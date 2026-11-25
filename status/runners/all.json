@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T03:51:06.074Z",
+  "at": "2026-11-25T03:52:19.445Z",
   "pid": 51038,
   "runner": "v8.3",
   "poll_ms": 30000,
@@ -36,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.67,
-    "compressed_gb": 4.24,
+    "used_gb": 15.69,
+    "compressed_gb": 4.23,
     "swap_used_gb": 1.96,
     "pressure": "normal",
-    "at": "2026-11-25T03:50:37.119Z"
+    "at": "2026-11-25T03:51:47.440Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -48,14 +48,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-25T03:46:31.215Z",
+      "at": "2026-11-25T03:51:44.983Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 10,
+      "api_calls": 8,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -77,7 +77,7 @@
         "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 37,
@@ -104,17 +104,17 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 39.9
       },
-      "jsonl_added": 6,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 14841,
-    "at": "2026-11-25T03:46:44.530Z"
+    "took_ms": 7907,
+    "at": "2026-11-25T03:51:51.340Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 4,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3:claim 2026-11-25T03:39:48.187Z] R0-1125-J → started · runner-v8.3 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-J.json · {\"id\":\"R0-1125-J\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-25T03:39:48.298Z\",\"note\":\"runner-v8.3 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-J.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3:gh-watchdog 2026-11-25T03:40:12.725Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.3:gh-watchdog 2026-11-25T03:40:46.535Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.3:gh-watchdog 2026-11-25T03:41:22.391Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.3:r0 2026-11-25T03:42:07.278Z] [report-path] R0-1125-J: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3:claim 2026-11-25T03:42:17.448Z] R0-1125-J → done · runner-v8.3 cmux-split · 리포트 확인 r0/R0-1125-J-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-J.json · {\"id\":\"R0-1125-J\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-25T03:42:17.535Z\",\"note\":\"runner-v8.3 cmux-split · 리포트 확인 r0/R0-1125-J-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1125-J.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3:self-update 2026-11-25T03:46:36.040Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3:m2 2026-11-25T03:50:50.331Z] [report-path] M2-1125-H: REPORT_PATH 격리 리포트 수거·push",
+  "err_tail": "[hub-runner-v8.3:gh-watchdog 2026-11-25T03:40:12.725Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.3:gh-watchdog 2026-11-25T03:40:46.535Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.3:gh-watchdog 2026-11-25T03:41:22.391Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.3:r0 2026-11-25T03:42:07.278Z] [report-path] R0-1125-J: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3:claim 2026-11-25T03:42:17.448Z] R0-1125-J → done · runner-v8.3 cmux-split · 리포트 확인 r0/R0-1125-J-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-J.json · {\"id\":\"R0-1125-J\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-25T03:42:17.535Z\",\"note\":\"runner-v8.3 cmux-split · 리포트 확인 r0/R0-1125-J-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1125-J.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3:self-update 2026-11-25T03:46:36.040Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3:m2 2026-11-25T03:50:50.331Z] [report-path] M2-1125-H: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3:claim 2026-11-25T03:51:06.123Z] M2-1125-H → done · runner-v8.3 cmux-split · 리포트 확인 m2/M2-1125-H-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1125-H.json · {\"id\":\"M2-1125-H\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-25T03:51:06.212Z\",\"note\":\"runner-v8.3 cmux-split · 리포트 확인 m2/M2-1125-H-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1125-H.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed",
   "git_state": {
     "ahead": 0,
     "behind": 0,
