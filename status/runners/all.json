@@ -1,123 +1,45 @@
 {
-  "at": "2026-11-25T03:25:05.219Z",
-  "pid": 74805,
-  "runner": "v8.2",
+  "at": "2026-11-25T03:25:52.139Z",
+  "pid": 51038,
+  "runner": "v8.3",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
   "last_error": "blocked: runner-folder change pending Kyu install (events/runner-main-guard-20261124T173048Z.md)",
-  "last_error_at": "2026-11-24T22:56:04.463Z",
+  "last_error_at": "2026-11-25T03:25:50.416Z",
   "hubs": {
     "m0": {
       "current": null,
-      "last_activity": "2026-11-25T03:14:12.305Z"
+      "last_activity": null
     },
     "m1": {
       "current": null,
-      "last_activity": "2026-11-25T03:19:21.135Z"
+      "last_activity": null
     },
     "m2": {
       "current": null,
-      "last_activity": "2026-11-25T02:53:45.495Z"
+      "last_activity": null
     },
     "m3": {
       "current": null,
-      "last_activity": "2026-11-25T02:58:53.053Z"
+      "last_activity": null
     },
     "r0": {
       "current": null,
-      "last_activity": "2026-11-25T03:01:11.429Z"
+      "last_activity": null
     }
   },
   "pane_close_failures": {},
-  "last_sleep_gap": {
-    "lastMs": 15859,
-    "totalMs": 7902570,
-    "phase": "await-landing",
-    "at": "2026-11-25T01:24:02.367Z"
-  },
+  "last_sleep_gap": null,
   "kyu_folder_intrusion": null,
-  "mem": {
-    "total_gb": 16,
-    "used_gb": 15.85,
-    "compressed_gb": 3.99,
-    "swap_used_gb": 1.99,
-    "pressure": "normal",
-    "at": "2026-11-25T03:24:33.327Z"
-  },
-  "mem_peak_today": {
-    "date": "2026-11-25",
-    "used_gb": 15.91
-  },
-  "ci": {
-    "data": {
-      "at": "2026-11-25T03:20:40.177Z",
-      "repos_scanned": [
-        "CuriocityDevAi/storeport",
-        "CuriocityDevAi/agilo-medusa-pos-fork"
-      ],
-      "repos_failed": [],
-      "repos_skipped": [],
-      "api_calls": 12,
-      "api_budget": 40,
-      "api_overflow": false,
-      "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "cloud_in_progress": [],
-      "runners": {
-        "heavy_online": 1,
-        "heavy_busy": 0,
-        "light_online": 1
-      },
-      "cloud_today": 3,
-      "today": {
-        "mac-heavy": {
-          "jobs": 40,
-          "avg_wait_min": 1,
-          "avg_run_min": 3.5,
-          "success_rate": 72.5,
-          "run_min_total": 140.70000000000002
-        },
-        "mac-light": {
-          "jobs": 71,
-          "avg_wait_min": 1.4,
-          "avg_run_min": 0.7,
-          "success_rate": 98.6,
-          "run_min_total": 49.39999999999995
-        },
-        "cloud": {
-          "jobs": 37,
-          "avg_wait_min": 0,
-          "avg_run_min": 2.5,
-          "success_rate": 59.5,
-          "run_min_total": 93.39999999999996
-        },
-        "cloud_cost_est_usd": 0.896,
-        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 39.9
-      },
-      "jsonl_added": 12,
-      "alerts": []
-    },
-    "took_ms": 9806,
-    "at": "2026-11-25T03:20:48.042Z"
-  },
+  "mem": null,
+  "mem_peak_today": null,
+  "ci": null,
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 25,
+  "isolated_reports_collected": null,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] pushed\n[hub-runner-v8.2:m0 2026-11-25T03:14:10.079Z] [report-path] M0-1125-E: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.2:claim 2026-11-25T03:14:13.478Z] M0-1125-E → done · runner-v8.2 cmux-split · 리포트 확인 m0/M0-1125-E-report.md · model=opus · 로그: /Users\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1125-E.json · {\"id\":\"M0-1125-E\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-25T03:14:13.585Z\",\"note\":\"runner-v8.2 cmux-split · 리포트 확인 m0/M0-1125-E-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1125-E.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:self-update 2026-11-25T03:15:39.451Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.2:m1 2026-11-25T03:19:19.102Z] [report-path] M1-1125-E: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.2:claim 2026-11-25T03:19:22.237Z] M1-1125-E → done · runner-v8.2 cmux-split · 리포트 확인 m1/M1-1125-E-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1125-E.json · {\"id\":\"M1-1125-E\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-25T03:19:22.328Z\",\"note\":\"runner-v8.2 cmux-split · 리포트 확인 m1/M1-1125-E-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1125-E.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:heartbeat 2026-11-25T03:24:31.159Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:git 2026-11-25T03:25:03.547Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:heartbeat 2026-11-25T03:24:31.159Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.2:git 2026-11-25T03:25:03.547Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.2:self-update 2026-11-25T03:25:42.995Z] 변화 감지 · target=hub-runner-v8.3.mjs renamed=true bytesDiffer=true\n[hub-runner-v8.2:self-update 2026-11-25T03:25:44.279Z] node --check hub-runner-v8.3.mjs → status=0\n[hub-runner-v8.2:self-update 2026-11-25T03:25:44.279Z] selftest --selftest-stale-lock → status=0 [selftest-stale-lock] OK · 사망 PID lock 즉시 stale 처리 · 10분 대기 없음\n[hub-runner-v8.2:self-update 2026-11-25T03:25:44.279Z] selftest --selftest-merge-fail3 → status=0 [selftest-merge-fail3] OK · 연속 3회 → summarized=true · 4회 반복 억제 · 키 변경 시 리셋\n[hub-runner-v8.2:self-update 2026-11-25T03:25:44.279Z] selftest --selftest-report-path-off → status=0 [selftest-report-path-off] OK · flag off → false · 기본 on · ${ABS_PATH} 치환 정상\n[hub-runner-v8.2:self-update 2026-11-25T03:25:44.279Z] selftest --selftest-main-guard-d → status=0 [selftest-main-guard-D] OK\n[hub-runner-v8.2:self-update 2026-11-25T03:25:44.279Z] selftest --selftest-main-guard-e → status=0 [selftest-main-guard-E] OK\n[hub-runner-v8.2:self-update 2026-11-25T03:25:44.279Z] 심링크 갱신 · /Users/kyu.lee/.hub-runner/bin/hub-runner.mjs → /Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v8.3.mjs · prev=/Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v8.2.mjs\n[hub-runner-v8.2:self-update 2026-11-25T03:25:44.280Z] pending 기록 · prev=hub-runner-v8.2.mjs next=hub-runner-v8.3.mjs · 2 초 뒤 exit(0)\n[hub-runner-v8.3 2026-11-25T03:25:46.756Z] 시작 · v8.3 · script=hub-runner-v8.3.mjs · boot_sha=160cefc99ccd · mode=--all · once=false · dry-run=false · poll=30000ms · claude=/Users/kyu.lee/.local/bin/claude · version=2.1.128 (Claude Code) · model=opus · display=cmux-split · cmux=/Applications/cmux.app/Contents/Resources/bin/cmux · cmux_password=*** · heartbeat=30m · run_timeout=60m · self_update=10m\n[hub-runner-v8.3:self-update 2026-11-25T03:25:46.758Z] boot confirm · count=1 · 180 s 내 heartbeat 필요\n[hub-runner-v8.3:self-update 2026-11-25T03:25:48.104Z] boot heartbeat OK · pending 정리 · prev=hub-runner-v8.2.mjs next=hub-runner-v8.3.mjs\n[hub-runner-v8.3:git 2026-11-25T03:25:50.416Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.3:gh-watchdog 2026-11-25T03:25:51.177Z] [gh-runner-watchdog] skip restart: no-ci-data",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -130,7 +52,7 @@
     {
       "name": "curiocity-mac-light",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
