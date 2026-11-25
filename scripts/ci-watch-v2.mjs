@@ -12,9 +12,9 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { homedir } from 'node:os';
-import { buildExtendedView } from './watch/collect-view.mjs';
+import { buildExtendedView, buildExtendedViewAsync } from './watch/collect-view.mjs';
 import { renderV2, renderDetailPanel } from './watch/render-v2.mjs';
-import { maybeGitFetch } from './watch/sources-git.mjs';
+import { maybeGitFetch, maybeGitFetchAsync, getDataOrigin, resetFetchGuard, readLocalOriginSha } from './watch/sources-git.mjs';
 
 const CI_WATCH_V2_VERSION = '2.3.0';
 
@@ -59,17 +59,52 @@ let lastInProgress = [];
 // ── 렌더 ──────────────────────────────────────────────────────────────────
 
 let cachedView = null;
+let _fetchingBackground = false;
+let _collecting = false;
 
-function tickOnce() {
-  const view = buildExtendedView({ repoRoot: REPO_ROOT, now: new Date() });
+/** --once 모드 및 'r' 키 fallback 용 동기 tick */
+function tickOnce({ skipFetch = false, skipGh = false } = {}) {
+  const view = buildExtendedView({ repoRoot: REPO_ROOT, now: new Date(), skipFetch, skipGh });
   cachedView = view;
   lastInProgress = view.inProgress || [];
-
-  // cursor 범위 보정
   if (lastInProgress.length === 0) uiState.cursor = -1;
   else if (uiState.cursor >= lastInProgress.length) uiState.cursor = lastInProgress.length - 1;
-
   redraw(view);
+}
+
+/** 비동기 데이터 수집 — 이벤트 루프를 차단하지 않아 스피너 120ms 타이머가 계속 동작함 */
+async function collectViewAsync({ skipFetch = false, skipGh = false } = {}) {
+  if (_collecting) return;
+  _collecting = true;
+  try {
+    const view = await buildExtendedViewAsync({
+      repoRoot: REPO_ROOT, now: new Date(), skipFetch, skipGh,
+    });
+    cachedView = view;
+    lastInProgress = view.inProgress || [];
+    if (lastInProgress.length === 0) uiState.cursor = -1;
+    else if (uiState.cursor >= lastInProgress.length) uiState.cursor = lastInProgress.length - 1;
+    if (!uiState.filterMode) redraw(cachedView);
+  } catch (e) {
+    process.stderr.write(`[ci-watch-v2] collect: ${e?.message}\n`);
+  } finally {
+    _collecting = false;
+  }
+}
+
+/** 첫 화면: skipFetch+skipGh 로 즉시 async 수집, 이후 비동기 fetch */
+async function tickFastAsync() {
+  readLocalOriginSha(REPO_ROOT); // fetch 전에도 로컬 rev-parse 로 sha 표시
+  await collectViewAsync({ skipFetch: true, skipGh: true });
+  if (_fetchingBackground) return;
+  _fetchingBackground = true;
+  try {
+    await maybeGitFetchAsync(REPO_ROOT, Date.now(), 10_000);
+    _fetchingBackground = false;
+    if (!uiState.filterMode && !uiState.detailCard) {
+      await collectViewAsync({ skipFetch: true });
+    }
+  } catch { _fetchingBackground = false; }
 }
 
 function redraw(view) {
@@ -79,6 +114,7 @@ function redraw(view) {
     terminalWidth: width,
     timeStr: nowStrWib(),
     version: CI_WATCH_V2_VERSION,
+    nowMs: Date.now(),
   }, uiState);
 
   process.stdout.write('\x1b[2J\x1b[H');
@@ -90,14 +126,29 @@ function redraw(view) {
 let refreshTimer = null;
 let spinnerTimer  = null;
 
+// runScheduledTick: 3초마다 비동기 수집 + 비동기 fetch (이벤트 루프 비차단)
+async function runScheduledTick() {
+  if (!uiState.filterMode && !uiState.detailCard) {
+    await collectViewAsync({ skipFetch: true });
+    if (!_fetchingBackground) {
+      _fetchingBackground = true;
+      let prevSha = cachedView?.dataOrigin?.sha || null;
+      try {
+        await maybeGitFetchAsync(REPO_ROOT, Date.now(), 10_000);
+        _fetchingBackground = false;
+        const { sha: newSha } = getDataOrigin();
+        if (newSha !== prevSha && !uiState.filterMode && !uiState.detailCard) {
+          await collectViewAsync({ skipFetch: true });
+        }
+      } catch { _fetchingBackground = false; }
+    }
+  }
+  refreshTimer = setTimeout(runScheduledTick, LOCAL_REFRESH_MS);
+}
+
 function scheduleNext() {
   if (refreshTimer) clearTimeout(refreshTimer);
-  refreshTimer = setTimeout(() => {
-    if (!uiState.filterMode && !uiState.detailCard) {
-      try { tickOnce(); } catch (e) { process.stderr.write(`[ci-watch-v2] tick: ${e?.message}\n`); }
-    }
-    scheduleNext();
-  }, LOCAL_REFRESH_MS);
+  refreshTimer = setTimeout(runScheduledTick, LOCAL_REFRESH_MS);
 }
 
 function startSpinner() {
@@ -146,7 +197,7 @@ function handleKey(key) {
   if (key === 'q' || key === 'Q' || key === '\x03') {
     cleanupTerminal(); process.exit(0);
   } else if (key === 'r' || key === 'R') {
-    try { tickOnce(); } catch {}
+    collectViewAsync().catch(() => {});
   } else if (key === 'j' || key === 'J') {
     moveCursor(1);
   } else if (key === 'k' || key === 'K') {
@@ -179,9 +230,9 @@ function openDetail() {
 
 if (process.argv.includes('--once') || process.env.CI_WATCH_ONCE === '1') {
   try {
-    // --once 시작 시 git fetch 선행 (data origin 표시용)
-    maybeGitFetch(REPO_ROOT);
-    const view = buildExtendedView({ repoRoot: REPO_ROOT, now: new Date() });
+    // --once: fetch·gh 없이 로컬 origin/main 기준으로 즉시 (목표 ≤ 3초)
+    readLocalOriginSha(REPO_ROOT); // fetch 없이 로컬 rev-parse 로 sha 채움
+    const view = buildExtendedView({ repoRoot: REPO_ROOT, now: new Date(), skipFetch: true, skipGh: true });
     const widthArg = process.argv.find(a => a.startsWith('--width='));
     const width = widthArg ? Number(widthArg.slice('--width='.length)) : detectTerminalWidth();
     const lines = renderV2(view, {
@@ -197,9 +248,109 @@ if (process.argv.includes('--once') || process.env.CI_WATCH_ONCE === '1') {
   }
 }
 
+// ── --measure=N 모드 (스피너 타이밍 + fetch/sha 추적, N초 후 요약 출력) ───────
+
+const _measureArg = process.argv.find(x => x.startsWith('--measure='));
+const MEASURE_SEC = _measureArg ? parseInt(_measureArg.slice('--measure='.length)) : 0;
+
+if (MEASURE_SEC > 0 && process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  let _mSpinCount = 0;
+  let _mLastSpinAt = 0;
+  let _mCollectCount = 0;
+  let _mFetchCount = 0;
+  let _mGitProcCount = 0;
+  let _mShaChanges = 0;
+  let _mCurrentSha = null;
+  const _mSpinDts = [];
+  const _mCollectDurs = [];
+  const _mShaLog = [];   // sha 변경 이벤트
+
+  const _mOrigSpinner = setInterval(() => {
+    const now = Date.now();
+    if (_mLastSpinAt > 0) _mSpinDts.push(now - _mLastSpinAt);
+    _mLastSpinAt = now;
+    _mSpinCount++;
+  }, SPINNER_INTERVAL_MS);
+
+  const _mStart = Date.now();
+
+  // 3초마다 비동기 수집 (spinner 간섭 없이)
+  const _mCollect = async () => {
+    const t0 = Date.now();
+    const view = await buildExtendedViewAsync({
+      repoRoot: REPO_ROOT, now: new Date(), skipFetch: true, skipGh: true,
+    });
+    _mCollectDurs.push(Date.now() - t0);
+    _mCollectCount++;
+    const sha = view?.dataOrigin?.sha || null;
+    if (sha && sha !== _mCurrentSha) {
+      _mShaChanges++;
+      _mShaLog.push({ t: Date.now(), from: _mCurrentSha, to: sha });
+      process.stderr.write(`[measure] sha changed: ${_mCurrentSha} → ${sha}\n`);
+      _mCurrentSha = sha;
+    }
+  };
+
+  // 30초마다 실제 fetch (sha 변경 감지) — resetFetchGuard 로 30s 가드 우회
+  const _mFetchTick = async () => {
+    _mFetchCount++;
+    _mGitProcCount++;
+    const prevSha = getDataOrigin().sha;
+    resetFetchGuard();
+    await maybeGitFetchAsync(REPO_ROOT, Date.now(), 10_000);
+    const { sha: newSha } = getDataOrigin();
+    if (newSha && newSha !== prevSha) {
+      _mShaChanges++;
+      _mShaLog.push({ t: Date.now(), from: prevSha, to: newSha, source: 'fetch' });
+      process.stderr.write(`[measure] fetch sha changed: ${prevSha} → ${newSha}\n`);
+    }
+  };
+
+  _mCollect();
+  const _mTick = setInterval(_mCollect, LOCAL_REFRESH_MS);
+  const _mFetchTimer = setInterval(_mFetchTick, 30_000);
+  _mFetchTick(); // initial fetch
+
+  setTimeout(() => {
+    clearInterval(_mOrigSpinner);
+    clearInterval(_mTick);
+    clearInterval(_mFetchTimer);
+    const p95idx = Math.floor(_mSpinDts.length * 0.95);
+    const sorted = [..._mSpinDts].sort((a, b) => a - b);
+    const p95dt = sorted[Math.min(p95idx, sorted.length - 1)] || 0;
+    const missed = _mSpinDts.filter(dt => dt > SPINNER_INTERVAL_MS * 1.5).length;
+    const pctOk = _mSpinDts.length > 0
+      ? Math.round((1 - missed / _mSpinDts.length) * 1000) / 10
+      : 0;
+    const avgCollect = _mCollectDurs.length > 0
+      ? Math.round(_mCollectDurs.reduce((s, d) => s + d, 0) / _mCollectDurs.length)
+      : 0;
+    const summary = {
+      type: 'summary',
+      durationSec: Math.round((Date.now() - _mStart) / 1000),
+      // (b) 스피너
+      spinnerCount: _mSpinCount,
+      p95dtMs: p95dt,
+      missedFrames: missed,
+      pctWithin70to170ms: pctOk,
+      // (a) sha 추적
+      fetchCount: _mFetchCount,
+      shaChanges: _mShaChanges,
+      shaLog: _mShaLog,
+      finalSha: getDataOrigin().sha,
+      // (c) git 프로세스 수 (fetch 1회 = 1 프로세스)
+      gitProcCount: _mFetchCount + _mCollectCount * 3, // 추정: collect당 ls-tree+cat-file+show
+      collectCount: _mCollectCount,
+      avgCollectMs: avgCollect,
+    };
+    process.stdout.write(JSON.stringify(summary, null, 2) + '\n');
+    process.exit(0);
+  }, MEASURE_SEC * 1000);
+}
+
 // ── 대화형 모드 ───────────────────────────────────────────────────────────
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (!MEASURE_SEC && process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   process.on('SIGINT',  () => { cleanupTerminal(); process.exit(0); });
   process.on('SIGTERM', () => { cleanupTerminal(); process.exit(0); });
 
@@ -213,7 +364,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     process.stdin.on('data', key => { try { handleKey(key); } catch {} });
   }
 
-  try { tickOnce(); } catch (e) { process.stderr.write(`[ci-watch-v2] initial: ${e?.message}\n`); }
+  // 첫 화면: async 수집 (이벤트 루프 비차단 → 스피너 120ms 타이머 freeze 없음)
+  tickFastAsync().catch(e => process.stderr.write(`[ci-watch-v2] initial: ${e?.message}\n`));
   scheduleNext();
   startSpinner();
 }

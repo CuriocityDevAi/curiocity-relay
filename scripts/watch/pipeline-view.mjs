@@ -27,7 +27,7 @@ import {
   getWibDateStr,
   QUEUE_HUBS,
 } from './sources-local.mjs';
-import { readAllJsonGit, readClaimGit } from './sources-git.mjs';
+import { readAllJsonGit, readClaimGit, gitCatFileBatch } from './sources-git.mjs';
 import { classifyAge, shouldHideAfterMerge, recomputeSuccessRate, COLUMNS } from './thresholds.mjs';
 
 import { join as join_safe } from 'node:path';
@@ -40,6 +40,7 @@ const CI_RESULT_RECENT_MIN = 15;
 
 /**
  * 프롬프트 ID 당 "현재 칸" 결정.
+ * @param {Map} [claimCacheOverride]  pre-loaded claims Map (path → text). 제공 시 gitCatFileBatch 건너뜀.
  */
 export function buildPipelineView({
   repoRoot,
@@ -50,6 +51,7 @@ export function buildPipelineView({
   reportRecentMin = REPORT_RECENT_MIN,
   reviewRecentHr = REVIEW_RECENT_HR,
   ciResultRecentMin = CI_RESULT_RECENT_MIN,
+  claimCacheOverride,
 } = {}) {
   const paths = resolvePaths(repoRoot);
   // all.json: git 오브젝트 우선, 없으면 작업 트리 폴백
@@ -70,10 +72,29 @@ export function buildPipelineView({
   };
 
   // --- 1) 큐: queue/<hub>/<id>.md 있고 claim 미착수.
-  // claim: git 오브젝트 우선, 없으면 작업 트리 폴백
-  for (const q of scanQueueFiles(paths)) {
-    if (!inRecentCodes(q.id, todayCodes)) continue;
-    const claim = (repoRoot && readClaimGit(repoRoot, q.id)) || readClaim(paths, q.id);
+  // claim 배치 로드 (git cat-file --batch 1회) → 없으면 로컬 폴백.
+  // claimCacheOverride 가 제공되면 git 호출 없이 사용 (async 경로).
+  const recentQueueFiles = scanQueueFiles(paths).filter(q => inRecentCodes(q.id, todayCodes));
+  const _qClaimCache = new Map();
+  if (claimCacheOverride) {
+    for (const [p, text] of claimCacheOverride) {
+      if (!text) continue;
+      const id = p.replace('status/claims/', '').replace('.json', '');
+      try { const obj = JSON.parse(text); if (obj) _qClaimCache.set(id, obj); } catch {}
+    }
+  } else if (repoRoot && recentQueueFiles.length > 0) {
+    const claimPaths = recentQueueFiles.map(q => `status/claims/${q.id}.json`);
+    const batch = gitCatFileBatch(repoRoot, claimPaths);
+    for (const [p, text] of batch) {
+      if (!text) continue;
+      const id = p.replace('status/claims/', '').replace('.json', '');
+      try { const obj = JSON.parse(text); if (obj) _qClaimCache.set(id, obj); } catch {}
+    }
+  }
+  for (const q of recentQueueFiles) {
+    const claim = _qClaimCache.has(q.id)
+      ? _qClaimCache.get(q.id)
+      : ((repoRoot && readClaimGit(repoRoot, q.id)) || readClaim(paths, q.id));
     const claimed = !!(claim && claim.state && claim.state !== 'issued');
     if (claimed) continue;
     const card = ensure(q.id, q.hub);
