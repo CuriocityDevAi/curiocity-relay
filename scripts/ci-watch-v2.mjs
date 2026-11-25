@@ -1,43 +1,30 @@
 #!/usr/bin/env node
-// scripts/ci-watch-v2.mjs  ci-watch v2.0 (M1-1124-P)
-// 9칸 파이프라인 칸반 · 로컬 우선 · GitHub 최소 호출.
+// scripts/ci-watch-v2.mjs  ci-watch v2.0 (M2-1125-I)
+// 확정 레이아웃: 주의 · 허브큐 · CI대기 · 진행중 · 오늘완료.
 //
-// 실행: ci-watch.sh --v2  (래퍼 분기) · 단독: node ~/projects/curiocity-relay/scripts/ci-watch-v2.mjs
-// 키   : q 종료 / Ctrl+C 종료 / r 수동 새로고침
-// 간격 : 로컬 3초 · GitHub 호출은 이상 감지 트리거 시점에만 (평시 ≤1회/5분)
+// 실행: node ~/projects/curiocity-relay/scripts/ci-watch-v2.mjs
+// 키  : j/k 이동 · Enter 상세 창 · / 필터 · r 새로고침 · q 종료
+// 옵션: --once [--width=N]  스크린샷/테스트용 1회 출력
 //
 // 이 파일은 "조립"만 담당 — 모든 로직은 watch/*.mjs 에 있다.
 
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { homedir } from 'node:os';
-import { buildPipelineView } from './watch/pipeline-view.mjs';
-import { renderV2 } from './watch/render-v2.mjs';
+import { buildExtendedView } from './watch/collect-view.mjs';
+import { renderV2, renderDetailPanel } from './watch/render-v2.mjs';
 
-const CI_WATCH_V2_VERSION = '2.0.0-mvp';
+const CI_WATCH_V2_VERSION = '2.1.0';
 
-const HERE = dirname(fileURLToPath(import.meta.url));
-
-// 배포본 판정 — v1.4 와 동일 규칙.
 const DEPLOY_BIN = `${homedir()}/.hub-runner/bin`;
 const IS_DEPLOYED = process.argv[1]
   ? dirname(resolve(process.argv[1])) === DEPLOY_BIN
   : false;
-// 데이터 출처(REPO_ROOT)는 항상 러너가 쓰는 clone — 워크트리/배포 상관없이 live state 읽음.
-// 커스텀 경로가 필요하면 CI_WATCH_RELAY_ROOT 환경변수로 덮어쓸 수 있음(테스트용).
+
 const REPO_ROOT = process.env.CI_WATCH_RELAY_ROOT
   || `${homedir()}/projects/curiocity-relay`;
 
 const LOCAL_REFRESH_MS = 3_000;
-
-// GitHub 예산 추적 (평시 5분/이상 감지 시 1회) — 이번 라운드는 "호출 안 함"이 기본값.
-const ghBudget = {
-  windowStartMs: Date.now(),
-  windowCalls: 0,
-  windowMs: 60 * 60 * 1000,
-  maxPerWindow: 12,   // 한 시간 12회 상한
-  lastAnomalyMs: 0,
-};
 
 function nowStrWib() {
   return new Date().toLocaleString('en', {
@@ -48,37 +35,61 @@ function nowStrWib() {
 }
 
 function detectTerminalWidth() {
-  const cols = process.stdout.columns || 100;
-  return cols;
+  return process.stdout.columns || 100;
 }
 
-let renderToken = 0;
+// ── 인터랙션 상태 ─────────────────────────────────────────────────────────
+
+const uiState = {
+  cursor:       -1,   // 진행중 항목 선택 인덱스
+  filter:       '',   // / 필터 문자열
+  filterMode:   false,
+  detailCard:   null, // Enter 상세 창 열린 카드
+  doneExpanded: false,
+};
+
+// 마지막으로 렌더한 inProgress 목록 (j/k 범위 계산용)
+let lastInProgress = [];
+
+// ── 렌더 ──────────────────────────────────────────────────────────────────
+
+let cachedView = null;
 
 function tickOnce() {
-  renderToken += 1;
-  const view = buildPipelineView({ repoRoot: REPO_ROOT, now: new Date() });
+  const view = buildExtendedView({ repoRoot: REPO_ROOT, now: new Date() });
+  cachedView = view;
+  lastInProgress = view.inProgress || [];
+
+  // cursor 범위 보정
+  if (lastInProgress.length === 0) uiState.cursor = -1;
+  else if (uiState.cursor >= lastInProgress.length) uiState.cursor = lastInProgress.length - 1;
+
+  redraw(view);
+}
+
+function redraw(view) {
+  if (!view) return;
   const width = detectTerminalWidth();
-  const alertCount = view.cards.filter(c => c.level !== 'green').length;
   const lines = renderV2(view, {
     terminalWidth: width,
     timeStr: nowStrWib(),
     version: CI_WATCH_V2_VERSION,
-    alertCount,
-  });
+  }, uiState);
+
   process.stdout.write('\x1b[2J\x1b[H');
   process.stdout.write(lines.join('\n') + '\n');
-  // 하단 상태 줄 (GH 예산 · 호출 안 함 표기)
-  const since = Math.round((Date.now() - ghBudget.windowStartMs) / 60000);
-  const budgetStr = `GH 호출 ${ghBudget.windowCalls}/${ghBudget.maxPerWindow} (최근 ${since}분)`;
-  process.stdout.write(`\x1b[2m  로컬 3초 · ${budgetStr} · q 종료 · r 새로고침\x1b[0m\n`);
 }
+
+// ── 타이머 ────────────────────────────────────────────────────────────────
 
 let refreshTimer = null;
 
 function scheduleNext() {
   if (refreshTimer) clearTimeout(refreshTimer);
   refreshTimer = setTimeout(() => {
-    try { tickOnce(); } catch (e) { process.stderr.write(`[ci-watch-v2] tick error: ${e?.message || e}\n`); }
+    if (!uiState.filterMode && !uiState.detailCard) {
+      try { tickOnce(); } catch (e) { process.stderr.write(`[ci-watch-v2] tick: ${e?.message}\n`); }
+    }
     scheduleNext();
   }, LOCAL_REFRESH_MS);
 }
@@ -91,18 +102,75 @@ function cleanupTerminal() {
   process.stdout.write('\x1b[?25h\n');
 }
 
-// --- M1-1124-P: --once · --snapshot <width> — 테스트/스크린샷용 ---
+// ── 키 처리 ───────────────────────────────────────────────────────────────
+
+function handleKey(key) {
+  // 상세 창 열린 상태
+  if (uiState.detailCard) {
+    if (key === '\r' || key === '\x1b') { uiState.detailCard = null; redraw(cachedView); }
+    else if (key === 'j' || key === 'J') { moveCursor(1); }
+    else if (key === 'k' || key === 'K') { moveCursor(-1); }
+    return;
+  }
+
+  // 필터 입력 중
+  if (uiState.filterMode) {
+    if (key === '\x1b') {                     // ESC 취소
+      uiState.filter = ''; uiState.filterMode = false; redraw(cachedView);
+    } else if (key === '\r') {                // Enter 적용
+      uiState.filterMode = false; redraw(cachedView);
+    } else if (key === '\x7f' || key === '\b') { // 백스페이스
+      uiState.filter = uiState.filter.slice(0, -1); redraw(cachedView);
+    } else if (key.length === 1 && key >= ' ') {
+      uiState.filter += key; redraw(cachedView);
+    }
+    return;
+  }
+
+  // 일반 모드
+  if (key === 'q' || key === 'Q' || key === '\x03') {
+    cleanupTerminal(); process.exit(0);
+  } else if (key === 'r' || key === 'R') {
+    try { tickOnce(); } catch {}
+  } else if (key === 'j' || key === 'J') {
+    moveCursor(1);
+  } else if (key === 'k' || key === 'K') {
+    moveCursor(-1);
+  } else if (key === '\r') {  // Enter
+    openDetail();
+  } else if (key === '/') {
+    uiState.filterMode = true; redraw(cachedView);
+  }
+}
+
+function moveCursor(delta) {
+  if (lastInProgress.length === 0) return;
+  if (uiState.cursor < 0) uiState.cursor = 0;
+  else uiState.cursor = Math.max(0, Math.min(lastInProgress.length - 1, uiState.cursor + delta));
+  if (uiState.detailCard && lastInProgress[uiState.cursor]) {
+    uiState.detailCard = lastInProgress[uiState.cursor];
+  }
+  redraw(cachedView);
+}
+
+function openDetail() {
+  if (uiState.cursor >= 0 && lastInProgress[uiState.cursor]) {
+    uiState.detailCard = lastInProgress[uiState.cursor];
+    redraw(cachedView);
+  }
+}
+
+// ── --once モード (테스트/스크린샷) ─────────────────────────────────────────
+
 if (process.argv.includes('--once') || process.env.CI_WATCH_ONCE === '1') {
   try {
-    const view = buildPipelineView({ repoRoot: REPO_ROOT, now: new Date() });
+    const view = buildExtendedView({ repoRoot: REPO_ROOT, now: new Date() });
     const widthArg = process.argv.find(a => a.startsWith('--width='));
     const width = widthArg ? Number(widthArg.slice('--width='.length)) : detectTerminalWidth();
-    const alertCount = view.cards.filter(c => c.level !== 'green').length;
     const lines = renderV2(view, {
       terminalWidth: width,
       timeStr: nowStrWib(),
       version: CI_WATCH_V2_VERSION,
-      alertCount,
     });
     process.stdout.write(lines.join('\n') + '\n');
     process.exit(0);
@@ -112,26 +180,22 @@ if (process.argv.includes('--once') || process.env.CI_WATCH_ONCE === '1') {
   }
 }
 
+// ── 대화형 모드 ───────────────────────────────────────────────────────────
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   process.on('SIGINT',  () => { cleanupTerminal(); process.exit(0); });
   process.on('SIGTERM', () => { cleanupTerminal(); process.exit(0); });
 
   process.stdout.write('\x1b[?25l');
-  process.stderr.write(`[ci-watch-v2:boot] deployed=${IS_DEPLOYED} · repo=${REPO_ROOT}\n`);
+  process.stderr.write(`[ci-watch-v2:boot] v${CI_WATCH_V2_VERSION} · deployed=${IS_DEPLOYED} · repo=${REPO_ROOT}\n`);
 
   if (process.stdin.isTTY) {
     try { process.stdin.setRawMode(true); } catch {}
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
-    process.stdin.on('data', key => {
-      if (key === 'q' || key === 'Q' || key === '') {
-        cleanupTerminal(); process.exit(0);
-      } else if (key === 'r' || key === 'R') {
-        try { tickOnce(); } catch {}
-      }
-    });
+    process.stdin.on('data', key => { try { handleKey(key); } catch {} });
   }
 
-  try { tickOnce(); } catch (e) { process.stderr.write(`[ci-watch-v2] initial tick error: ${e?.message || e}\n`); }
+  try { tickOnce(); } catch (e) { process.stderr.write(`[ci-watch-v2] initial: ${e?.message}\n`); }
   scheduleNext();
 }

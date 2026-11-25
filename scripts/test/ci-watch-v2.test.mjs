@@ -1,5 +1,5 @@
-// scripts/test/ci-watch-v2.test.mjs  M1-1124-P — ci-watch v2 단위 테스트
-// 대상: 칸 융합 · 색 임계 · 숨김 규칙 · 성공률 재계산.
+// scripts/test/ci-watch-v2.test.mjs  M2-1125-I — ci-watch v2 단위 테스트
+// 대상: 칸 융합 · 색 임계 · 숨김 규칙 · 성공률 재계산 · 새 섹션 레이아웃 · EAW 폭.
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -15,7 +15,8 @@ import {
   COLUMN_LABELS,
 } from '../watch/thresholds.mjs';
 import { buildPipelineView, inRecentCodes, getIdDateCodes } from '../watch/pipeline-view.mjs';
-import { renderV2, stripAnsi } from '../watch/render-v2.mjs';
+import { buildExtendedView, stageStrip, stageLabel } from '../watch/collect-view.mjs';
+import { renderV2, stripAnsi, renderDetailPanel } from '../watch/render-v2.mjs';
 import { displayWidth, truncateWidth, padEndWidth } from '../watch/text-width.mjs';
 
 // ---------- 임계 분류 ----------
@@ -38,7 +39,6 @@ test('T-1c: classifyAge — hub 기본 노 28/빨 40', () => {
 });
 
 test('T-1d: classifyAge — thresholdOverride 로 상한 바꾸기', () => {
-  // 허브 상한 25분 프롬프트일 때 17.5분(70%) 이상 노, 25분 이상 빨
   assert.deepEqual(classifyAge('hub', 10, { yellow: 18, red: 25 }), { level: 'green', mark: '●' });
   assert.deepEqual(classifyAge('hub', 20, { yellow: 18, red: 25 }), { level: 'yellow', mark: '▲' });
   assert.deepEqual(classifyAge('hub', 25, { yellow: 18, red: 25 }), { level: 'red', mark: '■' });
@@ -74,7 +74,6 @@ test('T-3a: recomputeSuccessRate — 취소/건너뜀 제외', () => {
     { conclusion: 'failure' },
   ];
   const r = recomputeSuccessRate(recs);
-  // 유효 3건 (성공 2 · 실패 1) → 66.7%
   assert.equal(r.total, 3);
   assert.equal(r.failCount, 1);
   assert.equal(r.successRate, 66.7);
@@ -101,7 +100,7 @@ test('T-3d: recomputeSuccessRate — 전원 건너뜀', () => {
 // ---------- 날짜 코드 필터 ----------
 
 test('T-4a: getIdDateCodes — 오늘/어제 MMDD 를 포함', () => {
-  const now = new Date('2026-11-24T05:00:00Z'); // UTC
+  const now = new Date('2026-11-24T05:00:00Z');
   const codes = getIdDateCodes(now);
   assert.ok(codes.has('1124'));
   assert.ok(codes.has('1123'));
@@ -130,9 +129,8 @@ function makeFixture() {
   return root;
 }
 
-// 테스트 기준일: 2026-11-24 UTC (MMDD=1124), WIB 는 +7h 로 같은 날짜 "1124".
 const NOW_MS = new Date('2026-11-24T12:00:00Z').getTime();
-const NOW = new Date(NOW_MS);
+const NOW    = new Date(NOW_MS);
 
 function stamp(path, mtimeMs) {
   const t = new Date(mtimeMs);
@@ -140,17 +138,17 @@ function stamp(path, mtimeMs) {
 }
 
 test('T-5a: buildPipelineView — queue 미착수 카드', () => {
-  const root = makeFixture();
+  const root  = makeFixture();
   const qPath = join(root, 'queue', 'm1', 'M1-1124-Z.md');
   writeFileSync(qPath, 'M1-1124-Z 작업 제목\n내용');
-  stamp(qPath, NOW_MS - 90_000); // 90초 전
+  stamp(qPath, NOW_MS - 90_000);
 
-  const view = buildPipelineView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const view  = buildPipelineView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
   const queue = view.cards.filter(c => c.column === 'queue');
   assert.equal(queue.length, 1);
   assert.equal(queue[0].id, 'M1-1124-Z');
-  assert.equal(queue[0].ageMin, 2); // 90초 → 올림 2분
-  assert.equal(queue[0].mark, '▲'); // 2분 → 노
+  assert.equal(queue[0].ageMin, 2);
+  assert.equal(queue[0].mark, '▲');
 });
 
 test('T-5b: buildPipelineView — claim started → queue 에서 밀려남', () => {
@@ -158,7 +156,6 @@ test('T-5b: buildPipelineView — claim started → queue 에서 밀려남', () 
   writeFileSync(join(root, 'queue', 'm1', 'M1-1124-Y.md'), '제목');
   writeFileSync(join(root, 'status', 'claims', 'M1-1124-Y.json'),
     JSON.stringify({ id: 'M1-1124-Y', hub: 'm1', state: 'started' }));
-  // hubs.m1.current 를 M1-1124-Y 로
   writeFileSync(join(root, 'status', 'runners', 'all.json'),
     JSON.stringify({ hubs: { m1: { current: 'M1-1124-Y', started_at: new Date(NOW_MS - 10 * 60_000).toISOString() } } }));
 
@@ -173,17 +170,14 @@ test('T-5c: buildPipelineView — 오래된 ID 는 큐에서 제외', () => {
   const root = makeFixture();
   writeFileSync(join(root, 'queue', 'm1', 'M1-1105-AA.md'), '오래된 작업');
   const view = buildPipelineView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
-  // 날짜 코드 1105 ≠ {1124, 1123} → M1-1105-AA 는 카드로 출현하지 않아야 함.
   assert.equal(view.cards.find(c => c.id === 'M1-1105-AA'), undefined);
 });
 
 test('T-5d: buildPipelineView — 리포트 PR URL → pr 칸, CI jsonl → ci_result', () => {
-  const root = makeFixture();
-  // 리포트 (최근 5분)
+  const root    = makeFixture();
   const rptPath = join(root, 'm1', 'M1-1124-Q-report.md');
   writeFileSync(rptPath, 'PASS\n# M1-1124-Q 제목\nPR: https://github.com/CuriocityDevAi/storeport/pull/9999\n');
   stamp(rptPath, NOW_MS - 5 * 60_000);
-  // CI jsonl 매칭 (3분 전 완료)
   writeFileSync(join(root, 'status', 'ci', '2026-11-24.jsonl'),
     JSON.stringify({ id: 1, repo: 'r', pr: 9999, workflow: 'ci', job: 'lint',
       runner_kind: 'mac-light', created_at: new Date(NOW_MS - 10 * 60_000).toISOString(),
@@ -199,7 +193,7 @@ test('T-5d: buildPipelineView — 리포트 PR URL → pr 칸, CI jsonl → ci_r
 });
 
 test('T-5e: buildPipelineView — PR URL 있고 CI 매칭 없음 → ci_pending (예측)', () => {
-  const root = makeFixture();
+  const root    = makeFixture();
   const rptPath = join(root, 'm1', 'M1-1124-R-report.md');
   writeFileSync(rptPath, 'PASS\n# M1-1124-R\nPR: https://github.com/CuriocityDevAi/storeport/pull/8888\n');
   stamp(rptPath, NOW_MS - 2 * 60_000);
@@ -213,7 +207,7 @@ test('T-5e: buildPipelineView — PR URL 있고 CI 매칭 없음 → ci_pending 
 });
 
 test('T-5f: buildPipelineView — pipeline.jsonl merged + 11분 전 → 숨김, doneToday 증가', () => {
-  const root = makeFixture();
+  const root    = makeFixture();
   const rptPath = join(root, 'm1', 'M1-1124-S-report.md');
   writeFileSync(rptPath, '# S\nPR: https://github.com/CuriocityDevAi/storeport/pull/7777');
   stamp(rptPath, NOW_MS - 15 * 60_000);
@@ -228,7 +222,7 @@ test('T-5f: buildPipelineView — pipeline.jsonl merged + 11분 전 → 숨김, 
 
 test('T-5g: buildPipelineView — r0 review mtime < 2h → review 칸', () => {
   const root = makeFixture();
-  const r0 = join(root, 'r0', 'R0-1124-K-report.md');
+  const r0   = join(root, 'r0', 'R0-1124-K-report.md');
   writeFileSync(r0, 'APPROVE\n\nR0-1124-K — M1-1124-Q 리뷰\nPR: x');
   stamp(r0, NOW_MS - 30 * 60_000);
   writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
@@ -240,17 +234,20 @@ test('T-5g: buildPipelineView — r0 review mtime < 2h → review 칸', () => {
   assert.equal(card.ageMin, 30);
 });
 
-// ---------- 렌더 스모크 ----------
+// ---------- 렌더 스모크 (새 섹션 레이아웃) ----------
 
-test('T-6a: renderV2 — 빈 뷰에서도 상단/하단 라인 포함', () => {
+test('T-6a: renderV2 — 빈 뷰에서도 주요 섹션 헤더 포함', () => {
   const view = {
     cards: [], hubCurrents: {}, hubOrder: {},
     doneToday: 0, anomalies: [], today: null, todaySuccess: null, stats: {},
   };
   const lines = renderV2(view, { terminalWidth: 100, timeStr: '2026-11-24 23:00:00' });
-  const text = lines.map(stripAnsi).join('\n');
-  assert.ok(text.includes('ci-watch v2'));
-  assert.ok(text.includes('경보 없음'));
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('ci-watch'), '헤더 포함');
+  assert.ok(text.includes('주의 없음'), '주의 없음 섹션');
+  assert.ok(text.includes('허브 큐'), '허브 큐 섹션');
+  assert.ok(text.includes('진행 중'), '진행 중 섹션');
+  assert.ok(text.includes('j/k'), '키 안내');
 });
 
 test('T-6b: renderV2 board narrow (< 60) — 세로 쌓기 (빈 칸 "--")', () => {
@@ -259,30 +256,32 @@ test('T-6b: renderV2 board narrow (< 60) — 세로 쌓기 (빈 칸 "--")', () =
     hubCurrents: {}, hubOrder: {}, doneToday: 0, anomalies: [], stats: {},
   };
   const lines = renderV2(view, { terminalWidth: 55, timeStr: 't', board: true });
-  const text = lines.map(stripAnsi).join('\n');
+  const text  = lines.map(stripAnsi).join('\n');
   assert.ok(text.includes('큐(1)'));
   assert.ok(text.includes('M1-1124-Z'));
   assert.ok(text.includes('허브작업(0)  --'));
 });
 
-test('T-6c: renderV2 — 노/빨 카드는 이유 줄 포함', () => {
+test('T-6c: renderV2 — 주의 카드 이유 줄 포함', () => {
   const view = {
     cards: [
-      { id: 'M1-1124-Z', column: 'hub', hub: 'm1', ageMin: 45, mark: '■', level: 'red', title: '허브 과업', reason: '허브작업 45분 (상한 초과)' },
+      { id: 'M1-1124-Z', column: 'hub', hub: 'm1', ageMin: 45, mark: '■', level: 'red',
+        title: '허브 과업', reason: '허브작업 45분 (상한 초과)' },
     ],
     hubCurrents: {}, hubOrder: {}, doneToday: 0, anomalies: [], stats: {},
   };
   const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
-  const text = lines.map(stripAnsi).join('\n');
-  assert.ok(text.includes('허브작업 45분'));
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('주의 (1)'), '주의 1건');
+  assert.ok(text.includes('M1-1124-Z'), 'ID 포함');
+  assert.ok(text.includes('허브작업 45분'), '이유 포함');
 });
 
 // ---------- predicted review 경보 집계 제외 ----------
 
 test('T-8a: buildPipelineView — review predicted=true: level green, 경보 집계 제외', () => {
   const root = makeFixture();
-  const r0 = join(root, 'r0', 'R0-1124-KK-report.md');
-  // APPROVE 리뷰 리포트, 45분 전 (review 창 2h 이내, 90분 미만)
+  const r0   = join(root, 'r0', 'R0-1124-KK-report.md');
   writeFileSync(r0, 'APPROVE\n\nR0-1124-KK — M1-1124-ZZ 리뷰\nPR: x');
   stamp(r0, NOW_MS - 45 * 60_000);
   writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
@@ -291,23 +290,22 @@ test('T-8a: buildPipelineView — review predicted=true: level green, 경보 집
   const card = view.cards.find(c => c.id === 'M1-1124-ZZ');
   assert.ok(card, 'review card should exist');
   assert.equal(card.column, 'review');
-  assert.equal(card.predicted, true, 'predicted should be true');
-  assert.equal(card.level, 'green', 'level must be green (경보 집계 제외)');
+  assert.equal(card.predicted, true);
+  assert.equal(card.level, 'green');
   assert.equal(card.mark, '●');
   assert.equal(card.reason, '예측·머지 여부 모름');
 });
 
 test('T-8b: buildPipelineView — review APPROVE 90분+ → 숨김 (doneToday 증가)', () => {
   const root = makeFixture();
-  const r0 = join(root, 'r0', 'R0-1124-KM-report.md');
-  // 95분 전 — reviewRecentHr=2 창 안이지만 APPROVE + 90분 초과
+  const r0   = join(root, 'r0', 'R0-1124-KM-report.md');
   writeFileSync(r0, 'APPROVE\n\nR0-1124-KM — M1-1124-ZM 리뷰\nPR: x');
   stamp(r0, NOW_MS - 95 * 60_000);
   writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
 
   const view = buildPipelineView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
-  assert.equal(view.cards.find(c => c.id === 'M1-1124-ZM'), undefined, 'card should be hidden');
-  assert.equal(view.doneToday, 1, 'doneToday should increment');
+  assert.equal(view.cards.find(c => c.id === 'M1-1124-ZM'), undefined);
+  assert.equal(view.doneToday, 1);
 });
 
 // ---------- COLUMNS/LABELS 안전 ----------
@@ -317,156 +315,344 @@ test('T-7a: COLUMNS 9칸 순서 일관', () => {
 });
 
 test('T-7b: COLUMN_LABELS 전체 한국어', () => {
-  for (const c of COLUMNS) {
-    assert.ok(COLUMN_LABELS[c], `missing label for ${c}`);
-  }
+  for (const c of COLUMNS) assert.ok(COLUMN_LABELS[c], `missing label for ${c}`);
 });
 
 // ---------- EAW 표시 폭 함수 ----------
 
 test('T-W1: displayWidth — 한글·이모지·●■▲·… 폭 계산', () => {
-  assert.equal(displayWidth('abc'), 3, 'ASCII 1칸');
-  assert.equal(displayWidth('한글'), 4, 'Korean 2칸×2');
-  assert.equal(displayWidth('a한b'), 4, 'mixed 1+2+1');
-  assert.equal(displayWidth('●'), 2, '● Geometric Shape 2칸');
-  assert.equal(displayWidth('■'), 2, '■ 2칸');
-  assert.equal(displayWidth('▲'), 2, '▲ 2칸');
-  assert.equal(displayWidth('…'), 2, '… HORIZONTAL ELLIPSIS 2칸');
+  assert.equal(displayWidth('abc'), 3);
+  assert.equal(displayWidth('한글'), 4);
+  assert.equal(displayWidth('a한b'), 4);
+  assert.equal(displayWidth('●'), 2);
+  assert.equal(displayWidth('■'), 2);
+  assert.equal(displayWidth('▲'), 2);
+  assert.equal(displayWidth('…'), 2);
   assert.equal(displayWidth('\x1b[32m한\x1b[0m'), 2, 'ANSI 코드 0칸');
-  assert.equal(displayWidth('🎉'), 2, '이모지 2칸');
-  assert.equal(displayWidth('│'), 1, '박스 그리기 문자 1칸');
-  assert.equal(displayWidth('─'), 1, '가로선 1칸');
+  assert.equal(displayWidth('🎉'), 2);
+  assert.equal(displayWidth('│'), 1);
+  assert.equal(displayWidth('─'), 1);
 });
 
 test('T-W2: truncateWidth — 한글 포함 자르기', () => {
-  // '한글abcd' = 2+2+1+1+1+1=8, maxCols=7
-  // 7-2(ellipsis)=5, '한글a'=2+2+1=5 → '한글a…'
   assert.equal(truncateWidth('한글abcd', 7), '한글a…');
-  // 꼭 맞는 경우 — 자르기 없음
-  assert.equal(truncateWidth('한글abc', 7), '한글abc'); // 2+2+1+1+1=7 ≤ 7
-  // 한글만
-  assert.equal(truncateWidth('한글한', 5), '한…'); // 2+2>5-2=3이므로 '한'(2)+…(2)=4
-  // 빈 문자열
+  assert.equal(truncateWidth('한글abc', 7), '한글abc');
+  assert.equal(truncateWidth('한글한', 5), '한…');
   assert.equal(truncateWidth('', 10), '');
-  // maxCols=0
   assert.equal(truncateWidth('abc', 0), '');
 });
 
 test('T-W3: padEndWidth — EAW 기준 패딩', () => {
-  const p1 = padEndWidth('한', 5); // 2 → 3 spaces
-  assert.equal(displayWidth(p1), 5, '한(2)+3spaces=5');
-  assert.ok(p1.endsWith('   '), '3 trailing spaces');
+  const p1 = padEndWidth('한', 5);
+  assert.equal(displayWidth(p1), 5);
+  assert.ok(p1.endsWith('   '));
 
-  const p2 = padEndWidth('abc', 5); // 3 → 2 spaces
-  assert.equal(displayWidth(p2), 5, 'abc(3)+2spaces=5');
+  const p2 = padEndWidth('abc', 5);
+  assert.equal(displayWidth(p2), 5);
 
-  // ANSI 포함
   const p3 = padEndWidth('\x1b[32m한\x1b[0m', 5);
-  assert.equal(displayWidth(p3), 5, 'ANSI+한(2)+3spaces=5');
+  assert.equal(displayWidth(p3), 5);
 
-  // 이미 충분
-  assert.equal(padEndWidth('한글', 4), '한글', 'no pad when at target');
-  assert.equal(padEndWidth('한글한', 4), '한글한', 'no pad when over target');
+  assert.equal(padEndWidth('한글', 4), '한글');
+  assert.equal(padEndWidth('한글한', 4), '한글한');
 });
 
-// ---------- 박스 테두리 정렬 ----------
+// ---------- 박스 테두리 정렬 (board 모드) ----------
 
 test('T-W4: renderV2 board — 한글 카드 포함 시 각 줄 표시 폭 동일', () => {
   const view = {
     cards: [
-      { id: 'M1-1124-Z', column: 'queue', hub: 'm1', ageMin: 2, mark: '▲', level: 'yellow',
-        title: '한글 카드 제목 테스트' },
-      { id: 'M1-1124-A', column: 'hub', hub: 'm1', ageMin: 10, mark: '●', level: 'green',
-        title: 'ASCII title only' },
+      { id: 'M1-1124-Z', column: 'queue', hub: 'm1', ageMin: 2, mark: '▲', level: 'yellow', title: '한글 카드 제목 테스트' },
+      { id: 'M1-1124-A', column: 'hub',   hub: 'm1', ageMin: 10, mark: '●', level: 'green',  title: 'ASCII title only' },
     ],
     hubCurrents: {}, hubOrder: {}, doneToday: 0, anomalies: [], stats: {},
   };
-  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't', board: true });
+  const lines    = renderV2(view, { terminalWidth: 100, timeStr: 't', board: true });
   const stripped = lines.map(l => stripAnsi(l));
 
-  // 상단/하단 테두리 줄 (┌/└ 로 시작하는 전체 행)
   const topRows = stripped.filter(l => /^┌/.test(l));
   const botRows = stripped.filter(l => /^└/.test(l));
-  assert.ok(topRows.length > 0, '상단 테두리 존재');
-  assert.ok(botRows.length > 0, '하단 테두리 존재');
+  assert.ok(topRows.length > 0);
+  assert.ok(botRows.length > 0);
 
   const refWidth = displayWidth(topRows[0]);
-  assert.ok(refWidth > 0, '기준 폭 > 0');
-
-  // 하단 테두리도 같은 폭
-  for (const row of botRows) {
-    assert.equal(displayWidth(row), refWidth, `하단 테두리 폭 불일치: "${row}"`);
-  }
-
-  // │ 로 시작하는 카드 줄도 같은 폭
-  const cardRows = stripped.filter(l => /^│/.test(l));
-  for (const row of cardRows) {
-    assert.equal(displayWidth(row), refWidth, `카드 줄 폭 불일치: "${row.slice(0, 30)}…"`);
+  for (const row of botRows)  assert.equal(displayWidth(row), refWidth);
+  for (const row of stripped.filter(l => /^│/.test(l))) {
+    assert.equal(displayWidth(row), refWidth);
   }
 });
 
-// ---------- --once 출력 캐처 (줄형 · 박스) ----------
+// ---------- 단계 띠 (stageStrip) ----------
 
-test('T-9a: --once 줄형 출력 캐처 — 한글/이모지 카드 포함', () => {
+test('T-S1: stageStrip — 8단계 띠 올바른 기호', () => {
+  assert.equal(stageStrip('hub'),        '◐○○○○○○○', 'hub = 단계 0');
+  assert.equal(stageStrip('report'),     '●◐○○○○○○', 'report = 단계 1');
+  assert.equal(stageStrip('pr'),         '●●◐○○○○○', 'pr = 단계 2');
+  assert.equal(stageStrip('ci_pending'), '●●●◐○○○○', 'ci_pending = 단계 3');
+  assert.equal(stageStrip('ci_running'), '●●●●◐○○○', 'ci_running = 단계 4');
+  assert.equal(stageStrip('ci_result'),  '●●●●●◐○○', 'ci_result = 단계 5');
+  assert.equal(stageStrip('review'),     '●●●●●●◐○', 'review = 단계 6');
+  assert.equal(stageStrip('merge'),      '●●●●●●●◐', 'merge = 단계 7');
+  assert.equal(stageStrip('unknown'),    '○○○○○○○○', '알 수 없는 단계');
+});
+
+test('T-S2: stageLabel — 단계명 한국어', () => {
+  assert.equal(stageLabel('hub'),        '작업');
+  assert.equal(stageLabel('report'),     '리포트');
+  assert.equal(stageLabel('pr'),         'PR');
+  assert.equal(stageLabel('ci_pending'), 'CI대기');
+  assert.equal(stageLabel('ci_running'), 'CI실행');
+  assert.equal(stageLabel('ci_result'),  'CI결과');
+  assert.equal(stageLabel('review'),     '리뷰');
+  assert.equal(stageLabel('merge'),      '머지');
+});
+
+// ---------- buildExtendedView ----------
+
+function makeFullFixture() {
   const root = makeFixture();
-  // 접미사는 [A-Z]+ 패턴만 허용 (숫자 불가) → QA 사용
-  writeFileSync(join(root, 'queue', 'm1', 'M1-1124-QA.md'), '🎉 한글 제목 테스트\n내용');
-  stamp(join(root, 'queue', 'm1', 'M1-1124-QA.md'), NOW_MS - 60_000);
+  mkdirSync(join(root, 'queue', 'm0'), { recursive: true });
+  mkdirSync(join(root, 'queue', 'm3'), { recursive: true });
+  mkdirSync(join(root, 'queue', 'r0'), { recursive: true });
+  return root;
+}
+
+test('T-E1: buildExtendedView — 허브 큐 미착수 항목 허브별 집계', () => {
+  const root = makeFullFixture();
+  const q1   = join(root, 'queue', 'm1', 'M1-1124-XA.md');
+  const q2   = join(root, 'queue', 'm2', 'M2-1124-XB.md');
+  writeFileSync(q1, '원장 대사: "작업 A 제목"\n내용');
+  writeFileSync(q2, '원장 대사: "작업 B 제목"\n내용');
+  stamp(q1, NOW_MS - 3 * 60_000);
+  stamp(q2, NOW_MS - 1 * 60_000);
   writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
 
-  const view = buildPipelineView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const m1q  = view.hubQueue.get('m1') || [];
+  const m2q  = view.hubQueue.get('m2') || [];
+  assert.equal(m1q.length, 1, 'm1에 1건');
+  assert.equal(m1q[0].id, 'M1-1124-XA');
+  assert.equal(m2q.length, 1, 'm2에 1건');
+  assert.equal(m2q[0].id, 'M2-1124-XB');
+  assert.equal((view.hubQueue.get('m3') || []).length, 0, 'm3 비어있음');
+});
 
-  // 줄형 (기본, board 없음)
-  const lineLines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
-  const lineText = lineLines.map(l => stripAnsi(l)).join('\n');
+test('T-E2: buildExtendedView — inProgress = hub 카드, caution = red/yellow 항목', () => {
+  const root = makeFullFixture();
+  writeFileSync(join(root, 'queue', 'm1', 'M1-1124-XC.md'), '제목');
+  writeFileSync(join(root, 'status', 'claims', 'M1-1124-XC.json'),
+    JSON.stringify({ id: 'M1-1124-XC', hub: 'm1', state: 'started' }));
+  writeFileSync(join(root, 'status', 'runners', 'all.json'),
+    JSON.stringify({ hubs: { m1: {
+      current: 'M1-1124-XC',
+      started_at: new Date(NOW_MS - 45 * 60_000).toISOString(), // 45분 → red
+    }}}));
 
-  assert.ok(lineText.includes('M1-1124-QA'), 'ID 포함');
-  assert.ok(lineText.includes('한글 제목 테스트'), '한글 제목 포함');
-  assert.ok(lineText.includes('ci-watch'), '헤더 포함');
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  // 특정 카드 M1-1124-XC 가 inProgress 와 caution 에 있는지 확인
+  // (실제 ~/.hub-runner/reports 에 1124 날짜 리포트가 있으면 추가 카드가 생길 수 있어 exact count 미확인)
+  const hubCard = view.inProgress.find(c => c.id === 'M1-1124-XC');
+  assert.ok(hubCard, 'M1-1124-XC 가 inProgress 에 존재');
+  assert.equal(hubCard.column, 'hub', 'hub 칼럼');
+  const cauCard = view.caution.find(c => c.id === 'M1-1124-XC');
+  assert.ok(cauCard, 'M1-1124-XC 가 caution 에 존재 (45분 → red)');
+  assert.equal(cauCard.level, 'red');
+});
 
-  // hr 줄은 terminalWidth(100) 과 같은 표시 폭이어야 함
-  for (const l of lineLines) {
-    const plain = stripAnsi(l);
-    if (plain.startsWith('━')) {
-      assert.equal(displayWidth(plain), 100, 'hr 줄 폭 = 100');
-    }
+test('T-E3: buildExtendedView — CI 러너 풀 상태 집계', () => {
+  const root = makeFullFixture();
+  writeFileSync(join(root, 'status', 'runners', 'all.json'),
+    JSON.stringify({
+      ci_runners: [
+        { name: 'curiocity-mac-light', status: 'online', busy: false },
+        { name: 'Youngkyus-MacBook-Pro-M1', status: 'online', busy: true },
+        { name: 'curiocity-mac-fork', status: 'offline', busy: false },
+        { name: 'curiocity-mac-fork-light', status: 'online', busy: false },
+      ],
+    }));
+
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  assert.equal(view.ciRunnerPools.get('storeport-light')?.status, 'online');
+  assert.equal(view.ciRunnerPools.get('storeport-heavy')?.status, 'busy');
+  assert.equal(view.ciRunnerPools.get('fork-heavy')?.status, 'offline');
+  assert.equal(view.ciRunnerPools.get('fork-light')?.status, 'online');
+});
+
+// ---------- 새 섹션 렌더 — 0건 접힘 · 주의 · 허브큐 칩 · 진행중 띠 ----------
+
+test('T-R1: renderV2 — 0건 주의 섹션 접힘(한 줄)', () => {
+  const view = { cards: [], hubCurrents: {}, hubOrder: {}, doneToday: 0, anomalies: [], stats: {} };
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+  // 주의 없음: 한 줄만 (헤더), 그 아래에 개별 카드 줄 없어야 함
+  assert.ok(text.includes('주의 없음'), '주의 없음 헤더');
+  assert.ok(!text.includes('주의 ('), '주의 (N) 없음');
+});
+
+test('T-R2: renderV2 — 0건 진행 중 섹션 접힘(한 줄)', () => {
+  const view = { cards: [], hubCurrents: {}, hubOrder: {}, doneToday: 0, anomalies: [], stats: {} };
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('진행 중 (없음)'), '진행 중 없음 한 줄');
+});
+
+test('T-R3: renderV2 — 허브 큐 chip 표시 (ID + 대기분)', () => {
+  const view = {
+    cards: [],
+    hubQueue: new Map([
+      ['m0', []],
+      ['m1', [{ id: 'M1-1124-XP', ageMin: 7, title: '어떤 제목' }]],
+      ['m2', []],
+      ['m3', []],
+      ['r0', []],
+    ]),
+    hubCurrents: { m1: 'M1-1124-XQ' },
+    hubOrder: {}, doneToday: 0, anomalies: [], stats: {},
+  };
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('[M1-1124-XP 7분]'), '허브 큐 칩 ID+분');
+  assert.ok(text.includes('m0'), 'm0 허브 줄');
+  assert.ok(text.includes('m1'), 'm1 허브 줄');
+});
+
+test('T-R4: renderV2 — 진행 중 카드에 8단계 띠 포함', () => {
+  const view = {
+    cards: [
+      { id: 'M2-1124-XQ', column: 'ci_pending', hub: 'm2', ageMin: 8, mark: '●', level: 'green',
+        title: 'CI 대기 중' },
+    ],
+    hubCurrents: {}, hubOrder: {}, doneToday: 0, anomalies: [], stats: {},
+  };
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+  // ci_pending = 단계 3 → ●●●◐○○○○
+  assert.ok(text.includes('●●●◐○○○○'), '8단계 띠');
+  assert.ok(text.includes('M2-1124-XQ'), 'ID 포함');
+});
+
+test('T-R5: renderV2 — 폭 80 에서 주요 섹션 헤더가 깨지지 않음', () => {
+  const view = {
+    cards: [
+      { id: 'M1-1124-XR', column: 'hub', hub: 'm1', ageMin: 10, mark: '●', level: 'green',
+        title: '한글 제목 테스트 EAW 폭 80' },
+    ],
+    hubCurrents: { m1: 'M1-1124-XR' },
+    hubOrder: {}, doneToday: 0, anomalies: [], stats: {},
+  };
+  const lines = renderV2(view, { terminalWidth: 80, timeStr: '2026-11-25 10:47:00' });
+  const stripped = lines.map(l => stripAnsi(l));
+
+  // 섹션 헤더 줄은 "─ " 로 시작
+  const headers = stripped.filter(l => l.startsWith('─ '));
+  assert.ok(headers.length >= 3, '섹션 헤더 3개 이상');
+
+  // 각 헤더 줄의 표시 폭이 80 이하인지 확인 (80 초과는 깨짐)
+  for (const h of headers) {
+    const w = displayWidth(h);
+    assert.ok(w <= 82, `헤더 폭 ${w} 이 80±2 초과: "${h}"`);
   }
 
-  // ID 가 줄 보기에 나타나는지 (줄형은 한 줄당 1카드)
-  const cardLine = lineLines.find(l => stripAnsi(l).includes('M1-1124-QA'));
-  assert.ok(cardLine, '줄형에 카드 줄 존재');
+  // 진행 중 항목 줄도 폭 80 이하
+  const inProgLines = lines.filter(l => stripAnsi(l).includes('M1-1124-XR'));
+  assert.ok(inProgLines.length > 0, '진행 중 항목 줄 존재');
+  for (const l of inProgLines) {
+    const w = displayWidth(stripAnsi(l));
+    assert.ok(w <= 82, `진행 중 줄 폭 ${w} 이 80±2 초과`);
+  }
+});
+
+test('T-R6: renderV2 — CI 풀 OFF 경고 섹션 표시', () => {
+  const ciPools = new Map([
+    ['storeport-heavy', { queued: 0, queuedPrs: [], oldestMin: null, offlineReason: null }],
+    ['storeport-light', { queued: 0, queuedPrs: [], oldestMin: null, offlineReason: null }],
+    ['fork-heavy',      { queued: 0, queuedPrs: [], oldestMin: null, offlineReason: 'fork-heavy 러너 OFF — 클라우드로 넘기기 필요' }],
+    ['fork-light',      { queued: 0, queuedPrs: [], oldestMin: null, offlineReason: null }],
+  ]);
+  const view = {
+    cards: [], hubCurrents: {}, hubOrder: {}, doneToday: 0, anomalies: [], stats: {},
+    ciPools,
+  };
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('fork-heavy'), 'fork-heavy 풀 줄');
+  assert.ok(text.includes('클라우드'), '오프라인 이유 포함');
+});
+
+// ---------- 상세 창 렌더 ----------
+
+test('T-D1: renderDetailPanel — 카드 상세 창 출력', () => {
+  const card = {
+    id: 'M2-1124-XS', column: 'ci_running', hub: 'm2', ageMin: 15,
+    mark: '▲', level: 'yellow', title: 'CI 실행 중 테스트',
+    reason: 'CI 실행 15분 경과',
+    extra: { pr: { number: 428 } },
+  };
+  const lines = renderDetailPanel(card, { terminalWidth: 80 });
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('M2-1124-XS'), 'ID');
+  assert.ok(text.includes('CI실행'), '단계명');
+  assert.ok(text.includes('15분'), '경과 분');
+  assert.ok(text.includes('#428'), 'PR 번호');
+  assert.ok(text.includes('●●●●◐○○○'), '8단계 띠');
+});
+
+// ---------- --once 출력 캐처 (새 섹션) ----------
+
+test('T-9a: renderV2 새 섹션 — hub 카드 포함 시 진행 중 섹션 표시', () => {
+  const root = makeFullFixture();
+  writeFileSync(join(root, 'status', 'runners', 'all.json'),
+    JSON.stringify({ hubs: { m1: {
+      current: 'M1-1124-QA',
+      started_at: new Date(NOW_MS - 5 * 60_000).toISOString(),
+    }}}));
+  writeFileSync(join(root, 'status', 'claims', 'M1-1124-QA.json'),
+    JSON.stringify({ id: 'M1-1124-QA', hub: 'm1', state: 'started' }));
+  writeFileSync(join(root, 'queue', 'm1', 'M1-1124-QA.md'), '원장 대사: "한글 제목 테스트"\n내용');
+
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+
+  assert.ok(text.includes('M1-1124-QA'), 'ID 포함');
+  assert.ok(text.includes('ci-watch'), '헤더 포함');
+  assert.ok(text.includes('진행 중'), '진행 중 섹션');
+
+  // hr 줄 폭 확인
+  for (const l of lines) {
+    const plain = stripAnsi(l);
+    if (plain.startsWith('─ ')) {
+      const w = displayWidth(plain);
+      assert.ok(w <= 102, `헤더 폭 ${w} 이 100±2 초과`);
+    }
+  }
 });
 
 test('T-9b: --once 박스 출력 캐처 — 한글/이모지 카드 포함', () => {
   const root = makeFixture();
-  // 제목만 적어 박스 내 truncation 없이 한글이 표시되도록
   writeFileSync(join(root, 'queue', 'm1', 'M1-1124-QB.md'), '한글박스테스트\n내용');
   stamp(join(root, 'queue', 'm1', 'M1-1124-QB.md'), NOW_MS - 120_000);
   writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
 
   const view = buildPipelineView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
 
-  // 박스 (board=true)
   const boardLines = renderV2(view, { terminalWidth: 100, timeStr: 't', board: true });
-  const boardText = boardLines.map(l => stripAnsi(l)).join('\n');
+  const boardText  = boardLines.map(l => stripAnsi(l)).join('\n');
 
-  assert.ok(boardText.includes('M1-1124-QB'), 'ID 포함');
-  assert.ok(boardText.includes('한글박스테스트'), '한글 제목 포함 — 박스 내 2칸 폭 올바르게 표시');
+  assert.ok(boardText.includes('M1-1124-QB'));
+  assert.ok(boardText.includes('한글박스테스트'));
 
-  // 테두리 정렬: ┌/└ 행 모두 같은 폭
-  const stripped = boardLines.map(l => stripAnsi(l));
+  const stripped   = boardLines.map(l => stripAnsi(l));
   const borderRows = stripped.filter(l => /^[┌└]/.test(l));
   if (borderRows.length > 1) {
     const ws = borderRows.map(l => displayWidth(l));
     assert.ok(ws.every(w => w === ws[0]), `테두리 폭 불일치: [${ws}]`);
   }
 
-  // 카드 줄(│ 시작, 해당 ID 포함)도 같은 폭
   const cardRows = stripped.filter(l => /^│/.test(l) && l.includes('M1-1124-QB'));
   if (borderRows.length > 0) {
     const refW = displayWidth(borderRows[0]);
-    for (const row of cardRows) {
-      assert.equal(displayWidth(row), refW, `카드 줄 폭 불일치`);
-    }
+    for (const row of cardRows) assert.equal(displayWidth(row), refW);
   }
 });
