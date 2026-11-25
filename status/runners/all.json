@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T04:22:18.623Z",
+  "at": "2026-11-25T04:22:44.129Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -27,10 +27,8 @@
       "last_activity": null
     },
     "r0": {
-      "current": "R0-1125-L",
-      "started_at": "2026-11-25T04:19:57.749Z",
-      "model": "sonnet",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-25T04:22:42.720Z"
     }
   },
   "pane_close_failures": {},
@@ -38,11 +36,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.83,
-    "compressed_gb": 3.89,
+    "used_gb": 15.66,
+    "compressed_gb": 6.58,
     "swap_used_gb": 2.47,
     "pressure": "normal",
-    "at": "2026-11-25T04:21:45.699Z"
+    "at": "2026-11-25T04:22:19.739Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -114,9 +112,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": null,
+  "isolated_reports_collected": 1,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:self-update 2026-11-25T04:18:10.547Z] boot heartbeat OK · pending 정리 · prev=hub-runner-v8.3.mjs next=hub-runner-v8.3.mjs\n[hub-runner-v8.3.2:git 2026-11-25T04:18:12.861Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T04:18:13.539Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:m2 2026-11-25T04:19:56.493Z] pick · M2-1125-J · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:r0 2026-11-25T04:19:57.743Z] pick · R0-1125-L · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-25T04:20:00.843Z] M2-1125-J → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1125-J.json · {\"id\":\"M2-1125-J\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-25T04:20:01.002Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1125-J.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): queue/m2/M2-1125-J.md, queue/r0/R0-1125-L.md, status/pipeline/M2-1125-J.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:claim 2026-11-25T04:20:05.976Z] R0-1125-L → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-L.json · {\"id\":\"R0-1125-L\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-25T04:20:06.086Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-L.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1125-L.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T04:18:13.539Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:m2 2026-11-25T04:19:56.493Z] pick · M2-1125-J · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:r0 2026-11-25T04:19:57.743Z] pick · R0-1125-L · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-25T04:20:00.843Z] M2-1125-J → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1125-J.json · {\"id\":\"M2-1125-J\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-25T04:20:01.002Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1125-J.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): queue/m2/M2-1125-J.md, queue/r0/R0-1125-L.md, status/pipeline/M2-1125-J.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:claim 2026-11-25T04:20:05.976Z] R0-1125-L → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-L.json · {\"id\":\"R0-1125-L\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-25T04:20:06.086Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-L.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1125-L.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-25T04:22:28.369Z] [report-path] R0-1125-L: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:r0 2026-11-25T04:22:42.719Z] [kyu-intrusion] Kyu 폴더 HEAD 변경 감지 · 모두 kyu dev-refresh 패턴 · 경보 생략: /Users/kyu.lee/projects/agilo-fork-test",
   "git_state": {
     "ahead": 0,
     "behind": 0,
