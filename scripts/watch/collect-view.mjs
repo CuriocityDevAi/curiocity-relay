@@ -3,9 +3,11 @@
 // PR 머지 여부 확인을 위해 gh pr view 를 선택적으로 호출한다(30초 캐시, 실패 시 무시).
 
 import { execSync } from 'node:child_process';
+import { join } from 'node:path';
 import { buildPipelineView } from './pipeline-view.mjs';
 import {
   resolvePaths, readAllJson, scanQueueFiles, readClaim, readQueueTitle,
+  scanClaimsDir, getWibDateStr,
   QUEUE_HUBS,
   findReportFile, extractPrUrl, readPipelineEvents, readReportFirstLine,
 } from './sources-local.mjs';
@@ -64,11 +66,17 @@ export function defaultFetchPrState(prNumber, fullRepo) {
   if (cached && now - cached.cachedAt < 30_000) return cached;
   try {
     const out = execSync(
-      `gh pr view ${prNumber} --repo ${repo} --json state,mergedAt 2>/dev/null`,
+      `gh pr view ${prNumber} --repo ${repo} --json state,mergedAt,mergeable,mergeStateStatus 2>/dev/null`,
       { timeout: 5000, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] },
     );
     const data = JSON.parse(out);
-    const result = { state: data.state, mergedAt: data.mergedAt || null, cachedAt: now };
+    const result = {
+      state: data.state,
+      mergedAt: data.mergedAt || null,
+      mergeable: data.mergeable || null,
+      mergeStateStatus: data.mergeStateStatus || null,
+      cachedAt: now,
+    };
     _prMergeCache.set(cacheKey, result);
     return result;
   } catch { return null; }
@@ -225,6 +233,11 @@ export function buildExtendedView({
       card.since   = new Date(mAt);
       card.ageMin  = Math.max(0, Math.round((nowMs - mAt) / 60000));
       card.predicted = false;
+    } else if (prData.mergeStateStatus === 'DIRTY' || prData.mergeable === 'CONFLICTING') {
+      card.level  = 'red';
+      card.mark   = '■';
+      card.reason = '충돌 — rebase 필요';
+      card.mergeConflict = true;
     }
   }
 
@@ -237,6 +250,16 @@ export function buildExtendedView({
       card.mark   = '●';
       card.reason = null;
     }
+  }
+
+  // 3.5) 제목 없는 카드 → 큐 파일 원장 대사 폴백 (R0 포함 전 허브)
+  for (const card of base.cards) {
+    if (card.title) continue;
+    const hub = card.hub;
+    if (!hub) continue;
+    const qPath = join(paths.queueRoot, hub, `${card.id}.md`);
+    const qTitle = readQueueTitle(qPath);
+    if (qTitle) card.title = qTitle;
   }
 
   // 4) R0 카드 리뷰 결과 칩 준비 (render 에서 사용)
@@ -378,22 +401,30 @@ export function buildExtendedView({
       card._hideFromInProgress = true;
     }
   }
-  // R0 no-PR 완료: done claim + 리포트 첫 줄 판정 → 오늘 완료에 편입
+  // 모든 허브: done claim + open PR 없음 → 오늘 완료에 편입
   const inProgress = base.cards.filter(c => c.column !== 'queue' && !c._hideFromInProgress);
   for (let i = inProgress.length - 1; i >= 0; i--) {
     const card = inProgress[i];
-    if (card.hub !== 'r0') continue;
     if (card.extra?.pr?.number) continue;
     const claim = readClaim(paths, card.id);
     if (!claim || claim.state !== 'done') continue;
-    const rpt = findReportFile(paths, card.hub, card.id);
-    if (!rpt) continue;
-    const firstLine = readReportFirstLine(rpt.path);
-    if (!firstLine || !/^(APPROVE|PASS|FAIL|CHANGES)\b/i.test(firstLine)) continue;
     doneToday += 1;
     inProgress.splice(i, 1);
   }
   const caution = inProgress.filter(c => c.level !== 'green');
+
+  // 오늘 done claim 전체 집계 (WIB 기준) — inProgress 에 남은 카드(open PR 등) 제외
+  const inProgressIds = new Set(inProgress.map(c => c.id));
+  const todayWibStr = getWibDateStr(now);
+  let doneTodayFromClaims = 0;
+  for (const claimData of scanClaimsDir(paths)) {
+    if (!claimData || claimData.state !== 'done') continue;
+    if (!claimData.at) continue;
+    if (getWibDateStr(new Date(claimData.at)) !== todayWibStr) continue;
+    if (inProgressIds.has(claimData.id)) continue;
+    doneTodayFromClaims++;
+  }
+  if (doneTodayFromClaims > doneToday) doneToday = doneTodayFromClaims;
 
   // 10) 허브 큐 정체 경보 계산
   const congestionAlerts = [];

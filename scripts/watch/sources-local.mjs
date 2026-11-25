@@ -90,6 +90,21 @@ export function readClaim(paths, id) {
   return safeReadJson(join(paths.claimsDir, `${id}.json`));
 }
 
+export function scanClaimsDir(paths) {
+  const dir = paths.claimsDir;
+  if (!existsSync(dir)) return [];
+  let files; try { files = readdirSync(dir); } catch { return []; }
+  const out = [];
+  for (const f of files) {
+    if (!f.endsWith('.json')) continue;
+    const id = f.replace(/\.json$/, '');
+    if (!PROMPT_ID_RE.test(id)) continue;
+    const data = safeReadJson(join(dir, f));
+    if (data) out.push(data);
+  }
+  return out;
+}
+
 /**
  * 리포트 파일 경로 후보를 확인해 첫 일치를 반환.
  * - ~/.hub-runner/reports/<hub>/<id>/report.md  (M1-1124-P 형식)

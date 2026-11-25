@@ -133,6 +133,10 @@ function makeFixture() {
 const NOW_MS = new Date('2026-11-24T12:00:00Z').getTime();
 const NOW    = new Date(NOW_MS);
 
+// M2-1125-L 테스트용 Nov 25 기준 (1125 날짜 코드 ID)
+const L_NOW_MS = new Date('2026-11-25T05:00:00Z').getTime(); // WIB 12:00 Nov 25
+const L_NOW    = new Date(L_NOW_MS);
+
 function stamp(path, mtimeMs) {
   const t = new Date(mtimeMs);
   utimesSync(path, t, t);
@@ -1105,4 +1109,162 @@ test('T-PR1: renderV2 — PR# 포맷 #257 (# 뒤 공백 없음)', () => {
   const text  = lines.map(stripAnsi).join('\n');
   assert.ok(text.includes('#257'), '#257 포함');
   assert.ok(!text.includes('# 257'), '# 257 (공백) 없음');
+});
+
+// ========== M2-1125-L 신규 테스트 ==========
+
+// ---------- done claim + 무PR → inProgress 미포함 (전 허브) ----------
+
+test('T-L1: done+무PR (R0·m0, 리포트 첫 줄 "#N CHANGES") → inProgress 미포함', () => {
+  const root = makeFullFixture();
+  mkdirSync(join(root, 'r0'), { recursive: true });
+  mkdirSync(join(root, 'm0'), { recursive: true });
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+
+  // R0: done claim, no PR, 리포트 첫 줄 "#431 CHANGES" (기존 regex 불일치 버그 재현)
+  const qR0 = join(root, 'queue', 'r0', 'R0-1125-XA.md');
+  writeFileSync(qR0, 'R0-1125-XA\n원장 대사: "리뷰 프롬프트 완료"\n');
+  stamp(qR0, L_NOW_MS - 60 * 60_000);
+  writeFileSync(join(root, 'status', 'claims', 'R0-1125-XA.json'),
+    JSON.stringify({ id: 'R0-1125-XA', hub: 'r0', state: 'done',
+      at: new Date(L_NOW_MS - 10 * 60_000).toISOString() }));
+  const rptR0 = join(root, 'r0', 'R0-1125-XA-report.md');
+  writeFileSync(rptR0, '#431 CHANGES\n내용\n');
+  stamp(rptR0, L_NOW_MS - 5 * 60_000);
+
+  // m0: done claim, no PR, report
+  const qM0 = join(root, 'queue', 'm0', 'M0-1125-XB.md');
+  writeFileSync(qM0, 'M0-1125-XB\n원장 대사: "조사만 수행"\n');
+  stamp(qM0, L_NOW_MS - 60 * 60_000);
+  writeFileSync(join(root, 'status', 'claims', 'M0-1125-XB.json'),
+    JSON.stringify({ id: 'M0-1125-XB', hub: 'm0', state: 'done',
+      at: new Date(L_NOW_MS - 15 * 60_000).toISOString() }));
+  const rptM0 = join(root, 'm0', 'M0-1125-XB-report.md');
+  writeFileSync(rptM0, 'PASS\n내용\n');
+  stamp(rptM0, L_NOW_MS - 10 * 60_000);
+
+  const view = buildExtendedView({
+    repoRoot: root, now: L_NOW, nowMs: L_NOW_MS,
+    fetchPrState: () => null,
+  });
+
+  assert.equal(view.inProgress.find(c => c.id === 'R0-1125-XA'), undefined,
+    'R0 done+무PR → inProgress 미포함');
+  assert.equal(view.inProgress.find(c => c.id === 'M0-1125-XB'), undefined,
+    'm0 done+무PR → inProgress 미포함');
+});
+
+// ---------- done claim + open PR → inProgress 유지 ----------
+
+test('T-L2: done+open PR → inProgress 유지', () => {
+  const root = makeFullFixture();
+  mkdirSync(join(root, 'm2'), { recursive: true });
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+
+  const rpt = join(root, 'm2', 'M2-1125-XC-report.md');
+  writeFileSync(rpt, 'PASS\nPR: https://github.com/CuriocityDevAi/storeport/pull/9999\n');
+  stamp(rpt, L_NOW_MS - 5 * 60_000);
+  writeFileSync(join(root, 'status', 'claims', 'M2-1125-XC.json'),
+    JSON.stringify({ id: 'M2-1125-XC', hub: 'm2', state: 'done',
+      at: new Date(L_NOW_MS - 5 * 60_000).toISOString() }));
+
+  const view = buildExtendedView({
+    repoRoot: root, now: L_NOW, nowMs: L_NOW_MS,
+    fetchPrState: (prNum) => Number(prNum) === 9999
+      ? { state: 'OPEN', mergedAt: null, mergeable: 'MERGEABLE', mergeStateStatus: 'CLEAN', cachedAt: L_NOW_MS }
+      : null,
+  });
+
+  const card = view.inProgress.find(c => c.id === 'M2-1125-XC');
+  assert.ok(card, 'done+open PR 카드는 inProgress 에 유지');
+});
+
+// ---------- 오늘 완료 집계 (claims 기반) ----------
+
+test('T-L3: 오늘 done claim → doneToday 집계', () => {
+  const root = makeFullFixture();
+  mkdirSync(join(root, 'm1'), { recursive: true });
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+
+  for (let i = 0; i < 4; i++) {
+    const id = `M1-1125-X${String.fromCharCode(65 + i)}`;
+    const qPath = join(root, 'queue', 'm1', `${id}.md`);
+    writeFileSync(qPath, `원장 대사: "완료 테스트 ${i}"\n`);
+    stamp(qPath, L_NOW_MS - 60 * 60_000);
+    writeFileSync(join(root, 'status', 'claims', `${id}.json`),
+      JSON.stringify({ id, hub: 'm1', state: 'done',
+        at: new Date(L_NOW_MS - (i + 1) * 60_000).toISOString() }));
+    const rpt = join(root, 'm1', `${id}-report.md`);
+    writeFileSync(rpt, 'PASS\n');
+    stamp(rpt, L_NOW_MS - (i + 1) * 60_000 + 30_000);
+  }
+
+  const view = buildExtendedView({
+    repoRoot: root, now: L_NOW, nowMs: L_NOW_MS,
+    fetchPrState: () => null,
+  });
+
+  assert.ok(view.doneToday >= 4, `doneToday ${view.doneToday} >= 4`);
+});
+
+// ---------- ci_pending + DIRTY merge → 충돌 reason ----------
+
+test('T-L4: ci_pending + DIRTY merge → 주의에 "충돌 — rebase 필요" 표시', () => {
+  const root = makeFullFixture();
+  mkdirSync(join(root, 'm1'), { recursive: true });
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+
+  const rpt = join(root, 'm1', 'M1-1125-XD-report.md');
+  writeFileSync(rpt, 'PASS\nPR: https://github.com/CuriocityDevAi/storeport/pull/9998\n');
+  stamp(rpt, L_NOW_MS - 5 * 60_000);
+
+  const mockFetch = (prNum) => Number(prNum) === 9998
+    ? { state: 'OPEN', mergedAt: null, mergeable: 'CONFLICTING', mergeStateStatus: 'DIRTY', cachedAt: L_NOW_MS }
+    : null;
+
+  const view = buildExtendedView({
+    repoRoot: root, now: L_NOW, nowMs: L_NOW_MS,
+    fetchPrState: mockFetch,
+  });
+
+  const card = view.cards.find(c => c.id === 'M1-1125-XD');
+  assert.ok(card, 'M1-1125-XD 카드 존재');
+  assert.ok(card.reason?.includes('충돌'), `reason 에 충돌 포함: "${card.reason}"`);
+  assert.equal(card.level, 'red', 'level = red');
+  assert.equal(card.mark, '■', 'mark = ■');
+  assert.ok(card.mergeConflict, 'mergeConflict = true');
+
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('충돌'), '렌더에 충돌 표시');
+});
+
+// ---------- R0 카드 제목 폴백 (큐 파일 원장 대사) ----------
+
+test('T-L5: R0 타겟 카드 제목 없을 때 → 큐 파일 원장 대사 폴백', () => {
+  const root = makeFullFixture();
+  mkdirSync(join(root, 'r0'), { recursive: true });
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+
+  // R0-1125-XT: 리뷰어 역할 (다른 R0를 타겟으로)
+  const r0Rpt = join(root, 'r0', 'R0-1125-XT-report.md');
+  writeFileSync(r0Rpt, 'APPROVE\n\nR0-1125-XT — R0-1125-XU 리뷰\n');
+  stamp(r0Rpt, L_NOW_MS - 30 * 60_000);
+
+  // R0-1125-XU: 타겟 (큐 파일에 원장 대사 있음)
+  const qXU = join(root, 'queue', 'r0', 'R0-1125-XU.md');
+  writeFileSync(qXU, 'R0-1125-XU\n원장 대사: "R0 리뷰 큐 대사 테스트"\n');
+  stamp(qXU, L_NOW_MS - 60 * 60_000);
+  writeFileSync(join(root, 'status', 'claims', 'R0-1125-XU.json'),
+    JSON.stringify({ id: 'R0-1125-XU', hub: 'r0', state: 'done',
+      at: new Date(L_NOW_MS - 20 * 60_000).toISOString() }));
+
+  const view = buildExtendedView({
+    repoRoot: root, now: L_NOW, nowMs: L_NOW_MS,
+    fetchPrState: () => null,
+  });
+
+  // R0-1125-XU: done+무PR → inProgress 미포함 (오늘 완료)
+  assert.equal(view.inProgress.find(c => c.id === 'R0-1125-XU'), undefined,
+    'R0-1125-XU done+무PR → inProgress 미포함');
 });
