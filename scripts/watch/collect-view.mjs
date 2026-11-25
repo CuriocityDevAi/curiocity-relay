@@ -384,11 +384,11 @@ export function buildExtendedView({
     if (card.column !== 'ci_pending') continue;
     const pr = card.extra?.pr;
     if (!pr) continue;
-    const repo = pr.repo || (pr.url ? pr.url.split('/').slice(-2)[0] : null);
+    const repo = pr.repo || (pr.url ? pr.url.split('/').slice(-3)[0] : null);
     if (repo && NO_CI_REPOS.has(repo)) {
       card.column   = 'review';
       card.predicted = true;
-      card.reason   = null;
+      card.reason   = 'CI 없음(리뷰 대기)';
     }
   }
 
@@ -593,6 +593,7 @@ export function buildExtendedView({
     if (inAnyPool) continue;
     const owner = card.extra?.pr?.owner;
     const repo  = card.extra?.pr?.repo;
+    if (repo && NO_CI_REPOS.has(repo)) continue;
     const isFork = owner === 'narisolutions' || (repo || '').includes('fork');
     const targetPool = isFork ? 'fork-heavy' : 'storeport-heavy';
     const td = ciPools.get(targetPool);
@@ -1046,11 +1047,11 @@ export async function buildExtendedViewAsync({
     if (card.column !== 'ci_pending') continue;
     const pr = card.extra?.pr;
     if (!pr) continue;
-    const repo = pr.repo || (pr.url ? pr.url.split('/').slice(-2)[0] : null);
+    const repo = pr.repo || (pr.url ? pr.url.split('/').slice(-3)[0] : null);
     if (repo && NO_CI_REPOS.has(repo)) {
       card.column   = 'review';
       card.predicted = true;
-      card.reason   = null;
+      card.reason   = 'CI 없음(리뷰 대기)';
     }
   }
 
@@ -1236,6 +1237,7 @@ export async function buildExtendedViewAsync({
     if (inAnyPool) continue;
     const owner = card.extra?.pr?.owner;
     const repo  = card.extra?.pr?.repo;
+    if (repo && NO_CI_REPOS.has(repo)) continue;
     const isFork = owner === 'narisolutions' || (repo || '').includes('fork');
     const targetPool = isFork ? 'fork-heavy' : 'storeport-heavy';
     const td = ciPools.get(targetPool);
