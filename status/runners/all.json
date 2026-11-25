@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T11:57:28.714Z",
+  "at": "2026-11-25T12:02:00.470Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -9,7 +9,9 @@
   "last_error_at": "2026-11-25T11:03:07.920Z",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1125-S",
+      "started_at": "2026-11-25T12:01:57.445Z",
+      "model": "opus",
       "last_activity": "2026-11-25T11:41:04.886Z"
     },
     "m1": {
@@ -19,7 +21,9 @@
       "last_activity": "2026-11-25T09:42:02.606Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1125-X",
+      "started_at": "2026-11-25T12:01:58.559Z",
+      "model": "sonnet",
       "last_activity": "2026-11-25T11:53:10.642Z"
     },
     "m3": {
@@ -41,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.84,
-    "compressed_gb": 3.89,
-    "swap_used_gb": 3.5,
+    "used_gb": 15.87,
+    "compressed_gb": 4.22,
+    "swap_used_gb": 3.49,
     "pressure": "normal",
-    "at": "2026-11-25T11:56:50.976Z"
+    "at": "2026-11-25T12:01:25.269Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -53,14 +57,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-25T11:53:20.336Z",
+      "at": "2026-11-25T11:58:31.725Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 21,
+      "api_calls": 22,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -69,7 +73,7 @@
           445,
           437
         ],
-        "oldest_queued_min": 7,
+        "oldest_queued_min": 12,
         "oldest_queued_pr": "storeport:#445",
         "in_progress": [
           {
@@ -78,28 +82,8 @@
             "pr_display": "storeport:main",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 18,
+            "running_min": 23,
             "runner": "Youngkyus-MacBook-Pro-M1",
-            "kind": "mac-heavy"
-          },
-          {
-            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-            "pr": "#266",
-            "pr_display": "fork:#266",
-            "job": "unit-tests",
-            "step": null,
-            "running_min": 1,
-            "runner": "curiocity-mac-fork-light",
-            "kind": "mac-heavy"
-          },
-          {
-            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-            "pr": "#266",
-            "pr_display": "fork:#266",
-            "job": "playwright",
-            "step": "Run Playwright harnesses",
-            "running_min": 1,
-            "runner": "curiocity-mac-fork",
             "kind": "mac-heavy"
           }
         ]
@@ -117,55 +101,55 @@
           "pr_display": "storeport:#444",
           "job": "heavy-cloud",
           "step": "Run ./.github/actions/heavy-steps",
-          "running_min": 14,
+          "running_min": 20,
           "runner": "GitHub Actions 1000008136",
           "kind": "cloud"
         }
       ],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 2,
+        "heavy_busy": 1,
         "light_online": 1
       },
       "cloud_today": 3,
       "today": {
         "mac-heavy": {
-          "jobs": 225,
+          "jobs": 226,
           "avg_wait_min": 2.3,
           "avg_run_min": 3,
-          "success_rate": 73.3,
-          "run_min_total": 672.4
+          "success_rate": 73,
+          "run_min_total": 673.5
         },
         "mac-light": {
-          "jobs": 240,
-          "avg_wait_min": 1.9,
+          "jobs": 246,
+          "avg_wait_min": 2,
           "avg_run_min": 0.6,
-          "success_rate": 95,
-          "run_min_total": 146.20000000000022
+          "success_rate": 95.1,
+          "run_min_total": 148.60000000000025
         },
         "cloud": {
-          "jobs": 160,
+          "jobs": 163,
           "avg_wait_min": 0,
-          "avg_run_min": 1.3,
-          "success_rate": 60.6,
-          "run_min_total": 214.59999999999962
+          "avg_run_min": 1.4,
+          "success_rate": 61.3,
+          "run_min_total": 231.09999999999962
         },
-        "cloud_cost_est_usd": 2.352,
+        "cloud_cost_est_usd": 2.496,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 169.69999999999993
       },
-      "jsonl_added": 18,
+      "jsonl_added": 10,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 21890,
-    "at": "2026-11-25T11:53:40.356Z"
+    "took_ms": 22379,
+    "at": "2026-11-25T11:58:52.228Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 72,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:54:31.879Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:54:32.573Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:54:32.573Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:55:08.571Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:55:08.571Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:55:09.443Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:55:09.443Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:55:41.461Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:55:41.461Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:55:42.169Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:55:42.169Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:56:18.348Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:56:18.348Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:56:18.968Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:56:18.968Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:56:50.976Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:56:50.976Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:56:51.743Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:56:51.743Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:r0 2026-11-25T11:57:18.434Z] [report-path] R0-1125-AH: REPORT_PATH 격리 리포트 수거·push",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:59:09.701Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:self-update 2026-11-25T11:59:43.668Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:59:44.095Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:59:44.095Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:59:44.774Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T11:59:44.774Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:00:17.001Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:00:17.001Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:00:17.732Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:00:17.732Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:00:52.468Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:00:52.468Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:00:53.167Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:00:53.167Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:01:25.268Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:01:25.268Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:01:26.060Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T12:01:26.060Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:m0 2026-11-25T12:01:57.444Z] pick · M0-1125-S · model=opus · display=cmux-split\n[hub-runner-v8.3.2:m2 2026-11-25T12:01:58.559Z] pick · M2-1125-X · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -193,7 +177,7 @@
     {
       "name": "curiocity-mac-fork-light",
       "status": "online",
-      "busy": true
+      "busy": false
     }
   ]
 }
