@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T21:08:41.015Z",
+  "at": "2026-11-25T21:43:19.516Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -39,11 +39,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.82,
-    "compressed_gb": 4.86,
+    "used_gb": 15.34,
+    "compressed_gb": 4.01,
     "swap_used_gb": 3.53,
     "pressure": "normal",
-    "at": "2026-11-25T20:51:18.718Z"
+    "at": "2026-11-25T21:42:46.755Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -51,14 +51,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-25T20:51:11.550Z",
+      "at": "2026-11-25T21:38:55.869Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 10,
+      "api_calls": 9,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -69,18 +69,18 @@
         "in_progress": []
       },
       "light": {
-        "queued": 1,
-        "oldest_queued_min": 36,
-        "oldest_queued_pr": "storeport:main",
+        "queued": 0,
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
         "in_progress": []
       },
       "cloud_in_progress": [],
       "runners": {
-        "heavy_online": 1,
+        "heavy_online": 3,
         "heavy_busy": 0,
-        "light_online": 0
+        "light_online": 1
       },
-      "cloud_today": 1,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 9,
@@ -90,11 +90,11 @@
           "run_min_total": 26.3
         },
         "mac-light": {
-          "jobs": 13,
-          "avg_wait_min": 5.4,
-          "avg_run_min": 1.2,
-          "success_rate": 92.3,
-          "run_min_total": 15.2
+          "jobs": 14,
+          "avg_wait_min": 10.9,
+          "avg_run_min": 1.1,
+          "success_rate": 92.9,
+          "run_min_total": 15.5
         },
         "cloud": {
           "jobs": 8,
@@ -108,22 +108,16 @@
         "wasted_min": 13.5
       },
       "jsonl_added": 1,
-      "alerts": [
-        {
-          "type": "light_wait",
-          "detail": "oldest light queued 36m (storeport:main)"
-        }
-      ],
-      "partial": true
+      "alerts": []
     },
-    "took_ms": 16974,
-    "at": "2026-11-25T20:51:25.452Z"
+    "took_ms": 10836,
+    "at": "2026-11-25T21:39:04.042Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 103,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:git 2026-11-25T19:38:08.607Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:39:49.144Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/storeport): Command failed: gh api repos/CuriocityDevAi/storeport/actions/runners\nerror connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:39:56.229Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T19:49:53.444Z] sleep observed · gap=735s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:50:04.056Z] [gh-runner-watchdog] wake: mac-heavy Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:50:04.099Z] [gh-runner-watchdog] wake: mac-light Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:50:09.296Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T20:00:49.151Z] sleep observed · gap=656s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:00:59.144Z] [gh-runner-watchdog] wake: mac-heavy Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:00:59.195Z] [gh-runner-watchdog] wake: mac-light Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:01:04.005Z] [gh-runner-watchdog] partial skip: mac-heavy Runner.Worker alive\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:01:04.065Z] [gh-runner-watchdog] partial skip: mac-light Runner.Worker alive\n[hub-runner-v8.3.2:state 2026-11-25T20:36:18.427Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:36:18.635Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:36:18.635Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T20:51:08.478Z] sleep observed · gap=2979s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:51:30.085Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T21:08:39.246Z] sleep observed · gap=1051s · threshold=120s",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:39:56.229Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T19:49:53.444Z] sleep observed · gap=735s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:50:04.056Z] [gh-runner-watchdog] wake: mac-heavy Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:50:04.099Z] [gh-runner-watchdog] wake: mac-light Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T19:50:09.296Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T20:00:49.151Z] sleep observed · gap=656s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:00:59.144Z] [gh-runner-watchdog] wake: mac-heavy Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:00:59.195Z] [gh-runner-watchdog] wake: mac-light Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:01:04.005Z] [gh-runner-watchdog] partial skip: mac-heavy Runner.Worker alive\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:01:04.065Z] [gh-runner-watchdog] partial skip: mac-light Runner.Worker alive\n[hub-runner-v8.3.2:state 2026-11-25T20:36:18.427Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:36:18.635Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:36:18.635Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T20:51:08.478Z] sleep observed · gap=2979s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T20:51:30.085Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T21:08:39.246Z] sleep observed · gap=1051s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T21:38:30.193Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T21:38:30.194Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T21:38:53.206Z] sleep observed · gap=1814s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T21:38:58.870Z] [gh-runner-watchdog] skip restart: no-ci-data",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -135,12 +129,22 @@
   "ci_runners": [
     {
       "name": "curiocity-mac-light",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
-      "status": "offline",
+      "status": "online",
+      "busy": false
+    },
+    {
+      "name": "curiocity-mac-fork",
+      "status": "online",
+      "busy": false
+    },
+    {
+      "name": "curiocity-mac-fork-light",
+      "status": "online",
       "busy": false
     }
   ]
