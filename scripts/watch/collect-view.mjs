@@ -7,6 +7,7 @@ import { buildPipelineView } from './pipeline-view.mjs';
 import {
   resolvePaths, readAllJson, scanQueueFiles, readClaim, readQueueTitle,
   QUEUE_HUBS,
+  findReportFile, extractPrUrl, readPipelineEvents, readReportFirstLine,
 } from './sources-local.mjs';
 
 // ── 큐 정체 판정 기준 상수 ────────────────────────────────────────────────
@@ -50,20 +51,62 @@ export function stageLabel(col) {
 // ── PR 머지 확인 (gh pr view + 30초 캐시) ────────────────────────────────
 const _prMergeCache = new Map();
 
-export function defaultFetchPrState(prNumber) {
+/**
+ * PR 상태 조회. fullRepo 가 없으면 storeport 기본값 사용.
+ * @param {number} prNumber
+ * @param {string} [fullRepo]  'owner/repo' 형식
+ */
+export function defaultFetchPrState(prNumber, fullRepo) {
+  const repo = fullRepo || 'CuriocityDevAi/storeport';
+  const cacheKey = `${repo}#${prNumber}`;
   const now = Date.now();
-  const cached = _prMergeCache.get(prNumber);
+  const cached = _prMergeCache.get(cacheKey);
   if (cached && now - cached.cachedAt < 30_000) return cached;
   try {
     const out = execSync(
-      `gh pr view ${prNumber} --repo CuriocityDevAi/storeport --json state,mergedAt 2>/dev/null`,
+      `gh pr view ${prNumber} --repo ${repo} --json state,mergedAt 2>/dev/null`,
       { timeout: 5000, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] },
     );
     const data = JSON.parse(out);
     const result = { state: data.state, mergedAt: data.mergedAt || null, cachedAt: now };
-    _prMergeCache.set(prNumber, result);
+    _prMergeCache.set(cacheKey, result);
     return result;
   } catch { return null; }
+}
+
+// ── ID → PR 검색 (gh pr list --search, 30초 캐시, 3개 리포) ───────────────
+const _prSearchCache = new Map();
+const _SEARCH_REPOS = [
+  'CuriocityDevAi/storeport',
+  'CuriocityDevAi/curiocity-relay',
+  'narisolutions/agilo-medusa-pos-fork',
+];
+
+function fetchPrBySearch(id) {
+  const now = Date.now();
+  const cached = _prSearchCache.get(id);
+  if (cached && now - cached.cachedAt < 30_000) return cached.result;
+
+  for (const fullRepo of _SEARCH_REPOS) {
+    try {
+      const out = execSync(
+        `gh pr list --repo ${fullRepo} --state all --search "${id}" --json number,state,mergedAt,url,headRefName --limit 10 2>/dev/null`,
+        { timeout: 8000, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] },
+      );
+      const prs = JSON.parse(out);
+      const pr = prs.find(p =>
+        (p.headRefName || '').includes(id) || (p.title || '').includes(id)
+      );
+      if (pr) {
+        const [owner, repo] = fullRepo.split('/');
+        const result = { number: pr.number, url: pr.url, owner, repo };
+        _prSearchCache.set(id, { result, cachedAt: now });
+        return result;
+      }
+    } catch {}
+  }
+  _prSearchCache.set(id, { result: null, cachedAt: now });
+  return null;
 }
 
 // ── CI 러너 풀 분류 ───────────────────────────────────────────────────────
@@ -133,15 +176,50 @@ export function buildExtendedView({
   // 1) 기본 파이프라인 뷰
   const base = buildPipelineView({ repoRoot, now, nowMs, allJson });
 
+  // 1.5) PR 정보 없는 카드에 다중 소스 PR 매핑
+  // ① 리포트 파일 PR URL ② pipeline jsonl pr 이벤트 ③ gh pr list --search
+  for (const card of base.cards) {
+    if (card.extra?.pr?.number) continue; // 이미 있음
+    if (card.hub === 'r0') continue; // R0 는 자체 PR 없음
+    if (!['review', 'ci_result', 'pr', 'ci_pending'].includes(card.column)) continue;
+
+    const rpt = findReportFile(paths, card.hub, card.id);
+    if (rpt) {
+      const prUrl = extractPrUrl(rpt.path);
+      if (prUrl?.number) {
+        card.extra = { ...(card.extra || {}), pr: prUrl };
+        continue;
+      }
+    }
+
+    const events = readPipelineEvents(paths, card.id);
+    const prEvent = events.find(e => e.pr || e.pr_number);
+    if (prEvent) {
+      const raw = prEvent.pr ?? prEvent.pr_number;
+      const num = raw ? Number(String(raw).replace(/^#/, '')) : NaN;
+      if (!isNaN(num) && num > 0) {
+        card.extra = { ...(card.extra || {}), pr: { number: num, url: null } };
+        continue;
+      }
+    }
+
+    const ghPr = fetchPrBySearch(card.id);
+    if (ghPr?.number) {
+      card.extra = { ...(card.extra || {}), pr: ghPr };
+    }
+  }
+
   // 2) PR 머지 여부 보강 (review/ci_result 카드 · 30초 캐시 · 실패 시 현상 유지)
   for (const card of base.cards) {
     if (!['review', 'ci_result', 'pr', 'ci_pending'].includes(card.column)) continue;
-    const prNum = card.extra?.pr?.number;
-    if (!prNum) continue;
+    const pr = card.extra?.pr;
+    if (!pr?.number) continue;
+    const fullRepo = pr.owner && pr.repo ? `${pr.owner}/${pr.repo}` : undefined;
     let prData = null;
-    try { prData = fetchPrState(prNum); } catch {}
+    try { prData = fetchPrState(pr.number, fullRepo); } catch {}
     if (!prData) continue;
-    if (prData.state === 'merged' || prData.state === 'closed') {
+    const st = (prData.state || '').toLowerCase();
+    if (st === 'merged' || st === 'closed') {
       const mAt = prData.mergedAt ? new Date(prData.mergedAt).getTime() : nowMs;
       card.column  = 'merge';
       card.since   = new Date(mAt);
@@ -291,8 +369,31 @@ export function buildExtendedView({
   for (const list of hubQueue.values()) list.sort((a, b) => a.id.localeCompare(b.id));
 
   // 9) 진행 중 / 주의
-  const inProgress = base.cards.filter(c => c.column !== 'queue');
-  const caution    = inProgress.filter(c => c.level !== 'green');
+  // step 2 에서 merge 로 이동된 카드 중 10분 이상 → doneToday 편입 + inProgress 제외
+  const HIDE_MIN = 10;
+  let doneToday = base.doneToday;
+  for (const card of base.cards) {
+    if (card.column === 'merge' && card.ageMin >= HIDE_MIN) {
+      doneToday += 1;
+      card._hideFromInProgress = true;
+    }
+  }
+  // R0 no-PR 완료: done claim + 리포트 첫 줄 판정 → 오늘 완료에 편입
+  const inProgress = base.cards.filter(c => c.column !== 'queue' && !c._hideFromInProgress);
+  for (let i = inProgress.length - 1; i >= 0; i--) {
+    const card = inProgress[i];
+    if (card.hub !== 'r0') continue;
+    if (card.extra?.pr?.number) continue;
+    const claim = readClaim(paths, card.id);
+    if (!claim || claim.state !== 'done') continue;
+    const rpt = findReportFile(paths, card.hub, card.id);
+    if (!rpt) continue;
+    const firstLine = readReportFirstLine(rpt.path);
+    if (!firstLine || !/^(APPROVE|PASS|FAIL|CHANGES)\b/i.test(firstLine)) continue;
+    doneToday += 1;
+    inProgress.splice(i, 1);
+  }
+  const caution = inProgress.filter(c => c.level !== 'green');
 
   // 10) 허브 큐 정체 경보 계산
   const congestionAlerts = [];
@@ -353,6 +454,7 @@ export function buildExtendedView({
 
   return {
     ...base,
+    doneToday,
     runnerVersion,
     ciRunnerPools,
     ciPools,

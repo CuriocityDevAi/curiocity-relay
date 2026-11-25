@@ -92,8 +92,8 @@ export function buildPipelineView({
     card.ageMin = Math.max(0, Math.round((nowMs - startedAt) / 60000));
     if (!card.title) {
       const rpt = findReportFile(paths, hub, id);
-      card.title = (rpt ? extractReportTitle(rpt.path) : null)
-        || readQueueTitle(_findQueueFile(paths, hub, id))
+      card.title = readQueueTitle(_findQueueFile(paths, hub, id))
+        || (rpt ? extractReportTitle(rpt.path) : null)
         || '';
     }
     card.extra = { ...(card.extra || {}), model: h.model || null };
@@ -122,12 +122,18 @@ export function buildPipelineView({
     }
     const card = ensure(r.id);
     const ageMin = Math.max(0, Math.round((nowMs - r.mtimeMs) / 60000));
-    card.column = prUrl ? 'pr' : 'report';
+    // R0 허브 카드: 리포트의 PR URL 은 "리뷰 대상 PR" 이므로 card.extra.pr 에 설정 금지.
+    const isR0 = r.hub === 'r0';
+    card.column = (prUrl && !isR0) ? 'pr' : 'report';
     card.since = new Date(r.mtimeMs);
     card.ageMin = ageMin;
-    if (!card.title) card.title = extractReportTitle(r.path) || '';
+    if (!card.title) {
+      card.title = readQueueTitle(_findQueueFile(paths, r.hub, r.id))
+        || extractReportTitle(r.path)
+        || '';
+    }
     card.extra = { ...(card.extra || {}), reportFirstLine: readReportFirstLine(r.path) };
-    if (prUrl) card.extra.pr = prUrl;
+    if (prUrl && !isR0) card.extra.pr = prUrl;
   }
 
   // --- 4) today CI jsonl → ci_running/ci_result + ci_pending 예측 조정.
@@ -200,9 +206,14 @@ export function buildPipelineView({
     card.ageMin = Math.max(0, Math.round((nowMs - info.mtimeMs) / 60000));
     card.extra = { ...(card.extra || {}), review: info };
     if (!card.title) {
-      // r0 리포트 첫 줄은 "APPROVE"/"CHANGES" 등이므로 둘째 줄 이후에서 제목 추출을 시도
-      const rpt = findReportFile(paths, card.hub, card.id);
-      if (rpt) card.title = extractReportTitle(rpt.path) || card.title;
+      const qFile = _findQueueFile(paths, card.hub, card.id);
+      const qTitle = readQueueTitle(qFile);
+      if (qTitle) {
+        card.title = qTitle;
+      } else {
+        const rpt = findReportFile(paths, card.hub, card.id);
+        if (rpt) card.title = extractReportTitle(rpt.path) || '';
+      }
     }
   }
 
