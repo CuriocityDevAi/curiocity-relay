@@ -17,7 +17,7 @@ import {
   COLUMN_LABELS,
 } from '../watch/thresholds.mjs';
 import { buildPipelineView, inRecentCodes, getIdDateCodes } from '../watch/pipeline-view.mjs';
-import { buildExtendedView, stageStrip, stageLabel, HUB_PICKUP_RED_SEC, CI_PICKUP_RED_SEC } from '../watch/collect-view.mjs';
+import { buildExtendedView, stageStrip, stageLabel, HUB_PICKUP_RED_SEC, CI_PICKUP_RED_SEC, humanJobLabel } from '../watch/collect-view.mjs';
 import { renderV2, stripAnsi, renderDetailPanel, spinnerChar } from '../watch/render-v2.mjs';
 import { displayWidth, truncateWidth, padEndWidth } from '../watch/text-width.mjs';
 import { extractPrUrl } from '../watch/sources-local.mjs';
@@ -1513,6 +1513,182 @@ test('T-GH4: fetchForkRuns 주입 → fork-heavy queuedPrs 추가, CI 큐 FH 1 �
   const text  = lines.map(stripAnsi).join('\n');
   assert.ok(text.includes('FH 1') || /FH [1-9]/.test(text), 'CI 큐 헤더에 FH 1+ 표시');
   assert.ok(text.includes('#301'), 'CI 큐에 #301 칩 표시');
+});
+
+// ========== M2-1125-O 신규 테스트 — 풀 배정 수정 ==========
+
+// Kyu 화면 픽스처:
+//   storeport-heavy 에 두 잡이 동시에 보임
+//     └ ⠋ M1-1125-L  mac-light 4분   ← storeport #433 의 light 잡
+//     └ ⠋ M3-1125-J  mac-heavy 1분   ← fork #261 잡 (fork 러너여야 함)
+
+test('T-P1: Kyu 픽스처 — storeport light 잡 → storeport-light, fork 잡 → fork-heavy', () => {
+  const root = makeFullFixture();
+  mkdirSync(join(root, 'm1'), { recursive: true });
+  mkdirSync(join(root, 'm3'), { recursive: true });
+
+  // M1-1125-L: storeport PR #433, job='mac-light' (light 러너에서 실행)
+  const rpt1 = join(root, 'm1', 'M1-1125-L-report.md');
+  writeFileSync(rpt1, 'PASS\nPR: https://github.com/CuriocityDevAi/storeport/pull/433\n');
+  stamp(rpt1, L_NOW_MS - 5 * 60_000);
+
+  // M3-1125-J: fork PR #261, job='mac-heavy' (fork 러너에서 실행)
+  const rpt2 = join(root, 'm3', 'M3-1125-J-report.md');
+  writeFileSync(rpt2, 'PASS\nPR: https://github.com/narisolutions/agilo-medusa-pos-fork/pull/261\n');
+  stamp(rpt2, L_NOW_MS - 2 * 60_000);
+
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), JSON.stringify({
+    ci: { data: {
+      // all.json 이 두 잡을 모두 heavy 에 넣는 버그 상황 재현
+      heavy: {
+        queued_prs: [], oldest_queued_min: null,
+        in_progress: [
+          { pr: '#433', job: 'mac-light', running_min: 4 },
+          { pr: '#261', job: 'mac-heavy', running_min: 1 },
+        ],
+      },
+      light: { queued_prs: [], oldest_queued_min: null, in_progress: [] },
+    }},
+  }));
+
+  const view = buildExtendedView({
+    repoRoot: root, now: L_NOW, nowMs: L_NOW_MS,
+    fetchPrState: () => null,
+    fetchForkRuns: () => ({ queued: [], inProgress: [] }),
+  });
+
+  // M1-1125-L (#433 mac-light) → storeport-light
+  const lightPool = view.ciPools.get('storeport-light');
+  assert.ok(lightPool, 'storeport-light pool 존재');
+  const lightItem = (lightPool.inProgressItems || []).find(i => i.prNumber === 433);
+  assert.ok(lightItem, 'storeport-light 에 PR #433 존재');
+
+  // M3-1125-J (#261 mac-heavy fork) → fork-heavy
+  const forkPool = view.ciPools.get('fork-heavy');
+  assert.ok(forkPool, 'fork-heavy pool 존재');
+  const forkItem = (forkPool.inProgressItems || []).find(i => i.prNumber === 261);
+  assert.ok(forkItem, 'fork-heavy 에 PR #261 존재');
+
+  // storeport-heavy 에 두 잡이 동시에 보이면 안 됨
+  const heavyPool = view.ciPools.get('storeport-heavy');
+  const heavyItems = heavyPool?.inProgressItems || [];
+  assert.ok(
+    !heavyItems.some(i => i.prNumber === 433) || !heavyItems.some(i => i.prNumber === 261),
+    `storeport-heavy 에 두 잡이 함께 있으면 안 됨: [${heavyItems.map(i => i.prNumber).join(',')}]`
+  );
+});
+
+test('T-P2: 같은 풀 2건 → "풀 배정 오류" congestionAlert 생성', () => {
+  const root = makeFullFixture();
+  mkdirSync(join(root, 'm1'), { recursive: true });
+  mkdirSync(join(root, 'm2'), { recursive: true });
+
+  // 두 storeport PR 이 heavy 에 동시에 들어있고, 둘 다 heavy runner 로 판정
+  const rpt1 = join(root, 'm1', 'M1-1125-PA-report.md');
+  writeFileSync(rpt1, 'PASS\nPR: https://github.com/CuriocityDevAi/storeport/pull/501\n');
+  stamp(rpt1, L_NOW_MS - 3 * 60_000);
+
+  const rpt2 = join(root, 'm2', 'M2-1125-PB-report.md');
+  writeFileSync(rpt2, 'PASS\nPR: https://github.com/CuriocityDevAi/storeport/pull/502\n');
+  stamp(rpt2, L_NOW_MS - 2 * 60_000);
+
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), JSON.stringify({
+    ci: { data: {
+      heavy: {
+        queued_prs: [], oldest_queued_min: null,
+        in_progress: [
+          { pr: '#501', job: 'mac-heavy', running_min: 3 },
+          { pr: '#502', job: 'mac-heavy', running_min: 2 },
+        ],
+      },
+      light: { queued_prs: [], oldest_queued_min: null, in_progress: [] },
+    }},
+  }));
+
+  const view = buildExtendedView({
+    repoRoot: root, now: L_NOW, nowMs: L_NOW_MS,
+    fetchPrState: () => null,
+    fetchForkRuns: () => ({ queued: [], inProgress: [] }),
+  });
+
+  const poolErrors = view.congestionAlerts.filter(a => a.kind === 'pool_assign_error');
+  assert.ok(poolErrors.length > 0,
+    `storeport-heavy 2건 → pool_assign_error 경보 없음 (alerts: ${JSON.stringify(view.congestionAlerts.map(a => a.kind))})`);
+  assert.ok(poolErrors[0].reason.includes('풀 배정 오류'), `reason에 "풀 배정 오류" 포함: "${poolErrors[0].reason}"`);
+});
+
+test('T-P3: fork PR → storeport 풀에 배정되면 pool_assign_error (REQ-2 어설션)', () => {
+  const root = makeFullFixture();
+  mkdirSync(join(root, 'm3'), { recursive: true });
+
+  // fork PR #261 이 all.json heavy (storeport-heavy) 에 있고, runner_name 없는 상황
+  // → 7.6 에서 fork-heavy 로 이동하므로 storeport 풀에 남으면 안 됨
+  // → 이동된 후에도 fork PR 가 storeport 풀에 있으면 pool_assign_error 가 생겨야 함
+  const rpt = join(root, 'm3', 'M3-1125-PC-report.md');
+  writeFileSync(rpt, 'PASS\nPR: https://github.com/narisolutions/agilo-medusa-pos-fork/pull/261\n');
+  stamp(rpt, L_NOW_MS - 2 * 60_000);
+
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), JSON.stringify({
+    ci: { data: {
+      heavy: {
+        queued_prs: [], oldest_queued_min: null,
+        // fork PR 를 job='mac-heavy' 로 heavy 에 넣는 상황
+        in_progress: [{ pr: '#261', job: 'mac-heavy', running_min: 1 }],
+      },
+      light: { queued_prs: [], oldest_queued_min: null, in_progress: [] },
+    }},
+  }));
+
+  const view = buildExtendedView({
+    repoRoot: root, now: L_NOW, nowMs: L_NOW_MS,
+    fetchPrState: () => null,
+    fetchForkRuns: () => ({ queued: [], inProgress: [] }),
+  });
+
+  // fork PR #261 는 fork-heavy 로 이동되어야 함 (storeport-heavy 에 없어야 함)
+  const heavyItems = view.ciPools.get('storeport-heavy')?.inProgressItems || [];
+  assert.ok(!heavyItems.some(i => i.prNumber === 261),
+    'fork PR #261 이 storeport-heavy 에 남아있으면 안 됨');
+
+  const forkItems = view.ciPools.get('fork-heavy')?.inProgressItems || [];
+  assert.ok(forkItems.some(i => i.prNumber === 261),
+    'fork PR #261 이 fork-heavy 로 이동되어야 함');
+});
+
+test('T-P4: humanJobLabel — mac-light → 가벼운 검사, mac-heavy → 전체 검사', () => {
+  assert.equal(humanJobLabel('mac-light'),  '가벼운 검사');
+  assert.equal(humanJobLabel('light-mac'),  '가벼운 검사');
+  assert.equal(humanJobLabel('mac-heavy'),  '전체 검사');
+  assert.equal(humanJobLabel('heavy-mac'),  '전체 검사');
+  assert.equal(humanJobLabel('unknown-job'), null);
+  assert.equal(humanJobLabel(''),           null);
+  assert.equal(humanJobLabel(null),         null);
+});
+
+test('T-P5: renderV2 — CI 큐 └ 행에 사람이 읽는 잡 레이블 표시', () => {
+  const ciPools = new Map([
+    ['storeport-light', {
+      queued: 0, queuedPrs: [], oldestMin: null, oldestSec: null,
+      inProgressItems: [{ prNumber: 433, promptId: 'M1-1125-L', runnerKind: 'mac-light', ageMin: 4 }],
+      offlineReason: null, congested: false,
+    }],
+    ['storeport-heavy', { queued: 0, queuedPrs: [], oldestMin: null, oldestSec: null, inProgressItems: [], offlineReason: null, congested: false }],
+    ['fork-heavy',      { queued: 0, queuedPrs: [], oldestMin: null, oldestSec: null, inProgressItems: [], offlineReason: null, congested: false }],
+    ['fork-light',      { queued: 0, queuedPrs: [], oldestMin: null, oldestSec: null, inProgressItems: [], offlineReason: null, congested: false }],
+  ]);
+  const view = {
+    cards: [], hubCurrents: {}, hubOrder: {}, doneToday: 0, anomalies: [], stats: {},
+    ciPools, congestionAlerts: [],
+  };
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+
+  // mac-light 대신 "가벼운 검사" 표시
+  assert.ok(text.includes('가벼운 검사'), '"가벼운 검사" 표시 확인');
+  assert.ok(!text.includes('mac-light'), 'mac-light 가 그대로 나오면 안 됨');
+  // ID 와 PR# 함께 표시
+  assert.ok(text.includes('M1-1125-L'), 'promptId 표시');
+  assert.ok(text.includes('#433'), 'PR# 표시');
 });
 
 // ---------- cwd 독립성 ----------

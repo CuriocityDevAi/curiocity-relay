@@ -9,7 +9,7 @@ import {
 } from './text-width.mjs';
 import {
   stageStrip, stageLabel, poolDot, POOL_ORDER, POOL_ABBR, QUEUE_HUBS,
-  HUB_PICKUP_RED_SEC, CI_PICKUP_RED_SEC,
+  HUB_PICKUP_RED_SEC, CI_PICKUP_RED_SEC, humanJobLabel,
 } from './collect-view.mjs';
 
 export { stripAnsi };
@@ -133,13 +133,14 @@ function renderCaution(view, opts) {
 
   const lines = [sectionHr(`주의 (${total})`, w)];
 
-  // 큐 정체 경보
+  // 큐 정체 / 풀 배정 오류 경보
   for (const a of congestionAlerts) {
-    const idStr = a.id ? `  ${a.id}` : '';
-    const src   = a.kind === 'hub_queue' ? a.hub : (a.poolAbbr || a.pool || '');
+    const idStr  = a.id ? `  ${a.id}` : '';
+    const src    = a.kind === 'hub_queue' ? a.hub : (a.poolAbbr || a.pool || '');
     const minStr = a.ageMin != null ? `${a.ageMin}분` : '—';
+    const typeLabel = a.kind === 'pool_assign_error' ? '풀 배정 오류' : `큐 정체 ${minStr}`;
     const header = truncateWidth(
-      `■ ${(src + idStr).padEnd(14)}  큐 정체 ${minStr}`, w
+      `■ ${(src + idStr).padEnd(14)}  ${typeLabel}`, w
     );
     lines.push(`${C.red}${header}${C.reset}`);
     lines.push(`    ${C.dim}└ ${truncateWidth(a.reason || '', Math.max(4, w - 6))}${C.reset}`);
@@ -307,14 +308,34 @@ function renderCiPool(view, opts, state = {}) {
       }
     }
 
-    // 실행 중 └ 행
+    // 실행 중 └ 행 — 풀 이름은 행 머리(pool 레이블)로 이미 보이므로 반복하지 않음
     for (const item of (data.inProgressItems || [])) {
       const sp      = spinnerChar(spinnerFrame);
+      // ID: 프롬프트 ID 우선, 없으면 PR 번호
       const idStr   = item.promptId || `#${item.prNumber}`;
-      const rk      = item.runnerKind || '';
+      // PR 번호: 프롬프트 ID 가 있을 때만 함께 표시
+      const prPart  = (item.promptId && item.prNumber) ? ` #${item.prNumber}` : '';
+      // 잡 레이블: 사람이 읽는 말로 (mac-light → 가벼운 검사), 풀 이름은 반복 안 함
+      const jLabel  = humanJobLabel(item.runnerKind) || item.runnerKind || '';
       const ageStr  = item.ageMin != null ? ` ${item.ageMin}분` : '';
-      const inner   = `${sp} ${idStr}  ${rk}${ageStr}`;
+      const inner   = `${sp} ${idStr}${prPart}  ${jLabel}${ageStr}`;
       lines.push(`    ${C.dim}└${C.reset} ${truncateWidth(inner, Math.max(4, w - 6))}`);
+    }
+  }
+
+  // 미배정 풀 (runner_name · job 으로 pool 판정 불가)
+  const unassignedData = iterPools.get('unassigned');
+  if (unassignedData && (unassignedData.inProgressItems || []).length > 0) {
+    const uLabel = padEndWidth('미배정', POOL_LABEL_W);
+    lines.push(`  ${C.yellow}${uLabel}${C.reset}`);
+    for (const item of unassignedData.inProgressItems) {
+      const sp     = spinnerChar(spinnerFrame);
+      const idStr  = item.promptId || `#${item.prNumber}`;
+      const prPart = (item.promptId && item.prNumber) ? ` #${item.prNumber}` : '';
+      const jLabel = humanJobLabel(item.runnerKind) || item.runnerKind || '';
+      const ageStr = item.ageMin != null ? ` ${item.ageMin}분` : '';
+      const inner  = `${sp} ${idStr}${prPart}  ${jLabel}${ageStr}`;
+      lines.push(`    ${C.dim}└${C.reset} ${C.yellow}${truncateWidth(inner, Math.max(4, w - 6))}${C.reset}`);
     }
   }
 

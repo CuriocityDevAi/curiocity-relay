@@ -165,12 +165,50 @@ function fetchPrBySearch(id) {
 
 // ── CI 러너 풀 분류 ───────────────────────────────────────────────────────
 
+// 러너 이름/라벨 → 풀 매핑표 (단일 소스)
+// runner_name(실행 중) · labels(대기 중) 로 판정 — 판정 불가 시 null 반환.
 function classifyRunnerPool(name) {
   const lc = String(name || '').toLowerCase();
+  if (!lc) return null;
   if (lc.includes('fork') && lc.includes('light')) return 'fork-light';
   if (lc.includes('fork')) return 'fork-heavy';
   if (lc.includes('light')) return 'storeport-light';
-  return 'storeport-heavy';
+  if (lc.includes('ubuntu') || lc.startsWith('github-')) return 'CLOUD';
+  // 알려진 storeport-heavy 러너 패턴 (heavy 키워드 or 등록된 머신명)
+  if (lc.includes('heavy') || lc.includes('youngkyus') || lc.includes('macbook')) return 'storeport-heavy';
+  // 판정 불가 → null (미배정). storeport-heavy 기본값 제거.
+  return null;
+}
+
+// 잡 이름 → 사람이 읽는 말 (REQ-4: mac-light → 가벼운 검사)
+const JOB_LABEL = {
+  'mac-light':  '가벼운 검사',
+  'light-mac':  '가벼운 검사',
+  'mac-heavy':  '전체 검사',
+  'heavy-mac':  '전체 검사',
+};
+
+export function humanJobLabel(job) {
+  return JOB_LABEL[String(job || '').toLowerCase()] || null;
+}
+
+// runner_name · job 이름 · PR 리포 맥락으로 실제 풀 결정
+function classifyItemPool(runnerName, jobName, isForkPr) {
+  // 1) runner_name 이 가장 신뢰도 높음
+  const fromRunner = classifyRunnerPool(runnerName);
+  if (fromRunner) return fromRunner;
+  // 2) job 이름 + PR 리포 맥락
+  const jl = String(jobName || '').toLowerCase();
+  const isLight = jl.includes('light');
+  const isHeavy = jl.includes('heavy');
+  if (isForkPr) {
+    if (isLight) return 'fork-light';
+    if (isHeavy || jl) return 'fork-heavy';
+    return null;
+  }
+  if (isLight) return 'storeport-light';
+  if (isHeavy) return 'storeport-heavy';
+  return null;
 }
 
 function poolStatus(runners) {
@@ -362,13 +400,15 @@ export function buildExtendedView({
 
   function mapInProgress(inProgressItems, poolLabel) {
     return (inProgressItems || []).map(item => {
-      // item は数値(PR番号) または {pr:'#429', job:'heavy-mac', running_min:9, ...} 形式
+      // item は数値(PR番号) または {pr:'#429', job:'heavy-mac', running_min:9, runner_name:'curiocity-mac-light', ...} 形式
       let rawPr;
-      let jobLabel = poolLabel;
+      let jobName = poolLabel;
+      let runnerName = null;
       let runningMin = null;
       if (typeof item === 'object' && item !== null) {
-        rawPr     = item.pr ?? item.number ?? item.pr_number ?? null;
-        jobLabel  = item.job || item.kind || poolLabel;
+        rawPr      = item.pr ?? item.number ?? item.pr_number ?? null;
+        jobName    = item.job || item.kind || poolLabel;
+        runnerName = item.runner_name || null;
         runningMin = item.running_min ?? null;
       } else {
         rawPr = item;
@@ -377,11 +417,19 @@ export function buildExtendedView({
       const numStr = String(rawPr ?? '').replace(/^#/, '');
       const num    = numStr ? Number(numStr) : NaN;
       const card   = !isNaN(num) ? prToCard.get(num) : null;
+      // PR 리포 기반 fork 판정
+      const isForkPr = card?.extra?.pr?.owner === 'narisolutions'
+        || (card?.extra?.pr?.repo || '').includes('fork');
+      const actualPool = classifyItemPool(runnerName, jobName, isForkPr);
+      // 사람이 읽는 잡 레이블 (mac-light → 가벼운 검사)
+      const displayKind = humanJobLabel(jobName) || card?.extra?.ci?.runner_kind || jobName;
       return {
-        prNumber:   !isNaN(num) ? num : null,
-        promptId:   card?.id    || null,
-        runnerKind: card?.extra?.ci?.runner_kind || jobLabel,
-        ageMin:     runningMin ?? card?.ageMin ?? null,
+        prNumber:    !isNaN(num) ? num : null,
+        promptId:    card?.id    || null,
+        runnerKind:  displayKind,
+        ageMin:      runningMin ?? card?.ageMin ?? null,
+        actualPool,
+        runner_name: runnerName,
       };
     }).filter(x => x.prNumber !== null);
   }
@@ -517,6 +565,33 @@ export function buildExtendedView({
     } catch {}
   }
 
+  // 7.6) pool 재배정 — runner_name·job·PR리포 기반 (REQ M2-1125-O)
+  // actualPool 이 소속 pool 과 다르면 올바른 pool 로 이동. null → '미배정' 별도 보관.
+  {
+    const unassigned = [];
+    for (const [pool, poolData] of ciPools) {
+      const stay = [];
+      for (const item of (poolData.inProgressItems || [])) {
+        if (item.actualPool === null) {
+          unassigned.push({ ...item, sourcePool: pool });
+        } else if (item.actualPool !== pool) {
+          const target = ciPools.get(item.actualPool);
+          if (target) target.inProgressItems.push(item);
+          else stay.push(item); // 대상 pool 없으면 그대로 (안전망)
+        } else {
+          stay.push(item);
+        }
+      }
+      poolData.inProgressItems = stay;
+    }
+    if (unassigned.length > 0) {
+      ciPools.set('unassigned', {
+        queued: 0, queuedPrs: [], oldestMin: null, oldestSec: null,
+        inProgressItems: unassigned, offlineReason: null, congested: false,
+      });
+    }
+  }
+
   // 8) 허브 큐 (미착수 프롬프트, 허브별 · ageSec 포함)
   const hubQueue = new Map();
   for (const hub of QUEUE_HUBS) hubQueue.set(hub, []);
@@ -626,6 +701,44 @@ export function buildExtendedView({
           ageSec:   oldestSec,
           ageMin:   data.oldestMin,
           reason:   `${POOL_ABBR[pool]} 러너 idle 인데 ${data.oldestMin}분째 queued — 러너 재연결 필요`,
+        });
+      }
+    }
+  }
+
+  // 10.5) pool 배정 오류 감지 (REQ M2-1125-O)
+  // ① 같은 풀에 실행 중 2건 이상 → 데이터 오류
+  // ② fork PR 이 storeport 풀에, storeport PR 이 fork 풀에 → 오류
+  for (const [pool, data] of ciPools) {
+    if (pool === 'unassigned') continue;
+    const items = data.inProgressItems || [];
+    if (items.length > 1) {
+      congestionAlerts.push({
+        kind:     'pool_assign_error',
+        pool,
+        poolAbbr: POOL_ABBR[pool] || pool,
+        id:       null, ageSec: null, ageMin: null,
+        reason:   `${POOL_ABBR[pool] || pool} 풀 실행 중 ${items.length}건 — 풀 배정 오류 (한 풀 = 동시 1건)`,
+      });
+    }
+    for (const item of items) {
+      if (!item.prNumber) continue;
+      const card = prToCard.get(item.prNumber);
+      if (!card?.extra?.pr) continue;
+      const isForkPr = card.extra.pr.owner === 'narisolutions'
+        || (card.extra.pr.repo || '').includes('fork');
+      const isInForkPool = pool.startsWith('fork');
+      if (isForkPr && !isInForkPool) {
+        congestionAlerts.push({
+          kind: 'pool_assign_error', pool, poolAbbr: POOL_ABBR[pool] || pool,
+          id: `#${item.prNumber}`, ageSec: null, ageMin: null,
+          reason: `fork PR #${item.prNumber} 가 ${POOL_ABBR[pool] || pool}(storeport) 풀에 배정 — 오류`,
+        });
+      } else if (!isForkPr && isInForkPool) {
+        congestionAlerts.push({
+          kind: 'pool_assign_error', pool, poolAbbr: POOL_ABBR[pool] || pool,
+          id: `#${item.prNumber}`, ageSec: null, ageMin: null,
+          reason: `storeport PR #${item.prNumber} 가 ${POOL_ABBR[pool] || pool}(fork) 풀에 배정 — 오류`,
         });
       }
     }
