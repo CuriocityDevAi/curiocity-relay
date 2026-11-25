@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T02:58:23.638Z",
+  "at": "2026-11-25T02:58:54.339Z",
   "pid": 74805,
   "runner": "v8.2",
   "poll_ms": 30000,
@@ -23,10 +23,8 @@
       "last_activity": "2026-11-25T02:53:45.495Z"
     },
     "m3": {
-      "current": "M3-1125-D",
-      "started_at": "2026-11-25T02:45:13.721Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-25T02:31:40.091Z"
+      "current": null,
+      "last_activity": "2026-11-25T02:58:53.053Z"
     },
     "r0": {
       "current": null,
@@ -43,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.78,
-    "compressed_gb": 5.32,
+    "used_gb": 15.66,
+    "compressed_gb": 5.28,
     "swap_used_gb": 1.89,
     "pressure": "normal",
-    "at": "2026-11-25T02:57:52.627Z"
+    "at": "2026-11-25T02:58:26.256Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -151,9 +149,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 20,
+  "isolated_reports_collected": 21,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:self-update 2026-11-25T02:54:56.475Z] 보류 · busy=3 claimQueue=0 processing=false\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:55:27.534Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:56:02.112Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:56:38.824Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:r0 2026-11-25T02:56:56.872Z] [report-path] R0-1125-G: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.2:claim 2026-11-25T02:57:00.664Z] R0-1125-G → done · runner-v8.2 cmux-split · 리포트 확인 r0/R0-1125-G-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-G.json · {\"id\":\"R0-1125-G\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-25T02:57:00.764Z\",\"note\":\"runner-v8.2 cmux-split · 리포트 확인 r0/R0-1125-G-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1125-G.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:57:12.662Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:57:48.127Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:58:21.546Z] [gh-runner-watchdog] skip restart: data-partial",
+  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:self-update 2026-11-25T02:54:56.475Z] 보류 · busy=3 claimQueue=0 processing=false\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:55:27.534Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:56:02.112Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:56:38.824Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:r0 2026-11-25T02:56:56.872Z] [report-path] R0-1125-G: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.2:claim 2026-11-25T02:57:00.664Z] R0-1125-G → done · runner-v8.2 cmux-split · 리포트 확인 r0/R0-1125-G-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-G.json · {\"id\":\"R0-1125-G\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-25T02:57:00.764Z\",\"note\":\"runner-v8.2 cmux-split · 리포트 확인 r0/R0-1125-G-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1125-G.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:57:12.662Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:57:48.127Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:gh-watchdog 2026-11-25T02:58:21.546Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:m3 2026-11-25T02:58:50.818Z] [report-path] M3-1125-D: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 0,
