@@ -1,5 +1,15 @@
 // scripts/lib/land-detect-v2.mjs — M1-1105-BT · v7.3 착지 감지 (2단계 + 잠자기 예산 보정)
 //
+// M1-1125-B (v8.3) 추가:
+//   ③ **head-moved 엄격화**: HEAD 가 움직여도 "그 커밋이 실제로 <hub>/<id>-report.md 를 터치했는지"
+//      확인해야 head-moved 로 성공 판정. 아니면 (heartbeat/다른 claim 커밋이었다) 스냅샷만 갱신하고
+//      계속 폴. 11-25 사고: v8.2 는 "HEAD 움직임 + 과거 localReport 있음" 만으로 즉시 성공 판정 →
+//      세션이 PR 생성·코드 커밋·리뷰 중인데 /exit 로 강제 종료.
+//   ④ **세션 idle 지속 N 폴**: report-based 착지(head-moved · report-origin) 는 "pane idle"
+//      이 연속 N 폴 유지될 때만 최종 resolve. idle 판정은 호출자 콜백 isPaneIdle() (기본 true) —
+//      claude REPL 에서 "esc to interrupt" 등 busy 토큰이 보이지 않을 때 idle=true 로 호출자가 정의.
+//      claim-{done,blocked,cancelled} 는 explicit 신호이므로 idle 체크 불필요.
+//
 // v7.2 의 waitForLandingWith 과의 차이:
 //   ① **잠자기 예산 보정**: Mac 잠자기 중에는 Date.now()/hrtime.bigint() 둘 다 전진하므로
 //      (mach_absolute_time 도 수면 중 tick · Node 가 노출하는 CLOCK_MONOTONIC 도 마찬가지)
@@ -30,6 +40,8 @@
  * @param {()=>{state,note}|null} opts.readClaim           로컬 claim 읽기
  * @param {()=>string}          opts.getHead               로컬 HEAD rev (throws 허용)
  * @param {()=>boolean}         opts.fetchOriginReport     origin 에 report 존재 여부 (네트워크)
+ * @param {(headRev:string)=>boolean} [opts.headTouchesReport] M1-1125-B: HEAD 커밋이 report 파일을 터치했는지 (허브 커밋 식별). 미지정 시 v8.2 호환 — 무조건 true.
+ * @param {()=>boolean}         [opts.isPaneIdle]          M1-1125-B: 세션이 입력 대기(프롬프트 빈칸) 상태인지. 미지정 시 true(호환).
  * @param {(msg:string)=>void}  [opts.logLine]
  * @param {()=>number|null}     [opts.detectLatency]       done 시 지연 계산
  * @param {()=>void}            [opts.onTimeout]           최종 타임아웃 콜백 (C-c 등)
@@ -41,6 +53,7 @@
  * @param {number}              [opts.sigkillGraceMs=5000]
  * @param {number}              [opts.remoteWaitMs=300000] report-local 후 원격 착지 대기 상한 (기본 5m)
  * @param {number}              [opts.sleepGapMultiplier=4] 수면 간주 임계: gap > pollMs × N
+ * @param {number}              [opts.paneIdleStreakThreshold=3] M1-1125-B: report-based 착지 전 요구되는 연속 idle 폴 수 (기본 3)
  * @param {()=>number}          [opts.now=Date.now]        clock injection (테스트용)
  * @param {(cb:Function,ms:number)=>any} [opts.setIntervalFn=setInterval]
  * @param {(h:any)=>void}       [opts.clearIntervalFn=clearInterval]
@@ -58,6 +71,8 @@ export function waitForLandingAwake({
   readClaim,
   getHead,
   fetchOriginReport,
+  headTouchesReport = () => true,
+  isPaneIdle = () => true,
   logLine = () => {},
   detectLatency = () => null,
   onTimeout = () => {},
@@ -69,6 +84,7 @@ export function waitForLandingAwake({
   sigkillGraceMs = 5000,
   remoteWaitMs = 5 * 60_000,
   sleepGapMultiplier = 4,
+  paneIdleStreakThreshold = 3,
   now = Date.now,
   setIntervalFn = setInterval,
   clearIntervalFn = clearInterval,
@@ -85,6 +101,12 @@ export function waitForLandingAwake({
     let phase = 'await-landing'; // 'await-landing' | 'await-remote'
     let remotePhaseStartedAt = null;
     let remotePhaseSleepGapAtStart = 0;
+    // M1-1125-B v8.3: report-based 착지 전 pane idle 연속 폴 카운터.
+    let paneIdleStreak = 0;
+    let pendingLandingReason = null; // 'head-moved' | 'report-origin' — idle 연속 N 폴 되면 resolve.
+    let busyLogged = false;
+    // M1-1125-B v8.3: head-moved 오탐 로그 1회 억제 (poll 마다 중복 방지).
+    let headUnrelatedLogged = false;
 
     const threshold = pollMs * sleepGapMultiplier;
 
@@ -110,7 +132,7 @@ export function waitForLandingAwake({
       pollCount++;
       try { onPoll(t); } catch { /* noop */ }
 
-      // Check L1: claim done/blocked/cancelled — 두 phase 모두 최종.
+      // Check L1: claim done/blocked/cancelled — 두 phase 모두 최종 (explicit 신호 · idle 체크 불필요).
       try {
         const claim = readClaim();
         if (claim && (claim.state === 'done' || claim.state === 'blocked' || claim.state === 'cancelled')) {
@@ -123,14 +145,49 @@ export function waitForLandingAwake({
       let localReport = false;
       try { localReport = reportExists(); } catch { /* noop */ }
 
-      // Check L3: 로컬 HEAD 이동 + report 존재 → head-moved (허브가 commit 함).
+      // M1-1125-B v8.3: pane idle 연속 카운터 갱신. busy 가 보이면 streak reset.
+      let paneIdleNow = true;
+      try { paneIdleNow = !!isPaneIdle(); } catch { paneIdleNow = true; }
+      if (paneIdleNow) {
+        paneIdleStreak++;
+      } else {
+        if (paneIdleStreak > 0) {
+          logLine(`[landing] 세션 busy 재진입 · idle streak reset (${paneIdleStreak} → 0)`);
+        }
+        paneIdleStreak = 0;
+        busyLogged = false;
+      }
+
+      // pending landing 이 있고 idle 연속 임계 넘겼으면 이제 resolve.
+      if (pendingLandingReason && paneIdleStreak >= paneIdleStreakThreshold) {
+        resolveLanding(pendingLandingReason);
+        return;
+      }
+
+      // Check L3: 로컬 HEAD 이동 + 커밋이 report 를 터치 + report 존재 → head-moved (허브가 commit 함).
+      // M1-1125-B v8.3: HEAD 이동만으로는 부족 — heartbeat/claim 커밋이 움직였을 수 있음.
       try {
         const curHead = getHead();
         if (headSnapshot && curHead !== headSnapshot) {
+          const prevSnapshot = headSnapshot;
           headSnapshot = curHead;
-          if (localReport) {
-            resolveLanding('head-moved');
-            return;
+          let touched = false;
+          try { touched = !!headTouchesReport(curHead); } catch { /* noop */ }
+          if (localReport && touched) {
+            if (paneIdleStreak >= paneIdleStreakThreshold) {
+              resolveLanding('head-moved');
+              return;
+            }
+            if (!pendingLandingReason) {
+              pendingLandingReason = 'head-moved';
+              logLine(`[landing] head-moved + report touched · pane idle 대기 (streak=${paneIdleStreak}/${paneIdleStreakThreshold})`);
+            }
+          } else if (!touched) {
+            // 허브와 무관한 commit (heartbeat/claim) — 로그 1회만.
+            if (!headUnrelatedLogged) {
+              logLine(`[landing] HEAD 이동하였으나 report 미터치 (${prevSnapshot?.slice(0, 7)}→${curHead?.slice(0, 7)}) · 무시하고 폴 계속`);
+              headUnrelatedLogged = true;
+            }
           }
         }
       } catch { /* noop */ }
@@ -139,10 +196,22 @@ export function waitForLandingAwake({
       if (pollCount % originPollInterval === 0) {
         try {
           if (fetchOriginReport()) {
-            resolveLanding('report-origin');
-            return;
+            if (paneIdleStreak >= paneIdleStreakThreshold) {
+              resolveLanding('report-origin');
+              return;
+            }
+            if (!pendingLandingReason) {
+              pendingLandingReason = 'report-origin';
+              logLine(`[landing] origin/main report 확인 · pane idle 대기 (streak=${paneIdleStreak}/${paneIdleStreakThreshold})`);
+            }
           }
         } catch { /* 아직 없음 */ }
+      }
+
+      // pending 있는데 busy 인 상태를 1회만 로그 (스팸 방지).
+      if (pendingLandingReason && !paneIdleNow && !busyLogged) {
+        logLine(`[landing] 착지 조건(${pendingLandingReason}) 충족했으나 세션 busy · 입력 대기 전까지 pane 유지`);
+        busyLogged = true;
       }
 
       // Phase 전환: report-local 처음 감지 → await-remote.

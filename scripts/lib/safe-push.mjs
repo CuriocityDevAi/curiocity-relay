@@ -1,8 +1,8 @@
-// scripts/lib/safe-push.mjs · M1-1124-N
+// scripts/lib/safe-push.mjs · M1-1125-B (v8.3)
 //
 // 러너 자기 push 를 rebase 없이, 충돌 생기지 않는 방식으로 돌린다.
 //
-// 배경 (오늘 사고 A):
+// 배경 (사고 A · M1-1124-N):
 //   러너의 자기 push 경로가 `pull --rebase --autostash origin main` 을 사용 → 같은 파일
 //   (status/claims/<id>.json) 을 허브와 러너가 모두 건드리는 순간 rebase 충돌 → 중단 상태 방치 →
 //   "unmerged files" 로 모든 push 정지.
@@ -11,7 +11,15 @@
 // 따라서 충돌은 "허브가 러너 폴더에 잘못 썼다" 거나 "두 러너가 동시 push" 중 하나다.
 // 어느 경우든 **러너 쪽 버전이 정답** 이므로 ours 전략으로 자동 해소하고 push.
 //
+// M1-1125-B 추가 (v8.3):
+//   HEAD-on-main 가드. 러너 폴더의 HEAD 가 (detached 혹은 feature-branch 로) main 이 아니면
+//   즉시 거부. 11-24 사고 D 재현(러너 폴더가 PR #27 feature 브랜치 tip 에 detached 로 있던 중
+//   `push origin HEAD:main` 이 feature 상태를 main 으로 밀어 PR 머지 없이 반영). 러너 자기 push 는
+//   main-guard 가 매 tick 복구하므로 통상 main 에 있지만, tick 도중 사고로 분기해도 여기서 1차 차단.
+//
 // 흐름:
+//   0) `git symbolic-ref --short HEAD` → 'main' 이 아니거나 (detached 등으로) 실패하면 not-on-main
+//      리턴. 호출자는 로그 tail + 다음 tick main-guard 복구에 맡김.
 //   1) `git fetch origin main`
 //   2) local 이 origin/main 보다 ahead 0 → 바로 push.
 //   3) ahead > 0:
@@ -42,8 +50,17 @@ export function createGit(repoRoot) {
   };
 }
 
-export function safeRunnerPush({ git, timeoutMs = 30_000 }) {
+export function safeRunnerPush({ git, timeoutMs = 30_000, allowBranch = 'main' }) {
   const steps = [];
+  // M1-1125-B v8.3: HEAD-on-main 가드. HEAD 가 main 분기가 아니면 거부.
+  // detached HEAD 는 symbolic-ref 가 실패하므로 catch 로 걸러진다.
+  const head = git.try(['symbolic-ref', '--short', 'HEAD']);
+  const headName = head.ok ? head.stdout.trim() : null;
+  steps.push({ step: 'head-check', ok: head.ok, headName: headName || '(detached)' });
+  if (!head.ok || headName !== allowBranch) {
+    return { ok: false, reason: 'not-on-main', steps };
+  }
+
   const fetch = git.try(['fetch', 'origin', 'main'], { timeout: timeoutMs });
   steps.push({ step: 'fetch', ok: fetch.ok, err: fetch.ok ? null : fetch.err?.split('\n')[0] });
   if (!fetch.ok) return { ok: false, reason: 'fetch-failed', steps };
