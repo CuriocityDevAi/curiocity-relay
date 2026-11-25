@@ -112,13 +112,15 @@ export function findReportFile(paths, hub, id) {
 
 /**
  * 리포트 본문에서 PR URL 추출 (첫 매치).
+ * 반환: { url, owner, repo, number } — owner/repo 는 URL 에서 추출.
  */
 export function extractPrUrl(reportPath) {
   if (!reportPath || !existsSync(reportPath)) return null;
   try {
     const body = readFileSync(reportPath, 'utf8');
-    const m = body.match(/https:\/\/github\.com\/[^\s)'"]+\/pull\/(\d+)/);
-    return m ? { url: m[0], number: Number(m[1]) } : null;
+    const m = body.match(/https:\/\/github\.com\/([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)\/pull\/(\d+)/);
+    if (!m) return null;
+    return { url: m[0], owner: m[1], repo: m[2], number: Number(m[3]) };
   } catch { return null; }
 }
 
@@ -167,27 +169,46 @@ export function extractReportTitle(reportPath) {
   return null;
 }
 
+const _ID_RE = /^[MRTNK]\d-\d{4}-[A-Z]+$/;
+
 /**
  * 큐 파일 1줄 제목.
- * `원장 대사:` 줄이 있으면 따옴표 안 텍스트를 우선 사용, 없으면 첫 비공란 라인.
+ * 우선순위: ① 원장 대사: 줄 ② [REQ] 첫 문장 ③ 첫 비-ID 비공란 줄.
  */
 export function readQueueTitle(filePath) {
   if (!filePath || !existsSync(filePath)) return null;
   try {
-    const lines = readFileSync(filePath, 'utf8').split('\n').slice(0, 6);
-    for (const l of lines) {
+    const body = readFileSync(filePath, 'utf8');
+    const lines = body.split('\n');
+    // ① 원장 대사: (첫 10 줄)
+    for (const l of lines.slice(0, 10)) {
       const s = l.trim();
       if (s.startsWith('원장 대사:')) {
         const rest = s.slice('원장 대사:'.length).trim();
         const quoted = rest.match(/"([^"]{4,80})"/);
         if (quoted) return quoted[1];
-        // 따옴표 없으면 첫 세그먼트 (— 또는 · 이전)
         const seg = rest.replace(/—.*$/, '').replace(/·.*$/, '').trim();
         if (seg.length >= 4) return seg.slice(0, 80);
       }
     }
-    const first = (lines[0] || '').trim();
-    return first || null;
+    // ② [REQ] 첫 문장
+    let inReq = false;
+    for (const l of lines) {
+      const s = l.trim();
+      if (s === '[REQ]') { inReq = true; continue; }
+      if (inReq) {
+        if (s.startsWith('[') && s !== '[REQ]') break;
+        if (!s || s.startsWith('-') || s.startsWith('*')) continue;
+        const sentence = s.split(/[。.]/)[0].trim();
+        if (sentence.length >= 4) return sentence.slice(0, 80);
+      }
+    }
+    // ③ 첫 비-ID 비공란 줄
+    for (const l of lines.slice(0, 10)) {
+      const s = l.trim();
+      if (s && !_ID_RE.test(s) && s.length >= 4) return s.slice(0, 80);
+    }
+    return null;
   } catch { return null; }
 }
 

@@ -1,5 +1,5 @@
-// scripts/test/ci-watch-v2.test.mjs  M2-1125-I — ci-watch v2 단위 테스트
-// 대상: 칸 융합 · 색 임계 · 숨김 규칙 · 성공률 재계산 · 새 섹션 레이아웃 · EAW 폭.
+// scripts/test/ci-watch-v2.test.mjs  M2-1125-K — ci-watch v2 단위 테스트
+// 대상: 칸 융합 · 색 임계 · 숨김 규칙 · 성공률 재계산 · 새 섹션 레이아웃 · EAW 폭 · PR 매핑 · R0 완료.
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -18,6 +18,7 @@ import { buildPipelineView, inRecentCodes, getIdDateCodes } from '../watch/pipel
 import { buildExtendedView, stageStrip, stageLabel, HUB_PICKUP_RED_SEC, CI_PICKUP_RED_SEC } from '../watch/collect-view.mjs';
 import { renderV2, stripAnsi, renderDetailPanel, spinnerChar } from '../watch/render-v2.mjs';
 import { displayWidth, truncateWidth, padEndWidth } from '../watch/text-width.mjs';
+import { extractPrUrl } from '../watch/sources-local.mjs';
 
 // ---------- 임계 분류 ----------
 
@@ -920,6 +921,162 @@ test('T-W6: renderV2 — 폭 80 에서 모든 줄 표시폭 ≤ 80', () => {
     const w = displayWidth(l);
     assert.ok(w <= 82, `줄 폭 ${w} > 82 (허용 오차 2): "${l.slice(0, 40)}..."`);
   }
+});
+
+// ========== M2-1125-K 신규 테스트 ==========
+
+// ---------- extractPrUrl — 3개 리포 URL 파싱 ----------
+
+test('T-URL1: extractPrUrl — storeport URL owner/repo/number 추출', () => {
+  const root = mkdtempSync(join(tmpdir(), 'pr-url-'));
+  const rpt  = join(root, 'report.md');
+  writeFileSync(rpt, 'PASS\nPR: https://github.com/CuriocityDevAi/storeport/pull/428\n');
+  const r = extractPrUrl(rpt);
+  assert.ok(r, 'pr url 추출 성공');
+  assert.equal(r.number, 428);
+  assert.equal(r.owner,  'CuriocityDevAi');
+  assert.equal(r.repo,   'storeport');
+  assert.ok(r.url.includes('/pull/428'));
+});
+
+test('T-URL2: extractPrUrl — relay URL owner/repo/number 추출', () => {
+  const root = mkdtempSync(join(tmpdir(), 'pr-url-'));
+  const rpt  = join(root, 'report.md');
+  writeFileSync(rpt, 'PASS\nPR: https://github.com/CuriocityDevAi/curiocity-relay/pull/31\n');
+  const r = extractPrUrl(rpt);
+  assert.ok(r);
+  assert.equal(r.number, 31);
+  assert.equal(r.owner,  'CuriocityDevAi');
+  assert.equal(r.repo,   'curiocity-relay');
+});
+
+test('T-URL3: extractPrUrl — fork URL owner/repo/number 추출', () => {
+  const root = mkdtempSync(join(tmpdir(), 'pr-url-'));
+  const rpt  = join(root, 'report.md');
+  writeFileSync(rpt, 'PASS\nPR: https://github.com/narisolutions/agilo-medusa-pos-fork/pull/257\n');
+  const r = extractPrUrl(rpt);
+  assert.ok(r);
+  assert.equal(r.number, 257);
+  assert.equal(r.owner,  'narisolutions');
+  assert.equal(r.repo,   'agilo-medusa-pos-fork');
+});
+
+// ---------- R0 no-PR 완료 → 오늘 완료 ----------
+
+test('T-K1: R0 done claim + APPROVE 리포트 → doneToday 증가, inProgress 제외', () => {
+  const root = makeFullFixture();
+  mkdirSync(join(root, 'r0'), { recursive: true });
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+
+  // R0 큐 파일
+  const qPath = join(root, 'queue', 'r0', 'R0-1124-KD.md');
+  writeFileSync(qPath, 'R0-1124-KD\n원장 대사: "리뷰 프롬프트 완료 테스트"\n');
+  stamp(qPath, NOW_MS - 60 * 60_000);
+
+  // R0 done claim
+  writeFileSync(join(root, 'status', 'claims', 'R0-1124-KD.json'),
+    JSON.stringify({ id: 'R0-1124-KD', hub: 'r0', state: 'done' }));
+
+  // R0 리포트 (최근 — reportRecentMin 이내 — 에서 감지되려면 최근이어야 함)
+  mkdirSync(join(root, 'r0'), { recursive: true });
+  const rptPath = join(root, 'r0', 'R0-1124-KD-report.md');
+  writeFileSync(rptPath, 'APPROVE\n\nR0-1124-KD — M1-1124-ZZ 리뷰 완료\n');
+  stamp(rptPath, NOW_MS - 5 * 60_000);
+
+  const view = buildExtendedView({
+    repoRoot: root, now: NOW, nowMs: NOW_MS,
+    fetchPrState: () => null,
+  });
+
+  assert.equal(view.inProgress.find(c => c.id === 'R0-1124-KD'), undefined,
+    'R0 done 카드가 inProgress 에 없어야 함');
+  assert.ok(view.doneToday >= 1, `doneToday ${view.doneToday} >= 1`);
+});
+
+// ---------- 다중 소스 PR 매핑 — 오래된 리포트에서 PR URL 추출 ----------
+
+test('T-K2: review 카드에 PR# 없음 + 25분 된 리포트 → step1.5 가 PR URL 추출 → merge 로 이동', () => {
+  const root = makeFullFixture();
+  mkdirSync(join(root, 'm1'), { recursive: true });
+  mkdirSync(join(root, 'r0'), { recursive: true });
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+
+  // 대상 리포트: 25분 전 (recentReports 20분 창 밖) — PR URL 포함
+  const tgtRpt = join(root, 'm1', 'M1-1124-KT-report.md');
+  writeFileSync(tgtRpt, 'PASS\nPR: https://github.com/CuriocityDevAi/storeport/pull/8001\n');
+  stamp(tgtRpt, NOW_MS - 25 * 60_000);
+
+  // R0 리뷰 → M1-1124-KT review 단계 트리거
+  const r0Rpt = join(root, 'r0', 'R0-1124-KR-report.md');
+  writeFileSync(r0Rpt, 'APPROVE\n\nR0-1124-KR — M1-1124-KT 리뷰\nPR: x\n');
+  stamp(r0Rpt, NOW_MS - 5 * 60_000);
+
+  // PR 8001 머지 15분 전 → HIDE_MIN(10) 초과 → doneToday 편입
+  const mergedAt = new Date(NOW_MS - 15 * 60_000).toISOString();
+  const mockFetch = (prNum) => Number(prNum) === 8001
+    ? { state: 'merged', mergedAt, cachedAt: NOW_MS }
+    : null;
+
+  const view = buildExtendedView({
+    repoRoot: root, now: NOW, nowMs: NOW_MS,
+    fetchPrState: mockFetch,
+  });
+
+  // M1-1124-KT 는 inProgress 에 없어야 함 (15분 머지 → doneToday 편입)
+  assert.equal(view.inProgress.find(c => c.id === 'M1-1124-KT'), undefined,
+    'M1-1124-KT: 15분 머지 → inProgress 제외');
+  assert.ok(view.doneToday >= 1, `doneToday ${view.doneToday} >= 1`);
+});
+
+// ---------- 스냅샷 픽스처: inProgress 에 머지된 카드 0건 ----------
+
+test('T-K3: 스냅샷 픽스처 — 머지된 카드가 inProgress 에 남지 않음', () => {
+  const root = makeFullFixture();
+  mkdirSync(join(root, 'm1'), { recursive: true });
+  mkdirSync(join(root, 'm2'), { recursive: true });
+  mkdirSync(join(root, 'r0'), { recursive: true });
+  writeFileSync(join(root, 'status', 'runners', 'all.json'),
+    JSON.stringify({ hubs: { m0: {
+      current: 'M0-1124-KA',
+      started_at: new Date(NOW_MS - 5 * 60_000).toISOString(),
+    }}}));
+  writeFileSync(join(root, 'status', 'claims', 'M0-1124-KA.json'),
+    JSON.stringify({ id: 'M0-1124-KA', hub: 'm0', state: 'started' }));
+  writeFileSync(join(root, 'queue', 'm0', 'M0-1124-KA.md'), '원장 대사: "진행 중 작업"\n');
+
+  // 머지된 카드 1: 오래된 리포트 → step1.5 PR 매핑
+  const rpt1 = join(root, 'm1', 'M1-1124-KB-report.md');
+  writeFileSync(rpt1, 'PASS\nPR: https://github.com/CuriocityDevAi/storeport/pull/5001\n');
+  stamp(rpt1, NOW_MS - 30 * 60_000);
+  const r0a = join(root, 'r0', 'R0-1124-KA-report.md');
+  writeFileSync(r0a, 'APPROVE\n\nR0-1124-KA — M1-1124-KB 리뷰\nPR: x\n');
+  stamp(r0a, NOW_MS - 10 * 60_000);
+
+  // 머지된 카드 2: 최근 리포트 → pipeline-view PR 매핑
+  const rpt2 = join(root, 'm2', 'M2-1124-KC-report.md');
+  writeFileSync(rpt2, 'PASS\nPR: https://github.com/CuriocityDevAi/curiocity-relay/pull/5002\n');
+  stamp(rpt2, NOW_MS - 8 * 60_000);
+
+  // mock: 두 PR 모두 머지 완료 (20분 전 → doneToday)
+  const mockFetch = (prNum) => {
+    if (Number(prNum) === 5001 || Number(prNum) === 5002) {
+      return { state: 'merged', mergedAt: new Date(NOW_MS - 20 * 60_000).toISOString(), cachedAt: NOW_MS };
+    }
+    return null;
+  };
+
+  const view = buildExtendedView({
+    repoRoot: root, now: NOW, nowMs: NOW_MS,
+    fetchPrState: mockFetch,
+  });
+
+  // 머지된 카드가 inProgress 에 남아있으면 안 됨
+  const mergedInProgress = view.inProgress.filter(c => c.column === 'merge' && c.ageMin >= 10);
+  assert.equal(mergedInProgress.length, 0,
+    `머지 10분+ 카드가 inProgress 에 ${mergedInProgress.length}건 남아있음: ${mergedInProgress.map(c => c.id).join(',')}`);
+
+  // M0-1124-KA 는 여전히 inProgress 에 있어야 함 (5분 작업중)
+  assert.ok(view.inProgress.find(c => c.id === 'M0-1124-KA'), 'M0-1124-KA 진행 중 유지');
 });
 
 // ---------- 스피너 ----------
