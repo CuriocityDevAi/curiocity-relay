@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts/hub-runner-v8.3.mjs · M1-1125-E · v8.3.1 · pipeline-log 이벤트 기록 (M1-1125-C 기반).
+// scripts/hub-runner-v8.3.mjs · M1-1125-G · v8.3.2 · fork 러너 감시 + sleep 복귀 재연결 + partial-but-safe.
 //
 // v8.2 과의 차이 (M1-1125-B·C · 5건):
 //   ① **landing 오탐 수정**: land-detect-v2.mjs 에 isPaneIdle / headTouchesReport 콜백 주입.
@@ -122,7 +122,13 @@ import { fetchCiHealth } from './lib/ci-health.mjs';
 import { maybeStartCiFetch, getLatestCi } from './lib/ci-background.mjs';
 import { computeSuspectDone } from './lib/ci-suspect.mjs';
 // M0-1119-T: Mac 수면 복귀 후 self-hosted runner 자동 재시작.
-import { runOnce as runGhWatchdog, getLatestAlert as getGhWatchdogAlert, DEFAULT_RUNNER_PATHS as GH_WATCHDOG_DEFAULT_PATHS } from './lib/gh-runner-watchdog.mjs';
+import {
+  runOnce as runGhWatchdog,
+  getLatestAlert as getGhWatchdogAlert,
+  DEFAULT_RUNNER_PATHS as GH_WATCHDOG_DEFAULT_PATHS,
+  defaultFetchRunnerStatuses as ghRunnerFetchStatuses,
+  defaultKickstart as ghRunnerKickstart,
+} from './lib/gh-runner-watchdog.mjs';
 // M1-1124-N: 러너 폴더 main-guard · 안전 push · 허브 preamble · sleep 트래커.
 import {
   assertMainAtTickStart as mainGuardAssert,
@@ -176,7 +182,7 @@ const SIGKILL_GRACE_MS = 5 * 1000;
 const CMUX_WAIT_MS = 10 * 60 * 1000;
 const DEFAULT_CLAUDE_BIN = '/Users/kyu.lee/.local/bin/claude';
 // M1-1105-BA(d): all.json 러너 버전 표기 버그 — 한 곳에서만 관리.
-const RUNNER_VERSION = 'v8.3.1';
+const RUNNER_VERSION = 'v8.3.2';
 // M1-1124-H: 자기 업데이트 기본값 — runner-config.selfUpdate 로 덮어쓸 수 있다.
 // M1-1125-C: prev 부재 시 되돌릴 안전판 버전.
 const SELF_UPDATE_FALLBACK_RUNNER = 'hub-runner-v8.2.mjs';
@@ -195,6 +201,8 @@ const DEFAULT_SELF_UPDATE_PREFLIGHT = [
   // M1-1125-C: landing 오탐·safe-push detached 가드.
   '--selftest-head-moved-unrelated',
   '--selftest-safe-push-detached',
+  // M1-1125-G: fork 러너 + sleep-wake + partial-but-safe.
+  '--selftest-watchdog-fork-wake',
 ];
 // 심링크 자체 경로 — M1-1124-H install 가 ProgramArguments 에 꽂는 파일.
 const SELF_SCRIPT_URL = import.meta.url;
@@ -400,6 +408,8 @@ const SELFTEST_PREAMBLE_NEWLINE = argv.includes('--selftest-preamble-newline');
 const SELFTEST_FG_TIMEOUT_ISOLATED = argv.includes('--selftest-fg-timeout-isolated');
 // v8.3.1 신규 셀프테스트 (M1-1125-E)
 const SELFTEST_PIPELINE_LOG = argv.includes('--selftest-pipeline-log');
+// v8.3.2 신규 셀프테스트 (M1-1125-G)
+const SELFTEST_WATCHDOG_FORK_WAKE = argv.includes('--selftest-watchdog-fork-wake');
 const hubFlag = (() => {
   const i = argv.indexOf('--hub');
   return i >= 0 ? argv[i + 1] : null;
@@ -458,7 +468,8 @@ if (
   !SELFTEST_SAFE_PUSH_DETACHED &&
   !SELFTEST_PREAMBLE_NEWLINE &&
   !SELFTEST_FG_TIMEOUT_ISOLATED &&
-  !SELFTEST_PIPELINE_LOG
+  !SELFTEST_PIPELINE_LOG &&
+  !SELFTEST_WATCHDOG_FORK_WAKE
 ) {
   console.error(
     'Usage: node scripts/hub-runner-v8.3.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-* (see docs/hub-runner.md).',
@@ -3299,7 +3310,8 @@ function fireCi() {
 }
 
 // M0-1119-T: tick 시작부 fire-and-forget. ci-health 캐시 결과를 재사용 (추가 API 호출 0).
-function fireGhWatchdog(config) {
+// M1-1125-G: sleepGapMs > 0 이면 sleep-wake 복귀 경로 (launchctl kickstart -k) 활성.
+function fireGhWatchdog(config, sleepGapMs = 0) {
   try {
     const latest = getLatestCi();
     const ciData = latest && latest.data ? latest.data : null;
@@ -3309,9 +3321,12 @@ function fireGhWatchdog(config) {
       ciData,
       repoRoot: REPO_ROOT,
       runnerPaths,
+      sleepGapMs,
       thresholdMin: wdCfg.stuck_threshold_min || GH_WATCHDOG_STUCK_THRESHOLD_MIN,
       cooldownMs: wdCfg.cooldown_ms || GH_WATCHDOG_COOLDOWN_MS,
       maxFailures: wdCfg.max_failures || GH_WATCHDOG_MAX_FAILURES,
+      fetchRunnerStatusesFn: ghRunnerFetchStatuses,
+      kickstartFn: ghRunnerKickstart,
       warn: (m) => log('gh-watchdog', m),
     }).catch((e) => log('gh-watchdog', `runOnce 예외: ${e.message || e}`));
   } catch (e) {
@@ -3353,14 +3368,20 @@ async function tick(hubs) {
     }
 
     // M1-1124-N REQ5: tick 간 벽시계 점프 = sleep 감지 → ndjson 기록. recoverStuckStartedClaims 가 참조.
-    try { sleepTracker.observeTick(); } catch { /* noop */ }
+    // M1-1125-G: gapMs 를 fireGhWatchdog 에 전달 → sleep-wake 경로 활성화.
+    let _sleepGapMs = 0;
+    try {
+      const sr = sleepTracker.observeTick();
+      if (sr && sr.sleep) _sleepGapMs = sr.gapMs || 0;
+    } catch { /* noop */ }
 
     // M0-1119-I: 백그라운드 CI 조회 요청(동시 1개 · 30s 마감 · tick 본체는 await 안 함).
     fireCi();
     safePull();
     const config = loadConfig();
     // M0-1119-T: ci-health 캐시 결과로 stuck 러너 자동 재시작 (fire-and-forget).
-    fireGhWatchdog(config);
+    // M1-1125-G: sleep gap 전달 → sleep-wake 경로 활성.
+    fireGhWatchdog(config, _sleepGapMs);
 
     if (config.display === 'cmux-split' && cmuxAlive(config.cmux_bin)) {
       const bootLog = join(RUNNER_HOME, 'hubs-split.log');
@@ -6003,6 +6024,19 @@ process.stdin.resume();
       process.exit(ok ? 0 : 1);
     } catch (e) {
       console.error(`[selftest-pipeline-log] FAIL · ${e.message}`);
+      process.exit(1);
+    }
+  })();
+
+} else if (SELFTEST_WATCHDOG_FORK_WAKE) {
+  // M1-1125-G: fork 러너 목록 · sleep-wake 트리거 · busy 제외 · partial-but-safe.
+  (async () => {
+    try {
+      const mod = await import('./test/hub-runner-gh-watchdog.test.mjs');
+      const ok = await mod.runSelftest();
+      process.exit(ok ? 0 : 1);
+    } catch (e) {
+      console.error(`[selftest-watchdog-fork-wake] FAIL · ${e.message}`);
       process.exit(1);
     }
   })();

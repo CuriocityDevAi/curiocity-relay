@@ -1,58 +1,63 @@
-// scripts/lib/gh-runner-watchdog.mjs · M0-1119-T — Mac 수면 복귀 후 self-hosted runner "켜져있는데 일 안 함" 자동 재시작.
+// scripts/lib/gh-runner-watchdog.mjs · M1-1125-G — fork 러너 감시 + sleep 복귀 재연결 + partial-but-safe.
 //
-// 배경 (Kyu 11-19 13:07):
-//   · 오늘 light(~/actions-runner-light) 75분 · heavy(~/actions-runner) 30분 둘 다
-//     svc.sh status=Started 인데 job 을 안 가져감 (Mac 잠자기 후).
-//   · ci-health 는 runner_idle alert 로 이미 감지하고 있으나 조치는 사람 몫이었다.
-//   · 이 모듈 = 감지시 svc.sh stop && start 자동 수행 · 사람 손 제거.
+// M0-1119-T 원본:
+//   · Mac 잠자기 복귀 후 storeport 러너(heavy/light) "켜져있는데 일 안 함" 자동 재시작 (svc.sh stop&&start).
+//   · M0-1119-U: data-partial / repos_failed / stale cache → 재시작 통째 skip.
 //
-// 설계 원칙:
-//   · 호출: 허브 러너 tick 시작부 fire-and-forget (ci-background 와 같은 모양).
-//     허브 본업(큐 투입 · 하트비트) blocking 금지 — 실패해도 조용히 흘러간다.
-//   · 추가 API 호출 없음. ci-health 결과(getLatestCi) 를 재사용.
-//   · 상태 = `.cache/gh-runner-watchdog-state.json` 에 1 파일. 허브 재기동과 무관.
+// M1-1125-G 추가 (REQ1~4):
+//   1. fork 러너 2대(fork-heavy · fork-light) 감시 목록 추가. storeport 2대 유지.
+//   2. sleep gap 감지 시 GitHub API 로 offline 러너 확인 → launchctl kickstart -k.
+//      · Runner.Worker 살아있는 바쁜 러너는 건드리지 않음.
+//      · 호출 예산: 같은 repo 는 1 호출 캐싱.
+//   3. data-partial 일 때 "GH offline + in_progress=0 + Runner.Worker 없음" → partial-but-safe 재시작.
+//   4. selftest: fork 목록 · sleep 복귀 트리거 · busy 제외 · partial-but-safe.
 //
-// 판정 (stuck):
+// 판정 (stuck, storeport 전용):
 //   pool.queued > 0 AND pool.in_progress.length === 0 AND pool.oldest_queued_min >= N
-//   (ci-health 의 `runner_idle` alert 조건과 동일 로직.)
-//
-// 조치:
-//   `<svc.sh> stop && <svc.sh> start` (sh -c 로 체이닝 · timeout 30s)
-//   · 같은 러너 30분/1회 상한 (`lastRestartAt`).
-//   · 실행 중 job 이 있으면 (ci 의 in_progress) 절대 실행 안 함 → judgeStuck 에서 거름.
-//   · 다음 회차에 상태 복귀 안 되면 "실패". 2회 연속 실패 → 더 안 하고 `gh_runner_alert` 플래그.
-//
-// 기록: `status/ci/runner-restarts-<WIB-date>.jsonl` · 한 줄 당 1 재시작.
-//
-// M0-1119-U — 실행 중 job 을 죽일 수 있는 경로 봉쇄 (R0C-1119-AH):
-//   1. ci-health 가 queued 먼저 · in_progress 나중에 조회 → deadline/budget 로 partial 이면
-//      queued 만 남고 in_progress 가 빔. repos_failed 에 들어간 repo 도 같은 공백.
-//      또 latest 캐시가 오래됐으면 지금 돌고 있는 job 이 아직 반영 전.
-//      → ciData 가 `partial` 이거나 `repos_failed.length>0` 이거나 `ci.data.at` 이 6분보다
-//        오래되면 그 회차는 재시작 판정 통째 skip · warn 로그만.
-//   2. stop 직전 안전망: 러너 폴더 (dirname(svc.sh)) 에 Runner.Worker 가 살아있으면 skip.
-//      pgrep 호출은 execFile + 인자 배열 (셸 주입 방지).
+//   fork 러너는 별도 CI pool 없음 → judgeStuck = no-pool → stuck 경로 skip.
+//   sleep 복귀 경로(REQ2) · partial-but-safe(REQ3) 는 fork 포함 전체 대상.
 
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { existsSync, mkdirSync, readFileSync, writeFileSync, appendFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { homedir } from 'node:os';
+import { homedir, userInfo } from 'node:os';
 
 const execFileAsync = promisify(execFile);
 
 export const DEFAULT_STUCK_THRESHOLD_MIN = 8;
 export const DEFAULT_COOLDOWN_MS = 30 * 60_000;
+// storeport 2대 + fork 2대
 export const DEFAULT_RUNNER_PATHS = {
   'mac-heavy': '~/actions-runner/svc.sh',
   'mac-light': '~/actions-runner-light/svc.sh',
+  'fork-heavy': '~/actions-runner-fork/svc.sh',
+  'fork-light': '~/actions-runner-fork-light/svc.sh',
+};
+// launchd 서비스 레이블 — launchctl kickstart -k gui/<uid>/<label> 에 사용.
+export const DEFAULT_RUNNER_LAUNCHD_LABELS = {
+  'mac-heavy': 'actions.runner.CuriocityDevAi-storeport.Youngkyus-MacBook-Pro-M1',
+  'mac-light': 'actions.runner.CuriocityDevAi-storeport.curiocity-mac-light',
+  'fork-heavy': 'actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork',
+  'fork-light': 'actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light',
+};
+// GitHub Actions runner 이름 + 소속 repo — GH API 조회용.
+export const DEFAULT_RUNNER_GH_NAMES = {
+  'mac-heavy': { repo: 'CuriocityDevAi/storeport', name: 'Youngkyus-MacBook-Pro-M1' },
+  'mac-light': { repo: 'CuriocityDevAi/storeport', name: 'curiocity-mac-light' },
+  'fork-heavy': { repo: 'CuriocityDevAi/agilo-medusa-pos-fork', name: 'curiocity-mac-fork' },
+  'fork-light': { repo: 'CuriocityDevAi/agilo-medusa-pos-fork', name: 'curiocity-mac-fork-light' },
 };
 export const DEFAULT_MAX_FAILURES = 2;
 export const DEFAULT_EXEC_TIMEOUT_MS = 30_000;
+export const DEFAULT_GH_API_TIMEOUT_MS = 10_000;
 // M0-1119-U: ci.data.at 이 이보다 오래되면 "지금 돌고 있는 job 이 미반영" 가능 → skip.
 export const DEFAULT_STALE_CACHE_MS = 6 * 60_000;
 export const DEFAULT_WORKER_CHECK_TIMEOUT_MS = 3_000;
 export const STATE_REL_PATH = join('.cache', 'gh-runner-watchdog-state.json');
+
+// CI pool 키 매핑 — storeport 전용. fork 종류는 null → judgeStuck = no-pool.
+const POOL_MAP = { 'mac-heavy': 'heavy', 'mac-light': 'light' };
 
 // Module-level latest alert (also persisted in state file). Hub-runner heartbeat
 // pulls from here via getLatestAlert() so all.json stays single-writer.
@@ -128,11 +133,40 @@ export async function hasRunningWorker(svcPath, opts = {}) {
   }
 }
 
+// M1-1125-G: GitHub API 로 repo 의 self-hosted runner 목록 조회 (gh CLI 사용).
+// 반환: Array<{ id, name, status: 'online'|'offline', busy: boolean }>
+export async function defaultFetchRunnerStatuses(repo, opts = {}) {
+  const timeoutMs = opts.timeoutMs ?? DEFAULT_GH_API_TIMEOUT_MS;
+  const { stdout } = await execFileAsync('gh', ['api', `repos/${repo}/actions/runners`], {
+    timeout: timeoutMs,
+    maxBuffer: 256 * 1024,
+  });
+  const data = JSON.parse(stdout);
+  return (data.runners || []).map((r) => ({
+    id: r.id,
+    name: r.name,
+    status: r.status,
+    busy: r.busy || false,
+  }));
+}
+
+// M1-1125-G: launchctl kickstart -k gui/<uid>/<label> 로 launchd 서비스 강제 재시작.
+export async function defaultKickstart(label, uid, opts = {}) {
+  const timeoutMs = opts.timeoutMs ?? DEFAULT_EXEC_TIMEOUT_MS;
+  return execFileAsync('launchctl', ['kickstart', '-k', `gui/${uid}/${label}`], {
+    timeout: timeoutMs,
+    maxBuffer: 256 * 1024,
+  });
+}
+
 // Pure judge — exported for tests.
+// M1-1125-G: POOL_MAP 사용 → fork 종류는 no-pool 반환 (storeport 풀 오용 방지).
 export function judgeStuck(ciData, kind, opts = {}) {
   const threshold = opts.thresholdMin ?? DEFAULT_STUCK_THRESHOLD_MIN;
   if (!ciData) return { stuck: false, reason: 'no-ci-data' };
-  const pool = kind === 'mac-light' ? ciData.light : ciData.heavy;
+  const poolKey = POOL_MAP[kind];
+  if (!poolKey) return { stuck: false, reason: 'no-pool' };
+  const pool = ciData[poolKey];
   if (!pool) return { stuck: false, reason: 'no-pool' };
   if (!pool.queued || pool.queued <= 0) return { stuck: false, reason: 'no-queue' };
   // Safety: any job running → not stuck. Protects user work-in-flight.
@@ -218,13 +252,19 @@ function defaultExec(svcPath, timeoutMs) {
 // opts:
 //   · ciData: result of getLatestCi()?.data (or null) — the inner shape with heavy/light.
 //   · repoRoot: relay repo root.
-//   · runnerPaths: { 'mac-heavy': '~/.../svc.sh', 'mac-light': '~/.../svc.sh' }
+//   · runnerPaths: { 'mac-heavy': '~/.../svc.sh', ... }
+//   · runnerLabels: { 'mac-heavy': 'actions.runner.…', ... } — launchd service labels (M1-1125-G).
+//   · runnerGhNames: { 'mac-heavy': { repo, name }, ... } — GitHub API runner info (M1-1125-G).
+//   · sleepGapMs: tick 간 sleep 간격 ms (> 0 이면 sleep-wake 복귀 경로 실행, M1-1125-G).
 //   · thresholdMin, cooldownMs, maxFailures, execTimeoutMs: knobs.
 //   · stateFile: override default path (tests).
-//   · execFn(svcPath, timeoutMs): injectable — resolves on exec ok, rejects on fail.
-//   · workerCheckFn(runnerDir): injectable — returns true if Runner.Worker alive (M0-1119-U).
+//   · execFn(svcPath, timeoutMs): injectable — svc.sh stop&&start.
+//   · workerCheckFn(runnerDir): injectable — returns true if Runner.Worker alive.
+//   · fetchRunnerStatusesFn(repo): injectable — GitHub API runner list (M1-1125-G).
+//   · kickstartFn(label, uid, opts): injectable — launchctl kickstart -k (M1-1125-G).
+//   · uid: OS user UID for launchctl (M1-1125-G, default: os.userInfo().uid).
 //   · recordFn(record): injectable jsonl append.
-//   · staleCacheMs: ci.data.at 허용 최대 지연 (M0-1119-U · 기본 6분).
+//   · staleCacheMs: ci.data.at 허용 최대 지연.
 //   · now: injectable clock.
 //   · warn(msg): injectable logger.
 export async function runOnce(opts = {}) {
@@ -232,6 +272,9 @@ export async function runOnce(opts = {}) {
   if (!repoRoot) throw new Error('gh-runner-watchdog.runOnce: repoRoot required');
   const ciData = opts.ciData ?? null;
   const runnerPaths = opts.runnerPaths || DEFAULT_RUNNER_PATHS;
+  const runnerLabels = opts.runnerLabels || DEFAULT_RUNNER_LAUNCHD_LABELS;
+  const runnerGhNames = opts.runnerGhNames || DEFAULT_RUNNER_GH_NAMES;
+  const sleepGapMs = opts.sleepGapMs ?? 0;
   const thresholdMin = opts.thresholdMin ?? DEFAULT_STUCK_THRESHOLD_MIN;
   const cooldownMs = opts.cooldownMs ?? DEFAULT_COOLDOWN_MS;
   const maxFailures = opts.maxFailures ?? DEFAULT_MAX_FAILURES;
@@ -240,6 +283,10 @@ export async function runOnce(opts = {}) {
   const stateFile = opts.stateFile || join(repoRoot, STATE_REL_PATH);
   const execFn = opts.execFn || ((svc, t) => defaultExec(svc, t));
   const workerCheckFn = opts.workerCheckFn || defaultWorkerCheck;
+  // null 로 두면 sleep-wake · partial-but-safe 비활성. hub-runner 가 명시적으로 주입.
+  const fetchRunnerStatusesFn = opts.fetchRunnerStatusesFn ?? null;
+  const kickstartFn = opts.kickstartFn ?? null;
+  const uid = opts.uid ?? (() => { try { return userInfo().uid; } catch { return 502; } })();
   const recordFn = opts.recordFn || ((rec) => defaultRecord(repoRoot, rec));
   const now = opts.now ?? Date.now();
   const warn = opts.warn || (() => {});
@@ -247,21 +294,184 @@ export async function runOnce(opts = {}) {
   const state = readState(stateFile);
   const actions = [];
 
-  // M0-1119-U safety gate 1: ciData 가 불완전하면 그 회차 재시작 통째 skip (warn 만).
+  // GH API 결과 캐시 — 같은 repo 를 sleep-wake · partial-but-safe 에서 중복 호출 방지.
+  const _repoCache = new Map();
+  async function getGhStatusFor(kind) {
+    if (!fetchRunnerStatusesFn) return null;
+    const ghInfo = runnerGhNames[kind];
+    if (!ghInfo) return null;
+    if (!_repoCache.has(ghInfo.repo)) {
+      try {
+        const list = await fetchRunnerStatusesFn(ghInfo.repo);
+        _repoCache.set(ghInfo.repo, list);
+      } catch (e) {
+        warn(`[gh-runner-watchdog] GH API 실패 (${ghInfo.repo}): ${e.message || e}`);
+        _repoCache.set(ghInfo.repo, null);
+      }
+    }
+    const list = _repoCache.get(ghInfo.repo);
+    return list?.find((r) => r.name === ghInfo.name) || null;
+  }
+
+  // M1-1125-G REQ2: sleep 복귀 후 offline 러너 launchctl kickstart -k.
+  // sleepGapMs > 0 이고 kickstartFn 이 주입된 tick 에만 실행. kickstart 성공 시 lastRestartAt 세팅 → stuck 경로 cooldown 처리.
+  if (sleepGapMs > 0 && kickstartFn) {
+    for (const kind of Object.keys(runnerPaths)) {
+      const svc = runnerPaths[kind];
+      if (!svc) continue;
+      const label = runnerLabels[kind];
+      if (!label) continue;
+
+      const ghStatus = await getGhStatusFor(kind);
+      if (!ghStatus || ghStatus.status !== 'offline') {
+        actions.push({ kind, action: 'skip', reason: 'wake-online', event: 'wake' });
+        continue;
+      }
+
+      // M0-1119-U 안전: Runner.Worker 살아있으면 건드리지 않음.
+      let workerAlive = false;
+      try {
+        workerAlive = await hasRunningWorker(svc, { workerCheckFn });
+      } catch {
+        workerAlive = true;
+      }
+      if (workerAlive) {
+        warn(`[gh-runner-watchdog] wake: ${kind} Runner.Worker alive — skip kickstart`);
+        actions.push({ kind, action: 'skip', reason: 'wake-worker-running', event: 'wake' });
+        continue;
+      }
+
+      const at = new Date(now).toISOString();
+      let kickResult;
+      try {
+        await kickstartFn(label, uid, { timeoutMs: execTimeoutMs });
+        kickResult = { ok: true };
+        // cooldown 등록: 이 tick 의 stuck 경로가 중복 재시작하지 않도록.
+        state.lastRestartAt[kind] = now;
+      } catch (e) {
+        const errMsg = ((e && (e.message || String(e))) || '').split('\n')[0];
+        kickResult = { ok: false, error: errMsg };
+        warn(`[gh-runner-watchdog] wake: ${kind} kickstart 실패: ${errMsg}`);
+      }
+
+      try {
+        recordFn({
+          at,
+          kind,
+          label,
+          reason: `sleep-wake recovery · gap_ms=${sleepGapMs} · gh_status=offline`,
+          event: 'wake',
+          result: kickResult,
+        });
+      } catch {}
+
+      actions.push({ kind, action: 'kickstart', event: 'wake', result: kickResult });
+    }
+  }
+
+  // M0-1119-U safety gate 1: ciData 가 불완전하면 처리 분기.
   // partial / repos_failed / stale cache 는 in_progress 공백을 만들 수 있고 → 돌고 있는 job 을 죽일 수 있다.
   const dataCheck = isDataIncomplete(ciData, now, { staleCacheMs });
   if (dataCheck.incomplete) {
-    warn(`[gh-runner-watchdog] skip restart: ${dataCheck.reason}`);
-    for (const kind of ['mac-heavy', 'mac-light']) {
-      if (!runnerPaths[kind]) continue;
-      actions.push({ kind, action: 'skip', reason: dataCheck.reason });
+    if (dataCheck.reason === 'data-partial' && fetchRunnerStatusesFn) {
+      // M1-1125-G REQ3: partial-but-safe — GH offline + in_progress=0 + Runner.Worker 없음이면 재시작 허용.
+      for (const kind of Object.keys(runnerPaths)) {
+        const svc = runnerPaths[kind];
+        if (!svc) continue;
+
+        const ghStatus = await getGhStatusFor(kind);
+        if (!ghStatus || ghStatus.status !== 'offline') {
+          warn(`[gh-runner-watchdog] partial skip: ${kind} gh_status=${ghStatus?.status ?? 'unknown'}`);
+          actions.push({ kind, action: 'skip', reason: 'data-partial' });
+          continue;
+        }
+
+        // partial ciData 의 in_progress 가 비어있지 않으면 (일부라도) 건드리지 않음.
+        const poolKey = POOL_MAP[kind];
+        const pool = poolKey ? ciData?.[poolKey] : null;
+        if (pool?.in_progress?.length > 0) {
+          warn(`[gh-runner-watchdog] partial skip: ${kind} in_progress not empty`);
+          actions.push({ kind, action: 'skip', reason: 'data-partial' });
+          continue;
+        }
+
+        // M0-1119-U 안전: Runner.Worker 생존 확인.
+        let workerAlive = false;
+        try {
+          workerAlive = await hasRunningWorker(svc, { workerCheckFn });
+        } catch {
+          workerAlive = true;
+        }
+        if (workerAlive) {
+          warn(`[gh-runner-watchdog] partial skip: ${kind} Runner.Worker alive`);
+          actions.push({ kind, action: 'skip', reason: 'worker-running' });
+          continue;
+        }
+
+        // cooldown · failure tracking — 기존 stuck 경로와 동일 로직.
+        if (withinCooldown(state, kind, now, cooldownMs)) {
+          actions.push({ kind, action: 'skip', reason: 'cooldown' });
+          continue;
+        }
+
+        if (state.pendingVerification[kind]) {
+          state.pendingVerification[kind] = false;
+          state.consecutiveFailures[kind] = (state.consecutiveFailures[kind] || 0) + 1;
+        }
+
+        const pFailures = state.consecutiveFailures[kind] || 0;
+        if (pFailures >= maxFailures) {
+          actions.push({ kind, action: 'skip', reason: 'max-failures', failures: pFailures });
+          continue;
+        }
+
+        const at = new Date(now).toISOString();
+        let execResult;
+        try {
+          await execFn(svc, execTimeoutMs);
+          execResult = { ok: true };
+          state.pendingVerification[kind] = true;
+        } catch (e) {
+          const errMsg = ((e && (e.message || String(e))) || '').split('\n')[0];
+          execResult = { ok: false, error: errMsg };
+          state.consecutiveFailures[kind] = (state.consecutiveFailures[kind] || 0) + 1;
+          state.pendingVerification[kind] = false;
+          warn(`[gh-runner-watchdog] partial-but-safe exec 실패: ${kind} ${errMsg}`);
+        }
+        state.lastRestartAt[kind] = now;
+
+        try {
+          recordFn({
+            at, kind, svc,
+            reason: `partial-but-safe · gh_status=offline · in_progress=0`,
+            result: execResult,
+            consecutive_failures: state.consecutiveFailures[kind] || 0,
+          });
+        } catch {}
+
+        actions.push({
+          kind,
+          action: 'restart',
+          reason: 'partial-but-safe',
+          result: execResult,
+          consecutive_failures: state.consecutiveFailures[kind] || 0,
+        });
+      }
+    } else {
+      // data-repos-failed · data-stale · no-ci-data · fetchRunnerStatusesFn 미주입 partial: 기존 동작 유지 — 통째 skip.
+      warn(`[gh-runner-watchdog] skip restart: ${dataCheck.reason}`);
+      for (const kind of Object.keys(runnerPaths)) {
+        if (!runnerPaths[kind]) continue;
+        actions.push({ kind, action: 'skip', reason: dataCheck.reason });
+      }
     }
     writeState(stateFile, state);
     latestAlert = state.alert || null;
     return { actions, alert: state.alert || null };
   }
 
-  for (const kind of ['mac-heavy', 'mac-light']) {
+  // 정상 경로: stuck 판정 → svc.sh stop&&start.
+  for (const kind of Object.keys(runnerPaths)) {
     const svc = runnerPaths[kind];
     if (!svc) continue;
 
