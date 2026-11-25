@@ -1,5 +1,12 @@
 # Hub Runner · 큐 자동 투입 (M1-1105-S / Y · 단일 프로세스)
 
+> **v8.3.1 (M1-1125-E)**: v8.3 기반 + pipeline-log 이벤트 기록.
+>
+> `status/pipeline/<ID>.jsonl` 에 프롬프트 1개의 일생을 이벤트로 쌓는다(화면 변화 없음).
+> 이벤트: `queued`(큐 선택) · `started`(세션 시작) · `report`(리포트 확인) · `artifact`(PR URL 추출 · pr_number·repo·head_sha) · `done/blocked`(종결).
+> 기록 실패는 non-fatal(try/catch). push 는 claim 커밋에 번들. `status/pipeline/` 가 RUNNER_SCOPE_PREFIXES 에 추가됨.
+> Selftest: `--selftest-pipeline-log` (6종 · 임시 디렉터리 · 쓰기 실패 non-fatal · archiveOldPipelineLogs 포함).
+>
 > **v8.2 (M1-1124-N)**: v8.1 기반 + 러너 폴더 main-guard · 자기 push rebase 제거 · 허브 preamble worktree 강제 · sleep 보정.
 >
 > 2026-11-24 러너 폴더 사고 3건이 뿌리.
@@ -205,6 +212,7 @@ curiocity-relay/
 ├─ status/claims/<ID>.json          ← 라운드 state (started/blocked/done/cancelled)
 ├─ status/runners/all.json          ← 러너 heartbeat (단일 파일 · ci + ci.today 포함)
 ├─ status/ci/<YYYY-MM-DD WIB>.jsonl ← 완료된 CI job 이력 (날짜별 · M0-1119-H)
+├─ status/pipeline/<ID>.jsonl       ← 프롬프트 일생 이벤트 (queued·started·report·artifact·done/blocked · M1-1125-E)
 ├─ status/runner-config.json        ← 허브별 cwd 지도 (M1-1105-S)
 └─ docs/hub-runner.md               ← 이 문서
 ```
