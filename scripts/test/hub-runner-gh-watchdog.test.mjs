@@ -20,6 +20,12 @@
 //   T16 runOnce — ci.at 이 6분보다 오래됨 → skip · exec 0.
 //   T17 runOnce — stop 직전 Runner.Worker alive → skip · exec 0.
 //   T18 isDataIncomplete — ciData null · partial · repos_failed · stale · 정상 5경우.
+// M1-1125-G 추가 (REQ1~4):
+//   T20 DEFAULT_RUNNER_PATHS 에 fork-heavy · fork-light 포함.
+//   T21 sleepGapMs>0 + kickstartFn → offline 러너 kickstart · online 러너 skip.
+//   T22 sleepGapMs>0 · Runner.Worker alive → kickstart skip (busy 러너 보호).
+//   T23 data-partial + GH offline + in_progress=0 + no Worker → partial-but-safe restart.
+//   T24 data-partial + GH online → data-partial skip (기존 동작 유지).
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -36,6 +42,7 @@ import {
   DEFAULT_STUCK_THRESHOLD_MIN,
   DEFAULT_COOLDOWN_MS,
   DEFAULT_STALE_CACHE_MS,
+  DEFAULT_RUNNER_PATHS,
   _resetGhRunnerWatchdog,
 } from '../lib/gh-runner-watchdog.mjs';
 
@@ -422,3 +429,301 @@ test('T19: hasRunningWorker — workerCheckFn 가 throw 하면 "있음" 으로 �
   const result = await hasRunningWorker('/path/to/svc.sh', { workerCheckFn: bombCheck });
   assert.equal(result, true, '예외 시 재시작 봉쇄');
 });
+
+// ---- M1-1125-G: fork 러너 + sleep-wake + partial-but-safe ----
+
+test('T20: DEFAULT_RUNNER_PATHS 에 fork-heavy · fork-light 포함 (storeport 2대 유지)', () => {
+  assert.ok('mac-heavy' in DEFAULT_RUNNER_PATHS, 'mac-heavy 존재');
+  assert.ok('mac-light' in DEFAULT_RUNNER_PATHS, 'mac-light 존재');
+  assert.ok('fork-heavy' in DEFAULT_RUNNER_PATHS, 'fork-heavy 추가됨');
+  assert.ok('fork-light' in DEFAULT_RUNNER_PATHS, 'fork-light 추가됨');
+  assert.ok(DEFAULT_RUNNER_PATHS['fork-heavy'].includes('actions-runner-fork'), 'fork-heavy 경로 확인');
+  assert.ok(DEFAULT_RUNNER_PATHS['fork-light'].includes('actions-runner-fork-light'), 'fork-light 경로 확인');
+});
+
+test('T21: sleepGapMs>0 + kickstartFn → offline 러너 kickstart · online 러너 skip', async () => {
+  _resetGhRunnerWatchdog();
+  const root = mkdtempSync(join(tmpdir(), 'gh-watchdog-'));
+  const stateFile = join(root, '.cache', 'gh-runner-watchdog-state.json');
+  const kickCalls = [];
+  const kickstartFn = async (label, uid) => { kickCalls.push({ label, uid }); };
+  const execCalls = [];
+  const execFn = async (svc) => { execCalls.push(svc); };
+  const workerCheckFn = async () => false;
+
+  const runnerPaths = { 'mac-heavy': '/svc-heavy', 'mac-light': '/svc-light' };
+  const runnerLabels = { 'mac-heavy': 'label-heavy', 'mac-light': 'label-light' };
+  const runnerGhNames = {
+    'mac-heavy': { repo: 'org/repo1', name: 'runner-heavy' },
+    'mac-light': { repo: 'org/repo1', name: 'runner-light' },
+  };
+  // heavy → offline, light → online
+  const fetchRunnerStatusesFn = async (repo) => [
+    { name: 'runner-heavy', status: 'offline', busy: false },
+    { name: 'runner-light', status: 'online', busy: false },
+  ];
+
+  const ciData = makeCiData();
+  ciData.at = new Date(1_000_000).toISOString();
+
+  const res = await runOnce({
+    ciData,
+    repoRoot: root,
+    runnerPaths,
+    runnerLabels,
+    runnerGhNames,
+    sleepGapMs: 60_000,  // sleep detected
+    stateFile,
+    execFn,
+    kickstartFn,
+    fetchRunnerStatusesFn,
+    workerCheckFn,
+    recordFn: () => {},
+    now: 1_000_000,
+  });
+
+  assert.equal(kickCalls.length, 1, 'offline 러너만 kickstart');
+  assert.equal(kickCalls[0].label, 'label-heavy');
+  assert.equal(execCalls.length, 0, 'sleep-wake 경로에서는 execFn 미호출');
+
+  const wakeActions = res.actions.filter((a) => a.event === 'wake');
+  const kicked = wakeActions.find((a) => a.kind === 'mac-heavy' && a.action === 'kickstart');
+  const skipped = wakeActions.find((a) => a.kind === 'mac-light' && a.action === 'skip');
+  assert.ok(kicked, 'heavy kickstart action');
+  assert.ok(skipped, 'light skip action (online)');
+  assert.equal(skipped.reason, 'wake-online');
+});
+
+test('T22: sleepGapMs>0 · Runner.Worker alive → kickstart skip (busy 러너 보호)', async () => {
+  _resetGhRunnerWatchdog();
+  const root = mkdtempSync(join(tmpdir(), 'gh-watchdog-'));
+  const stateFile = join(root, '.cache', 'gh-runner-watchdog-state.json');
+  const kickCalls = [];
+  const kickstartFn = async (label) => { kickCalls.push(label); };
+  // heavy: offline on GH but Runner.Worker alive locally
+  const workerCheckFn = async (runnerDir) => runnerDir.includes('heavy');  // heavy has worker
+  const fetchRunnerStatusesFn = async () => [
+    { name: 'runner-heavy', status: 'offline', busy: false },
+  ];
+
+  const runnerPaths = { 'mac-heavy': '/heavy/svc.sh' };
+  const runnerLabels = { 'mac-heavy': 'label-heavy' };
+  const runnerGhNames = { 'mac-heavy': { repo: 'org/repo', name: 'runner-heavy' } };
+  const ciData = makeCiData();
+  ciData.at = new Date(1_000_000).toISOString();
+
+  const res = await runOnce({
+    ciData,
+    repoRoot: root,
+    runnerPaths,
+    runnerLabels,
+    runnerGhNames,
+    sleepGapMs: 90_000,
+    stateFile,
+    execFn: async () => {},
+    kickstartFn,
+    fetchRunnerStatusesFn,
+    workerCheckFn,
+    recordFn: () => {},
+    now: 1_000_000,
+  });
+
+  assert.equal(kickCalls.length, 0, 'Runner.Worker alive → kickstart 금지');
+  const wakeAction = res.actions.find((a) => a.event === 'wake' && a.kind === 'mac-heavy');
+  assert.ok(wakeAction, 'wake action 존재');
+  assert.equal(wakeAction.action, 'skip');
+  assert.equal(wakeAction.reason, 'wake-worker-running');
+});
+
+test('T23: data-partial + GH offline + in_progress=0 + no Worker → partial-but-safe restart', async () => {
+  _resetGhRunnerWatchdog();
+  const root = mkdtempSync(join(tmpdir(), 'gh-watchdog-'));
+  const stateFile = join(root, '.cache', 'gh-runner-watchdog-state.json');
+  const execCalls = [];
+  const execFn = async (svc) => { execCalls.push(svc); };
+  const workerCheckFn = async () => false;
+  // GH says offline for heavy
+  const fetchRunnerStatusesFn = async () => [
+    { name: 'runner-heavy', status: 'offline', busy: false },
+    { name: 'runner-light', status: 'online', busy: false },
+  ];
+
+  const runnerPaths = { 'mac-heavy': '/svc-heavy', 'mac-light': '/svc-light' };
+  const runnerGhNames = {
+    'mac-heavy': { repo: 'org/repo', name: 'runner-heavy' },
+    'mac-light': { repo: 'org/repo', name: 'runner-light' },
+  };
+  const ciData = {
+    ...makeCiData({
+      heavy: { queued: 2, oldest_queued_min: 20, in_progress: [] },
+    }),
+    partial: true,
+  };
+
+  const res = await runOnce({
+    ciData,
+    repoRoot: root,
+    runnerPaths,
+    runnerGhNames,
+    stateFile,
+    execFn,
+    fetchRunnerStatusesFn,
+    workerCheckFn,
+    recordFn: () => {},
+    now: 1_000_000,
+  });
+
+  assert.equal(execCalls.length, 1, 'partial-but-safe: offline + no worker → restart');
+  assert.equal(execCalls[0], '/svc-heavy');
+  const heavyAction = res.actions.find((a) => a.kind === 'mac-heavy');
+  assert.equal(heavyAction.action, 'restart');
+  assert.equal(heavyAction.reason, 'partial-but-safe');
+  // light: GH online → skip with data-partial
+  const lightAction = res.actions.find((a) => a.kind === 'mac-light');
+  assert.equal(lightAction.action, 'skip');
+  assert.equal(lightAction.reason, 'data-partial');
+});
+
+test('T24: data-partial · fetchRunnerStatusesFn 미주입 → 기존 동작(전체 skip) 유지', async () => {
+  _resetGhRunnerWatchdog();
+  const root = mkdtempSync(join(tmpdir(), 'gh-watchdog-'));
+  const stateFile = join(root, '.cache', 'gh-runner-watchdog-state.json');
+  const execCalls = [];
+  const execFn = async (svc) => { execCalls.push(svc); };
+
+  const runnerPaths = { 'mac-heavy': '/svc-heavy', 'mac-light': '/svc-light' };
+  const ciData = {
+    ...makeCiData({
+      heavy: { queued: 2, oldest_queued_min: 20, in_progress: [] },
+    }),
+    partial: true,
+  };
+
+  // fetchRunnerStatusesFn 미전달 → 기존 skip-all 동작
+  const res = await runOnce({
+    ciData,
+    repoRoot: root,
+    runnerPaths,
+    stateFile,
+    execFn,
+    workerCheckFn: async () => false,
+    recordFn: () => {},
+    now: 1_000_000,
+  });
+
+  assert.equal(execCalls.length, 0, 'fetchRunnerStatusesFn 없으면 exec 금지');
+  for (const a of res.actions) {
+    assert.equal(a.action, 'skip');
+    assert.equal(a.reason, 'data-partial');
+  }
+});
+
+// ---- selftest 진입점 (hub-runner --selftest-watchdog-fork-wake 에서 호출) ----
+
+export async function runSelftest() {
+  const { test: nodeTest, run } = await import('node:test');
+  // 위 test() 호출들이 이미 등록됨 — node:test 의 global registry 에 있음.
+  // runSelftest 는 이미 실행된 테스트 결과로 판정.
+  // 단순히 T20~T24 를 직접 실행해 PASS/FAIL 반환.
+  const results = [];
+  async function check(name, fn) {
+    try {
+      await fn();
+      results.push({ name, ok: true });
+    } catch (e) {
+      results.push({ name, ok: false, error: e.message });
+    }
+  }
+
+  await check('T20-fork-paths', () => {
+    const { DEFAULT_RUNNER_PATHS: paths } = { DEFAULT_RUNNER_PATHS };
+    // already imported above
+    assert.ok('fork-heavy' in DEFAULT_RUNNER_PATHS);
+    assert.ok('fork-light' in DEFAULT_RUNNER_PATHS);
+  });
+
+  await check('T21-sleep-wake-trigger', async () => {
+    _resetGhRunnerWatchdog();
+    const { mkdtempSync: mktmp } = await import('node:fs');
+    const { tmpdir: td } = await import('node:os');
+    const { join: pjoin } = await import('node:path');
+    const root = mktmp(pjoin(td(), 'selftest-wake-'));
+    const stateFile = pjoin(root, '.cache', 'st.json');
+    const kicked = [];
+    await runOnce({
+      ciData: null,
+      repoRoot: root, stateFile,
+      sleepGapMs: 60_000,
+      runnerPaths: { 'fork-heavy': '/svc-fork' },
+      runnerLabels: { 'fork-heavy': 'label-fork' },
+      runnerGhNames: { 'fork-heavy': { repo: 'org/r', name: 'rn' } },
+      fetchRunnerStatusesFn: async () => [{ name: 'rn', status: 'offline', busy: false }],
+      kickstartFn: async (lbl) => { kicked.push(lbl); },
+      workerCheckFn: async () => false,
+      execFn: async () => {},
+      recordFn: () => {},
+      now: 1_000_000,
+    });
+    assert.equal(kicked.length, 1);
+    assert.equal(kicked[0], 'label-fork');
+  });
+
+  await check('T22-busy-excluded', async () => {
+    _resetGhRunnerWatchdog();
+    const { mkdtempSync: mktmp } = await import('node:fs');
+    const { tmpdir: td } = await import('node:os');
+    const { join: pjoin } = await import('node:path');
+    const root = mktmp(pjoin(td(), 'selftest-busy-'));
+    const stateFile = pjoin(root, '.cache', 'st.json');
+    const kicked = [];
+    await runOnce({
+      ciData: null,
+      repoRoot: root, stateFile,
+      sleepGapMs: 60_000,
+      runnerPaths: { 'fork-heavy': '/heavy/svc.sh' },
+      runnerLabels: { 'fork-heavy': 'label-fork' },
+      runnerGhNames: { 'fork-heavy': { repo: 'org/r', name: 'rn' } },
+      fetchRunnerStatusesFn: async () => [{ name: 'rn', status: 'offline', busy: false }],
+      kickstartFn: async (lbl) => { kicked.push(lbl); },
+      workerCheckFn: async () => true,  // busy!
+      execFn: async () => {},
+      recordFn: () => {},
+      now: 1_000_000,
+    });
+    assert.equal(kicked.length, 0, 'busy → skip');
+  });
+
+  await check('T23-partial-but-safe', async () => {
+    _resetGhRunnerWatchdog();
+    const { mkdtempSync: mktmp } = await import('node:fs');
+    const { tmpdir: td } = await import('node:os');
+    const { join: pjoin } = await import('node:path');
+    const root = mktmp(pjoin(td(), 'selftest-pbs-'));
+    const stateFile = pjoin(root, '.cache', 'st.json');
+    const execd = [];
+    const ciData = { partial: true, heavy: { queued: 1, oldest_queued_min: 10, in_progress: [] }, light: { queued: 0, in_progress: [] } };
+    await runOnce({
+      ciData,
+      repoRoot: root, stateFile,
+      runnerPaths: { 'mac-heavy': '/svc-h' },
+      runnerGhNames: { 'mac-heavy': { repo: 'org/r', name: 'rn' } },
+      fetchRunnerStatusesFn: async () => [{ name: 'rn', status: 'offline', busy: false }],
+      execFn: async (svc) => { execd.push(svc); },
+      kickstartFn: async () => {},
+      workerCheckFn: async () => false,
+      recordFn: () => {},
+      now: 1_000_000,
+    });
+    assert.equal(execd.length, 1, 'partial-but-safe execFn called');
+  });
+
+  const failed = results.filter((r) => !r.ok);
+  if (failed.length > 0) {
+    for (const f of failed) {
+      console.error(`[selftest-watchdog-fork-wake] FAIL · ${f.name}: ${f.error}`);
+    }
+    return false;
+  }
+  console.log(`[selftest-watchdog-fork-wake] PASS · ${results.length} checks`);
+  return true;
+}
