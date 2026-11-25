@@ -86,72 +86,62 @@ _configure_runner() {
     _ok "runner '$runner_name' configured"
 }
 
-# launchd plist 생성 및 등록 (idempotent)
+# launchd 서비스 설치 및 시작 (idempotent)
+# 공식 ./svc.sh install 을 사용해 runsvc.sh 복사·로그 디렉토리·plist 생성을 위임한다.
+# 수동 plist 작성을 하지 않으므로 UserName 키 오류나 runsvc.sh 누락이 발생하지 않는다.
 _install_launchd() {
     local dir="$1"
     local org_repo="$2"
     local runner_name="$3"
-    local username
-    username=$(whoami)
 
     local label
     label=$(_plist_label "$org_repo" "$runner_name")
-    local plist
-    plist=$(_plist_path "$label")
-    local log_dir="$HOME/Library/Logs/$label"
 
     if launchctl list "$label" >/dev/null 2>&1; then
         _skip "launchd service $label already loaded"
         return 0
     fi
 
-    _step "Installing launchd service: $label..."
+    _step "Installing launchd service via svc.sh: $label..."
     if [ "${DRY_RUN:-0}" = "1" ]; then
-        _dry "mkdir -p $log_dir"
-        _dry "write plist: $plist"
-        _dry "launchctl load -w $plist"
+        _dry "cd $dir && ./svc.sh install"
+        _dry "cd $dir && ./svc.sh start"
         return 0
     fi
 
-    mkdir -p "$log_dir"
-    cat > "$plist" <<PLIST
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>EnvironmentVariables</key>
-	<dict>
-		<key>ACTIONS_RUNNER_SVC</key>
-		<string>1</string>
-	</dict>
-	<key>KeepAlive</key>
-	<true/>
-	<key>Label</key>
-	<string>${label}</string>
-	<key>ProcessType</key>
-	<string>Interactive</string>
-	<key>ProgramArguments</key>
-	<array>
-		<string>${dir}/runsvc.sh</string>
-	</array>
-	<key>RunAtLoad</key>
-	<true/>
-	<key>SessionCreate</key>
-	<true/>
-	<key>StandardErrorPath</key>
-	<string>${log_dir}/stderr.log</string>
-	<key>StandardOutPath</key>
-	<string>${log_dir}/stdout.log</string>
-	<key>UserName</key>
-	<string>${username}</string>
-	<key>WorkingDirectory</key>
-	<string>${dir}</string>
-</dict>
-</plist>
-PLIST
+    (cd "$dir" && ./svc.sh install)
+    (cd "$dir" && ./svc.sh start)
+    _ok "launchd service $label installed and started"
+}
 
-    launchctl load -w "$plist"
-    _ok "launchd service $label started"
+# 러너 launchd PID 검증: 숫자 PID 면 OK · '-' 이면 빨간 경고 + stderr.log 꼬리
+verify_runner_pid() {
+    local org_repo="$1"
+    local runner_name="$2"
+    local label
+    label=$(_plist_label "$org_repo" "$runner_name")
+
+    if [ "${DRY_RUN:-0}" = "1" ]; then
+        _dry "launchctl list | grep $label  # verify PID numeric"
+        return 0
+    fi
+
+    local pid
+    pid=$(launchctl list 2>/dev/null | awk -v lbl="$label" '$3 == lbl { print $1 }')
+
+    if [[ "${pid:-}" =~ ^[0-9]+$ ]]; then
+        _ok "$label  (PID $pid)"
+    else
+        local msg="[ci-box] ✗ $label — PID=${pid:--} (서비스 미시작)"
+        printf '\033[31m%s\033[0m\n' "$msg" >&2
+        local log_dir="$HOME/Library/Logs/$label"
+        if [ -f "$log_dir/stderr.log" ]; then
+            echo "  --- stderr.log 꼬리 (최근 10줄) ---" >&2
+            tail -10 "$log_dir/stderr.log" >&2
+            echo "  ---" >&2
+        fi
+        return 1
+    fi
 }
 
 # 단일 러너 전체 설치 흐름
