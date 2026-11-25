@@ -1,12 +1,12 @@
 {
-  "at": "2026-11-25T06:42:53.915Z",
+  "at": "2026-11-25T06:43:19.031Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": "blocked: runner-folder change pending Kyu install (queue/m3/M3-1125-L.md)",
-  "last_error_at": "2026-11-25T06:42:50.007Z",
+  "last_error": "blocked: runner-folder change pending Kyu install (events/runner-main-guard-20261124T173048Z.md)",
+  "last_error_at": "2026-11-25T06:43:18.178Z",
   "hubs": {
     "m0": {
       "current": "M0-1125-J",
@@ -15,10 +15,8 @@
       "last_activity": "2026-11-25T06:40:47.934Z"
     },
     "m1": {
-      "current": "M1-1125-L",
-      "started_at": "2026-11-25T06:33:18.444Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-25T05:55:34.501Z"
+      "current": null,
+      "last_activity": "2026-11-25T06:43:18.066Z"
     },
     "m2": {
       "current": "M2-1125-N",
@@ -42,11 +40,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.92,
-    "compressed_gb": 3.74,
+    "used_gb": 15.22,
+    "compressed_gb": 3.26,
     "swap_used_gb": 4.91,
     "pressure": "normal",
-    "at": "2026-11-25T06:42:22.945Z"
+    "at": "2026-11-25T06:42:55.648Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -118,9 +116,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 25,
+  "isolated_reports_collected": 26,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1125-J.json · {\"id\":\"M0-1125-J\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-25T06:41:09.556Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1125-J.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M0-1125-J.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:11.878Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:11.878Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:12.492Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:12.493Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:43.336Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:43.336Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:43.988Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:43.988Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:42:22.944Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:42:22.945Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:42:23.508Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:42:23.508Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:git 2026-11-25T06:42:50.006Z] 러너 폴더 침범 감지 · files=queue/m3/M3-1125-L.md · guess_hub=m3\n[hub-runner-v8.3.2:git 2026-11-25T06:42:50.007Z] blocked: runner-folder change pending Kyu install · files=queue/m3/M3-1125-L.md,events/runner-main-guard-20261124T173048Z.md",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:11.878Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:12.492Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:12.493Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:43.336Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:43.336Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:43.988Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:41:43.988Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:42:22.944Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:42:22.945Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:42:23.508Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:42:23.508Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:git 2026-11-25T06:42:50.006Z] 러너 폴더 침범 감지 · files=queue/m3/M3-1125-L.md · guess_hub=m3\n[hub-runner-v8.3.2:git 2026-11-25T06:42:50.007Z] blocked: runner-folder change pending Kyu install · files=queue/m3/M3-1125-L.md,events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:42:55.648Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:42:55.648Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:42:56.205Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T06:42:56.205Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:m1 2026-11-25T06:43:02.639Z] [report-path] M1-1125-L: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:m1 2026-11-25T06:43:18.066Z] [kyu-intrusion] Kyu 폴더 HEAD 변경 감지 · 모두 kyu dev-refresh 패턴 · 경보 생략: /Users/kyu.lee/projects/agilo-fork-test, /Users/kyu.lee/projects/kyu-display\n[hub-runner-v8.3.2:git 2026-11-25T06:43:18.178Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261124T173048Z.md",
   "git_state": {
     "ahead": 0,
     "behind": 0,
