@@ -14,7 +14,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { homedir } from 'node:os';
 import { buildExtendedView } from './watch/collect-view.mjs';
 import { renderV2, renderDetailPanel } from './watch/render-v2.mjs';
-import { maybeGitFetch } from './watch/sources-git.mjs';
+import { maybeGitFetch, maybeGitFetchAsync } from './watch/sources-git.mjs';
 
 const CI_WATCH_V2_VERSION = '2.3.0';
 
@@ -59,9 +59,10 @@ let lastInProgress = [];
 // ── 렌더 ──────────────────────────────────────────────────────────────────
 
 let cachedView = null;
+let _fetchingBackground = false;
 
-function tickOnce() {
-  const view = buildExtendedView({ repoRoot: REPO_ROOT, now: new Date() });
+function tickOnce({ skipFetch = false, skipGh = false } = {}) {
+  const view = buildExtendedView({ repoRoot: REPO_ROOT, now: new Date(), skipFetch, skipGh });
   cachedView = view;
   lastInProgress = view.inProgress || [];
 
@@ -70,6 +71,19 @@ function tickOnce() {
   else if (uiState.cursor >= lastInProgress.length) uiState.cursor = lastInProgress.length - 1;
 
   redraw(view);
+}
+
+/** 첫 화면을 즉시 그리고, 비동기 fetch 완료 후 재렌더. gh 호출도 첫 렌더에서 건너뜀. */
+function tickFast() {
+  tickOnce({ skipFetch: true, skipGh: true });
+  if (_fetchingBackground) return;
+  _fetchingBackground = true;
+  maybeGitFetchAsync(REPO_ROOT, Date.now(), 10_000).then(() => {
+    _fetchingBackground = false;
+    if (!uiState.filterMode && !uiState.detailCard) {
+      try { tickOnce({ skipFetch: true }); } catch {}
+    }
+  }).catch(() => { _fetchingBackground = false; });
 }
 
 function redraw(view) {
@@ -179,9 +193,8 @@ function openDetail() {
 
 if (process.argv.includes('--once') || process.env.CI_WATCH_ONCE === '1') {
   try {
-    // --once 시작 시 git fetch 선행 (data origin 표시용)
-    maybeGitFetch(REPO_ROOT);
-    const view = buildExtendedView({ repoRoot: REPO_ROOT, now: new Date() });
+    // --once: fetch·gh 없이 로컬 origin/main 기준으로 즉시 (목표 ≤ 3초)
+    const view = buildExtendedView({ repoRoot: REPO_ROOT, now: new Date(), skipFetch: true, skipGh: true });
     const widthArg = process.argv.find(a => a.startsWith('--width='));
     const width = widthArg ? Number(widthArg.slice('--width='.length)) : detectTerminalWidth();
     const lines = renderV2(view, {
@@ -213,7 +226,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     process.stdin.on('data', key => { try { handleKey(key); } catch {} });
   }
 
-  try { tickOnce(); } catch (e) { process.stderr.write(`[ci-watch-v2] initial: ${e?.message}\n`); }
+  // 첫 화면 즉시 (skipFetch=true) → 비동기 fetch 후 재렌더
+  try { tickFast(); } catch (e) { process.stderr.write(`[ci-watch-v2] initial: ${e?.message}\n`); }
   scheduleNext();
   startSpinner();
 }

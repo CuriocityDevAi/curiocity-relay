@@ -1,6 +1,7 @@
-// scripts/watch/collect-view.mjs  M2-1125-N — git 오브젝트 데이터 읽기 (stale 방지)
+// scripts/watch/collect-view.mjs  M2-1125-Q — 배치 claims 읽기 + skipFetch + 날짜 필터
 // buildPipelineView() 위에 추가 데이터(허브 큐 · CI 풀 · 러너 상태 · 큐 정체 경보)를 얹는다.
 // M2-1125-N: 클레임·all.json 을 작업 트리 대신 git origin/main 오브젝트에서 읽어 stale 방지.
+// M2-1125-Q: scanClaimsDirGitFast(날짜 필터+배치) · skipFetch · 중복 scan 제거.
 
 import { execSync } from 'node:child_process';
 import { join } from 'node:path';
@@ -13,7 +14,8 @@ import {
 } from './sources-local.mjs';
 import {
   maybeGitFetch, getDataOrigin,
-  readAllJsonGit, readClaimGit, scanClaimsDirGit,
+  readAllJsonGit, readClaimGit, scanClaimsDirGitFast, getRecentMmddSet,
+  gitCatFileBatch,
 } from './sources-git.mjs';
 
 // ── 큐 정체 판정 기준 상수 ────────────────────────────────────────────────
@@ -260,11 +262,17 @@ export function buildExtendedView({
   now = new Date(),
   nowMs = Date.now(),
   allJson: allJsonOverride,
-  fetchPrState = defaultFetchPrState,
-  fetchForkRuns = fetchGhForkRuns,
+  fetchPrState: fetchPrStateOpt,
+  fetchForkRuns: fetchForkRunsOpt,
+  skipFetch = false,
+  skipGh = false,
 } = {}) {
-  // git 오브젝트에서 최신 relay 데이터 읽기 (30초 간격 fetch)
-  if (repoRoot) maybeGitFetch(repoRoot, nowMs);
+  // skipGh=true 시 gh/PR API 호출 전부 no-op (첫 화면 즉시 렌더용)
+  const fetchPrState = fetchPrStateOpt ?? (skipGh ? () => null : defaultFetchPrState);
+  const fetchForkRuns = fetchForkRunsOpt ?? (skipGh ? () => ({ queued: [], inProgress: [] }) : fetchGhForkRuns);
+
+  // git 오브젝트에서 최신 relay 데이터 읽기 (30초 간격 fetch · skipFetch=true 시 건너뜀)
+  if (repoRoot && !skipFetch) maybeGitFetch(repoRoot, nowMs);
 
   const paths   = resolvePaths(repoRoot);
   // all.json: git 오브젝트 우선, 없으면 작업 트리 폴백
@@ -272,6 +280,9 @@ export function buildExtendedView({
     || (repoRoot && readAllJsonGit(repoRoot))
     || readAllJson(paths)
     || {};
+
+  // 0.5) 오늘/어제 MMDD 집합 — claims 날짜 필터에 사용
+  const mmddSet = getRecentMmddSet(now, 1);
 
   // 1) 기본 파이프라인 뷰
   const base = buildPipelineView({ repoRoot, now, nowMs, allJson });
@@ -303,9 +314,11 @@ export function buildExtendedView({
       }
     }
 
-    const ghPr = fetchPrBySearch(card.id);
-    if (ghPr?.number) {
-      card.extra = { ...(card.extra || {}), pr: ghPr };
+    if (!skipGh) {
+      const ghPr = fetchPrBySearch(card.id);
+      if (ghPr?.number) {
+        card.extra = { ...(card.extra || {}), pr: ghPr };
+      }
     }
   }
 
@@ -333,11 +346,30 @@ export function buildExtendedView({
     }
   }
 
+  // 2.5) 비-큐 카드 claims 단일 배치 프리로드 (git cat-file --batch 1회)
+  // null(git 없음/실패) → 캐싱 않음 → 로컬 폴백. queue 카드는 pipeline-view 에서 처리 완료.
+  const _claimCache = new Map(); // id → claim object (null 미저장 → 로컬 폴백)
+  if (repoRoot) {
+    const needIds = base.cards
+      .filter(c => c.column !== 'queue')
+      .map(c => `status/claims/${c.id}.json`);
+    if (needIds.length > 0) {
+      const batch = gitCatFileBatch(repoRoot, needIds);
+      for (const [p, text] of batch) {
+        if (!text) continue;
+        const id = p.replace('status/claims/', '').replace('.json', '');
+        try { const obj = JSON.parse(text); if (obj) _claimCache.set(id, obj); } catch {}
+      }
+    }
+  }
+
   // 3) 'report' 단계 + done claim 인 카드 → 경보 제외
-  // git 오브젝트 우선, 없으면 작업 트리 폴백
+  // 프리로드 캐시 우선, 없으면 git show, 없으면 작업 트리 폴백
   for (const card of base.cards) {
     if (card.column !== 'report') continue;
-    const claim = (repoRoot && readClaimGit(repoRoot, card.id)) || readClaim(paths, card.id);
+    const claim = _claimCache.has(card.id)
+      ? _claimCache.get(card.id)
+      : ((repoRoot && readClaimGit(repoRoot, card.id)) || readClaim(paths, card.id));
     if (claim?.state === 'done') {
       card.level  = 'green';
       card.mark   = '●';
@@ -620,12 +652,15 @@ export function buildExtendedView({
     }
   }
   // 모든 허브: done claim + open PR 없음 → 오늘 완료에 편입
-  // git 오브젝트 우선 (origin/main 최신 claim), 없으면 작업 트리 폴백
+  // 카드 ID 배치 로드 (git cat-file --batch 1회) + 없으면 작업 트리 폴백
   const inProgress = base.cards.filter(c => c.column !== 'queue' && !c._hideFromInProgress);
+
   for (let i = inProgress.length - 1; i >= 0; i--) {
     const card = inProgress[i];
     if (card.extra?.pr?.number) continue;
-    const claim = (repoRoot && readClaimGit(repoRoot, card.id)) || readClaim(paths, card.id);
+    const claim = _claimCache.has(card.id)
+      ? _claimCache.get(card.id)
+      : ((repoRoot && readClaimGit(repoRoot, card.id)) || readClaim(paths, card.id));
     if (!claim || claim.state !== 'done') continue;
     doneToday += 1;
     inProgress.splice(i, 1);
@@ -633,13 +668,12 @@ export function buildExtendedView({
   const caution = inProgress.filter(c => c.level !== 'green');
 
   // 오늘 done claim 전체 집계 (WIB 기준) — inProgress 에 남은 카드(open PR 등) 제외
-  // git 오브젝트 우선 (origin/main 최신 claims 전체), 없으면 작업 트리 폴백
+  // git 오브젝트 우선: 날짜 필터 + 배치 읽기 (오늘 MMDD only → 프로세스 2개 이하)
   const inProgressIds = new Set(inProgress.map(c => c.id));
   const todayWibStr = getWibDateStr(now);
   let doneTodayFromClaims = 0;
-  const claimsSource = (repoRoot && scanClaimsDirGit(repoRoot).length > 0)
-    ? scanClaimsDirGit(repoRoot)
-    : scanClaimsDir(paths);
+  const gitClaims = repoRoot ? scanClaimsDirGitFast(repoRoot, mmddSet) : [];
+  const claimsSource = gitClaims.length > 0 ? gitClaims : scanClaimsDir(paths);
   for (const claimData of claimsSource) {
     if (!claimData || claimData.state !== 'done') continue;
     if (!claimData.at) continue;
