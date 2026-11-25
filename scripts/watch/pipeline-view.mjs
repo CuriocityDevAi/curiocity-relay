@@ -27,6 +27,7 @@ import {
   getWibDateStr,
   QUEUE_HUBS,
 } from './sources-local.mjs';
+import { readAllJsonGit, readClaimGit } from './sources-git.mjs';
 import { classifyAge, shouldHideAfterMerge, recomputeSuccessRate, COLUMNS } from './thresholds.mjs';
 
 import { join as join_safe } from 'node:path';
@@ -51,7 +52,11 @@ export function buildPipelineView({
   ciResultRecentMin = CI_RESULT_RECENT_MIN,
 } = {}) {
   const paths = resolvePaths(repoRoot);
-  const allJson = allJsonOverride || readAllJson(paths) || {};
+  // all.json: git 오브젝트 우선, 없으면 작업 트리 폴백
+  const allJson = allJsonOverride
+    || (repoRoot && readAllJsonGit(repoRoot))
+    || readAllJson(paths)
+    || {};
   const dateStr = getWibDateStr(now);
   const todayCodes = getIdDateCodes(now);
 
@@ -65,9 +70,10 @@ export function buildPipelineView({
   };
 
   // --- 1) 큐: queue/<hub>/<id>.md 있고 claim 미착수.
+  // claim: git 오브젝트 우선, 없으면 작업 트리 폴백
   for (const q of scanQueueFiles(paths)) {
     if (!inRecentCodes(q.id, todayCodes)) continue;
-    const claim = readClaim(paths, q.id);
+    const claim = (repoRoot && readClaimGit(repoRoot, q.id)) || readClaim(paths, q.id);
     const claimed = !!(claim && claim.state && claim.state !== 'issued');
     if (claimed) continue;
     const card = ensure(q.id, q.hub);

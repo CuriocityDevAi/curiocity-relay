@@ -85,7 +85,7 @@ function hr(w) {
 
 function renderSummaryBar(view, opts) {
   const { timeStr = '', terminalWidth: w = 100 } = opts;
-  const { inProgress = [], caution = [], doneToday = 0, runnerVersion = '', ciRunnerPools } = view;
+  const { inProgress = [], caution = [], doneToday = 0, runnerVersion = '', ciRunnerPools, dataOrigin } = view;
 
   const inN  = inProgress.length;
   const cauN = caution.length + (view.congestionAlerts?.length || 0);
@@ -113,6 +113,13 @@ function renderSummaryBar(view, opts) {
   const left = `${C.bold}ci-watch${C.reset}  ${timeStr}  ${inStr}  ${cauStr}  ${doneStr}`;
   const right = (rvStr ? `  ${rvStr}` : '') + `   CI ${ciDots}`;
   return left + right;
+}
+
+function renderDataOriginLine(dataOrigin) {
+  if (!dataOrigin) return null;
+  const shaStr = dataOrigin.sha ? `@${dataOrigin.sha}` : '@(unknown)';
+  const ageStr = dataOrigin.ageSec != null ? `${dataOrigin.ageSec}s 전 fetch` : 'fetch 미완';
+  return `${C.dim}data origin/main ${shaStr} · ${ageStr}${C.reset}`;
 }
 
 // ── 주의 섹션 ─────────────────────────────────────────────────────────────
@@ -607,6 +614,8 @@ export function renderV2(view, opts = {}, state = {}) {
 
   const lines = [];
   lines.push(renderSummaryBar(v, { ...opts, terminalWidth: width }));
+  const originLine = renderDataOriginLine(v.dataOrigin);
+  if (originLine) lines.push(originLine);
   lines.push(...renderCaution(v, { terminalWidth: width }));
   lines.push(...renderHubQueue(v, { terminalWidth: width }, state));
   lines.push(...renderCiPool(v, { terminalWidth: width }, state));

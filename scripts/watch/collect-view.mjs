@@ -1,6 +1,6 @@
-// scripts/watch/collect-view.mjs  M2-1125-J — 확정 레이아웃 (11:04 개정판) 확장 뷰 수집기
+// scripts/watch/collect-view.mjs  M2-1125-N — git 오브젝트 데이터 읽기 (stale 방지)
 // buildPipelineView() 위에 추가 데이터(허브 큐 · CI 풀 · 러너 상태 · 큐 정체 경보)를 얹는다.
-// PR 머지 여부 확인을 위해 gh pr view 를 선택적으로 호출한다(30초 캐시, 실패 시 무시).
+// M2-1125-N: 클레임·all.json 을 작업 트리 대신 git origin/main 오브젝트에서 읽어 stale 방지.
 
 import { execSync } from 'node:child_process';
 import { join } from 'node:path';
@@ -11,6 +11,10 @@ import {
   QUEUE_HUBS,
   findReportFile, extractPrUrl, readPipelineEvents, readReportFirstLine,
 } from './sources-local.mjs';
+import {
+  maybeGitFetch, getDataOrigin,
+  readAllJsonGit, readClaimGit, scanClaimsDirGit,
+} from './sources-git.mjs';
 
 // ── 큐 정체 판정 기준 상수 ────────────────────────────────────────────────
 export const HUB_PICKUP_RED_SEC = 60;
@@ -178,8 +182,15 @@ export function buildExtendedView({
   allJson: allJsonOverride,
   fetchPrState = defaultFetchPrState,
 } = {}) {
+  // git 오브젝트에서 최신 relay 데이터 읽기 (30초 간격 fetch)
+  if (repoRoot) maybeGitFetch(repoRoot, nowMs);
+
   const paths   = resolvePaths(repoRoot);
-  const allJson = allJsonOverride || readAllJson(paths) || {};
+  // all.json: git 오브젝트 우선, 없으면 작업 트리 폴백
+  const allJson = allJsonOverride
+    || (repoRoot && readAllJsonGit(repoRoot))
+    || readAllJson(paths)
+    || {};
 
   // 1) 기본 파이프라인 뷰
   const base = buildPipelineView({ repoRoot, now, nowMs, allJson });
@@ -242,9 +253,10 @@ export function buildExtendedView({
   }
 
   // 3) 'report' 단계 + done claim 인 카드 → 경보 제외
+  // git 오브젝트 우선, 없으면 작업 트리 폴백
   for (const card of base.cards) {
     if (card.column !== 'report') continue;
-    const claim = readClaim(paths, card.id);
+    const claim = (repoRoot && readClaimGit(repoRoot, card.id)) || readClaim(paths, card.id);
     if (claim?.state === 'done') {
       card.level  = 'green';
       card.mark   = '●';
@@ -402,11 +414,12 @@ export function buildExtendedView({
     }
   }
   // 모든 허브: done claim + open PR 없음 → 오늘 완료에 편입
+  // git 오브젝트 우선 (origin/main 최신 claim), 없으면 작업 트리 폴백
   const inProgress = base.cards.filter(c => c.column !== 'queue' && !c._hideFromInProgress);
   for (let i = inProgress.length - 1; i >= 0; i--) {
     const card = inProgress[i];
     if (card.extra?.pr?.number) continue;
-    const claim = readClaim(paths, card.id);
+    const claim = (repoRoot && readClaimGit(repoRoot, card.id)) || readClaim(paths, card.id);
     if (!claim || claim.state !== 'done') continue;
     doneToday += 1;
     inProgress.splice(i, 1);
@@ -414,10 +427,14 @@ export function buildExtendedView({
   const caution = inProgress.filter(c => c.level !== 'green');
 
   // 오늘 done claim 전체 집계 (WIB 기준) — inProgress 에 남은 카드(open PR 등) 제외
+  // git 오브젝트 우선 (origin/main 최신 claims 전체), 없으면 작업 트리 폴백
   const inProgressIds = new Set(inProgress.map(c => c.id));
   const todayWibStr = getWibDateStr(now);
   let doneTodayFromClaims = 0;
-  for (const claimData of scanClaimsDir(paths)) {
+  const claimsSource = (repoRoot && scanClaimsDirGit(repoRoot).length > 0)
+    ? scanClaimsDirGit(repoRoot)
+    : scanClaimsDir(paths);
+  for (const claimData of claimsSource) {
     if (!claimData || claimData.state !== 'done') continue;
     if (!claimData.at) continue;
     if (getWibDateStr(new Date(claimData.at)) !== todayWibStr) continue;
@@ -493,6 +510,7 @@ export function buildExtendedView({
     inProgress,
     caution,
     congestionAlerts,
+    dataOrigin: repoRoot ? getDataOrigin(nowMs) : null,
   };
 }
 

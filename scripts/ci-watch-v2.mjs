@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// scripts/ci-watch-v2.mjs  ci-watch v2.1 (M2-1125-J)
+// scripts/ci-watch-v2.mjs  ci-watch v2.3 (M2-1125-N)
 // 확정 레이아웃: 주의 · 허브큐 · CI대기 · 진행중 · 오늘완료.
+// M2-1125-N: relay 데이터를 git origin/main 오브젝트에서 읽어 stale 방지.
 //
 // 실행: node ~/projects/curiocity-relay/scripts/ci-watch-v2.mjs
 // 키  : j/k 이동 · Enter 상세 창 · / 필터 · r 새로고침 · q 종료
@@ -13,8 +14,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { homedir } from 'node:os';
 import { buildExtendedView } from './watch/collect-view.mjs';
 import { renderV2, renderDetailPanel } from './watch/render-v2.mjs';
+import { maybeGitFetch } from './watch/sources-git.mjs';
 
-const CI_WATCH_V2_VERSION = '2.2.0';
+const CI_WATCH_V2_VERSION = '2.3.0';
 
 const SPINNER_INTERVAL_MS = 120;
 
@@ -177,6 +179,8 @@ function openDetail() {
 
 if (process.argv.includes('--once') || process.env.CI_WATCH_ONCE === '1') {
   try {
+    // --once 시작 시 git fetch 선행 (data origin 표시용)
+    maybeGitFetch(REPO_ROOT);
     const view = buildExtendedView({ repoRoot: REPO_ROOT, now: new Date() });
     const widthArg = process.argv.find(a => a.startsWith('--width='));
     const width = widthArg ? Number(widthArg.slice('--width='.length)) : detectTerminalWidth();

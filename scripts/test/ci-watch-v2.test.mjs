@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, utimesSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 import {
   classifyAge,
@@ -1237,6 +1238,121 @@ test('T-L4: ci_pending + DIRTY merge → 주의에 "충돌 — rebase 필요" �
   const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
   const text  = lines.map(stripAnsi).join('\n');
   assert.ok(text.includes('충돌'), '렌더에 충돌 표시');
+});
+
+// ========== M2-1125-N 신규 테스트 — git origin/main 오브젝트 stale 방지 ==========
+
+// git 리포 픽스처: bare remote + local clone
+// 러너가 뒤처진 worktree 에서 ci-watch 를 실행하는 상황을 재현한다.
+function makeGitRepoFixture() {
+  const root     = mkdtempSync(join(tmpdir(), 'ci-watch-gitfix-'));
+  const bareDir  = join(root, 'origin.git');
+  const initDir  = join(root, 'init');
+  const localDir = join(root, 'local');
+
+  // 1. bare remote
+  execFileSync('git', ['init', '--bare', bareDir], { stdio: 'ignore' });
+
+  // 2. initDir: working copy → initial commit → push to bare
+  mkdirSync(initDir, { recursive: true });
+  execFileSync('git', ['init', initDir], { stdio: 'ignore' });
+  execFileSync('git', ['-C', initDir, 'symbolic-ref', 'HEAD', 'refs/heads/main']);
+  execFileSync('git', ['-C', initDir, 'config', 'user.email', 'test@test.com']);
+  execFileSync('git', ['-C', initDir, 'config', 'user.name', 'Test']);
+  for (const d of [
+    'queue/m0','queue/m1','queue/m2','queue/m3','queue/r0',
+    'status/claims','status/runners','status/ci','status/pipeline',
+    'm0','m1','m2','r0',
+  ]) mkdirSync(join(initDir, d), { recursive: true });
+  writeFileSync(join(initDir, 'status/runners/all.json'), '{}');
+  execFileSync('git', ['-C', initDir, 'add', '-A'], { stdio: 'ignore' });
+  execFileSync('git', ['-C', initDir, 'commit', '-m', 'init'], { stdio: 'ignore' });
+  execFileSync('git', ['-C', initDir, 'remote', 'add', 'origin', bareDir]);
+  execFileSync('git', ['-C', initDir, 'push', '-u', 'origin', 'main'], { stdio: 'ignore' });
+
+  // 3. localDir: clone (simulates ~/projects/curiocity-relay)
+  execFileSync('git', ['clone', bareDir, localDir], { stdio: 'ignore' });
+  execFileSync('git', ['-C', localDir, 'config', 'user.email', 'test@test.com']);
+  execFileSync('git', ['-C', localDir, 'config', 'user.name', 'Test']);
+
+  return { bareDir, localDir };
+}
+
+function makeSecondClone(bareDir) {
+  const dir = mkdtempSync(join(tmpdir(), 'ci-watch-git2-'));
+  execFileSync('git', ['clone', bareDir, dir], { stdio: 'ignore' });
+  execFileSync('git', ['-C', dir, 'config', 'user.email', 'test@test.com']);
+  execFileSync('git', ['-C', dir, 'config', 'user.name', 'Test']);
+  return dir;
+}
+
+function gitCommitPush(dir, msg) {
+  execFileSync('git', ['-C', dir, 'add', '-A'], { stdio: 'ignore' });
+  execFileSync('git', ['-C', dir, 'commit', '-m', msg], { stdio: 'ignore' });
+  execFileSync('git', ['-C', dir, 'push', 'origin', 'main'], { stdio: 'ignore' });
+}
+
+// (a) origin/main done 클레임 → doneToday 반영 (local worktree 는 뒤처진 상태)
+test('T-N1: buildExtendedView — origin/main done claim → doneToday 반영 (stale 방지)', () => {
+  const { bareDir, localDir } = makeGitRepoFixture();
+
+  // 2nd clone: add 2 done claims for today (WIB) → push to origin
+  const secondDir = makeSecondClone(bareDir);
+  mkdirSync(join(secondDir, 'status', 'claims'), { recursive: true });
+  const claimAt = new Date(L_NOW_MS - 60_000).toISOString();
+  for (const id of ['M2-1125-NA', 'M2-1125-NB']) {
+    writeFileSync(join(secondDir, 'status', 'claims', `${id}.json`),
+      JSON.stringify({ id, hub: 'm2', state: 'done', at: claimAt }));
+  }
+  gitCommitPush(secondDir, 'add done claims');
+
+  // local is behind — claims do NOT exist in localDir worktree
+  // buildExtendedView fetches origin/main and reads claims via git objects
+  const view = buildExtendedView({
+    repoRoot: localDir, now: L_NOW, nowMs: L_NOW_MS,
+    fetchPrState: () => null,
+  });
+
+  assert.equal(view.doneToday, 2,
+    `origin/main done claim 2건 → doneToday=2 (실제: ${view.doneToday})`);
+});
+
+// (b) done claim + PR 없음 → inProgress 에 0건 (local은 started 로 뒤처짐)
+test('T-N2: buildExtendedView — origin/main done+no-PR → inProgress 0건 (stale 방지)', () => {
+  const { bareDir, localDir } = makeGitRepoFixture();
+
+  const startedAt = new Date(L_NOW_MS - 5 * 60_000).toISOString();
+
+  // local: pick up task (started claim) → push to origin (both in sync)
+  mkdirSync(join(localDir, 'queue', 'm2'), { recursive: true });
+  mkdirSync(join(localDir, 'status', 'claims'), { recursive: true });
+  mkdirSync(join(localDir, 'status', 'runners'), { recursive: true });
+  writeFileSync(join(localDir, 'queue', 'm2', 'M2-1125-ND.md'), '원장 대사: "완료된 작업"\n내용');
+  writeFileSync(join(localDir, 'status', 'runners', 'all.json'),
+    JSON.stringify({ hubs: { m2: { current: 'M2-1125-ND', started_at: startedAt }}}));
+  writeFileSync(join(localDir, 'status', 'claims', 'M2-1125-ND.json'),
+    JSON.stringify({ id: 'M2-1125-ND', hub: 'm2', state: 'started', started_at: startedAt }));
+  gitCommitPush(localDir, 'start task');
+
+  // 2nd clone: mark claim done → push to origin (origin is now 1 commit ahead of local)
+  const secondDir = makeSecondClone(bareDir);
+  mkdirSync(join(secondDir, 'status', 'claims'), { recursive: true });
+  writeFileSync(join(secondDir, 'status', 'claims', 'M2-1125-ND.json'),
+    JSON.stringify({ id: 'M2-1125-ND', hub: 'm2', state: 'done',
+      at: new Date(L_NOW_MS - 60_000).toISOString() }));
+  gitCommitPush(secondDir, 'claim done');
+
+  // local worktree still has state='started' — behind by 1 commit
+  // buildExtendedView fetches → reads done claim from origin/main git objects
+  const view = buildExtendedView({
+    repoRoot: localDir, now: L_NOW, nowMs: L_NOW_MS,
+    fetchPrState: () => null,
+  });
+
+  const inProgCard = view.inProgress.find(c => c.id === 'M2-1125-ND');
+  assert.equal(inProgCard, undefined,
+    'done claim + no PR → inProgress 에 없어야 함 (origin/main 에서 읽어야 함)');
+  assert.ok(view.doneToday >= 1, `doneToday ${view.doneToday} >= 1`);
 });
 
 // ---------- R0 카드 제목 폴백 (큐 파일 원장 대사) ----------
