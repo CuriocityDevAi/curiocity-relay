@@ -991,8 +991,10 @@ function safePull() {
     if (quarantined.length > 0) log('git', `stray ${quarantined.length}건 격리 완료 · pull 진행`);
   }
   try {
+    // M1-1125-C: pull --rebase → fetch + merge -X ours. 러너 scope 는 러너가 정답이므로 ours 가 이긴다.
+    //   rebase 중단 상태(.git/rebase-merge)를 더는 남기지 않는다. main-guard 가 매 tick 복구 보장.
     git(['fetch', 'origin', 'main']);
-    git(['pull', '--rebase', '--autostash', 'origin', 'main']);
+    git(['merge', '-X', 'ours', '--no-edit', 'origin/main']);
     lastPullResult = { ok: true, at: ts(), err: null };
     // M1-1121-A REQ1: 막힘이 풀리면(foreign=0 · pull 성공) lastError 해제.
     if (lastError !== null) {
@@ -1004,8 +1006,9 @@ function safePull() {
     return true;
   } catch (e) {
     const msg = (e.stderr?.toString() || e.message).trim().split('\n').slice(0, 3).join(' · ');
-    log('git', `pull --rebase origin main 실패: ${msg} · rebase --abort`);
-    try { git(['rebase', '--abort']); } catch { /* noop */ }
+    log('git', `fetch + merge -X ours origin/main 실패: ${msg} · merge --abort`);
+    try { git(['merge', '--abort']); } catch { /* noop */ }
+    try { git(['rebase', '--abort']); } catch { /* 이전 rebase 잔재 있을 경우 cleanup */ }
     // M1-1123-E REQ2: 충돌이면 merge 로 자동 해소 시도.
     const resolved = tryAutoMergeConflicts();
     if (resolved.ok) {
@@ -1419,14 +1422,18 @@ function recoverReportFromBranch(hub, id, logFile) {
       }).toString().trim();
       if (!staged) continue;
       git(['commit', '-m', `${hub}: ${id} (runner-${RUNNER_VERSION} wrong-branch 회수 · ${br})`]);
+      // M1-1125-C: pull --rebase → safe-push (fetch + ours-merge + push). rebase 중단 상태 재발 방지.
       try {
-        execFileSync('git', ['pull', '--rebase', '--autostash', 'origin', 'main'], {
-          cwd: REPO_ROOT, stdio: 'pipe', timeout: 30_000,
-        });
-      } catch { /* noop */ }
-      execFileSync('git', ['push', 'origin', 'HEAD:main'], {
-        cwd: REPO_ROOT, stdio: 'pipe', timeout: 30_000,
-      });
+        const r = safeRunnerPush({ git: safePushCreateGit(REPO_ROOT), timeoutMs: 30_000 });
+        if (!r.ok) {
+          if (logFile) appendLine(logFile, `[report-path] wrong-branch 회수 push 실패 · reason=${r.reason} · steps=${JSON.stringify(r.steps).slice(0, 200)}`);
+          log(hub, `wrong-branch 회수 push 실패 · ${id} · ${r.reason}`);
+          continue;
+        }
+      } catch (e) {
+        if (logFile) appendLine(logFile, `[report-path] wrong-branch 회수 safe-push 예외 · ${e.message}`);
+        continue;
+      }
       branchReportsRecovered++;
       const srcTag = `branch:${br.replace(/^origin\//, '')}`;
       lastReportSource.set(id, srcTag);
