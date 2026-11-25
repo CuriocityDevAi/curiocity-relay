@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T22:58:58.137Z",
+  "at": "2026-11-25T23:37:23.206Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -35,93 +35,33 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 16815,
-    "totalMs": 33482,
+    "lastMs": 508688,
+    "totalMs": 2190302,
     "phase": "await-landing",
-    "at": "2026-11-25T15:57:48.213Z"
+    "at": "2026-11-25T23:37:05.914Z"
   },
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.7,
-    "compressed_gb": 3.93,
+    "used_gb": 15.56,
+    "compressed_gb": 3.19,
     "swap_used_gb": 4.13,
     "pressure": "normal",
-    "at": "2026-11-25T22:58:36.898Z"
+    "at": "2026-11-25T23:28:28.653Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
     "used_gb": 15.94
   },
   "ci": {
-    "data": {
-      "at": "2026-11-25T22:57:55.570Z",
-      "repos_scanned": [
-        "CuriocityDevAi/storeport",
-        "CuriocityDevAi/agilo-medusa-pos-fork"
-      ],
-      "repos_failed": [],
-      "repos_skipped": [],
-      "api_calls": 8,
-      "api_budget": 40,
-      "api_overflow": false,
-      "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "cloud_in_progress": [],
-      "runners": {
-        "heavy_online": 4,
-        "heavy_busy": 0,
-        "light_online": 2
-      },
-      "cloud_today": 0,
-      "today": {
-        "mac-heavy": {
-          "jobs": 9,
-          "avg_wait_min": 1.2,
-          "avg_run_min": 2.9,
-          "success_rate": 88.9,
-          "run_min_total": 26.3
-        },
-        "mac-light": {
-          "jobs": 14,
-          "avg_wait_min": 10.9,
-          "avg_run_min": 1.1,
-          "success_rate": 92.9,
-          "run_min_total": 15.5
-        },
-        "cloud": {
-          "jobs": 8,
-          "avg_wait_min": 0,
-          "avg_run_min": 1.3,
-          "success_rate": 50,
-          "run_min_total": 10.1
-        },
-        "cloud_cost_est_usd": 0.112,
-        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 13.5
-      },
-      "jsonl_added": 0,
-      "alerts": []
-    },
-    "took_ms": 11753,
-    "at": "2026-11-25T22:58:05.452Z"
+    "error": "deadline 30000ms",
+    "at": "2026-11-25T23:28:27.226Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 104,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:m1 2026-11-25T22:56:06.827Z] pick · M1-1125-AD · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:r0 2026-11-25T22:56:07.910Z] pick · R0-1125-AS · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-25T22:56:13.072Z] M1-1125-AD → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1125-AD.json · {\"id\":\"M1-1125-AD\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-25T22:56:13.205Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1125-AD.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): queue/m1/M1-1125-AD.md, queue/r0/R0-1125-AS.md, status/pipeline/M1-1125-AD.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:claim 2026-11-25T22:56:19.262Z] R0-1125-AS → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-AS.json · {\"id\":\"R0-1125-AS\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-25T22:56:19.374Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-AS.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1125-AS.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-25T22:58:54.090Z] [report-path] R0-1125-AS: REPORT_PATH 격리 리포트 수거·push",
+  "err_tail": "[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-25T22:58:54.090Z] [report-path] R0-1125-AS: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-25T22:58:58.189Z] R0-1125-AS → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1125-AS-report.md · model=sonnet · 로그: /\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-AS.json · {\"id\":\"R0-1125-AS\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-25T22:58:58.914Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1125-AS-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1125-AS.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1125-AS.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T23:18:05.423Z] sleep observed · gap=1107s · threshold=120s\n[hub-runner-v8.3.2:heartbeat 2026-11-25T23:21:21.211Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:state 2026-11-25T23:28:15.659Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.3.2:self-update 2026-11-25T23:28:15.683Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m2 2026-11-25T23:28:15.685Z] sleep gap 감지 1682s · 예산 보정 · 누적 1682s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-25T23:28:16.514Z] sleep gap 감지 1681s · 예산 보정 · 누적 1681s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-25T23:37:05.340Z] sleep gap 감지 512s · 예산 보정 · 누적 2193s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-25T23:37:05.914Z] sleep gap 감지 509s · 예산 보정 · 누적 2190s · phase=await-landing\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T23:37:15.143Z] sleep observed · gap=1150s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-25T23:37:15.504Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -149,7 +89,7 @@
     {
       "name": "curiocity-mac-light",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "ci-box-fork-heavy-imac",
@@ -169,7 +109,7 @@
     {
       "name": "curiocity-mac-fork-light",
       "status": "online",
-      "busy": false
+      "busy": true
     }
   ]
 }
