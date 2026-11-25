@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T01:12:26.531Z",
+  "at": "2026-11-25T01:26:21.995Z",
   "pid": 74805,
   "runner": "v8.2",
   "poll_ms": 30000,
@@ -19,7 +19,9 @@
       "last_activity": "2026-11-24T23:02:00.128Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1125-B",
+      "started_at": "2026-11-25T01:26:20.553Z",
+      "model": "sonnet",
       "last_activity": "2026-11-24T23:00:14.843Z"
     },
     "m3": {
@@ -35,33 +37,93 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 686853,
-    "totalMs": 7209439,
+    "lastMs": 15859,
+    "totalMs": 7902570,
     "phase": "await-landing",
-    "at": "2026-11-25T01:11:52.826Z"
+    "at": "2026-11-25T01:24:02.367Z"
   },
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.88,
-    "compressed_gb": 3.93,
-    "swap_used_gb": 1.8,
+    "used_gb": 15.69,
+    "compressed_gb": 4.77,
+    "swap_used_gb": 1.78,
     "pressure": "normal",
-    "at": "2026-11-25T01:00:17.162Z"
+    "at": "2026-11-25T01:25:47.672Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
-    "used_gb": 14.88
+    "used_gb": 15.85
   },
   "ci": {
-    "error": "deadline 30000ms",
-    "at": "2026-11-25T01:00:17.162Z"
+    "data": {
+      "at": "2026-11-25T01:23:58.234Z",
+      "repos_scanned": [
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
+      ],
+      "repos_failed": [],
+      "repos_skipped": [],
+      "api_calls": 14,
+      "api_budget": 40,
+      "api_overflow": false,
+      "heavy": {
+        "queued": 0,
+        "queued_prs": [],
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
+      },
+      "light": {
+        "queued": 0,
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
+        "in_progress": []
+      },
+      "cloud_in_progress": [],
+      "runners": {
+        "heavy_online": 3,
+        "heavy_busy": 0,
+        "light_online": 1
+      },
+      "cloud_today": 3,
+      "today": {
+        "mac-heavy": {
+          "jobs": 14,
+          "avg_wait_min": 0.9,
+          "avg_run_min": 3.6,
+          "success_rate": 85.7,
+          "run_min_total": 50.400000000000006
+        },
+        "mac-light": {
+          "jobs": 15,
+          "avg_wait_min": 3.6,
+          "avg_run_min": 1.9,
+          "success_rate": 93.3,
+          "run_min_total": 28.400000000000002
+        },
+        "cloud": {
+          "jobs": 13,
+          "avg_wait_min": 0,
+          "avg_run_min": 0.3,
+          "success_rate": 61.5,
+          "run_min_total": 3.6999999999999997
+        },
+        "cloud_cost_est_usd": 0.08,
+        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
+        "wasted_min": 8.8
+      },
+      "jsonl_added": 14,
+      "alerts": []
+    },
+    "took_ms": 20456,
+    "at": "2026-11-25T01:24:15.606Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 2,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.2:sleep-tracker 2026-11-24T23:19:18.610Z] sleep observed · gap=512s · threshold=120s\n[hub-runner-v8.2:git 2026-11-24T23:19:49.140Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.2:gh-watchdog 2026-11-24T23:19:49.144Z] [gh-runner-watchdog] skip restart: data-partial\n[hub-runner-v8.2:heartbeat 2026-11-24T23:30:29.971Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.2:state 2026-11-24T23:35:36.830Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.2:self-update 2026-11-24T23:35:36.867Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.2:m1 2026-11-24T23:35:36.874Z] sleep gap 감지 985s · 예산 보정 · 누적 1474s · phase=await-landing\n[hub-runner-v8.2:m3 2026-11-24T23:35:39.121Z] sleep gap 감지 976s · 예산 보정 · 누적 1476s · phase=await-landing\n[hub-runner-v8.2:sleep-tracker 2026-11-24T23:36:07.080Z] sleep observed · gap=1008s · threshold=120s\n[hub-runner-v8.2:git 2026-11-24T23:36:07.412Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.2:gh-watchdog 2026-11-24T23:36:08.491Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.2:state 2026-11-25T01:00:15.923Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.2:self-update 2026-11-25T01:00:15.967Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.2:m1 2026-11-25T01:00:15.972Z] sleep gap 감지 5048s · 예산 보정 · 누적 6523s · phase=await-landing\n[hub-runner-v8.2:m3 2026-11-25T01:00:16.671Z] sleep gap 감지 5047s · 예산 보정 · 누적 6523s · phase=await-landing\n[hub-runner-v8.2:m3 2026-11-25T01:11:52.547Z] sleep gap 감지 691s · 예산 보정 · 누적 7214s · phase=await-landing\n[hub-runner-v8.2:m1 2026-11-25T01:11:52.826Z] sleep gap 감지 687s · 예산 보정 · 누적 7209s · phase=await-landing\n[hub-runner-v8.2:sleep-tracker 2026-11-25T01:11:53.171Z] sleep observed · gap=5746s · threshold=120s\n[hub-runner-v8.2:git 2026-11-25T01:12:23.367Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.2:gh-watchdog 2026-11-25T01:12:23.372Z] [gh-runner-watchdog] skip restart: no-ci-data",
+  "err_tail": "[hub-runner-v8.2:sleep-tracker 2026-11-24T23:36:07.080Z] sleep observed · gap=1008s · threshold=120s\n[hub-runner-v8.2:git 2026-11-24T23:36:07.412Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.2:gh-watchdog 2026-11-24T23:36:08.491Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.2:state 2026-11-25T01:00:15.923Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.2:self-update 2026-11-25T01:00:15.967Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.2:m1 2026-11-25T01:00:15.972Z] sleep gap 감지 5048s · 예산 보정 · 누적 6523s · phase=await-landing\n[hub-runner-v8.2:m3 2026-11-25T01:00:16.671Z] sleep gap 감지 5047s · 예산 보정 · 누적 6523s · phase=await-landing\n[hub-runner-v8.2:m3 2026-11-25T01:11:52.547Z] sleep gap 감지 691s · 예산 보정 · 누적 7214s · phase=await-landing\n[hub-runner-v8.2:m1 2026-11-25T01:11:52.826Z] sleep gap 감지 687s · 예산 보정 · 누적 7209s · phase=await-landing\n[hub-runner-v8.2:sleep-tracker 2026-11-25T01:11:53.171Z] sleep observed · gap=5746s · threshold=120s\n[hub-runner-v8.2:git 2026-11-25T01:12:23.367Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.2:gh-watchdog 2026-11-25T01:12:23.372Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.2:self-update 2026-11-25T01:23:13.055Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.2:m3 2026-11-25T01:23:13.057Z] sleep gap 감지 676s · 예산 보정 · 누적 7889s · phase=await-landing\n[hub-runner-v8.2:m1 2026-11-25T01:23:15.099Z] sleep gap 감지 677s · 예산 보정 · 누적 7887s · phase=await-landing\n[hub-runner-v8.2:sleep-tracker 2026-11-25T01:23:55.150Z] sleep observed · gap=722s · threshold=120s\n[hub-runner-v8.2:gh-watchdog 2026-11-25T01:23:56.055Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.2:m3 2026-11-25T01:24:02.149Z] sleep gap 감지 19s · 예산 보정 · 누적 7908s · phase=await-landing\n[hub-runner-v8.2:m1 2026-11-25T01:24:02.367Z] sleep gap 감지 16s · 예산 보정 · 누적 7903s · phase=await-landing\n[hub-runner-v8.2:m2 2026-11-25T01:26:20.552Z] pick · M2-1125-B · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -74,7 +136,7 @@
     {
       "name": "curiocity-mac-light",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
