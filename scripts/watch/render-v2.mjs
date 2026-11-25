@@ -1,5 +1,5 @@
-// scripts/watch/render-v2.mjs  ci-watch v2.0 · 확정 레이아웃 (M2-1125-I)
-// 기본: 새 섹션 레이아웃(주의·허브큐·CI대기·진행중·완료).
+// scripts/watch/render-v2.mjs  ci-watch v2.1 · 확정 레이아웃 (M2-1125-J)
+// 기본: 새 섹션 레이아웃(주의·허브큐·CI큐·진행중·완료).
 // --board 옵션: 9칸 박스 칸반(M2-1125-H 호환).
 // 표시 폭은 EAW 기준(text-width.mjs) — 한글·전각·이모지 2칸.
 
@@ -8,10 +8,18 @@ import {
   stripAnsi, displayWidth, truncateWidth, padEndWidth,
 } from './text-width.mjs';
 import {
-  stageStrip, stageLabel, poolDot, POOL_ORDER, QUEUE_HUBS,
+  stageStrip, stageLabel, poolDot, POOL_ORDER, POOL_ABBR, QUEUE_HUBS,
+  HUB_PICKUP_RED_SEC, CI_PICKUP_RED_SEC,
 } from './collect-view.mjs';
 
 export { stripAnsi };
+
+// ── 스피너 ────────────────────────────────────────────────────────────────
+const SPINNER_FRAMES = ['⠋','⠙','⠹','⠸','⠼','⠴','⠦','⠧','⠇','⠏'];
+
+export function spinnerChar(frame) {
+  return SPINNER_FRAMES[Math.abs(frame || 0) % SPINNER_FRAMES.length];
+}
 
 // ── ANSI 색 ──────────────────────────────────────────────────────────────
 
@@ -32,8 +40,7 @@ function cl(level) { return LEVEL_COLOR[level] || ''; }
 
 function normalizeView(view) {
   if (!view) return view;
-  // inProgress/caution/hubQueue 가 없으면 cards 로부터 유도
-  const cards = view.cards || [];
+  const cards      = view.cards || [];
   const inProgress = view.inProgress !== undefined
     ? view.inProgress
     : cards.filter(c => c.column !== 'queue');
@@ -41,29 +48,30 @@ function normalizeView(view) {
     ? view.caution
     : inProgress.filter(c => c.level !== 'green');
 
-  // hubQueue: Map 없으면 cards 의 queue 칼럼 카드에서 허브별로 구성
   let hubQueue = view.hubQueue;
   if (!hubQueue) {
     hubQueue = new Map();
     for (const h of QUEUE_HUBS) hubQueue.set(h, []);
     for (const c of cards) {
       if (c.column !== 'queue') continue;
-      const hub = c.hub || '';
+      const hub  = c.hub || '';
       const list = hubQueue.get(hub) || [];
-      list.push({ id: c.id, ageMin: c.ageMin ?? 0, title: c.title || '' });
+      list.push({ id: c.id, ageMin: c.ageMin ?? 0, ageSec: (c.ageMin ?? 0) * 60, title: c.title || '' });
       hubQueue.set(hub, list);
     }
   }
 
-  return { ...view, inProgress, caution, hubQueue };
+  const congestionAlerts = view.congestionAlerts || [];
+
+  return { ...view, inProgress, caution, hubQueue, congestionAlerts };
 }
 
 // ── 구역 구분선 ───────────────────────────────────────────────────────────
 
 function sectionHr(title, w) {
   const prefix = `─ ${title} `;
-  const pw = displayWidth(prefix);
-  const fill = Math.max(0, w - pw);
+  const pw     = displayWidth(prefix);
+  const fill   = Math.max(0, w - pw);
   return prefix + '─'.repeat(fill);
 }
 
@@ -80,7 +88,7 @@ function renderSummaryBar(view, opts) {
   const { inProgress = [], caution = [], doneToday = 0, runnerVersion = '', ciRunnerPools } = view;
 
   const inN  = inProgress.length;
-  const cauN = caution.length;
+  const cauN = caution.length + (view.congestionAlerts?.length || 0);
   const inStr  = `${C.green}●진행 ${inN}${C.reset}`;
   const cauStr = cauN > 0
     ? `${C.red}■주의 ${cauN}${C.reset}`
@@ -107,13 +115,30 @@ function renderSummaryBar(view, opts) {
   return left + right;
 }
 
+// ── 주의 섹션 ─────────────────────────────────────────────────────────────
+
 function renderCaution(view, opts) {
-  const { caution = [] } = view;
+  const { caution = [], congestionAlerts = [] } = view;
   const { terminalWidth: w = 100 } = opts;
 
-  if (caution.length === 0) return [sectionHr('주의 없음', w)];
+  const total = caution.length + congestionAlerts.length;
+  if (total === 0) return [sectionHr('주의 없음', w)];
 
-  const lines = [sectionHr(`주의 (${caution.length})`, w)];
+  const lines = [sectionHr(`주의 (${total})`, w)];
+
+  // 큐 정체 경보
+  for (const a of congestionAlerts) {
+    const idStr = a.id ? `  ${a.id}` : '';
+    const src   = a.kind === 'hub_queue' ? a.hub : (a.poolAbbr || a.pool || '');
+    const minStr = a.ageMin != null ? `${a.ageMin}분` : '—';
+    const header = truncateWidth(
+      `■ ${(src + idStr).padEnd(14)}  큐 정체 ${minStr}`, w
+    );
+    lines.push(`${C.red}${header}${C.reset}`);
+    lines.push(`    ${C.dim}└ ${truncateWidth(a.reason || '', Math.max(4, w - 6))}${C.reset}`);
+  }
+
+  // 일반 경보 (기존 카드 주의)
   for (const c of caution) {
     const col    = cl(c.level);
     const mark   = c.mark || '■';
@@ -121,13 +146,19 @@ function renderCaution(view, opts) {
     const stage  = padEndWidth(stageLabel(c.column), 6);
     const ageStr = typeof c.ageMin === 'number' ? `${c.ageMin}분` : '';
     const prPart = c.extra?.pr?.number ? `  #${c.extra.pr.number}` : '';
-    const FIXED  = displayWidth(mark) + 1 + 12 + 1 + 2 + 2 + displayWidth(stageStrip(c.column)) + 2
-      + displayWidth(stage) + 2 + 4 + displayWidth(prPart);
+    const FIXED  = displayWidth(mark) + 1 + 12 + 1 + 2 + 2 + displayWidth(strip) + 2
+      + displayWidth(stage) + 2 + displayWidth(ageStr) + displayWidth(prPart);
     const title  = truncateWidth(c.title || '', Math.max(4, w - FIXED));
     const idPad  = padEndWidth(c.id, 12);
     const hubPad = padEndWidth(c.hub || '', 2);
+
+    // R0 리뷰 결과 칩
+    let reviewChip = '';
+    if (c.reviewResult === 'APPROVE') reviewChip = ` ${C.green}[APPROVE]${C.reset}`;
+    else if (c.reviewResult === 'CHANGES') reviewChip = ` ${C.yellow}[CHANGES]${C.reset}`;
+
     lines.push(
-      `${col}${mark}${C.reset} ${idPad} ${hubPad}  ${strip}  ${stage}  ${ageStr}${prPart}  ${col}${title}${C.reset}`
+      `${col}${mark}${C.reset} ${idPad} ${hubPad}  ${strip}  ${stage}  ${ageStr}${prPart}${reviewChip}  ${col}${title}${C.reset}`
     );
     if (c.reason) {
       lines.push(`  ${C.dim}└ ${truncateWidth(c.reason, Math.max(4, w - 6))}${C.reset}`);
@@ -136,70 +167,161 @@ function renderCaution(view, opts) {
   return lines;
 }
 
-function renderHubQueue(view, opts) {
-  const { hubQueue, hubCurrents = {} } = view;
+// ── 허브 큐 섹션 ─────────────────────────────────────────────────────────
+
+function renderHubQueue(view, opts, state = {}) {
+  const { hubQueue, inProgress = [], congestionAlerts = [] } = view;
   const { terminalWidth: w = 100 } = opts;
+  const { spinnerFrame = 0 } = state;
 
   const hubs = QUEUE_HUBS;
+
+  // 허브별 실행 중 카드 (inProgress 에서 column==='hub')
+  const runningByHub = new Map();
+  for (const c of inProgress) {
+    if (c.column === 'hub') runningByHub.set(c.hub, c);
+  }
+
+  // 대기 건수 → 제목
   const countParts = hubs.map(h => {
     const list = hubQueue instanceof Map ? (hubQueue.get(h) || []) : (hubQueue?.[h] || []);
     return `${h} ${list.length}`;
   }).join(' · ');
 
   const lines = [sectionHr(`허브 큐 (${countParts})`, w)];
+
   for (const hub of hubs) {
     const items   = hubQueue instanceof Map ? (hubQueue.get(hub) || []) : (hubQueue?.[hub] || []);
-    const busy    = !!hubCurrents[hub];
-    const hubMark = busy ? `${C.green}●${C.reset}` : `${C.dim}·${C.reset}`;
-    const hubPad  = padEndWidth(hub, 2);
+    const running = runningByHub.get(hub) || null;
+    const isAlert = congestionAlerts.some(a => a.kind === 'hub_queue' && a.hub === hub);
 
-    if (items.length === 0) { lines.push(`${hubMark} ${hubPad}  —`); continue; }
+    const hubPad = padEndWidth(hub, 2);
 
-    let chips = '';
-    for (const item of items) chips += `[${item.id} ${item.ageMin}분]`;
-    lines.push(`${hubMark} ${hubPad}  ${truncateWidth(chips, Math.max(10, w - 7))}`);
-  }
-  return lines;
-}
+    if (items.length === 0 && !running) {
+      lines.push(`  ${hubPad}  —`);
+      continue;
+    }
 
-function renderCiPool(view, opts) {
-  const { ciPools } = view;
-  const { terminalWidth: w = 100 } = opts;
-
-  const iterPools = ciPools instanceof Map ? ciPools
-    : (ciPools ? new Map(Object.entries(ciPools)) : new Map());
-
-  let storeportTotal = 0, forkTotal = 0;
-  for (const [pool, data] of iterPools) {
-    if (pool.startsWith('storeport')) storeportTotal += data.queued || 0;
-    if (pool.startsWith('fork'))      forkTotal      += data.queued || 0;
-  }
-
-  const title      = `CI 대기 (storeport ${storeportTotal} · fork ${forkTotal})`;
-  const hasOffline = [...iterPools.values()].some(d => d.offlineReason);
-
-  if (storeportTotal + forkTotal === 0 && !hasOffline) return [sectionHr(title, w)];
-
-  const POOL_LABEL_W = 15;
-  const lines = [sectionHr(title, w)];
-  for (const pool of POOL_ORDER) {
-    const data     = iterPools.get(pool);
-    const labelPad = padEndWidth(pool, POOL_LABEL_W);
-    if (!data) { lines.push(`  ${labelPad}  —`); continue; }
-    if (data.offlineReason) {
-      lines.push(`  ${C.red}${labelPad}${C.reset}  ${C.red}${truncateWidth(data.offlineReason, Math.max(4, w - POOL_LABEL_W - 6))}${C.reset}`);
-    } else if (data.queued === 0) {
-      lines.push(`  ${labelPad}  —`);
+    // 대기 칩
+    let chipsLine = `  ${hubPad}  `;
+    if (items.length === 0) {
+      chipsLine += '—';
     } else {
       let chips = '';
-      for (const pr of (data.queuedPrs || [])) {
-        chips += `[#${pr}${data.oldestMin != null ? ' ' + data.oldestMin + '분' : ''}]`;
+      for (const item of items) {
+        const ageStr  = `${item.ageMin}분`;
+        const isCong  = item.congested;
+        const chip    = `[${item.id} ${ageStr}]`;
+        chips += isCong ? `${C.red}${chip}${C.reset}` : chip;
       }
-      lines.push(`  ${labelPad}  ${truncateWidth(chips, Math.max(4, w - POOL_LABEL_W - 4))}`);
+      chipsLine += truncateWidth(chips.replace(/\x1b\[[0-9;]*m/g, '').length > 0 ? chips : chips, Math.max(10, w - 7));
+    }
+
+    // 제목 행 (대기 칩이 있는 행)에 정체 표시
+    if (isAlert && items.length > 0) {
+      lines.push(chipsLine);
+    } else {
+      lines.push(chipsLine);
+    }
+
+    // 실행 중 └ 행
+    if (running) {
+      const sp       = spinnerChar(spinnerFrame);
+      const stageStr = padEndWidth(stageLabel(running.column), 4);
+      const ageStr   = running.ageMin != null ? `${running.ageMin}분` : '';
+      const inner    = `${sp} ${running.id}  ${stageStr} ${ageStr}`;
+      lines.push(`    ${C.dim}└${C.reset} ${C.green}${truncateWidth(inner, Math.max(4, w - 6))}${C.reset}`);
     }
   }
   return lines;
 }
+
+// ── CI 큐 섹션 ───────────────────────────────────────────────────────────
+
+function renderCiPool(view, opts, state = {}) {
+  const { ciPools, ciRunnerPools } = view;
+  const { terminalWidth: w = 100 } = opts;
+  const { spinnerFrame = 0 } = state;
+
+  const iterPools  = ciPools instanceof Map ? ciPools
+    : (ciPools ? new Map(Object.entries(ciPools)) : new Map());
+  const iterRunner = ciRunnerPools instanceof Map ? ciRunnerPools
+    : (ciRunnerPools ? new Map(Object.entries(ciRunnerPools)) : new Map());
+
+  // 제목: CI 큐 (SH n · SL n · FH n · FL n)
+  const countParts = POOL_ORDER.map(p => {
+    const abbr = POOL_ABBR[p] || p;
+    const data = iterPools.get(p);
+    const n    = data?.queued || 0;
+    return `${abbr} ${n}`;
+  }).join(' · ');
+
+  const hasCloud = (view.allJson?.ci?.data?.cloud_in_progress || []).length > 0;
+  const titleStr = hasCloud
+    ? `CI 큐 (${countParts} · CL ${(view.allJson?.ci?.data?.cloud_in_progress || []).length})`
+    : `CI 큐 (${countParts})`;
+
+  const hasActivity = [...iterPools.values()].some(d =>
+    d.queued > 0 || d.offlineReason || (d.inProgressItems || []).length > 0
+  );
+
+  if (!hasActivity) return [sectionHr(titleStr, w)];
+
+  const POOL_LABEL_W = 15;
+  const lines = [sectionHr(titleStr, w)];
+
+  for (const pool of POOL_ORDER) {
+    const data      = iterPools.get(pool);
+    const runnerSt  = iterRunner.get(pool)?.status || 'unknown';
+    const labelPad  = padEndWidth(pool, POOL_LABEL_W);
+    const isCong    = data?.congested;
+
+    if (!data) { lines.push(`  ${labelPad}  —`); continue; }
+
+    if (data.offlineReason) {
+      lines.push(
+        `  ${C.red}${labelPad}${C.reset}  ${C.red}${truncateWidth(data.offlineReason, Math.max(4, w - POOL_LABEL_W - 6))}${C.reset}`
+      );
+    } else if (data.queued === 0 && (data.inProgressItems || []).length === 0) {
+      lines.push(`  ${labelPad}  —`);
+    } else {
+      // 대기 칩
+      let chipsStr = '';
+      for (const pr of (data.queuedPrs || [])) {
+        const prId   = `#${pr}`;
+        const minStr = data.oldestMin != null ? ` ${data.oldestMin}분` : '';
+        const chip   = `[${prId}${minStr}]`;
+        chipsStr += isCong ? `${C.red}${chip}${C.reset}` : chip;
+      }
+      if (chipsStr || data.queued > 0) {
+        lines.push(`  ${isCong ? C.red + labelPad + C.reset : labelPad}  ${truncateWidth(chipsStr, Math.max(4, w - POOL_LABEL_W - 6))}`);
+      } else {
+        lines.push(`  ${labelPad}  —`);
+      }
+    }
+
+    // 실행 중 └ 행
+    for (const item of (data.inProgressItems || [])) {
+      const sp      = spinnerChar(spinnerFrame);
+      const idStr   = item.promptId || `#${item.prNumber}`;
+      const rk      = item.runnerKind || '';
+      const ageStr  = item.ageMin != null ? ` ${item.ageMin}분` : '';
+      const inner   = `${sp} ${idStr}  ${rk}${ageStr}`;
+      lines.push(`    ${C.dim}└${C.reset} ${truncateWidth(inner, Math.max(4, w - 6))}`);
+    }
+  }
+
+  // CLOUD 줄 (있을 때만)
+  if (hasCloud) {
+    const cloudItems = view.allJson?.ci?.data?.cloud_in_progress || [];
+    const cl_label   = padEndWidth('CLOUD', POOL_LABEL_W);
+    lines.push(`  ${cl_label}  ${cloudItems.length}건 실행 중`);
+  }
+
+  return lines;
+}
+
+// ── 진행 중 섹션 ──────────────────────────────────────────────────────────
 
 function formatInProgressRow(c, w) {
   const col    = cl(c.level);
@@ -207,12 +329,20 @@ function formatInProgressRow(c, w) {
   const strip  = stageStrip(c.column);
   const stage  = padEndWidth(stageLabel(c.column), 6);
   const ageStr = padEndWidth(typeof c.ageMin === 'number' ? `${c.ageMin}분` : '', 4);
-  const prPart = c.extra?.pr?.number ? `#${String(c.extra.pr.number).padStart(4)}  ` : '       ';
-  // ●◐○ 기호는 EAW 2칸 → displayWidth 사용
+  // PR# 포맷: #257 (공백 없음, 오른쪽 정렬)
+  const prNum  = c.extra?.pr?.number;
+  const prPart = prNum ? `#${prNum}`.padStart(5) + '  ' : '       ';
   const FIXED  = displayWidth(mark) + 1 + 12 + 1 + 2 + 2 + displayWidth(strip) + 2
     + displayWidth(stage) + 2 + displayWidth(ageStr) + 2 + displayWidth(prPart);
-  const title  = truncateWidth(c.title || '', Math.max(4, w - FIXED));
-  return `${col}${mark}${C.reset} ${padEndWidth(c.id, 12)} ${padEndWidth(c.hub || '', 2)}  ${strip}  ${stage}  ${ageStr}  ${prPart}${title}`;
+
+  // R0 리뷰 결과 칩
+  let reviewChip = '';
+  if (c.reviewResult === 'APPROVE') reviewChip = ` ${C.green}[APPROVE]${C.reset}`;
+  else if (c.reviewResult === 'CHANGES') reviewChip = ` ${C.yellow}[CHANGES]${C.reset}`;
+  const chipW = c.reviewResult ? displayWidth(`[${c.reviewResult}]`) + 1 : 0;
+
+  const title  = truncateWidth(c.title || '', Math.max(4, w - FIXED - chipW));
+  return `${col}${mark}${C.reset} ${padEndWidth(c.id, 12)} ${padEndWidth(c.hub || '', 2)}  ${strip}  ${stage}  ${ageStr}  ${prPart}${reviewChip}${title}`;
 }
 
 function renderInProgress(view, opts, state = {}) {
@@ -276,8 +406,8 @@ export function renderDetailPanel(card, opts = {}) {
 
 function renderCardBlock(card, width) {
   const inner = width - 2;
-  const col = cl(card.level);
-  const mark = card.mark || '●';
+  const col   = cl(card.level);
+  const mark  = card.mark || '●';
   const idPlain = `${mark}${card.id}`;
   const idStr   = `${col}${truncateWidth(idPlain, inner)}${C.reset}`;
   const titleTrunc = truncateWidth(card.title || '', inner - 1);
@@ -460,7 +590,7 @@ function renderNarrow(view, options) {
  * @param {object} view  buildExtendedView() 또는 buildPipelineView() 결과
  * @param {object} opts  { terminalWidth?, timeStr?, version?, alertCount?, extraKeys?, board? }
  *   board=true → 9칸 박스 칸반 (M2-1125-H 호환)
- * @param {object} state { cursor?, filter?, doneExpanded?, detailCard? }
+ * @param {object} state { cursor?, filter?, doneExpanded?, detailCard?, spinnerFrame? }
  */
 export function renderV2(view, opts = {}, state = {}) {
   const width = opts.terminalWidth || 100;
@@ -478,8 +608,8 @@ export function renderV2(view, opts = {}, state = {}) {
   const lines = [];
   lines.push(renderSummaryBar(v, { ...opts, terminalWidth: width }));
   lines.push(...renderCaution(v, { terminalWidth: width }));
-  lines.push(...renderHubQueue(v, { terminalWidth: width }));
-  lines.push(...renderCiPool(v, { terminalWidth: width }));
+  lines.push(...renderHubQueue(v, { terminalWidth: width }, state));
+  lines.push(...renderCiPool(v, { terminalWidth: width }, state));
   lines.push(...renderInProgress(v, { terminalWidth: width }, state));
   lines.push(...renderDoneToday(v, { terminalWidth: width }, state));
   lines.push(...renderKeyHints(state));

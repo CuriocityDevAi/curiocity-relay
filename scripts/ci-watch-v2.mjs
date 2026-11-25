@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts/ci-watch-v2.mjs  ci-watch v2.0 (M2-1125-I)
+// scripts/ci-watch-v2.mjs  ci-watch v2.1 (M2-1125-J)
 // 확정 레이아웃: 주의 · 허브큐 · CI대기 · 진행중 · 오늘완료.
 //
 // 실행: node ~/projects/curiocity-relay/scripts/ci-watch-v2.mjs
@@ -14,7 +14,9 @@ import { homedir } from 'node:os';
 import { buildExtendedView } from './watch/collect-view.mjs';
 import { renderV2, renderDetailPanel } from './watch/render-v2.mjs';
 
-const CI_WATCH_V2_VERSION = '2.1.0';
+const CI_WATCH_V2_VERSION = '2.2.0';
+
+const SPINNER_INTERVAL_MS = 120;
 
 const DEPLOY_BIN = `${homedir()}/.hub-runner/bin`;
 const IS_DEPLOYED = process.argv[1]
@@ -46,6 +48,7 @@ const uiState = {
   filterMode:   false,
   detailCard:   null, // Enter 상세 창 열린 카드
   doneExpanded: false,
+  spinnerFrame: 0,    // 스피너 프레임 (120ms 별개 타이머)
 };
 
 // 마지막으로 렌더한 inProgress 목록 (j/k 범위 계산용)
@@ -83,6 +86,7 @@ function redraw(view) {
 // ── 타이머 ────────────────────────────────────────────────────────────────
 
 let refreshTimer = null;
+let spinnerTimer  = null;
 
 function scheduleNext() {
   if (refreshTimer) clearTimeout(refreshTimer);
@@ -94,8 +98,17 @@ function scheduleNext() {
   }, LOCAL_REFRESH_MS);
 }
 
+function startSpinner() {
+  if (spinnerTimer) clearInterval(spinnerTimer);
+  spinnerTimer = setInterval(() => {
+    uiState.spinnerFrame = (uiState.spinnerFrame + 1) % 10;
+    if (!uiState.filterMode) redraw(cachedView);
+  }, SPINNER_INTERVAL_MS);
+}
+
 function cleanupTerminal() {
   if (refreshTimer) { clearTimeout(refreshTimer); refreshTimer = null; }
+  if (spinnerTimer)  { clearInterval(spinnerTimer);  spinnerTimer  = null; }
   try {
     if (process.stdin.isTTY && process.stdin.isRaw) process.stdin.setRawMode(false);
   } catch {}
@@ -198,4 +211,5 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
 
   try { tickOnce(); } catch (e) { process.stderr.write(`[ci-watch-v2] initial: ${e?.message}\n`); }
   scheduleNext();
+  startSpinner();
 }

@@ -15,8 +15,8 @@ import {
   COLUMN_LABELS,
 } from '../watch/thresholds.mjs';
 import { buildPipelineView, inRecentCodes, getIdDateCodes } from '../watch/pipeline-view.mjs';
-import { buildExtendedView, stageStrip, stageLabel } from '../watch/collect-view.mjs';
-import { renderV2, stripAnsi, renderDetailPanel } from '../watch/render-v2.mjs';
+import { buildExtendedView, stageStrip, stageLabel, HUB_PICKUP_RED_SEC, CI_PICKUP_RED_SEC } from '../watch/collect-view.mjs';
+import { renderV2, stripAnsi, renderDetailPanel, spinnerChar } from '../watch/render-v2.mjs';
 import { displayWidth, truncateWidth, padEndWidth } from '../watch/text-width.mjs';
 
 // ---------- 임계 분류 ----------
@@ -384,19 +384,21 @@ test('T-W4: renderV2 board — 한글 카드 포함 시 각 줄 표시 폭 동�
 
 // ---------- 단계 띠 (stageStrip) ----------
 
-test('T-S1: stageStrip — 8단계 띠 올바른 기호', () => {
-  assert.equal(stageStrip('hub'),        '◐○○○○○○○', 'hub = 단계 0');
-  assert.equal(stageStrip('report'),     '●◐○○○○○○', 'report = 단계 1');
-  assert.equal(stageStrip('pr'),         '●●◐○○○○○', 'pr = 단계 2');
-  assert.equal(stageStrip('ci_pending'), '●●●◐○○○○', 'ci_pending = 단계 3');
-  assert.equal(stageStrip('ci_running'), '●●●●◐○○○', 'ci_running = 단계 4');
-  assert.equal(stageStrip('ci_result'),  '●●●●●◐○○', 'ci_result = 단계 5');
-  assert.equal(stageStrip('review'),     '●●●●●●◐○', 'review = 단계 6');
-  assert.equal(stageStrip('merge'),      '●●●●●●●◐', 'merge = 단계 7');
-  assert.equal(stageStrip('unknown'),    '○○○○○○○○', '알 수 없는 단계');
+test('T-S1: stageStrip — 9단계 띠 올바른 기호', () => {
+  assert.equal(stageStrip('queue'),      '◐○○○○○○○○', 'queue = 단계 0');
+  assert.equal(stageStrip('hub'),        '●◐○○○○○○○', 'hub = 단계 1');
+  assert.equal(stageStrip('report'),     '●●◐○○○○○○', 'report = 단계 2');
+  assert.equal(stageStrip('pr'),         '●●●◐○○○○○', 'pr = 단계 3');
+  assert.equal(stageStrip('ci_pending'), '●●●●◐○○○○', 'ci_pending = 단계 4');
+  assert.equal(stageStrip('ci_running'), '●●●●●◐○○○', 'ci_running = 단계 5');
+  assert.equal(stageStrip('ci_result'),  '●●●●●●◐○○', 'ci_result = 단계 6');
+  assert.equal(stageStrip('review'),     '●●●●●●●◐○', 'review = 단계 7');
+  assert.equal(stageStrip('merge'),      '●●●●●●●●◐', 'merge = 단계 8');
+  assert.equal(stageStrip('unknown'),    '○○○○○○○○○', '알 수 없는 단계');
 });
 
 test('T-S2: stageLabel — 단계명 한국어', () => {
+  assert.equal(stageLabel('queue'),      '큐');
   assert.equal(stageLabel('hub'),        '작업');
   assert.equal(stageLabel('report'),     '리포트');
   assert.equal(stageLabel('pr'),         'PR');
@@ -516,7 +518,7 @@ test('T-R3: renderV2 — 허브 큐 chip 표시 (ID + 대기분)', () => {
   assert.ok(text.includes('m1'), 'm1 허브 줄');
 });
 
-test('T-R4: renderV2 — 진행 중 카드에 8단계 띠 포함', () => {
+test('T-R4: renderV2 — 진행 중 카드에 9단계 띠 포함', () => {
   const view = {
     cards: [
       { id: 'M2-1124-XQ', column: 'ci_pending', hub: 'm2', ageMin: 8, mark: '●', level: 'green',
@@ -526,8 +528,8 @@ test('T-R4: renderV2 — 진행 중 카드에 8단계 띠 포함', () => {
   };
   const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
   const text  = lines.map(stripAnsi).join('\n');
-  // ci_pending = 단계 3 → ●●●◐○○○○
-  assert.ok(text.includes('●●●◐○○○○'), '8단계 띠');
+  // ci_pending = 단계 4 → ●●●●◐○○○○
+  assert.ok(text.includes('●●●●◐○○○○'), '9단계 띠 (ci_pending)');
   assert.ok(text.includes('M2-1124-XQ'), 'ID 포함');
 });
 
@@ -594,7 +596,8 @@ test('T-D1: renderDetailPanel — 카드 상세 창 출력', () => {
   assert.ok(text.includes('CI실행'), '단계명');
   assert.ok(text.includes('15분'), '경과 분');
   assert.ok(text.includes('#428'), 'PR 번호');
-  assert.ok(text.includes('●●●●◐○○○'), '8단계 띠');
+  // ci_running = 단계 5 → ●●●●●◐○○○
+  assert.ok(text.includes('●●●●●◐○○○'), '9단계 띠 (ci_running)');
 });
 
 // ---------- --once 출력 캐처 (새 섹션) ----------
@@ -655,4 +658,265 @@ test('T-9b: --once 박스 출력 캐처 — 한글/이모지 카드 포함', () 
     const refW = displayWidth(borderRows[0]);
     for (const row of cardRows) assert.equal(displayWidth(row), refW);
   }
+});
+
+// ========== M2-1125-J 신규 테스트 ==========
+
+// ---------- 허브 큐 layout: 대기만 / 실행만 / 둘 다 / 둘 다 없음 ----------
+
+function makeJ1Fixture() {
+  const root = makeFullFixture();
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+  return root;
+}
+
+test('T-Q1: 허브 큐 — 대기만 (실행 없음): └ 줄 없음', () => {
+  const root = makeJ1Fixture();
+  const q1   = join(root, 'queue', 'm1', 'M1-1124-QW.md');
+  writeFileSync(q1, '원장 대사: "대기 작업 제목"\n내용');
+  stamp(q1, NOW_MS - 2 * 60_000);
+
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const stripped = lines.map(stripAnsi);
+
+  // 허브 큐 m1 행 찾기
+  const hqStart = stripped.findIndex(l => l.startsWith('─ 허브 큐'));
+  const hqEnd   = stripped.findIndex((l, i) => i > hqStart && l.startsWith('─ '));
+  const hqLines = stripped.slice(hqStart, hqEnd === -1 ? undefined : hqEnd);
+
+  const m1Idx = hqLines.findIndex(l => /^\s+m1\s/.test(l));
+  assert.ok(m1Idx >= 0, 'm1 허브 행 존재');
+  assert.ok(hqLines[m1Idx].includes('[M1-1124-QW 2분]'), '대기 칩 포함');
+  // 실행 없으면 m1 다음 줄이 └ 아님
+  if (m1Idx + 1 < hqLines.length) {
+    const nextLine = hqLines[m1Idx + 1];
+    assert.ok(!nextLine.includes('└') || /^\s+m/.test(nextLine), 'm1 아래 └ 줄 없음');
+  }
+});
+
+test('T-Q2: 허브 큐 — 실행만 (대기 없음): └ 줄 있음, 칩 없음', () => {
+  const root = makeJ1Fixture();
+  writeFileSync(join(root, 'status', 'runners', 'all.json'),
+    JSON.stringify({ hubs: { m1: {
+      current: 'M1-1124-QX',
+      started_at: new Date(NOW_MS - 5 * 60_000).toISOString(),
+    }}}));
+  writeFileSync(join(root, 'status', 'claims', 'M1-1124-QX.json'),
+    JSON.stringify({ id: 'M1-1124-QX', hub: 'm1', state: 'started' }));
+  writeFileSync(join(root, 'queue', 'm1', 'M1-1124-QX.md'), '제목');
+
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('└'), '└ 실행 줄 있음');
+  assert.ok(text.includes('M1-1124-QX'), 'ID 포함');
+});
+
+test('T-Q3: 허브 큐 — 대기+실행 둘 다: 칩+└ 모두', () => {
+  const root = makeJ1Fixture();
+  const q1   = join(root, 'queue', 'm1', 'M1-1124-QY.md');
+  writeFileSync(q1, '원장 대사: "대기 중"\n');
+  stamp(q1, NOW_MS - 3 * 60_000);
+  writeFileSync(join(root, 'status', 'runners', 'all.json'),
+    JSON.stringify({ hubs: { m1: {
+      current: 'M1-1124-QZ',
+      started_at: new Date(NOW_MS - 7 * 60_000).toISOString(),
+    }}}));
+  writeFileSync(join(root, 'status', 'claims', 'M1-1124-QZ.json'),
+    JSON.stringify({ id: 'M1-1124-QZ', hub: 'm1', state: 'started' }));
+  writeFileSync(join(root, 'queue', 'm1', 'M1-1124-QZ.md'), '제목');
+
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('[M1-1124-QY 3분]'), '대기 칩');
+  assert.ok(text.includes('└'), '└ 실행 줄');
+});
+
+test('T-Q4: 허브 큐 — 둘 다 없음: "—" 표시', () => {
+  const root = makeJ1Fixture();
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('—'), '빈 허브에 — 표시');
+});
+
+// ---------- 큐 정체 빨강 ----------
+
+test('T-C1: 허브 큐 정체 — 59초(빨강 아님)', () => {
+  const root = makeJ1Fixture();
+  const q1   = join(root, 'queue', 'm2', 'M2-1124-CA.md');
+  writeFileSync(q1, '제목');
+  stamp(q1, NOW_MS - 59_000);  // 59초 — 60초 미만
+
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  assert.equal(
+    view.congestionAlerts.filter(a => a.kind === 'hub_queue' && a.hub === 'm2').length,
+    0, '59초 → 정체 아님'
+  );
+});
+
+test('T-C2: 허브 큐 정체 — 61초(빨강)', () => {
+  const root = makeJ1Fixture();
+  const q1   = join(root, 'queue', 'm2', 'M2-1124-CB.md');
+  writeFileSync(q1, '제목');
+  stamp(q1, NOW_MS - 61_000);  // 61초 — 60초 초과
+
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const alerts = view.congestionAlerts.filter(a => a.kind === 'hub_queue' && a.hub === 'm2');
+  assert.equal(alerts.length, 1, '61초 → 정체 1건');
+  assert.ok(alerts[0].ageSec > HUB_PICKUP_RED_SEC, 'ageSec > 60');
+});
+
+test('T-C3: CI 러너 busy 일 때 대기 3분 → 빨강 아님', () => {
+  const root = makeJ1Fixture();
+  writeFileSync(join(root, 'status', 'runners', 'all.json'),
+    JSON.stringify({
+      ci_runners: [
+        { name: 'Youngkyus-MacBook-Pro-M1', status: 'online', busy: true },
+      ],
+      ci: { data: {
+        heavy: { queued: 1, queued_prs: [42], oldest_queued_min: 3, in_progress: [] },
+        light: { queued: 0, queued_prs: [], oldest_queued_min: null, in_progress: [] },
+      }},
+    }));
+
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  // storeport-heavy busy → 대기 3분이어도 정체 아님
+  const alerts = view.congestionAlerts.filter(a => a.kind === 'ci_queue' && a.pool === 'storeport-heavy');
+  assert.equal(alerts.length, 0, 'busy 상태에서 대기 → 정체 아님');
+});
+
+test('T-C4: CI 러너 offline → 즉시 빨강 경보', () => {
+  const root = makeJ1Fixture();
+  writeFileSync(join(root, 'status', 'runners', 'all.json'),
+    JSON.stringify({
+      ci_runners: [
+        { name: 'Youngkyus-MacBook-Pro-M1', status: 'offline', busy: false },
+      ],
+    }));
+
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const alerts = view.congestionAlerts.filter(a => a.kind === 'ci_queue' && a.pool === 'storeport-heavy');
+  assert.ok(alerts.length > 0, 'offline → 즉시 경보');
+  assert.ok(alerts[0].reason.includes('OFF'), 'offline 이유 포함');
+});
+
+// ---------- 머지된 PR 카드 → 오늘 완료 ----------
+
+test('T-M1: 머지된 PR 카드 → merge 단계로 이동 (오늘 완료)', () => {
+  const root = makeFullFixture();
+
+  // M1-1124-TM 자체 리포트 (PR URL 포함) → pipeline-view 가 extra.pr.number 를 세팅
+  const m1rpt = join(root, 'm1', 'M1-1124-TM-report.md');
+  writeFileSync(m1rpt, '# M1-1124-TM 리뷰 대상\nPR: https://github.com/CuriocityDevAi/storeport/pull/9000\n');
+  stamp(m1rpt, NOW_MS - 10 * 60_000);
+
+  // R0 리뷰 리포트 → review 단계 트리거
+  const r0rpt = join(root, 'r0', 'R0-1124-TM-report.md');
+  writeFileSync(r0rpt, 'APPROVE\n\nR0-1124-TM — M1-1124-TM 리뷰\nPR: https://github.com/CuriocityDevAi/storeport/pull/9000\n');
+  stamp(r0rpt, NOW_MS - 10 * 60_000);
+
+  writeFileSync(join(root, 'status', 'runners', 'all.json'), '{}');
+
+  // fetchPrState mock: PR 9000 → merged 5분 전
+  const mergedAt = new Date(NOW_MS - 5 * 60_000).toISOString();
+  const mockFetch = (prNum) => Number(prNum) === 9000
+    ? { state: 'merged', mergedAt, cachedAt: NOW_MS }
+    : null;
+
+  const view = buildExtendedView({
+    repoRoot: root, now: NOW, nowMs: NOW_MS,
+    fetchPrState: mockFetch,
+  });
+
+  // 5분 머지 → shouldHideAfterMerge(10분) 미적용 → 카드가 merge 단계로 존재해야 함
+  const card = view.cards.find(c => c.id === 'M1-1124-TM');
+  assert.ok(card, 'M1-1124-TM 카드 존재');
+  assert.equal(card.column, 'merge', 'PR merged → merge 단계');
+});
+
+// ---------- CI 큐 제목 형식 ----------
+
+test('T-CI1: renderV2 — CI 큐 섹션 제목 SH/SL/FH/FL 형식', () => {
+  const view = {
+    cards: [], hubCurrents: {}, hubOrder: {}, doneToday: 0, anomalies: [], stats: {},
+    ciPools: new Map([
+      ['storeport-heavy', { queued: 2, queuedPrs: [10, 11], oldestMin: 3, oldestSec: 180, inProgressItems: [], offlineReason: null, congested: false }],
+      ['storeport-light', { queued: 0, queuedPrs: [], oldestMin: null, oldestSec: null, inProgressItems: [], offlineReason: null, congested: false }],
+      ['fork-heavy',      { queued: 0, queuedPrs: [], oldestMin: null, oldestSec: null, inProgressItems: [], offlineReason: null, congested: false }],
+      ['fork-light',      { queued: 0, queuedPrs: [], oldestMin: null, oldestSec: null, inProgressItems: [], offlineReason: null, congested: false }],
+    ]),
+    ciRunnerPools: new Map([
+      ['storeport-heavy', { status: 'online', runners: [] }],
+      ['storeport-light', { status: 'online', runners: [] }],
+      ['fork-heavy',      { status: 'online', runners: [] }],
+      ['fork-light',      { status: 'online', runners: [] }],
+    ]),
+  };
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('CI 큐'), 'CI 큐 섹션명');
+  assert.ok(text.includes('SH 2'), 'SH 카운트');
+  assert.ok(text.includes('SL 0'), 'SL 카운트');
+  assert.ok(text.includes('FH 0'), 'FH 카운트');
+  assert.ok(text.includes('FL 0'), 'FL 카운트');
+});
+
+// ---------- 폭 80 모든 줄 ≤ 80 ----------
+
+test('T-W6: renderV2 — 폭 80 에서 모든 줄 표시폭 ≤ 80', () => {
+  const root = makeFullFixture();
+  writeFileSync(join(root, 'status', 'runners', 'all.json'),
+    JSON.stringify({ hubs: { m2: {
+      current: 'M2-1124-WA',
+      started_at: new Date(NOW_MS - 12 * 60_000).toISOString(),
+    }}}));
+  writeFileSync(join(root, 'status', 'claims', 'M2-1124-WA.json'),
+    JSON.stringify({ id: 'M2-1124-WA', hub: 'm2', state: 'started' }));
+  writeFileSync(join(root, 'queue', 'm2', 'M2-1124-WA.md'), '원장 대사: "폭 80 테스트 작업"\n내용');
+  const q1 = join(root, 'queue', 'm1', 'M1-1124-WB.md');
+  writeFileSync(q1, '원장 대사: "대기 중인 한글 작업 테스트"\n내용');
+  stamp(q1, NOW_MS - 90_000);
+
+  const view = buildExtendedView({
+    repoRoot: root, now: NOW, nowMs: NOW_MS,
+    fetchPrState: () => null,
+  });
+  const lines   = renderV2(view, { terminalWidth: 80, timeStr: '2026-11-25 11:00:00' });
+  const stripped = lines.map(l => stripAnsi(l));
+
+  for (const l of stripped) {
+    const w = displayWidth(l);
+    assert.ok(w <= 82, `줄 폭 ${w} > 82 (허용 오차 2): "${l.slice(0, 40)}..."`);
+  }
+});
+
+// ---------- 스피너 ----------
+
+test('T-SP1: spinnerChar — 10프레임 순환', () => {
+  const frames = ['⠋','⠙','⠹','⠸','⠼','⠴','⠦','⠧','⠇','⠏'];
+  for (let i = 0; i < 10; i++) {
+    assert.equal(spinnerChar(i), frames[i], `프레임 ${i}`);
+  }
+  assert.equal(spinnerChar(10), frames[0], '10 → 0 순환');
+  assert.equal(spinnerChar(0), frames[0], '--once 첫 프레임');
+});
+
+// ---------- PR# 포맷: #257 (공백 없음) ----------
+
+test('T-PR1: renderV2 — PR# 포맷 #257 (# 뒤 공백 없음)', () => {
+  const view = {
+    cards: [
+      { id: 'M2-1124-PR', column: 'ci_pending', hub: 'm2', ageMin: 5,
+        mark: '●', level: 'green', title: 'PR# 포맷 테스트',
+        extra: { pr: { number: 257 } } },
+    ],
+    hubCurrents: {}, hubOrder: {}, doneToday: 0, anomalies: [], stats: {},
+  };
+  const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
+  const text  = lines.map(stripAnsi).join('\n');
+  assert.ok(text.includes('#257'), '#257 포함');
+  assert.ok(!text.includes('# 257'), '# 257 (공백) 없음');
 });
