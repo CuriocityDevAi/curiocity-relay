@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-25T06:35:09.200Z",
+  "built_at": "2026-11-25T07:20:18.139Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T06:35:08.832Z"
+      "fetched_at": "2026-11-25T07:20:17.458Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T06:35:08.957Z"
+      "fetched_at": "2026-11-25T07:20:17.590Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6357,7 +6357,8 @@
               "name": "관리 화면 손보기",
               "summary": "사장이 백엔드 관리 화면에서 매장에 맞는 항목만 보이도록 화면과 언어를 손본다.",
               "files": [
-                "apps/commerce-core/src/admin/**"
+                "apps/commerce-core/src/admin/**",
+                "packages/receipt-view-model/**"
               ],
               "status": "live"
             },
@@ -6886,7 +6887,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-25T06:35:09.200Z"
+      "fetched_at": "2026-11-25T07:20:18.139Z"
     }
   ],
   "rollup": {
