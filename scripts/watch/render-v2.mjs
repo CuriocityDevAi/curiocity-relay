@@ -1,7 +1,11 @@
-// scripts/watch/render-v2.mjs  ci-watch v2.0 · 9칸 칸반 렌더러
-// ASCII · ANSI 색 · 100자+40줄 기준 가로 레이아웃 · 60자 미만 세로 쌓기.
+// scripts/watch/render-v2.mjs  ci-watch v2.0 · 렌더러
+// 기본: 줄형 보기(한 줄씩). --board 옵션: 9칸 박스 칸반.
+// 표시 폭은 EAW 기준(text-width.mjs) — 한글·전각·이모지 2칸 올바르게 처리.
 
 import { COLUMNS, COLUMN_LABELS } from './thresholds.mjs';
+import {
+  stripAnsi, displayWidth, truncateWidth, padEndWidth,
+} from './text-width.mjs';
 
 const C = {
   reset:  '\x1b[0m',
@@ -19,100 +23,86 @@ function colorForMark(level) {
   return MARK_COLOR[level] || '';
 }
 
-function truncate(s, n) {
-  if (!s) return '';
-  if ([...s].length <= n) return s;
-  return [...s].slice(0, Math.max(0, n - 1)).join('') + '…';
-}
-
-function padEnd(s, n) {
-  const visible = stripAnsi(s);
-  const w = [...visible].length;
-  if (w >= n) return s;
-  return s + ' '.repeat(n - w);
-}
-
-function stripAnsi(s) {
-  return String(s || '').replace(/\x1b\[[0-9;]*m/g, '');
-}
+// ── 카드 블록 (박스 칸반용) ───────────────────────────────────────────────
 
 /**
  * 1칸 카드 블록 생성 (가로 레이아웃용).
- * 반환: string[] (각 요소 = 카드의 1줄). 카드 외곽은 fixed 폭.
+ * 반환: string[] (각 요소 = 카드의 1줄). 각 줄의 표시 폭 = width.
  */
 function renderCardBlock(card, width) {
-  const inner = width - 2; // 테두리 2
-  const col = colorForMark(card.level);
+  const inner = width - 2; // 테두리 2칸(│…│)
+  const cl = colorForMark(card.level);
   const mark = card.mark || '●';
-  const idStr = `${col}${mark}${card.id}${C.reset}`;
-  const title = truncate(card.title || '', inner);
+
+  // ID 줄: mark(2칸) + id
+  const idPlain = `${mark}${card.id}`;
+  const idStr = `${cl}${truncateWidth(idPlain, inner)}${C.reset}`;
+
+  // 제목 줄: 앞에 공백 1칸
+  const titleTrunc = truncateWidth(card.title || '', inner - 1);
+
+  // 하단 줄: hub + age + mark
   const hubTag = card.hub ? `[${card.hub}]` : '';
   const age = typeof card.ageMin === 'number' ? `${card.ageMin}분` : '';
-  const foot = truncate(`${hubTag}  ${age} ${col}${mark}${C.reset}`, inner + ansiOverhead(col, C.reset));
+  const footTrunc = truncateWidth(`${hubTag}  ${age} ${mark}`, inner - 1);
+
   const lines = [
-    `│${padEnd(idStr, inner + ansiOverhead(col, C.reset))}│`,
-    `│${padEnd(' ' + title, inner)}│`,
-    `│${padEnd(' ' + foot, inner + ansiOverhead(col, C.reset))}│`,
+    `│${padEndWidth(idStr, inner)}│`,
+    `│${padEndWidth(' ' + titleTrunc, inner)}│`,
+    `│${padEndWidth(` ${cl}${footTrunc}${C.reset}`, inner)}│`,
   ];
+
   if (card.reason && card.level !== 'green') {
-    const r = truncate(card.reason, inner - 1);
-    lines.push(`│${padEnd(' ' + col + r + C.reset, inner + ansiOverhead(col, C.reset))}│`);
+    const r = truncateWidth(card.reason, inner - 2);
+    lines.push(`│${padEndWidth(` ${cl}${r}${C.reset}`, inner)}│`);
   }
   return lines;
-}
-
-function ansiOverhead(open, close) {
-  return open.length + close.length;
 }
 
 function renderEmptyCard(width) {
   const inner = width - 2;
   return [
-    `│${padEnd('', inner)}│`,
-    `│${padEnd('  (비어있음)', inner)}│`,
-    `│${padEnd('', inner)}│`,
+    `│${padEndWidth('', inner)}│`,
+    `│${padEndWidth('  (비어있음)', inner)}│`,
+    `│${padEndWidth('', inner)}│`,
   ];
 }
 
 function renderColumnHeader(col, count, width) {
   const label = COLUMN_LABELS[col] || col;
-  return padEnd(`[ ${label}(${count}) ]`, width);
+  return padEndWidth(`[ ${label}(${count}) ]`, width);
 }
 
-function renderGridRow(columnsBatch, cardsByCol, widths, hubOrder, hubCurrents) {
-  const heads = columnsBatch.map((col, i) => renderColumnHeader(col, (cardsByCol.get(col) || []).length, widths[i]));
-  const topRows = columnsBatch.map((col, i) => '┌' + '─'.repeat(widths[i] - 2) + '┐');
-  const botRows = columnsBatch.map((col, i) => '└' + '─'.repeat(widths[i] - 2) + '┘');
+function renderGridRow(columnsBatch, cardsByCol, widths, hubOrder) {
+  const heads = columnsBatch.map((col, i) =>
+    renderColumnHeader(col, (cardsByCol.get(col) || []).length, widths[i]));
+  const topRows = columnsBatch.map((_, i) => '┌' + '─'.repeat(widths[i] - 2) + '┐');
+  const botRows = columnsBatch.map((_, i) => '└' + '─'.repeat(widths[i] - 2) + '┘');
 
-  // 각 칸별로 카드 블록 리스트 만들기 (허브 칸은 current + queue 1·2 묶음)
   const cardBlocks = columnsBatch.map((col, i) => {
     const cards = cardsByCol.get(col) || [];
     if (cards.length === 0) return [renderEmptyCard(widths[i])];
 
-    // hub 칸: 현 작업 카드 아래에 대기 1·2 를 "연결" 블록으로.
     if (col === 'hub') {
-      const blocks = cards.map(c => renderCardBlock(c, widths[i]));
-      // 각 허브 current 뒤에 그 허브의 대기 카드 1·2 를 "├── 분할선 ──" 로 이어붙임
       const stacked = [];
       for (const c of cards) {
-        const myBlock = renderCardBlock(c, widths[i]);
-        stacked.push(...myBlock);
-        const queued = (hubOrder?.[c.hub] || []);
-        for (let qi = 0; qi < queued.length; qi++) {
-          const qCard = (cardsByCol.get('queue') || []).find(x => x.id === queued[qi]);
+        stacked.push(...renderCardBlock(c, widths[i]));
+        const queued = hubOrder?.[c.hub] || [];
+        for (const qi of queued) {
+          const qCard = (cardsByCol.get('queue') || []).find(x => x.id === qi);
           if (!qCard) continue;
           stacked.push(`├${'─'.repeat(widths[i] - 2)}┤`);
           stacked.push(...renderCardBlock(qCard, widths[i]));
         }
-        stacked.push(''); // gap
+        stacked.push('');
       }
       return [stacked];
     }
     return cards.map(c => renderCardBlock(c, widths[i]));
   });
 
-  // 열별 라인을 flatten. 열 높이를 맞춘다.
-  const columnLines = cardBlocks.map((blocks, i) => {
+  // 각 칸별 줄 배열 평탄화
+  const columnLines = cardBlocks.map(blocks => {
     const flat = [];
     for (const b of blocks) {
       if (Array.isArray(b)) flat.push(...b);
@@ -120,6 +110,7 @@ function renderGridRow(columnsBatch, cardsByCol, widths, hubOrder, hubCurrents) 
     return flat;
   });
 
+  // 칸 높이를 맞춤
   const maxH = Math.max(...columnLines.map(l => l.length));
   for (let i = 0; i < columnLines.length; i++) {
     while (columnLines[i].length < maxH) columnLines[i].push(' '.repeat(widths[i]));
@@ -131,11 +122,8 @@ function renderGridRow(columnsBatch, cardsByCol, widths, hubOrder, hubCurrents) 
   for (let r = 0; r < maxH; r++) {
     const row = columnLines.map((lines, i) => {
       const line = lines[r] || '';
-      // 빈 라인/간격은 공백
       if (!line || line.trim() === '') return ' '.repeat(widths[i]);
-      // 내부 라인은 카드 테두리가 이미 포함
-      if (line.startsWith('│') || line.startsWith('├')) return padEnd(line, widths[i]);
-      return padEnd(line, widths[i]);
+      return padEndWidth(line, widths[i]);
     }).join('  ');
     out.push(row);
   }
@@ -143,16 +131,14 @@ function renderGridRow(columnsBatch, cardsByCol, widths, hubOrder, hubCurrents) 
   return out;
 }
 
-/**
- * 평상시 가로 레이아웃: 100자 기준 2행 × 5·4 열 분할.
- */
+// ── 박스 칸반 (--board) ──────────────────────────────────────────────────
+
 function renderWide(view, options) {
   const { terminalWidth = 100 } = options;
   const rowCols = [
     ['queue', 'hub', 'report', 'pr', 'ci_pending'],
     ['ci_running', 'ci_result', 'review', 'merge'],
   ];
-  // 열 폭: 최소 18 · 균등 분할
   const gap = 2;
   const widthsTop = evenWidths(terminalWidth, rowCols[0].length, gap, 18);
   const widthsBot = evenWidths(terminalWidth, rowCols[1].length, gap, 22);
@@ -162,17 +148,14 @@ function renderWide(view, options) {
   const lines = [];
   lines.push(renderTopBar(view, options));
   lines.push(hr(terminalWidth));
-  lines.push(...renderGridRow(rowCols[0], cardsByCol, widthsTop, view.hubOrder, view.hubCurrents));
+  lines.push(...renderGridRow(rowCols[0], cardsByCol, widthsTop, view.hubOrder));
   lines.push('');
-  lines.push(...renderGridRow(rowCols[1], cardsByCol, widthsBot, view.hubOrder, view.hubCurrents));
+  lines.push(...renderGridRow(rowCols[1], cardsByCol, widthsBot, view.hubOrder));
   lines.push(hr(terminalWidth));
   lines.push(...renderAlertsSection(view));
   return lines;
 }
 
-/**
- * 좁은 단말 세로 쌓기 (60자 미만).
- */
 function renderNarrow(view, options) {
   const { terminalWidth = 60 } = options;
   const w = terminalWidth;
@@ -189,16 +172,71 @@ function renderNarrow(view, options) {
     }
     lines.push(`${label}(${cards.length})`);
     for (const c of cards) {
-      const col_ = colorForMark(c.level);
-      const row = `  ${col_}${c.mark}${c.id}${C.reset}  ${truncate(c.title, w - 14 - c.id.length)}  ${c.ageMin}분`;
+      const cl = colorForMark(c.level);
+      const ageStr = typeof c.ageMin === 'number' ? `${c.ageMin}분` : '';
+      const markW = displayWidth(c.mark || '●');
+      const fixedW = 2 + markW + displayWidth(c.id) + 2 + 2 + displayWidth(ageStr);
+      const titleW = Math.max(0, w - fixedW);
+      const row = `  ${cl}${c.mark || '●'}${c.id}${C.reset}  ${truncateWidth(c.title || '', titleW)}  ${ageStr}`;
       lines.push(row);
-      if (c.reason && c.level !== 'green') lines.push(`      ${col_}${c.mark}${c.reason}${C.reset}`);
+      if (c.reason && c.level !== 'green') {
+        lines.push(`      ${cl}${c.mark || '●'}${truncateWidth(c.reason, Math.max(0, w - 8))}${C.reset}`);
+      }
     }
   }
   lines.push('─'.repeat(w));
   lines.push(...renderAlertsSection(view));
   return lines;
 }
+
+// ── 줄형 보기 (기본) ─────────────────────────────────────────────────────
+
+/**
+ * 기본 줄형 보기: 단계 → 카드 한 줄씩.
+ * 각 줄: 색 기호 · ID · 단계 · [허브] · 분 · 한 줄 제목·이유.
+ */
+function renderLine(view, options) {
+  const { terminalWidth = 100 } = options;
+  const w = terminalWidth;
+  const lines = [];
+  lines.push(renderTopBar(view, options));
+  lines.push(hr(w));
+
+  if (view.cards.length === 0) {
+    lines.push(C.dim + '  작업 없음' + C.reset);
+  } else {
+    // 단계 순서대로 정렬
+    const sorted = [...view.cards].sort(
+      (a, b) => COLUMNS.indexOf(a.column) - COLUMNS.indexOf(b.column)
+    );
+
+    // 고정 열 폭: mark=2, id=12, stage=8, hub=5, age=5
+    // 사이 공백: 1씩 × 5 = 5
+    // 고정 합계 = 2+1+12+1+8+1+5+1+5+1 = 37
+    const FIXED = 37;
+    const remaining = Math.max(10, w - FIXED);
+
+    for (const c of sorted) {
+      const cl = colorForMark(c.level);
+      const markStr   = `${cl}${c.mark || '●'}${C.reset}`;
+      const idStr     = padEndWidth(c.id, 12);
+      const stageStr  = padEndWidth(COLUMN_LABELS[c.column] || c.column, 8);
+      const hubStr    = padEndWidth(c.hub ? `[${c.hub}]` : '', 5);
+      const ageStr    = padEndWidth(typeof c.ageMin === 'number' ? `${c.ageMin}분` : '', 5);
+      const reasonPart = c.reason && c.level !== 'green' ? ` · ${c.reason}` : '';
+      const fullText  = truncateWidth((c.title || '') + reasonPart, remaining);
+      const textStr   = c.level !== 'green' ? `${cl}${fullText}${C.reset}` : fullText;
+
+      lines.push(`${markStr} ${idStr} ${stageStr} ${hubStr} ${ageStr} ${textStr}`);
+    }
+  }
+
+  lines.push(hr(w));
+  lines.push(...renderAlertsSection(view));
+  return lines;
+}
+
+// ── 공유 헬퍼 ────────────────────────────────────────────────────────────
 
 function renderTopBar(view, options, narrow = false) {
   const { timeStr, version = '2.0', alertCount = 0, workCount = view.cards.length, extraKeys = '' } = options;
@@ -219,8 +257,8 @@ function renderAlertsSection(view) {
   const lines = [];
   for (const c of view.cards) {
     if (c.level === 'green') continue;
-    const col = colorForMark(c.level);
-    lines.push(`${col}${c.mark}${C.reset} ${c.id}  ${COLUMN_LABELS[c.column]} ${c.ageMin}분${c.reason ? ' · ' + c.reason : ''}`);
+    const cl = colorForMark(c.level);
+    lines.push(`${cl}${c.mark}${C.reset} ${c.id}  ${COLUMN_LABELS[c.column]} ${c.ageMin}분${c.reason ? ' · ' + c.reason : ''}`);
   }
   return lines;
 }
@@ -246,19 +284,24 @@ function groupCardsByColumn(cards) {
     list.push(c);
     m.set(c.column, list);
   }
-  for (const [k, list] of m) list.sort((a, b) => (b.ageMin ?? 0) - (a.ageMin ?? 0));
+  for (const [, list] of m) list.sort((a, b) => (b.ageMin ?? 0) - (a.ageMin ?? 0));
   return m;
 }
 
+// ── 공개 진입점 ──────────────────────────────────────────────────────────
+
 /**
- * 공개 진입점.
  * @param {object} view buildPipelineView() 결과
- * @param {object} opts { terminalWidth?: number, timeStr?: string, version?: string, alertCount?: number, extraKeys?: string }
+ * @param {object} opts { terminalWidth?, timeStr?, version?, alertCount?, extraKeys?, board? }
+ *   board=true → 9칸 박스 칸반 (기본값 false → 줄형 보기)
  */
 export function renderV2(view, opts = {}) {
   const width = opts.terminalWidth || 100;
-  if (width < 60) return renderNarrow(view, opts);
-  return renderWide(view, { ...opts, terminalWidth: width });
+  if (opts.board) {
+    if (width < 60) return renderNarrow(view, { ...opts, terminalWidth: width });
+    return renderWide(view, { ...opts, terminalWidth: width });
+  }
+  return renderLine(view, { ...opts, terminalWidth: width });
 }
 
 export { stripAnsi };
