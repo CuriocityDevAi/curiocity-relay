@@ -1,22 +1,7 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-25T11:47:51.620Z",
+  "built_at": "2026-11-25T11:49:34.325Z",
   "hubs": {
-    "n0": {
-      "state": "idle",
-      "last_activity": null,
-      "updated_at": "2026-11-25T11:46:07.534Z"
-    },
-    "t0": {
-      "state": "idle",
-      "last_activity": "2026-10-06T09:39:56.722Z",
-      "updated_at": "2026-11-25T11:46:07.534Z"
-    },
-    "m0": {
-      "state": "idle",
-      "last_activity": "2026-11-25T11:40:56.941Z",
-      "updated_at": "2026-11-25T11:46:07.534Z"
-    },
     "k0": {
       "state": "idle",
       "last_activity": "2026-10-06T09:36:43.561Z",
@@ -28,12 +13,16 @@
         "K0-0824-AC-inquiry.md",
         "K0-0902-AD-inquiry.md",
         "K0-0907-AO-inquiry.md"
-      ]
+      ],
+      "last_round": "K0-0918-F",
+      "last_report": "k0/K0-0918-F-report.md"
     },
     "k1": {
       "state": "idle",
       "last_activity": null,
-      "updated_at": "2026-11-25T11:46:07.534Z"
+      "updated_at": "2026-11-25T11:46:07.534Z",
+      "last_round": "K1-0918-H",
+      "last_report": "k1/K1-0918-H-report.md"
     },
     "k2": {
       "state": "idle",
@@ -77,15 +66,15 @@
       "current_note": "runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1125-W.log"
     },
     "m3": {
-      "last_round": "M3-1125-Q",
-      "last_report": "m3/M3-1125-Q-report.md",
+      "last_round": "M3-1125-R",
+      "last_report": "m3/M3-1125-R-report.md",
       "state": "idle",
       "last_activity": null,
       "updated_at": "2026-11-25T11:27:40.661Z",
       "current_round": "M3-1125-R",
-      "current_state": "started",
-      "current_at": "2026-11-25T11:02:51.287Z",
-      "current_note": "runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1125-R.log"
+      "current_state": "done",
+      "current_at": "2026-11-25T11:49:34.257Z",
+      "current_note": "runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1125-R-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1125-R.log · report_src=isolated"
     },
     "n0": {
       "state": "idle",
