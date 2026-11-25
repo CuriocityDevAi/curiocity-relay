@@ -14,7 +14,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { homedir } from 'node:os';
 import { buildExtendedView, buildExtendedViewAsync } from './watch/collect-view.mjs';
 import { renderV2, renderDetailPanel } from './watch/render-v2.mjs';
-import { maybeGitFetch, maybeGitFetchAsync, getDataOrigin, resetFetchGuard } from './watch/sources-git.mjs';
+import { maybeGitFetch, maybeGitFetchAsync, getDataOrigin, resetFetchGuard, readLocalOriginSha } from './watch/sources-git.mjs';
 
 const CI_WATCH_V2_VERSION = '2.3.0';
 
@@ -94,6 +94,7 @@ async function collectViewAsync({ skipFetch = false, skipGh = false } = {}) {
 
 /** 첫 화면: skipFetch+skipGh 로 즉시 async 수집, 이후 비동기 fetch */
 async function tickFastAsync() {
+  readLocalOriginSha(REPO_ROOT); // fetch 전에도 로컬 rev-parse 로 sha 표시
   await collectViewAsync({ skipFetch: true, skipGh: true });
   if (_fetchingBackground) return;
   _fetchingBackground = true;
@@ -230,6 +231,7 @@ function openDetail() {
 if (process.argv.includes('--once') || process.env.CI_WATCH_ONCE === '1') {
   try {
     // --once: fetch·gh 없이 로컬 origin/main 기준으로 즉시 (목표 ≤ 3초)
+    readLocalOriginSha(REPO_ROOT); // fetch 없이 로컬 rev-parse 로 sha 채움
     const view = buildExtendedView({ repoRoot: REPO_ROOT, now: new Date(), skipFetch: true, skipGh: true });
     const widthArg = process.argv.find(a => a.startsWith('--width='));
     const width = widthArg ? Number(widthArg.slice('--width='.length)) : detectTerminalWidth();

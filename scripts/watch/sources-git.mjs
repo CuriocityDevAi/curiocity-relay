@@ -80,6 +80,24 @@ export function resetFetchGuard() {
   _fs.fetchedAt = 0;
 }
 
+/**
+ * fetch 없이 로컬 `git rev-parse origin/main` (~수 ms) 으로 sha 를 읽어 _fs.sha 에 채운다.
+ * skipFetch 경로에서 @(unknown) 방지용. 이미 sha 가 있으면 덮어쓰지 않는다.
+ */
+export function readLocalOriginSha(repoRoot) {
+  if (_fs.sha && _fs.repoRoot === repoRoot) return _fs.sha;
+  try {
+    const sha = execFileSync('git', ['-C', repoRoot, 'rev-parse', 'origin/main'], {
+      timeout: 3_000, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim().slice(0, 7);
+    _fs.sha = sha;
+    _fs.repoRoot = repoRoot;
+    return sha;
+  } catch {
+    return null;
+  }
+}
+
 // ── 저수준 git 읽기 ──────────────────────────────────────────────────────
 
 export function gitShowText(repoRoot, relPath) {
