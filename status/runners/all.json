@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T02:50:42.542Z",
+  "at": "2026-11-25T02:52:28.611Z",
   "pid": 74805,
   "runner": "v8.2",
   "poll_ms": 30000,
@@ -47,11 +47,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.76,
-    "compressed_gb": 5.59,
+    "used_gb": 15.59,
+    "compressed_gb": 5.62,
     "swap_used_gb": 1.89,
     "pressure": "normal",
-    "at": "2026-11-25T02:50:08.355Z"
+    "at": "2026-11-25T02:51:57.051Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -147,7 +147,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 17,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:claim 2026-11-25T02:45:30.248Z] R0-1125-E → started · runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-E.json · {\"id\":\"R0-1125-E\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-25T02:45:30.341Z\",\"note\":\"runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-E.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:r0 2026-11-25T02:50:21.693Z] [report-path] R0-1125-E: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.2:claim 2026-11-25T02:50:25.324Z] R0-1125-E → done · runner-v8.2 cmux-split · 리포트 확인 r0/R0-1125-E-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-E.json · {\"id\":\"R0-1125-E\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-25T02:50:25.413Z\",\"note\":\"runner-v8.2 cmux-split · 리포트 확인 r0/R0-1125-E-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1125-E.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:r0 2026-11-25T02:50:41.109Z] pick · R0-1125-F · model=sonnet · display=cmux-split",
+  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:r0 2026-11-25T02:50:21.693Z] [report-path] R0-1125-E: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.2:claim 2026-11-25T02:50:25.324Z] R0-1125-E → done · runner-v8.2 cmux-split · 리포트 확인 r0/R0-1125-E-report.md · model=sonnet · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-E.json · {\"id\":\"R0-1125-E\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-25T02:50:25.413Z\",\"note\":\"runner-v8.2 cmux-split · 리포트 확인 r0/R0-1125-E-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1125-E.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.2:r0 2026-11-25T02:50:41.109Z] pick · R0-1125-F · model=sonnet · display=cmux-split\n[hub-runner-v8.2:claim 2026-11-25T02:50:45.642Z] R0-1125-F → started · runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-F.json · {\"id\":\"R0-1125-F\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-25T02:50:45.748Z\",\"note\":\"runner-v8.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-F.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed",
   "git_state": {
     "ahead": 0,
     "behind": 0,
