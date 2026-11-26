@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T01:19:10.992Z",
+  "at": "2026-11-26T01:24:17.609Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -25,7 +25,9 @@
       "last_activity": "2026-11-25T17:12:57.390Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1125-AT",
+      "started_at": "2026-11-26T01:21:27.603Z",
+      "model": "sonnet",
       "last_activity": "2026-11-25T22:58:56.990Z"
     }
   },
@@ -39,26 +41,26 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.71,
-    "compressed_gb": 2.81,
-    "swap_used_gb": 4.07,
+    "used_gb": 15.75,
+    "compressed_gb": 5.17,
+    "swap_used_gb": 3.41,
     "pressure": "normal",
-    "at": "2026-11-26T01:18:38.592Z"
+    "at": "2026-11-26T01:23:45.182Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
-    "used_gb": 15.71
+    "used_gb": 15.83
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T00:51:32.066Z",
+      "at": "2026-11-26T01:19:10.929Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 18,
+      "api_calls": 10,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -76,49 +78,48 @@
       },
       "cloud_in_progress": [],
       "runners": {
-        "heavy_online": 1,
+        "heavy_online": 4,
         "heavy_busy": 0,
-        "light_online": 1
+        "light_online": 2
       },
-      "cloud_today": 6,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 16,
-          "avg_wait_min": 15.2,
-          "avg_run_min": 3.8,
-          "success_rate": 62.5,
-          "run_min_total": 60.89999999999999
+          "jobs": 12,
+          "avg_wait_min": 0.9,
+          "avg_run_min": 3.1,
+          "success_rate": 83.3,
+          "run_min_total": 36.99999999999999
         },
         "mac-light": {
-          "jobs": 24,
-          "avg_wait_min": 16.3,
-          "avg_run_min": 1.3,
-          "success_rate": 91.7,
-          "run_min_total": 31.2
+          "jobs": 17,
+          "avg_wait_min": 13.4,
+          "avg_run_min": 1,
+          "success_rate": 94.1,
+          "run_min_total": 16.900000000000002
         },
         "cloud": {
-          "jobs": 16,
+          "jobs": 10,
           "avg_wait_min": 0,
-          "avg_run_min": 1.1,
-          "success_rate": 56.3,
-          "run_min_total": 17.900000000000006
+          "avg_run_min": 1,
+          "success_rate": 50,
+          "run_min_total": 10.2
         },
-        "cloud_cost_est_usd": 0.208,
+        "cloud_cost_est_usd": 0.12,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 33.5
+        "wasted_min": 13.5
       },
-      "jsonl_added": 19,
-      "alerts": [],
-      "partial": true
+      "jsonl_added": 2,
+      "alerts": []
     },
-    "took_ms": 23855,
-    "at": "2026-11-26T00:51:52.083Z"
+    "took_ms": 11225,
+    "at": "2026-11-26T01:19:19.915Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 106,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] pushed\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T00:45:44.495Z] sleep observed · gap=3192s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T00:45:48.218Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T00:47:40.760Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T00:51:28.228Z] sleep observed · gap=229s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T00:51:45.740Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T00:52:12.775Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T00:52:12.775Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T00:52:13.535Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T00:52:13.536Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T00:54:38.532Z] sleep observed · gap=149s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-26T01:01:17.035Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Resolving timed out after 386620 milliseconds\n[hub-runner-v8.3.2:heartbeat 2026-11-26T01:18:34.650Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Resolving timed out after 962234 milliseconds\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T01:18:38.592Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/storeport): Command failed: gh api repos/CuriocityDevAi/storeport/actions/runners\nerror connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T01:18:41.869Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=unknown\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T01:18:41.869Z] [gh-runner-watchdog] partial skip: mac-light gh_status=unknown\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T01:19:08.689Z] sleep observed · gap=1470s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-26T01:19:08.802Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T01:19:14.981Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T01:19:14.981Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T01:19:14.981Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:r0 2026-11-26T01:21:27.602Z] pick · R0-1125-AT · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T01:21:30.500Z] R0-1125-AT → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-AT.json · {\"id\":\"R0-1125-AT\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T01:21:30.742Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-AT.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): queue/r0/R0-1125-AT.md, status/ci/2026-11-26.jsonl, status/pipeline/R0-1125-AT.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] 2nd push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n ! [remote rejected]     HEAD -> main (cannot lock ref 'refs/heads/main': is at a15af2013d9a303939991f145bde4e689db06e8c but expected 925d78cde212240f563e3b1730a372cdda989d91)\nerror: failed to push some refs to 'https://github.com/CuriocityDevAi/curiocity-relay.git'\n[hub-runner-v8.3.2:claim 2026-11-26T01:21:35.146Z] claim.mjs 실패 (R0-1125-AT started): Command failed: /opt/homebrew/Cellar/node@22/22.23.4_2/bin/node /Users/kyu.lee/projects/curiocity-relay/scripts/claim.mjs R0-1125-AT started runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-AT.log\n[hub-runner-v8.3.2:git 2026-11-26T01:21:59.522Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T01:22:34.468Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T01:23:07.487Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T01:23:42.361Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T01:24:15.096Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1",
   "git_state": {
     "ahead": 0,
     "behind": 0,
