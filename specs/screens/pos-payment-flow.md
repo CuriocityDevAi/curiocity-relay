@@ -159,7 +159,7 @@ Order 상세는 [pos-order-detail.md](./pos-order-detail.md), 손님 화면은 [
 - `SUCC-RECEIPT`: `storeport/apps/customer-display/e2e/receipt-same-as-pos.spec.ts` (CD 쪽) · POS 쪽 없음.
 - `SUCC-HAND-OVER` · `SUCC-NEXT-CUSTOMER`: `fork/e2e/flows/M3-1126-D-pos-fixes.spec.ts` 부분 커버.
 - `SUCC-LINK-CUSTOMER`: 없음 — 조건부 숨김 assert 필요(충돌 해소 뒤).
-- `POS-SUCC-PHONEENTRY`: 없음 — 11-26 23:07 Kyu 결정으로 Payment successful 칩 삭제 예정 · M3 적용 후 `Phone entry 없음` assert 필요.
+- `POS-SUCC-PHONEENTRY`: 없음 — 11-26 23:07 Kyu 결정으로 Payment successful 칩 **삭제 완료**(fork #280 · M3-1126-S) · `Phone entry 없음` assert = M1-1127-A case1 · M3-1127-A audit.
 
 ---
 
@@ -202,4 +202,4 @@ Order 상세는 [pos-order-detail.md](./pos-order-detail.md), 손님 화면은 [
 | `SUCC-ASK-PHONE-DEL` | 영수증 아래 `[Ask phone on display]` 버튼 **없음** assert | 부분(`M0-1118-N-ask-phone-on-display.spec.ts` — 점검 필요) |
 | `SUCC-RECEIPT` | POS 영수증 = CD 영수증 (필드 1:1) | storeport `receipt-same-as-pos.spec.ts` (CD 쪽) · POS 쪽 없음 |
 | `SUCC-LINK-CUSTOMER` | `customer_flow.state ∈ {entering, first_visit, confirming, confirmed}` → 숨김 assert (Kyu "A. 숨김 유지") | 없음 — 다음 라운드 추가 |
-| `POS-SUCC-PHONEENTRY` | ~~Payment successful 칩 존재~~ → **삭제 예정 (11-26 23:07)** · M3 적용 후 `Phone entry 없음` assert. Order 상세 쪽 `POST /admin/pos/orders/:id/phone-entry` 는 유지. | storeport `M0-1126-M` 보존 테스트 (663e260) · fork 쪽 없음 |
+| `POS-SUCC-PHONEENTRY` | ~~Payment successful 칩 존재~~ → **삭제 완료 (11-26 23:07 결정 · fork #280 머지)** · `Phone entry 없음` assert. Order 상세 쪽 `POST /admin/pos/orders/:id/phone-entry` 는 유지. | storeport `M0-1126-M` 보존 테스트 (663e260) · fork 쪽 없음 |
