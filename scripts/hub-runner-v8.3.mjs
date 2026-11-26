@@ -221,8 +221,8 @@ let bootPendingArmed = false;
 let bootFirstHeartbeatSeen = false;
 // M0-1119-I: CI 조회 전체 마감(ms) · tick 경로와 분리된 fire-and-forget 1개만.
 const CI_FETCH_DEADLINE_MS = 30_000;
-// M0-1119-J REQ1: fireCi 최소 간격 — 마지막 시작 시각 기준 5분. tick(30s) × 10 회 skip.
-const CI_MIN_FIRE_INTERVAL_MS = 5 * 60_000;
+// M0-1119-J REQ1: fireCi 최소 간격 — 마지막 시작 시각 기준 2분(M2-1126-M: 5→2 · 완료 run 최대 지연 단축).
+const CI_MIN_FIRE_INTERVAL_MS = 2 * 60_000;
 // M0-1119-T: gh-runner-watchdog knobs. runner-config.json 의 gh_runner_watchdog 블록으로 override 가능.
 const GH_WATCHDOG_STUCK_THRESHOLD_MIN = 8;
 const GH_WATCHDOG_COOLDOWN_MS = 30 * 60_000;
@@ -3286,7 +3286,8 @@ function writeHeartbeat(config) {
   }
 }
 
-const HEARTBEAT_PUSH_INTERVAL_MS = 5 * 60_000;
+// M2-1126-M: 5→2분. CI 수집(2분) + push(2분) 최대 복합 지연 ≤4분으로 단축.
+const HEARTBEAT_PUSH_INTERVAL_MS = 2 * 60_000;
 
 function pushHeartbeatIfDue() {
   const now = Date.now();
