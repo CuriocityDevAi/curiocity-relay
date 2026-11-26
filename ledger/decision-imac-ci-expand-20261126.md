@@ -27,3 +27,45 @@ for L in actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-
 
 ## 감시 항목 (오케)
 - 다음 PR CI 가 아이맥에서 도는지 · CI 대기 시간 · 클라우드 overflow 횟수 · 아이맥 heartbeat health
+
+---
+
+## A 임팩트 측정 (M1-1126-N · Kyu 15:13 WIB)
+
+원문: "ci 를 아이맥 전용으로 사용하고나서, 내 맥북만 쓸때에 비해서 어떤점이 좋아졌는지 판단해봐줘"
+
+> ⚠️  **표본 부족 — 판단 보류** (후 구간 20분 < 2시간 · 수치는 참고용)
+
+컷오버: `2026-11-26T08:01:00Z` / 전 32h(2026-11-25~) / 후 20min
+
+### 맥북 자원 (mem-log · 1시간 간격 샘플)
+
+| 항목 | 전(맥북 CI 포함) n=27 | 후(iMac 전용) |
+|---|---|---|
+| used_gb | avg 15.41 / max 15.85 | 아직 샘플 없음 |
+| swap_used_gb | avg 3.83 / max 6.30 | 아직 샘플 없음 |
+| compressed_gb | avg 4.08 / max 6.23 | 아직 샘플 없음 |
+
+### CI 지표 (W2 필터 · marker·skipped·cancelled 제외)
+
+| 항목 | 전 n=564 | 후 n=8 |
+|---|---|---|
+| 대기시간 평균 | 1.5min | 0.8min |
+| 대기시간 p90 | 4.0min | 3.0min |
+| 잡 실행시간 평균 | 2.0min | 1.2min |
+| MBP 처리 수 | 442 | 0 |
+| iMac 처리 수 | 56 | 7 |
+| cloud overflow 수 | 66 | 1 |
+
+### 프롬프트 처리량 (pipeline + claims)
+
+| 항목 | 전 n=157 | 후 n=1 |
+|---|---|---|
+| started→done 평균 | 13.2min | 11.7min |
+| started→done 중앙값 | 9.9min | 11.7min |
+| 시간당 완료 PT/h | 4.90 | 3.01 |
+
+### 판단
+
+8잡 CI에서 대기·실행 시간 모두 단축(대기 −47%, p90 −25%), MBP 처리 0 확인(완전 오프로드). cloud overflow도 66→1. 맥북 메모리·PT는 표본 부족으로 판단 보류.  
+재측정: `node scripts/metrics/ci-offload-impact.mjs --cutover 2026-11-26T08:01:00Z`
