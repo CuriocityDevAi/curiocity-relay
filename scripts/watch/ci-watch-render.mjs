@@ -444,6 +444,11 @@ const CI_COL_CLOUD = 16;   // '⠹M2-1126-A 5m +2' = 17 → truncated
 const CI_COL_AVG   = 8;    // '4.5m' = 4
 const CI_SEP       = '  '; // 열 구분자
 
+// CI 표 `평균대기` 열 시작 x 위치 (EAW display cols, 2-space indent 포함)
+// W1: 허브 큐 머리줄의 `평균대기` 라벨과 허브 줄 평균대기 값을 이 위치에 맞춤
+export const CI_AVG_X = 2 + CI_COL_POOL + CI_SEP.length + CI_COL_QUEUE + CI_SEP.length +
+                        CI_COL_MBP + CI_SEP.length + CI_COL_IMAC + CI_SEP.length + CI_COL_CLOUD + CI_SEP.length;
+
 /**
  * §3: 시간 단위 s/m. min < 1 → Xs, min >= 1 → X.Xm
  */
@@ -459,37 +464,43 @@ export function fmtDuration(minFloat) {
 
 /**
  * §1: 기계 칸 (MBP/iMAC). status=offline 이고 partial 이면 `?` 회색.
+ * W4: todayN > 0 → 쉼(N) · 실행 중이면 ⠋ID 3m (N)
  */
-function fmtMachineCell(machineInfo, spinnerFrame, colW) {
+function fmtMachineCell(machineInfo, spinnerFrame, colW, todayN) {
   const { status, job, partial } = machineInfo;
   if (status === 'offline') {
     if (partial) return padEndWidth(col('?', C.dim), colW);
     return padEndWidth(col('OFF', C.red), colW);
   }
-  if (status === 'idle') return padEndWidth(col('쉼', C.dim), colW);
+  const nStr = typeof todayN === 'number' && todayN > 0 ? `(${todayN})` : '';
+  if (status === 'idle') {
+    return padEndWidth(col(`쉼${nStr}`, C.dim), colW);
+  }
   // running
   const sp = spinnerChar(spinnerFrame);
   const pid = job?.promptId || '?';
   const min = job?.min != null ? ` ${fmtDuration(job.min)}` : '';
-  const content = `${C.yellow}${sp}${pid}${min}${C.reset}`;
-  return padEndWidth(content, colW);
+  const nPart = nStr ? ` ${nStr}` : '';
+  return padEndWidth(`${C.yellow}${sp}${pid}${min}${nPart}${C.reset}`, colW);
 }
 
 /**
- * §1: 클라우드 칸. 0건→`—`, 1건→`⠹ID Tm`, 2+→`⠹ID Tm +N`
+ * §1: 클라우드 칸. 0건→`—(N)`, 1건→`⠹ID Tm (N)`, 2+→`⠹ID Tm (N) +N`
+ * W4: todayN > 0 → 오늘 처리 잡 수 표시
  */
-function fmtCloudCell(cloudState, spinnerFrame, colW) {
+function fmtCloudCell(cloudState, spinnerFrame, colW, todayN) {
   const { count, jobs } = cloudState;
-  if (!count) return padEndWidth(col('—', C.dim), colW);
+  const nStr = typeof todayN === 'number' && todayN > 0 ? `(${todayN})` : '';
+  if (!count) return padEndWidth(col(`—${nStr}`, C.dim), colW);
 
   const sp = spinnerChar(spinnerFrame);
   const firstJob = jobs[0];
   const pid = firstJob?.prompt_id || firstJob?.display || firstJob?.pr || '?';
   const min = firstJob?.running_min;
   const timeStr = min != null ? ` ${fmtDuration(min)}` : '';
+  const nPart = nStr ? ` ${nStr}` : '';
   const extra = count > 1 ? `${C.dim} +${count - 1}${C.reset}` : '';
-  const content = `${C.cyan}${sp}${pid}${timeStr}${C.reset}${extra}`;
-  return padEndWidth(content, colW);
+  return padEndWidth(`${C.cyan}${sp}${pid}${timeStr}${nPart}${C.reset}${extra}`, colW);
 }
 
 /**
@@ -521,7 +532,7 @@ function buildTodayProcessedRow(todayStats, cloudCostEst, todayMachineStats) {
 
   // 라벨 셀: 풀 + SEP + 대기 위치를 차지 (헤더의 풀/대기 열과 같은 너비)
   const labelWidth = CI_COL_POOL + CI_SEP.length + CI_COL_QUEUE;
-  const labelCell = padEndWidth('오늘 처리', labelWidth);
+  const labelCell = padEndWidth('오늘 처리(잡)', labelWidth);
 
   // MBP 칸
   let mbpStr;
@@ -567,14 +578,16 @@ function buildTodayProcessedRow(todayStats, cloudCostEst, todayMachineStats) {
 }
 
 /**
- * §4: 허브 줄 오른쪽 끝 평균대기 (열 정렬 · s/m 단위 · 접두어 금지)
+ * §4: 허브 줄 평균대기 — CI_AVG_X 위치에 고정 · 창 폭 밖이면 생략 (W1)
  */
 function appendHubWait(lineStr, hub, hubWaitStats, W) {
   const hw = hubWaitStats?.[hub];
-  const hwText = hw?.avgMin != null ? fmtDuration(hw.avgMin) : '-';
-  const leftW = displayWidth(lineStr);
+  if (hw?.avgMin == null) return lineStr;
+  const hwText = fmtDuration(hw.avgMin);
   const hwW = displayWidth(hwText);
-  const pad = Math.max(2, W - leftW - hwW);
+  if (CI_AVG_X + hwW > W) return lineStr; // 열이 창 폭 밖 → 생략
+  const leftW = displayWidth(lineStr);
+  const pad = Math.max(2, CI_AVG_X - leftW);
   return lineStr + ' '.repeat(pad) + col(hwText, C.dim);
 }
 
@@ -593,6 +606,7 @@ function appendHubWait(lineStr, hub, hubWaitStats, W) {
  *   poolWaitStats: { [poolKey]: { avgWait } }
  *   hubWaitStats: { [hub]: { avgMin, count } }
  *   todayMachineStats: { mbp: { jobs, avgRun }, imac: { jobs, avgRun } }
+ *   todayPoolMachineStats: { [poolKey]: { mbp: N, imac: N, cloud: N } }  W4
  */
 export function renderLayout(data) {
   const {
@@ -607,6 +621,7 @@ export function renderLayout(data) {
     poolWaitStats,
     hubWaitStats,
     todayMachineStats,
+    todayPoolMachineStats,
   } = data;
 
   const W = Math.max(terminalWidth, 60);
@@ -654,10 +669,21 @@ export function renderLayout(data) {
     return pending.length;
   });
   const hubSummary = hubs.map((h, i) => `${h} ${hubCounts[i]}`).join(' · ');
+  // W1: `평균대기` 라벨을 CI 표 `평균대기` 열 시작(CI_AVG_X)에 고정
   const hubAvgTitle = '평균대기';
   const hubLeftPart = `─ 허브 큐 (${hubSummary}) `;
-  const hubFill = '─'.repeat(Math.max(0, W - displayWidth(hubLeftPart) - displayWidth(hubAvgTitle) - 1));
-  lines.push(col(hubLeftPart + hubFill, C.bold) + ' ' + col(hubAvgTitle, C.dim));
+  const hubLeftW = displayWidth(hubLeftPart);
+  const hubAvgTitleW = displayWidth(hubAvgTitle);
+  if (CI_AVG_X + hubAvgTitleW <= W) {
+    // 라벨을 CI_AVG_X에 배치: fillToAvg = CI_AVG_X - hubLeftW - 1(공백 자리)
+    const fillToAvg = '─'.repeat(Math.max(0, CI_AVG_X - hubLeftW - 1));
+    const fillAfter = '─'.repeat(Math.max(0, W - CI_AVG_X - hubAvgTitleW - 1));
+    lines.push(col(hubLeftPart + fillToAvg, C.bold) + ' ' + col(hubAvgTitle, C.dim) + col(fillAfter, C.bold));
+  } else {
+    // 창 폭 부족 — 라벨 생략 · 대시로 채움
+    const hubFill = '─'.repeat(Math.max(0, W - hubLeftW - 1));
+    lines.push(col(hubLeftPart + hubFill, C.bold));
+  }
 
   for (const hub of hubs) {
     const h = allJson?.hubs?.[hub];
@@ -761,11 +787,12 @@ export function renderLayout(data) {
 
     for (const r of (ms.unknownRunners || [])) unknownRunnersAll.add(r);
 
+    const poolToday = todayPoolMachineStats?.[poolKey] || {};
     const poolCell  = padEndWidth(col(poolKey, C.bold), CI_COL_POOL);
     const queueCell = fmtQueueCell(qItems, CI_COL_QUEUE);
-    const mbpCell   = fmtMachineCell(ms.mbp, spinnerFrame, CI_COL_MBP);
-    const imacCell  = fmtMachineCell(ms.imac, spinnerFrame, CI_COL_IMAC);
-    const cloudCell = fmtCloudCell(ms.cloud, spinnerFrame, CI_COL_CLOUD);
+    const mbpCell   = fmtMachineCell(ms.mbp, spinnerFrame, CI_COL_MBP, poolToday.mbp);
+    const imacCell  = fmtMachineCell(ms.imac, spinnerFrame, CI_COL_IMAC, poolToday.imac);
+    const cloudCell = fmtCloudCell(ms.cloud, spinnerFrame, CI_COL_CLOUD, poolToday.cloud);
 
     const poolAw = poolWaitStats?.[poolKey]?.avgWait;
     const avgCell = col(poolAw != null ? fmtDuration(poolAw) : '-', C.dim);

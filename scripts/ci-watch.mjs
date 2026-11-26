@@ -30,11 +30,12 @@ import {
   filterFreshUnclaimed,
   buildRunnerRows,
   classifyMachine,
+  classifyRunner,
   renderCompact,
   renderLayout,
 } from './watch/ci-watch-render.mjs';
 
-const CI_WATCH_VERSION = '1.9';
+const CI_WATCH_VERSION = '1.10';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -530,7 +531,7 @@ function buildHubWaitStats(dateStr) {
   } catch { return {}; }
 }
 
-/** MBP/iMAC별 오늘 처리 통계 (JSONL runner_name 분류) */
+/** MBP/iMAC별 오늘 처리 통계 (JSONL runner_name 분류 · W2: 마커+skipped/cancelled 제외) */
 function buildTodayMachineStats(dateStr) {
   const jsonlPath = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
   if (!existsSync(jsonlPath)) return null;
@@ -538,6 +539,8 @@ function buildTodayMachineStats(dateStr) {
     const records = readJsonlFile(jsonlPath);
     const stats = { mbp: { count: 0, totalRun: 0 }, imac: { count: 0, totalRun: 0 } };
     for (const r of records) {
+      if (isMarkerJob(r.job)) continue;
+      if (r.conclusion === 'skipped' || r.conclusion === 'cancelled') continue;
       const kind = classifyMachine(r.runner_name);
       if (kind === 'mbp' || kind === 'imac') {
         stats[kind].count++;
@@ -549,6 +552,37 @@ function buildTodayMachineStats(dateStr) {
       imac: { jobs: stats.imac.count, avgRun: stats.imac.count > 0 ? stats.imac.totalRun / stats.imac.count : null },
     };
   } catch { return null; }
+}
+
+/** 풀×기계별 오늘 처리 잡 수 (W4 · W2: 마커+skipped/cancelled 제외) */
+function buildTodayPoolMachineStats(dateStr) {
+  const jsonlPath = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (!existsSync(jsonlPath)) return {};
+  try {
+    const records = readJsonlFile(jsonlPath);
+    const stats = {
+      'storeport-heavy': { mbp: 0, imac: 0, cloud: 0 },
+      'storeport-light': { mbp: 0, imac: 0, cloud: 0 },
+      'fork-heavy':      { mbp: 0, imac: 0, cloud: 0 },
+      'fork-light':      { mbp: 0, imac: 0, cloud: 0 },
+    };
+    for (const r of records) {
+      if (isMarkerJob(r.job)) continue;
+      if (r.conclusion === 'skipped' || r.conclusion === 'cancelled') continue;
+      const machineKind = classifyMachine(r.runner_name);
+      if (machineKind === 'mbp' || machineKind === 'imac') {
+        const { repo, role } = classifyRunner(r.runner_name);
+        const poolKey = `${repo}-${role}`;
+        if (stats[poolKey]) stats[poolKey][machineKind]++;
+      } else if (machineKind === 'cloud') {
+        const repo = (r.repo || '').includes('fork') ? 'fork' : 'storeport';
+        const role = isLightWorkflow(r.workflow || '') ? 'light' : 'heavy';
+        const poolKey = `${repo}-${role}`;
+        if (stats[poolKey]) stats[poolKey].cloud++;
+      }
+    }
+    return stats;
+  } catch { return {}; }
 }
 
 const QUEUE_HUBS = ['m0', 'm1', 'm2', 'm3', 'r0'];
@@ -1078,6 +1112,7 @@ async function tick(fullMode) {
   const poolWaitStats = buildPoolWaitStats(dateStr);
   const hubWaitStats = buildHubWaitStats(dateStr);
   const todayMachineStats = buildTodayMachineStats(dateStr);
+  const todayPoolMachineStats = buildTodayPoolMachineStats(dateStr);
 
   // 해소됨 오류 → err_tail 표시 영역(회색 줄)에 추가 · 경보 카운트 제외
   const resolvedErrAlerts = errAlerts.filter(a => a.resolved);
@@ -1098,11 +1133,16 @@ async function tick(fullMode) {
     hour: '2-digit', minute: '2-digit', second: '2-digit',
   }).replace(',', '');
 
-  // hubPending: { id, ageMin }[] per hub — age info for chip display
+  // hubPending: { id, ageMin }[] per hub — W3: 현재 실행 중인 프롬프트(hubs[hub].current) 제외
   const hubPending = {};
   for (const hub of QUEUE_HUBS) {
+    const currentId = allJson?.hubs?.[hub]?.current || null;
     hubPending[hub] = rawUnclaimed
-      .filter(item => extractHubFromId(item.id) === hub)
+      .filter(item => {
+        if (extractHubFromId(item.id) !== hub) return false;
+        if (currentId && item.id === currentId) return false;
+        return true;
+      })
       .slice(0, 5);
   }
   const hubNotifs = tickQueueDiff();
@@ -1154,6 +1194,7 @@ async function tick(fullMode) {
     poolWaitStats,
     hubWaitStats,
     todayMachineStats,
+    todayPoolMachineStats,
   };
 
   _lastRenderData = renderData;
