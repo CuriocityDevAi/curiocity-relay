@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T10:51:36.211Z",
+  "at": "2026-11-26T10:52:07.769Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -9,7 +9,9 @@
   "last_error_at": "2026-11-26T10:10:20.099Z",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1126-L",
+      "started_at": "2026-11-26T10:52:06.292Z",
+      "model": "opus",
       "last_activity": "2026-11-26T10:51:35.101Z"
     },
     "m1": {
@@ -74,7 +76,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T10:40:06.465Z",
+      "at": "2026-11-26T10:51:27.164Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport"
       ],
@@ -105,42 +107,42 @@
       "cloud_today": 1,
       "today": {
         "mac-heavy": {
-          "jobs": 133,
+          "jobs": 134,
           "avg_wait_min": 0.6,
-          "avg_run_min": 2.8,
-          "success_rate": 88,
-          "run_min_total": 368.30000000000007
+          "avg_run_min": 2.7,
+          "success_rate": 88.1,
+          "run_min_total": 356.4000000000001
         },
         "mac-light": {
-          "jobs": 107,
-          "avg_wait_min": 2.3,
+          "jobs": 103,
+          "avg_wait_min": 2.4,
           "avg_run_min": 0.4,
-          "success_rate": 99.1,
-          "run_min_total": 46.099999999999916
+          "success_rate": 99,
+          "run_min_total": 44.799999999999926
         },
         "cloud": {
           "jobs": 103,
           "avg_wait_min": 0,
           "avg_run_min": 1,
-          "success_rate": 57.3,
-          "run_min_total": 103.8999999999998
+          "success_rate": 58.3,
+          "run_min_total": 103.9999999999998
         },
-        "cloud_cost_est_usd": 1.232,
+        "cloud_cost_est_usd": 1.24,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 38.3
       },
-      "jsonl_added": 6,
+      "jsonl_added": 3,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 16252,
-    "at": "2026-11-26T10:40:20.979Z"
+    "took_ms": 19780,
+    "at": "2026-11-26T10:51:45.198Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 180,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1126-L.json · {\"id\":\"M3-1126-L\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-26T10:47:08.625Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1126-L.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 5건 (건드리지 않음): queue/m0/M0-1126-L.md, queue/r0/R0-1126-AC.md, status/pipeline/M3-1126-L.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:claim 2026-11-26T10:51:16.568Z] R0-1126-AC → started · runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-AC.json · {\"id\":\"R0-1126-AC\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T10:51:16.674Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1126-AC.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-AC.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m2 2026-11-26T10:51:19.741Z] sleep gap 감지 247s · 예산 보정 · 누적 670s · phase=await-landing\n[hub-runner-v8.3.2:m0 2026-11-26T10:51:21.013Z] sleep gap 감지 248s · 예산 보정 · 누적 686s · phase=await-landing\n[hub-runner-v8.3.2:m0 2026-11-26T10:51:24.487Z] [report-path] M0-1126-K: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T10:51:25.417Z] sleep observed · gap=417s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:51:34.145Z] [gh-runner-watchdog] wake: mac-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.Youngkyus-MacBook-Pro-M1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:51:34.168Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light",
+  "err_tail": "[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-AC.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m2 2026-11-26T10:51:19.741Z] sleep gap 감지 247s · 예산 보정 · 누적 670s · phase=await-landing\n[hub-runner-v8.3.2:m0 2026-11-26T10:51:21.013Z] sleep gap 감지 248s · 예산 보정 · 누적 686s · phase=await-landing\n[hub-runner-v8.3.2:m0 2026-11-26T10:51:24.487Z] [report-path] M0-1126-K: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T10:51:25.417Z] sleep observed · gap=417s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:51:34.145Z] [gh-runner-watchdog] wake: mac-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.Youngkyus-MacBook-Pro-M1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:51:34.168Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:claim 2026-11-26T10:51:36.265Z] M0-1126-K → done · runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1126-K-report.md · model=opus · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1126-K.json · {\"id\":\"M0-1126-K\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-26T10:51:37.249Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1126-K-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1126-K.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/runner-restarts-2026-11-26.jsonl, status/pipeline/M0-1126-K.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:51:41.075Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:51:41.098Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:51:41.138Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:m0 2026-11-26T10:52:06.292Z] pick · M0-1126-L · model=opus · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -178,7 +180,7 @@
     {
       "name": "ci-box-fork-light-imac",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "curiocity-mac-fork",
