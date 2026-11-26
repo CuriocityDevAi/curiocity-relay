@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T12:25:46.042Z",
+  "at": "2026-11-26T12:26:04.046Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -29,10 +29,8 @@
       "last_activity": "2026-11-26T11:44:42.912Z"
     },
     "r0": {
-      "current": "R0-1126-AF",
-      "started_at": "2026-11-26T12:01:16.119Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-26T12:00:51.577Z"
+      "current": null,
+      "last_activity": "2026-11-26T12:26:02.990Z"
     }
   },
   "pane_close_failures": {},
@@ -62,11 +60,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.08,
-    "compressed_gb": 4.37,
+    "used_gb": 14.74,
+    "compressed_gb": 4.17,
     "swap_used_gb": 3.34,
     "pressure": "normal",
-    "at": "2026-11-26T12:25:14.437Z"
+    "at": "2026-11-26T12:25:50.635Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -149,9 +147,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 192,
+  "isolated_reports_collected": 193,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:20:25.009Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:20:25.048Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:21:02.051Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-26T12:21:35.071Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:21:37.659Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T12:22:05.374Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:22:17.000Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:22:51.238Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:23:27.867Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:24:03.679Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:m2 2026-11-26T12:24:42.276Z] [report-path] M2-1126-M: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:24:44.643Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:claim 2026-11-26T12:24:47.068Z] M2-1126-M → done · runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1126-M-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1126-M.json · {\"id\":\"M2-1126-M\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-26T12:24:47.916Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1126-M-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1126-M.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M2-1126-M.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:25:14.436Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:21:02.051Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-26T12:21:35.071Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:21:37.659Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T12:22:05.374Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:22:17.000Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:22:51.238Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:23:27.867Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:24:03.679Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:m2 2026-11-26T12:24:42.276Z] [report-path] M2-1126-M: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:24:44.643Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:claim 2026-11-26T12:24:47.068Z] M2-1126-M → done · runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1126-M-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1126-M.json · {\"id\":\"M2-1126-M\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-26T12:24:47.916Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1126-M-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1126-M.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M2-1126-M.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:25:14.436Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T12:25:50.690Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:r0 2026-11-26T12:25:59.064Z] [report-path] R0-1126-AF: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 0,
