@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T15:14:25.209Z",
+  "at": "2026-11-26T15:15:36.420Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -15,7 +15,9 @@
       "last_activity": "2026-11-26T14:18:44.762Z"
     },
     "m1": {
-      "current": null,
+      "current": "M1-1126-R",
+      "started_at": "2026-11-26T15:15:34.928Z",
+      "model": "sonnet",
       "last_activity": null
     },
     "m2": {
@@ -43,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.71,
-    "compressed_gb": 4.14,
+    "used_gb": 15.66,
+    "compressed_gb": 4.29,
     "swap_used_gb": 3.11,
     "pressure": "normal",
-    "at": "2026-11-26T15:13:51.149Z"
+    "at": "2026-11-26T15:15:02.632Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -55,14 +57,13 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T15:12:04.604Z",
+      "at": "2026-11-26T15:14:22.993Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport",
-        "CuriocityDevAi/agilo-medusa-pos-fork"
+        "CuriocityDevAi/storeport"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 8,
+      "api_calls": 5,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -80,7 +81,7 @@
       },
       "cloud_in_progress": [],
       "runners": {
-        "heavy_online": 3,
+        "heavy_online": 1,
         "heavy_busy": 0,
         "light_online": 1
       },
@@ -112,16 +113,17 @@
         "wasted_min": 58.199999999999996
       },
       "jsonl_added": 0,
-      "alerts": []
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 11523,
-    "at": "2026-11-26T15:12:14.258Z"
+    "took_ms": 16008,
+    "at": "2026-11-26T15:14:36.832Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 6,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:05:45.103Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:05:45.802Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:05:45.832Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:m3 2026-11-26T15:06:09.213Z] [report-path] M3-1126-Q: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T15:06:24.440Z] M3-1126-Q → done · runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1126-Q-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1126-Q.json · {\"id\":\"M3-1126-Q\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-26T15:06:24.550Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1126-Q-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1126-Q.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/runner-restarts-2026-11-26.jsonl, status/pipeline/M3-1126-Q.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:self-update 2026-11-26T15:06:52.236Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:heartbeat 2026-11-26T15:10:53.087Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T15:11:25.628Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T15:13:50.650Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T15:14:20.937Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m2 2026-11-26T15:14:23.610Z] pick · M2-1126-Q · model=sonnet · display=cmux-split",
+  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/runner-restarts-2026-11-26.jsonl, status/pipeline/M3-1126-Q.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:self-update 2026-11-26T15:06:52.236Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:heartbeat 2026-11-26T15:10:53.087Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T15:11:25.628Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T15:13:50.650Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T15:14:20.937Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m2 2026-11-26T15:14:23.610Z] pick · M2-1126-Q · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:heartbeat 2026-11-26T15:14:26.257Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:claim 2026-11-26T15:14:29.162Z] M2-1126-Q → started · runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1126-Q.json · {\"id\":\"M2-1126-Q\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-26T15:14:29.279Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1126-Q.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M2-1126-Q.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:m1 2026-11-26T15:15:34.928Z] pick · M1-1126-R · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 1,
