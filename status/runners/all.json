@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T02:25:17.305Z",
+  "at": "2026-11-26T02:25:26.494Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -29,7 +29,9 @@
       "last_activity": "2026-11-26T02:16:12.236Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1126-D",
+      "started_at": "2026-11-26T02:25:24.961Z",
+      "model": "sonnet",
       "last_activity": "2026-11-26T02:24:51.812Z"
     }
   },
@@ -121,7 +123,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 117,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:r0 2026-11-26T02:24:19.918Z] [report-path] R0-1126-C: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T02:24:29.074Z] M2-1126-A → done · runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1126-A-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1126-A.json · {\"id\":\"M2-1126-A\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-26T02:24:29.914Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1126-A-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1126-A.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M2-1126-A.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:git 2026-11-26T02:24:51.906Z] 러너 폴더 침범 감지 · files=queue/r0/R0-1126-D.md · guess_hub=r0\n[hub-runner-v8.3.2:git 2026-11-26T02:24:51.906Z] blocked: runner-folder change pending Kyu install · files=queue/r0/R0-1126-D.md,events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.3.2:claim 2026-11-26T02:24:52.892Z] R0-1126-C → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-C-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-C.json · {\"id\":\"R0-1126-C\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T02:24:52.999Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-C-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-C.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/r0/R0-1126-D.md, status/pipeline/R0-1126-C.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:m1 2026-11-26T02:25:00.971Z] [report-path] M1-1126-D: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:git 2026-11-26T02:25:16.378Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261124T173048Z.md",
+  "err_tail": "[hub-runner-v8.3.2:git 2026-11-26T02:24:51.906Z] 러너 폴더 침범 감지 · files=queue/r0/R0-1126-D.md · guess_hub=r0\n[hub-runner-v8.3.2:git 2026-11-26T02:24:51.906Z] blocked: runner-folder change pending Kyu install · files=queue/r0/R0-1126-D.md,events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.3.2:claim 2026-11-26T02:24:52.892Z] R0-1126-C → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-C-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-C.json · {\"id\":\"R0-1126-C\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T02:24:52.999Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-C-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-C.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/r0/R0-1126-D.md, status/pipeline/R0-1126-C.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:m1 2026-11-26T02:25:00.971Z] [report-path] M1-1126-D: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:git 2026-11-26T02:25:16.378Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261124T173048Z.md\n[hub-runner-v8.3.2:claim 2026-11-26T02:25:17.352Z] M1-1126-D → done · runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1126-D-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1126-D.json · {\"id\":\"M1-1126-D\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-26T02:25:18.544Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1126-D-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1126-D.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M1-1126-D.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T02:25:24.961Z] pick · R0-1126-D · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
