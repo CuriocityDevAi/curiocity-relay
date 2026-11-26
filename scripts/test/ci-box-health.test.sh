@@ -246,6 +246,46 @@ _assert_eq "C-3: unknown_* 만 있으면 health=ok" "ok" "$(echo "$C3_OUT" | pyt
 _assert_contains "C-3: reasons 에 unknown_netspeed" "unknown_netspeed" "$C3_OUT"
 _assert_contains "C-3: reasons 에 unknown_tailscale" "unknown_tailscale" "$C3_OUT"
 
+# ── E: curl 폴백 ──────────────────────────────────────────────────────────────
+
+echo "--- E: curl 폴백 ---"
+
+# E-1: curl %{speed_download}(bytes/s) → Mbps 변환 공식 (×8/1e6)
+E1_OUT=$(python3 -c "print(round(float('10000000') * 8 / 1e6, 1))")
+_assert_eq "E-1: curl 속도 변환 10MB/s → 80.0 Mbps" "80.0" "$E1_OUT"
+
+# E-2: curl 폴백 캐시(dl>0, ul=null) → cache-read hit
+E2_CACHE=$(mktemp)
+printf '{"dl_mbps":83.1,"ul_mbps":null,"rpm":null,"_ts":%d}' "$(date +%s)" > "$E2_CACHE"
+E2_NOW=$(date +%s)
+E2_CACHED=$(python3 - "$E2_NOW" "$E2_CACHE" <<'PYEOF' 2>/dev/null || echo "miss"
+import json, sys
+now = int(sys.argv[1])
+try:
+    d = json.load(open(sys.argv[2]))
+    age = now - int(d.get('_ts', 0))
+    if age < 3600 and not (d.get('dl_mbps', 0) == 0 and d.get('ul_mbps', 0) == 0):
+        d['cached'] = True
+        d.pop('_ts', None)
+        d.pop('_unknown', None)
+        print(json.dumps(d, separators=(',', ':')))
+    else:
+        print("miss")
+except Exception:
+    print("miss")
+PYEOF
+)
+rm -f "$E2_CACHE"
+_assert_contains "E-2: curl 캐시 (ul=null) → cache-read hit (dl_mbps 포함)" '"dl_mbps":83.1' "$E2_CACHED"
+_assert_contains "E-2: curl 캐시 → cached=true" '"cached":true' "$E2_CACHED"
+
+# E-3: curl 폴백 반환값 포맷 (dl>0, ul=null, rpm=null)
+E3_DL="83.1"; E3_UL="null"; E3_RPM="null"
+E3_OUT=$(printf '{"dl_mbps":%s,"ul_mbps":%s,"rpm":%s,"cached":false}' "$E3_DL" "$E3_UL" "$E3_RPM")
+_assert_contains "E-3: curl 반환값 dl>0" '"dl_mbps":83.1' "$E3_OUT"
+_assert_contains "E-3: curl 반환값 ul=null" '"ul_mbps":null' "$E3_OUT"
+_assert_contains "E-3: curl 반환값 rpm=null" '"rpm":null' "$E3_OUT"
+
 # ── D: --dry-run 통합 ──────────────────────────────────────────────────────────
 
 echo "--- D: --dry-run 통합 ---"
