@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts/hub-runner-v8.3.mjs · M1-1125-G · v8.3.2 · fork 러너 감시 + sleep 복귀 재연결 + partial-but-safe.
+// scripts/hub-runner-v8.3.mjs · M1-1125-G · v8.3.3 · M2-1126-T: all.json·mem-log status-wt 분리 (Kyu 폴더 git pull 보호).
 //
 // v8.2 과의 차이 (M1-1125-B·C · 5건):
 //   ① **landing 오탐 수정**: land-detect-v2.mjs 에 isPaneIdle / headTouchesReport 콜백 주입.
@@ -182,7 +182,7 @@ const SIGKILL_GRACE_MS = 5 * 1000;
 const CMUX_WAIT_MS = 10 * 60 * 1000;
 const DEFAULT_CLAUDE_BIN = '/Users/kyu.lee/.local/bin/claude';
 // M1-1105-BA(d): all.json 러너 버전 표기 버그 — 한 곳에서만 관리.
-const RUNNER_VERSION = 'v8.3.2';
+const RUNNER_VERSION = 'v8.3.3';
 // M1-1124-H: 자기 업데이트 기본값 — runner-config.selfUpdate 로 덮어쓸 수 있다.
 // M1-1125-C: prev 부재 시 되돌릴 안전판 버전.
 const SELF_UPDATE_FALLBACK_RUNNER = 'hub-runner-v8.2.mjs';
@@ -266,8 +266,6 @@ const CONFIG_FILE = join(REPO_ROOT, 'status', 'runner-config.json');
 const QUEUE_DIR = join(REPO_ROOT, 'queue');
 const CLAIMS_DIR = join(REPO_ROOT, 'status', 'claims');
 const RUNNERS_DIR = join(REPO_ROOT, 'status', 'runners');
-const ALL_HEARTBEAT = join(RUNNERS_DIR, 'all.json');
-const MEM_LOG_FILE = join(RUNNERS_DIR, 'mem-log.ndjson');
 const MEM_LOG_MS = 60 * 60 * 1000;
 const LOCK_FILE = join(RUNNER_HOME, 'all.lock');
 const HUBS_LAYOUT_FILE = join(RUNNER_HOME, 'hubs-layout.json');
@@ -282,9 +280,14 @@ const PANE_BUSY_RETRY_DIR = join(RUNNER_HOME, 'pane-busy-retry');
 const STATUS_WT_PATH = join(homedir(), '.hub-runner', 'status-wt');
 const STATUS_BRANCH = 'runner-status';
 const STATE_MIN_INTERVAL_MS = 60_000;
+// M2-1126-T: all.json·mem-log を status-wt(runner-status branch) に移動 →
+//   REPO_ROOT(Kyu 폴더)에 쓰지 않으므로 Kyu git pull 충돌 해소.
+const ALL_HEARTBEAT = join(STATUS_WT_PATH, 'all.json');
+const MEM_LOG_FILE = join(STATUS_WT_PATH, 'mem-log.ndjson');
 
 mkdirSync(RUNNER_HOME, { recursive: true });
 mkdirSync(RUNNERS_DIR, { recursive: true });
+mkdirSync(STATUS_WT_PATH, { recursive: true }); // M2-1126-T: ALL_HEARTBEAT 쓰기 전 디렉토리 보장
 mkdirSync(RECOVERY_MARK_DIR, { recursive: true });
 mkdirSync(PANE_BUSY_RETRY_DIR, { recursive: true });
 
@@ -738,7 +741,8 @@ function checkFolderGuardWithConfig(config) {
 
 // M0-1119-I: status/ci/ 추가 — jsonl 이 safePull 의 out-of-scope 로 오인되지 않게.
 // M1-1125-E: status/pipeline/ 추가 — pipeline-log jsonl 이 out-of-scope 오인 차단.
-const RUNNER_SCOPE_PREFIXES = ['status/claims/', 'status/runners/', 'status/hubs.json', 'status/ci/', 'status/pipeline/'];
+// M2-1126-T: status/runners/ 삭제 — all.json·mem-log が STATUS_WT_PATH に移動したため REPO_ROOT では書かない.
+const RUNNER_SCOPE_PREFIXES = ['status/claims/', 'status/hubs.json', 'status/ci/', 'status/pipeline/'];
 // M1-1123-E REQ2: 충돌 자동 해소 대상 — 자동 생성 파일만 여기 해당.
 const AUTO_RESOLVE_PREFIXES = ['status/', 'hubs.json', 'index'];
 // M1-1123-L REQ1: 허브가 쓰는 파일 — ahead 커밋에 있어도 'manual' 로 중단하지 않는다.
@@ -1255,8 +1259,7 @@ async function runClaim({ id, state, note, blockedBy, hub: claimHub }) {
     args.push('--blocked-by', blockedBy);
   }
   if (note) args.push(note);
-  // v6.8 REQ2: all.json 이 staged 돼 있으면 claim 커밋에 번들됨.
-  try { git(['add', 'status/runners/all.json']); } catch { /* noop */ }
+  // v6.8 REQ2: (M2-1126-T: all.json は STATUS_WT_PATH に移動 → REPO_ROOT で staging 불필요)
   let claimOk = false;
   try {
     execFileSync(process.execPath, args, { cwd: REPO_ROOT, stdio: 'inherit' });
@@ -3271,9 +3274,11 @@ function writeHeartbeat(config) {
     })(),
   };
   lastGitState = payload.git_state || null;
+  // M2-1126-T: ALL_HEARTBEAT은 STATUS_WT_PATH/all.json — REPO_ROOT에는 쓰지 않는다.
   writeFileSync(ALL_HEARTBEAT, JSON.stringify(payload, null, 2) + '\n', 'utf8');
-  // v6.8 REQ2: stage all.json — bundles into the next claim commit automatically.
-  try { git(['add', 'status/runners/all.json']); } catch { /* noop */ }
+  if (ensureStatusWorktree()) {
+    try { execFileSync('git', ['-C', STATUS_WT_PATH, 'add', 'all.json'], { stdio: 'pipe' }); } catch { /* noop */ }
+  }
   // M0-1119-I: status/ci/ jsonl 도 함께 stage (백그라운드가 append 한 파일 반영).
   try { git(['add', 'status/ci']); } catch { /* noop · 디렉토리 없어도 통과 */ }
 
@@ -3282,7 +3287,10 @@ function writeHeartbeat(config) {
   if (lastMemSample && now - lastMemLogAt >= MEM_LOG_MS) {
     appendMemLog({ ...lastMemSample, peak_today: memPeakToday });
     lastMemLogAt = now;
-    try { git(['add', 'status/runners/mem-log.ndjson']); } catch { /* noop */ }
+    // M2-1126-T: mem-log.ndjson 도 STATUS_WT_PATH に移動.
+    if (ensureStatusWorktree()) {
+      try { execFileSync('git', ['-C', STATUS_WT_PATH, 'add', 'mem-log.ndjson'], { stdio: 'pipe' }); } catch { /* noop */ }
+    }
   }
 }
 
@@ -3292,21 +3300,39 @@ const HEARTBEAT_PUSH_INTERVAL_MS = 2 * 60_000;
 function pushHeartbeatIfDue() {
   const now = Date.now();
   if (now - lastHeartbeatPushedAt < HEARTBEAT_PUSH_INTERVAL_MS) return;
+  // M2-1126-T: all.json·mem-log → runner-status branch via STATUS_WT_PATH (Kyu 폴더 보호)
+  if (ensureStatusWorktree()) {
+    try {
+      const staged = execFileSync('git', ['-C', STATUS_WT_PATH, 'diff', '--cached', '--name-only'], { stdio: 'pipe' }).toString().trim();
+      if (staged) {
+        let hasCommit = false;
+        try { execFileSync('git', ['-C', STATUS_WT_PATH, 'rev-parse', 'HEAD'], { stdio: 'pipe' }); hasCommit = true; } catch { /* orphan */ }
+        if (hasCommit) {
+          execFileSync('git', ['-C', STATUS_WT_PATH, 'commit', '--amend', '--no-edit'], { stdio: 'pipe' });
+        } else {
+          execFileSync('git', ['-C', STATUS_WT_PATH, 'commit', '-m', `chore(runner-${RUNNER_VERSION}): heartbeat`], { stdio: 'pipe' });
+        }
+        execFileSync('git', ['-C', STATUS_WT_PATH, 'push', '--force', 'origin', `${STATUS_BRANCH}:${STATUS_BRANCH}`], { stdio: 'pipe' });
+      }
+    } catch (e) {
+      log('heartbeat', `runner-status push 실패: ${e.message.split('\n')[0]}`);
+    }
+  }
+  // status/ci/ → main branch (기존과 동일, REPO_ROOT)
   try {
-    // M0-1119-I: status/runners/all.json 외 status/ci/ 도 포함.
     const staged = execFileSync(
-      'git',
-      ['diff', '--cached', '--name-only', '--', 'status/runners/all.json', 'status/ci'],
+      'git', ['diff', '--cached', '--name-only', '--', 'status/ci'],
       { cwd: REPO_ROOT, stdio: ['ignore', 'pipe', 'pipe'] },
     ).toString().trim();
-    if (!staged) return;
-    git(['commit', '-m', `chore(runner-${RUNNER_VERSION}): heartbeat all.json + ci`]);
-    git(['push', 'origin', 'HEAD:main']);
-    lastHeartbeatPushedAt = now;
+    if (staged) {
+      git(['commit', '-m', `chore(runner-${RUNNER_VERSION}): ci-health`]);
+      git(['push', 'origin', 'HEAD:main']);
+    }
   } catch (e) {
     const msg = (e.stderr?.toString() || e.message).trim().split('\n')[0];
-    log('heartbeat', `standalone push 실패: ${msg}`);
+    log('heartbeat', `ci-health push 실패: ${msg}`);
   }
+  lastHeartbeatPushedAt = now;
 }
 
 // M0-1119-I/J: tick 시작부에서 fire-and-forget. tick 자체에 await 추가하지 않는다.
@@ -4576,9 +4602,11 @@ process.stdin.resume();
     const fakeClaimFile = `status/claims/${fakeClaimId}.json`;
     const fakeClaimPath = join(REPO_ROOT, fakeClaimFile);
     try {
-      // 3개 heartbeat 커밋 (status/runners/all.json만)
+      // 3개 heartbeat 커밋 (selftest용 — ALL_HEARTBEAT은 STATUS_WT_PATH이므로 REPO_ROOT에 임시 파일 생성)
+      const selfTestHb = join(REPO_ROOT, 'status', 'runners', 'all.json');
+      mkdirSync(join(REPO_ROOT, 'status', 'runners'), { recursive: true });
       for (let i = 1; i <= 3; i++) {
-        writeFileSync(ALL_HEARTBEAT, JSON.stringify({ at: ts(), fake: true, test: i }, null, 2) + '\n', 'utf8');
+        writeFileSync(selfTestHb, JSON.stringify({ at: ts(), fake: true, test: i }, null, 2) + '\n', 'utf8');
         git(['add', 'status/runners/all.json']);
         git(['commit', '-m', `chore(runner-${RUNNER_VERSION}): selftest-auto-recover heartbeat ${i}`]);
       }
