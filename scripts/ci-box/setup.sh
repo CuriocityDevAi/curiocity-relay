@@ -81,10 +81,10 @@ REPO_STOREPORT="CuriocityDevAi/storeport"
 REPO_FORK="CuriocityDevAi/agilo-medusa-pos-fork"
 
 if [ "$DRY_RUN" = "1" ]; then
-    echo "[DRY] storeport heavy runner: $RUNNER_STOREPORT_HEAVY  labels=curiocity-mac"
-    echo "[DRY] storeport light runner: $RUNNER_STOREPORT_LIGHT  labels=curiocity-mac-light"
-    echo "[DRY] fork heavy runner:      $RUNNER_FORK_HEAVY       labels=curiocity-mac-fork"
-    echo "[DRY] fork light runner:      $RUNNER_FORK_LIGHT       labels=curiocity-mac-fork-light"
+    echo "[DRY] storeport heavy runner: $RUNNER_STOREPORT_HEAVY  labels=self-hosted,macOS,ARM64,curiocity-mac"
+    echo "[DRY] storeport light runner: $RUNNER_STOREPORT_LIGHT  labels=self-hosted,macOS,ARM64,curiocity-mac-light"
+    echo "[DRY] fork heavy runner:      $RUNNER_FORK_HEAVY       labels=self-hosted,macOS,ARM64,curiocity-mac-fork"
+    echo "[DRY] fork light runner:      $RUNNER_FORK_LIGHT       labels=self-hosted,macOS,ARM64,curiocity-mac-fork-light"
     echo "[DRY] ./svc.sh install x4  (runsvc.sh 복사 · plist 생성 · 로그 디렉토리)"
     echo "[DRY] ./svc.sh start x4   (launchctl load)"
 else
@@ -118,6 +118,21 @@ if [ "$_verify_all_ok" != "0" ]; then
     printf '\033[31m[ci-box] 경고: 일부 러너가 시작되지 않았습니다. 위 stderr.log 를 확인하세요.\033[0m\n' >&2
 fi
 unset _verify_all_ok
+
+echo ""
+echo "=============================="
+echo "  러너 라벨 검증 (GitHub API)"
+echo "=============================="
+_label_all_ok=0
+verify_runner_labels "$REPO_STOREPORT" "$RUNNER_STOREPORT_HEAVY" "curiocity-mac"            || _label_all_ok=1
+verify_runner_labels "$REPO_STOREPORT" "$RUNNER_STOREPORT_LIGHT" "curiocity-mac-light"      || _label_all_ok=1
+verify_runner_labels "$REPO_FORK"      "$RUNNER_FORK_HEAVY"      "curiocity-mac-fork"       || _label_all_ok=1
+verify_runner_labels "$REPO_FORK"      "$RUNNER_FORK_LIGHT"      "curiocity-mac-fork-light" || _label_all_ok=1
+if [ "$_label_all_ok" != "0" ]; then
+    echo ""
+    printf '\033[31m[ci-box] 경고: 라벨이 누락된 러너가 있습니다. 위 수동 추가 명령을 실행하세요.\033[0m\n' >&2
+fi
+unset _label_all_ok
 
 echo ""
 echo "=============================="

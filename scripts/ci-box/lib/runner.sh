@@ -72,7 +72,7 @@ _configure_runner() {
 
     _step "Configuring runner '$runner_name' for $repo_url..."
     if [ "${DRY_RUN:-0}" = "1" ]; then
-        _dry "$dir/config.sh --url $repo_url --token <TOKEN> --name $runner_name --labels $labels --no-default-labels --unattended"
+        _dry "$dir/config.sh --url $repo_url --token <TOKEN> --name $runner_name --labels $labels --unattended"
         return 0
     fi
 
@@ -81,7 +81,6 @@ _configure_runner() {
         --token "$token" \
         --name "$runner_name" \
         --labels "$labels" \
-        --no-default-labels \
         --unattended
     _ok "runner '$runner_name' configured"
 }
@@ -159,6 +158,64 @@ register_runner() {
     _download_runner "$dir"
     _configure_runner "$dir" "$repo_url" "$runner_name" "$labels" "$token"
     _install_launchd "$dir" "$org_repo" "$runner_name"
+}
+
+# gh API wrapper — 테스트에서 함수 override 로 stub 주입 가능
+_gh_runner_label_names() {
+    local org_repo="$1"
+    local runner_name="$2"
+    gh api "repos/$org_repo/actions/runners" \
+        --jq ".runners[] | select(.name == \"$runner_name\") | .labels[].name" 2>/dev/null || true
+}
+
+_gh_runner_id() {
+    local org_repo="$1"
+    local runner_name="$2"
+    gh api "repos/$org_repo/actions/runners" \
+        --jq ".runners[] | select(.name == \"$runner_name\") | .id" 2>/dev/null || true
+}
+
+# 러너 GitHub 라벨 검증: self-hosted + custom 라벨 존재 여부 확인
+# 없으면 빨간 경고 + 수동 추가 명령 출력
+verify_runner_labels() {
+    local org_repo="$1"
+    local runner_name="$2"
+    local custom_label="$3"
+
+    if [ "${DRY_RUN:-0}" = "1" ]; then
+        _dry "gh api repos/$org_repo/actions/runners # verify $runner_name: self-hosted + $custom_label"
+        return 0
+    fi
+
+    local label_names
+    label_names=$(_gh_runner_label_names "$org_repo" "$runner_name")
+
+    if [ -z "$label_names" ]; then
+        printf '\033[33m[ci-box] ⚠ %s — GitHub API 러너 미발견 (오프라인·미등록)\033[0m\n' "$runner_name" >&2
+        return 1
+    fi
+
+    local missing=()
+    for lbl in "self-hosted" "$custom_label"; do
+        if ! echo "$label_names" | grep -qx "$lbl"; then
+            missing+=("$lbl")
+        fi
+    done
+
+    if [ "${#missing[@]}" -eq 0 ]; then
+        _ok "$runner_name  labels OK (self-hosted, $custom_label)"
+        return 0
+    fi
+
+    local runner_id
+    runner_id=$(_gh_runner_id "$org_repo" "$runner_name")
+    printf '\033[31m[ci-box] ✗ %s — 라벨 누락: %s\033[0m\n' "$runner_name" "${missing[*]}" >&2
+    printf '\033[31m  수동 추가 명령:\033[0m\n' >&2
+    for lbl in "${missing[@]}"; do
+        printf '\033[31m  gh api repos/%s/actions/runners/%s/labels -X POST -f "labels[]=%s"\033[0m\n' \
+            "$org_repo" "$runner_id" "$lbl" >&2
+    done
+    return 1
 }
 
 # 러너 중지 (맥북 오프보딩용)
