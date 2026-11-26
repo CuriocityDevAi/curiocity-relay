@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T16:43:29.625Z",
+  "at": "2026-11-26T16:44:12.537Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -25,10 +25,8 @@
       "last_activity": "2026-11-26T16:22:23.339Z"
     },
     "m3": {
-      "current": "M3-1126-S",
-      "started_at": "2026-11-26T16:34:56.688Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-26T16:19:00.556Z"
+      "current": null,
+      "last_activity": "2026-11-26T16:44:11.471Z"
     },
     "r0": {
       "current": null,
@@ -45,11 +43,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.79,
-    "compressed_gb": 4.6,
+    "used_gb": 15.03,
+    "compressed_gb": 4.37,
     "swap_used_gb": 2.56,
     "pressure": "normal",
-    "at": "2026-11-26T16:42:58.321Z"
+    "at": "2026-11-26T16:44:10.336Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -133,9 +131,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 18,
+  "isolated_reports_collected": 19,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:self-update 2026-11-26T16:38:38.840Z] 보류 · busy=4 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:38:40.528Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-26T16:39:14.411Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:39:19.545Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T16:39:47.318Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:39:55.963Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:40:33.296Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:41:07.390Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:41:44.669Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T16:42:12.424Z] blocked: runner-folder change pending Kyu install · files=specs/screens/pos-payment-flow.md,events/runner-main-guard-20261126T085622Z.md\n[hub-runner-v8.3.2:r0 2026-11-26T16:42:23.634Z] [report-path] R0-1126-AR: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:42:24.685Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:claim 2026-11-26T16:42:30.013Z] R0-1126-AR → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AR-report.md · model=sonnet · 로그: /\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-AR.json · {\"id\":\"R0-1126-AR\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T16:42:30.114Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AR-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-AR.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): specs/screens/pos-payment-flow.md, status/pipeline/R0-1126-AR.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:42:58.322Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:39:19.545Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T16:39:47.318Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:39:55.963Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:40:33.296Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:41:07.390Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:41:44.669Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T16:42:12.424Z] blocked: runner-folder change pending Kyu install · files=specs/screens/pos-payment-flow.md,events/runner-main-guard-20261126T085622Z.md\n[hub-runner-v8.3.2:r0 2026-11-26T16:42:23.634Z] [report-path] R0-1126-AR: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:42:24.685Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:claim 2026-11-26T16:42:30.013Z] R0-1126-AR → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AR-report.md · model=sonnet · 로그: /\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-AR.json · {\"id\":\"R0-1126-AR\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T16:42:30.114Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AR-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-AR.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): specs/screens/pos-payment-flow.md, status/pipeline/R0-1126-AR.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:42:58.322Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:43:30.977Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m3 2026-11-26T16:43:58.063Z] [report-path] M3-1126-S: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T16:44:10.336Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
   "git_state": {
     "ahead": 0,
     "behind": 1,
@@ -173,7 +171,7 @@
     {
       "name": "ci-box-fork-light-imac",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "curiocity-mac-fork",
