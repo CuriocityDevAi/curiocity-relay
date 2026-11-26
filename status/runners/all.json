@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T08:42:25.166Z",
+  "at": "2026-11-26T08:45:22.789Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -64,11 +64,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.56,
-    "compressed_gb": 3.3,
+    "used_gb": 15.4,
+    "compressed_gb": 3.52,
     "swap_used_gb": 3.78,
     "pressure": "normal",
-    "at": "2026-11-26T08:41:53.609Z"
+    "at": "2026-11-26T08:44:51.635Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -76,14 +76,13 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T08:37:46.442Z",
+      "at": "2026-11-26T08:42:57.288Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport",
-        "CuriocityDevAi/agilo-medusa-pos-fork"
+        "CuriocityDevAi/storeport"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 8,
+      "api_calls": 5,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -101,7 +100,7 @@
       },
       "cloud_in_progress": [],
       "runners": {
-        "heavy_online": 3,
+        "heavy_online": 1,
         "heavy_busy": 0,
         "light_online": 1
       },
@@ -133,16 +132,17 @@
         "wasted_min": 38.3
       },
       "jsonl_added": 0,
-      "alerts": []
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 7916,
-    "at": "2026-11-26T08:37:52.741Z"
+    "took_ms": 12675,
+    "at": "2026-11-26T08:43:08.503Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 162,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-V.jsonl, status/pipeline/M1-1126-O.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:claim 2026-11-26T08:41:16.918Z] M1-1126-O → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1126-O.json · {\"id\":\"M1-1126-O\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-26T08:41:17.039Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1126-O.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M1-1126-O.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m3 2026-11-26T08:41:46.258Z] pick · M3-1126-H · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T08:41:51.091Z] M3-1126-H → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1126-H.json · {\"id\":\"M3-1126-H\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-26T08:41:51.203Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1126-H.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M3-1126-H.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m2 2026-11-26T08:42:23.696Z] pick · M2-1126-H · model=sonnet · display=cmux-split",
+  "err_tail": "[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M1-1126-O.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m3 2026-11-26T08:41:46.258Z] pick · M3-1126-H · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T08:41:51.091Z] M3-1126-H → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1126-H.json · {\"id\":\"M3-1126-H\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-26T08:41:51.203Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1126-H.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M3-1126-H.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m2 2026-11-26T08:42:23.696Z] pick · M2-1126-H · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T08:42:27.594Z] M2-1126-H → started · runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1126-H.json · {\"id\":\"M2-1126-H\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-26T08:42:27.703Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1126-H.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M2-1126-H.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:43:41.194Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start",
   "git_state": {
     "ahead": 0,
     "behind": 0,
