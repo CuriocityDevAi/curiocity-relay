@@ -6,8 +6,11 @@
 // v1.14: M2-1126-N — heavy-cloud 를 fork-only 마커로 변경 (storeport heavy-cloud 는 실제 24분 잡)
 // v1.15: M2-1126-Q — 전체 오늘 = 세 줄 단순 합 · 클라우드 top/bottom 단일 소스(cloudData) ·
 //                    iMAC online+idle → '쉼' (partial 전역 플래그 무시) · ⚠집계불일치 가드
+// v1.18: M0-1127-A — 진행 중 구역을 CW-PROG(프롬프트별 9단계 띠)로 복구 · err_tail [build-hubs] 필터 ·
+//                    주의 섹션을 countdown 위로 (카운트다운 setInterval 이 마지막 줄 덮어쓰는 문제)
 
 import { displayWidth, padEndWidth, stripAnsi, truncateWidth } from './text-width.mjs';
+import { stageStrip, stageLabel } from './collect-view.mjs';
 
 const C = {
   reset: '\x1b[0m', bold: '\x1b[1m', dim: '\x1b[2m',
@@ -789,7 +792,10 @@ export function renderLayout(data) {
   const allAlerts = [...(runnerAlerts || []), ...(ciAlerts || [])];
   const inProgressHeavy = runState?.heavy?.inProgress || [];
   const inProgressLight = runState?.light?.inProgress || [];
-  const totalInProgress = inProgressHeavy.length + inProgressLight.length;
+  // v1.18(M0-1127-A): 진행 중 = 프롬프트 수 (CW-PROG · 9단계 띠). CI 잡 수 아님.
+  // data.pipelinePrompts 는 buildExtendedView().inProgress — 큐 지나간 프롬프트 카드.
+  const pipelinePrompts = Array.isArray(data.pipelinePrompts) ? data.pipelinePrompts : [];
+  const totalInProgress = pipelinePrompts.length;
 
   const todayCompletedCount = (() => {
     if (todayStats) {
@@ -977,20 +983,36 @@ export function renderLayout(data) {
     }
   }
 
-  // ── 5. 진행 중 섹션 ───────────────────────────────────────────────────
+  // ── 5. 진행 중 섹션 (CW-PROG · v1.18) ────────────────────────────────
+  // 프롬프트 한 건 = 한 줄 · 9단계 띠 (큐·작업·리포트·PR·CI대기·CI실행·CI결과·리뷰·머지)
+  // 현재 단계 = ◐ · 지난 단계 = ● · 남은 단계 = ○
+  // 색: green=정상 · yellow=느림 · red=비정상(다음 줄 └ 이유)
   const inProgressTitle = `─ 진행 중 (${totalInProgress}) ` + '─'.repeat(Math.max(0, W - 2 - displayWidth(`─ 진행 중 (${totalInProgress}) `)));
   lines.push(col(inProgressTitle, C.bold));
 
-  for (const j of [...inProgressHeavy, ...inProgressLight]) {
-    const pid = j.prompt_id || j.display || j.pr || '-';
-    const hub = j.hub || '';
-    const jobName = j.check || j.job || '';
-    const min = j.running_min ?? '-';
-    const sp = spinnerChar(spinnerFrame);
-    const c = typeof min === 'number' && min >= 25 ? C.red
-      : typeof min === 'number' && min >= 15 ? C.yellow : C.green;
-    const timeStr2 = typeof min === 'number' ? fmtDuration(min) : '-';
-    lines.push(`  ${col(sp, c)} ${col(pid, C.bold)}  ${hub}  ${jobName}  ${c}${timeStr2}${C.reset}`);
+  for (const c of pipelinePrompts) {
+    const level = c.level || 'green';
+    const colCode = level === 'red' ? C.red : level === 'yellow' ? C.yellow : C.green;
+    const mark = c.mark || (level === 'red' ? '■' : level === 'yellow' ? '▲' : '●');
+    const strip = stageStrip(c.column);
+    const stage = padEndWidth(stageLabel(c.column), 6);
+    const ageStr = typeof c.ageMin === 'number' ? `${c.ageMin}분` : '';
+    const agePad = padEndWidth(ageStr, 5);
+    const prNum = c.extra?.pr?.number;
+    const prPart = prNum ? `#${prNum}` : '';
+    const prPad = padEndWidth(prPart, 6);
+    const idPad = padEndWidth(c.id || '', 12);
+    const hubPad = padEndWidth(c.hub || '', 2);
+    // 고정 영역: mark(1) + ' ' + id(12) + ' ' + hub(2) + '  ' + strip(9) + '  ' + stage(6) + '  ' + age(5) + '  ' + pr(6) + '  '
+    const FIXED = 1 + 1 + 12 + 1 + 2 + 2 + 9 + 2 + 6 + 2 + 5 + 2 + 6 + 2;
+    const title = truncateWidth(c.title || '', Math.max(4, W - FIXED - 2));
+    lines.push(
+      `  ${colCode}${mark}${C.reset} ${idPad} ${hubPad}  ${strip}  ${stage}  ${agePad}  ${prPad}  ${colCode}${title}${C.reset}`
+    );
+    if (level === 'red' && c.reason) {
+      const reason = truncateWidth(c.reason, Math.max(4, W - 8));
+      lines.push(`    ${colCode}└ ${reason}${C.reset}`);
+    }
   }
 
   if (totalInProgress === 0) {
@@ -1086,10 +1108,12 @@ export function renderLayout(data) {
   }
 
   // err_tail — W6: watchdog/claim/self-update 로그 줄은 화면 미출력 (파일 로그로만)
+  // v1.18: [build-hubs] 로그도 필터 (CW-RENDER · M0-1127-A · 11-27 05:32 실화면 bleed)
   const ERR_TAIL_SCREEN_FILTERS = [
     /^\[hub-runner/,
     /gh-watchdog/i,
     /^\[claim\]/,
+    /^\[build-hubs\]/,
     /self-update/i,
     /partial skip/i,
   ];
@@ -1102,10 +1126,9 @@ export function renderLayout(data) {
     for (const l of errLines2) lines.push(col('  ' + l.slice(0, W - 4), C.dim));
   }
 
-  const cdSec = typeof countdownSec === 'number' ? countdownSec : 30;
-  lines.push(col(`  다음 갱신 ${cdSec}초 | r 지금 갱신 · q 종료${fullMode ? '' : '  --full: 전체 목록'}`, C.dim));
-
   // ── 7. 주의 섹션 (맨 아래 · 0건이면 생략) ─────────────────────────────
+  // v1.18: countdown 보다 위로. setInterval 이 \x1b[1A 로 "마지막 줄 -1" 을 덮어쓰므로
+  // countdown 이 마지막이어야 주의 본문이 안 지워진다 (11-27 05:32 "주의 (1) 본문 안 보임" 뿌리).
   if (allAlerts.length > 0 || (ciDimAlerts && ciDimAlerts.length > 0)) {
     const alertTitle2 = `─ 주의 (${allAlerts.length}) ` + '─'.repeat(Math.max(0, W - 2 - displayWidth(`─ 주의 (${allAlerts.length}) `)));
     lines.push(col(alertTitle2, C.bold));
@@ -1117,6 +1140,10 @@ export function renderLayout(data) {
       lines.push(col(`  ⏭ ${a.msg}`, C.dim));
     }
   }
+
+  // countdown 은 항상 마지막 줄 — setInterval (\x1b[1A) 이 이 줄만 덮어쓰도록.
+  const cdSec = typeof countdownSec === 'number' ? countdownSec : 30;
+  lines.push(col(`  다음 갱신 ${cdSec}초 | r 지금 갱신 · q 종료${fullMode ? '' : '  --full: 전체 목록'}`, C.dim));
 
   return lines;
 }

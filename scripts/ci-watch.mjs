@@ -6,7 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 //
 // !! ci-watch 를 바꾸는 모든 프롬프트는 CI_WATCH_VERSION 을 올릴 것.
-// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입) · 1.10 M2-1126-F(W1~W4) · 1.11 M2-1126-G(W5~W9) · 1.12 M2-1126-I(W9경로·W2보완·W10) · 1.13 M2-1126-L(cancel-on-close마커·OFF표시·4줄기계별집계) · 1.14 M2-1126-N(heavy-cloud fork-only 마커) · 1.15 M2-1126-Q(전체=세줄합·클라우드 top/bottom 단일 소스·iMAC 쉼 판정·⚠집계불일치 가드) · 1.16 M2-1126-S(넘김 폐지 · 클라우드 >0 빨간 경고 · iMac heartbeat 끊김 상단 경보)
+// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입) · 1.10 M2-1126-F(W1~W4) · 1.11 M2-1126-G(W5~W9) · 1.12 M2-1126-I(W9경로·W2보완·W10) · 1.13 M2-1126-L(cancel-on-close마커·OFF표시·4줄기계별집계) · 1.14 M2-1126-N(heavy-cloud fork-only 마커) · 1.15 M2-1126-Q(전체=세줄합·클라우드 top/bottom 단일 소스·iMAC 쉼 판정·⚠집계불일치 가드) · 1.16 M2-1126-S(넘김 폐지 · 클라우드 >0 빨간 경고 · iMac heartbeat 끊김 상단 경보) · 1.17 relay#60 예약(M2-1126-T) · 1.18 M0-1127-A(진행 중 9단계 띠 복구 · err_tail [build-hubs] 필터 · 주의 섹션을 countdown 위로)
 
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -35,8 +35,10 @@ import {
   renderCompact,
   renderLayout,
 } from './watch/ci-watch-render.mjs';
+// v1.18(M0-1127-A): 진행 중 구역 = buildExtendedView().inProgress (프롬프트 카드 · 9단계 띠)
+import { buildExtendedView } from './watch/collect-view.mjs';
 
-const CI_WATCH_VERSION = '1.15';
+const CI_WATCH_VERSION = '1.18';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -1432,9 +1434,25 @@ async function tick(fullMode) {
 
   const termWidth = detectTerminalWidth();
 
+  // v1.18(M0-1127-A): CW-PROG — 진행 중 섹션 데이터. buildExtendedView 는 relay 저장소에서
+  // 큐·작업·리포트·PR·CI·리뷰·머지 단계의 프롬프트 카드를 읽는다. skipFetch=true 로 기존
+  // git fetch 사이클과 분리 (ci-watch 틱마다 fetch 하지 않음). skipGh=true 로 gh 호출 차단
+  // (화면이 blocking 되지 않게; PR 번호 보강은 다음 틱에 반영됨).
+  let pipelinePrompts = [];
+  try {
+    const extView = buildExtendedView({
+      repoRoot: REPO_ROOT,
+      now: new Date(),
+      skipFetch: true,
+      skipGh: true,
+    });
+    pipelinePrompts = extView?.inProgress || [];
+  } catch { /* 실패 시 빈 배열 → 진행 중 "—" 로 표시 */ }
+
   const renderData = {
     allJson: renderAllJson,
     runState,
+    pipelinePrompts,
     cloudData,
     runnerAlerts,
     ciAlerts: [...ciAlerts, ...ciSummaryAlerts.filter(a => !a.dim)],
