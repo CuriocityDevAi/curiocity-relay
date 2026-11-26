@@ -1,4 +1,4 @@
-# 계약서: 손님화면(CD) ↔ POS 동기화 — v1.2 (2026-11-25 · 오케)
+# 계약서: 손님화면(CD) ↔ POS 동기화 — v1.3 (2026-11-26 · 오케)
 
 정본 흐름: `ledger/decision-cd-pos-sync-flow-20261125.md` · 디자인: `ledger/decision-cd-pos-sync-design-20261125.md` · 캔버스 https://claude.ai/artifact/VFoyrbxnvgB7akmS3xHvVW
 
@@ -7,6 +7,7 @@
 개정 이력:
 - v1.1 (19:00) — `source` 는 `state === 'none'` 일 때 `null` 허용(R0-1125-AH 지적).
 - v1.2 (19:45) — POS body 에 **`stock_location_id` 필수**(서버가 그 매장의 활성 CD snapshot 을 찾는 키 · M0-1125-T) · 응답 reason 에 `no_active_snapshot` 추가 · `register_mismatch`(403) 는 다른 매장 접근 차단용.
+- v1.3 (2026-11-26 · M0-1126-E · R0-1126-L) — `entering` 중 `customer_flow.phone` = 손님이 지금까지 누른 숫자(`phone_partial`). POS fork #270(머지됨)이 이 필드를 chip 에 실시간 표시(POS-2).
 
 ## 1. 두 갈래 상태 (CD snapshot 에 실림)
 ```ts
