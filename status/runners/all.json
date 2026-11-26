@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T22:46:19.637Z",
+  "at": "2026-11-26T22:46:56.798Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -47,11 +47,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.79,
-    "compressed_gb": 4.06,
+    "used_gb": 15.58,
+    "compressed_gb": 3.82,
     "swap_used_gb": 3.28,
     "pressure": "normal",
-    "at": "2026-11-26T22:45:46.835Z"
+    "at": "2026-11-26T22:46:24.966Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -59,24 +59,34 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T22:43:52.282Z",
+      "at": "2026-11-26T22:46:16.968Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 11,
+      "api_calls": 15,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 1,
+        "queued": 3,
         "queued_prs": [
           281
         ],
-        "oldest_queued_min": 0,
-        "oldest_queued_pr": "fork:#281",
+        "oldest_queued_min": 1,
+        "oldest_queued_pr": "fork:master",
         "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "#281",
+            "pr_display": "fork:#281",
+            "job": "e2e · case 1 (실서버)",
+            "step": "Upload artifacts (reports · screenshots · server logs)",
+            "running_min": 0,
+            "runner": "ci-box-fork-heavy-imac",
+            "kind": "mac-heavy"
+          },
           {
             "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
             "pr": "#281",
@@ -98,17 +108,17 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 1,
+        "heavy_busy": 2,
         "light_online": 1
       },
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 62,
+          "jobs": 64,
           "avg_wait_min": 2.5,
-          "avg_run_min": 1.5,
-          "success_rate": 83.9,
-          "run_min_total": 89.99999999999997
+          "avg_run_min": 1.4,
+          "success_rate": 84.4,
+          "run_min_total": 91.19999999999997
         },
         "mac-light": {
           "jobs": 11,
@@ -128,18 +138,18 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 16.900000000000002
       },
-      "jsonl_added": 1,
+      "jsonl_added": 2,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 17400,
-    "at": "2026-11-26T22:44:07.984Z"
+    "took_ms": 21731,
+    "at": "2026-11-26T22:46:36.975Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 31,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:m2 2026-11-26T22:42:42.255Z] pick · M2-1127-B · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T22:42:45.324Z] M2-1127-B → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1127-B.json · {\"id\":\"M2-1127-B\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-26T22:42:45.442Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1127-B.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m2/M2-1127-B.md, status/pipeline/M2-1127-B.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/1)\rerror: could not apply 8268bedd3... claim(m2): M2-1127-B started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-defau\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T22:44:33.601Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T22:44:33.642Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T22:44:34.268Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T22:44:34.300Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:heartbeat 2026-11-26T22:45:07.531Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T22:45:10.033Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-26T22:45:42.962Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T22:45:46.834Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
+  "err_tail": "[claim] pushed (after rebase)\n[hub-runner-v8.3.2:m2 2026-11-26T22:42:42.255Z] pick · M2-1127-B · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T22:42:45.324Z] M2-1127-B → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1127-B.json · {\"id\":\"M2-1127-B\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-26T22:42:45.442Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1127-B.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m2/M2-1127-B.md, status/pipeline/M2-1127-B.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/1)\rerror: could not apply 8268bedd3... claim(m2): M2-1127-B started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-defau\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T22:44:33.601Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T22:44:33.642Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T22:44:34.268Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T22:44:34.300Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:heartbeat 2026-11-26T22:45:07.531Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T22:45:10.033Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-26T22:45:42.962Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T22:45:46.834Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-26T22:46:22.288Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T22:46:24.964Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
   "git_state": {
     "ahead": 0,
     "behind": 1,
