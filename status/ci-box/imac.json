@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-26T15:46:51Z",
+  "ts": "2026-11-26T15:51:58Z",
   "uptime": {
-    "uptime_secs": 80094,
-    "load_1": 17.49,
-    "load_5": 12.24,
-    "load_15": 7.24
+    "uptime_secs": 80401,
+    "load_1": 7.41,
+    "load_5": 11.63,
+    "load_15": 8.66
   },
   "memory": {
-    "free_pct": 47,
+    "free_pct": 49,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 94,
-    "runner_work_free_gb": 94
+    "root_free_gb": 95,
+    "runner_work_free_gb": 95
   },
   "thermal": {
     "throttled": false,
@@ -21,11 +21,22 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 0,
-    "current": []
+    "worker_count": 1,
+    "current": [
+      {
+        "runner_name": "actions-runner-ci-box-sp-light",
+        "job": "route",
+        "repo": "CuriocityDevAi/storeport",
+        "workflow": "ci",
+        "head_ref": "feat/M0-1126-P",
+        "event_name": "pull_request",
+        "pr": "463",
+        "started_at": "2026-11-26T15:51:57Z"
+      }
+    ]
   },
   "github": {
-    "latency_ms": 222,
+    "latency_ms": 130,
     "reachable": true
   },
   "netspeed": {
