@@ -1,13 +1,13 @@
 {
-  "ts": "2026-11-26T10:33:00Z",
+  "ts": "2026-11-26T10:38:06Z",
   "uptime": {
-    "uptime_secs": 61263,
-    "load_1": 6.57,
-    "load_5": 6.6,
-    "load_15": 6.08
+    "uptime_secs": 61569,
+    "load_1": 6.14,
+    "load_5": 7.3,
+    "load_15": 6.62
   },
   "memory": {
-    "free_pct": 54,
+    "free_pct": 57,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
@@ -24,18 +24,18 @@
     "worker_count": 1,
     "current": [
       {
-        "runner_name": "actions-runner-ci-box-sp-heavy",
-        "job": "heavy-mac",
+        "runner_name": "actions-runner-ci-box-sp-light",
+        "job": "post",
         "repo": "CuriocityDevAi/storeport",
-        "workflow": "ci",
+        "workflow": "ci-summary",
         "head_ref": "",
-        "event_name": "push",
-        "started_at": "2026-11-26T10:24:30Z"
+        "event_name": "workflow_run",
+        "started_at": "2026-11-26T10:38:06Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 133,
+    "latency_ms": 105,
     "reachable": true
   },
   "netspeed": {
