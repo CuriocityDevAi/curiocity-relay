@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-26T14:40:04Z",
+  "ts": "2026-11-26T14:45:10Z",
   "uptime": {
-    "uptime_secs": 76087,
-    "load_1": 2.3,
-    "load_5": 3.38,
-    "load_15": 4.53
+    "uptime_secs": 76393,
+    "load_1": 10.98,
+    "load_5": 7.21,
+    "load_15": 5.74
   },
   "memory": {
-    "free_pct": 59,
+    "free_pct": 50,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 100,
-    "runner_work_free_gb": 100
+    "root_free_gb": 99,
+    "runner_work_free_gb": 99
   },
   "thermal": {
     "throttled": false,
@@ -21,11 +21,21 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 0,
-    "current": []
+    "worker_count": 1,
+    "current": [
+      {
+        "runner_name": "actions-runner-ci-box-sp-heavy",
+        "job": "heavy-mac",
+        "repo": "CuriocityDevAi/storeport",
+        "workflow": "ci",
+        "head_ref": "",
+        "event_name": "push",
+        "started_at": "2026-11-26T14:43:06Z"
+      }
+    ]
   },
   "github": {
-    "latency_ms": 143,
+    "latency_ms": 141,
     "reachable": true
   },
   "netspeed": {
