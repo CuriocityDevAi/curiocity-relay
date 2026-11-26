@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T02:51:37.629Z",
+  "at": "2026-11-26T02:52:27.397Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -25,10 +25,8 @@
       "last_activity": "2026-11-26T02:34:15.566Z"
     },
     "r0": {
-      "current": "R0-1126-F",
-      "started_at": "2026-11-26T02:47:05.709Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-26T02:41:43.077Z"
+      "current": null,
+      "last_activity": "2026-11-26T02:52:26.343Z"
     }
   },
   "pane_close_failures": {},
@@ -41,11 +39,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.43,
-    "compressed_gb": 4.57,
+    "used_gb": 14.34,
+    "compressed_gb": 4.41,
     "swap_used_gb": 4.57,
     "pressure": "normal",
-    "at": "2026-11-26T02:51:05.647Z"
+    "at": "2026-11-26T02:52:12.698Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -139,9 +137,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 123,
+  "isolated_reports_collected": 124,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:42:41.207Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:42:41.207Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:m2 2026-11-26T02:43:17.113Z] [report-path] M2-1126-B: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T02:43:27.580Z] M2-1126-B → done · runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1126-B-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1126-B.json · {\"id\":\"M2-1126-B\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-26T02:43:28.188Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1126-B-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1126-B.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M2-1126-B.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T02:47:05.708Z] pick · R0-1126-F · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T02:47:08.546Z] R0-1126-F → started · runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-F.json · {\"id\":\"R0-1126-F\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T02:47:08.703Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1126-F.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): queue/r0/R0-1126-F.md, queue/r0/R0-1126-G.md, status/pipeline/R0-1126-F.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/1)\rerror: could not apply 51a3b2290... claim(r0): R0-1126-F started · runner-v8.3.2 · cmux-split · model=sonnet · source=queue-lin\n[hub-runner-v8.3.2:self-update 2026-11-26T02:50:30.498Z] 보류 · busy=1 claimQueue=0 processing=false",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:42:41.207Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:m2 2026-11-26T02:43:17.113Z] [report-path] M2-1126-B: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T02:43:27.580Z] M2-1126-B → done · runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1126-B-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1126-B.json · {\"id\":\"M2-1126-B\",\"hub\":\"m2\",\"state\":\"done\",\"at\":\"2026-11-26T02:43:28.188Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m2/M2-1126-B-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m2/M2-1126-B.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M2-1126-B.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T02:47:05.708Z] pick · R0-1126-F · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T02:47:08.546Z] R0-1126-F → started · runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-F.json · {\"id\":\"R0-1126-F\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T02:47:08.703Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1126-F.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): queue/r0/R0-1126-F.md, queue/r0/R0-1126-G.md, status/pipeline/R0-1126-F.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/1)\rerror: could not apply 51a3b2290... claim(r0): R0-1126-F started · runner-v8.3.2 · cmux-split · model=sonnet · source=queue-lin\n[hub-runner-v8.3.2:self-update 2026-11-26T02:50:30.498Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:r0 2026-11-26T02:52:05.837Z] [report-path] R0-1126-F: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 0,
