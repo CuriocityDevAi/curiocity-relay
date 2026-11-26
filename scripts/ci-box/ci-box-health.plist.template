@@ -2,9 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
   "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
-  launchd plist 템플릿 — ci-box heartbeat (M1-1126-C)
+  launchd plist 템플릿 — ci-box heartbeat (M1-1126-G)
   설치: install-health.sh 가 HOME / SCRIPT_DIR 를 치환 후
         ~/Library/LaunchAgents/dev.curiocity.ci-box-health.plist 에 배치
+  주의: health.sh 는 tailscale · networkQuality 절대경로 사용(PATH 불필요하나
+        git · gh · python3 는 PATH 에서 탐색하므로 EnvironmentVariables 필수)
 -->
 <plist version="1.0">
 <dict>
