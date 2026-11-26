@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-26T10:18:30.040Z",
+  "built_at": "2026-11-26T10:59:08.475Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-26T10:18:29.562Z"
+      "fetched_at": "2026-11-26T10:59:08.086Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-26T10:18:29.701Z"
+      "fetched_at": "2026-11-26T10:59:08.212Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6250,14 +6250,18 @@
                 "apps/commerce-core/src/api/admin/pos/loyalty/sessions/snapshots/**",
                 "apps/commerce-core/src/api/admin/pos/registers/[id]/next-customer/route.ts",
                 "apps/commerce-core/src/api/admin/pos/orders/[id]/ask-phone-on-display/**",
+                "apps/commerce-core/src/api/admin/pos/orders/[id]/phone-entry/**",
                 "apps/commerce-core/src/api/admin/pos/customer-display/snapshots/[id]/route.ts",
                 "apps/commerce-core/src/subscribers/order-snapshot-paid.ts",
                 "apps/commerce-core/src/types/customer-display.ts",
                 "apps/commerce-core/src/types/__tests__/customer-display-types.unit.spec.ts",
                 "apps/commerce-core/integration-tests/pos/cd-pos-screen-sync.spec.ts",
+                "apps/commerce-core/integration-tests/pos/cd-pos-sync-v3.spec.ts",
+                "apps/commerce-core/integration-tests/pos/cd-pos-sync-v4.spec.ts",
                 "apps/commerce-core/integration-tests/pos/cd-parallel-pay.spec.ts",
                 "apps/commerce-core/integration-tests/loyalty/cd-snapshot-skip.spec.ts",
-                "apps/commerce-core/integration-tests/loyalty/cd-phone-partial.spec.ts"
+                "apps/commerce-core/integration-tests/loyalty/cd-phone-partial.spec.ts",
+                "docs/contracts/cd-sync-contract-v1.4.md"
               ],
               "status": "live"
             },
@@ -6925,7 +6929,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-26T10:18:30.040Z"
+      "fetched_at": "2026-11-26T10:59:08.475Z"
     }
   ],
   "rollup": {
