@@ -1,81 +1,59 @@
 {
-  "at": "2026-11-26T14:01:57.507Z",
-  "pid": 40164,
+  "at": "2026-11-26T14:04:55.269Z",
+  "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
   "last_error": "blocked: runner-folder change pending Kyu install (events/runner-main-guard-20261126T085622Z.md)",
-  "last_error_at": "2026-11-26T13:14:59.530Z",
+  "last_error_at": "2026-11-26T14:04:20.065Z",
   "hubs": {
     "m0": {
       "current": null,
-      "last_activity": "2026-11-26T12:52:31.705Z"
+      "last_activity": null
     },
     "m1": {
       "current": null,
-      "last_activity": "2026-11-26T11:52:45.338Z"
+      "last_activity": null
     },
     "m2": {
       "current": null,
-      "last_activity": "2026-11-26T13:40:37.657Z"
+      "last_activity": null
     },
     "m3": {
       "current": null,
-      "last_activity": "2026-11-26T13:54:13.650Z"
+      "last_activity": null
     },
     "r0": {
       "current": null,
-      "last_activity": "2026-11-26T14:01:56.428Z"
+      "last_activity": null
     }
   },
   "pane_close_failures": {},
-  "last_sleep_gap": {
-    "lastMs": 21108,
-    "totalMs": 245148,
-    "phase": "await-landing",
-    "at": "2026-11-26T11:05:25.122Z"
-  },
-  "kyu_folder_intrusion": {
-    "hub": "r0",
-    "prompt_id": "R0-1126-S",
-    "folder": [
-      "/Users/kyu.lee/projects/storeport-kyu"
-    ],
-    "changed": [
-      {
-        "dir": "/Users/kyu.lee/projects/storeport-kyu",
-        "fields": [
-          "git-status",
-          "node_modules-mtime"
-        ],
-        "actor": "unknown"
-      }
-    ],
-    "at": "2026-11-26T08:00:27.120Z"
-  },
+  "last_sleep_gap": null,
+  "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.87,
-    "compressed_gb": 4.04,
+    "used_gb": 15.75,
+    "compressed_gb": 3.92,
     "swap_used_gb": 3.31,
     "pressure": "normal",
-    "at": "2026-11-26T14:01:55.066Z"
+    "at": "2026-11-26T14:04:22.869Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
-    "used_gb": 15.93
+    "used_gb": 15.75
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T14:00:03.932Z",
+      "at": "2026-11-26T14:04:21.797Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 18,
+      "api_calls": 26,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -83,18 +61,7 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/storeport",
-            "pr": "main",
-            "pr_display": "storeport:main",
-            "job": "heavy-mac",
-            "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 14,
-            "runner": "ci-box-storeport-heavy-imac",
-            "kind": "mac-heavy"
-          }
-        ]
+        "in_progress": []
       },
       "light": {
         "queued": 0,
@@ -108,41 +75,41 @@
           "pr": "#277",
           "pr_display": "fork:#277",
           "job": "playwright",
-          "step": "Expo export web",
-          "running_min": 1,
+          "step": "Run Playwright harnesses",
+          "running_min": 6,
           "runner": "GitHub Actions 1000008320",
           "kind": "cloud"
         }
       ],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 1,
+        "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 7,
+      "cloud_today": 11,
       "today": {
         "mac-heavy": {
-          "jobs": 167,
+          "jobs": 176,
           "avg_wait_min": 0.6,
           "avg_run_min": 2.5,
-          "success_rate": 83.2,
-          "run_min_total": 419.70000000000016
+          "success_rate": 83.5,
+          "run_min_total": 441.0000000000002
         },
         "mac-light": {
-          "jobs": 141,
+          "jobs": 145,
           "avg_wait_min": 2,
           "avg_run_min": 0.5,
-          "success_rate": 95,
-          "run_min_total": 64.29999999999987
+          "success_rate": 94.5,
+          "run_min_total": 65.59999999999987
         },
         "cloud": {
-          "jobs": 133,
+          "jobs": 140,
           "avg_wait_min": 0,
-          "avg_run_min": 1.5,
+          "avg_run_min": 1.4,
           "success_rate": 57.9,
-          "run_min_total": 195.39999999999972
+          "run_min_total": 201.6999999999997
         },
-        "cloud_cost_est_usd": 2.08,
+        "cloud_cost_est_usd": 2.152,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 58.199999999999996
       },
@@ -150,17 +117,17 @@
       "alerts": [],
       "partial": true
     },
-    "took_ms": 22467,
-    "at": "2026-11-26T14:00:23.946Z"
+    "took_ms": 21824,
+    "at": "2026-11-26T14:04:41.806Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 201,
+  "isolated_reports_collected": null,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:54:23.162Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:54:24.005Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:54:24.034Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:54:58.618Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:55:31.177Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:56:06.094Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:56:38.687Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:56:38.719Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:57:13.744Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:57:46.407Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:58:21.232Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:58:54.163Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-26T13:59:28.974Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:59:31.771Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T14:00:01.609Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:00:07.817Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:00:43.096Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:01:15.576Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:r0 2026-11-26T14:01:54.206Z] [report-path] R0-1126-AJ: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:01:55.064Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
+  "err_tail": "[hub-runner-v8.3.2:self-update 2026-11-26T14:04:11.757Z] node --check hub-runner-v8.3.mjs → status=0\n[hub-runner-v8.3.2:self-update 2026-11-26T14:04:11.758Z] selftest --selftest-stale-lock → status=0 [selftest-stale-lock] OK · 사망 PID lock 즉시 stale 처리 · 10분 대기 없음\n[hub-runner-v8.3.2:self-update 2026-11-26T14:04:11.758Z] selftest --selftest-merge-fail3 → status=0 [selftest-merge-fail3] OK · 연속 3회 → summarized=true · 4회 반복 억제 · 키 변경 시 리셋\n[hub-runner-v8.3.2:self-update 2026-11-26T14:04:11.758Z] selftest --selftest-report-path-off → status=0 [selftest-report-path-off] OK · flag off → false · 기본 on · ${ABS_PATH} 치환 정상\n[hub-runner-v8.3.2:self-update 2026-11-26T14:04:11.759Z] selftest --selftest-main-guard-d → status=0 [selftest-main-guard-D] OK\n[hub-runner-v8.3.2:self-update 2026-11-26T14:04:11.759Z] selftest --selftest-main-guard-e → status=0 [selftest-main-guard-E] OK\n[hub-runner-v8.3.2:self-update 2026-11-26T14:04:11.759Z] selftest --selftest-head-moved-unrelated → status=0 [selftest-head-moved-unrelated] OK · HEAD 이동 + report 미터치 → head-moved 안 됨 (timeout)\n[hub-runner-v8.3.2:self-update 2026-11-26T14:04:11.759Z] selftest --selftest-safe-push-detached → status=0 [selftest-safe-push-detached] OK · detached + feature-branch 모두 not-on-main 거부\n[hub-runner-v8.3.2:self-update 2026-11-26T14:04:11.759Z] selftest --selftest-watchdog-fork-wake → status=0 [selftest-watchdog-fork-wake] PASS · 4 checks\n[hub-runner-v8.3.2:self-update 2026-11-26T14:04:11.759Z] 심링크 동일 · /Users/kyu.lee/.hub-runner/bin/hub-runner.mjs → /Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v8.3.mjs · prev=/Users/kyu.lee/projects/curiocity-relay/scripts/hub-runner-v8.3.mjs\n[hub-runner-v8.3.2:self-update 2026-11-26T14:04:11.760Z] pending 기록 · prev=hub-runner-v8.3.mjs next=hub-runner-v8.3.mjs · 2 초 뒤 exit(0)\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:04:11.762Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2 2026-11-26T14:04:13.945Z] 시작 · v8.3.2 · script=hub-runner-v8.3.mjs · boot_sha=a2b169ad61fa · mode=--all · once=false · dry-run=false · poll=30000ms · claude=/Users/kyu.lee/.local/bin/claude · version=2.1.128 (Claude Code) · model=opus · display=cmux-split · cmux=/Applications/cmux.app/Contents/Resources/bin/cmux · cmux_password=*** · heartbeat=30m · run_timeout=60m · self_update=10m\n[hub-runner-v8.3.2:self-update 2026-11-26T14:04:13.947Z] boot confirm · count=1 · 180 s 내 heartbeat 필요\n[hub-runner-v8.3.2:self-update 2026-11-26T14:04:17.358Z] boot heartbeat OK · pending 정리 · prev=hub-runner-v8.3.mjs next=hub-runner-v8.3.mjs\n[hub-runner-v8.3.2:self-update 2026-11-26T14:04:19.890Z] ci-watch.sh 래퍼 배포\n[hub-runner-v8.3.2:git 2026-11-26T14:04:20.065Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261126T085622Z.md\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:04:20.843Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:heartbeat 2026-11-26T14:04:22.804Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T14:04:53.083Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
   "git_state": {
     "ahead": 0,
-    "behind": 0,
+    "behind": 1,
     "rebase_in_progress": false,
     "merge_in_progress": false,
     "conflicted": [],
@@ -170,7 +137,7 @@
     {
       "name": "ci-box-storeport-heavy-imac",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "ci-box-storeport-light-imac",
@@ -195,7 +162,7 @@
     {
       "name": "ci-box-fork-light-imac",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "curiocity-mac-fork",
