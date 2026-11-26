@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T23:15:26.809Z",
+  "at": "2026-11-26T23:32:48.803Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -9,11 +9,15 @@
   "last_error_at": "2026-11-26T16:49:18.143Z",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1127-B",
+      "started_at": "2026-11-26T23:32:43.306Z",
+      "model": "opus",
       "last_activity": "2026-11-26T22:56:19.926Z"
     },
     "m1": {
-      "current": null,
+      "current": "M1-1127-C",
+      "started_at": "2026-11-26T23:32:44.831Z",
+      "model": "sonnet",
       "last_activity": "2026-11-26T23:15:25.768Z"
     },
     "m2": {
@@ -21,7 +25,9 @@
       "last_activity": "2026-11-26T22:57:22.019Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1127-B",
+      "started_at": "2026-11-26T23:32:46.106Z",
+      "model": "sonnet",
       "last_activity": "2026-11-26T22:53:38.470Z"
     },
     "r0": {
@@ -39,96 +45,25 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.49,
-    "compressed_gb": 3.74,
-    "swap_used_gb": 3.22,
+    "used_gb": 15.87,
+    "compressed_gb": 3.48,
+    "swap_used_gb": 3.2,
     "pressure": "normal",
-    "at": "2026-11-26T23:15:24.438Z"
+    "at": "2026-11-26T23:32:09.362Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
     "used_gb": 15.94
   },
   "ci": {
-    "data": {
-      "at": "2026-11-26T23:14:46.886Z",
-      "repos_scanned": [
-        "CuriocityDevAi/storeport",
-        "CuriocityDevAi/agilo-medusa-pos-fork"
-      ],
-      "repos_failed": [],
-      "repos_skipped": [],
-      "api_calls": 12,
-      "api_budget": 40,
-      "api_overflow": false,
-      "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-            "pr": "#281",
-            "pr_display": "fork:#281",
-            "job": "playwright",
-            "step": "Run actions/checkout@v4",
-            "running_min": 0,
-            "runner": "ci-box-fork-heavy-imac",
-            "kind": "mac-heavy"
-          }
-        ]
-      },
-      "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "cloud_in_progress": [],
-      "runners": {
-        "heavy_online": 3,
-        "heavy_busy": 1,
-        "light_online": 1
-      },
-      "cloud_today": 0,
-      "today": {
-        "mac-heavy": {
-          "jobs": 87,
-          "avg_wait_min": 2.1,
-          "avg_run_min": 1.3,
-          "success_rate": 79.3,
-          "run_min_total": 114.89999999999999
-        },
-        "mac-light": {
-          "jobs": 13,
-          "avg_wait_min": 0.2,
-          "avg_run_min": 0.3,
-          "success_rate": 92.3,
-          "run_min_total": 3.7
-        },
-        "cloud": {
-          "jobs": 6,
-          "avg_wait_min": 0,
-          "avg_run_min": 2.8,
-          "success_rate": 0,
-          "run_min_total": 16.7
-        },
-        "cloud_cost_est_usd": 0.136,
-        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 20.900000000000002
-      },
-      "jsonl_added": 3,
-      "alerts": []
-    },
-    "took_ms": 11042,
-    "at": "2026-11-26T23:14:56.199Z"
+    "error": "deadline 30000ms",
+    "at": "2026-11-26T23:32:09.362Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 36,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:10:46.255Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:11:18.534Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:11:54.725Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:12:26.991Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:13:07.210Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:r0 2026-11-26T23:13:18.936Z] [report-path] R0-1127-A: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T23:13:34.767Z] R0-1127-A → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1127-A-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-A.json · {\"id\":\"R0-1127-A\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T23:13:34.877Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1127-A-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1127-A.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1127-A.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:13:40.251Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:14:16.509Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:14:48.019Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:14:48.051Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:14:48.639Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:14:48.668Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:m1 2026-11-26T23:15:16.913Z] [report-path] M1-1127-B: REPORT_PATH 격리 리포트 수거·push",
+  "err_tail": "[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1127-B.json · {\"id\":\"M1-1127-B\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-26T23:15:27.549Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1127-B-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1127-B.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): status/ci/2026-11-27.jsonl, status/ci/runner-restarts-2026-11-27.jsonl, status/pipeline/M1-1127-B.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T23:18:17.573Z] sleep observed · gap=144s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-26T23:18:47.786Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:heartbeat 2026-11-26T23:20:39.972Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:state 2026-11-26T23:32:09.132Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:32:09.363Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/storeport): Command failed: gh api repos/CuriocityDevAi/storeport/actions/runners\nerror connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:32:10.778Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:32:10.908Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T23:32:39.515Z] sleep observed · gap=862s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-26T23:32:39.766Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m0 2026-11-26T23:32:43.306Z] pick · M0-1127-B · model=opus · display=cmux-split\n[hub-runner-v8.3.2:m1 2026-11-26T23:32:44.831Z] pick · M1-1127-C · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:m3 2026-11-26T23:32:46.106Z] pick · M3-1127-B · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 1,
@@ -139,34 +74,14 @@
   },
   "ci_runners": [
     {
-      "name": "ci-box-storeport-heavy-imac",
-      "status": "online",
-      "busy": false
-    },
-    {
-      "name": "ci-box-storeport-light-imac",
-      "status": "online",
-      "busy": false
-    },
-    {
-      "name": "Youngkyus-MacBook-Pro-M1",
-      "status": "offline",
-      "busy": false
-    },
-    {
-      "name": "curiocity-mac-light",
-      "status": "offline",
-      "busy": false
-    },
-    {
       "name": "ci-box-fork-heavy-imac",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "ci-box-fork-light-imac",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "curiocity-mac-fork",
