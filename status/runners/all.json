@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T13:15:39.491Z",
+  "at": "2026-11-26T13:16:13.803Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -60,11 +60,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.13,
-    "compressed_gb": 4.14,
+    "used_gb": 15.44,
+    "compressed_gb": 4.09,
     "swap_used_gb": 3.32,
     "pressure": "normal",
-    "at": "2026-11-26T13:15:07.208Z"
+    "at": "2026-11-26T13:15:42.207Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -138,7 +138,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 194,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/1)\rerror: could not apply c86746846... claim(m3): M3-1126-O started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-defau\n[hub-runner-v8.3.2:git 2026-11-26T12:58:35.639Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T12:59:11.339Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T12:59:44.805Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T13:00:20.539Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T13:00:54.122Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T13:01:30.986Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:self-update 2026-11-26T13:01:35.695Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:git 2026-11-26T13:02:06.021Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T13:02:42.260Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T13:03:15.733Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:heartbeat 2026-11-26T13:08:36.807Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T13:09:07.116Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:self-update 2026-11-26T13:12:10.053Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:git 2026-11-26T13:12:40.255Z] 러너 폴더 침범 감지 · files=queue/m3/M3-1126-P.md · guess_hub=m3\n[hub-runner-v8.3.2:git 2026-11-26T13:12:40.255Z] blocked: runner-folder change pending Kyu install · files=queue/m3/M3-1126-P.md,events/runner-main-guard-20261126T085622Z.md\n[hub-runner-v8.3.2:heartbeat 2026-11-26T13:14:29.221Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T13:14:59.529Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261126T085622Z.md\n[hub-runner-v8.3.2:heartbeat 2026-11-26T13:15:03.812Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git",
+  "err_tail": "[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/1)\rerror: could not apply c86746846... claim(m3): M3-1126-O started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-defau\n[hub-runner-v8.3.2:git 2026-11-26T12:58:35.639Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T12:59:11.339Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T12:59:44.805Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T13:00:20.539Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T13:00:54.122Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T13:01:30.986Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:self-update 2026-11-26T13:01:35.695Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:git 2026-11-26T13:02:06.021Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T13:02:42.260Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T13:03:15.733Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:heartbeat 2026-11-26T13:08:36.807Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T13:09:07.116Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:self-update 2026-11-26T13:12:10.053Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:git 2026-11-26T13:12:40.255Z] 러너 폴더 침범 감지 · files=queue/m3/M3-1126-P.md · guess_hub=m3\n[hub-runner-v8.3.2:git 2026-11-26T13:12:40.255Z] blocked: runner-folder change pending Kyu install · files=queue/m3/M3-1126-P.md,events/runner-main-guard-20261126T085622Z.md\n[hub-runner-v8.3.2:heartbeat 2026-11-26T13:14:29.221Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T13:14:59.529Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261126T085622Z.md\n[hub-runner-v8.3.2:heartbeat 2026-11-26T13:15:03.812Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:heartbeat 2026-11-26T13:15:40.545Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git",
   "git_state": {
     "ahead": 0,
     "behind": 0,
