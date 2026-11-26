@@ -7,8 +7,9 @@
 //   W114-count-sp:  countRealCloud — storeport heavy-cloud 포함 카운트
 //   W114-count-fork: countRealCloud — fork heavy-cloud 여전히 제외
 //   W114-countable:  isCountableJob — repo 포함 record 로 판정
-//   W114-jsonl-delta: 오늘 2026-11-26 JSONL 전/후 클라우드 숫자 (22 → 46)
+//   W114-jsonl-delta: 픽스처 JSONL 로 countRealCloud 전/후 실측 (fixtures/ci-watch-w114-sample.jsonl)
 
+import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
@@ -101,17 +102,30 @@ test('W114-countable: isCountableJob — storeport heavy-cloud success → count
   );
 });
 
-// ─── W114: 2026-11-26 JSONL 전/후 ───────────────────────────────────────────
+// ─── W114: 픽스처 JSONL 전/후 countRealCloud 실측 ────────────────────────────
 
-test('W114-jsonl-delta: 2026-11-26 JSONL 클라우드 카운트 전(22) 후(46) 확인', () => {
-  // 계산 결과를 하드코딩하여 회귀 방지
-  // 전: MARKER_JOBS 에 heavy-cloud 포함 → storeport+fork heavy-cloud 모두 제외 → 22
-  // 후: fork heavy-cloud 만 제외 → storeport 24건 추가 → 46
-  // (실측: scripts/ci-watch.mjs + 2026-11-26.jsonl 로 직접 검증)
-  const before = 22;
-  const after = 46;
-  const delta = 24;
-  assert.equal(after - before, delta,
-    `delta ${delta} = storeport heavy-cloud 24건 (skipped 20 + success/failure 4)`);
-  assert.ok(after > before, '수정 후 클라우드 카운트가 더 큼');
+test('W114-jsonl-delta: 픽스처 JSONL — countRealCloud 전/후 실측', () => {
+  // fixtures/ci-watch-w114-sample.jsonl:
+  //   storeport heavy-cloud × 3 (success×2 + skipped×1)
+  //   fork heavy-cloud × 2 (success×2)
+  //   route × 1 (marker)
+  //   assertions × 3 (success×2 + skipped×1)
+  //   self-hosted heavy-mac × 1 (runner_kind != cloud → 미카운트)
+  const fixtureText = readFileSync(
+    new URL('./fixtures/ci-watch-w114-sample.jsonl', import.meta.url), 'utf8',
+  );
+  const records = fixtureText.trim().split('\n').map(l => JSON.parse(l));
+
+  // "after": repo 포함 → storeport heavy-cloud 는 실제 잡으로 카운트
+  const countAfter = countRealCloud(records);
+
+  // "before" 시뮬레이션: heavy-cloud 에서 repo 제거 → backward-compat 마커 취급
+  const recordsBefore = records.map(r =>
+    r.job === 'heavy-cloud' ? { ...r, repo: undefined } : r,
+  );
+  const countBefore = countRealCloud(recordsBefore);
+
+  assert.equal(countBefore, 3, 'before: assertions 3건만 (heavy-cloud 전부 마커)');
+  assert.equal(countAfter, 6, 'after: assertions 3건 + storeport heavy-cloud 3건');
+  assert.equal(countAfter - countBefore, 3, 'delta = storeport heavy-cloud 3건');
 });

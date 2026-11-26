@@ -285,7 +285,7 @@ async function fetchQueuedForRepo(repo) {
 
   const queued = [];
   for (const run of ((qData && qData.workflow_runs) || [])) {
-    if (isMarkerJob(run.name)) continue;
+    if (isMarkerJob(run.name, repo)) continue;
     const prNum = run.pull_requests?.[0]?.number || null;
     const prStr = prNum ? `#${prNum}` : (run.head_branch || '-');
     const promptId = extractPromptId(run.head_branch) || extractPromptId(run.name) || null;
