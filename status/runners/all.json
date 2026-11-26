@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T10:24:33.933Z",
+  "at": "2026-11-26T10:29:34.992Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -39,10 +39,10 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 153259,
-    "totalMs": 265401,
+    "lastMs": 16891,
+    "totalMs": 282292,
     "phase": "await-landing",
-    "at": "2026-11-26T10:24:01.219Z"
+    "at": "2026-11-26T10:25:17.045Z"
   },
   "kyu_folder_intrusion": {
     "hub": "r0",
@@ -64,11 +64,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.7,
-    "compressed_gb": 5.67,
-    "swap_used_gb": 2.95,
+    "used_gb": 15.43,
+    "compressed_gb": 3.26,
+    "swap_used_gb": 4.23,
     "pressure": "normal",
-    "at": "2026-11-26T10:24:01.670Z"
+    "at": "2026-11-26T10:29:03.035Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -76,7 +76,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T10:17:32.316Z",
+      "at": "2026-11-26T10:24:31.224Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport"
       ],
@@ -90,7 +90,18 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "main",
+            "pr_display": "storeport:main",
+            "job": "heavy-mac",
+            "step": "Checkout",
+            "running_min": 0,
+            "runner": "ci-box-storeport-heavy-imac",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -101,17 +112,17 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 1,
-        "heavy_busy": 0,
+        "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 3,
+      "cloud_today": 1,
       "today": {
         "mac-heavy": {
-          "jobs": 137,
+          "jobs": 132,
           "avg_wait_min": 0.6,
           "avg_run_min": 2.7,
-          "success_rate": 88.3,
-          "run_min_total": 364.00000000000017
+          "success_rate": 87.9,
+          "run_min_total": 354.9000000000001
         },
         "mac-light": {
           "jobs": 103,
@@ -121,28 +132,28 @@
           "run_min_total": 44.799999999999926
         },
         "cloud": {
-          "jobs": 104,
+          "jobs": 102,
           "avg_wait_min": 0,
           "avg_run_min": 1,
-          "success_rate": 57.7,
-          "run_min_total": 103.9999999999998
+          "success_rate": 57.8,
+          "run_min_total": 103.8999999999998
         },
-        "cloud_cost_est_usd": 1.24,
+        "cloud_cost_est_usd": 1.232,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 38.3
       },
-      "jsonl_added": 9,
+      "jsonl_added": 2,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 15892,
-    "at": "2026-11-26T10:17:46.487Z"
+    "took_ms": 17635,
+    "at": "2026-11-26T10:24:45.705Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 177,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:17:40.840Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:18:15.157Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:m3 2026-11-26T10:21:11.363Z] sleep gap 감지 109s · 예산 보정 · 누적 109s · phase=await-landing\n[hub-runner-v8.3.2:r0 2026-11-26T10:21:11.861Z] sleep gap 감지 108s · 예산 보정 · 누적 108s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-26T10:21:12.303Z] sleep gap 감지 102s · 예산 보정 · 누적 102s · phase=await-landing\n[hub-runner-v8.3.2:m0 2026-11-26T10:21:22.963Z] sleep gap 감지 112s · 예산 보정 · 누적 112s · phase=await-landing\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T10:21:34.256Z] sleep observed · gap=134s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-26T10:23:42.531Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:heartbeat 2026-11-26T10:23:55.171Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:self-update 2026-11-26T10:23:57.941Z] 보류 · busy=4 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m3 2026-11-26T10:23:57.945Z] sleep gap 감지 162s · 예산 보정 · 누적 270s · phase=await-landing\n[hub-runner-v8.3.2:r0 2026-11-26T10:24:00.272Z] sleep gap 감지 163s · 예산 보정 · 누적 272s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-26T10:24:00.692Z] sleep gap 감지 163s · 예산 보정 · 누적 265s · phase=await-landing\n[hub-runner-v8.3.2:m0 2026-11-26T10:24:01.219Z] sleep gap 감지 153s · 예산 보정 · 누적 265s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:24:01.707Z] [gh-runner-watchdog] wake: mac-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.Youngkyus-MacBook-Pro-M1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:24:01.765Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:24:02.724Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:24:02.749Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T10:24:28.069Z] sleep observed · gap=174s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-26T10:24:28.235Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:24:01.707Z] [gh-runner-watchdog] wake: mac-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.Youngkyus-MacBook-Pro-M1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:24:01.765Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:24:02.724Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:24:02.749Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T10:24:28.069Z] sleep observed · gap=174s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-26T10:24:28.235Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:24:40.355Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/storeport): Command failed: gh api repos/CuriocityDevAi/storeport/actions/runners\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:24:41.146Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:24:41.174Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:24:41.174Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=unknown\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:24:41.174Z] [gh-runner-watchdog] partial skip: mac-light gh_status=unknown\n[hub-runner-v8.3.2:r0 2026-11-26T10:25:07.211Z] sleep gap 감지 15s · 예산 보정 · 누적 287s · phase=await-landing\n[hub-runner-v8.3.2:m0 2026-11-26T10:25:17.045Z] sleep gap 감지 17s · 예산 보정 · 누적 282s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:25:20.073Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:25:55.271Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:26:35.429Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:27:12.262Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:27:49.092Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:28:24.474Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:29:03.033Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -155,12 +166,12 @@
     {
       "name": "ci-box-storeport-heavy-imac",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "ci-box-storeport-light-imac",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
