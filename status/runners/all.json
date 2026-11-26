@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T01:24:17.609Z",
+  "at": "2026-11-26T01:24:54.365Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -25,10 +25,8 @@
       "last_activity": "2026-11-25T17:12:57.390Z"
     },
     "r0": {
-      "current": "R0-1125-AT",
-      "started_at": "2026-11-26T01:21:27.603Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-25T22:58:56.990Z"
+      "current": null,
+      "last_activity": "2026-11-26T01:24:53.380Z"
     }
   },
   "pane_close_failures": {},
@@ -41,11 +39,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.75,
-    "compressed_gb": 5.17,
-    "swap_used_gb": 3.41,
+    "used_gb": 15.78,
+    "compressed_gb": 5.39,
+    "swap_used_gb": 3.31,
     "pressure": "normal",
-    "at": "2026-11-26T01:23:45.182Z"
+    "at": "2026-11-26T01:24:23.746Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -53,14 +51,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T01:19:10.929Z",
+      "at": "2026-11-26T01:24:17.016Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 10,
+      "api_calls": 8,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -85,11 +83,11 @@
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 12,
-          "avg_wait_min": 0.9,
-          "avg_run_min": 3.1,
-          "success_rate": 83.3,
-          "run_min_total": 36.99999999999999
+          "jobs": 10,
+          "avg_wait_min": 1.1,
+          "avg_run_min": 3.6,
+          "success_rate": 80,
+          "run_min_total": 36.3
         },
         "mac-light": {
           "jobs": 17,
@@ -109,17 +107,17 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 13.5
       },
-      "jsonl_added": 2,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 11225,
-    "at": "2026-11-26T01:19:19.915Z"
+    "took_ms": 13070,
+    "at": "2026-11-26T01:24:27.974Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 106,
+  "isolated_reports_collected": 107,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T01:19:14.981Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T01:19:14.981Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T01:19:14.981Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:r0 2026-11-26T01:21:27.602Z] pick · R0-1125-AT · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T01:21:30.500Z] R0-1125-AT → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-AT.json · {\"id\":\"R0-1125-AT\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T01:21:30.742Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-AT.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): queue/r0/R0-1125-AT.md, status/ci/2026-11-26.jsonl, status/pipeline/R0-1125-AT.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] 2nd push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n ! [remote rejected]     HEAD -> main (cannot lock ref 'refs/heads/main': is at a15af2013d9a303939991f145bde4e689db06e8c but expected 925d78cde212240f563e3b1730a372cdda989d91)\nerror: failed to push some refs to 'https://github.com/CuriocityDevAi/curiocity-relay.git'\n[hub-runner-v8.3.2:claim 2026-11-26T01:21:35.146Z] claim.mjs 실패 (R0-1125-AT started): Command failed: /opt/homebrew/Cellar/node@22/22.23.4_2/bin/node /Users/kyu.lee/projects/curiocity-relay/scripts/claim.mjs R0-1125-AT started runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-AT.log\n[hub-runner-v8.3.2:git 2026-11-26T01:21:59.522Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T01:22:34.468Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T01:23:07.487Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T01:23:42.361Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T01:24:15.096Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T01:19:14.981Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T01:19:14.981Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:r0 2026-11-26T01:21:27.602Z] pick · R0-1125-AT · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T01:21:30.500Z] R0-1125-AT → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1125-AT.json · {\"id\":\"R0-1125-AT\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T01:21:30.742Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-AT.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): queue/r0/R0-1125-AT.md, status/ci/2026-11-26.jsonl, status/pipeline/R0-1125-AT.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] 2nd push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n ! [remote rejected]     HEAD -> main (cannot lock ref 'refs/heads/main': is at a15af2013d9a303939991f145bde4e689db06e8c but expected 925d78cde212240f563e3b1730a372cdda989d91)\nerror: failed to push some refs to 'https://github.com/CuriocityDevAi/curiocity-relay.git'\n[hub-runner-v8.3.2:claim 2026-11-26T01:21:35.146Z] claim.mjs 실패 (R0-1125-AT started): Command failed: /opt/homebrew/Cellar/node@22/22.23.4_2/bin/node /Users/kyu.lee/projects/curiocity-relay/scripts/claim.mjs R0-1125-AT started runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1125-AT.log\n[hub-runner-v8.3.2:git 2026-11-26T01:21:59.522Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T01:22:34.468Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T01:23:07.487Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T01:23:42.361Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T01:24:15.096Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:r0 2026-11-26T01:24:51.202Z] [report-path] R0-1125-AT: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 0,
