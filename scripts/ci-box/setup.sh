@@ -85,8 +85,8 @@ if [ "$DRY_RUN" = "1" ]; then
     echo "[DRY] storeport light runner: $RUNNER_STOREPORT_LIGHT  labels=curiocity-mac-light"
     echo "[DRY] fork heavy runner:      $RUNNER_FORK_HEAVY       labels=curiocity-mac-fork"
     echo "[DRY] fork light runner:      $RUNNER_FORK_LIGHT       labels=curiocity-mac-fork-light"
-    echo "[DRY] launchd plist x4 → ~/Library/LaunchAgents/"
-    echo "[DRY] launchctl load -w (x4)"
+    echo "[DRY] ./svc.sh install x4  (runsvc.sh 복사 · plist 생성 · 로그 디렉토리)"
+    echo "[DRY] ./svc.sh start x4   (launchctl load)"
 else
     echo "storeport 등록 토큰 입력 (echo 없음):"
     read -rs TOKEN_STOREPORT
@@ -103,6 +103,21 @@ else
 
     unset TOKEN_STOREPORT TOKEN_FORK
 fi
+
+echo ""
+echo "=============================="
+echo "  러너 상태 검증 (launchd PID)"
+echo "=============================="
+_verify_all_ok=0
+verify_runner_pid "$REPO_STOREPORT" "$RUNNER_STOREPORT_HEAVY" || _verify_all_ok=1
+verify_runner_pid "$REPO_STOREPORT" "$RUNNER_STOREPORT_LIGHT" || _verify_all_ok=1
+verify_runner_pid "$REPO_FORK"      "$RUNNER_FORK_HEAVY"      || _verify_all_ok=1
+verify_runner_pid "$REPO_FORK"      "$RUNNER_FORK_LIGHT"      || _verify_all_ok=1
+if [ "$_verify_all_ok" != "0" ]; then
+    echo ""
+    printf '\033[31m[ci-box] 경고: 일부 러너가 시작되지 않았습니다. 위 stderr.log 를 확인하세요.\033[0m\n' >&2
+fi
+unset _verify_all_ok
 
 echo ""
 echo "=============================="
