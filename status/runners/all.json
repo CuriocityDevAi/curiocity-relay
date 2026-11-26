@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T02:39:44.692Z",
+  "at": "2026-11-26T02:40:10.900Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -15,10 +15,8 @@
       "last_activity": "2026-11-26T02:18:30.050Z"
     },
     "m1": {
-      "current": "M1-1126-E",
-      "started_at": "2026-11-26T02:36:43.071Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-26T02:25:16.263Z"
+      "current": null,
+      "last_activity": "2026-11-26T02:40:09.501Z"
     },
     "m2": {
       "current": "M2-1126-B",
@@ -47,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.54,
-    "compressed_gb": 5.53,
-    "swap_used_gb": 4.56,
+    "used_gb": 15.17,
+    "compressed_gb": 4.85,
+    "swap_used_gb": 4.75,
     "pressure": "normal",
-    "at": "2026-11-26T02:39:12.115Z"
+    "at": "2026-11-26T02:39:55.362Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -134,9 +132,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 119,
+  "isolated_reports_collected": 121,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:36:55.760Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:36:55.760Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:37:27.251Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:37:27.251Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:37:27.849Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:37:27.850Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:00.705Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:00.705Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:01.399Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:01.399Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:38.602Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:38.602Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:39.181Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:39.181Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:39:12.114Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:39:12.114Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:39:12.674Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:39:12.674Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:37:27.849Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:37:27.850Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:00.705Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:00.705Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:01.399Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:01.399Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:38.602Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:38.602Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:39.181Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:38:39.181Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:39:12.114Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:39:12.114Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:39:12.674Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:39:12.674Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:m1 2026-11-26T02:39:50.012Z] [report-path] M1-1126-E: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:m0 2026-11-26T02:39:54.714Z] [report-path] M0-1126-B: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:39:54.949Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:39:54.949Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:39:56.187Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:39:56.187Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online",
   "git_state": {
     "ahead": 0,
     "behind": 0,
