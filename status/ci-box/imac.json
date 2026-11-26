@@ -1,13 +1,13 @@
 {
-  "ts": "2026-11-26T04:16:05Z",
+  "ts": "2026-11-26T04:21:11Z",
   "uptime": {
-    "uptime_secs": 38648,
-    "load_1": 2.5,
-    "load_5": 2.54,
-    "load_15": 4.26
+    "uptime_secs": 38954,
+    "load_1": 2.31,
+    "load_5": 2.37,
+    "load_15": 3.67
   },
   "memory": {
-    "free_pct": 27,
+    "free_pct": 55,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
@@ -16,32 +16,31 @@
     "runner_work_free_gb": 110
   },
   "thermal": {
-    "throttled": true,
+    "throttled": false,
     "cpu_speed_limit_pct": 100
   },
   "runners": {
-    "listener_count": 0,
+    "listener_count": 4,
     "worker_count": 0
   },
   "github": {
-    "latency_ms": 136,
+    "latency_ms": 133,
     "reachable": true
   },
   "netspeed": {
-    "dl_mbps": 0,
-    "ul_mbps": 0,
-    "rpm": 0,
-    "cached": true
+    "dl_mbps": null,
+    "ul_mbps": null,
+    "rpm": null
   },
   "postgres": {
     "alive": true
   },
   "tailscale": {
-    "up": false,
-    "ip": ""
+    "up": true,
+    "ip": "100.82.115.70"
   },
-  "health": "bad",
+  "health": "ok",
   "reasons": [
-    "runners_0_lt_4"
+    "unknown_netspeed"
   ]
 }
