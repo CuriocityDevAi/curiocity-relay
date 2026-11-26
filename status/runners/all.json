@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T15:40:23.606Z",
+  "at": "2026-11-26T15:42:44.000Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -45,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.75,
-    "compressed_gb": 4.31,
+    "used_gb": 15.88,
+    "compressed_gb": 4.55,
     "swap_used_gb": 2.98,
     "pressure": "normal",
-    "at": "2026-11-26T15:39:49.969Z"
+    "at": "2026-11-26T15:42:11.449Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -57,7 +57,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T15:38:28.962Z",
+      "at": "2026-11-26T15:40:55.499Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -114,16 +114,17 @@
         "wasted_min": 58.199999999999996
       },
       "jsonl_added": 0,
-      "alerts": []
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 13009,
-    "at": "2026-11-26T15:38:40.148Z"
+    "took_ms": 14439,
+    "at": "2026-11-26T15:41:08.249Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 9,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T15:31:24.100Z] pick · R0-1126-AO · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T15:31:28.560Z] R0-1126-AO → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-AO.json · {\"id\":\"R0-1126-AO\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T15:31:28.678Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1126-AO.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/r0/R0-1126-AO.md, status/pipeline/R0-1126-AO.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:heartbeat 2026-11-26T15:33:45.013Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T15:34:17.500Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T15:36:45.630Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:36:47.939Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:36:48.692Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:36:48.724Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:git 2026-11-26T15:37:15.876Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:self-update 2026-11-26T15:37:23.838Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m2 2026-11-26T15:40:22.139Z] pick · M2-1126-R · model=sonnet · display=cmux-split",
+  "err_tail": "[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:heartbeat 2026-11-26T15:33:45.013Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T15:34:17.500Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T15:36:45.630Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:36:47.939Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:36:48.692Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:36:48.724Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:git 2026-11-26T15:37:15.876Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:self-update 2026-11-26T15:37:23.838Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m2 2026-11-26T15:40:22.139Z] pick · M2-1126-R · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T15:40:25.569Z] M2-1126-R → started · runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1126-R.json · {\"id\":\"M2-1126-R\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-26T15:40:25.676Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1126-R.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m2/M2-1126-R.md, status/pipeline/M2-1126-R.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)",
   "git_state": {
     "ahead": 0,
     "behind": 1,
