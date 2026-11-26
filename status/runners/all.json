@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T18:27:32.901Z",
+  "at": "2026-11-26T18:29:49.690Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -39,11 +39,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.23,
-    "compressed_gb": 2.78,
+    "used_gb": 15.6,
+    "compressed_gb": 2.8,
     "swap_used_gb": 3.49,
     "pressure": "normal",
-    "at": "2026-11-26T18:27:00.533Z"
+    "at": "2026-11-26T18:29:17.761Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -51,20 +51,20 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T18:25:52.886Z",
+      "at": "2026-11-26T18:28:09.624Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 11,
+      "api_calls": 10,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
         "queued": 1,
         "queued_prs": [],
-        "oldest_queued_min": 1,
+        "oldest_queued_min": 3,
         "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
@@ -73,7 +73,7 @@
             "pr_display": "fork:master",
             "job": "playwright",
             "step": "Run Playwright harnesses",
-            "running_min": 2,
+            "running_min": 4,
             "runner": "ci-box-fork-heavy-imac",
             "kind": "mac-heavy"
           }
@@ -94,11 +94,11 @@
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 55,
+          "jobs": 53,
           "avg_wait_min": 2.8,
           "avg_run_min": 1.5,
-          "success_rate": 85.5,
-          "run_min_total": 80.29999999999998
+          "success_rate": 84.9,
+          "run_min_total": 78.99999999999999
         },
         "mac-light": {
           "jobs": 11,
@@ -118,11 +118,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 16.900000000000002
       },
-      "jsonl_added": 2,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 9637,
-    "at": "2026-11-26T18:26:00.632Z"
+    "took_ms": 10035,
+    "at": "2026-11-26T18:28:17.876Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
@@ -166,7 +166,7 @@
     {
       "name": "ci-box-fork-light-imac",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "curiocity-mac-fork",
