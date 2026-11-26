@@ -14,6 +14,7 @@ import {
   existsSync,
   readFileSync,
   readdirSync,
+  realpathSync,
   statSync,
 } from 'node:fs';
 import { homedir } from 'node:os';
@@ -30,7 +31,7 @@ import {
   renderCompact,
 } from './watch/ci-watch-render.mjs';
 
-const CI_WATCH_VERSION = '1.4';
+const CI_WATCH_VERSION = '1.5';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -47,6 +48,8 @@ const REPO_ROOT = CI_WATCH_IS_DEPLOYED
   ? join(homedir(), 'projects', 'curiocity-relay')
   : resolve(HERE, '..');
 const THIS_FILE = fileURLToPath(import.meta.url);
+// M1-1126-A: 해시 기준을 realpath 로 통일 — 심링크 경로/실제 경로 혼재 시 불일치 방지.
+const THIS_FILE_REAL = (() => { try { return realpathSync(THIS_FILE); } catch { return THIS_FILE; } })();
 
 const LOCAL_REFRESH_MS = 3_000;              // 화면 갱신 · 로컬 전용 · GitHub 호출 없음
 const GH_QUEUE_REFRESH_MS = 30_000;          // GitHub 대기열+클라우드 조회 간격
@@ -755,12 +758,13 @@ async function checkOriginVersion() {
   return originVersionCache;
 }
 
-// 기동 시 실행 중 코드 해시 1회 고정 — 이후 디스크 변경 감지용
+// 기동 시 실행 중 코드 해시 1회 고정 — 이후 디스크 변경 감지용.
+// M1-1126-A: realpath 기준으로 통일해 심링크 경로 오탐 방지.
 let runningCodeHash = '';
-try { runningCodeHash = createHash('md5').update(readFileSync(THIS_FILE)).digest('hex'); } catch {}
+try { runningCodeHash = createHash('md5').update(readFileSync(THIS_FILE_REAL)).digest('hex'); } catch {}
 
 function getDiskFileHash() {
-  try { return createHash('md5').update(readFileSync(THIS_FILE)).digest('hex'); } catch { return ''; }
+  try { return createHash('md5').update(readFileSync(THIS_FILE_REAL)).digest('hex'); } catch { return ''; }
 }
 
 // M1-1124-H: 자기 파일 변화 감지 시 exit(0) → ci-watch.sh 래퍼가 재기동.
@@ -997,15 +1001,22 @@ async function tick(fullMode) {
 }
 
 // M1-1124-L F2: --once / CI_WATCH_ONCE=1 — import 연결 스모크 테스트용.
-// 심링크 실행 시 import.meta.url(resolve 완료)과 argv[1](심링크 경로) 불일치로
-// 아래 main 블록에 진입하지 않으므로 module 최상위에서 처리.
+// 최상위에서 처리해 심링크/직접 실행 양쪽에서 동작하도록 유지.
 // ERR_MODULE_NOT_FOUND 가 있으면 여기 오기 전에 프로세스가 비정상 종료한다.
 if (process.argv.includes('--once') || process.env.CI_WATCH_ONCE === '1') {
   process.stderr.write('[ci-watch:once] imports ok\n');
   process.exit(0);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+// M1-1126-A: 심링크 배포 시 import.meta.url(resolve 완료) 과 argv[1](심링크 경로) 가 불일치해
+// main 블록에 진입 못 하는 버그 수정 — argv[1] realpath 도 함께 비교한다.
+const _argv1 = process.argv[1] || '';
+const _argv1Real = (() => { try { return realpathSync(_argv1); } catch { return _argv1; } })();
+
+if (_argv1 && (
+  import.meta.url === pathToFileURL(_argv1).href ||
+  import.meta.url === pathToFileURL(_argv1Real).href
+)) {
   const fullMode = process.argv.includes('--full');
 
   process.on('SIGINT', () => { cleanupTerminal(); process.exit(0); });
@@ -1013,7 +1024,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   process.stdout.write('\x1b[?25l');
 
   // M1-1124-H: boot 로그 — 배포본 여부 · boot hash.
-  process.stderr.write(`[ci-watch:boot] deployed=${CI_WATCH_IS_DEPLOYED} · self=${THIS_FILE} · hash=${(runningCodeHash || '').slice(0, 12)}\n`);
+  process.stderr.write(`[ci-watch:boot] deployed=${CI_WATCH_IS_DEPLOYED} · real=${THIS_FILE_REAL} · hash=${(runningCodeHash || '').slice(0, 12)}\n`);
 
   function scheduleNext() {
     if (refreshTimer) clearTimeout(refreshTimer);
