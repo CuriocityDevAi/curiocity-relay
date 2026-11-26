@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-26T10:43:12Z",
+  "ts": "2026-11-26T10:48:19Z",
   "uptime": {
-    "uptime_secs": 61875,
-    "load_1": 3.66,
-    "load_5": 4.36,
-    "load_15": 5.41
+    "uptime_secs": 62182,
+    "load_1": 6.54,
+    "load_5": 6.77,
+    "load_15": 6.25
   },
   "memory": {
-    "free_pct": 58,
+    "free_pct": 54,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 106,
-    "runner_work_free_gb": 106
+    "root_free_gb": 105,
+    "runner_work_free_gb": 105
   },
   "thermal": {
     "throttled": false,
@@ -24,19 +24,19 @@
     "worker_count": 1,
     "current": [
       {
-        "runner_name": "actions-runner-ci-box-fork-light",
-        "job": "lint",
+        "runner_name": "actions-runner-ci-box-fork-heavy",
+        "job": "playwright",
         "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-        "workflow": "Lint",
+        "workflow": "CI",
         "head_ref": "feat/M3-1126-K",
         "event_name": "pull_request",
         "pr": "276",
-        "started_at": "2026-11-26T10:43:07Z"
+        "started_at": "2026-11-26T10:46:29Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 119,
+    "latency_ms": 136,
     "reachable": true
   },
   "netspeed": {
