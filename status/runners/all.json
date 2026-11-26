@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T05:13:17.142Z",
+  "at": "2026-11-26T05:15:34.687Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -43,11 +43,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.58,
-    "compressed_gb": 3.61,
-    "swap_used_gb": 6.46,
+    "used_gb": 15.36,
+    "compressed_gb": 4.35,
+    "swap_used_gb": 6.43,
     "pressure": "normal",
-    "at": "2026-11-26T05:12:44.442Z"
+    "at": "2026-11-26T05:15:02.565Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -55,14 +55,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T05:08:04.583Z",
+      "at": "2026-11-26T05:13:15.183Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 15,
+      "api_calls": 9,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -78,24 +78,13 @@
         "oldest_queued_pr": null,
         "in_progress": []
       },
-      "cloud_in_progress": [
-        {
-          "repo": "CuriocityDevAi/storeport",
-          "pr": "#453",
-          "pr_display": "storeport:#453",
-          "job": "docker-build-commerce-core (ubuntu)",
-          "step": "docker build -f apps/commerce-core/Dockerfile .",
-          "running_min": 5,
-          "runner": "GitHub Actions 1000008227",
-          "kind": "cloud"
-        }
-      ],
+      "cloud_in_progress": [],
       "runners": {
         "heavy_online": 6,
         "heavy_busy": 0,
         "light_online": 2
       },
-      "cloud_today": 3,
+      "cloud_today": 1,
       "today": {
         "mac-heavy": {
           "jobs": 59,
@@ -112,27 +101,27 @@
           "run_min_total": 32.199999999999996
         },
         "cloud": {
-          "jobs": 46,
+          "jobs": 47,
           "avg_wait_min": 0,
-          "avg_run_min": 1.6,
-          "success_rate": 60.9,
-          "run_min_total": 74.39999999999995
+          "avg_run_min": 1.7,
+          "success_rate": 61.7,
+          "run_min_total": 82.09999999999995
         },
-        "cloud_cost_est_usd": 0.776,
+        "cloud_cost_est_usd": 0.84,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 20.7
       },
-      "jsonl_added": 15,
+      "jsonl_added": 1,
       "alerts": []
     },
-    "took_ms": 16584,
-    "at": "2026-11-26T05:08:19.596Z"
+    "took_ms": 12735,
+    "at": "2026-11-26T05:13:26.429Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 143,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/R0-1126-L.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T05:06:23.219Z] pick · R0-1126-M · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T05:06:25.411Z] R0-1126-M → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-M.json · {\"id\":\"R0-1126-M\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T05:06:25.522Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1126-M.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/R0-1126-M.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T05:11:59.763Z] [report-path] R0-1126-M: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T05:13:03.202Z] R0-1126-M → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-M-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-M.json · {\"id\":\"R0-1126-M\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T05:13:03.309Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-M-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-M.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/R0-1126-M.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T05:13:15.777Z] pick · R0-1126-N · model=sonnet · display=cmux-split",
+  "err_tail": "[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/R0-1126-M.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T05:11:59.763Z] [report-path] R0-1126-M: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T05:13:03.202Z] R0-1126-M → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-M-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-M.json · {\"id\":\"R0-1126-M\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T05:13:03.309Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-M-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-M.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/R0-1126-M.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T05:13:15.777Z] pick · R0-1126-N · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T05:13:19.005Z] R0-1126-N → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-N.json · {\"id\":\"R0-1126-N\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T05:13:19.111Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1126-N.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/R0-1126-N.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:self-update 2026-11-26T05:13:53.580Z] 보류 · busy=2 claimQueue=0 processing=false",
   "git_state": {
     "ahead": 0,
     "behind": 0,
