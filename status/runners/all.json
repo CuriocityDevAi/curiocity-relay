@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T08:00:04.643Z",
+  "at": "2026-11-26T08:00:28.089Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -27,10 +27,8 @@
       "last_activity": "2026-11-26T07:32:29.952Z"
     },
     "r0": {
-      "current": "R0-1126-S",
-      "started_at": "2026-11-26T07:48:42.209Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-26T07:44:58.506Z"
+      "current": null,
+      "last_activity": "2026-11-26T08:00:27.120Z"
     }
   },
   "pane_close_failures": {},
@@ -40,14 +38,31 @@
     "phase": "await-landing",
     "at": "2026-11-25T23:52:02.466Z"
   },
-  "kyu_folder_intrusion": null,
+  "kyu_folder_intrusion": {
+    "hub": "r0",
+    "prompt_id": "R0-1126-S",
+    "folder": [
+      "/Users/kyu.lee/projects/storeport-kyu"
+    ],
+    "changed": [
+      {
+        "dir": "/Users/kyu.lee/projects/storeport-kyu",
+        "fields": [
+          "git-status",
+          "node_modules-mtime"
+        ],
+        "actor": "unknown"
+      }
+    ],
+    "at": "2026-11-26T08:00:27.120Z"
+  },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.41,
-    "compressed_gb": 3.38,
+    "used_gb": 15.59,
+    "compressed_gb": 3.31,
     "swap_used_gb": 3.88,
     "pressure": "normal",
-    "at": "2026-11-26T07:59:32.475Z"
+    "at": "2026-11-26T08:00:09.730Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -119,9 +134,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 155,
+  "isolated_reports_collected": 156,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:55:33.445Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:55:34.077Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:55:34.077Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:07.374Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:07.374Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:07.942Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:07.943Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:41.472Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:41.472Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:42.039Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:42.039Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:self-update 2026-11-26T07:57:15.119Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m1 2026-11-26T07:58:54.854Z] pick · M1-1126-M · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T07:58:57.814Z] M1-1126-M → started · runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1126-M.json · {\"id\":\"M1-1126-M\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-26T07:58:57.927Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1126-M.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/ci/2026-11-26.jsonl, status/pipeline/M1-1126-M.jsonl\n[claim] committed\n[claim] pushed",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:55:34.077Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:07.374Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:07.374Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:07.942Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:07.943Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:41.472Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:41.472Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:42.039Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:56:42.039Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:self-update 2026-11-26T07:57:15.119Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m1 2026-11-26T07:58:54.854Z] pick · M1-1126-M · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T07:58:57.814Z] M1-1126-M → started · runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1126-M.json · {\"id\":\"M1-1126-M\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-26T07:58:57.927Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1126-M.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/ci/2026-11-26.jsonl, status/pipeline/M1-1126-M.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T08:00:07.777Z] [report-path] R0-1126-S: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:r0 2026-11-26T08:00:27.120Z] [kyu-intrusion] 허브 r0(R0-1126-S) 실행 중 Kyu 폴더 변경 감지: /Users/kyu.lee/projects/storeport-kyu(actor=unknown)",
   "git_state": {
     "ahead": 0,
     "behind": 0,
