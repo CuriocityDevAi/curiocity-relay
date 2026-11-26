@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T14:34:47.447Z",
+  "at": "2026-11-26T14:37:42.950Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -41,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.9,
-    "compressed_gb": 4.17,
+    "used_gb": 15.04,
+    "compressed_gb": 4.12,
     "swap_used_gb": 3.31,
     "pressure": "normal",
-    "at": "2026-11-26T14:34:15.171Z"
+    "at": "2026-11-26T14:37:10.337Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -53,14 +53,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T14:32:29.155Z",
+      "at": "2026-11-26T14:37:05.952Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 9,
+      "api_calls": 8,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -68,18 +68,7 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/storeport",
-            "pr": "#462",
-            "pr_display": "storeport:#462",
-            "job": "heavy-mac",
-            "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 12,
-            "runner": "ci-box-storeport-heavy-imac",
-            "kind": "mac-heavy"
-          }
-        ]
+        "in_progress": []
       },
       "light": {
         "queued": 0,
@@ -90,30 +79,30 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 1,
+        "heavy_busy": 0,
         "light_online": 1
       },
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 170,
+          "jobs": 171,
           "avg_wait_min": 0.6,
           "avg_run_min": 2.5,
-          "success_rate": 83.5,
-          "run_min_total": 420.6000000000002
+          "success_rate": 83.6,
+          "run_min_total": 434.50000000000017
         },
         "mac-light": {
-          "jobs": 143,
+          "jobs": 147,
           "avg_wait_min": 2,
           "avg_run_min": 0.5,
-          "success_rate": 95.1,
-          "run_min_total": 64.89999999999986
+          "success_rate": 95.2,
+          "run_min_total": 66.19999999999986
         },
         "cloud": {
-          "jobs": 143,
+          "jobs": 144,
           "avg_wait_min": 0,
           "avg_run_min": 1.4,
-          "success_rate": 54.5,
+          "success_rate": 54.2,
           "run_min_total": 202.89999999999972
         },
         "cloud_cost_est_usd": 2.144,
@@ -121,17 +110,16 @@
         "wasted_min": 58.199999999999996
       },
       "jsonl_added": 0,
-      "alerts": [],
-      "partial": true
+      "alerts": []
     },
-    "took_ms": 14746,
-    "at": "2026-11-26T14:32:42.069Z"
+    "took_ms": 11126,
+    "at": "2026-11-26T14:37:15.362Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 3,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-AL.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T14:29:58.766Z] [report-path] R0-1126-AL: safe push 실패 (push-failed) · 다음 tick 재시도\n[hub-runner-v8.3.2:claim 2026-11-26T14:30:03.012Z] R0-1126-AL → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AL-report.md · model=sonnet · 로그: /\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-AL.json · {\"id\":\"R0-1126-AL\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T14:30:03.118Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AL-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-AL.log · report_src=legacy-root\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-AL.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:33:07.768Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:33:07.810Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:33:08.670Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:33:08.710Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:33:42.660Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:34:15.170Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
+  "err_tail": "[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T14:29:58.766Z] [report-path] R0-1126-AL: safe push 실패 (push-failed) · 다음 tick 재시도\n[hub-runner-v8.3.2:claim 2026-11-26T14:30:03.012Z] R0-1126-AL → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AL-report.md · model=sonnet · 로그: /\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-AL.json · {\"id\":\"R0-1126-AL\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T14:30:03.118Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AL-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-AL.log · report_src=legacy-root\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-AL.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:33:07.768Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:33:07.810Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:33:08.670Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:33:08.710Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:33:42.660Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:34:15.170Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:34:52.530Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:self-update 2026-11-26T14:35:24.687Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:heartbeat 2026-11-26T14:37:07.616Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T14:37:40.106Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
   "git_state": {
     "ahead": 0,
     "behind": 1,
@@ -144,7 +132,7 @@
     {
       "name": "ci-box-storeport-heavy-imac",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "ci-box-storeport-light-imac",
