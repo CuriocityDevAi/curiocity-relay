@@ -273,3 +273,82 @@ test('M-7: renderLayout — 동일 데이터 2번 렌더 시 동일한 줄 수/�
   }
   assert.equal(diffCount, 0, `동일 데이터에서 ${diffCount}줄이 다름 (차분 렌더 오류)`);
 });
+
+// ─── M-8: CI 풀 avg wait 표시 ────────────────────────────────────────────────
+
+test('M-8: renderLayout — poolWaitStats → CI 풀 줄에 대기avg 등장', () => {
+  const data = makeLayoutData({
+    poolWaitStats: { 'storeport-heavy': { avgWait: 2.5 }, 'fork-light': { avgWait: 0.0 } },
+  });
+  const lines = renderLayout(data);
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+  assert.ok(text.includes('대기avg2.5m'), `대기avg2.5m 없음\n${text}`);
+});
+
+test('M-8b: renderLayout — poolWaitStats 없으면 "-" 등장', () => {
+  const lines = renderLayout(makeLayoutData());
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+  // pool 행마다 '-' 가 나타나야 함 (대기 데이터 없을 때)
+  const ciIdx = text.indexOf('CI 큐');
+  const after = text.slice(ciIdx);
+  // '-' 가 avg wait 위치에 있음
+  assert.ok(after.includes('-'), `avg wait '-' 없음`);
+});
+
+// ─── M-9: 오늘 처리 MBP/iMAC 분리 ──────────────────────────────────────────
+
+test('M-9: renderLayout — todayMachineStats → MBP·iMAC 분리 표시', () => {
+  const data = makeLayoutData({
+    todayMachineStats: { mbp: { jobs: 35, avgRun: 2.0 }, imac: { jobs: 1, avgRun: 0.6 } },
+  });
+  const lines = renderLayout(data);
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+  assert.ok(text.includes('MBP 35건'), `MBP 35건 없음\n${text}`);
+  assert.ok(text.includes('iMAC 1건'), `iMAC 1건 없음\n${text}`);
+});
+
+test('M-9b: renderLayout — todayMachineStats 없으면 MAC 합산 표시', () => {
+  const data = makeLayoutData({ todayStats: makeAllJson().ci.data.today });
+  const lines = renderLayout(data);
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+  assert.ok(text.includes('MAC ') || text.includes('MBP '), '오늘 처리 없음');
+});
+
+// ─── M-10: ID 잘림 없음 ──────────────────────────────────────────────────────
+
+test('M-10: renderLayout — prompt ID 잘림 없음 (M2-1126-A 9자)', () => {
+  const allJson = makeAllJson();
+  allJson.ci_runners = allJson.ci_runners.map(r =>
+    r.name === 'Youngkyus-MacBook-Pro-M1' ? { ...r, busy: true } : r,
+  );
+  allJson.ci.data.heavy.in_progress = [{
+    runner: 'Youngkyus-MacBook-Pro-M1',
+    prompt_id: 'M2-1126-A',
+    running_min: 5,
+  }];
+  const runState = makeRunState();
+  runState.heavy.inProgress = [{
+    runner: 'Youngkyus-MacBook-Pro-M1',
+    repo: 'CuriocityDevAi/storeport',
+    prompt_id: 'M2-1126-A',
+    running_min: 5,
+    light: false,
+  }];
+
+  const lines = renderLayout(makeLayoutData({ allJson, runState }));
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+  assert.ok(text.includes('M2-1126-A'), `M2-1126-A 전체가 없음 — ID 잘림\n${text}`);
+  assert.ok(!text.includes('M2-1126- '), `M2-1126- 로 끝남 — A 가 잘림\n${text}`);
+});
+
+// ─── M-11: 허브 avg wait 표시 ───────────────────────────────────────────────
+
+test('M-11: renderLayout — hubWaitStats → 허브 줄에 대기avg 등장', () => {
+  const data = makeLayoutData({
+    hubWaitStats: { m0: { avgMin: 0.1, count: 1 }, m2: { avgMin: 1.5, count: 2 } },
+  });
+  const lines = renderLayout(data);
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+  assert.ok(text.includes('대기avg0.1m'), `m0 대기avg 없음\n${text}`);
+  assert.ok(text.includes('대기avg1.5m'), `m2 대기avg 없음\n${text}`);
+});

@@ -28,11 +28,12 @@ import {
   isMarkerJob,
   filterFreshUnclaimed,
   buildRunnerRows,
+  classifyMachine,
   renderCompact,
   renderLayout,
 } from './watch/ci-watch-render.mjs';
 
-const CI_WATCH_VERSION = '1.6';
+const CI_WATCH_VERSION = '1.7';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -470,6 +471,83 @@ export function readRealCloudData(dateStr, limit) {
   }));
 
   return { realCount: records.length, limit, totalMin, last3 };
+}
+
+/** CI 풀별 오늘 평균대기 (JSONL wait_min 집계) */
+function buildPoolWaitStats(dateStr) {
+  const jsonlPath = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (!existsSync(jsonlPath)) return {};
+  try {
+    const records = readJsonlFile(jsonlPath);
+    const pools = {};
+    for (const r of records) {
+      const repo = (r.repo || '').includes('fork') ? 'fork' : 'storeport';
+      const wf = (r.workflow || '').toLowerCase();
+      const role = (wf.includes('light') || wf.includes('feature-map') || wf.includes('check')) ? 'light' : 'heavy';
+      const poolKey = `${repo}-${role}`;
+      if (!pools[poolKey]) pools[poolKey] = { sum: 0, count: 0 };
+      if (r.wait_min != null) { pools[poolKey].sum += r.wait_min; pools[poolKey].count++; }
+    }
+    const result = {};
+    for (const [k, v] of Object.entries(pools)) {
+      result[k] = { avgWait: v.count > 0 ? v.sum / v.count : null };
+    }
+    return result;
+  } catch { return {}; }
+}
+
+/** 허브별 오늘 평균대기 (pipeline events queued→started) */
+function buildHubWaitStats(dateStr) {
+  const pipelineDir = join(REPO_ROOT, 'status', 'pipeline');
+  if (!existsSync(pipelineDir)) return {};
+  try {
+    const monthDay = dateStr.slice(5, 7) + dateStr.slice(8, 10); // "1126" from "2026-11-26"
+    let files;
+    try { files = readdirSync(pipelineDir); } catch { return {}; }
+    const todayFiles = files.filter(f => f.includes(`-${monthDay}-`) && f.endsWith('.jsonl'));
+    const hubStats = {};
+    for (const f of todayFiles) {
+      try {
+        const lines = readFileSync(join(pipelineDir, f), 'utf8').trim().split('\n').filter(Boolean);
+        const events = lines.map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+        const queued = events.find(e => e.event === 'queued');
+        const started = events.find(e => e.event === 'started');
+        if (!queued || !started) continue;
+        const waitMin = (new Date(started.ts) - new Date(queued.ts)) / 60000;
+        const hub = queued.hub;
+        if (!hub) continue;
+        if (!hubStats[hub]) hubStats[hub] = { sum: 0, count: 0 };
+        hubStats[hub].sum += waitMin;
+        hubStats[hub].count++;
+      } catch {}
+    }
+    const result = {};
+    for (const [h, v] of Object.entries(hubStats)) {
+      result[h] = { avgMin: v.count > 0 ? v.sum / v.count : null, count: v.count };
+    }
+    return result;
+  } catch { return {}; }
+}
+
+/** MBP/iMAC별 오늘 처리 통계 (JSONL runner_name 분류) */
+function buildTodayMachineStats(dateStr) {
+  const jsonlPath = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (!existsSync(jsonlPath)) return null;
+  try {
+    const records = readJsonlFile(jsonlPath);
+    const stats = { mbp: { count: 0, totalRun: 0 }, imac: { count: 0, totalRun: 0 } };
+    for (const r of records) {
+      const kind = classifyMachine(r.runner_name);
+      if (kind === 'mbp' || kind === 'imac') {
+        stats[kind].count++;
+        stats[kind].totalRun += (r.run_min || 0);
+      }
+    }
+    return {
+      mbp: { jobs: stats.mbp.count, avgRun: stats.mbp.count > 0 ? stats.mbp.totalRun / stats.mbp.count : null },
+      imac: { jobs: stats.imac.count, avgRun: stats.imac.count > 0 ? stats.imac.totalRun / stats.imac.count : null },
+    };
+  } catch { return null; }
 }
 
 const QUEUE_HUBS = ['m0', 'm1', 'm2', 'm3', 'r0'];
@@ -985,6 +1063,9 @@ async function tick(fullMode) {
   const ciSummaryAlerts = computeCiSummaryAlerts(allJson, lastCiByRepo, dateStr);
   const todayStats = allJson?.ci?.data?.today || null;
   const cloudTodayCount = allJson?.ci?.data?.cloud_today ?? null;
+  const poolWaitStats = buildPoolWaitStats(dateStr);
+  const hubWaitStats = buildHubWaitStats(dateStr);
+  const todayMachineStats = buildTodayMachineStats(dateStr);
 
   // 해소됨 오류 → err_tail 표시 영역(회색 줄)에 추가 · 경보 카운트 제외
   const resolvedErrAlerts = errAlerts.filter(a => a.resolved);
@@ -1057,6 +1138,9 @@ async function tick(fullMode) {
     versionNote,
     busyJobMap,
     hubNotifs,
+    poolWaitStats,
+    hubWaitStats,
+    todayMachineStats,
   };
 
   _lastRenderData = renderData;

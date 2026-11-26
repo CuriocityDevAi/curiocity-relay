@@ -464,6 +464,9 @@ function isLightWorkflow(name) {
   return n.includes('feature-map') || n.includes('light') || n.includes('check');
 }
 
+// Machine column width (display chars)
+const MCOL_W = 14;
+
 // Braille spinner frames
 const SPINNER_FRAMES = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
 
@@ -472,55 +475,83 @@ export function spinnerChar(frame) {
 }
 
 /**
- * REQ 1: Format a machine column cell (12 chars wide).
+ * REQ 1: Format a machine column cell (14 chars wide).
  * status: 'running'|'idle'|'offline'
  * job: { promptId, min } | null
  * spinnerFrame: number
  */
 function fmtMachineCell(machineInfo, spinnerFrame) {
   const { status, job } = machineInfo;
-  if (status === 'offline') return col('OFF'.padEnd(10), C.red);
-  if (status === 'idle') return '쉼'.padEnd(8) + '  '; // 쉼 = 2 display cols
-  // running
+  if (status === 'offline') return padEndWidth(col('OFF', C.red), MCOL_W);
+  if (status === 'idle') return padEndWidth(col('쉼', C.dim), MCOL_W);
+  // running: ID는 절대 자르지 말 것(REQ 3) · 분→m (1폭 절약)
   const sp = spinnerChar(spinnerFrame);
-  const pid = job?.promptId ? job.promptId.slice(0, 8) : '?';
-  const min = job?.min != null ? `${job.min}분` : '';
-  // e.g. "⠹M2-K 5분" — truncate to fit 10 display cols
+  const pid = job?.promptId || '?';
+  const min = job?.min != null ? `${job.min}m` : '';
   const content = `${sp}${pid}${min ? ' ' + min : ''}`;
-  return col(padEndWidth(content, 10), C.yellow);
+  return padEndWidth(col(content, C.yellow), MCOL_W);
 }
 
 /**
  * REQ 3: 오늘 처리 row for CI section.
- * Builds "오늘 처리: MBP N건 avgXmin · iMAC N건 avgXmin · 클라우드 N건 avgXmin $X.XX"
+ * Builds "오늘 처리: MBP N건 avgXm · iMAC N건 avgXm · 클라우드 N건 avgXm $X.XX"
+ * @param {object|null} todayStats
+ * @param {number|null} cloudCostEst
+ * @param {object|null} todayMachineStats  { mbp: { jobs, avgRun }, imac: { jobs, avgRun } }
  */
-function buildTodayProcessedRow(todayStats, cloudCostEst) {
-  if (!todayStats) return null;
+function buildTodayProcessedRow(todayStats, cloudCostEst, todayMachineStats) {
+  if (!todayStats && !todayMachineStats) return null;
 
-  // mac-heavy + mac-light combined for all MAC (MBP+iMAC can't be split from todayStats alone)
-  const mh = todayStats['mac-heavy'];
-  const ml = todayStats['mac-light'];
-  const cl = todayStats['cloud'];
+  let macPart;
+  if (todayMachineStats) {
+    const mbp = todayMachineStats.mbp;
+    const imac = todayMachineStats.imac;
+    const mbpStr = mbp && mbp.jobs > 0
+      ? `MBP ${mbp.jobs}건 avg${(mbp.avgRun ?? 0).toFixed(1)}m`
+      : 'MBP 0건';
+    const imacStr = imac && imac.jobs > 0
+      ? `iMAC ${imac.jobs}건 avg${(imac.avgRun ?? 0).toFixed(1)}m`
+      : 'iMAC 0건';
+    macPart = `${mbpStr} · ${imacStr}`;
+  } else {
+    const mh = todayStats?.['mac-heavy'];
+    const ml = todayStats?.['mac-light'];
+    const macJobs = (mh?.jobs || 0) + (ml?.jobs || 0);
+    const macAvgRun = (mh && ml)
+      ? ((mh.avg_run_min || 0) * (mh.jobs || 0) + (ml.avg_run_min || 0) * (ml.jobs || 0)) / Math.max(1, macJobs)
+      : (mh?.avg_run_min || ml?.avg_run_min || 0);
+    macPart = `MAC ${macJobs}건 avg${macAvgRun.toFixed(1)}m`;
+  }
 
-  const macJobs = (mh?.jobs || 0) + (ml?.jobs || 0);
-  const macAvgRun = (mh && ml)
-    ? ((mh.avg_run_min || 0) * (mh.jobs || 0) + (ml.avg_run_min || 0) * (ml.jobs || 0)) / Math.max(1, macJobs)
-    : (mh?.avg_run_min || ml?.avg_run_min || 0);
-
+  const cl = todayStats?.['cloud'];
   const cloudJobs = cl?.jobs || 0;
   const cloudAvg = cl?.avg_run_min;
   const costStr = cloudCostEst != null ? ` $${cloudCostEst.toFixed(2)}` : '';
-
-  const macPart = `MAC ${macJobs}건 avg${macAvgRun.toFixed(1)}분`;
   const cloudPart = cloudJobs > 0
-    ? `클라우드 ${cloudJobs}건${cloudAvg != null ? ` avg${cloudAvg.toFixed(0)}분` : ''}${costStr}`
+    ? `클라우드 ${cloudJobs}건${cloudAvg != null ? ` avg${cloudAvg.toFixed(0)}m` : ''}${costStr}`
     : `클라우드 0건${costStr}`;
 
   return `  오늘 처리: ${macPart} · ${cloudPart}`;
 }
 
 /**
- * REQ 1-7: New main render function for ci-watch v1.6
+ * REQ 1 (허브): 허브 라인에 오른쪽 정렬 avg wait 추가
+ * @param {string} lineStr  ANSI 포함 허브 라인 문자열
+ * @param {string} hub  'm0'|'m1'|'m2'|'m3'|'r0'
+ * @param {object|undefined} hubWaitStats  { [hub]: { avgMin, count } }
+ * @param {number} W  터미널 폭
+ */
+function appendHubWait(lineStr, hub, hubWaitStats, W) {
+  const hw = hubWaitStats?.[hub];
+  const hwText = hw?.avgMin != null ? `대기avg${hw.avgMin.toFixed(1)}m` : '-';
+  const leftW = displayWidth(lineStr);
+  const hwW = displayWidth(hwText);
+  const pad = Math.max(2, W - leftW - hwW);
+  return lineStr + ' '.repeat(pad) + col(hwText, C.dim);
+}
+
+/**
+ * REQ 1-7: New main render function for ci-watch v1.6/v1.7
  *
  * @param {object} data
  *   allJson, runState, cloudData, runnerAlerts, ciAlerts, ciDimAlerts,
@@ -529,6 +560,9 @@ function buildTodayProcessedRow(todayStats, cloudCostEst) {
  *   spinnerFrame: number (default 0),
  *   terminalWidth: number (default 120)
  *   version: string (default '1.6')
+ *   poolWaitStats: { [poolKey]: { avgWait } } — CI 풀별 오늘 평균대기 (REQ 1)
+ *   hubWaitStats: { [hub]: { avgMin, count } } — 허브별 오늘 평균대기 (REQ 1)
+ *   todayMachineStats: { mbp: { jobs, avgRun }, imac: { jobs, avgRun } } — 기계별 오늘 처리 (REQ 2)
  */
 export function renderLayout(data) {
   const {
@@ -538,6 +572,9 @@ export function renderLayout(data) {
     spinnerFrame = 0,
     terminalWidth = 120,
     version = '1.6',
+    poolWaitStats,
+    hubWaitStats,
+    todayMachineStats,
   } = data;
 
   const W = Math.max(terminalWidth, 60);
@@ -603,7 +640,8 @@ export function renderLayout(data) {
   for (const hub of hubs) {
     const h = allJson?.hubs?.[hub];
     if (!h) {
-      lines.push(`  ${col(hub, C.bold)}  ${col('—', C.dim)}`);
+      const noDataLine = `  ${col(hub, C.bold)}  ${col('—', C.dim)}`;
+      lines.push(appendHubWait(noDataLine, hub, hubWaitStats, W));
       continue;
     }
     const cur = h.current;
@@ -635,14 +673,16 @@ export function renderLayout(data) {
         statusStr = `${col(cur, C.yellow)}  ${elapStr}`;
       }
       const chipsStr = chips ? `  ${col(chips, C.dim)}` : '';
-      lines.push(`  ${col(hub, C.bold)}  ${statusStr}${chipsStr}`);
+      const curLine = `  ${col(hub, C.bold)}  ${statusStr}${chipsStr}`;
+      lines.push(appendHubWait(curLine, hub, hubWaitStats, W));
 
       // └ sub-row for hub: only when running
       const sp = spinnerChar(spinnerFrame);
       lines.push(`    └ ${col(sp, C.cyan)} ${col(cur, C.dim)}  작업 중`);
     } else {
       const chipsStr = chips ? `  ${col(chips, C.dim)}` : '';
-      lines.push(`  ${col(hub, C.bold)}  ${col('—', C.green)}${chipsStr}`);
+      const idleLine = `  ${col(hub, C.bold)}  ${col('—', C.green)}${chipsStr}`;
+      lines.push(appendHubWait(idleLine, hub, hubWaitStats, W));
     }
   }
 
@@ -671,7 +711,6 @@ export function renderLayout(data) {
 
   // CI section header with machine column titles on the right
   // REQ 7: narrow mode — omit cloud column
-  const MCOL_W = 12;
   const colTitles = narrowMode
     ? `${'MBP M1'.padStart(MCOL_W)}${'iMAC M1'.padStart(MCOL_W)}`
     : `${'MBP M1'.padStart(MCOL_W)}${'iMAC M1'.padStart(MCOL_W)}${'클라우드'.padStart(MCOL_W)}`;
@@ -716,42 +755,41 @@ export function renderLayout(data) {
       chipStr = chips.join('');
       if (qItems.length > 3) chipStr += col(` +${qItems.length - 3}`, C.dim);
 
-      // avg wait for this pool from todayStats
-      const todayKind = poolKey.includes('light') ? 'mac-light' : 'mac-heavy';
-      const aw = todayStats?.[todayKind]?.avg_wait_min;
-      if (aw != null) chipStr += col(`  avg${aw.toFixed(1)}분`, C.dim);
     } else {
       chipStr = col('  —', C.dim);
     }
 
-    lines.push(`  ${col(label, C.bold)}${chipStr}`);
+    // REQ 1: CI 풀 줄 오른쪽 끝 평균대기 (고정 폭 오른쪽 정렬)
+    const poolAw = poolWaitStats?.[poolKey]?.avgWait;
+    const poolAwText = poolAw != null ? `대기avg${poolAw.toFixed(1)}m` : '-';
+    const poolAwW = displayWidth(poolAwText);
+    const poolLeftW = 2 + displayWidth(label) + displayWidth(chipStr);
+    const poolPad = Math.max(2, W - poolLeftW - poolAwW);
+    lines.push(`  ${col(label, C.bold)}${chipStr}${' '.repeat(poolPad)}${col(poolAwText, C.dim)}`);
 
     // └ sub-row: ALWAYS present (REQ 1)
     // Left part: blank filler; right: machine columns
     const COLS_TOTAL = narrowMode ? MCOL_W * 2 + 2 : MCOL_W * 3 + 4;
     const leftFill = ' '.repeat(Math.max(0, W - COLS_TOTAL - 6));
 
-    const mbpCell = fmtMachineCell(ms.mbp, spinnerFrame).padEnd(MCOL_W);
-    const imacCell = fmtMachineCell(ms.imac, spinnerFrame).padEnd(MCOL_W);
+    const mbpCell = fmtMachineCell(ms.mbp, spinnerFrame);
+    const imacCell = fmtMachineCell(ms.imac, spinnerFrame);
 
     let subRow;
     if (narrowMode) {
       subRow = `    └ ${leftFill}${mbpCell}  ${imacCell}`;
     } else {
-      const cloudCount = ms.cloud.count;
-      const cloudCell = cloudCount > 1
-        ? col(`+${cloudCount}`, C.cyan).padEnd(MCOL_W)
-        : cloudCount === 1
-        ? col('+1', C.cyan).padEnd(MCOL_W)
-        : col('쉼', C.dim).padEnd(MCOL_W + 2); // 쉼 is 2 display cols
-      subRow = `    └ ${leftFill}${mbpCell}  ${imacCell}  ${cloudCount > 0 ? cloudCell : col('쉼', C.dim)}`;
+      const cloudCellText = ms.cloud.count > 0 ? `+${ms.cloud.count}` : '쉼';
+      const cloudCellColor = ms.cloud.count > 0 ? C.cyan : C.dim;
+      const cloudCell = padEndWidth(col(cloudCellText, cloudCellColor), MCOL_W);
+      subRow = `    └ ${leftFill}${mbpCell}  ${imacCell}  ${cloudCell}`;
     }
 
     lines.push(subRow);
   }
 
   // 오늘 처리 row (REQ 3)
-  const todayRow = buildTodayProcessedRow(todayStats, todayStats?.cloud_cost_est_usd ?? null);
+  const todayRow = buildTodayProcessedRow(todayStats, todayStats?.cloud_cost_est_usd ?? null, todayMachineStats);
   if (todayRow) lines.push(col(todayRow, C.dim));
 
   // Unknown runner warning (REQ 5)
