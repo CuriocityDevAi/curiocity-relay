@@ -52,10 +52,12 @@ test('M-1d: classifyMachine — GitHub-hosted → cloud', () => {
   assert.equal(classifyMachine('macos-14'), 'cloud');
 });
 
-test('M-1e: classifyMachine — null/undefined → cloud', () => {
-  assert.equal(classifyMachine(null), 'cloud');
-  assert.equal(classifyMachine(undefined), 'cloud');
-  assert.equal(classifyMachine(''), 'cloud');
+test('M-1e: classifyMachine — null/undefined → unknown (W5 fix: not cloud)', () => {
+  // W5: null/undefined runner → 'unknown', NOT 'cloud'.
+  // Pre-W5 버그: null 을 cloud 로 분류해 미배정 run 이 cloud 칸에 등장했었음.
+  assert.equal(classifyMachine(null), 'unknown');
+  assert.equal(classifyMachine(undefined), 'unknown');
+  assert.equal(classifyMachine(''), 'unknown');
 });
 
 // ─── M-2: classifyMachine — unknown self-hosted ────────────────────────────

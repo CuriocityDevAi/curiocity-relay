@@ -1,7 +1,8 @@
 // scripts/watch/ci-watch-render.mjs  M1-1123-K — 압축 렌더 + 순수 헬퍼
 // v1.8: CI 한 줄 표 · partial→? · 단위 s/m · 잔상 방지
+// v1.11: W5~W9 — 클라우드 필터·?표시·합계줄·초록✓·잡이름+열폭절단
 
-import { displayWidth, padEndWidth, stripAnsi } from './text-width.mjs';
+import { displayWidth, padEndWidth, stripAnsi, truncateWidth } from './text-width.mjs';
 
 const C = {
   reset: '\x1b[0m', bold: '\x1b[1m', dim: '\x1b[2m',
@@ -306,9 +307,10 @@ function fmtRepoShort(repo) {
 
 /**
  * REQ 2: runner_name → 'mbp' | 'imac' | 'cloud' | 'unknown'
+ * W5: null/undefined → 'unknown' (not 'cloud') — runner 미배정은 cloud가 아님
  */
 export function classifyMachine(name) {
-  if (!name) return 'cloud';
+  if (!name) return 'unknown';
   const n = String(name);
   if (/^ci-box-.*-imac$/i.test(n)) return 'imac';
   if (/^(curiocity-mac-|Youngkyus-MacBook)/i.test(n)) return 'mbp';
@@ -391,10 +393,15 @@ export function buildMachineState(allJson, runState) {
         if (j) {
           const promptId = j.prompt_id || null;
           const min = j.running_min ?? null;
-          return { status: 'running', job: { promptId, min, runnerName: r.name }, partial: false };
+          // W9: pr번호·브랜치·잡이름 포함
+          const pr = (j.pr && j.pr !== '-') ? j.pr : null;
+          const branch = j.head_branch || null;
+          const jobName = j.job || j.check || '';
+          return { status: 'running', job: { promptId, pr, branch, jobName, min, runnerName: r.name }, partial: false };
         }
       }
-      return { status: 'idle', job: null, partial: false };
+      // W6: idle 이지만 partial → '?' 표시
+      return { status: 'idle', job: null, partial: isPoolPartial };
     }
 
     const poolCloudJobs = [
@@ -463,10 +470,17 @@ export function fmtDuration(minFloat) {
 }
 
 /**
- * §1: 기계 칸 (MBP/iMAC). status=offline 이고 partial 이면 `?` 회색.
- * W4: todayN > 0 → 쉼(N) · 실행 중이면 ⠋ID 3m (N)
+ * §1: 기계 칸 (MBP/iMAC). status=offline/idle+partial → `?` 회색 (W6).
+ * W4: todayN > 0 → 쉼(N) · 실행 중이면 ⠋ID·잡 3m (N)
+ * W8: recentMin < 10 → idle 셀에 `✓Nm` 초록 추가
+ * W9: 실행 중 → `⠋#PR·잡이름 Xm (N)` · 열 폭 절단
+ * @param {object} machineInfo - { status, job, partial }
+ * @param {number} spinnerFrame
+ * @param {number} colW - 열 폭 (display cols)
+ * @param {number|undefined} todayN - 오늘 처리 잡 수
+ * @param {number|undefined} recentMin - 최근 완료 분 (W8)
  */
-function fmtMachineCell(machineInfo, spinnerFrame, colW, todayN) {
+function fmtMachineCell(machineInfo, spinnerFrame, colW, todayN, recentMin) {
   const { status, job, partial } = machineInfo;
   if (status === 'offline') {
     if (partial) return padEndWidth(col('?', C.dim), colW);
@@ -474,19 +488,37 @@ function fmtMachineCell(machineInfo, spinnerFrame, colW, todayN) {
   }
   const nStr = typeof todayN === 'number' && todayN > 0 ? `(${todayN})` : '';
   if (status === 'idle') {
+    // W6: partial → '?' 회색
+    if (partial) return padEndWidth(col('?', C.dim), colW);
+    // W8: 10분 내 완료 → `✓Nm` 초록
+    const isRecent = typeof recentMin === 'number' && recentMin < 10;
+    if (isRecent) {
+      const recentPart = `\x1b[32m✓${recentMin}m\x1b[0m`;
+      const recentW = displayWidth(`✓${recentMin}m`);
+      const baseW = Math.max(0, colW - recentW - 1); // 1 for space
+      return padEndWidth(col(`쉼${nStr}`, C.dim), baseW) + ' ' + recentPart;
+    }
     return padEndWidth(col(`쉼${nStr}`, C.dim), colW);
   }
-  // running
+  // running — W9: `⠋#PR·잡이름 Xm (N)` 형태 · 열 폭 절단
   const sp = spinnerChar(spinnerFrame);
-  const pid = job?.promptId || '?';
-  const min = job?.min != null ? ` ${fmtDuration(job.min)}` : '';
+  const displayId = (job?.pr && job.pr !== '-') ? job.pr
+    : (job?.branch ? job.branch.replace(/^refs\/[^/]+\//, '') : (job?.promptId || '?'));
+  const jobName = job?.jobName || '';
+  const minPart = job?.min != null ? ` ${fmtDuration(job.min)}` : '';
   const nPart = nStr ? ` ${nStr}` : '';
-  return padEndWidth(`${C.yellow}${sp}${pid}${min}${nPart}${C.reset}`, colW);
+  // 잡 이름 포함 · 초과 시 오른쪽부터 말줄임
+  const basePart = jobName ? `${sp}${displayId}·${jobName}` : `${sp}${displayId}`;
+  const fullPlain = basePart + minPart + nPart;
+  const truncated = truncateWidth(fullPlain, colW);
+  return padEndWidth(`${C.yellow}${truncated}${C.reset}`, colW);
 }
 
 /**
- * §1: 클라우드 칸. 0건→`—(N)`, 1건→`⠹ID Tm (N)`, 2+→`⠹ID Tm (N) +N`
+ * §1: 클라우드 칸. 0건→`—(N)`, 1건→`⠹#PR·잡 Tm (N)`, 2+→`⠹#PR·잡 Tm (N) +N`
  * W4: todayN > 0 → 오늘 처리 잡 수 표시
+ * W5: cloudState.jobs 는 실제 cloud(GitHub-hosted) runner 잡만 포함
+ * W9: 잡 이름 표시 · 열 폭 절단
  */
 function fmtCloudCell(cloudState, spinnerFrame, colW, todayN) {
   const { count, jobs } = cloudState;
@@ -495,12 +527,18 @@ function fmtCloudCell(cloudState, spinnerFrame, colW, todayN) {
 
   const sp = spinnerChar(spinnerFrame);
   const firstJob = jobs[0];
-  const pid = firstJob?.prompt_id || firstJob?.display || firstJob?.pr || '?';
+  const displayId = (firstJob?.pr && firstJob.pr !== '-') ? firstJob.pr
+    : (firstJob?.prompt_id || firstJob?.display || '?');
+  const jobName = firstJob?.job || firstJob?.check || '';
   const min = firstJob?.running_min;
   const timeStr = min != null ? ` ${fmtDuration(min)}` : '';
   const nPart = nStr ? ` ${nStr}` : '';
-  const extra = count > 1 ? `${C.dim} +${count - 1}${C.reset}` : '';
-  return padEndWidth(`${C.cyan}${sp}${pid}${timeStr}${nPart}${C.reset}${extra}`, colW);
+  const extra = count > 1 ? ` +${count - 1}` : '';
+  // W9: 잡 이름 포함 · 열 폭 절단
+  const basePart = jobName ? `${sp}${displayId}·${jobName}` : `${sp}${displayId}`;
+  const fullPlain = basePart + timeStr + nPart + extra;
+  const truncated = truncateWidth(fullPlain, colW);
+  return padEndWidth(`${C.cyan}${truncated}${C.reset}`, colW);
 }
 
 /**
@@ -526,13 +564,34 @@ function fmtQueueCell(qItems, colW) {
 
 /**
  * §1: 오늘 처리 행 — CI 표 열 아래에 N건·avgXm (MBP / iMAC / 클라우드 각각 정렬)
+ * W8: machineRecentStats 에서 최근 10분 내 완료 → `✓Nm` 초록 추가
+ * @param {object|null} machineRecentStats - { 'storeport-heavy-mbp': minAgo, ... }
  */
-function buildTodayProcessedRow(todayStats, cloudCostEst, todayMachineStats) {
+function buildTodayProcessedRow(todayStats, cloudCostEst, todayMachineStats, machineRecentStats) {
   if (!todayStats && !todayMachineStats) return null;
 
   // 라벨 셀: 풀 + SEP + 대기 위치를 차지 (헤더의 풀/대기 열과 같은 너비)
   const labelWidth = CI_COL_POOL + CI_SEP.length + CI_COL_QUEUE;
   const labelCell = padEndWidth('오늘 처리(잡)', labelWidth);
+
+  // W8: 기계 전체 최근 완료 ✓Nm 계산
+  function overallRecentMin(kind) {
+    if (!machineRecentStats) return null;
+    const vals = Object.entries(machineRecentStats)
+      .filter(([k]) => k.endsWith(`-${kind}`))
+      .map(([, v]) => v)
+      .filter(v => v < 10);
+    return vals.length ? Math.min(...vals) : null;
+  }
+
+  function buildMachineCol(str, colW, recentMin) {
+    if (typeof recentMin === 'number' && recentMin < 10) {
+      const recentPart = `\x1b[32m✓${recentMin}m\x1b[0m`;
+      const rW = displayWidth(`✓${recentMin}m`);
+      return padEndWidth(str, Math.max(0, colW - rW - 1)) + ' ' + recentPart;
+    }
+    return padEndWidth(str, colW);
+  }
 
   // MBP 칸
   let mbpStr;
@@ -550,7 +609,7 @@ function buildTodayProcessedRow(todayStats, cloudCostEst, todayMachineStats) {
       : (mh?.avg_run_min || ml?.avg_run_min || 0);
     mbpStr = macJobs > 0 ? `${macJobs}건·${fmtDuration(macAvgRun)}` : '0건';
   }
-  const mbpCell = padEndWidth(mbpStr, CI_COL_MBP);
+  const mbpCell = buildMachineCol(mbpStr, CI_COL_MBP, overallRecentMin('mbp'));
 
   // iMAC 칸
   let imacStr;
@@ -562,7 +621,7 @@ function buildTodayProcessedRow(todayStats, cloudCostEst, todayMachineStats) {
   } else {
     imacStr = '—';
   }
-  const imacCell = padEndWidth(imacStr, CI_COL_IMAC);
+  const imacCell = buildMachineCol(imacStr, CI_COL_IMAC, overallRecentMin('imac'));
 
   // 클라우드 칸
   const cl = todayStats?.['cloud'];
@@ -607,6 +666,10 @@ function appendHubWait(lineStr, hub, hubWaitStats, W) {
  *   hubWaitStats: { [hub]: { avgMin, count } }
  *   todayMachineStats: { mbp: { jobs, avgRun }, imac: { jobs, avgRun } }
  *   todayPoolMachineStats: { [poolKey]: { mbp: N, imac: N, cloud: N } }  W4
+ *   machineRecentStats: { [poolKey-kind]: minAgo }  W8
+ *   summaryPR: number  W7
+ *   summaryPT: number  W7
+ *   summaryJobs: number  W7
  */
 export function renderLayout(data) {
   const {
@@ -622,6 +685,10 @@ export function renderLayout(data) {
     hubWaitStats,
     todayMachineStats,
     todayPoolMachineStats,
+    machineRecentStats,
+    summaryPR,
+    summaryPT,
+    summaryJobs,
   } = data;
 
   const W = Math.max(terminalWidth, 60);
@@ -790,8 +857,9 @@ export function renderLayout(data) {
     const poolToday = todayPoolMachineStats?.[poolKey] || {};
     const poolCell  = padEndWidth(col(poolKey, C.bold), CI_COL_POOL);
     const queueCell = fmtQueueCell(qItems, CI_COL_QUEUE);
-    const mbpCell   = fmtMachineCell(ms.mbp, spinnerFrame, CI_COL_MBP, poolToday.mbp);
-    const imacCell  = fmtMachineCell(ms.imac, spinnerFrame, CI_COL_IMAC, poolToday.imac);
+    // W8: per-pool machine recent stats
+    const mbpCell   = fmtMachineCell(ms.mbp, spinnerFrame, CI_COL_MBP, poolToday.mbp, machineRecentStats?.[`${poolKey}-mbp`]);
+    const imacCell  = fmtMachineCell(ms.imac, spinnerFrame, CI_COL_IMAC, poolToday.imac, machineRecentStats?.[`${poolKey}-imac`]);
     const cloudCell = fmtCloudCell(ms.cloud, spinnerFrame, CI_COL_CLOUD, poolToday.cloud);
 
     const poolAw = poolWaitStats?.[poolKey]?.avgWait;
@@ -800,8 +868,8 @@ export function renderLayout(data) {
     lines.push(`  ${poolCell}${CI_SEP}${queueCell}${CI_SEP}${mbpCell}${CI_SEP}${imacCell}${CI_SEP}${cloudCell}${CI_SEP}${avgCell}`);
   }
 
-  // 오늘 처리 행 (§1: 마지막 줄)
-  const todayRow = buildTodayProcessedRow(todayStats, todayStats?.cloud_cost_est_usd ?? null, todayMachineStats);
+  // 오늘 처리 행 (§1: 마지막 줄) — W8 machineRecentStats 전달
+  const todayRow = buildTodayProcessedRow(todayStats, todayStats?.cloud_cost_est_usd ?? null, todayMachineStats, machineRecentStats);
   if (todayRow) lines.push(col(todayRow, C.dim));
 
   // 미분류 러너 경고
@@ -859,12 +927,30 @@ export function renderLayout(data) {
   const remaining = Math.max(0, cd.limit - cd.realCount);
   lines.push(col(`  cloud 잡 오늘  ${cd.realCount}건  잔여 ${remaining}`, C.dim));
 
-  // err_tail
+  // err_tail — W6: watchdog/claim/self-update 로그 줄은 화면 미출력 (파일 로그로만)
+  const ERR_TAIL_SCREEN_FILTERS = [
+    /^\[hub-runner/,
+    /gh-watchdog/i,
+    /^\[claim\]/,
+    /self-update/i,
+    /partial skip/i,
+  ];
   const errLines2 = allJson?.err_tail
-    ? allJson.err_tail.split('\n').filter(Boolean).slice(-2)
+    ? allJson.err_tail.split('\n').filter(Boolean)
+        .filter(l => !ERR_TAIL_SCREEN_FILTERS.some(p => p.test(l)))
+        .slice(-2)
     : [];
   if (errLines2.length) {
     for (const l of errLines2) lines.push(col('  ' + l.slice(0, W - 4), C.dim));
+  }
+
+  // W7: 맨 아래 합계 한 줄 `PR N · PT N · 잡 N`
+  if (summaryPR != null || summaryPT != null || summaryJobs != null) {
+    const parts = [];
+    if (summaryPR != null) parts.push(`PR ${summaryPR}`);
+    if (summaryPT != null) parts.push(`PT ${summaryPT}`);
+    if (summaryJobs != null) parts.push(`잡 ${summaryJobs}`);
+    if (parts.length) lines.push(col(`  ${parts.join(' · ')}`, C.dim));
   }
 
   const cdSec = typeof countdownSec === 'number' ? countdownSec : 30;
