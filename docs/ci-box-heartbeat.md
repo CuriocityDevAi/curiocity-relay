@@ -28,9 +28,9 @@ status/ci-box/
 | `runners.listener_count` | `ps -axo command \| grep Runner.Listener` | 대기 중 러너 수 · null = 측정 불가 |
 | `runners.worker_count` | 같음 (Runner.Worker) | 실행 중 작업 수 · null = 측정 불가 |
 | `github.latency_ms` | `curl api.github.com` | HTTPS 응답 ms |
-| `netspeed.dl_mbps` | `/usr/bin/networkQuality -s -c` | 1시간에 1번만 측정·캐시 · null = 미설치 |
-| `netspeed.ul_mbps` | 같음 | — |
-| `netspeed.rpm` | 같음 | Responsiveness (RPM) |
+| `netspeed.dl_mbps` | `/usr/bin/networkQuality -s -c` → 실패 시 curl Cloudflare 10MB 폴백 (M1-1126-J) | 1시간에 1번만 측정·캐시 · null = 두 방법 모두 실패 |
+| `netspeed.ul_mbps` | networkQuality 성공 시 측정 · curl 폴백 시 null | — |
+| `netspeed.rpm` | networkQuality 성공 시 측정 · curl 폴백 시 null | Responsiveness (RPM) |
 | `postgres.alive` | `pg_isready` | localhost:5432 |
 | `tailscale.up` | 절대경로 Tailscale.app binary (M1-1126-G) | BackendState=Running · null = 미설치 |
 | `tailscale.ip` | 같음 | Tailscale IPv4 |
@@ -62,6 +62,12 @@ M1-1126-G 에서 확인된 원인과 대응:
 | `memory.free_pct` 2 거짓 | inactive 페이지(회수 가능) 미포함 | `(free+spec+inactive)/total` 공식 |
 | `thermal.throttled` true 거짓 | GPU_Throttle grep 오탐 | CPU_Speed_Limit < 100 조건만 사용 |
 
+M1-1126-J 에서 확인된 원인과 대응:
+
+| 항목 | 원인 | 대응 |
+|------|------|------|
+| `netspeed` null (unknown_netspeed) 거짓 | 절대경로 대응 후에도 아이맥 launchd 환경에서 `networkQuality` 가 0 bytes/s 반환 (Ethernet 인터페이스 미지원 또는 잠금화면 네트워크 확장 제한) | `networkQuality` dl=0 시 `curl https://speed.cloudflare.com/__down?bytes=10000000` 으로 dl_mbps 대체 측정 · ul·rpm=null 허용 |
+
 ## JSON 예시
 
 ```json
@@ -73,7 +79,7 @@ M1-1126-G 에서 확인된 원인과 대응:
   "thermal": {"throttled": false, "cpu_speed_limit_pct": 100},
   "runners": {"listener_count": 4, "worker_count": 1},
   "github": {"latency_ms": 320, "reachable": true},
-  "netspeed": {"dl_mbps": 450.2, "ul_mbps": 95.1, "rpm": 310, "cached": true},
+  "netspeed": {"dl_mbps": 83.1, "ul_mbps": null, "rpm": null, "cached": false},
   "postgres": {"alive": true},
   "tailscale": {"up": true, "ip": "100.82.115.70"},
   "health": "ok",

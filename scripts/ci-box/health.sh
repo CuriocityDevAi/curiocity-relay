@@ -142,10 +142,6 @@ collect_github() {
 collect_netspeed() {
     # /usr/bin/networkQuality 절대경로 사용 (launchd PATH 에 미포함 가능)
     local NQ_BIN="/usr/bin/networkQuality"
-    if [[ ! -x "$NQ_BIN" ]]; then
-        printf '{"dl_mbps":null,"ul_mbps":null,"rpm":null,"_unknown":"unknown_netspeed"}'
-        return
-    fi
 
     local now_epoch
     now_epoch=$(date +%s)
@@ -158,7 +154,7 @@ now = int(sys.argv[1])
 try:
     d = json.load(open(sys.argv[2]))
     age = now - int(d.get('_ts', 0))
-    # 0/0 캐시는 miss 처리 → 재측정
+    # dl_mbps=0 캐시는 miss 처리 → 재측정
     if age < 3600 and not (d.get('dl_mbps', 0) == 0 and d.get('ul_mbps', 0) == 0):
         d['cached'] = True
         d.pop('_ts', None)
@@ -176,21 +172,34 @@ PYEOF
         fi
     fi
 
-    # 실제 측정
-    local nq_out dl=0 ul=0 rpm=0
-    nq_out=$("$NQ_BIN" -s -c 2>/dev/null | tail -1 || echo "{}")
-    dl=$(echo "$nq_out" | python3 -c \
-        "import json,sys; d=json.load(sys.stdin); print(round(d.get('dl_throughput',0)/1e6,1))" 2>/dev/null || echo 0)
-    ul=$(echo "$nq_out" | python3 -c \
-        "import json,sys; d=json.load(sys.stdin); print(round(d.get('ul_throughput',0)/1e6,1))" 2>/dev/null || echo 0)
-    rpm=$(echo "$nq_out" | python3 -c \
-        "import json,sys
+    # networkQuality 측정 시도 (launchd 환경에서 Ethernet·잠금화면 제한으로 0/0 반환 가능)
+    local dl=0 ul=0 rpm=0
+    if [[ -x "$NQ_BIN" ]]; then
+        local nq_out
+        nq_out=$("$NQ_BIN" -s -c 2>/dev/null | tail -1 || echo "{}")
+        dl=$(echo "$nq_out" | python3 -c \
+            "import json,sys; d=json.load(sys.stdin); print(round(d.get('dl_throughput',0)/1e6,1))" 2>/dev/null || echo 0)
+        ul=$(echo "$nq_out" | python3 -c \
+            "import json,sys; d=json.load(sys.stdin); print(round(d.get('ul_throughput',0)/1e6,1))" 2>/dev/null || echo 0)
+        rpm=$(echo "$nq_out" | python3 -c \
+            "import json,sys
 d=json.load(sys.stdin)
 r=d.get('responsiveness',0)
 print(r.get('rpm',r) if isinstance(r,dict) else r)" 2>/dev/null || echo 0)
+    fi
 
-    # dl==0 && ul==0 → networkQuality 실패: 캐시 없이 null 반환
-    if python3 -c "import sys; sys.exit(0 if float('${dl:-0}')==0 and float('${ul:-0}')==0 else 1)" 2>/dev/null; then
+    # networkQuality 실패(dl=0) 또는 미설치 → curl 로 dl_mbps 대체 측정 (ul·rpm=null 허용)
+    if python3 -c "import sys; sys.exit(0 if float('${dl:-0}')==0 else 1)" 2>/dev/null; then
+        local curl_bps
+        curl_bps=$(curl -s -o /dev/null -w "%{speed_download}" --max-time 15 \
+            "https://speed.cloudflare.com/__down?bytes=10000000" 2>/dev/null || echo "0")
+        dl=$(python3 -c "print(round(float('${curl_bps:-0}') * 8 / 1e6, 1))" 2>/dev/null || echo 0)
+        ul="null"
+        rpm="null"
+    fi
+
+    # 여전히 0 (두 방법 모두 실패) → null + unknown_netspeed
+    if python3 -c "import sys; sys.exit(0 if float('${dl:-0}')==0 else 1)" 2>/dev/null; then
         printf '{"dl_mbps":null,"ul_mbps":null,"rpm":null,"_unknown":"unknown_netspeed"}'
         return
     fi
