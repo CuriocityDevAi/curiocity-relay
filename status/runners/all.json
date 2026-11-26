@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T08:23:22.420Z",
+  "at": "2026-11-26T08:27:32.373Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -27,7 +27,9 @@
       "last_activity": "2026-11-26T07:32:29.952Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1126-U",
+      "started_at": "2026-11-26T08:27:30.862Z",
+      "model": "sonnet",
       "last_activity": "2026-11-26T08:07:27.061Z"
     }
   },
@@ -59,10 +61,10 @@
   "mem": {
     "total_gb": 16,
     "used_gb": 15.48,
-    "compressed_gb": 3.09,
+    "compressed_gb": 2.93,
     "swap_used_gb": 3.8,
     "pressure": "normal",
-    "at": "2026-11-26T08:23:04.259Z"
+    "at": "2026-11-26T08:26:58.428Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -148,7 +150,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 160,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1126-G.json · {\"id\":\"M0-1126-G\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-26T08:14:10.617Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1126-G-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1126-G.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M0-1126-G.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m1 2026-11-26T08:14:57.115Z] pick · M1-1126-N · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T08:14:59.283Z] M1-1126-N → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1126-N.json · {\"id\":\"M1-1126-N\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-26T08:14:59.389Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1126-N.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M1-1126-N.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:self-update 2026-11-26T08:17:52.501Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m1 2026-11-26T08:22:59.004Z] [report-path] M1-1126-N: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:23:04.257Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:23:04.296Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:23:05.031Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:23:05.067Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start",
+  "err_tail": "[hub-runner-v8.3.2:m1 2026-11-26T08:22:59.004Z] [report-path] M1-1126-N: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:23:04.257Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:23:04.296Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:23:05.031Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:23:05.067Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:claim 2026-11-26T08:23:22.470Z] M1-1126-N → done · runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1126-N-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1126-N.json · {\"id\":\"M1-1126-N\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-26T08:23:23.101Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1126-N-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1126-N.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/2026-11-26.jsonl, status/ci/runner-restarts-2026-11-26.jsonl, status/pipeline/M1-1126-N.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:23:37.610Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:24:09.864Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:24:44.528Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:25:16.835Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:25:51.622Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:26:23.858Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T08:26:58.427Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:r0 2026-11-26T08:27:30.862Z] pick · R0-1126-U · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
