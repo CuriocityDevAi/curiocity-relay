@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T23:32:48.803Z",
+  "at": "2026-11-26T23:50:18.780Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -45,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.87,
-    "compressed_gb": 3.48,
-    "swap_used_gb": 3.2,
+    "used_gb": 15.8,
+    "compressed_gb": 4.22,
+    "swap_used_gb": 3.18,
     "pressure": "normal",
-    "at": "2026-11-26T23:32:09.362Z"
+    "at": "2026-11-26T23:41:40.160Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -57,13 +57,13 @@
   },
   "ci": {
     "error": "deadline 30000ms",
-    "at": "2026-11-26T23:32:09.362Z"
+    "at": "2026-11-26T23:41:36.126Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 36,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1127-B.json · {\"id\":\"M1-1127-B\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-26T23:15:27.549Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1127-B-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1127-B.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): status/ci/2026-11-27.jsonl, status/ci/runner-restarts-2026-11-27.jsonl, status/pipeline/M1-1127-B.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T23:18:17.573Z] sleep observed · gap=144s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-26T23:18:47.786Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:heartbeat 2026-11-26T23:20:39.972Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:state 2026-11-26T23:32:09.132Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:32:09.363Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/storeport): Command failed: gh api repos/CuriocityDevAi/storeport/actions/runners\nerror connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:32:10.778Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:32:10.908Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T23:32:39.515Z] sleep observed · gap=862s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-26T23:32:39.766Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m0 2026-11-26T23:32:43.306Z] pick · M0-1127-B · model=opus · display=cmux-split\n[hub-runner-v8.3.2:m1 2026-11-26T23:32:44.831Z] pick · M1-1127-C · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:m3 2026-11-26T23:32:46.106Z] pick · M3-1127-B · model=sonnet · display=cmux-split",
+  "err_tail": "error connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:32:10.778Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:32:10.908Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T23:32:39.515Z] sleep observed · gap=862s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-26T23:32:39.766Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m0 2026-11-26T23:32:43.306Z] pick · M0-1127-B · model=opus · display=cmux-split\n[hub-runner-v8.3.2:m1 2026-11-26T23:32:44.831Z] pick · M1-1127-C · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:m3 2026-11-26T23:32:46.106Z] pick · M3-1127-B · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:heartbeat 2026-11-26T23:41:21.321Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:claim 2026-11-26T23:41:45.503Z] M1-1127-C → started · runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1127-C.json · {\"id\":\"M1-1127-C\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-26T23:41:45.739Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1127-C.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): status/pipeline/M1-1127-C.jsonl, events/runner-main-guard-20261126T085622Z.md, status/pipeline/M0-1127-B.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:41:53.810Z] [gh-runner-watchdog] wake: mac-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.Youngkyus-MacBook-Pro-M1\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T23:41:55.351Z] sleep observed · gap=556s · threshold=120s",
   "git_state": {
     "ahead": 0,
     "behind": 1,
@@ -73,6 +73,26 @@
     "needs_human": false
   },
   "ci_runners": [
+    {
+      "name": "ci-box-storeport-heavy-imac",
+      "status": "online",
+      "busy": false
+    },
+    {
+      "name": "ci-box-storeport-light-imac",
+      "status": "online",
+      "busy": false
+    },
+    {
+      "name": "Youngkyus-MacBook-Pro-M1",
+      "status": "offline",
+      "busy": false
+    },
+    {
+      "name": "curiocity-mac-light",
+      "status": "offline",
+      "busy": false
+    },
     {
       "name": "ci-box-fork-heavy-imac",
       "status": "online",
