@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T22:35:33.392Z",
+  "at": "2026-11-26T22:36:46.243Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -45,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.26,
-    "compressed_gb": 3.37,
+    "used_gb": 15.55,
+    "compressed_gb": 3.7,
     "swap_used_gb": 3.29,
     "pressure": "normal",
-    "at": "2026-11-26T22:34:58.685Z"
+    "at": "2026-11-26T22:36:14.635Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -123,7 +123,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 30,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:git 2026-11-26T22:23:23.763Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T22:25:43.704Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T22:26:16.212Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T22:26:19.403Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T22:26:49.687Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T22:29:08.932Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T22:29:41.280Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m2 2026-11-26T22:30:17.518Z] pick · M2-1127-A · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T22:30:23.191Z] M2-1127-A → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1127-A.json · {\"id\":\"M2-1127-A\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-26T22:30:23.321Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1127-A.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m2/M2-1127-A.md, status/pipeline/M2-1127-A.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:heartbeat 2026-11-26T22:34:55.259Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T22:35:27.759Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m1 2026-11-26T22:35:30.485Z] pick · M1-1127-A · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:m3 2026-11-26T22:35:31.570Z] pick · M3-1127-A · model=sonnet · display=cmux-split",
+  "err_tail": "[hub-runner-v8.3.2:heartbeat 2026-11-26T22:34:55.259Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T22:35:27.759Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m1 2026-11-26T22:35:30.485Z] pick · M1-1127-A · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:m3 2026-11-26T22:35:31.570Z] pick · M3-1127-A · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:heartbeat 2026-11-26T22:35:36.370Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:claim 2026-11-26T22:35:37.102Z] M1-1127-A → started · runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1127-A.json · {\"id\":\"M1-1127-A\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-26T22:35:37.214Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1127-A.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/pipeline/M1-1127-A.jsonl, events/runner-main-guard-20261126T085622Z.md, status/pipeline/M3-1127-A.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:claim 2026-11-26T22:35:42.001Z] M3-1127-A → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1127-A.json · {\"id\":\"M3-1127-A\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-26T22:35:42.112Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1127-A.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M3-1127-A.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed",
   "git_state": {
     "ahead": 0,
     "behind": 1,
