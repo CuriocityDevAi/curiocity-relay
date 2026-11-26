@@ -14,10 +14,10 @@
 | 4 | relay#60 머지 + Kyu 러너 폴더 정리 | 오케 + Kyu | Kyu 깨어 있을 때 | 러너 self-update 재시작 동반 |
 | 5 | 아이맥 heavy2 (메모리 실측 → 등록) · 대기열 줄이기 | Kyu → M2 | 실측 대기 | — |
 | 5.5 | **방법론 v2.0** (README 11단계 · 10-sdd · ROADMAP · HISTORY 뼈대 = 오케 착지 05:3x · HISTORY 채우기 = **M2-1127-A 발부**) · 01~09 본문 갱신은 HISTORY 착지 후 | 오케 + M2 | 진행 | Kyu 05:27 go · decision-sdd-naming · decision-oke-model |
-| 6 | spec-guard 보강 3종 (발부 전 충돌 검색 기록 · 핵심 흐름 실서버 e2e · 명세↔testid 자동 대조) | M1 · M3 | 발부 예정 | handoff-20261127 §6 |
+| 6 | spec-guard 보강 3종 — ① 발부 전 충돌 검색 기록 = 오케 적용 시작(11-27 발부분부터 `충돌 없음 확인(검색어)`) ② 핵심 흐름 실서버 e2e = **M1-1127-A 발부**(C 계획 R1+R2 · Opus) ③ 명세 ID↔화면 자동 대조 = **M3-1127-A 발부**(POS 쪽 · CD 쪽은 다음) | 오케 · M1 · M3 | 진행 | Kyu 05:33 "응 발부해줘" |
 | 7 | POS fork 자체 #N 카운터 PATCH 제거 | M3 | 후순위 | 선택 |
 | 8 | feature-map cd-keypad planned → live | M0 | 후순위 | — |
-| 9 | C 계획 (아이맥 통합 리허설 E2E) | — | Kyu go 대기 | 6번 e2e 가 최소판 |
+| 9 | C 계획 (아이맥 통합 리허설) R3~R6 — R1+R2 는 6번 ②로 착수 | M0 · M1 | R1+R2 착지 후 | 계획서 plans/cd-scenario-e2e-imac-20261126.md |
 
 허브(05:00): M0·M1·M2·M3·R0 전부 쉼 · 진행 중 프롬프트 없음 · 러너 v8.3.2 heartbeat 정상 · last_error = Kyu 러너 폴더 로컬 변경(events/runner-main-guard-20261126T085622Z.md)로 pull 막힘(queue 는 별도 checkout 으로 계속 받음).
 
