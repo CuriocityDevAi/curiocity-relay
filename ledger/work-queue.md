@@ -1,8 +1,24 @@
 # 작업 큐 (Kyu 의뢰 → 허브 할당 · 우선순위 · 상태 · 이유)
 
-갱신 2026-11-17 WIB (전화번호 발부 · 오케 작업자) · 그 전 2026-11-13 06:40 WIB (Kyu 06:35 회신 반영 · 오케 작업자) · 그 전 2026-11-13 WIB (handoff-20261113 병합) · **최신 handoff = `ledger/handoff-20261118.md`** · 직전 = `ledger/handoff-20261112.md` · 직전 갱신 2026-11-11 16:20 WIB · 규칙(Kyu 11-05): 오케는 매 응답 현황판 아래에 이 표를 붙이고(바뀐 줄 굵게), 우선순위 변경 시 "↑/↓ 이유". 정본 = 이 파일 · **오케가 갱신** · 최소 하루 1회. 프롬프트별 실시간 상태 = 상태판 https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE
+갱신 2026-11-27 05:00 WIB (handoff-20261127 이관 · 오케) · 그 전 2026-11-17 WIB (전화번호 발부 · 오케 작업자) · 그 전 2026-11-13 06:40 WIB (Kyu 06:35 회신 반영 · 오케 작업자) · 그 전 2026-11-13 WIB (handoff-20261113 병합) · **최신 handoff = `ledger/handoff-20261127.md`** · 직전 = `ledger/handoff-20261112.md` · 직전 갱신 2026-11-11 16:20 WIB · 규칙(Kyu 11-05): 오케는 매 응답 현황판 아래에 이 표를 붙이고(바뀐 줄 굵게), 우선순위 변경 시 "↑/↓ 이유". 정본 = 이 파일 · **오케가 갱신** · 최소 하루 1회. 프롬프트별 실시간 상태 = 상태판 https://claude.ai/artifact/Fpm1UFYvxX4mzCJYHtnBGE
 
 결정 정본 파일(원문 보존 · 유지): [decision-next-big-20261113](decision-next-big-20261113.md) · [decision-payment-icons-qris-sim-20261113](decision-payment-icons-qris-sim-20261113.md) · [decision-qris-20261112](decision-qris-20261112.md) · [decision-refund-nav-20261112](decision-refund-nav-20261112.md) · [decision-split-delivery-test-20261112](decision-split-delivery-test-20261112.md) · [decision-delivery-ui-20261110](decision-delivery-ui-20261110.md) · [decision-p6-20261110](decision-p6-20261110.md) · [decision-p6-split-20261111](decision-p6-split-20261111.md) · [decision-checkout-ui-20261111](decision-checkout-ui-20261111.md) · [decision-p6-test-20261111](decision-p6-test-20261111.md) · 장치 사건 [device-incidents](device-incidents.md) · 지표 [metrics](metrics.md)
+
+## 11-27 05:00 새 창 시작 (handoff-20261127 §4 이관 · 이 절이 최신)
+
+| 순서 | 일 | 허브 | 상태 | 이유 / 막힌 것 |
+|---|---|---|---|---|
+| 1 | POS·손님 화면 실기 (A~D · #275 #279 #280 #463~#468) | Kyu | 아침 | handoff-20261127 §3-1 |
+| 2 | GitHub Actions 지출 한도 $73 → $0 | Kyu | 아침 | 클라우드 잡 0 확인됨 |
+| 3 | 짧은 번호 초기화 결정 (매일 #1 vs 매장별 1~99 이어감) → 필요 시 M0 수정 | Kyu → M0 | 결정 대기 | 11-23 vs 11-26 결정 충돌 · specs/domain/order-number.md §2.2 |
+| 4 | relay#60 머지 + Kyu 러너 폴더 정리 | 오케 + Kyu | Kyu 깨어 있을 때 | 러너 self-update 재시작 동반 |
+| 5 | 아이맥 heavy2 (메모리 실측 → 등록) · 대기열 줄이기 | Kyu → M2 | 실측 대기 | — |
+| 6 | spec-guard 보강 3종 (발부 전 충돌 검색 기록 · 핵심 흐름 실서버 e2e · 명세↔testid 자동 대조) | M1 · M3 | 발부 예정 | handoff-20261127 §6 |
+| 7 | POS fork 자체 #N 카운터 PATCH 제거 | M3 | 후순위 | 선택 |
+| 8 | feature-map cd-keypad planned → live | M0 | 후순위 | — |
+| 9 | C 계획 (아이맥 통합 리허설 E2E) | — | Kyu go 대기 | 6번 e2e 가 최소판 |
+
+허브(05:00): M0·M1·M2·M3·R0 전부 쉼 · 진행 중 프롬프트 없음 · 러너 v8.3.2 heartbeat 정상 · last_error = Kyu 러너 폴더 로컬 변경(events/runner-main-guard-20261126T085622Z.md)로 pull 막힘(queue 는 별도 checkout 으로 계속 받음).
 
 ## 11-24 00:55 마감 (handoff-20261124 · 이 절이 최신)
 
