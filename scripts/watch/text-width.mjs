@@ -146,3 +146,46 @@ export function padEndWidth(s, targetCols) {
   if (w >= targetCols) return s;
   return s + ' '.repeat(targetCols - w);
 }
+
+/**
+ * ANSI 코드 포함 문자열을 표시 폭 maxCols 로 절단.
+ * ANSI 코드는 너비 0으로 계산하며, 열린 색상 코드가 있으면 끝에 \x1b[0m 추가.
+ * 한글·이모지 2칸 문자를 경계에서 자르지 않는다.
+ */
+export function truncateAnsiWidth(s, maxCols) {
+  if (!s) return '';
+  if (maxCols <= 0) return '';
+
+  const str = String(s);
+  let w = 0;
+  let i = 0;
+  let result = '';
+  let hasOpenAnsi = false;
+
+  while (i < str.length) {
+    // ANSI escape sequence
+    if (str.charCodeAt(i) === 0x1b && str[i + 1] === '[') {
+      const end = str.indexOf('m', i + 2);
+      if (end !== -1) {
+        const seq = str.slice(i, end + 1);
+        result += seq;
+        // Track whether color is open (not reset by \x1b[0m or \x1b[m)
+        hasOpenAnsi = seq !== '\x1b[0m' && seq !== '\x1b[m';
+        i = end + 1;
+        continue;
+      }
+    }
+
+    const cp = str.codePointAt(i);
+    const gw = cpWidth(cp);
+    const charLen = cp > 0xFFFF ? 2 : 1;
+
+    if (w + gw > maxCols) break;
+    result += str.slice(i, i + charLen);
+    w += gw;
+    i += charLen;
+  }
+
+  if (hasOpenAnsi) result += '\x1b[0m';
+  return result;
+}

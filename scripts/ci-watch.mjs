@@ -6,7 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 //
 // !! ci-watch 를 바꾸는 모든 프롬프트는 CI_WATCH_VERSION 을 올릴 것.
-// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A
+// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입)
 
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -24,6 +24,7 @@ import { promisify } from 'node:util';
 import { getWibDateStr, readJsonlFile } from './lib/ci-history.mjs';
 import { readAllLocalRunnerStates } from './lib/local-ci.mjs';
 import { computeRunnerAlerts } from './watch/runner-alerts.mjs';
+import { truncateAnsiWidth } from './watch/text-width.mjs';
 import {
   isMarkerJob,
   filterFreshUnclaimed,
@@ -33,7 +34,7 @@ import {
   renderLayout,
 } from './watch/ci-watch-render.mjs';
 
-const CI_WATCH_VERSION = '1.7';
+const CI_WATCH_VERSION = '1.9';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -864,28 +865,39 @@ function detectTerminalWidth() {
   return process.stdout.columns || 120;
 }
 
-// REQ 6: 차분 렌더 — 첫 렌더만 full clear, 이후는 변경된 줄만 갱신
+// §6: 차분 렌더 — 모든 줄 EAW 절단 · 마지막 줄 뒤 \x1b[J · 바뀐 줄만 덮어쓰기
 let _prevLines = [];
 
-export function renderDiff(lines) {
+// SIGWINCH 등에서 prevLines 초기화 — 테스트에서 직접 호출 가능
+export function resetRenderPrevLines() { _prevLines = []; }
+
+// write: 출력 대상 함수(기본값 process.stdout.write) · termWidth: 폭 주입(기본값 detectTerminalWidth())
+export function renderDiff(lines, { write, termWidth } = {}) {
+  const tw = termWidth ?? detectTerminalWidth();
+  const writeFn = write ?? (s => process.stdout.write(s));
+  // EAW 기준으로 각 줄을 터미널 폭에 절단 (줄바꿈→잔상 방지)
+  const truncated = lines.map(l => truncateAnsiWidth(l, tw));
+
   if (_prevLines.length === 0) {
-    // 첫 렌더: full clear
-    process.stdout.write('\x1b[2J\x1b[H');
-    process.stdout.write(lines.join('\n') + '\n');
+    // 첫 렌더: 전체 지우고 출력
+    writeFn('\x1b[2J\x1b[H');
+    for (const line of truncated) {
+      writeFn(line + '\n');
+    }
   } else {
-    const maxLen = Math.max(lines.length, _prevLines.length);
+    const maxLen = Math.max(truncated.length, _prevLines.length);
     for (let i = 0; i < maxLen; i++) {
-      const nl = lines[i] || '';
+      const nl = truncated[i] || '';
       const ol = _prevLines[i] || '';
       if (nl !== ol) {
-        // Move to line i+1, clear line, write new content
-        process.stdout.write(`\x1b[${i + 1};1H\x1b[2K${nl}`);
+        writeFn(`\x1b[${i + 1};1H\x1b[2K${nl}`);
       }
     }
-    // Move cursor past the last line
-    process.stdout.write(`\x1b[${lines.length + 1};1H`);
+    writeFn(`\x1b[${truncated.length + 1};1H`);
   }
-  _prevLines = lines.slice();
+  // 마지막 줄 뒤 화면 끝까지 지움 → 러너 로그 잔상 제거 (§6)
+  writeFn('\x1b[J');
+  _prevLines = truncated.slice();
 }
 
 // REQ 6: 스피너 — 120ms 간격으로 별도 업데이트
@@ -1136,6 +1148,7 @@ async function tick(fullMode) {
     terminalWidth: termWidth,
     version: CI_WATCH_VERSION,
     versionNote,
+    fileCommitDate: fileCommitDate || '',
     busyJobMap,
     hubNotifs,
     poolWaitStats,
@@ -1145,14 +1158,8 @@ async function tick(fullMode) {
 
   _lastRenderData = renderData;
 
-  const layoutLines = renderLayout(renderData);
-
-  // 타이틀/버전 경고는 첫 줄에 붙임
-  const titlePrefix = `\x1b[1mci-watch v${CI_WATCH_VERSION} (${fileCommitDate || '?'})\x1b[0m`;
-  const finalLines = layoutLines.map((l, i) => {
-    if (i === 0) return `${titlePrefix}  ${versionNote}  ${l}`;
-    return l;
-  });
+  // §6: 머리줄 중복 제거 — renderLayout 이 version+heartbeat 를 1회 출력
+  const finalLines = renderLayout(renderData);
 
   renderDiff(finalLines);
 
@@ -1181,6 +1188,14 @@ if (_argv1 && (
 
   process.on('SIGINT', () => { cleanupTerminal(); process.exit(0); });
   process.on('SIGTERM', () => { cleanupTerminal(); process.exit(0); });
+  // §6: SIGWINCH 시 전체 1회 재그림 (창 크기 변경)
+  process.on('SIGWINCH', () => {
+    _prevLines = []; // force full redraw on next render
+    if (!isRendering) {
+      clearTimeout(refreshTimer);
+      tick(fullMode).catch(() => {}).finally(scheduleNext);
+    }
+  });
   process.stdout.write('\x1b[?25l');
 
   // M1-1124-H: boot 로그 — 배포본 여부 · boot hash.
