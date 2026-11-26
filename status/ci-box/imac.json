@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-26T03:45:30Z",
+  "ts": "2026-11-26T03:50:36Z",
   "uptime": {
-    "uptime_secs": 36813,
-    "load_1": 6.58,
-    "load_5": 10.09,
-    "load_15": 11.76
+    "uptime_secs": 37119,
+    "load_1": 8.81,
+    "load_5": 8.87,
+    "load_15": 10.62
   },
   "memory": {
-    "free_pct": 6,
-    "swap_used_mb": 0.25,
-    "swap_free_mb": 1023.75
+    "free_pct": 26,
+    "swap_used_mb": 0.75,
+    "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 94,
-    "runner_work_free_gb": 94
+    "root_free_gb": 109,
+    "runner_work_free_gb": 109
   },
   "thermal": {
     "throttled": true,
@@ -24,7 +24,7 @@
     "worker_count": 0
   },
   "github": {
-    "latency_ms": 126,
+    "latency_ms": 119,
     "reachable": true
   },
   "netspeed": {
@@ -42,7 +42,6 @@
   },
   "health": "bad",
   "reasons": [
-    "memory_free_6pct_lt_15",
     "runners_0_lt_4"
   ]
 }
