@@ -233,7 +233,7 @@ export function deployCiWatch({ repoRoot, runnerHome }) {
 }
 
 export const WRAPPER_BODY = `#!/bin/bash
-# ci-watch.sh · M1-1124-K · ci-watch 자가 재기동 래퍼
+# ci-watch.sh · M1-1124-K · ci-watch 자가 재기동 래퍼  (M1-1126-A: exit(0) 루프 방지)
 # 끄기: Ctrl+C  또는  ci-watch.sh stop (다른 터미널)
 set -u
 
@@ -242,10 +242,13 @@ CI_WATCH="$SELF_DIR/ci-watch.mjs"
 PID_FILE="$HOME/.hub-runner/ci-watch.pid"
 CRASH_WINDOW=60
 CRASH_LIMIT=5
+# M1-1126-A: stderr 를 임시 파일에 tee — exit(0) 루프 중단 메시지에 마지막 3줄 첨부용.
+_STDERR_LOG="$(mktemp /tmp/ci-watch-stderr-XXXXXX 2>/dev/null || mktemp)"
 
 if [[ $# -ge 1 && "$1" = "stop" ]]; then
   if [[ ! -f "$PID_FILE" ]]; then
     echo "[ci-watch.sh] pid 파일 없음 · 실행 중이 아닐 수 있음"
+    rm -f "$_STDERR_LOG"
     exit 0
   fi
   pid="$(cat "$PID_FILE" 2>/dev/null)"
@@ -256,6 +259,7 @@ if [[ $# -ge 1 && "$1" = "stop" ]]; then
     echo "[ci-watch.sh] pid=$pid 프로세스 없음 · 이미 종료됨"
     rm -f "$PID_FILE"
   fi
+  rm -f "$_STDERR_LOG"
   exit 0
 fi
 
@@ -270,7 +274,7 @@ _cleanup() {
     kill -TERM "$_CHILD_PID" 2>/dev/null
     wait "$_CHILD_PID" 2>/dev/null
   fi
-  rm -f "$PID_FILE"
+  rm -f "$PID_FILE" "$_STDERR_LOG"
   exit 0
 }
 trap _cleanup INT TERM
@@ -287,7 +291,9 @@ while [[ "$_STOPPING" -eq 0 ]]; do
     continue
   fi
 
-  node "$CI_WATCH" "$@" &
+  # M1-1126-A: stderr 를 terminal 에 표시하면서 로그 파일에도 tee.
+  # $! 는 node 의 PID (process substitution 은 $! 에 반영 안 됨).
+  node "$CI_WATCH" "$@" 2> >(tee -a "$_STDERR_LOG" >&2) &
   _CHILD_PID=$!
   wait "$_CHILD_PID"
   exit_code=$?
@@ -295,11 +301,7 @@ while [[ "$_STOPPING" -eq 0 ]]; do
 
   [[ "$_STOPPING" -eq 1 ]] && break
 
-  if [[ "$exit_code" -eq 0 ]]; then
-    echo "[ci-watch.sh] exit(0) · 즉시 재기동" >&2
-    continue
-  fi
-
+  # M1-1126-A: exit(0) 도 crash 카운터에 포함 — 자가 업데이트 오탐 무한 루프 방지.
   now=$(date +%s)
   if (( now - crash_window_start > CRASH_WINDOW )); then
     crash_window_start=$now
@@ -309,16 +311,25 @@ while [[ "$_STOPPING" -eq 0 ]]; do
   fi
 
   if (( crash_count >= CRASH_LIMIT )); then
-    echo "[ci-watch.sh] $CRASH_WINDOW s 내 비정상 종료 $CRASH_LIMIT 회 — 루프 중단. 고친 뒤 다시 실행하세요." >&2
-    rm -f "$PID_FILE"
+    _last_lines="$(tail -3 "$_STDERR_LOG" 2>/dev/null | tr '\\n' '|')"
+    if [[ "$exit_code" -eq 0 ]]; then
+      echo "[ci-watch.sh] 자가 업데이트 재기동이 \${CRASH_WINDOW}초에 \${CRASH_LIMIT}회 넘음 · 중단 — \${_last_lines}" >&2
+    else
+      echo "[ci-watch.sh] \${CRASH_WINDOW}s 내 비정상 종료 \${CRASH_LIMIT}회 — 루프 중단. 고친 뒤 다시 실행하세요." >&2
+    fi
+    rm -f "$PID_FILE" "$_STDERR_LOG"
     exit 1
   fi
 
-  echo "[ci-watch.sh] 비정상 종료(exit=$exit_code) · 2 초 뒤 재기동" >&2
-  sleep 2 & wait $!
+  if [[ "$exit_code" -eq 0 ]]; then
+    echo "[ci-watch.sh] exit(0) · 즉시 재기동" >&2
+  else
+    echo "[ci-watch.sh] 비정상 종료(exit=$exit_code) · 2 초 뒤 재기동" >&2
+    sleep 2 & wait $!
+  fi
 done
 
-rm -f "$PID_FILE"
+rm -f "$PID_FILE" "$_STDERR_LOG"
 `;
 
 export function deployCiWatchWrapper({ runnerHome }) {
