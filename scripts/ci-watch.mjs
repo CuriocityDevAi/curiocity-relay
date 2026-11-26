@@ -1005,9 +1005,12 @@ async function tick(fullMode) {
     hour: '2-digit', minute: '2-digit', second: '2-digit',
   }).replace(',', '');
 
+  // hubPending: { id, ageMin }[] per hub — age info for chip display
   const hubPending = {};
   for (const hub of QUEUE_HUBS) {
-    hubPending[hub] = listHubPendingIds(hub);
+    hubPending[hub] = rawUnclaimed
+      .filter(item => extractHubFromId(item.id) === hub)
+      .slice(0, 5);
   }
   const hubNotifs = tickQueueDiff();
 

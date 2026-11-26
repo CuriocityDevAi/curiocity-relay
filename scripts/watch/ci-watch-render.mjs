@@ -569,7 +569,7 @@ export function renderLayout(data) {
     ? col(`●진행 ${totalInProgress}`, C.green, C.bold)
     : col(`●진행 0`, C.dim);
   const todayBadge = col(`✔오늘 ${todayCompletedCount}`, C.dim);
-  const runnerVer = allJson?.runner ? `runner v${allJson.runner}` : 'runner ?';
+  const runnerVer = allJson?.runner ? `runner ${allJson.runner}` : 'runner ?';
 
   const hbAge = allJson?.at ? Math.round((Date.now() - new Date(allJson.at).getTime()) / 60000) : null;
   const hbStr = hbAge !== null
@@ -608,7 +608,12 @@ export function renderLayout(data) {
     }
     const cur = h.current;
     const pending = data.hubPending?.[hub] || [];
-    const chips = pending.map(id => `[${id}]`).join('');
+    // pending items: { id, ageMin } objects or legacy string IDs
+    const chips = pending.map(item => {
+      const id = typeof item === 'string' ? item : item.id;
+      const ageMin = typeof item === 'object' && item.ageMin != null ? ` ${item.ageMin}분` : '';
+      return `[${id}${ageMin}]`;
+    }).join('');
 
     if (cur) {
       const rptStatus = hubReportStatus?.[hub];
