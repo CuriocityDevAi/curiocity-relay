@@ -161,7 +161,11 @@ test('W5-4: self-hosted(imac) runner in-progress → cloud 칸 미포함', () =>
 
 // ─── W6-1: idle + partial → '?' 등장 ────────────────────────────────────────
 
-test('W6-1: ci.data.partial=true → idle 셀에 "?" 등장', () => {
+// v1.15: Kyu 신뢰 회복 — 온라인 러너가 idle 이면 '쉼' 으로 확정 표시.
+//        전역 partial 플래그로 기존 의 idle 판정을 뒤집지 않는다
+//        (전역 partial 은 다른 repo 조회 실패로 켜질 수 있음).
+//        '?' 는 러너 목록에 없거나 offline+partial 인 경우에만 뜬다.
+test('W6-1(v1.15): online 러너 idle + partial=true 여도 "?" 아닌 "쉼"', () => {
   const allJson = makeAllJson({ ci: { data: {
     partial: true,
     heavy: { in_progress: [], queued: 0 },
@@ -176,12 +180,16 @@ test('W6-1: ci.data.partial=true → idle 셀에 "?" 등장', () => {
 
   const lines = renderLayout(makeLayoutData({ allJson }));
   const text  = stripAnsi(lines.join('\n'));
-
-  // partial=true 인 상태에서 idle 기계 칸이 '?' 를 표시해야 함
-  // CI 큐 섹션에 '?' 가 등장해야 함 (회색 dim 색상이므로 텍스트만 확인)
   const ciSection = text.slice(text.indexOf('CI 큐'), text.indexOf('진행 중') > 0 ? text.indexOf('진행 중') : text.length);
-  assert.ok(ciSection.includes('?'),
-    `partial=true 인데 CI 큐 섹션에 '?' 없음\n${ciSection.slice(0, 300)}`);
+
+  // online 러너 전부 포함 → '?' 없음. '쉼' 은 있어야 함.
+  assert.ok(ciSection.includes('쉼'),
+    `online idle 인데 '쉼' 없음\n${ciSection.slice(0, 300)}`);
+  // '?' 셀 (단독 토큰) 없음 — 최소한 '쉼' 보다 많이 뜨지 않음
+  const qCount = (ciSection.match(/[?]/g) || []).length;
+  const stCount = (ciSection.match(/쉼/g) || []).length;
+  assert.ok(stCount >= 1 && qCount === 0,
+    `? ${qCount}개 · 쉼 ${stCount}개 — online idle 은 '쉼' 이어야 함`);
 });
 
 // ─── W6-2: ERR_TAIL_SCREEN_FILTERS — 금지 로그 줄 화면 미출력 ────────────────
@@ -213,30 +221,43 @@ test('W6-2: hub-runner/partial skip/claim 로그 줄은 화면 미출력', () =>
     `일반 에러 줄이 화면에서 사라짐`);
 });
 
-// ─── W7-1: 합계 한 줄 'PR N · PT N · 잡 N' 형태 ───────────────────────────────
+// ─── W7-1(v1.15): 전체 오늘 = 세 줄 단순 합 ──────────────────────────────────
+// v1.15: 중복 제거 고유 수(summaryPR/PT/Jobs)는 "고유 N" 괄호 참고만.
+//        전체 PR·PT·잡 은 MBP + iMAC + 클라우드 단순 합.
 
-test('W7-1: summaryPR/PT/잡 → "PR 14 · PT 31 · 잡 165" 형태 한 줄', () => {
-  const lines = renderLayout(makeLayoutData({ summaryPR: 14, summaryPT: 31, summaryJobs: 165 }));
+test('W7-1(v1.15): 전체 오늘 = 세 줄 PR·PT·잡 단순 합', () => {
+  const lines = renderLayout(makeLayoutData({
+    mbpPR: 4, mbpPT: 10, imacPR: 6, imacPT: 15, cloudPR: 4, cloudPT: 6,
+    todayMachineStats: { mbp: { jobs: 80, avgRun: 2 }, imac: { jobs: 60, avgRun: 1 } },
+    cloudData: { realCount: 25, limit: 5, totalMin: 10, last3: [] },
+    summaryPR: 14, summaryPT: 31, summaryJobs: 165, // 고유/전수 참고값 — 전체 줄 숫자 결정 안 함
+  }));
   const text  = stripAnsi(lines.join('\n'));
 
-  assert.ok(text.includes('PR 14') && text.includes('PT 31') && text.includes('잡 165'),
-    `합계 줄 미등장\n...${text.slice(-400)}`);
-  // 세 항목이 같은 줄에 있어야 함
-  const foundLine = lines.map(l => stripAnsi(l)).find(l => l.includes('PR 14') && l.includes('PT 31') && l.includes('잡 165'));
-  assert.ok(foundLine, `PR · PT · 잡 세 항목이 같은 줄에 없음`);
+  // 전체 PR = 4+6+4 = 14, PT = 10+15+6 = 31, 잡 = 80+60+25 = 165
+  const foundLine = lines.map(l => stripAnsi(l)).find(l => l.includes('전체 오늘'));
+  assert.ok(foundLine, `'전체 오늘' 줄 없음\n...${text.slice(-400)}`);
+  assert.ok(foundLine.includes('PR 14'), `전체 PR 합 14 없음: "${foundLine}"`);
+  assert.ok(foundLine.includes('PT 31'), `전체 PT 합 31 없음: "${foundLine}"`);
+  assert.ok(foundLine.includes('잡 165'), `전체 잡 합 165 없음: "${foundLine}"`);
 });
 
 // ─── W7-2: 순서 PR → PT → 잡 고정 ──────────────────────────────────────────
 
-test('W7-2: 합계 줄 순서 PR → PT → 잡 고정', () => {
-  const lines = renderLayout(makeLayoutData({ summaryPR: 5, summaryPT: 10, summaryJobs: 50 }));
-  const foundLine = lines.map(l => stripAnsi(l)).find(l => l.includes('PR 5') && l.includes('PT 10') && l.includes('잡 50'));
-  assert.ok(foundLine, '합계 줄 없음');
-
+test('W7-2(v1.15): 전체 오늘 줄 순서 PR → PT → 잡 고정', () => {
+  const lines = renderLayout(makeLayoutData({
+    mbpPR: 2, mbpPT: 4, imacPR: 2, imacPT: 4, cloudPR: 1, cloudPT: 2,
+    todayMachineStats: { mbp: { jobs: 20, avgRun: 1 }, imac: { jobs: 20, avgRun: 1 } },
+    cloudData: { realCount: 10, limit: 5, totalMin: 5, last3: [] },
+  }));
+  const foundLine = lines.map(l => stripAnsi(l)).find(l => l.includes('전체 오늘'));
+  assert.ok(foundLine, '전체 오늘 줄 없음');
+  // PR 5, PT 10, 잡 50 — 세 줄 합
   const idxPR  = foundLine.indexOf('PR 5');
   const idxPT  = foundLine.indexOf('PT 10');
   const idxJob = foundLine.indexOf('잡 50');
-
+  assert.ok(idxPR >= 0 && idxPT >= 0 && idxJob >= 0,
+    `세 숫자 중 일부 누락: PR=${idxPR} PT=${idxPT} JOB=${idxJob} → "${foundLine}"`);
   assert.ok(idxPR < idxPT,  `PR(${idxPR}) 이 PT(${idxPT}) 보다 뒤`);
   assert.ok(idxPT < idxJob, `PT(${idxPT}) 이 잡(${idxJob}) 보다 뒤`);
 });

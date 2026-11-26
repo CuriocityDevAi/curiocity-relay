@@ -6,7 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 //
 // !! ci-watch 를 바꾸는 모든 프롬프트는 CI_WATCH_VERSION 을 올릴 것.
-// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입) · 1.10 M2-1126-F(W1~W4) · 1.11 M2-1126-G(W5~W9) · 1.12 M2-1126-I(W9경로·W2보완·W10) · 1.13 M2-1126-L(cancel-on-close마커·OFF표시·4줄기계별집계)
+// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입) · 1.10 M2-1126-F(W1~W4) · 1.11 M2-1126-G(W5~W9) · 1.12 M2-1126-I(W9경로·W2보완·W10) · 1.13 M2-1126-L(cancel-on-close마커·OFF표시·4줄기계별집계) · 1.14 M2-1126-N(heavy-cloud fork-only 마커) · 1.15 M2-1126-Q(전체=세줄합·클라우드 top/bottom 단일 소스·iMAC 쉼 판정·⚠집계불일치 가드)
 
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -36,7 +36,7 @@ import {
   renderLayout,
 } from './watch/ci-watch-render.mjs';
 
-const CI_WATCH_VERSION = '1.13';
+const CI_WATCH_VERSION = '1.15';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));

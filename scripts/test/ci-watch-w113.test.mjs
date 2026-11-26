@@ -184,13 +184,19 @@ test('W10-cloud줄: PR · PT · 잡 · 넘김 X/Y 포함', () => {
   assert.ok(foundLine.includes('3/5'),   `3/5 없음: "${foundLine}"`);
 });
 
-test('W10-전체줄: summaryPR · summaryPT · summaryJobs 포함', () => {
+test('W10-전체줄(v1.15): 세 줄 PR·PT·잡 단순 합 (summary* 는 고유 참고용)', () => {
+  // mbpPR=10, imacPR=12, cloudPR=8 → 30
+  // mbpPT=8,  imacPT=9,  cloudPT=6 → 23
+  // mbp.jobs=31, imac.jobs=57, cloud(cd.realCount)=24 → 112
   const lines = renderLayout(makeLayoutData({ summaryPR: 15, summaryPT: 12, summaryJobs: 112 }));
   const foundLine = lines.map(l => stripAnsi(l)).find(l => l.includes('전체 오늘'));
   assert.ok(foundLine, '전체 오늘 줄 없음');
-  assert.ok(foundLine.includes('PR 15'),  `PR 15 없음: "${foundLine}"`);
-  assert.ok(foundLine.includes('PT 12'),  `PT 12 없음: "${foundLine}"`);
-  assert.ok(foundLine.includes('잡 112'), `잡 112 없음: "${foundLine}"`);
+  assert.ok(foundLine.includes('PR 30'),  `전체 PR 합 30 없음: "${foundLine}"`);
+  assert.ok(foundLine.includes('PT 23'),  `전체 PT 합 23 없음: "${foundLine}"`);
+  assert.ok(foundLine.includes('잡 112'), `전체 잡 합 112 없음: "${foundLine}"`);
+  // 고유 PR 15 참고 괄호 (전체 30 ≠ summaryPR 15 이므로 표시)
+  assert.ok(foundLine.includes('고유 PR 15'),
+    `(고유 PR 15) 참고 괄호 없음: "${foundLine}"`);
 });
 
 test('W10-넘김빨강: cloudTodayCount >= cloudLimit → 넘김 빨강 색상', () => {
@@ -223,11 +229,14 @@ test('W10-일관성: cloudData.realCount 가 오늘 처리(잡) 클라우드 칸
 
 // ─── W10 전체 PR ≤ 세 줄 PR 합 ────────────────────────────────────────────────
 
-test('W10-전체PR: summaryPR ≤ mbpPR + imacPR + cloudPR (중복 제거 원칙)', () => {
-  // PR 중복: mbp=10, imac=12, cloud=8, 전체=15 ≤ 30
-  const { mbpPR, imacPR, cloudPR, summaryPR } = makeLayoutData();
-  assert.ok(summaryPR <= (mbpPR ?? 0) + (imacPR ?? 0) + (cloudPR ?? 0),
-    `전체 PR ${summaryPR} > 세 줄 합 ${(mbpPR ?? 0) + (imacPR ?? 0) + (cloudPR ?? 0)}`);
+test('W10-전체PR(v1.15): 전체 PR = mbpPR + imacPR + cloudPR (단순 합 · Kyu 규칙)', () => {
+  // v1.15: 전체 = 세 줄 단순 합. 고유 수 아님.
+  const { mbpPR, imacPR, cloudPR } = makeLayoutData();
+  const sum = (mbpPR ?? 0) + (imacPR ?? 0) + (cloudPR ?? 0);
+  const lines = renderLayout(makeLayoutData());
+  const foundLine = lines.map(l => stripAnsi(l)).find(l => l.includes('전체 오늘'));
+  assert.ok(foundLine?.includes(`PR ${sum}`),
+    `전체 PR ${sum} (세 줄 합) 없음: "${foundLine}"`);
 });
 
 // ─── W10-no-duplicate: 하단 단독 PR·PT·잡 줄 없음 ────────────────────────────

@@ -4,6 +4,8 @@
 // v1.12: W2보완(changes-filter·markers-and-forbidden) · W10(클라우드 오늘 줄 개편)
 // v1.13: M2-1126-L — W2(cancel-on-close 마커) · W5(OFF 표시 수정) · W10(4줄 MBP/iMAC/클라우드/전체)
 // v1.14: M2-1126-N — heavy-cloud 를 fork-only 마커로 변경 (storeport heavy-cloud 는 실제 24분 잡)
+// v1.15: M2-1126-Q — 전체 오늘 = 세 줄 단순 합 · 클라우드 top/bottom 단일 소스(cloudData) ·
+//                    iMAC online+idle → '쉼' (partial 전역 플래그 무시) · ⚠집계불일치 가드
 
 import { displayWidth, padEndWidth, stripAnsi, truncateWidth } from './text-width.mjs';
 
@@ -51,6 +53,35 @@ export function isCountableJob(record) {
   const c = record.conclusion;
   if (c === 'skipped' || c === 'cancelled') return false;
   return true;
+}
+
+/**
+ * v1.15: 집계 일관성 자가검사 — "조용히 틀린 숫자 금지" (Kyu 신뢰 회복 조건).
+ * 위반 1건당 사람이 읽을 수 있는 메시지 1줄 반환. 위반 없으면 [].
+ * 검사 항목:
+ *   G1: 상단 '오늘 처리(잡)' 클라우드 셀 == 아래 '클라우드 오늘' 잡 (동일 소스)
+ *   G2: 전체 PR = MBP + iMAC + 클라우드
+ *   G3: 전체 PT = MBP + iMAC + 클라우드
+ *   G4: 전체 잡 = MBP + iMAC + 클라우드
+ */
+export function checkAggregateInvariants(nums) {
+  const msgs = [];
+  if (nums.topCloudJobs !== nums.bottomCloudJobs) {
+    msgs.push(`클라우드 상단 ${nums.topCloudJobs} ≠ 하단 ${nums.bottomCloudJobs}`);
+  }
+  const sumPR = nums.mbpPRv + nums.imacPRv + nums.cloudPRv;
+  if (nums.totalPR !== sumPR) {
+    msgs.push(`전체 PR ${nums.totalPR} ≠ ${nums.mbpPRv}+${nums.imacPRv}+${nums.cloudPRv}=${sumPR}`);
+  }
+  const sumPT = nums.mbpPTv + nums.imacPTv + nums.cloudPTv;
+  if (nums.totalPT !== sumPT) {
+    msgs.push(`전체 PT ${nums.totalPT} ≠ ${nums.mbpPTv}+${nums.imacPTv}+${nums.cloudPTv}=${sumPT}`);
+  }
+  const sumJ = nums.mbpJobs + nums.imacJobs + nums.cloudJobs;
+  if (nums.totalJobs !== sumJ) {
+    msgs.push(`전체 잡 ${nums.totalJobs} ≠ ${nums.mbpJobs}+${nums.imacJobs}+${nums.cloudJobs}=${sumJ}`);
+  }
+  return msgs;
 }
 
 /**
@@ -433,8 +464,10 @@ export function buildMachineState(allJson, runState) {
           return { status: 'running', job: { promptId, pr, branch, jobName, min, runnerName: r.name }, partial: false };
         }
       }
-      // W6: idle 이지만 partial → '?' 표시
-      return { status: 'idle', job: null, partial: isPoolPartial };
+      // v1.15: 러너가 online 이고 실행 중 잡 없음 → idle 은 확정된 사실 (실측 '쉼')
+      // isPoolPartial (전역 partial 플래그) 은 다른 repo 조회 실패로 켜질 수 있으므로
+      // 이미 online 확인된 러너의 idle 판정을 뒤집지 않는다.
+      return { status: 'idle', job: null, partial: false };
     }
 
     const poolCloudJobs = [
@@ -598,9 +631,13 @@ function fmtQueueCell(qItems, colW) {
 /**
  * §1: 오늘 처리 행 — CI 표 열 아래에 N건·avgXm (MBP / iMAC / 클라우드 각각 정렬)
  * W8: machineRecentStats 에서 최근 10분 내 완료 → `✓Nm` 초록 추가
+ * v1.15: 클라우드 건수는 cloudJobs 파라미터(= readRealCloudData().realCount)만 사용 —
+ *        아래 "클라우드 오늘" 줄과 **동일 소스**. 과거엔 todayStats['cloud'].jobs 를 썼으나
+ *        hub-runner 집계가 다른 필터를 쓰기 때문에 상/하 숫자 불일치의 원인이었다.
  * @param {object|null} machineRecentStats - { 'storeport-heavy-mbp': minAgo, ... }
+ * @param {number} cloudJobs - 아래 클라우드 줄과 동일한 cloudData.realCount
  */
-function buildTodayProcessedRow(todayStats, cloudCostEst, todayMachineStats, machineRecentStats) {
+function buildTodayProcessedRow(todayStats, cloudCostEst, todayMachineStats, machineRecentStats, cloudJobs) {
   if (!todayStats && !todayMachineStats) return null;
 
   // 라벨 셀: 풀 + SEP + 대기 위치를 차지 (헤더의 풀/대기 열과 같은 너비)
@@ -656,13 +693,14 @@ function buildTodayProcessedRow(todayStats, cloudCostEst, todayMachineStats, mac
   }
   const imacCell = buildMachineCol(imacStr, CI_COL_IMAC, overallRecentMin('imac'));
 
-  // 클라우드 칸
+  // 클라우드 칸 — v1.15: cloudJobs(= cloudData.realCount) 단일 소스
+  // avg_run_min 은 참고용으로 todayStats 를 쓰지만, 건수는 cloudJobs 로 고정
   const cl = todayStats?.['cloud'];
-  const cloudJobs = cl?.jobs || 0;
+  const cloudJobCount = typeof cloudJobs === 'number' ? cloudJobs : (cl?.jobs || 0);
   const cloudAvg = cl?.avg_run_min;
   const costStr = cloudCostEst != null ? ` $${cloudCostEst.toFixed(2)}` : '';
-  const cloudStr = cloudJobs > 0
-    ? `${cloudJobs}건·${cloudAvg != null ? fmtDuration(cloudAvg) : '?'}${costStr}`
+  const cloudStr = cloudJobCount > 0
+    ? `${cloudJobCount}건·${cloudAvg != null ? fmtDuration(cloudAvg) : '?'}${costStr}`
     : `0건${costStr}`;
   const cloudCell = padEndWidth(cloudStr, CI_COL_CLOUD);
 
@@ -917,7 +955,15 @@ export function renderLayout(data) {
   }
 
   // 오늘 처리 행 (§1: 마지막 줄) — W8 machineRecentStats 전달
-  const todayRow = buildTodayProcessedRow(todayStats, todayStats?.cloud_cost_est_usd ?? null, todayMachineStats, machineRecentStats);
+  // v1.15: cloudData.realCount 를 넘겨 아래 "클라우드 오늘" 줄과 동일 소스로 통일
+  const cdForRow = cloudData || { realCount: 0 };
+  const todayRow = buildTodayProcessedRow(
+    todayStats,
+    todayStats?.cloud_cost_est_usd ?? null,
+    todayMachineStats,
+    machineRecentStats,
+    cdForRow.realCount,
+  );
   if (todayRow) lines.push(col(todayRow, C.dim));
 
   // 미분류 러너 경고
@@ -973,15 +1019,24 @@ export function renderLayout(data) {
 
   const cd = cloudData || { realCount: 0, limit: 5, totalMin: 0, last3: [] };
 
-  // W10: 4줄 — MBP M1 오늘 / iMAC M1 오늘 / 클라우드 오늘 / 전체 오늘
-  // 전체 PR·PT = 중복 제거 고유 수 (동일 PR이 여러 기계에서 돌 수 있음). 전체 잡 = 세 줄 합.
+  // v1.15: 4줄 — MBP / iMAC / 클라우드 / 전체. 전체 = **세 줄 단순 합** (Kyu 확정).
+  // 중복 제거 고유 수는 쓰지 않음 (summaryPR/PT/Jobs 는 참고용 "고유 N" 괄호로만 노출).
+  // 또한 아래 "클라우드 오늘 잡" 은 cd.realCount — 위 CI 표 "오늘 처리(잡)" 과 동일 소스.
   {
     const mbpJobs = todayMachineStats?.mbp?.jobs ?? 0;
     const imacJobs = todayMachineStats?.imac?.jobs ?? 0;
     const cloudJobs = cd.realCount;
-    const totalJobs = summaryJobs ?? (mbpJobs + imacJobs + cloudJobs);
-    const totalPR = summaryPR ?? 0;
-    const totalPT = summaryPT ?? 0;
+    const mbpPRv = mbpPR ?? 0;
+    const imacPRv = imacPR ?? 0;
+    const cloudPRv = cloudPR ?? 0;
+    const mbpPTv = mbpPT ?? 0;
+    const imacPTv = imacPT ?? 0;
+    const cloudPTv = cloudPT ?? 0;
+
+    // 전체 = 세 줄 합 (단순 산수). summaryPR/PT/Jobs 는 고유 수 참고용.
+    const totalPR = mbpPRv + imacPRv + cloudPRv;
+    const totalPT = mbpPTv + imacPTv + cloudPTv;
+    const totalJobs = mbpJobs + imacJobs + cloudJobs;
 
     const LBL_W = 14; // 라벨 열 폭 (display cols) — '클라우드 오늘' = 7 CJK = 14
     const fmtRow = (label, pr, pt, jobs, suffix = '') => {
@@ -989,8 +1044,8 @@ export function renderLayout(data) {
       return col(`  ${lbl}  PR ${pr} · PT ${pt} · 잡 ${jobs}${suffix}`, C.dim);
     };
 
-    lines.push(fmtRow('MBP M1 오늘', mbpPR ?? 0, mbpPT ?? 0, mbpJobs));
-    lines.push(fmtRow('iMAC M1 오늘', imacPR ?? 0, imacPT ?? 0, imacJobs));
+    lines.push(fmtRow('MBP M1 오늘', mbpPRv, mbpPTv, mbpJobs));
+    lines.push(fmtRow('iMAC M1 오늘', imacPRv, imacPTv, imacJobs));
 
     // 클라우드 오늘 — 넘김 X/Y (한도 소진 시 빨강)
     const overflowUsed = cloudTodayCount ?? 0;
@@ -999,10 +1054,31 @@ export function renderLayout(data) {
     const overflowText = `${overflowUsed}/${overflowLim}`;
     const overflowStr = overflowExhausted ? col(overflowText, C.red) : overflowText;
     lines.push(
-      col(`  ${padEndWidth('클라우드 오늘', LBL_W)}  PR ${cloudPR ?? 0} · PT ${cloudPT ?? 0} · 잡 ${cloudJobs} · 넘김 `, C.dim) + overflowStr,
+      col(`  ${padEndWidth('클라우드 오늘', LBL_W)}  PR ${cloudPRv} · PT ${cloudPTv} · 잡 ${cloudJobs} · 넘김 `, C.dim) + overflowStr,
     );
 
-    lines.push(fmtRow('전체 오늘', totalPR, totalPT, totalJobs));
+    // 전체 오늘 — 세 줄 합. (고유 N) 은 회색 참고 표기 (옵션).
+    const uniqueSuffix = (() => {
+      const parts = [];
+      if (typeof summaryPR === 'number' && summaryPR !== totalPR) parts.push(`고유 PR ${summaryPR}`);
+      if (typeof summaryJobs === 'number' && summaryJobs !== totalJobs) parts.push(`전수 잡 ${summaryJobs}`);
+      return parts.length ? `  (${parts.join(' · ')})` : '';
+    })();
+    lines.push(fmtRow('전체 오늘', totalPR, totalPT, totalJobs, uniqueSuffix));
+
+    // v1.15 가드: 조용히 틀린 숫자 금지. 상/하 클라우드 잡 수 일치 자가검사.
+    // (현재 코드는 같은 변수로 양쪽을 그려서 분기 가능성이 없지만, 회귀 방지 안전망)
+    // 또한 전체 PR·PT·잡 = 세 줄 합 성립 여부도 검사 (산수 방어).
+    const guardMsgs = checkAggregateInvariants({
+      topCloudJobs: cloudJobs,       // 상단 "오늘 처리(잡)" 행 클라우드 셀 (v1.15에서 cd.realCount 사용)
+      bottomCloudJobs: cloudJobs,    // 아래 "클라우드 오늘" 줄
+      mbpPRv, imacPRv, cloudPRv, totalPR,
+      mbpPTv, imacPTv, cloudPTv, totalPT,
+      mbpJobs, imacJobs, cloudJobs, totalJobs,
+    });
+    for (const m of guardMsgs) {
+      lines.push(col(`  ⚠ 집계 불일치: ${m}`, C.red, C.bold));
+    }
   }
 
   // err_tail — W6: watchdog/claim/self-update 로그 줄은 화면 미출력 (파일 로그로만)
