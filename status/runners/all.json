@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T02:22:11.144Z",
+  "at": "2026-11-26T02:22:21.773Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -13,7 +13,9 @@
       "last_activity": "2026-11-26T02:18:30.050Z"
     },
     "m1": {
-      "current": null,
+      "current": "M1-1126-D",
+      "started_at": "2026-11-26T02:22:20.400Z",
+      "model": "sonnet",
       "last_activity": "2026-11-26T02:22:09.964Z"
     },
     "m2": {
@@ -121,7 +123,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 114,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:20:01.448Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:20:02.076Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:20:02.076Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:20:37.821Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:20:37.821Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:20:38.398Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:20:38.398Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:21:11.567Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:21:11.567Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:21:12.137Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:21:12.137Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:r0 2026-11-26T02:21:43.865Z] pick · R0-1126-C · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:m1 2026-11-26T02:21:50.754Z] [report-path] M1-1126-C: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T02:21:52.263Z] R0-1126-C → started · runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-C.json · {\"id\":\"R0-1126-C\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T02:21:52.370Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1126-C.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-C.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:21:11.567Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:21:12.137Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T02:21:12.137Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:r0 2026-11-26T02:21:43.865Z] pick · R0-1126-C · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:m1 2026-11-26T02:21:50.754Z] [report-path] M1-1126-C: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T02:21:52.263Z] R0-1126-C → started · runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-C.json · {\"id\":\"R0-1126-C\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T02:21:52.370Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1126-C.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-C.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:claim 2026-11-26T02:22:11.194Z] M1-1126-C → done · runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1126-C-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1126-C.json · {\"id\":\"M1-1126-C\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-26T02:22:11.976Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1126-C-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1126-C.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M1-1126-C.jsonl, events/runner-main-guard-20261124T173048Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m1 2026-11-26T02:22:20.400Z] pick · M1-1126-D · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
