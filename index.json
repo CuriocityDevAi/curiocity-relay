@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-26T05:27:34.232Z",
+  "built_at": "2026-11-26T06:36:42.190Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-26T05:27:33.596Z"
+      "fetched_at": "2026-11-26T06:36:41.641Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-26T05:27:33.748Z"
+      "fetched_at": "2026-11-26T06:36:41.827Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6256,7 +6256,8 @@
                 "apps/commerce-core/src/types/__tests__/customer-display-types.unit.spec.ts",
                 "apps/commerce-core/integration-tests/pos/cd-pos-screen-sync.spec.ts",
                 "apps/commerce-core/integration-tests/pos/cd-parallel-pay.spec.ts",
-                "apps/commerce-core/integration-tests/loyalty/cd-snapshot-skip.spec.ts"
+                "apps/commerce-core/integration-tests/loyalty/cd-snapshot-skip.spec.ts",
+                "apps/commerce-core/integration-tests/loyalty/cd-phone-partial.spec.ts"
               ],
               "status": "live"
             },
@@ -6857,7 +6858,8 @@
                 "apps/customer-display/src/screens/PhoneFlowScreen.tsx",
                 "apps/customer-display/src/components/cd-sync/**",
                 "apps/customer-display/src/types/cd-sync-contract.ts",
-                "apps/customer-display/e2e/cd-sync-flow.spec.ts"
+                "apps/customer-display/e2e/cd-sync-flow.spec.ts",
+                "apps/customer-display/e2e/cd-pos-sync-v2.spec.ts"
               ],
               "status": "live"
             },
@@ -6923,7 +6925,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-26T05:27:34.231Z"
+      "fetched_at": "2026-11-26T06:36:42.190Z"
     }
   ],
   "rollup": {
