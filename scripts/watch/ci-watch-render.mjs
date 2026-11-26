@@ -21,6 +21,14 @@ export function isMarkerJob(jobName) {
   return MARKER_JOBS.has(n) || n.startsWith('ci-summary');
 }
 
+export function isCountableJob(record) {
+  if (!record) return false;
+  if (isMarkerJob(record.job)) return false;
+  const c = record.conclusion;
+  if (c === 'skipped' || c === 'cancelled') return false;
+  return true;
+}
+
 /**
  * JSONL 레코드 배열에서 실제 검사 잡만 카운트
  */

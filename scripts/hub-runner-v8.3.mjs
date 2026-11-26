@@ -3178,7 +3178,22 @@ function appendMemLog(entry) {
   const line = JSON.stringify(entry) + '\n';
   let existing = '';
   if (existsSync(MEM_LOG_FILE)) {
-    existing = readFileSync(MEM_LOG_FILE, 'utf8');
+    const raw = readFileSync(MEM_LOG_FILE, 'utf8');
+    // M1-1126-N: stash/pull 충돌 마커 자가 치유 — 마커 줄 제거 후 유효 JSON 줄만 시각순 보존.
+    const hasMarkers = /^(<{7}|={7}|>{7})/m.test(raw);
+    if (hasMarkers) {
+      const cleaned = raw.split('\n')
+        .filter((l) => l && !/^(<{7}|={7}|>{7})/.test(l))
+        .map((l) => { try { return JSON.parse(l); } catch { return null; } })
+        .filter(Boolean)
+        .sort((a, b) => (a.at || '') < (b.at || '') ? -1 : 1)
+        .map((o) => JSON.stringify(o))
+        .join('\n') + '\n';
+      existing = cleaned;
+      log('mem', 'mem-log 충돌 마커 자가 치유 완료');
+    } else {
+      existing = raw;
+    }
     if (existing.length + line.length > 1024 * 1024) {
       const lines = existing.split('\n').filter(Boolean);
       while (lines.length > 0 && lines.join('\n').length + 1 + line.length > 1024 * 1024) {
