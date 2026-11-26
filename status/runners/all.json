@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T05:22:59.502Z",
+  "at": "2026-11-26T05:23:16.039Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -27,10 +27,8 @@
       "last_activity": "2026-11-26T04:56:56.635Z"
     },
     "r0": {
-      "current": "R0-1126-O",
-      "started_at": "2026-11-26T05:19:00.992Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-26T05:18:36.615Z"
+      "current": null,
+      "last_activity": "2026-11-26T05:23:15.094Z"
     }
   },
   "pane_close_failures": {},
@@ -43,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.83,
-    "compressed_gb": 4.61,
+    "used_gb": 15.82,
+    "compressed_gb": 4.55,
     "swap_used_gb": 6.39,
     "pressure": "normal",
-    "at": "2026-11-26T05:22:28.197Z"
+    "at": "2026-11-26T05:23:06.055Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -130,9 +128,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 145,
+  "isolated_reports_collected": 146,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M0-1126-E.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:r0 2026-11-26T05:18:16.244Z] [report-path] R0-1126-N: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T05:18:37.658Z] R0-1126-N → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-N-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-N.json · {\"id\":\"R0-1126-N\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T05:18:37.765Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-N-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-N.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/R0-1126-N.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T05:19:00.992Z] pick · R0-1126-O · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T05:19:03.059Z] R0-1126-O → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-O.json · {\"id\":\"R0-1126-O\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T05:19:03.190Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1126-O.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/ci/2026-11-26.jsonl, status/pipeline/R0-1126-O.jsonl\n[claim] committed\n[claim] pushed",
+  "err_tail": "[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:r0 2026-11-26T05:18:16.244Z] [report-path] R0-1126-N: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T05:18:37.658Z] R0-1126-N → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-N-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-N.json · {\"id\":\"R0-1126-N\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T05:18:37.765Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-N-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-N.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/R0-1126-N.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T05:19:00.992Z] pick · R0-1126-O · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T05:19:03.059Z] R0-1126-O → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-O.json · {\"id\":\"R0-1126-O\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T05:19:03.190Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1126-O.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/ci/2026-11-26.jsonl, status/pipeline/R0-1126-O.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T05:23:05.815Z] [report-path] R0-1126-O: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 0,
