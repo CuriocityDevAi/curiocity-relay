@@ -65,7 +65,9 @@ test('G-1: 정상 — 대기 없음, 알림 없음', async () => {
     'actions/runs?status=completed': { workflow_runs: [] },
     'actions/runners': { runners: [{ labels: [{ name: 'curiocity-mac' }], status: 'online', busy: false, name: 'youngs-mac' }] },
   });
-  const result = await fetchCiHealth({ execFn, repoRoot: REPO_ROOT });
+  // M2-1126-R: cloud_today 가 오늘 jsonl 전수를 읽음 → tmpRoot 로 격리.
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-g1-'));
+  const result = await fetchCiHealth({ execFn, repoRoot: tmpRoot });
   assert.ok(!result.error, `에러 없어야 함: ${result.error}`);
   assert.equal(result.heavy.queued, 0);
   assert.equal(result.heavy.in_progress.length, 0);
@@ -638,4 +640,86 @@ test('J-8: queued run 분류 — jobs 의 labels=curiocity-mac-light → lightQu
   assert.ok(!r.error, `error: ${r.error}`);
   assert.equal(r.light.queued, 1, 'light queued 로 분류');
   assert.equal(r.heavy.queued, 0, 'heavy queued 비어있음');
+});
+
+// ---- M2-1126-R: cloud_today 넘김 카운터 ----
+
+test('R-1: cloud_today = 오늘 heavy-cloud 실제 run 수 (jsonl 전수 · marker/route/docker-build 제외)', () => {
+  _resetCiHealthCache();
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-r1-'));
+  const dateStr = getWibDateStr();
+  const base = { repo: 'CuriocityDevAi/storeport', pr: 1, workflow: 'ci', runner_kind: 'cloud', labels: ['ubuntu-latest'] };
+  const now = new Date().toISOString();
+  // 오늘 jsonl 에: heavy-cloud 3건(success/failure/timed_out) + skipped 1건 + 마커/route/docker-build 5건.
+  appendJobs(tmpRoot, [
+    { ...base, id: 1, job: 'heavy-cloud', conclusion: 'success', completed_at: now, started_at: now, created_at: now, wait_min: 0, run_min: 20 },
+    { ...base, id: 2, job: 'heavy-cloud', conclusion: 'failure', completed_at: now, started_at: now, created_at: now, wait_min: 0, run_min: 3 },
+    { ...base, id: 3, job: 'heavy-cloud', conclusion: 'timed_out', completed_at: now, started_at: now, created_at: now, wait_min: 0, run_min: 90 },
+    { ...base, id: 4, job: 'heavy-cloud', conclusion: 'skipped', completed_at: now, started_at: now, created_at: now, wait_min: 0, run_min: 0 },
+    { ...base, id: 5, job: 'route', conclusion: 'success', completed_at: now, started_at: now, created_at: now, wait_min: 0, run_min: 0 },
+    { ...base, id: 6, job: 'docker-build-commerce-core (ubuntu)', conclusion: 'success', completed_at: now, started_at: now, created_at: now, wait_min: 0, run_min: 7 },
+    { ...base, id: 7, job: 'cancel-on-close', conclusion: 'success', completed_at: now, started_at: now, created_at: now, wait_min: 0, run_min: 0 },
+  ], dateStr);
+
+  return fetchCiHealth({
+    execFn: async () => ({ workflow_runs: [], runners: [] }),
+    repoRoot: tmpRoot,
+  }).then((r) => {
+    assert.ok(!r.error, `error: ${r.error}`);
+    assert.equal(r.cloud_today, 3, 'heavy-cloud success+failure+timed_out 만 집계');
+  });
+});
+
+test('R-2: cloud_today — jsonl + 이 tick completedRecords 중복 id 는 1회만', () => {
+  _resetCiHealthCache();
+  const tmpRoot = mkdtempSync(join(tmpdir(), 'ci-r2-'));
+  const dateStr = getWibDateStr();
+  const now = new Date().toISOString();
+  // jsonl 에 heavy-cloud 1건 pre-populate — id=100
+  appendJobs(tmpRoot, [{
+    id: 100, repo: 'CuriocityDevAi/storeport', pr: 1, workflow: 'ci',
+    runner_kind: 'cloud', labels: ['ubuntu-latest'],
+    job: 'heavy-cloud', conclusion: 'success',
+    completed_at: now, started_at: now, created_at: now, wait_min: 0, run_min: 20,
+  }], dateStr);
+
+  const minsAgoStr = (n) => new Date(Date.now() - n * 60_000).toISOString();
+  // 이 tick 에 completed run id=100(기존 jsonl 과 중복) + id=101(새) 반환.
+  const runCreatedAt = minsAgoStr(30);
+  const runStartedAt = minsAgoStr(28);
+  const runCompletedAt = minsAgoStr(5);
+  const makeCompletedRun = (id) => ({
+    id, name: 'CI', status: 'completed', conclusion: 'success',
+    created_at: runCreatedAt, run_started_at: runStartedAt, updated_at: runCompletedAt,
+    head_branch: 'feat/x', pull_requests: [{ number: 42 }],
+    repository: { full_name: 'CuriocityDevAi/storeport' },
+  });
+  const makeJob = (id, runId) => ({
+    id, name: 'heavy-cloud', status: 'completed', conclusion: 'success',
+    labels: ['ubuntu-latest'], runner_name: 'GitHub Actions 123',
+    created_at: runCreatedAt, started_at: runStartedAt, completed_at: runCompletedAt,
+    steps: [],
+  });
+  const execFn = async (endpoint) => {
+    if (!endpoint.includes('CuriocityDevAi/storeport')) {
+      if (endpoint.includes('actions/runs')) return { workflow_runs: [] };
+      if (endpoint.includes('actions/runners')) return { runners: [] };
+      return {};
+    }
+    if (endpoint.includes('actions/runs?status=queued')) return { workflow_runs: [] };
+    if (endpoint.includes('actions/runs?status=in_progress')) return { workflow_runs: [] };
+    if (endpoint.includes('actions/runners')) return { runners: [] };
+    if (endpoint.includes('actions/runs?status=completed') || endpoint.includes('actions/runs?per_page=')) {
+      return { workflow_runs: [makeCompletedRun(100), makeCompletedRun(101)] };
+    }
+    if (endpoint.includes('actions/runs/100/jobs')) return { jobs: [makeJob(500, 100)] };
+    if (endpoint.includes('actions/runs/101/jobs')) return { jobs: [makeJob(501, 101)] };
+    return { workflow_runs: [] };
+  };
+  return fetchCiHealth({ execFn, repoRoot: tmpRoot }).then((r) => {
+    assert.ok(!r.error, `error: ${r.error}`);
+    // id=500(jsonl pre-populate 는 id=100 로 들어있으므로 execFn 은 새 jsonl 레코드 id=500,501 생성)
+    // jsonl 에는 id=100(pre) + id=500(새) + id=501(새) = heavy-cloud 3건 → cloud_today=3
+    assert.equal(r.cloud_today, 3, 'jsonl 전수 집계');
+  });
 });
