@@ -386,7 +386,7 @@ function computeTodayPRCount(dateStr) {
     const records = readJsonlFile(p);
     const prSet = new Set();
     for (const r of records) {
-      if (isMarkerJob(r.job)) continue;
+      if (isMarkerJob(r.job, r.repo)) continue;
       const pr = String(r.pr || '');
       if (!pr || pr === '-' || pr === '0') continue;
       prSet.add(`${r.repo}:${pr}`);
@@ -423,7 +423,7 @@ function computeTodayJobCount(dateStr) {
   if (!existsSync(p)) return 0;
   try {
     return readJsonlFile(p).filter(r =>
-      !isMarkerJob(r.job) &&
+      !isMarkerJob(r.job, r.repo) &&
       r.conclusion !== 'skipped' &&
       r.conclusion !== 'cancelled',
     ).length;
@@ -438,7 +438,7 @@ function buildMachineRecentStats(dateStr) {
     const records = readJsonlFile(p);
     const latest = {};
     for (const r of records) {
-      if (isMarkerJob(r.job)) continue;
+      if (isMarkerJob(r.job, r.repo)) continue;
       if (r.conclusion === 'skipped' || r.conclusion === 'cancelled') continue;
       if (!r.completed_at) continue;
       const kind = classifyMachine(r.runner_name);
@@ -465,7 +465,7 @@ export function computeCloudTodayPRStats(dateStr) {
     const prSet = new Set();
     for (const r of records) {
       if (r.runner_kind !== 'cloud') continue;
-      if (isMarkerJob(r.job)) continue;
+      if (isMarkerJob(r.job, r.repo)) continue;
       if (r.conclusion === 'skipped' || r.conclusion === 'cancelled') continue;
       const pr = r.pr;
       if (!pr || pr === '-' || pr === 0 || pr === '0') continue;
@@ -555,7 +555,7 @@ function readLastCiFromJsonl(dateStr) {
     const records = readJsonlFile(jsonlPath);
     const byRepo = {};
     for (const r of records) {
-      if (!r.completed_at || !r.repo || isMarkerJob(r.job)) continue;
+      if (!r.completed_at || !r.repo || isMarkerJob(r.job, r.repo)) continue;
       if (!byRepo[r.repo] || r.completed_at > byRepo[r.repo].completed_at) {
         byRepo[r.repo] = r;
       }
@@ -727,7 +727,7 @@ function buildTodayMachineStats(dateStr) {
     const records = readJsonlFile(jsonlPath);
     const stats = { mbp: { count: 0, totalRun: 0 }, imac: { count: 0, totalRun: 0 } };
     for (const r of records) {
-      if (isMarkerJob(r.job)) continue;
+      if (isMarkerJob(r.job, r.repo)) continue;
       if (r.conclusion === 'skipped' || r.conclusion === 'cancelled') continue;
       const kind = classifyMachine(r.runner_name);
       if (kind === 'mbp' || kind === 'imac') {
@@ -755,7 +755,7 @@ function buildTodayPoolMachineStats(dateStr) {
       'fork-light':      { mbp: 0, imac: 0, cloud: 0 },
     };
     for (const r of records) {
-      if (isMarkerJob(r.job)) continue;
+      if (isMarkerJob(r.job, r.repo)) continue;
       if (r.conclusion === 'skipped' || r.conclusion === 'cancelled') continue;
       const machineKind = classifyMachine(r.runner_name);
       if (machineKind === 'mbp' || machineKind === 'imac') {

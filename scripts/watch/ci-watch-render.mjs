@@ -3,6 +3,7 @@
 // v1.11: W5~W9 — 클라우드 필터·?표시·합계줄·초록✓·잡이름+열폭절단
 // v1.12: W2보완(changes-filter·markers-and-forbidden) · W10(클라우드 오늘 줄 개편)
 // v1.13: M2-1126-L — W2(cancel-on-close 마커) · W5(OFF 표시 수정) · W10(4줄 MBP/iMAC/클라우드/전체)
+// v1.14: M2-1126-N — heavy-cloud 를 fork-only 마커로 변경 (storeport heavy-cloud 는 실제 24분 잡)
 
 import { displayWidth, padEndWidth, stripAnsi, truncateWidth } from './text-width.mjs';
 
@@ -14,20 +15,39 @@ const col = (text, ...codes) => codes.join('') + text + C.reset;
 
 // ---- 순수 헬퍼 (테스트 가능) ----
 
-/** route / heavy-cloud / ci-summary 등 마커/요약 잡 여부 */
+/** route / ci-summary 등 마커/요약 잡 여부 */
 // W2보완: changes-filter · markers-and-forbidden 추가 (gate/filter 잡)
 // cancel-on-close: PR 닫힐 때 실행되는 수 초짜리 정리 잡 → 마커 (실제 테스트·빌드 아님)
-export const MARKER_JOBS = new Set(['route', 'heavy-cloud', 'ci-summary', 'feature-map-route', 'changes-filter', 'markers-and-forbidden', 'cancel-on-close']);
+// v1.14: heavy-cloud 제거 — storeport 에서는 실제 24분 잡 · fork 에서만 echo 마커
+//        fork 판정은 isMarkerJob(jobName, repo) 의 repo 파라미터로 처리
+export const MARKER_JOBS = new Set(['route', 'ci-summary', 'feature-map-route', 'changes-filter', 'markers-and-forbidden', 'cancel-on-close']);
 
-export function isMarkerJob(jobName) {
+/** fork 리포 여부 판정 (CuriocityDevAi/agilo-* 또는 *-fork) */
+function isForkRepo(repo) {
+  if (!repo) return false;
+  const last = String(repo).split('/').pop() || '';
+  return last.endsWith('-fork') || last.startsWith('agilo');
+}
+
+/**
+ * 마커/요약 잡 여부.
+ * @param {string} jobName
+ * @param {string} [repo] - 리포 full_name (CuriocityDevAi/storeport 등).
+ *   repo 미전달 → heavy-cloud 를 보수적으로 마커 취급 (backward-compat).
+ */
+export function isMarkerJob(jobName, repo) {
   if (!jobName) return false;
   const n = String(jobName).toLowerCase();
-  return MARKER_JOBS.has(n) || n.startsWith('ci-summary');
+  if (MARKER_JOBS.has(n) || n.startsWith('ci-summary')) return true;
+  // heavy-cloud: fork 에서는 echo 마커 · storeport 에서는 실제 잡
+  // repo 미전달이면 보수적으로 마커 취급 (기존 동작 유지)
+  if (n === 'heavy-cloud') return repo === undefined ? true : isForkRepo(repo);
+  return false;
 }
 
 export function isCountableJob(record) {
   if (!record) return false;
-  if (isMarkerJob(record.job)) return false;
+  if (isMarkerJob(record.job, record.repo)) return false;
   const c = record.conclusion;
   if (c === 'skipped' || c === 'cancelled') return false;
   return true;
@@ -37,7 +57,7 @@ export function isCountableJob(record) {
  * JSONL 레코드 배열에서 실제 검사 잡만 카운트
  */
 export function countRealCloud(records) {
-  return records.filter(r => r.runner_kind === 'cloud' && !isMarkerJob(r.job)).length;
+  return records.filter(r => r.runner_kind === 'cloud' && !isMarkerJob(r.job, r.repo)).length;
 }
 
 /**
