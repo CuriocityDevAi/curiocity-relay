@@ -418,8 +418,8 @@ export function buildMachineState(allJson, runState) {
     function machineStatus(runners) {
       if (!runners.length) return { status: 'offline', job: null, partial: isPoolPartial };
       const online = runners.some(r => r.status === 'online');
-      // W5fix: 러너가 목록에 존재하고 명시적으로 offline → partial=false (알 수 없음 아님)
-      if (!online) return { status: 'offline', job: null, partial: false };
+      // W5fix: 러너가 목록에 존재하고 명시적으로 offline → OFF. 단 CI 데이터 조회 실패(isPoolPartial) 시엔 ? 표시
+      if (!online) return { status: 'offline', job: null, partial: isPoolPartial };
 
       for (const r of runners) {
         const j = jobByRunner.get(r.name);
