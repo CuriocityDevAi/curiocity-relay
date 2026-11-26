@@ -1,6 +1,7 @@
 // scripts/watch/ci-watch-render.mjs  M1-1123-K — 압축 렌더 + 순수 헬퍼
 // v1.8: CI 한 줄 표 · partial→? · 단위 s/m · 잔상 방지
 // v1.11: W5~W9 — 클라우드 필터·?표시·합계줄·초록✓·잡이름+열폭절단
+// v1.12: W2보완(changes-filter·markers-and-forbidden) · W10(클라우드 오늘 줄 개편)
 
 import { displayWidth, padEndWidth, stripAnsi, truncateWidth } from './text-width.mjs';
 
@@ -13,7 +14,8 @@ const col = (text, ...codes) => codes.join('') + text + C.reset;
 // ---- 순수 헬퍼 (테스트 가능) ----
 
 /** route / heavy-cloud / ci-summary 등 마커/요약 잡 여부 */
-export const MARKER_JOBS = new Set(['route', 'heavy-cloud', 'ci-summary', 'feature-map-route']);
+// W2보완: changes-filter · markers-and-forbidden 추가 (gate/filter 잡 — ci-watch · ci-offload-impact 모두 여기서 import)
+export const MARKER_JOBS = new Set(['route', 'heavy-cloud', 'ci-summary', 'feature-map-route', 'changes-filter', 'markers-and-forbidden']);
 
 export function isMarkerJob(jobName) {
   if (!jobName) return false;
@@ -678,6 +680,8 @@ function appendHubWait(lineStr, hub, hubWaitStats, W) {
  *   summaryPR: number  W7
  *   summaryPT: number  W7
  *   summaryJobs: number  W7
+ *   cloudPR: number  W10 — 오늘 클라우드 잡 1건 이상 돈 PR 수
+ *   cloudPT: number  W10 — 그 PR들을 만든/고친 오늘 프롬프트 수
  */
 export function renderLayout(data) {
   const {
@@ -697,6 +701,8 @@ export function renderLayout(data) {
     summaryPR,
     summaryPT,
     summaryJobs,
+    cloudPR = null,
+    cloudPT = null,
   } = data;
 
   const W = Math.max(terminalWidth, 60);
@@ -932,8 +938,17 @@ export function renderLayout(data) {
   }
 
   const cd = cloudData || { realCount: 0, limit: 5, totalMin: 0, last3: [] };
-  const remaining = Math.max(0, cd.limit - cd.realCount);
-  lines.push(col(`  cloud 잡 오늘  ${cd.realCount}건  잔여 ${remaining}`, C.dim));
+  // W10: 클라우드 오늘  PR N · PT M · 잡 K · 넘김 X/Y (한도 소진 시 넘김 빨강)
+  {
+    const overflowUsed = cloudTodayCount ?? 0;
+    const overflowLim = cloudLimit || 5;
+    const overflowExhausted = overflowUsed >= overflowLim;
+    const overflowText = `${overflowUsed}/${overflowLim}`;
+    const overflowStr = overflowExhausted ? col(overflowText, C.red) : overflowText;
+    lines.push(
+      col(`  클라우드 오늘  PR ${cloudPR ?? 0} · PT ${cloudPT ?? 0} · 잡 ${cd.realCount} · 넘김 `, C.dim) + overflowStr,
+    );
+  }
 
   // err_tail — W6: watchdog/claim/self-update 로그 줄은 화면 미출력 (파일 로그로만)
   const ERR_TAIL_SCREEN_FILTERS = [

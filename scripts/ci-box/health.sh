@@ -256,15 +256,31 @@ collect_tailscale() {
 
 collect_running_jobs() {
     # health.sh 변경은 아이맥 pull 만으로 반영 (plist 재설치 불필요)
+    # W9(R0-V): _runner_dir 규칙 — actions-runner-ci-box-{sp-heavy,sp-light,fork-heavy,fork-light}
     python3 - \
-        "$HOME/actions-runner" \
-        "$HOME/actions-runner-light" \
-        "$HOME/actions-runner-fork" \
-        "$HOME/actions-runner-fork-light" <<'PYEOF' 2>/dev/null || echo "[]"
-import sys, json, re, os, time
+        "$HOME/actions-runner-ci-box-sp-heavy" \
+        "$HOME/actions-runner-ci-box-sp-light" \
+        "$HOME/actions-runner-ci-box-fork-heavy" \
+        "$HOME/actions-runner-ci-box-fork-light" <<'PYEOF' 2>/dev/null || echo "[]"
+import sys, json, re, os, time, subprocess
 
-runner_dirs = sys.argv[1:]
+primary_dirs = sys.argv[1:]
 result = []
+
+# 기본 4경로 중 _diag 가 하나도 없으면 find 로 동적 탐색 (폴백)
+def has_diag(d):
+    return os.path.isdir(os.path.join(d, '_diag'))
+
+runner_dirs = primary_dirs
+if not any(has_diag(d) for d in primary_dirs):
+    try:
+        find_out = subprocess.check_output(
+            ['find', os.path.expanduser('~'), '-maxdepth', '2', '-type', 'd', '-name', '_diag'],
+            timeout=10, stderr=subprocess.DEVNULL, text=True,
+        ).strip().split('\n')
+        runner_dirs = [os.path.dirname(d) for d in find_out if d]
+    except Exception:
+        runner_dirs = primary_dirs
 
 for runner_dir in runner_dirs:
     diag = os.path.join(runner_dir, '_diag')

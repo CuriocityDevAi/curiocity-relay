@@ -6,7 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 //
 // !! ci-watch 를 바꾸는 모든 프롬프트는 CI_WATCH_VERSION 을 올릴 것.
-// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입) · 1.10 M2-1126-F(W1~W4) · 1.11 M2-1126-G(W5~W9)
+// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입) · 1.10 M2-1126-F(W1~W4) · 1.11 M2-1126-G(W5~W9) · 1.12 M2-1126-I(W9경로·W2보완·W10)
 
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -35,7 +35,7 @@ import {
   renderLayout,
 } from './watch/ci-watch-render.mjs';
 
-const CI_WATCH_VERSION = '1.11';
+const CI_WATCH_VERSION = '1.12';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -453,6 +453,50 @@ function buildMachineRecentStats(dateStr) {
     }
     return result;
   } catch { return {}; }
+}
+
+// W10: 오늘 클라우드 PR 고유 Set + 카운트 (isCountableJob 기준)
+export function computeCloudTodayPRStats(dateStr) {
+  const p = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (!existsSync(p)) return { count: 0, prSet: new Set() };
+  try {
+    const records = readJsonlFile(p);
+    const prSet = new Set();
+    for (const r of records) {
+      if (r.runner_kind !== 'cloud') continue;
+      if (isMarkerJob(r.job)) continue;
+      if (r.conclusion === 'skipped' || r.conclusion === 'cancelled') continue;
+      const pr = r.pr;
+      if (!pr || pr === '-' || pr === 0 || pr === '0') continue;
+      prSet.add(`${r.repo}:${pr}`);
+    }
+    return { count: prSet.size, prSet };
+  } catch { return { count: 0, prSet: new Set() }; }
+}
+
+// W10: 오늘 클라우드 연결 PT 수 (pipeline artifact.pr_number × cloudPrSet 교집합)
+export function computeCloudTodayPT(dateStr, cloudPrSet) {
+  if (!cloudPrSet || cloudPrSet.size === 0) return 0;
+  const pipelineDir = join(REPO_ROOT, 'status', 'pipeline');
+  if (!existsSync(pipelineDir)) return 0;
+  try {
+    const monthDay = dateStr.slice(5, 7) + dateStr.slice(8, 10);
+    let files;
+    try { files = readdirSync(pipelineDir); } catch { return 0; }
+    const todayFiles = files.filter(f => f.includes(`-${monthDay}-`) && f.endsWith('.jsonl'));
+    let count = 0;
+    for (const f of todayFiles) {
+      try {
+        const events = readFileSync(join(pipelineDir, f), 'utf8').trim().split('\n').filter(Boolean)
+          .map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+        const artifact = events.find(e => e.event === 'artifact' && e.pr_number != null);
+        if (!artifact) continue;
+        const prKey = `${artifact.repo}:${artifact.pr_number}`;
+        if (cloudPrSet.has(prKey)) count++;
+      } catch {}
+    }
+    return count;
+  } catch { return 0; }
 }
 
 // --- 마지막 완료 CI (JSONL + gh run list 폴백) ---
@@ -1259,6 +1303,9 @@ async function tick(fullMode) {
   const summaryJobs = computeTodayJobCount(dateStr);
   // W8: 풀×기계 최근 완료 통계
   const machineRecentStats = buildMachineRecentStats(dateStr);
+  // W10: 클라우드 오늘 PR/PT 통계
+  const { count: cloudPRCount, prSet: cloudPrSet } = computeCloudTodayPRStats(dateStr);
+  const cloudPTCount = computeCloudTodayPT(dateStr, cloudPrSet);
 
   // 해소됨 오류 → err_tail 표시 영역(회색 줄)에 추가 · 경보 카운트 제외
   const resolvedErrAlerts = errAlerts.filter(a => a.resolved);
@@ -1345,6 +1392,8 @@ async function tick(fullMode) {
     summaryPR,
     summaryPT,
     summaryJobs,
+    cloudPR: cloudPRCount,
+    cloudPT: cloudPTCount,
   };
 
   _lastRenderData = renderData;
