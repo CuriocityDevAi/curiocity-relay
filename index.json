@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-26T12:52:29.388Z",
+  "built_at": "2026-11-26T16:08:35.553Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-26T12:52:28.782Z"
+      "fetched_at": "2026-11-26T16:08:35.078Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-26T12:52:28.983Z"
+      "fetched_at": "2026-11-26T16:08:35.247Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6253,11 +6253,13 @@
                 "apps/commerce-core/src/api/admin/pos/orders/[id]/phone-entry/**",
                 "apps/commerce-core/src/api/admin/pos/customer-display/snapshots/[id]/route.ts",
                 "apps/commerce-core/src/subscribers/order-snapshot-paid.ts",
+                "apps/commerce-core/src/lib/resolve-cashier-name.ts",
                 "apps/commerce-core/src/types/customer-display.ts",
                 "apps/commerce-core/src/types/__tests__/customer-display-types.unit.spec.ts",
                 "apps/commerce-core/integration-tests/pos/cd-pos-screen-sync.spec.ts",
                 "apps/commerce-core/integration-tests/pos/cd-pos-sync-v3.spec.ts",
                 "apps/commerce-core/integration-tests/pos/cd-pos-sync-v4.spec.ts",
+                "apps/commerce-core/integration-tests/pos/cd-pos-sync-v4-next-customer.spec.ts",
                 "apps/commerce-core/integration-tests/pos/cd-parallel-pay.spec.ts",
                 "apps/commerce-core/integration-tests/loyalty/cd-snapshot-skip.spec.ts",
                 "apps/commerce-core/integration-tests/loyalty/cd-phone-partial.spec.ts",
@@ -6894,10 +6896,13 @@
             },
             {
               "id": "cd-mirror",
-              "name": "CD Preview 미러 (M3-1120-D)",
-              "summary": "POS CD Preview WebView가 로드하는 read-only 미러 라우트. POS가 injectJavaScript로 'pos-mirror' CustomEvent를 디스패치하면 snapshot을 받아 posScreenToDisplay로 화면 선택. 콜백 no-op — POS 오버레이 터치 차단 보완.",
+              "name": "CD Preview 미러 (M3-1120-D · M0-1126-O)",
+              "summary": "POS CD Preview WebView가 로드하는 read-only 미러 라우트. POS가 injectJavaScript로 'pos-mirror' CustomEvent를 디스패치하면 snapshot을 받아 posScreenToDisplay로 화면 선택. 콜백 no-op — POS 오버레이 터치 차단 보완. M0-1126-O: 웹 POS 미리보기(iframe) 가 보내는 `postMessage({type:'pos-mirror', detail}, <CD origin>)` 도 수신 — 동일 origin(기본) + localhost:8081 + EXPO_PUBLIC_POS_MIRROR_ORIGINS 로 지정한 origin 만 허용. CustomEvent/postMessage 두 경로가 **같은 applySnapshot** 로 합류.",
               "files": [
-                "apps/customer-display/app/mirror.tsx"
+                "apps/customer-display/app/mirror.tsx",
+                "apps/customer-display/src/lib/pos-mirror-origins.ts",
+                "apps/customer-display/src/lib/__tests__/pos-mirror-origins.test.ts",
+                "apps/customer-display/e2e/mirror-postmessage.spec.ts"
               ],
               "status": "live"
             },
@@ -6929,7 +6934,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-26T12:52:29.387Z"
+      "fetched_at": "2026-11-26T16:08:35.553Z"
     }
   ],
   "rollup": {
