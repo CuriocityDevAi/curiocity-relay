@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T09:48:44.185Z",
+  "at": "2026-11-26T09:54:30.699Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -23,7 +23,9 @@
       "last_activity": "2026-11-26T09:06:58.780Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1126-K",
+      "started_at": "2026-11-26T09:54:29.233Z",
+      "model": "sonnet",
       "last_activity": "2026-11-26T09:33:05.021Z"
     },
     "r0": {
@@ -60,11 +62,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.36,
-    "compressed_gb": 4.34,
-    "swap_used_gb": 3.4,
+    "used_gb": 15.79,
+    "compressed_gb": 4.16,
+    "swap_used_gb": 3.39,
     "pressure": "normal",
-    "at": "2026-11-26T09:48:11.391Z"
+    "at": "2026-11-26T09:53:57.160Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -72,14 +74,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T09:45:46.287Z",
+      "at": "2026-11-26T09:51:00.030Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 13,
+      "api_calls": 12,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -87,7 +89,18 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "#456",
+            "pr_display": "storeport:#456",
+            "job": "heavy-mac",
+            "step": "Run ./.github/actions/heavy-steps",
+            "running_min": 2,
+            "runner": "ci-box-storeport-heavy-imac",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -95,13 +108,24 @@
         "oldest_queued_pr": null,
         "in_progress": []
       },
-      "cloud_in_progress": [],
+      "cloud_in_progress": [
+        {
+          "repo": "CuriocityDevAi/storeport",
+          "pr": "#456",
+          "pr_display": "storeport:#456",
+          "job": "docker-build-commerce-core (ubuntu)",
+          "step": "docker build -f apps/commerce-core/Dockerfile .",
+          "running_min": 4,
+          "runner": "GitHub Actions 1000008279",
+          "kind": "cloud"
+        }
+      ],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 0,
+        "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 3,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 130,
@@ -111,11 +135,11 @@
           "run_min_total": 341.1000000000001
         },
         "mac-light": {
-          "jobs": 99,
-          "avg_wait_min": 2.5,
+          "jobs": 101,
+          "avg_wait_min": 2.4,
           "avg_run_min": 0.4,
           "success_rate": 99,
-          "run_min_total": 43.499999999999936
+          "run_min_total": 44.29999999999993
         },
         "cloud": {
           "jobs": 99,
@@ -128,18 +152,17 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 38.3
       },
-      "jsonl_added": 14,
-      "alerts": [],
-      "partial": true
+      "jsonl_added": 2,
+      "alerts": []
     },
-    "took_ms": 17864,
-    "at": "2026-11-26T09:46:02.597Z"
+    "took_ms": 13756,
+    "at": "2026-11-26T09:51:12.025Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 174,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:41:15.873Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:41:49.147Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:42:24.917Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:42:58.235Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:43:33.909Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:44:06.897Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:44:42.262Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:45:15.382Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:45:54.128Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:46:27.079Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:m0 2026-11-26T09:48:04.440Z] [report-path] M0-1126-I: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T09:48:30.392Z] M0-1126-I → done · runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1126-I-report.md · model=opus · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1126-I.json · {\"id\":\"M0-1126-I\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-26T09:48:30.496Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1126-I-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1126-I.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M0-1126-I.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:m0 2026-11-26T09:48:42.801Z] pick · M0-1126-J · model=opus · display=cmux-split",
+  "err_tail": "[hub-runner-v8.3.2:claim 2026-11-26T09:48:30.392Z] M0-1126-I → done · runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1126-I-report.md · model=opus · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1126-I.json · {\"id\":\"M0-1126-I\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-26T09:48:30.496Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1126-I-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1126-I.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M0-1126-I.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:m0 2026-11-26T09:48:42.801Z] pick · M0-1126-J · model=opus · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T09:48:45.192Z] M0-1126-J → started · runner-v8.3.2 · cmux-split · model=opus · source=hub-default · pane foreground=c\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1126-J.json · {\"id\":\"M0-1126-J\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-26T09:48:45.300Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1126-J.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M0-1126-J.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:self-update 2026-11-26T09:50:28.188Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:heartbeat 2026-11-26T09:53:53.758Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T09:54:26.523Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m3 2026-11-26T09:54:29.233Z] pick · M3-1126-K · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -152,7 +175,7 @@
     {
       "name": "ci-box-storeport-heavy-imac",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "ci-box-storeport-light-imac",
