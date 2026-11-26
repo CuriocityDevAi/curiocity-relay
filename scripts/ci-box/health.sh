@@ -158,7 +158,8 @@ now = int(sys.argv[1])
 try:
     d = json.load(open(sys.argv[2]))
     age = now - int(d.get('_ts', 0))
-    if age < 3600:
+    # 0/0 캐시는 miss 처리 → 재측정
+    if age < 3600 and not (d.get('dl_mbps', 0) == 0 and d.get('ul_mbps', 0) == 0):
         d['cached'] = True
         d.pop('_ts', None)
         d.pop('_unknown', None)
@@ -187,6 +188,12 @@ PYEOF
 d=json.load(sys.stdin)
 r=d.get('responsiveness',0)
 print(r.get('rpm',r) if isinstance(r,dict) else r)" 2>/dev/null || echo 0)
+
+    # dl==0 && ul==0 → networkQuality 실패: 캐시 없이 null 반환
+    if python3 -c "import sys; sys.exit(0 if float('${dl:-0}')==0 and float('${ul:-0}')==0 else 1)" 2>/dev/null; then
+        printf '{"dl_mbps":null,"ul_mbps":null,"rpm":null,"_unknown":"unknown_netspeed"}'
+        return
+    fi
 
     # 캐시 저장
     printf '{"dl_mbps":%s,"ul_mbps":%s,"rpm":%s,"_ts":%d}' \

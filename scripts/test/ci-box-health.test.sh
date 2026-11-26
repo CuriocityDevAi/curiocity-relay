@@ -8,6 +8,7 @@
 #   A-4: collect_thermal — GPU_Throttle 문구 있어도 cpu_limit=100 이면 throttled=false
 #   B-1: collect_runners — ps -axo 환경에서 Runner.Listener 카운트
 #   B-2: collect_tailscale — 절대경로 Tailscale 없으면 null 반환
+#   B-3: collect_netspeed — 0 캐시 → miss 처리 + 측정 0/0 → null/unknown_netspeed
 #   C-1: judge_health — listener_count=null 이면 bad 아님 + unknown_runners 추가
 #   C-2: judge_health — listener_count=0 이면 bad + runners_0_lt_4
 #   C-3: judge_health — extra_unknowns 는 reasons 에 포함, health 에 영향 없음
@@ -148,6 +149,41 @@ fi
 ')
 _assert_contains "B-2: Tailscale 없으면 null" '"up":null' "$B2_OUT"
 _assert_contains "B-2: Tailscale 없으면 unknown 태그" '"_unknown":"unknown_tailscale"' "$B2_OUT"
+
+# B-3: 0 캐시 → cache-read miss + 측정 0/0 → null/unknown_netspeed
+echo "--- B-3: collect_netspeed 0 캐시 ---"
+
+B3_CACHE=$(mktemp)
+printf '{"dl_mbps":0,"ul_mbps":0,"rpm":0,"_ts":%d}' "$(date +%s)" > "$B3_CACHE"
+B3_NOW=$(date +%s)
+B3_CACHED=$(python3 - "$B3_NOW" "$B3_CACHE" <<'PYEOF' 2>/dev/null || echo "miss"
+import json, sys
+now = int(sys.argv[1])
+try:
+    d = json.load(open(sys.argv[2]))
+    age = now - int(d.get('_ts', 0))
+    if age < 3600 and not (d.get('dl_mbps', 0) == 0 and d.get('ul_mbps', 0) == 0):
+        d['cached'] = True
+        d.pop('_ts', None)
+        d.pop('_unknown', None)
+        print(json.dumps(d))
+    else:
+        print("miss")
+except Exception:
+    print("miss")
+PYEOF
+)
+rm -f "$B3_CACHE"
+_assert_eq "B-3: 0 캐시 → cache-read miss" "miss" "$B3_CACHED"
+
+B3_DL="0.0"; B3_UL="0.0"
+if python3 -c "import sys; sys.exit(0 if float('$B3_DL')==0 and float('$B3_UL')==0 else 1)" 2>/dev/null; then
+    B3_NULL_OUT='{"dl_mbps":null,"ul_mbps":null,"rpm":null,"_unknown":"unknown_netspeed"}'
+else
+    B3_NULL_OUT="{}"
+fi
+_assert_contains "B-3: 측정값 0/0 → null 반환" '"dl_mbps":null' "$B3_NULL_OUT"
+_assert_contains "B-3: 측정값 0/0 → unknown_netspeed" '"_unknown":"unknown_netspeed"' "$B3_NULL_OUT"
 
 # ── C: judge_health ───────────────────────────────────────────────────────────
 
