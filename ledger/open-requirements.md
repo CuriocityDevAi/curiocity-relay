@@ -220,3 +220,16 @@ R0-CJ-3/4(세금 fallback 마커·다품목 정밀도) · split+QRIS 환불 · /
 - Meta 개발자 앱 = **CareAgent** · 비즈니스 포트폴리오 = **Curiocity** (플랫폼 소유) · 테스트 번호로 시작
 - 후속(오케 메모): 실제 매장 번호 운영 시 매장 WhatsApp 계정을 매장 명의로 둘지(Curiocity 앱이 매장 계정에 연결하는 방식) 그때 Kyu 결정
 - (Kyu 22:22) "curiocity 는 법인이 아니야. Soopsok 만 법인이야. 그래서 2번으로 진행하자." → WhatsApp 발신은 **PT Soopsok Sweets 포트폴리오 비즈니스 인증** 후 그 포트폴리오의 WhatsApp 계정을 Curiocity 앱(CareAgent)에 파트너 공유로 연결 · 원인: Curiocity WABA 2239808970243470 "계정 제한됨 — 비즈니스 인증 필요"(오류 131031) · 수신 webhook 은 정상
+
+## 🔴 방법론 v2.0 — 전 과정 프레임워크화 · 진화 기록 · 로드맵 · SDD 편입 (Kyu 11-27 05:10 · 11-11 요구의 재언급)
+- Kyu 원문: "설계서를 지속적을 업데이트하고, 구현시 설계서와비교하는 절차 … 앞으로 개발하는 모든 프로젝트에 적용했으면 해서, curiocity dev method 에 적용하고싶거든." / "이 전 과정을 개발 프레임워크(개발방법론)으로 남겨서, 다음 프로젝트에도 그대로 사용하고 싶거든." / "이 방법론도 진화를 해 나갈거야. 그 진화되는 과정도 기록해주었으면해 … 수많은 오류들을 만났고, 그것들을 하나씩 해결해가고 있잖아." / "향후에 어떻게 할거다 하는 계획도 있어야해.(예를들어 스테이징 환경 …)" / "다른 프로젝트를 할때 갑자기되던게 안되거나 할 여지는 없을지, 걱정이 되어서, 한번 정리를 하고 가고싶어."
+- 결정: 이름 = SDD(spec-anchored) · living spec · spec drift check · spec-guard (decision-sdd-naming-20261127) · 오케 Fable · R0 선택적 Opus · 토큰 모니터링 (decision-oke-model-20261127) · Kyu 05:27 "go"
+- 소유: 오케(뼈대 · 본문 01~09 갱신 · ROADMAP) + M2(HISTORY 역추적) · 리포 = CuriocityDevAi/curiocity-devai-method
+
+| 항목 | 문서화 | 구현 | 실기 |
+|---|---|---|---|
+| README 11단계 · 10-sdd.md · ROADMAP.md · HISTORY 뼈대 · MP-010~012 | ✅ method 리포 main (오케 11-27) | — | Kyu 읽기 |
+| HISTORY.md 채우기 (오류→원인→고친 규칙) | M2-1127-A 발부 | — | — |
+| 01~09 본문 갱신 (러너 v8 · 자체 CI · 클라우드 0 · R0 클라우드 · 원장 색인) | 미착수 (HISTORY 착지 후) | — | — |
+| 이식성 수정 (리포 목록 설정화 · 메모리 규칙 이전 · specs 제품 리포 이전) | ROADMAP R7~R9 등재 | 미착수 | — |
+| 토큰 지표 ④ | ✅ metrics.md | 기준선 수집 중 | — |
