@@ -514,22 +514,22 @@ function fmtQueueCell(qItems, colW) {
 }
 
 /**
- * §1: 오늘 처리 행 — 기계 열 아래 N건·avgXm (클라우드 +비용)
+ * §1: 오늘 처리 행 — CI 표 열 아래에 N건·avgXm (MBP / iMAC / 클라우드 각각 정렬)
  */
 function buildTodayProcessedRow(todayStats, cloudCostEst, todayMachineStats) {
   if (!todayStats && !todayMachineStats) return null;
 
-  let macPart;
+  // 라벨 셀: 풀 + SEP + 대기 위치를 차지 (헤더의 풀/대기 열과 같은 너비)
+  const labelWidth = CI_COL_POOL + CI_SEP.length + CI_COL_QUEUE;
+  const labelCell = padEndWidth('오늘 처리', labelWidth);
+
+  // MBP 칸
+  let mbpStr;
   if (todayMachineStats) {
     const mbp = todayMachineStats.mbp;
-    const imac = todayMachineStats.imac;
-    const mbpStr = mbp && mbp.jobs > 0
-      ? `MBP ${mbp.jobs}건·${fmtDuration(mbp.avgRun ?? 0)}`
-      : 'MBP 0건';
-    const imacStr = imac && imac.jobs > 0
-      ? `iMAC ${imac.jobs}건·${fmtDuration(imac.avgRun ?? 0)}`
-      : 'iMAC 0건';
-    macPart = `${mbpStr} · ${imacStr}`;
+    mbpStr = mbp && mbp.jobs > 0
+      ? `${mbp.jobs}건·${fmtDuration(mbp.avgRun ?? 0)}`
+      : '0건';
   } else {
     const mh = todayStats?.['mac-heavy'];
     const ml = todayStats?.['mac-light'];
@@ -537,18 +537,33 @@ function buildTodayProcessedRow(todayStats, cloudCostEst, todayMachineStats) {
     const macAvgRun = (mh && ml)
       ? ((mh.avg_run_min || 0) * (mh.jobs || 0) + (ml.avg_run_min || 0) * (ml.jobs || 0)) / Math.max(1, macJobs)
       : (mh?.avg_run_min || ml?.avg_run_min || 0);
-    macPart = `MAC ${macJobs}건·${fmtDuration(macAvgRun)}`;
+    mbpStr = macJobs > 0 ? `${macJobs}건·${fmtDuration(macAvgRun)}` : '0건';
   }
+  const mbpCell = padEndWidth(mbpStr, CI_COL_MBP);
 
+  // iMAC 칸
+  let imacStr;
+  if (todayMachineStats) {
+    const imac = todayMachineStats.imac;
+    imacStr = imac && imac.jobs > 0
+      ? `${imac.jobs}건·${fmtDuration(imac.avgRun ?? 0)}`
+      : '0건';
+  } else {
+    imacStr = '—';
+  }
+  const imacCell = padEndWidth(imacStr, CI_COL_IMAC);
+
+  // 클라우드 칸
   const cl = todayStats?.['cloud'];
   const cloudJobs = cl?.jobs || 0;
   const cloudAvg = cl?.avg_run_min;
   const costStr = cloudCostEst != null ? ` $${cloudCostEst.toFixed(2)}` : '';
-  const cloudPart = cloudJobs > 0
-    ? `클라우드 ${cloudJobs}건·${cloudAvg != null ? fmtDuration(cloudAvg) : '?'}${costStr}`
-    : `클라우드 0건${costStr}`;
+  const cloudStr = cloudJobs > 0
+    ? `${cloudJobs}건·${cloudAvg != null ? fmtDuration(cloudAvg) : '?'}${costStr}`
+    : `0건${costStr}`;
+  const cloudCell = padEndWidth(cloudStr, CI_COL_CLOUD);
 
-  return `  오늘 처리: ${macPart} · ${cloudPart}`;
+  return `  ${labelCell}${CI_SEP}${mbpCell}${CI_SEP}${imacCell}${CI_SEP}${cloudCell}`;
 }
 
 /**
@@ -631,18 +646,6 @@ export function renderLayout(data) {
   const verStr = fileCommitDate ? `v${version} (${fileCommitDate})` : `v${version}`;
   const verNote = versionNote ? `  ${versionNote}` : '';
   lines.push(`${C.bold}ci-watch ${verStr}${C.reset}  ${timeStr}  ${inProgBadge}  ${alertBadge}  ${todayBadge}  ${runnerVer}  ${hbStr}${verNote}`);
-
-  // ── 2. 주의 섹션 ──────────────────────────────────────────────────────
-  const alertTitle = `─ 주의 (${allAlerts.length}) ` + '─'.repeat(Math.max(0, W - 2 - displayWidth(`─ 주의 (${allAlerts.length}) `)));
-  lines.push(col(alertTitle, C.bold));
-
-  for (const a of allAlerts.slice(0, 5)) {
-    const msg = a.msg || a.detail || '';
-    lines.push(col(`  ■ ${msg}`, C.red));
-  }
-  for (const a of (ciDimAlerts || [])) {
-    lines.push(col(`  ⏭ ${a.msg}`, C.dim));
-  }
 
   // ── 3. 허브 큐 섹션 (§4: 평균대기 열 · 단위 s/m) ─────────────────────
   const hubs = ['m0', 'm1', 'm2', 'm3', 'r0'];
@@ -839,6 +842,19 @@ export function renderLayout(data) {
 
   const cdSec = typeof countdownSec === 'number' ? countdownSec : 30;
   lines.push(col(`  다음 갱신 ${cdSec}초 | r 지금 갱신 · q 종료${fullMode ? '' : '  --full: 전체 목록'}`, C.dim));
+
+  // ── 7. 주의 섹션 (맨 아래 · 0건이면 생략) ─────────────────────────────
+  if (allAlerts.length > 0 || (ciDimAlerts && ciDimAlerts.length > 0)) {
+    const alertTitle2 = `─ 주의 (${allAlerts.length}) ` + '─'.repeat(Math.max(0, W - 2 - displayWidth(`─ 주의 (${allAlerts.length}) `)));
+    lines.push(col(alertTitle2, C.bold));
+    for (const a of allAlerts.slice(0, 5)) {
+      const msg = a.msg || a.detail || '';
+      lines.push(col(`  ■ ${msg}`, C.red));
+    }
+    for (const a of (ciDimAlerts || [])) {
+      lines.push(col(`  ⏭ ${a.msg}`, C.dim));
+    }
+  }
 
   return lines;
 }

@@ -24,7 +24,7 @@ import {
   renderLayout,
   fmtDuration,
 } from '../watch/ci-watch-render.mjs';
-import { truncateAnsiWidth, displayWidth } from '../watch/text-width.mjs';
+import { truncateAnsiWidth, displayWidth, stripAnsi } from '../watch/text-width.mjs';
 
 // ─── M-1: classifyMachine — 알려진 runner name ─────────────────────────────
 
@@ -310,15 +310,16 @@ test('M-9: renderLayout — todayMachineStats → MBP·iMAC 분리 표시', () =
   });
   const lines = renderLayout(data);
   const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
-  assert.ok(text.includes('MBP 35건'), `MBP 35건 없음\n${text}`);
-  assert.ok(text.includes('iMAC 1건'), `iMAC 1건 없음\n${text}`);
+  assert.ok(text.includes('35건·2m'), `35건·2m 없음\n${text}`);
+  assert.ok(text.includes('1건·36s'), `1건·36s 없음\n${text}`);
 });
 
 test('M-9b: renderLayout — todayMachineStats 없으면 MAC 합산 표시', () => {
   const data = makeLayoutData({ todayStats: makeAllJson().ci.data.today });
   const lines = renderLayout(data);
   const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
-  assert.ok(text.includes('MAC ') || text.includes('MBP '), '오늘 처리 없음');
+  assert.ok(text.includes('오늘 처리'), '오늘 처리 행 없음');
+  assert.ok(text.includes('33건·'), `33건 없음 (MAC 합산)\n${text}`);
 });
 
 // ─── M-10: ID 잘림 없음 ──────────────────────────────────────────────────────
@@ -536,4 +537,179 @@ test('P-6: renderLayout — 허브 avgWait 에 "대기avg" 접두어 없음', ()
   assert.ok(!text.includes('대기avg'), `대기avg 접두어 발견 → v1.8 에서 금지\n${text}`);
   // 값은 있어야 함 (2.5m or similar)
   assert.ok(text.includes('2.5m'), `2.5m 없음\n${text}`);
+});
+
+// ─── Q-1~Q-2: 클라우드 count≥2 → +N 출력 ─────────────────────────────────────
+
+test('Q-1: renderLayout — 클라우드 2건 → +1 등장', () => {
+  const runState = makeRunState();
+  runState.heavy.inProgress = [
+    { runner: 'GitHub Actions 1', repo: 'CuriocityDevAi/storeport', prompt_id: 'M2-1126-A', running_min: 5, light: false },
+    { runner: 'GitHub Actions 2', repo: 'CuriocityDevAi/storeport', prompt_id: 'M2-1126-B', running_min: 3, light: false },
+  ];
+  const lines = renderLayout(makeLayoutData({ runState }));
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+  assert.ok(text.includes('+1'), `+1 없음 (클라우드 2건)\n${text}`);
+});
+
+test('Q-2: renderLayout — 클라우드 3건 → +2 등장', () => {
+  const runState = makeRunState();
+  runState.heavy.inProgress = [
+    { runner: 'GitHub Actions 1', repo: 'CuriocityDevAi/storeport', prompt_id: 'M2-1126-A', running_min: 5, light: false },
+    { runner: 'GitHub Actions 2', repo: 'CuriocityDevAi/storeport', prompt_id: 'M2-1126-B', running_min: 3, light: false },
+    { runner: 'GitHub Actions 3', repo: 'CuriocityDevAi/storeport', prompt_id: 'M2-1126-C', running_min: 1, light: false },
+  ];
+  const lines = renderLayout(makeLayoutData({ runState }));
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+  assert.ok(text.includes('+2'), `+2 없음 (클라우드 3건)\n${text}`);
+});
+
+// ─── Q-3~Q-4: 대기 3+건 → 칩 2개 + +N 출력 ──────────────────────────────────
+
+test('Q-3: renderLayout — 대기 3건 → 칩 2개 + +1 등장', () => {
+  const runState = makeRunState();
+  runState.heavy.queued = [
+    { prompt_id: 'M2-1126-A', repo: 'CuriocityDevAi/storeport', queued_min: 5, light: false },
+    { prompt_id: 'M2-1126-B', repo: 'CuriocityDevAi/storeport', queued_min: 3, light: false },
+    { prompt_id: 'M2-1126-C', repo: 'CuriocityDevAi/storeport', queued_min: 1, light: false },
+  ];
+  const lines = renderLayout(makeLayoutData({ runState }));
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+  assert.ok(text.includes('[M2-1126-A'), `첫 번째 칩 없음\n${text}`);
+  assert.ok(text.includes('[M2-1126-B'), `두 번째 칩 없음\n${text}`);
+  assert.ok(text.includes('+1'), `+1 없음 (대기 3건)\n${text}`);
+});
+
+test('Q-4: renderLayout — 대기 4건 → 칩 2개 + +2 등장', () => {
+  const runState = makeRunState();
+  runState.heavy.queued = [
+    { prompt_id: 'M2-1126-A', repo: 'CuriocityDevAi/storeport', queued_min: 5, light: false },
+    { prompt_id: 'M2-1126-B', repo: 'CuriocityDevAi/storeport', queued_min: 3, light: false },
+    { prompt_id: 'M2-1126-C', repo: 'CuriocityDevAi/storeport', queued_min: 1, light: false },
+    { prompt_id: 'M2-1126-D', repo: 'CuriocityDevAi/storeport', queued_min: 0, light: false },
+  ];
+  const lines = renderLayout(makeLayoutData({ runState }));
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+  assert.ok(text.includes('+2'), `+2 없음 (대기 4건)\n${text}`);
+});
+
+// ─── PTY-1: 잔상 자기 검증 ② ─────────────────────────────────────────────────
+// node-pty / @xterm/headless 미설치 환경 → 순수 JS 가상 버퍼로 대체
+// renderDiff 로직 미러링 + CSI 시퀀스 가상 터미널 재생
+
+// 가상 터미널: renderDiff 가 쓰는 CSI 시퀀스만 처리
+function replayToRows(allWrites) {
+  const rows = new Map();
+  let r = 0;
+  for (const chunk of allWrites) {
+    const str = typeof chunk === 'string' ? chunk : String(chunk);
+    let i = 0;
+    while (i < str.length) {
+      if (str[i] === '\x1b' && i + 1 < str.length && str[i + 1] === '[') {
+        let j = i + 2;
+        while (j < str.length && !(str.charCodeAt(j) >= 0x40 && str.charCodeAt(j) <= 0x7E)) j++;
+        if (j >= str.length) break;
+        const finalByte = str[j];
+        const params = str.slice(i + 2, j);
+        if (finalByte === 'J') {
+          if (params === '2') { rows.clear(); r = 0; }
+          else { for (const k of [...rows.keys()]) { if (k >= r) rows.delete(k); } }
+        } else if (finalByte === 'H') {
+          const parts = params.split(';').map(p => parseInt(p) || 1);
+          r = (parts[0] || 1) - 1;
+        } else if (finalByte === 'K' && params === '2') {
+          rows.delete(r);
+        }
+        i = j + 1;
+      } else if (str[i] === '\n') { r++; i++; }
+      else if (str[i] === '\r') { i++; }
+      else {
+        let j = i;
+        while (j < str.length && str[j] !== '\x1b' && str[j] !== '\n' && str[j] !== '\r') j++;
+        const plain = str.slice(i, j).replace(/\x1b\[[0-9;]*m/g, '');
+        if (plain) rows.set(r, (rows.get(r) || '') + plain);
+        i = j;
+      }
+    }
+  }
+  return rows;
+}
+
+// renderDiff 로직 미러링 (process.stdout mock 없이 가상 버퍼에 직접 write)
+function simulateRenderDiff(lines, termWidth, prevLines) {
+  const writes = [];
+  const truncated = lines.map(l => truncateAnsiWidth(l, termWidth));
+  if (!prevLines || prevLines.length === 0) {
+    writes.push('\x1b[2J\x1b[H');
+    for (const line of truncated) writes.push(line + '\n');
+  } else {
+    const maxLen = Math.max(truncated.length, prevLines.length);
+    for (let i = 0; i < maxLen; i++) {
+      const nl = truncated[i] || '';
+      const ol = prevLines[i] || '';
+      if (nl !== ol) writes.push(`\x1b[${i + 1};1H\x1b[2K${nl}`);
+    }
+    writes.push(`\x1b[${truncated.length + 1};1H`);
+  }
+  writes.push('\x1b[J');
+  return { writes, truncated };
+}
+
+test('PTY-1: 잔상 자기 검증 ② — 가상 버퍼 (node-pty 미설치, 순수 JS 가상 터미널)', () => {
+  // node-pty / @xterm/headless 미설치로 renderDiff 로직을 가상 버퍼에 미러링
+  // SIGWINCH 시뮬레이션: prevLines=[] 로 전체 재그림 (ci-watch.mjs:1188 동일 로직)
+  const allWrites = [];
+  let prev = [];
+
+  // Frame 1: width=120 (초기 렌더)
+  const { writes: w1, truncated: t1 } = simulateRenderDiff(
+    renderLayout(makeLayoutData({ terminalWidth: 120 })), 120, [],
+  );
+  allWrites.push(...w1);
+  prev = t1;
+
+  // SIGWINCH 120→90: prevLines 초기화 → 전체 재그림
+  const { writes: w2, truncated: t2 } = simulateRenderDiff(
+    renderLayout(makeLayoutData({ terminalWidth: 90 })), 90, [],
+  );
+  allWrites.push(...w2);
+  prev = t2;
+
+  // diff 렌더 at 90 (스피너 업데이트)
+  const { writes: w3, truncated: t3 } = simulateRenderDiff(
+    renderLayout(makeLayoutData({ terminalWidth: 90, spinnerFrame: 1 })), 90, prev,
+  );
+  allWrites.push(...w3);
+  prev = t3;
+
+  // SIGWINCH 90→120: prevLines 초기화 → 전체 재그림
+  const { writes: w4, truncated: t4 } = simulateRenderDiff(
+    renderLayout(makeLayoutData({ terminalWidth: 120 })), 120, [],
+  );
+  allWrites.push(...w4);
+
+  // 가상 버퍼 재생
+  const finalRows = replayToRows(allWrites);
+  const expectedCount = t4.length;
+
+  // (a) 폭 초과 없음 (truncateAnsiWidth 로 보장 · 가상 버퍼로 확인)
+  for (const [row, content] of finalRows) {
+    const dw = displayWidth(content);
+    assert.ok(dw <= 120, `행 ${row}: 폭 ${dw} > 120 (잔상 가능)\n"${content}"`);
+  }
+
+  // (b) 최종 렌더 범위 밖 잔상 0 (\x1b[J 로 보장 · 가상 버퍼로 확인)
+  for (const [row] of finalRows) {
+    assert.ok(row < expectedCount,
+      `행 ${row}: 최종 렌더(${expectedCount}행) 밖 잔상\n"${finalRows.get(row)}"`);
+  }
+
+  // 실행 로그 (리포트 첨부용)
+  const maxW = finalRows.size > 0
+    ? Math.max(...[...finalRows.values()].map(l => displayWidth(l)))
+    : 0;
+  console.log(
+    `[PTY-1] write=${allWrites.length} 총 프레임=4 (120→90→90→120) ` +
+    `최종행=${finalRows.size}/${expectedCount} 최대폭=${maxW}`,
+  );
 });
