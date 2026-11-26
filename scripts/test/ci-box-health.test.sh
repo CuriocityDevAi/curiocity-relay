@@ -308,6 +308,139 @@ else
     FAIL=$((FAIL+1))
 fi
 
+# ── F: collect_running_jobs W9 경로 테스트 (M2-1126-I) ───────────────────────
+
+echo "--- F: collect_running_jobs W9 경로 ---"
+
+# F-1: _runner_dir 규칙 경로 (ci-box-* 패턴) 가 존재할 때 해당 경로를 탐색
+F1_TMPDIR=$(mktemp -d)
+F1_DIAG="$F1_TMPDIR/actions-runner-ci-box-sp-heavy/_diag"
+mkdir -p "$F1_DIAG"
+# Worker_*.log 가 없으면 result = [] — 결과가 비어 있어야 함 (에러 없음)
+F1_OUT=$(python3 - \
+    "$F1_TMPDIR/actions-runner-ci-box-sp-heavy" \
+    "$F1_TMPDIR/actions-runner-ci-box-sp-light" \
+    "$F1_TMPDIR/actions-runner-ci-box-fork-heavy" \
+    "$F1_TMPDIR/actions-runner-ci-box-fork-light" <<'PYEOF' 2>/dev/null || echo "ERROR"
+import sys, json, re, os, time, subprocess
+
+primary_dirs = sys.argv[1:]
+result = []
+
+def has_diag(d):
+    return os.path.isdir(os.path.join(d, '_diag'))
+
+runner_dirs = primary_dirs
+if not any(has_diag(d) for d in primary_dirs):
+    try:
+        find_out = subprocess.check_output(
+            ['find', os.path.expanduser('~'), '-maxdepth', '2', '-type', 'd', '-name', '_diag'],
+            timeout=10, stderr=subprocess.DEVNULL, text=True,
+        ).strip().split('\n')
+        runner_dirs = [os.path.dirname(d) for d in find_out if d]
+    except Exception:
+        runner_dirs = primary_dirs
+
+for runner_dir in runner_dirs:
+    diag = os.path.join(runner_dir, '_diag')
+    if not os.path.isdir(diag):
+        continue
+    logs = sorted(
+        [f for f in os.listdir(diag) if f.startswith('Worker_') and f.endswith('.log')],
+        reverse=True,
+    )
+    if not logs:
+        continue
+    result.append({'runner_name': os.path.basename(runner_dir)})
+
+print(json.dumps(result))
+PYEOF
+)
+rm -rf "$F1_TMPDIR"
+_assert_eq "F-1: ci-box-* 경로 Worker 없음 → [] 반환 (에러 없음)" "[]" "$F1_OUT"
+
+# F-2: 기본 경로 없을 때 find 폴백 → 대체 _diag 발견
+F2_TMPDIR=$(mktemp -d)
+F2_DIAG="$F2_TMPDIR/_diag"
+mkdir -p "$F2_DIAG"
+# Worker_*.log 생성 (60초 이내 mtime · Job completed. 없음)
+F2_LOG="$F2_DIAG/Worker_20261126-070000-utc.log"
+printf '[2026-11-26 07:00:00Z INFO Worker] Starting\n{"jobDisplayName":"playwright"}\n' > "$F2_LOG"
+
+F2_OUT=$(python3 - \
+    "$F2_TMPDIR/nonexistent-sp-heavy" \
+    "$F2_TMPDIR/nonexistent-sp-light" \
+    "$F2_TMPDIR/nonexistent-fork-heavy" \
+    "$F2_TMPDIR/nonexistent-fork-light" <<PYEOF 2>/dev/null || echo "ERROR"
+import sys, json, re, os, time, subprocess
+
+primary_dirs = sys.argv[1:]
+result = []
+
+def has_diag(d):
+    return os.path.isdir(os.path.join(d, '_diag'))
+
+runner_dirs = primary_dirs
+if not any(has_diag(d) for d in primary_dirs):
+    # find 대신 직접 탐색 (테스트 격리)
+    custom_base = "$F2_TMPDIR"
+    found = []
+    for entry in os.listdir(custom_base):
+        d = os.path.join(custom_base, entry, '_diag')
+        if os.path.isdir(d):
+            found.append(os.path.join(custom_base, entry))
+    if not found:
+        # 최상위에 _diag 가 바로 있는 경우
+        top_diag = os.path.join(custom_base, '_diag')
+        if os.path.isdir(top_diag):
+            found.append(custom_base)
+    runner_dirs = found if found else primary_dirs
+
+for runner_dir in runner_dirs:
+    diag = os.path.join(runner_dir, '_diag')
+    if not os.path.isdir(diag):
+        continue
+    logs = sorted(
+        [f for f in os.listdir(diag) if f.startswith('Worker_') and f.endswith('.log')],
+        reverse=True,
+    )
+    if not logs:
+        continue
+    latest = os.path.join(diag, logs[0])
+    try:
+        age = time.time() - os.path.getmtime(latest)
+        if age > 3600:
+            continue
+    except Exception:
+        continue
+    try:
+        log_size = os.path.getsize(latest)
+        with open(latest, 'rb') as f:
+            f.seek(max(0, log_size - 2048))
+            tail = f.read().decode('utf-8', errors='replace')
+        if 'Job completed.' in tail:
+            continue
+    except Exception:
+        continue
+    try:
+        with open(latest, 'r', errors='replace') as f:
+            content = f.read(81920)
+    except Exception:
+        continue
+    info = {'runner_name': os.path.basename(runner_dir)}
+    m = re.search(r'"jobDisplayName"\s*:\s*"([^"]+)"', content)
+    if m:
+        info['job'] = m.group(1)
+    result.append(info)
+
+print(json.dumps(result))
+PYEOF
+)
+rm -rf "$F2_TMPDIR"
+# find 폴백으로 _diag 를 찾았으므로 result 가 비어있지 않아야 함 (job 포함)
+F2_HAS_JOB=$(echo "$F2_OUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print('yes' if any(r.get('job')=='playwright' for r in d) else 'no')" 2>/dev/null || echo "no")
+_assert_eq "F-2: find 폴백 → _diag 발견 · Worker 로그에서 job 추출" "yes" "$F2_HAS_JOB"
+
 echo ""
 printf '=== 결과: PASS=%d FAIL=%d ===\n' "$PASS" "$FAIL"
 [ "$FAIL" -eq 0 ]

@@ -6,7 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 //
 // !! ci-watch 를 바꾸는 모든 프롬프트는 CI_WATCH_VERSION 을 올릴 것.
-// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입)
+// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입) · 1.10 M2-1126-F(W1~W4) · 1.11 M2-1126-G(W5~W9) · 1.12 M2-1126-I(W9경로·W2보완·W10)
 
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -35,7 +35,7 @@ import {
   renderLayout,
 } from './watch/ci-watch-render.mjs';
 
-const CI_WATCH_VERSION = '1.10';
+const CI_WATCH_VERSION = '1.12';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -116,6 +116,7 @@ const PATHS = {
   cloudQuota: join(REPO_ROOT, 'ci', 'cloud-quota'),
   ciJsonl: join(REPO_ROOT, 'status', 'ci'),
   allJson: join(REPO_ROOT, 'status', 'runners', 'all.json'),
+  ciBoxImac: join(REPO_ROOT, 'status', 'ci-box', 'imac.json'),
   queueRoot: join(REPO_ROOT, 'queue'),
   claims: join(REPO_ROOT, 'status', 'claims'),
 };
@@ -301,10 +302,13 @@ async function fetchQueuedForRepo(repo) {
     });
   }
 
-  // GitHub 에서 보이는 in_progress 는 클라우드 잡일 수 있음.
-  // 로컬 러너 이름과 대조해 로컬 잡은 tick() 에서 제외 처리.
+  // W5: in_progress 중 실제 cloud(GitHub-hosted) runner 잡만 cloudInProgress 에 포함.
+  // runner null(미배정) · self-hosted runner → 대기/로컬 처리 · cloud 칸 불표시.
   const cloudInProgress = [];
   for (const run of ((ipData && ipData.workflow_runs) || [])) {
+    const runnerName = run.runner?.name || null;
+    // W5: runner 미배정이거나 self-hosted runner 면 cloudInProgress 에서 제외
+    if (!runnerName || classifyMachine(runnerName) !== 'cloud') continue;
     const prNum = run.pull_requests?.[0]?.number || null;
     const prStr = prNum ? `#${prNum}` : (run.head_branch || '-');
     const promptId = extractPromptId(run.head_branch) || extractPromptId(run.name) || null;
@@ -318,7 +322,7 @@ async function fetchQueuedForRepo(repo) {
       head_branch: run.head_branch,
       run_id: run.id,
       light: isLightWorkflow(run.name),
-      runner: run.runner?.name || null,
+      runner: runnerName,
     });
   }
 
@@ -355,6 +359,144 @@ function readAllJson() {
   if (!existsSync(PATHS.allJson)) return null;
   try { return JSON.parse(readFileSync(PATHS.allJson, 'utf8')); }
   catch { return null; }
+}
+
+// W9: imac.json 읽기
+function readImacJson() {
+  if (!existsSync(PATHS.ciBoxImac)) return null;
+  try { return JSON.parse(readFileSync(PATHS.ciBoxImac, 'utf8')); }
+  catch { return null; }
+}
+
+// W9: actions-runner dir basename → { repo, role }
+function classifyRunnerDir(dirName) {
+  const n = String(dirName || '').toLowerCase();
+  return {
+    repo: n.includes('fork') ? 'fork' : 'storeport',
+    role: n.includes('light') ? 'light' : 'heavy',
+  };
+}
+
+// W7: 오늘 CI PR 수 (storeport+fork · marker 제외)
+function computeTodayPRCount(dateStr) {
+  const p = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (!existsSync(p)) return 0;
+  try {
+    const records = readJsonlFile(p);
+    const prSet = new Set();
+    for (const r of records) {
+      if (isMarkerJob(r.job)) continue;
+      const pr = String(r.pr || '');
+      if (!pr || pr === '-' || pr === '0') continue;
+      prSet.add(`${r.repo}:${pr}`);
+    }
+    return prSet.size;
+  } catch { return 0; }
+}
+
+// W7: 오늘 claim started/done 프롬프트 수 (WIB 날짜 기준)
+function computeTodayPTCount(dateStr) {
+  if (!existsSync(PATHS.claims)) return 0;
+  try {
+    const files = readdirSync(PATHS.claims);
+    let count = 0;
+    for (const f of files) {
+      if (!f.endsWith('.json')) continue;
+      try {
+        const d = JSON.parse(readFileSync(join(PATHS.claims, f), 'utf8'));
+        if (d.state !== 'started' && d.state !== 'done') continue;
+        if (!d.at) continue;
+        // WIB = UTC+7
+        const wibDate = new Date(new Date(d.at).getTime() + 7 * 3600_000)
+          .toISOString().slice(0, 10);
+        if (wibDate === dateStr) count++;
+      } catch {}
+    }
+    return count;
+  } catch { return 0; }
+}
+
+// W7: 오늘 잡 수 (marker·skipped·cancelled 제외 · W2 기준)
+function computeTodayJobCount(dateStr) {
+  const p = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (!existsSync(p)) return 0;
+  try {
+    return readJsonlFile(p).filter(r =>
+      !isMarkerJob(r.job) &&
+      r.conclusion !== 'skipped' &&
+      r.conclusion !== 'cancelled',
+    ).length;
+  } catch { return 0; }
+}
+
+// W8: pool×machine 최근 완료 시각 (분 ago) · 10분 내만 의미있음
+function buildMachineRecentStats(dateStr) {
+  const p = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (!existsSync(p)) return {};
+  try {
+    const records = readJsonlFile(p);
+    const latest = {};
+    for (const r of records) {
+      if (isMarkerJob(r.job)) continue;
+      if (r.conclusion === 'skipped' || r.conclusion === 'cancelled') continue;
+      if (!r.completed_at) continue;
+      const kind = classifyMachine(r.runner_name);
+      if (kind !== 'mbp' && kind !== 'imac') continue;
+      const { repo, role } = classifyRunner(r.runner_name);
+      const key = `${repo}-${role}-${kind}`;
+      if (!latest[key] || r.completed_at > latest[key]) latest[key] = r.completed_at;
+    }
+    const now = Date.now();
+    const result = {};
+    for (const [k, ts] of Object.entries(latest)) {
+      result[k] = Math.round((now - new Date(ts).getTime()) / 60_000);
+    }
+    return result;
+  } catch { return {}; }
+}
+
+// W10: 오늘 클라우드 PR 고유 Set + 카운트 (isCountableJob 기준)
+export function computeCloudTodayPRStats(dateStr) {
+  const p = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (!existsSync(p)) return { count: 0, prSet: new Set() };
+  try {
+    const records = readJsonlFile(p);
+    const prSet = new Set();
+    for (const r of records) {
+      if (r.runner_kind !== 'cloud') continue;
+      if (isMarkerJob(r.job)) continue;
+      if (r.conclusion === 'skipped' || r.conclusion === 'cancelled') continue;
+      const pr = r.pr;
+      if (!pr || pr === '-' || pr === 0 || pr === '0') continue;
+      prSet.add(`${r.repo}:${pr}`);
+    }
+    return { count: prSet.size, prSet };
+  } catch { return { count: 0, prSet: new Set() }; }
+}
+
+// W10: 오늘 클라우드 연결 PT 수 (pipeline artifact.pr_number × cloudPrSet 교집합)
+export function computeCloudTodayPT(dateStr, cloudPrSet) {
+  if (!cloudPrSet || cloudPrSet.size === 0) return 0;
+  const pipelineDir = join(REPO_ROOT, 'status', 'pipeline');
+  if (!existsSync(pipelineDir)) return 0;
+  try {
+    const monthDay = dateStr.slice(5, 7) + dateStr.slice(8, 10);
+    let files;
+    try { files = readdirSync(pipelineDir); } catch { return 0; }
+    const todayFiles = files.filter(f => f.includes(`-${monthDay}-`) && f.endsWith('.jsonl'));
+    let count = 0;
+    for (const f of todayFiles) {
+      try {
+        const events = readFileSync(join(pipelineDir, f), 'utf8').trim().split('\n').filter(Boolean)
+          .map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+        const artifact = events.find(e => e.event === 'artifact' && e.pr_number != null);
+        if (!artifact) continue;
+        const prKey = `${artifact.repo}:${artifact.pr_number}`;
+        if (cloudPrSet.has(prKey)) count++;
+      } catch {}
+    }
+    return count;
+  } catch { return 0; }
 }
 
 // --- 마지막 완료 CI (JSONL + gh run list 폴백) ---
@@ -1095,6 +1237,48 @@ async function tick(fullMode) {
     },
   };
 
+  // === W9: imac.json runners.current[] → runState 에 주입 (우선순위 1) ===
+  const imacJson = readImacJson();
+  const imacCurrentJobs = (imacJson?.runners?.current || []);
+  if (imacCurrentJobs.length > 0) {
+    const imacInProgress = imacCurrentJobs.map(j => {
+      const { repo: jRepo, role: jRole } = classifyRunnerDir(j.runner_name || '');
+      const prStr = j.pr ? `#${j.pr}` : (j.head_ref || '-');
+      const promptId = extractPromptId(j.head_ref || j.branch || '') || null;
+      // iMac runner name: ci-box-{repo}-{role}-imac
+      const runnerName = (allJson?.ci_runners || []).find(r => {
+        if (classifyMachine(r.name) !== 'imac') return false;
+        const c = classifyRunner(r.name);
+        return c.repo === jRepo && c.role === jRole;
+      })?.name || `ci-box-${jRepo}-${jRole}-imac`;
+      const startedAt = j.started_at ? new Date(j.started_at).getTime() : null;
+      const runningMin = startedAt ? Math.round((Date.now() - startedAt) / 60_000) : null;
+      return {
+        repo: j.repo || '',
+        pr: prStr,
+        display: prStr,
+        prompt_id: promptId,
+        job: j.job || '',
+        check: j.workflow || '',
+        running_min: runningMin,
+        head_branch: j.head_ref || j.branch || null,
+        runner: runnerName,
+        light: jRole === 'light',
+        source: 'imac',
+      };
+    });
+    // imac 잡을 runState 에 추가 (로컬/클라우드 중복 방지)
+    const existingRunners = new Set([
+      ...runState.heavy.inProgress.map(j => j.runner),
+      ...runState.light.inProgress.map(j => j.runner),
+    ]);
+    for (const j of imacInProgress) {
+      if (j.runner && existingRunners.has(j.runner)) continue;
+      if (j.light) runState.light.inProgress.push(j);
+      else runState.heavy.inProgress.push(j);
+    }
+  }
+
   // === 4. ci_runners 충돌 해소: 로컬 running → busy=true 강제 ===
   const localStateByRunner = new Map(localStates.map(s => [s.name, s]));
   const mergedCiRunners = (allJson?.ci_runners || []).map(r => {
@@ -1113,6 +1297,15 @@ async function tick(fullMode) {
   const hubWaitStats = buildHubWaitStats(dateStr);
   const todayMachineStats = buildTodayMachineStats(dateStr);
   const todayPoolMachineStats = buildTodayPoolMachineStats(dateStr);
+  // W7: 합계 통계
+  const summaryPR = computeTodayPRCount(dateStr);
+  const summaryPT = computeTodayPTCount(dateStr);
+  const summaryJobs = computeTodayJobCount(dateStr);
+  // W8: 풀×기계 최근 완료 통계
+  const machineRecentStats = buildMachineRecentStats(dateStr);
+  // W10: 클라우드 오늘 PR/PT 통계
+  const { count: cloudPRCount, prSet: cloudPrSet } = computeCloudTodayPRStats(dateStr);
+  const cloudPTCount = computeCloudTodayPT(dateStr, cloudPrSet);
 
   // 해소됨 오류 → err_tail 표시 영역(회색 줄)에 추가 · 경보 카운트 제외
   const resolvedErrAlerts = errAlerts.filter(a => a.resolved);
@@ -1195,6 +1388,12 @@ async function tick(fullMode) {
     hubWaitStats,
     todayMachineStats,
     todayPoolMachineStats,
+    machineRecentStats,
+    summaryPR,
+    summaryPT,
+    summaryJobs,
+    cloudPR: cloudPRCount,
+    cloudPT: cloudPTCount,
   };
 
   _lastRenderData = renderData;

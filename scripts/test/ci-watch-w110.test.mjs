@@ -246,16 +246,17 @@ test('W4-2: 실행 중 셀 → ⠋ID 3m (N) 형태', () => {
   allJson.ci_runners = allJson.ci_runners.map(r =>
     r.name === 'Youngkyus-MacBook-Pro-M1' ? { ...r, busy: true } : r,
   );
+  // M2-F 를 사용 — W9 절단으로 인해 긴 ID는 (N) 을 밀어냄; 14자 한도 내 단축 ID 사용
   allJson.ci.data.heavy.in_progress = [{
     runner: 'Youngkyus-MacBook-Pro-M1',
-    prompt_id: 'M2-1126-F',
+    prompt_id: 'M2-F',
     running_min: 3,
   }];
   const runState = makeRunState();
   runState.heavy.inProgress = [{
     runner: 'Youngkyus-MacBook-Pro-M1',
     repo: 'CuriocityDevAi/storeport',
-    prompt_id: 'M2-1126-F',
+    prompt_id: 'M2-F',
     running_min: 3,
     light: false,
   }];
@@ -270,8 +271,8 @@ test('W4-2: 실행 중 셀 → ⠋ID 3m (N) 형태', () => {
   const lines = renderLayout(makeLayoutData({ allJson, runState, todayPoolMachineStats }));
   const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
 
-  // storeport-heavy MBP 가 실행 중이므로 M2-1126-F + (7) 이 있어야 함
-  assert.ok(text.includes('M2-1126-F') && text.includes('(7)'),
+  // storeport-heavy MBP 가 실행 중이므로 M2-F + (7) 이 있어야 함 (14자 한도 내 맞춤)
+  assert.ok(text.includes('M2-F') && text.includes('(7)'),
     `실행 중 셀에 ID 또는 (N) 없음\n${text.slice(text.indexOf('CI 큐'), text.indexOf('CI 큐') + 500)}`);
 });
 

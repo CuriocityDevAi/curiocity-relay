@@ -252,6 +252,118 @@ collect_tailscale() {
     printf '{"up":%s,"ip":"%s"}' "$up" "$ip"
 }
 
+# ── W9: 현재 실행 중인 잡 수집 (각 runner _diag Worker 로그 파싱) ──────────────
+
+collect_running_jobs() {
+    # health.sh 변경은 아이맥 pull 만으로 반영 (plist 재설치 불필요)
+    # W9(R0-V): _runner_dir 규칙 — actions-runner-ci-box-{sp-heavy,sp-light,fork-heavy,fork-light}
+    python3 - \
+        "$HOME/actions-runner-ci-box-sp-heavy" \
+        "$HOME/actions-runner-ci-box-sp-light" \
+        "$HOME/actions-runner-ci-box-fork-heavy" \
+        "$HOME/actions-runner-ci-box-fork-light" <<'PYEOF' 2>/dev/null || echo "[]"
+import sys, json, re, os, time, subprocess
+
+primary_dirs = sys.argv[1:]
+result = []
+
+# 기본 4경로 중 _diag 가 하나도 없으면 find 로 동적 탐색 (폴백)
+def has_diag(d):
+    return os.path.isdir(os.path.join(d, '_diag'))
+
+runner_dirs = primary_dirs
+if not any(has_diag(d) for d in primary_dirs):
+    try:
+        find_out = subprocess.check_output(
+            ['find', os.path.expanduser('~'), '-maxdepth', '2', '-type', 'd', '-name', '_diag'],
+            timeout=10, stderr=subprocess.DEVNULL, text=True,
+        ).strip().split('\n')
+        runner_dirs = [os.path.dirname(d) for d in find_out if d]
+    except Exception:
+        runner_dirs = primary_dirs
+
+for runner_dir in runner_dirs:
+    diag = os.path.join(runner_dir, '_diag')
+    if not os.path.isdir(diag):
+        continue
+
+    # 가장 최신 Worker_*.log
+    logs = sorted(
+        [f for f in os.listdir(diag) if f.startswith('Worker_') and f.endswith('.log')],
+        reverse=True,
+    )
+    if not logs:
+        continue
+
+    latest = os.path.join(diag, logs[0])
+
+    # 로그 나이 확인 (60분 초과 → 실행 중 아님)
+    try:
+        age = time.time() - os.path.getmtime(latest)
+        if age > 3600:
+            continue
+    except Exception:
+        continue
+
+    # 로그 끝 확인: "Job completed." 있으면 완료
+    try:
+        log_size = os.path.getsize(latest)
+        with open(latest, 'rb') as f:
+            f.seek(max(0, log_size - 2048))
+            tail = f.read().decode('utf-8', errors='replace')
+        if 'Job completed.' in tail:
+            continue
+    except Exception:
+        continue
+
+    # 잡 정보 파싱 (로그 앞 80KB)
+    try:
+        with open(latest, 'r', errors='replace') as f:
+            content = f.read(81920)
+    except Exception:
+        continue
+
+    info = {
+        'runner_name': os.path.basename(runner_dir),
+    }
+
+    m = re.search(r'"jobDisplayName"\s*:\s*"([^"]+)"', content)
+    if m:
+        info['job'] = m.group(1)
+
+    repo_m = re.search(r'"k"\s*:\s*"repository"\s*,\s*"v"\s*:\s*"([^"]+)"', content)
+    if repo_m:
+        info['repo'] = repo_m.group(1)
+
+    wf_m = re.search(r'"k"\s*:\s*"workflow"\s*,\s*"v"\s*:\s*"([^"]+)"', content)
+    if wf_m:
+        info['workflow'] = wf_m.group(1)
+
+    hr_m = re.search(r'"k"\s*:\s*"head_ref"\s*,\s*"v"\s*:\s*"([^"]*)"', content)
+    if hr_m:
+        info['head_ref'] = hr_m.group(1)
+
+    en_m = re.search(r'"k"\s*:\s*"event_name"\s*,\s*"v"\s*:\s*"([^"]+)"', content)
+    if en_m:
+        info['event_name'] = en_m.group(1)
+
+    # PR 번호 (pull_request 이벤트: github.event.number)
+    if info.get('event_name') == 'pull_request':
+        pr_m = re.search(r'"k"\s*:\s*"number"\s*,\s*"v"\s*:\s*["\']?(\d+)["\']?', content[:65536])
+        if pr_m:
+            info['pr'] = pr_m.group(1)
+
+    # 시작 시각 (로그 첫 줄 타임스탬프)
+    start_m = re.search(r'\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}Z)', content[:300])
+    if start_m:
+        info['started_at'] = start_m.group(1).replace(' ', 'T')
+
+    result.append(info)
+
+print(json.dumps(result))
+PYEOF
+}
+
 # ── 판정 ──────────────────────────────────────────────────────────────────────
 
 judge_health() {
@@ -404,6 +516,8 @@ main() {
     postgres_j=$(collect_postgres)
     _log "tailscale..."
     tailscale_j=$(collect_tailscale)
+    _log "running jobs (Worker 로그)..."
+    running_jobs_j=$(collect_running_jobs)
 
     # 판정용 값 추출 (null 이면 "null" 문자열)
     local mem_free_pct root_free_gb runner_free_gb listener_count github_latency_ms extra_unknowns
@@ -435,7 +549,8 @@ PYEOF
     local json
     json=$(python3 - \
         "$ts" "$uptime_j" "$memory_j" "$disk_j" "$thermal_j" \
-        "$runners_j" "$github_j" "$netspeed_j" "$postgres_j" "$tailscale_j" "$health_j" <<'PYEOF'
+        "$runners_j" "$github_j" "$netspeed_j" "$postgres_j" "$tailscale_j" "$health_j" \
+        "$running_jobs_j" <<'PYEOF'
 import json, sys
 def clean(d):
     if isinstance(d, dict):
@@ -454,6 +569,11 @@ out = {
     "tailscale": clean(json.loads(sys.argv[10])),
 }
 out.update(json.loads(sys.argv[11]))
+# W9: runners.current — 현재 실행 중 잡 목록
+try:
+    out["runners"]["current"] = json.loads(sys.argv[12])
+except Exception:
+    out["runners"]["current"] = []
 print(json.dumps(out, indent=2))
 PYEOF
     )
