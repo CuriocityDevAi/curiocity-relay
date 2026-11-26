@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-26T16:08:35.553Z",
+  "built_at": "2026-11-26T18:20:46.015Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-26T16:08:35.078Z"
+      "fetched_at": "2026-11-26T18:20:45.558Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-26T16:08:35.247Z"
+      "fetched_at": "2026-11-26T18:20:45.688Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6240,11 +6240,13 @@
               "files": [
                 "apps/commerce-core/src/modules/register_session/order_snapshot/model.ts",
                 "apps/commerce-core/src/modules/register_session/models/order-snapshot.ts",
+                "apps/commerce-core/src/modules/register_session/models/pos-short-number.ts",
                 "apps/commerce-core/src/modules/register_session/migrations/Migration20261115100000.ts",
                 "apps/commerce-core/src/modules/register_session/migrations/Migration20261118000001.ts",
                 "apps/commerce-core/src/modules/register_session/migrations/Migration20261119000001.ts",
                 "apps/commerce-core/src/modules/register_session/migrations/Migration20261123000001.ts",
                 "apps/commerce-core/src/modules/register_session/migrations/Migration20261124000001.ts",
+                "apps/commerce-core/src/modules/register_session/migrations/Migration20261126000001.ts",
                 "apps/commerce-core/src/modules/register_session/lifecycle.ts",
                 "apps/commerce-core/src/modules/register_session/__tests__/order-snapshot.unit.spec.ts",
                 "apps/commerce-core/src/api/admin/pos/loyalty/sessions/snapshots/**",
@@ -6252,6 +6254,7 @@
                 "apps/commerce-core/src/api/admin/pos/orders/[id]/ask-phone-on-display/**",
                 "apps/commerce-core/src/api/admin/pos/orders/[id]/phone-entry/**",
                 "apps/commerce-core/src/api/admin/pos/customer-display/snapshots/[id]/route.ts",
+                "apps/commerce-core/src/api/admin/pos/orders/[id]/checkout-snapshot/route.ts",
                 "apps/commerce-core/src/subscribers/order-snapshot-paid.ts",
                 "apps/commerce-core/src/lib/resolve-cashier-name.ts",
                 "apps/commerce-core/src/types/customer-display.ts",
@@ -6260,7 +6263,9 @@
                 "apps/commerce-core/integration-tests/pos/cd-pos-sync-v3.spec.ts",
                 "apps/commerce-core/integration-tests/pos/cd-pos-sync-v4.spec.ts",
                 "apps/commerce-core/integration-tests/pos/cd-pos-sync-v4-next-customer.spec.ts",
+                "apps/commerce-core/integration-tests/pos/cd-pos-sync-v4-pos-chip-skipped.spec.ts",
                 "apps/commerce-core/integration-tests/pos/cd-parallel-pay.spec.ts",
+                "apps/commerce-core/integration-tests/pos/short-order-num.spec.ts",
                 "apps/commerce-core/integration-tests/loyalty/cd-snapshot-skip.spec.ts",
                 "apps/commerce-core/integration-tests/loyalty/cd-phone-partial.spec.ts",
                 "docs/contracts/cd-sync-contract-v1.4.md"
@@ -6865,7 +6870,8 @@
                 "apps/customer-display/src/components/cd-sync/**",
                 "apps/customer-display/src/types/cd-sync-contract.ts",
                 "apps/customer-display/e2e/cd-sync-flow.spec.ts",
-                "apps/customer-display/e2e/cd-pos-sync-v2.spec.ts"
+                "apps/customer-display/e2e/cd-pos-sync-v2.spec.ts",
+                "apps/customer-display/e2e/cd-pos-sync-v4-phone-entry-ok.spec.ts"
               ],
               "status": "live"
             },
@@ -6934,7 +6940,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-26T16:08:35.553Z"
+      "fetched_at": "2026-11-26T18:20:46.014Z"
     }
   ],
   "rollup": {
