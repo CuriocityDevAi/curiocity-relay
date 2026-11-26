@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T23:10:40.082Z",
+  "at": "2026-11-26T23:12:59.346Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -43,11 +43,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.32,
-    "compressed_gb": 3.83,
+    "used_gb": 15.34,
+    "compressed_gb": 3.95,
     "swap_used_gb": 3.22,
     "pressure": "normal",
-    "at": "2026-11-26T23:10:07.691Z"
+    "at": "2026-11-26T23:12:26.992Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -55,22 +55,20 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T23:10:04.411Z",
+      "at": "2026-11-26T23:12:24.849Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 18,
+      "api_calls": 12,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
         "queued": 2,
-        "queued_prs": [
-          281
-        ],
-        "oldest_queued_min": 2,
+        "queued_prs": [],
+        "oldest_queued_min": 4,
         "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
@@ -78,8 +76,8 @@
             "pr": "#281",
             "pr_display": "fork:#281",
             "job": "e2e · case 1 (실서버)",
-            "step": "Install playwright chromium (local cache)",
-            "running_min": 1,
+            "step": "Playwright · Case 1 (정상 경로)",
+            "running_min": 4,
             "runner": "ci-box-fork-heavy-imac",
             "kind": "mac-heavy"
           },
@@ -87,8 +85,8 @@
             "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
             "pr": "#281",
             "pr_display": "fork:#281",
-            "job": "lint",
-            "step": null,
+            "job": "assertions",
+            "step": "Run assertions",
             "running_min": 1,
             "runner": "ci-box-fork-light-imac",
             "kind": "mac-heavy"
@@ -110,11 +108,11 @@
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 108,
-          "avg_wait_min": 1.7,
-          "avg_run_min": 1.1,
-          "success_rate": 73.1,
-          "run_min_total": 122.30000000000001
+          "jobs": 84,
+          "avg_wait_min": 2,
+          "avg_run_min": 1.3,
+          "success_rate": 79.8,
+          "run_min_total": 109.39999999999999
         },
         "mac-light": {
           "jobs": 13,
@@ -132,20 +130,20 @@
         },
         "cloud_cost_est_usd": 0.136,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 26.3
+        "wasted_min": 20.900000000000002
       },
-      "jsonl_added": 13,
+      "jsonl_added": 0,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 20903,
-    "at": "2026-11-26T23:10:23.469Z"
+    "took_ms": 15070,
+    "at": "2026-11-26T23:12:38.253Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 34,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-A.json · {\"id\":\"R0-1127-A\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T23:00:14.662Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1127-A.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1127-A.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD fatal: Cannot rebase onto multiple branches.\n[hub-runner-v8.3.2:git 2026-11-26T23:00:40.187Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T23:01:13.592Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T23:01:50.382Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T23:02:23.804Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:heartbeat 2026-11-26T23:04:48.839Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T23:05:21.351Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:06:03.904Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:06:36.560Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:07:12.839Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:07:48.791Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:self-update 2026-11-26T23:09:32.449Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:heartbeat 2026-11-26T23:10:06.785Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T23:10:37.094Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+  "err_tail": "[claim] committed\n[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD fatal: Cannot rebase onto multiple branches.\n[hub-runner-v8.3.2:git 2026-11-26T23:00:40.187Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T23:01:13.592Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T23:01:50.382Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:git 2026-11-26T23:02:23.804Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:heartbeat 2026-11-26T23:04:48.839Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T23:05:21.351Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:06:03.904Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:06:36.560Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:07:12.839Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:07:48.791Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:self-update 2026-11-26T23:09:32.449Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:heartbeat 2026-11-26T23:10:06.785Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T23:10:37.094Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:10:46.255Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:11:18.534Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:11:54.725Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:12:26.991Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
   "git_state": {
     "ahead": 0,
     "behind": 1,
