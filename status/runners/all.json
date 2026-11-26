@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T23:51:53.919Z",
+  "at": "2026-11-26T00:45:06.572Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -33,19 +33,19 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 102547,
-    "totalMs": 2812553,
+    "lastMs": 109171,
+    "totalMs": 2921724,
     "phase": "await-landing",
-    "at": "2026-11-25T23:49:43.149Z"
+    "at": "2026-11-25T23:52:02.466Z"
   },
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.88,
-    "compressed_gb": 4.53,
+    "used_gb": 14.97,
+    "compressed_gb": 3.97,
     "swap_used_gb": 4.11,
     "pressure": "normal",
-    "at": "2026-11-25T23:49:43.837Z"
+    "at": "2026-11-25T23:52:06.599Z"
   },
   "mem_peak_today": {
     "date": "2026-11-25",
@@ -57,9 +57,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 105,
+  "isolated_reports_collected": 106,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:m1 2026-11-25T23:39:24.799Z] sleep gap 감지 15s · 예산 보정 · 누적 2274s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:39:27.881Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:39:27.881Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:m1 2026-11-25T23:46:25.431Z] sleep gap 감지 416s · 예산 보정 · 누적 2690s · phase=await-landing\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T23:46:27.147Z] sleep observed · gap=439s · threshold=120s\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:46:50.495Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/agilo-medusa-pos-fork): Command failed: gh api repos/CuriocityDevAi/agilo-medusa-pos-fork/actions/runners\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:46:50.496Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=unknown\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:46:50.496Z] [gh-runner-watchdog] partial skip: fork-light gh_status=unknown\n[hub-runner-v8.3.2:m1 2026-11-25T23:46:50.499Z] sleep gap 감지 20s · 예산 보정 · 누적 2710s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:46:54.739Z] [gh-runner-watchdog] wake: mac-heavy Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:47:04.598Z] [gh-runner-watchdog] wake: fork-heavy Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:47:04.682Z] [gh-runner-watchdog] wake: fork-light Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:47:04.748Z] [gh-runner-watchdog] partial skip: mac-heavy Runner.Worker alive\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:47:04.896Z] [gh-runner-watchdog] partial skip: fork-heavy Runner.Worker alive\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:47:04.981Z] [gh-runner-watchdog] partial skip: fork-light Runner.Worker alive\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:47:24.738Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:48:02.356Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:self-update 2026-11-25T23:49:43.149Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m1 2026-11-25T23:49:43.149Z] sleep gap 감지 103s · 예산 보정 · 누적 2813s · phase=await-landing\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T23:50:13.627Z] sleep observed · gap=133s · threshold=120s",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:46:50.495Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/agilo-medusa-pos-fork): Command failed: gh api repos/CuriocityDevAi/agilo-medusa-pos-fork/actions/runners\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:46:50.496Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=unknown\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:46:50.496Z] [gh-runner-watchdog] partial skip: fork-light gh_status=unknown\n[hub-runner-v8.3.2:m1 2026-11-25T23:46:50.499Z] sleep gap 감지 20s · 예산 보정 · 누적 2710s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:46:54.739Z] [gh-runner-watchdog] wake: mac-heavy Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:47:04.598Z] [gh-runner-watchdog] wake: fork-heavy Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:47:04.682Z] [gh-runner-watchdog] wake: fork-light Runner.Worker alive — skip kickstart\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:47:04.748Z] [gh-runner-watchdog] partial skip: mac-heavy Runner.Worker alive\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:47:04.896Z] [gh-runner-watchdog] partial skip: fork-heavy Runner.Worker alive\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:47:04.981Z] [gh-runner-watchdog] partial skip: fork-light Runner.Worker alive\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:47:24.738Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:48:02.356Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:self-update 2026-11-25T23:49:43.149Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m1 2026-11-25T23:49:43.149Z] sleep gap 감지 103s · 예산 보정 · 누적 2813s · phase=await-landing\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T23:50:13.627Z] sleep observed · gap=133s · threshold=120s\n[hub-runner-v8.3.2:m1 2026-11-25T23:52:02.466Z] sleep gap 감지 109s · 예산 보정 · 누적 2922s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-25T23:52:12.399Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:m1 2026-11-25T23:52:28.104Z] [report-path] M1-1125-AD: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:sleep-tracker 2026-11-25T23:52:32.985Z] sleep observed · gap=139s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-26T00:45:04.981Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Recv failure: Operation timed out",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -81,13 +81,13 @@
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
       "name": "curiocity-mac-light",
-      "status": "offline",
-      "busy": true
+      "status": "online",
+      "busy": false
     },
     {
       "name": "ci-box-fork-heavy-imac",
@@ -101,13 +101,13 @@
     },
     {
       "name": "curiocity-mac-fork",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
       "name": "curiocity-mac-fork-light",
-      "status": "offline",
-      "busy": true
+      "status": "online",
+      "busy": false
     }
   ]
 }
