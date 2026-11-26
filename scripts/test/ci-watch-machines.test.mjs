@@ -25,6 +25,7 @@ import {
   fmtDuration,
 } from '../watch/ci-watch-render.mjs';
 import { truncateAnsiWidth, displayWidth, stripAnsi } from '../watch/text-width.mjs';
+import { renderDiff, resetRenderPrevLines } from '../ci-watch.mjs';
 
 // ─── M-1: classifyMachine — 알려진 runner name ─────────────────────────────
 
@@ -594,8 +595,7 @@ test('Q-4: renderLayout — 대기 4건 → 칩 2개 + +2 등장', () => {
 });
 
 // ─── PTY-1: 잔상 자기 검증 ② ─────────────────────────────────────────────────
-// node-pty / @xterm/headless 미설치 환경 → 순수 JS 가상 버퍼로 대체
-// renderDiff 로직 미러링 + CSI 시퀀스 가상 터미널 재생
+// 실제 renderDiff + 가짜 스트림 · CSI 시퀀스 가상 터미널 재생
 
 // 가상 터미널: renderDiff 가 쓰는 CSI 시퀀스만 처리
 function replayToRows(allWrites) {
@@ -635,62 +635,37 @@ function replayToRows(allWrites) {
   return rows;
 }
 
-// renderDiff 로직 미러링 (process.stdout mock 없이 가상 버퍼에 직접 write)
-function simulateRenderDiff(lines, termWidth, prevLines) {
-  const writes = [];
-  const truncated = lines.map(l => truncateAnsiWidth(l, termWidth));
-  if (!prevLines || prevLines.length === 0) {
-    writes.push('\x1b[2J\x1b[H');
-    for (const line of truncated) writes.push(line + '\n');
-  } else {
-    const maxLen = Math.max(truncated.length, prevLines.length);
-    for (let i = 0; i < maxLen; i++) {
-      const nl = truncated[i] || '';
-      const ol = prevLines[i] || '';
-      if (nl !== ol) writes.push(`\x1b[${i + 1};1H\x1b[2K${nl}`);
-    }
-    writes.push(`\x1b[${truncated.length + 1};1H`);
-  }
-  writes.push('\x1b[J');
-  return { writes, truncated };
-}
-
-test('PTY-1: 잔상 자기 검증 ② — 가상 버퍼 (node-pty 미설치, 순수 JS 가상 터미널)', () => {
-  // node-pty / @xterm/headless 미설치로 renderDiff 로직을 가상 버퍼에 미러링
-  // SIGWINCH 시뮬레이션: prevLines=[] 로 전체 재그림 (ci-watch.mjs:1188 동일 로직)
+test('PTY-1: 잔상 자기 검증 ② — 실제 renderDiff + 가짜 스트림', () => {
+  // 실제 renderDiff 에 가짜 write 함수 주입 · SIGWINCH 는 resetRenderPrevLines() 로 재현
   const allWrites = [];
-  let prev = [];
+  const fakeWrite = s => allWrites.push(s);
 
-  // Frame 1: width=120 (초기 렌더)
-  const { writes: w1, truncated: t1 } = simulateRenderDiff(
-    renderLayout(makeLayoutData({ terminalWidth: 120 })), 120, [],
-  );
-  allWrites.push(...w1);
-  prev = t1;
+  // Frame 1: width=120 (초기 full redraw)
+  resetRenderPrevLines();
+  renderDiff(renderLayout(makeLayoutData({ terminalWidth: 120 })), { write: fakeWrite, termWidth: 120 });
 
-  // SIGWINCH 120→90: prevLines 초기화 → 전체 재그림
-  const { writes: w2, truncated: t2 } = simulateRenderDiff(
-    renderLayout(makeLayoutData({ terminalWidth: 90 })), 90, [],
-  );
-  allWrites.push(...w2);
-  prev = t2;
+  // SIGWINCH 120→90: 실제 코드의 prevLines 초기화 로직 사용
+  resetRenderPrevLines();
+  renderDiff(renderLayout(makeLayoutData({ terminalWidth: 90 })), { write: fakeWrite, termWidth: 90 });
 
-  // diff 렌더 at 90 (스피너 업데이트)
-  const { writes: w3, truncated: t3 } = simulateRenderDiff(
-    renderLayout(makeLayoutData({ terminalWidth: 90, spinnerFrame: 1 })), 90, prev,
-  );
-  allWrites.push(...w3);
-  prev = t3;
+  // diff at 90 (스피너 업데이트)
+  renderDiff(renderLayout(makeLayoutData({ terminalWidth: 90, spinnerFrame: 1 })), { write: fakeWrite, termWidth: 90 });
 
-  // SIGWINCH 90→120: prevLines 초기화 → 전체 재그림
-  const { writes: w4, truncated: t4 } = simulateRenderDiff(
-    renderLayout(makeLayoutData({ terminalWidth: 120 })), 120, [],
-  );
-  allWrites.push(...w4);
+  // SIGWINCH 90→120: 실제 코드의 prevLines 초기화 로직 사용
+  resetRenderPrevLines();
+  const finalLines = renderLayout(makeLayoutData({ terminalWidth: 120 }));
+  renderDiff(finalLines, { write: fakeWrite, termWidth: 120 });
+
+  // 외부 쓰기 시뮬레이션 (countdownTimer 등): 렌더 범위 밖에 잔상 삽입
+  // \x1b[J 없으면 이 잔상이 남아 (b) 어설션 실패 → 회귀 감지 경로
+  allWrites.push(`\x1b[${finalLines.length + 2};1H잔상`);
+
+  // diff 재렌더 — \x1b[J 로 외부 잔상 제거
+  renderDiff(renderLayout(makeLayoutData({ terminalWidth: 120, spinnerFrame: 1 })), { write: fakeWrite, termWidth: 120 });
 
   // 가상 버퍼 재생
   const finalRows = replayToRows(allWrites);
-  const expectedCount = t4.length;
+  const expectedCount = finalLines.length;
 
   // (a) 폭 초과 없음 (truncateAnsiWidth 로 보장 · 가상 버퍼로 확인)
   for (const [row, content] of finalRows) {
@@ -709,7 +684,7 @@ test('PTY-1: 잔상 자기 검증 ② — 가상 버퍼 (node-pty 미설치, 순
     ? Math.max(...[...finalRows.values()].map(l => displayWidth(l)))
     : 0;
   console.log(
-    `[PTY-1] write=${allWrites.length} 총 프레임=4 (120→90→90→120) ` +
+    `[PTY-1] write=${allWrites.length} 총 프레임=5 (120→90(SIGWINCH)→90→120(SIGWINCH)→120) ` +
     `최종행=${finalRows.size}/${expectedCount} 최대폭=${maxW}`,
   );
 });

@@ -6,7 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 //
 // !! ci-watch 를 바꾸는 모든 프롬프트는 CI_WATCH_VERSION 을 올릴 것.
-// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost)
+// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입)
 
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -34,7 +34,7 @@ import {
   renderLayout,
 } from './watch/ci-watch-render.mjs';
 
-const CI_WATCH_VERSION = '1.8';
+const CI_WATCH_VERSION = '1.9';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -868,16 +868,21 @@ function detectTerminalWidth() {
 // §6: 차분 렌더 — 모든 줄 EAW 절단 · 마지막 줄 뒤 \x1b[J · 바뀐 줄만 덮어쓰기
 let _prevLines = [];
 
-export function renderDiff(lines) {
-  const tw = detectTerminalWidth();
+// SIGWINCH 등에서 prevLines 초기화 — 테스트에서 직접 호출 가능
+export function resetRenderPrevLines() { _prevLines = []; }
+
+// write: 출력 대상 함수(기본값 process.stdout.write) · termWidth: 폭 주입(기본값 detectTerminalWidth())
+export function renderDiff(lines, { write, termWidth } = {}) {
+  const tw = termWidth ?? detectTerminalWidth();
+  const writeFn = write ?? (s => process.stdout.write(s));
   // EAW 기준으로 각 줄을 터미널 폭에 절단 (줄바꿈→잔상 방지)
   const truncated = lines.map(l => truncateAnsiWidth(l, tw));
 
   if (_prevLines.length === 0) {
     // 첫 렌더: 전체 지우고 출력
-    process.stdout.write('\x1b[2J\x1b[H');
+    writeFn('\x1b[2J\x1b[H');
     for (const line of truncated) {
-      process.stdout.write(line + '\n');
+      writeFn(line + '\n');
     }
   } else {
     const maxLen = Math.max(truncated.length, _prevLines.length);
@@ -885,13 +890,13 @@ export function renderDiff(lines) {
       const nl = truncated[i] || '';
       const ol = _prevLines[i] || '';
       if (nl !== ol) {
-        process.stdout.write(`\x1b[${i + 1};1H\x1b[2K${nl}`);
+        writeFn(`\x1b[${i + 1};1H\x1b[2K${nl}`);
       }
     }
-    process.stdout.write(`\x1b[${truncated.length + 1};1H`);
+    writeFn(`\x1b[${truncated.length + 1};1H`);
   }
   // 마지막 줄 뒤 화면 끝까지 지움 → 러너 로그 잔상 제거 (§6)
-  process.stdout.write('\x1b[J');
+  writeFn('\x1b[J');
   _prevLines = truncated.slice();
 }
 
