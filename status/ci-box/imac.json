@@ -1,13 +1,13 @@
 {
-  "ts": "2026-11-26T09:10:20Z",
+  "ts": "2026-11-26T09:15:53Z",
   "uptime": {
-    "uptime_secs": 56304,
-    "load_1": 14.76,
-    "load_5": 12.02,
-    "load_15": 7.14
+    "uptime_secs": 56636,
+    "load_1": 7.41,
+    "load_5": 8.07,
+    "load_15": 6.78
   },
   "memory": {
-    "free_pct": 46,
+    "free_pct": 55,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
@@ -21,17 +21,17 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 2
+    "worker_count": 1
   },
   "github": {
-    "latency_ms": 116,
+    "latency_ms": 137,
     "reachable": true
   },
   "netspeed": {
     "dl_mbps": 75.5,
     "ul_mbps": null,
     "rpm": null,
-    "cached": false
+    "cached": true
   },
   "postgres": {
     "alive": true
