@@ -89,6 +89,8 @@ import {
   jobToRecord,
   getWibDayBoundary,
   getWibDateStr,
+  getJsonlPath,
+  readJsonlFile,
 } from './ci-history.mjs';
 
 const execFileAsync = promisify(execFile);
@@ -708,11 +710,35 @@ export async function fetchCiHealth(opts = {}, _legacy = null, _legacyRoot = nul
 
   // ---- Finalize ----
   const todayBoundary = getWibDayBoundary();
-  const cloudToday = completedRecords.filter((r) => {
-    if (r.runner_kind !== 'cloud') return false;
+
+  // M2-1126-R: 넘김 카운터 = 오늘 route overflow 사용 수 (heavy-cloud 실제 run).
+  //   - 직전: completedRecords(이 tick 분만) × runner_kind='cloud' → marker/ci-summary/
+  //     docker-build-pr 포함·누적 아님 → 오늘 5건 넘김인데 "0/5" 로 표시되던 버그.
+  //   - 수정: 오늘 JSONL 전수 × job='heavy-cloud' × conclusion ∈ {success, failure, timed_out}.
+  //     heavy-cloud 는 route.outputs.is_cloud=='true' 일 때만 실행(storeport=실잡 · fork=마커)
+  //     → 둘 다 overflow 신호. skipped/cancelled 는 route 가 로컬로 보냈거나 취소된 경우.
+  const todayJsonlPath = getJsonlPath(root);
+  const todayJobs = (() => {
+    try { return readJsonlFile(todayJsonlPath); }
+    catch { return []; }
+  })();
+  const isOverflowRun = (r) => {
+    if (!r || r.job !== 'heavy-cloud') return false;
+    const c = r.conclusion;
+    return c === 'success' || c === 'failure' || c === 'timed_out';
+  };
+  // 이 tick 의 새 records 중 아직 jsonl 에 안 들어간 heavy-cloud 도 합산 (중복 ID 는 집합으로 제거).
+  const overflowIds = new Set();
+  for (const r of todayJobs) {
+    if (isOverflowRun(r) && r.id != null) overflowIds.add(r.id);
+  }
+  for (const r of completedRecords) {
+    if (!isOverflowRun(r) || r.id == null) continue;
     const c = r.completed_at ? new Date(r.completed_at) : null;
-    return c && c >= todayBoundary;
-  }).length;
+    if (!c || c < todayBoundary) continue;
+    overflowIds.add(r.id);
+  }
+  const cloudToday = overflowIds.size;
 
   let jsonlAdded = 0;
   if (completedRecords.length > 0) {
