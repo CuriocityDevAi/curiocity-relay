@@ -1,12 +1,12 @@
 {
-  "at": "2026-11-26T10:55:44.823Z",
+  "at": "2026-11-26T10:56:26.792Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": "blocked: runner-folder change pending Kyu install (queue/m2/M2-1126-L.md)",
-  "last_error_at": "2026-11-26T10:53:51.622Z",
+  "last_error": "blocked: runner-folder change pending Kyu install (events/runner-main-guard-20261126T085622Z.md)",
+  "last_error_at": "2026-11-26T10:56:16.113Z",
   "hubs": {
     "m0": {
       "current": "M0-1126-L",
@@ -31,10 +31,8 @@
       "last_activity": "2026-11-26T10:44:00.196Z"
     },
     "r0": {
-      "current": "R0-1126-AC",
-      "started_at": "2026-11-26T10:47:00.692Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-26T10:42:13.753Z"
+      "current": null,
+      "last_activity": "2026-11-26T10:56:25.605Z"
     }
   },
   "pane_close_failures": {},
@@ -64,11 +62,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.73,
-    "compressed_gb": 3.56,
+    "used_gb": 15.28,
+    "compressed_gb": 4.03,
     "swap_used_gb": 4.12,
     "pressure": "normal",
-    "at": "2026-11-26T10:55:12.081Z"
+    "at": "2026-11-26T10:55:47.361Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -140,9 +138,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 180,
+  "isolated_reports_collected": 181,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:claim 2026-11-26T10:51:36.265Z] M0-1126-K → done · runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1126-K-report.md · model=opus · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1126-K.json · {\"id\":\"M0-1126-K\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-26T10:51:37.249Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1126-K-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1126-K.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/runner-restarts-2026-11-26.jsonl, status/pipeline/M0-1126-K.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:51:41.075Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:51:41.098Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:51:41.138Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:m0 2026-11-26T10:52:06.292Z] pick · M0-1126-L · model=opus · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T10:52:10.952Z] M0-1126-L → started · runner-v8.3.2 · cmux-split · model=opus · source=hub-default · pane foreground=c\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1126-L.json · {\"id\":\"M0-1126-L\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-26T10:52:11.074Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1126-L.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): status/ci/2026-11-26.jsonl, status/ci/runner-restarts-2026-11-26.jsonl, status/pipeline/M0-1126-L.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:git 2026-11-26T10:53:51.621Z] 러너 폴더 침범 감지 · files=queue/m2/M2-1126-L.md,queue/r0/R0-1126-AD.md · guess_hub=m2\n[hub-runner-v8.3.2:git 2026-11-26T10:53:51.622Z] blocked: runner-folder change pending Kyu install · files=queue/m2/M2-1126-L.md,queue/r0/R0-1126-AD.md,events/runner-main-guard-20261126T085622Z.md",
+  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/runner-restarts-2026-11-26.jsonl, status/pipeline/M0-1126-K.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:51:41.075Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:51:41.098Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T10:51:41.138Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:m0 2026-11-26T10:52:06.292Z] pick · M0-1126-L · model=opus · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T10:52:10.952Z] M0-1126-L → started · runner-v8.3.2 · cmux-split · model=opus · source=hub-default · pane foreground=c\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1126-L.json · {\"id\":\"M0-1126-L\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-26T10:52:11.074Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1126-L.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): status/ci/2026-11-26.jsonl, status/ci/runner-restarts-2026-11-26.jsonl, status/pipeline/M0-1126-L.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:git 2026-11-26T10:53:51.621Z] 러너 폴더 침범 감지 · files=queue/m2/M2-1126-L.md,queue/r0/R0-1126-AD.md · guess_hub=m2\n[hub-runner-v8.3.2:git 2026-11-26T10:53:51.622Z] blocked: runner-folder change pending Kyu install · files=queue/m2/M2-1126-L.md,queue/r0/R0-1126-AD.md,events/runner-main-guard-20261126T085622Z.md\n[hub-runner-v8.3.2:r0 2026-11-26T10:56:06.077Z] [report-path] R0-1126-AC: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:git 2026-11-26T10:56:16.113Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261126T085622Z.md",
   "git_state": {
     "ahead": 0,
     "behind": 0,
