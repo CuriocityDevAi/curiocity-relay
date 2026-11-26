@@ -13,11 +13,11 @@
 | 3 | 짧은 번호 초기화 결정 (매일 #1 vs 매장별 1~99 이어감) → 필요 시 M0 수정 | Kyu → M0 | 결정 대기 | 11-23 vs 11-26 결정 충돌 · specs/domain/order-number.md §2.2 |
 | 4 | relay#60 머지 + Kyu 러너 폴더 정리 | 오케 + Kyu | Kyu 깨어 있을 때 | 러너 self-update 재시작 동반 |
 | 5 | 아이맥 heavy2 (메모리 실측 → 등록) · 대기열 줄이기 | Kyu → M2 | 실측 대기 | — |
-| 5.5 | **방법론 v2.0** — 뼈대 ✅(오케) · HISTORY ✅(M2-1127-A · method#1 머지 05:4x) · 01~09 본문 갱신 = **M2-1127-B 발부** · 남음: 6~10월 기록 보충 · 오케 메모리 규칙 이전(ROADMAP R8) = 오케 | 오케 + M2 | 진행 | Kyu 05:27 go |
+| 5.5 | **방법론 v2.0** — 뼈대 ✅ · HISTORY ✅(method#1) · 01~09 본문 ✅(M2-1127-B · method#2 머지 06:1x) · MP-013 06·09 반영 ✅ · 남음: 6~10월 기록 보충 · 오케 메모리 규칙 이전(R8) · 04-artifacts/templates 나머지 | 오케 | 대부분 완료 | Kyu 05:27 go |
 | 5.7 | 🔴 ci-watch 진행 중 9단계 띠 복구 — M0-1127-A 착지(relay#61 · v1.18 · 251/251) → **R0-1127-A 리뷰 발부** → 머지 → Kyu 실화면 | M0 → R0 → Kyu | 리뷰 | 의심 2건(머지된 방법론 PR 을 빨강으로 · 제목 출처) R0 판정 |
 | 6 | spec-guard 보강 — ① 충돌 검색 기록 ✅ ② 실서버 e2e: M1-1127-A **부분 착지**(fork#281 · 아이맥에 storeport 없음) → **M1-1127-B 발부**(storeport 가 main 을 아이맥에 복사 · 새 토큰 없음) ③ 자동 대조: M3-1127-A 착지(fork#282 · 36 ID · OK 32 · todo 9) → **R0-1127-A 리뷰** | M1 · R0 | 진행 | — |
 | 6.5 | 러너 gh-watchdog 이 꺼 둔 맥북 CI 러너 3개를 35초마다 재시작 시도(실패 로그 반복) → 설정에서 맥북 러너 제외 · 러너 heartbeat push 연속 실패 8분(05:45~05:53 · 경쟁 push) = relay#60 로 완화 | 오케 → M2 | 허브 착지 뒤 | 11-27 러너 로그 직접 확인 |
-| 6.6 | 오케 러너 로그 직접 접근(~/.hub-runner) — 연결 ✅ · 결정 파일 ✅ · 방법론 HISTORY·MP-013 ✅ · 06-operating-rules·09-new-project 반영은 M2-1127-B 착지 뒤 오케 | 오케 | 진행 | Kyu 05:59 |
+| 6.6 | 오케 러너 로그 직접 접근(~/.hub-runner) — 연결 · 결정 파일 · 방법론(HISTORY · MP-013 · 06 · 09) 전부 ✅ | 오케 | ✅ 완료 | Kyu 05:59 |
 | 7 | POS fork 자체 #N 카운터 PATCH 제거 | M3 | 후순위 | 선택 |
 | 8 | feature-map cd-keypad planned → live | M0 | 후순위 | — |
 | 9 | C 계획 (아이맥 통합 리허설) R3~R6 — R1+R2 는 6번 ②로 착수 | M0 · M1 | R1+R2 착지 후 | 계획서 plans/cd-scenario-e2e-imac-20261126.md |
