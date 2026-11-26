@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T18:34:58.293Z",
+  "at": "2026-11-26T18:37:47.415Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -39,11 +39,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.52,
-    "compressed_gb": 2.82,
+    "used_gb": 15.62,
+    "compressed_gb": 3.02,
     "swap_used_gb": 3.49,
     "pressure": "normal",
-    "at": "2026-11-26T18:34:26.363Z"
+    "at": "2026-11-26T18:37:15.475Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -51,14 +51,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T18:32:41.572Z",
+      "at": "2026-11-26T18:37:14.261Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 11,
+      "api_calls": 8,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -107,17 +107,17 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 16.900000000000002
       },
-      "jsonl_added": 8,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 11404,
-    "at": "2026-11-26T18:32:51.175Z"
+    "took_ms": 8121,
+    "at": "2026-11-26T18:37:19.976Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 30,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/2026-11-27.jsonl, status/pipeline/M3-1126-U.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:05:52.003Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:06:24.672Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:11:01.182Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:11:31.465Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:r0 2026-11-26T18:12:13.677Z] 복구 보류 · R0-1126-AT stale(옛 started) · pane title=\"R0 · ✓ R0-1126-AU\" (다른 ID: R0-1126-AU) · 칸 무접촉\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:16:11.605Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:16:44.130Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:21:19.354Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:21:49.638Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:21:53.268Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:22:25.950Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:27:00.473Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:27:30.747Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:32:07.372Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:32:39.867Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+  "err_tail": "[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/2026-11-27.jsonl, status/pipeline/M3-1126-U.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:05:52.003Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:06:24.672Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:11:01.182Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:11:31.465Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:r0 2026-11-26T18:12:13.677Z] 복구 보류 · R0-1126-AT stale(옛 started) · pane title=\"R0 · ✓ R0-1126-AU\" (다른 ID: R0-1126-AU) · 칸 무접촉\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:16:11.605Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:16:44.130Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:21:19.354Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:21:49.638Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:21:53.268Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:22:25.950Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:27:00.473Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:27:30.747Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:32:07.372Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:32:39.867Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:37:15.412Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:37:45.692Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
   "git_state": {
     "ahead": 0,
     "behind": 1,
