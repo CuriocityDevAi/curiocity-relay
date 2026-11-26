@@ -12,6 +12,8 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+export { isMarkerJob, isCountableJob, MARKER_JOBS } from '../watch/ci-watch-render.mjs';
+import { isMarkerJob, isCountableJob } from '../watch/ci-watch-render.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, '..', '..');
@@ -28,24 +30,6 @@ function parseArgs(argv) {
   }
   if (!args.cutover) throw new Error('--cutover <ISO timestamp> 필수');
   return args;
-}
-
-// ---- 마커/요약 잡 필터 (ci-watch W2 와 동일 규칙) ----
-
-const MARKER_JOBS = new Set(['route', 'heavy-cloud', 'ci-summary', 'feature-map-route', 'changes-filter', 'markers-and-forbidden']);
-
-export function isMarkerJob(jobName) {
-  if (!jobName) return false;
-  const n = String(jobName).toLowerCase();
-  return MARKER_JOBS.has(n) || n.startsWith('ci-summary');
-}
-
-export function isCountableJob(record) {
-  if (!record) return false;
-  if (isMarkerJob(record.job)) return false;
-  const c = record.conclusion;
-  if (c === 'skipped' || c === 'cancelled') return false;
-  return true;
 }
 
 // ---- JSONL 로더 ----
