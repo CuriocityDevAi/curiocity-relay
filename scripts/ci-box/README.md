@@ -3,6 +3,12 @@
 아이맥(M1 16GB) 또는 맥미니(M5 Pro 48/64GB)를 CI 전용 기계로 세팅하는 스크립트 모음.
 스크립트를 다시 돌리면 이미 완료된 항목은 건너뜀(idempotent).
 
+> **M2-1126-S (2026-11-26) — 넘김 폐지 (zero-cloud)**
+> 모든 CI 는 아이맥 러너(ci-box 4종)로만 돈다. 이전의 "Mac 바쁠 때 ubuntu-latest 로 하루 5건 넘김"
+> 분기는 폐기. 근거: `ledger/decision-ci-zero-cloud-20261126.md` — Kyu 결정.
+> GitHub Settings → Billing → Actions 지출 한도를 **$0** 으로 내려두면 실수로 생긴 cloud 잡은
+> 과금 대신 실패로 즉시 드러남 (안전망). iMac heartbeat 끊김은 ci-watch 가 상단 빨간 경고로 알림.
+
 ## 설치 항목
 
 | 항목 | 버전 | 출처 |

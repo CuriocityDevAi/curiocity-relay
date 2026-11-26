@@ -262,8 +262,13 @@ export function renderCompact(data) {
   lines.push(hr);
 
   const cd = cloudData || { realCount: 0, limit: 5, totalMin: 0, last3: [] };
-  const remaining = Math.max(0, cd.limit - cd.realCount);
-  lines.push(`  ${col('cloud 잡 오늘', C.bold)}  ${cd.realCount}건(간단 판정 포함)  총 ${cd.totalMin.toFixed(1)}분  잔여: ${remaining}`);
+  // M2-1126-S: 넘김 폐지 — 클라우드 잡 수는 정상이면 0. 0 아니면 "몰래 생긴 잡" 빨간 경고.
+  if (cd.realCount === 0) {
+    lines.push(`  ${col('cloud 잡 오늘', C.bold)}  ${col('0건 · 넘김 폐지 (zero-cloud)', C.green)}`);
+  } else {
+    lines.push(`  ${col('cloud 잡 오늘', C.bold)}  ${col(`⚠ ${cd.realCount}건 — 몰래 생긴 클라우드 잡 (zero-cloud 위반)`, C.red, C.bold)}`);
+    lines.push(`    ${col('총', C.red)} ${cd.totalMin.toFixed(1)}분  (넘김 폐지 이후 클라우드 러너 사용 시 위반)`);
+  }
   if (cd.last3 && cd.last3.length) {
     for (const j of cd.last3.slice(0, 3)) {
       const res = j.conclusion === 'success' ? col('✓', C.green) : j.conclusion === 'skipped' ? col('-', C.dim) : col('✗', C.red);
@@ -292,11 +297,10 @@ export function renderCompact(data) {
         : typeof cl.success_rate === 'number' && cl.success_rate < 90 ? C.yellow : '';
       lines.push(`  ${'cloud(경로포함)'.padEnd(14)}  ${String(cl.jobs).padStart(3)}잡  실행${ar}분  ${sc}성공${sr}%${C.reset}`);
     }
-    if (cloudTodayCount !== null) {
-      const lim = cloudLimit || 5;
-      const rem = Math.max(0, lim - cloudTodayCount);
+    // M2-1126-S: 넘김 폐지 — "넘기기 한도" 표시 제거. 클라우드 >0 이면 위의 cd.realCount 블록이 경고를 띄움.
+    if (cloudTodayCount !== null && cloudTodayCount > 0) {
       const costStr = todayStats.cloud_cost_est_usd != null ? `  $${todayStats.cloud_cost_est_usd.toFixed(2)}` : '';
-      lines.push(`  ${'클라우드 넘기기 한도'.padEnd(10)}  ${cloudTodayCount}/${lim}${costStr}  잔여 ${rem}`);
+      lines.push(`  ${col('클라우드 잡 (넘김 폐지)', C.red, C.bold)}  ${col(`⚠ ${cloudTodayCount}건${costStr} — 과금 대상 (GitHub Settings → Billing → Actions 지출 한도 $0 권장)`, C.red)}`);
     }
     lines.push(hr);
   }
@@ -1047,14 +1051,14 @@ export function renderLayout(data) {
     lines.push(fmtRow('MBP M1 오늘', mbpPRv, mbpPTv, mbpJobs));
     lines.push(fmtRow('iMAC M1 오늘', imacPRv, imacPTv, imacJobs));
 
-    // 클라우드 오늘 — 넘김 X/Y (한도 소진 시 빨강)
-    const overflowUsed = cloudTodayCount ?? 0;
-    const overflowLim = cloudLimit || 5;
-    const overflowExhausted = overflowUsed >= overflowLim;
-    const overflowText = `${overflowUsed}/${overflowLim}`;
-    const overflowStr = overflowExhausted ? col(overflowText, C.red) : overflowText;
+    // M2-1126-S: 넘김 폐지 — "넘김 X/Y" 제거. 잡 0 이 정상, >0 이면 빨강 경고.
+    const cloudAbnormal = cloudJobs > 0;
+    const cloudLabel = padEndWidth('클라우드 오늘', LBL_W);
+    const cloudTail = cloudAbnormal
+      ? col(` ⚠ 넘김 폐지 위반 (${cloudJobs}잡 발생)`, C.red, C.bold)
+      : col(` · 넘김 폐지`, C.green);
     lines.push(
-      col(`  ${padEndWidth('클라우드 오늘', LBL_W)}  PR ${cloudPRv} · PT ${cloudPTv} · 잡 ${cloudJobs} · 넘김 `, C.dim) + overflowStr,
+      col(`  ${cloudLabel}  PR ${cloudPRv} · PT ${cloudPTv} · 잡 ${cloudJobs}`, C.dim) + cloudTail,
     );
 
     // 전체 오늘 — 세 줄 합. (고유 N) 은 회색 참고 표기 (옵션).

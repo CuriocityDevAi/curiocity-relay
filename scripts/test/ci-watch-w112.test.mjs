@@ -96,17 +96,16 @@ test('W10-1: renderLayout — "클라우드 오늘" 줄 등장 (폭 100)', () =>
     `클라우드 오늘 줄 미등장\n...${text.slice(-600)}`);
 });
 
-// ─── W10-2: PR · PT · 잡 · 넘김 형태 (폭 100) ────────────────────────────────
+// ─── W10-2 (M2-1126-S): PR · PT · 잡 · 넘김 폐지 형태 (폭 100) ──────────────
 
-test('W10-2: renderLayout — PR 3 · PT 4 · 잡 18 · 넘김 3/5 형태 (폭 100)', () => {
+test('W10-2 (M2-1126-S): renderLayout — PR 3 · PT 4 · 잡 18 · 넘김 폐지 라벨 (폭 100)', () => {
   const lines = renderLayout(makeLayoutData({ terminalWidth: 100, cloudPR: 3, cloudPT: 4 }));
   const foundLine = lines.map(l => stripAnsi(l)).find(l => l.includes('클라우드 오늘'));
   assert.ok(foundLine, '클라우드 오늘 줄 없음');
   assert.ok(foundLine.includes('PR 3'),  `PR 3 없음: "${foundLine}"`);
   assert.ok(foundLine.includes('PT 4'),  `PT 4 없음: "${foundLine}"`);
   assert.ok(foundLine.includes('잡 18'), `잡 18 없음: "${foundLine}"`);
-  assert.ok(foundLine.includes('넘김'),  `넘김 없음: "${foundLine}"`);
-  assert.ok(foundLine.includes('3/5'),   `3/5 없음: "${foundLine}"`);
+  assert.ok(/넘김\s*폐지/.test(foundLine), `넘김 폐지 라벨 없음: "${foundLine}"`);
 });
 
 // ─── W10-3: 동일 형태 폭 140 ─────────────────────────────────────────────────
@@ -119,42 +118,39 @@ test('W10-3: renderLayout — 클라우드 오늘 줄 등장 (폭 140)', () => {
     `PR/PT/잡 없음 (폭 140): "${foundLine}"`);
 });
 
-// ─── W10-4: 넘김 소진 → 빨강 ─────────────────────────────────────────────────
+// ─── W10-4 (M2-1126-S): 클라우드 잡>0 → 빨강 위반 ─────────────────────────
 
-test('W10-4: cloudTodayCount >= cloudLimit → 넘김 빨강 색상 코드 포함', () => {
-  // overflow = limit = 5 → 소진
+test('W10-4 (M2-1126-S): 클라우드 잡>0 → 빨강 위반 경고', () => {
+  // 넘김 폐지: 한도 소진 개념 없음. 클라우드 잡이 생겼다는 것 자체가 위반.
   const lines = renderLayout(makeLayoutData({
-    cloudTodayCount: 5,
+    cloudData: { realCount: 3, limit: 5, totalMin: 2, last3: [] },
+    cloudTodayCount: 3,
     cloudLimit: 5,
     cloudPR: 2,
     cloudPT: 3,
   }));
   const rawLine = lines.find(l => stripAnsi(l).includes('클라우드 오늘'));
   assert.ok(rawLine, '클라우드 오늘 줄 없음');
-  // 빨강 ANSI 코드(\x1b[31m) 가 포함되어야 함
   assert.ok(rawLine.includes('\x1b[31m'),
-    `넘김 소진인데 빨강 코드 없음: "${rawLine.slice(0, 120)}"`);
-  // 5/5 텍스트도 있어야 함
-  assert.ok(stripAnsi(rawLine).includes('5/5'),
-    `5/5 없음: "${stripAnsi(rawLine)}"`);
+    `클라우드 잡>0 인데 빨강 코드 없음: "${rawLine.slice(0, 160)}"`);
+  assert.ok(stripAnsi(rawLine).includes('위반'),
+    `위반 라벨 없음: "${stripAnsi(rawLine)}"`);
 });
 
-// ─── W10-5: 넘김 미소진 → 빨강 없음 ─────────────────────────────────────────
+// ─── W10-5 (M2-1126-S): 클라우드 잡 0 → 녹색 넘김 폐지 라벨 ─────────────────
 
-test('W10-5: cloudTodayCount < cloudLimit → 넘김 줄에 빨강 없음', () => {
-  // overflow = 2, limit = 5 → 미소진
+test('W10-5 (M2-1126-S): 클라우드 잡 0 → 녹색 넘김 폐지 라벨', () => {
   const lines = renderLayout(makeLayoutData({
-    cloudTodayCount: 2,
+    cloudData: { realCount: 0, limit: 5, totalMin: 0, last3: [] },
+    cloudTodayCount: 0,
     cloudLimit: 5,
-    cloudPR: 1,
-    cloudPT: 1,
+    cloudPR: 0,
+    cloudPT: 0,
   }));
   const rawLine = lines.find(l => stripAnsi(l).includes('클라우드 오늘'));
   assert.ok(rawLine, '클라우드 오늘 줄 없음');
-  // 2/5 텍스트가 있어야 함
-  assert.ok(stripAnsi(rawLine).includes('2/5'),
-    `2/5 없음: "${stripAnsi(rawLine)}"`);
-  // 넘김 미소진 → 빨강 코드 없어야 함
   assert.ok(!rawLine.includes('\x1b[31m'),
-    `미소진인데 빨강 코드 있음: "${rawLine.slice(0, 120)}"`);
+    `클라우드 잡=0 인데 빨강 코드 있음: "${rawLine.slice(0, 160)}"`);
+  assert.ok(/넘김\s*폐지/.test(stripAnsi(rawLine)),
+    `넘김 폐지 라벨 없음: "${stripAnsi(rawLine)}"`);
 });
