@@ -233,3 +233,13 @@ R0-CJ-3/4(세금 fallback 마커·다품목 정밀도) · split+QRIS 환불 · /
 | 01~09 본문 갱신 (러너 v8 · 자체 CI · 클라우드 0 · R0 클라우드 · 원장 색인) | 미착수 (HISTORY 착지 후) | — | — |
 | 이식성 수정 (리포 목록 설정화 · 메모리 규칙 이전 · specs 제품 리포 이전) | ROADMAP R7~R9 등재 | 미착수 | — |
 | 토큰 지표 ④ | ✅ metrics.md | 기준선 수집 중 | — |
+
+## 🔴 ci-watch 진행 중 = 프롬프트별 9단계 띠 복구 + ci-watch 명세서 (Kyu 11-27 05:38 · 11-24 14:13 요구의 재언급)
+- Kyu 원문: "원래 진행 중 섹션에는, 프롬프트 단위로 9단계중 어디를 지나고 있는지 표현해주는 원이 9개 있었고 … ci-watch 도 설계서가 없는 대표적인 케이스같아 … 왜 … 없어졌는지 추적해주고, 다시 만들어서 넣어줬으면해."
+- 정본: decision-ci-watch-progress-band-20261127 · specs/screens/ci-watch.md · 소유 M0(M0-1127-A)
+
+| 항목 | 문서화 | 구현 | 실기 |
+|---|---|---|---|
+| 추적(왜 사라졌나) | ✅ decision 파일 | — | — |
+| ci-watch 명세서 | ✅ specs/screens/ci-watch.md (오케 11-27) | — | — |
+| CW-PROG 9단계 띠 · CW-HEAD 진행 수 · CW-RENDER 로그 줄 · CW-VERSION | 명세 | M0-1127-A 발부 | Kyu 실화면 |

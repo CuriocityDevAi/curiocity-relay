@@ -17,6 +17,7 @@
 | 영수증 · POS = 손님 화면 영수증 · 영수증 번호 | [screens/customer-display.md CD-RECEIPT-FORMAT](./screens/customer-display.md) · [domain/order-number.md § 3](./domain/order-number.md) | POS 영수증과 **같은 데이터** · 영수증 하단 번호 = 긴 주문번호 |
 | 검게 안 보이는 Sell 탭 · 상품 사진 fit | [screens/pos-payment-flow.md SELL-TAB-LABEL · SELL-PRODUCT-SHEET-IMG](./screens/pos-payment-flow.md) | 11-26 V4 · 복구 완료 (`fork` #274) |
 | 로그인 화면 로고 · 톱니 · Email 입력 | [screens/pos-payment-flow.md LG-1·LG-2·LG-3](./screens/pos-payment-flow.md) | 11-26 Kyu · 복구 완료 (`fork` #271) |
+| ci-watch · 감시 화면 · 진행 중 · 9단계 띠 · 9칸 · 파이프라인 | [screens/ci-watch.md](./screens/ci-watch.md) | 기본 화면 하나 · 진행 중 = 프롬프트별 9단계 띠(11-24·11-25 승인 · 11-26 소실 · 복구 M0-1127-A) |
 
 ## 화면 명세서 (정본)
 
@@ -25,6 +26,7 @@
 | [screens/pos-payment-flow.md](./screens/pos-payment-flow.md) | POS 로그인 · Sell · Cart · Checkout · Cash/Card/QRIS · 나눠결제 · Payment successful + 공용 `POS-HDR-PHONE` |
 | [screens/pos-order-detail.md](./screens/pos-order-detail.md) | POS Orders → 주문 상세 (결제 완료 뒤 Link customer · V4-7 Phone entry) |
 | [screens/customer-display.md](./screens/customer-display.md) | 손님 화면(CD) 대기 · Order list · QRIS QR · 키패드 · First visit · Confirm · Earned · Failed · Skipped · Payment complete · 영수증 full/mini · 좌측 패널 |
+| [screens/ci-watch.md](./screens/ci-watch.md) | 감시 화면 ci-watch — 머리줄 · 허브 큐 · CI 큐 표 · **진행 중 9단계 띠** · 오늘 완료 · 주의 |
 | [screens/README.md](./screens/README.md) | 화면 명세서 작성 규약 (ID 체계 · 갱신 절차 · 보존 테스트) |
 
 ## 결정 기록 (날짜별)

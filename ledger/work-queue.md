@@ -14,6 +14,7 @@
 | 4 | relay#60 머지 + Kyu 러너 폴더 정리 | 오케 + Kyu | Kyu 깨어 있을 때 | 러너 self-update 재시작 동반 |
 | 5 | 아이맥 heavy2 (메모리 실측 → 등록) · 대기열 줄이기 | Kyu → M2 | 실측 대기 | — |
 | 5.5 | **방법론 v2.0** (README 11단계 · 10-sdd · ROADMAP · HISTORY 뼈대 = 오케 착지 05:3x · HISTORY 채우기 = **M2-1127-A 발부**) · 01~09 본문 갱신은 HISTORY 착지 후 | 오케 + M2 | 진행 | Kyu 05:27 go · decision-sdd-naming · decision-oke-model |
+| 5.7 | 🔴 **ci-watch 진행 중 = 프롬프트별 9단계 띠 복구** + ci-watch 명세서(오케 작성 ✅) + 보존 테스트 = **M0-1127-A 발부** | M0 | 진행 | Kyu 05:38 · decision-ci-watch-progress-band-20261127 · 원인 = 11-26 오케 발부 누락 |
 | 6 | spec-guard 보강 3종 — ① 발부 전 충돌 검색 기록 = 오케 적용 시작(11-27 발부분부터 `충돌 없음 확인(검색어)`) ② 핵심 흐름 실서버 e2e = **M1-1127-A 발부**(C 계획 R1+R2 · Opus) ③ 명세 ID↔화면 자동 대조 = **M3-1127-A 발부**(POS 쪽 · CD 쪽은 다음) | 오케 · M1 · M3 | 진행 | Kyu 05:33 "응 발부해줘" |
 | 7 | POS fork 자체 #N 카운터 PATCH 제거 | M3 | 후순위 | 선택 |
 | 8 | feature-map cd-keypad planned → live | M0 | 후순위 | — |
