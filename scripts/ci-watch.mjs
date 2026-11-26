@@ -6,7 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 //
 // !! ci-watch 를 바꾸는 모든 프롬프트는 CI_WATCH_VERSION 을 올릴 것.
-// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K
+// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A
 
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -28,10 +28,12 @@ import {
   isMarkerJob,
   filterFreshUnclaimed,
   buildRunnerRows,
+  classifyMachine,
   renderCompact,
+  renderLayout,
 } from './watch/ci-watch-render.mjs';
 
-const CI_WATCH_VERSION = '1.5';
+const CI_WATCH_VERSION = '1.7';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -471,6 +473,83 @@ export function readRealCloudData(dateStr, limit) {
   return { realCount: records.length, limit, totalMin, last3 };
 }
 
+/** CI 풀별 오늘 평균대기 (JSONL wait_min 집계) */
+function buildPoolWaitStats(dateStr) {
+  const jsonlPath = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (!existsSync(jsonlPath)) return {};
+  try {
+    const records = readJsonlFile(jsonlPath);
+    const pools = {};
+    for (const r of records) {
+      const repo = (r.repo || '').includes('fork') ? 'fork' : 'storeport';
+      const wf = (r.workflow || '').toLowerCase();
+      const role = (wf.includes('light') || wf.includes('feature-map') || wf.includes('check')) ? 'light' : 'heavy';
+      const poolKey = `${repo}-${role}`;
+      if (!pools[poolKey]) pools[poolKey] = { sum: 0, count: 0 };
+      if (r.wait_min != null) { pools[poolKey].sum += r.wait_min; pools[poolKey].count++; }
+    }
+    const result = {};
+    for (const [k, v] of Object.entries(pools)) {
+      result[k] = { avgWait: v.count > 0 ? v.sum / v.count : null };
+    }
+    return result;
+  } catch { return {}; }
+}
+
+/** 허브별 오늘 평균대기 (pipeline events queued→started) */
+function buildHubWaitStats(dateStr) {
+  const pipelineDir = join(REPO_ROOT, 'status', 'pipeline');
+  if (!existsSync(pipelineDir)) return {};
+  try {
+    const monthDay = dateStr.slice(5, 7) + dateStr.slice(8, 10); // "1126" from "2026-11-26"
+    let files;
+    try { files = readdirSync(pipelineDir); } catch { return {}; }
+    const todayFiles = files.filter(f => f.includes(`-${monthDay}-`) && f.endsWith('.jsonl'));
+    const hubStats = {};
+    for (const f of todayFiles) {
+      try {
+        const lines = readFileSync(join(pipelineDir, f), 'utf8').trim().split('\n').filter(Boolean);
+        const events = lines.map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+        const queued = events.find(e => e.event === 'queued');
+        const started = events.find(e => e.event === 'started');
+        if (!queued || !started) continue;
+        const waitMin = (new Date(started.ts) - new Date(queued.ts)) / 60000;
+        const hub = queued.hub;
+        if (!hub) continue;
+        if (!hubStats[hub]) hubStats[hub] = { sum: 0, count: 0 };
+        hubStats[hub].sum += waitMin;
+        hubStats[hub].count++;
+      } catch {}
+    }
+    const result = {};
+    for (const [h, v] of Object.entries(hubStats)) {
+      result[h] = { avgMin: v.count > 0 ? v.sum / v.count : null, count: v.count };
+    }
+    return result;
+  } catch { return {}; }
+}
+
+/** MBP/iMAC별 오늘 처리 통계 (JSONL runner_name 분류) */
+function buildTodayMachineStats(dateStr) {
+  const jsonlPath = join(PATHS.ciJsonl, `${dateStr}.jsonl`);
+  if (!existsSync(jsonlPath)) return null;
+  try {
+    const records = readJsonlFile(jsonlPath);
+    const stats = { mbp: { count: 0, totalRun: 0 }, imac: { count: 0, totalRun: 0 } };
+    for (const r of records) {
+      const kind = classifyMachine(r.runner_name);
+      if (kind === 'mbp' || kind === 'imac') {
+        stats[kind].count++;
+        stats[kind].totalRun += (r.run_min || 0);
+      }
+    }
+    return {
+      mbp: { jobs: stats.mbp.count, avgRun: stats.mbp.count > 0 ? stats.mbp.totalRun / stats.mbp.count : null },
+      imac: { jobs: stats.imac.count, avgRun: stats.imac.count > 0 ? stats.imac.totalRun / stats.imac.count : null },
+    };
+  } catch { return null; }
+}
+
 const QUEUE_HUBS = ['m0', 'm1', 'm2', 'm3', 'r0'];
 
 function scanUnclaimedIds() {
@@ -779,6 +858,59 @@ function exitIfSelfChanged(tag = 'tick') {
   process.exit(0);
 }
 
+// --- M2-1126-A: 터미널 폭 · 차분 렌더 · 스피너 타이머 ---
+
+function detectTerminalWidth() {
+  return process.stdout.columns || 120;
+}
+
+// REQ 6: 차분 렌더 — 첫 렌더만 full clear, 이후는 변경된 줄만 갱신
+let _prevLines = [];
+
+export function renderDiff(lines) {
+  if (_prevLines.length === 0) {
+    // 첫 렌더: full clear
+    process.stdout.write('\x1b[2J\x1b[H');
+    process.stdout.write(lines.join('\n') + '\n');
+  } else {
+    const maxLen = Math.max(lines.length, _prevLines.length);
+    for (let i = 0; i < maxLen; i++) {
+      const nl = lines[i] || '';
+      const ol = _prevLines[i] || '';
+      if (nl !== ol) {
+        // Move to line i+1, clear line, write new content
+        process.stdout.write(`\x1b[${i + 1};1H\x1b[2K${nl}`);
+      }
+    }
+    // Move cursor past the last line
+    process.stdout.write(`\x1b[${lines.length + 1};1H`);
+  }
+  _prevLines = lines.slice();
+}
+
+// REQ 6: 스피너 — 120ms 간격으로 별도 업데이트
+let spinnerFrame = 0;
+let spinnerTimer = null;
+let _lastRenderData = null; // last data for spinner-only re-render
+
+function spinnerTickRender() {
+  if (!_lastRenderData || isRendering) return;
+  spinnerFrame = (spinnerFrame + 1) % 10;
+  try {
+    const lines = renderLayout({ ..._lastRenderData, spinnerFrame });
+    renderDiff(lines);
+  } catch {}
+}
+
+function startSpinnerTimer() {
+  if (spinnerTimer) return;
+  spinnerTimer = setInterval(spinnerTickRender, 120);
+}
+
+function stopSpinnerTimer() {
+  if (spinnerTimer) { clearInterval(spinnerTimer); spinnerTimer = null; }
+}
+
 // --- M2-1124-H: 카운트다운 + 키 입력 ---
 
 let nextGhRefreshMs = 0;        // GH 큐 다음 갱신 시각 (카운트다운 표시용)
@@ -807,6 +939,7 @@ function startCountdownTimer(fullMode, ghAgeStr, rateLimitWarn) {
 function cleanupTerminal() {
   if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
   if (refreshTimer) { clearTimeout(refreshTimer); refreshTimer = null; }
+  stopSpinnerTimer();
   try {
     if (process.stdin.isTTY && process.stdin.isRaw) process.stdin.setRawMode(false);
   } catch {}
@@ -930,6 +1063,9 @@ async function tick(fullMode) {
   const ciSummaryAlerts = computeCiSummaryAlerts(allJson, lastCiByRepo, dateStr);
   const todayStats = allJson?.ci?.data?.today || null;
   const cloudTodayCount = allJson?.ci?.data?.cloud_today ?? null;
+  const poolWaitStats = buildPoolWaitStats(dateStr);
+  const hubWaitStats = buildHubWaitStats(dateStr);
+  const todayMachineStats = buildTodayMachineStats(dateStr);
 
   // 해소됨 오류 → err_tail 표시 영역(회색 줄)에 추가 · 경보 카운트 제외
   const resolvedErrAlerts = errAlerts.filter(a => a.resolved);
@@ -950,9 +1086,12 @@ async function tick(fullMode) {
     hour: '2-digit', minute: '2-digit', second: '2-digit',
   }).replace(',', '');
 
+  // hubPending: { id, ageMin }[] per hub — age info for chip display
   const hubPending = {};
   for (const hub of QUEUE_HUBS) {
-    hubPending[hub] = listHubPendingIds(hub);
+    hubPending[hub] = rawUnclaimed
+      .filter(item => extractHubFromId(item.id) === hub)
+      .slice(0, 5);
   }
   const hubNotifs = tickQueueDiff();
 
@@ -962,7 +1101,22 @@ async function tick(fullMode) {
   isRendering = true;
   nextGhRefreshMs = ghDataFetchedAt + ghInterval;
 
-  const rawLines = renderCompact({
+  // 타이틀 줄: 버전 · 날짜 · 최신 아님 경고 · 파일 갱신 경고
+  const originInfo = await checkOriginVersion();
+  const fileChanged = runningCodeHash && getDiskFileHash() !== runningCodeHash;
+  let versionNote = '';
+  if (originInfo.version && isNewerVersion(originInfo.version, CI_WATCH_VERSION)) {
+    versionNote = `  \x1b[33m⚠ 최신 v${originInfo.version} 있음 — Ctrl+C 후 재시작\x1b[0m`;
+  } else if (originInfo.different) {
+    versionNote = `  \x1b[33m⚠ 최신 내용 다름 — Ctrl+C 후 재시작\x1b[0m`;
+  }
+  if (fileChanged) {
+    versionNote += `  \x1b[33m⚠ 파일 갱신됨 — 재시작 필요\x1b[0m`;
+  }
+
+  const termWidth = detectTerminalWidth();
+
+  const renderData = {
     allJson: renderAllJson,
     runState,
     cloudData,
@@ -977,24 +1131,30 @@ async function tick(fullMode) {
     lastCiByRepo,
     countdownSec: Math.round(ghInterval / 1000),
     hubReportStatus: computeHubReportStatus(allJson),
+    hubPending,
+    spinnerFrame,
+    terminalWidth: termWidth,
+    version: CI_WATCH_VERSION,
+    versionNote,
+    busyJobMap,
+    hubNotifs,
+    poolWaitStats,
+    hubWaitStats,
+    todayMachineStats,
+  };
+
+  _lastRenderData = renderData;
+
+  const layoutLines = renderLayout(renderData);
+
+  // 타이틀/버전 경고는 첫 줄에 붙임
+  const titlePrefix = `\x1b[1mci-watch v${CI_WATCH_VERSION} (${fileCommitDate || '?'})\x1b[0m`;
+  const finalLines = layoutLines.map((l, i) => {
+    if (i === 0) return `${titlePrefix}  ${versionNote}  ${l}`;
+    return l;
   });
 
-  // 타이틀 줄: 버전 · 날짜 · 최신 아님 경고 · 파일 갱신 경고
-  const originInfo = await checkOriginVersion();
-  const fileChanged = runningCodeHash && getDiskFileHash() !== runningCodeHash;
-  let titleLine = `\x1b[1mRunner/CI Monitoring v${CI_WATCH_VERSION} (${fileCommitDate || '?'})\x1b[0m`;
-  if (originInfo.version && isNewerVersion(originInfo.version, CI_WATCH_VERSION)) {
-    titleLine += `  \x1b[33m⚠ 최신 v${originInfo.version} 있음 — Ctrl+C 후 재시작\x1b[0m`;
-  } else if (originInfo.different) {
-    titleLine += `  \x1b[33m⚠ 최신 내용 다름 — Ctrl+C 후 재시작\x1b[0m`;
-  }
-  if (fileChanged) {
-    titleLine += `  \x1b[33m⚠ 파일 갱신됨 — 재시작 필요\x1b[0m`;
-  }
-
-  const finalLines = [titleLine, ...appendHubPending(enhanceBusyLines(rawLines, busyJobMap), hubPending, hubNotifs)];
-  process.stdout.write('\x1b[2J\x1b[H');
-  process.stdout.write(finalLines.join('\n') + '\n');
+  renderDiff(finalLines);
 
   startCountdownTimer(fullMode, ghAgeStr, rateLimitWarn);
   isRendering = false;
@@ -1066,6 +1226,7 @@ if (_argv1 && (
     exitIfSelfChanged('boot');
     await initFileCommitDate();
     await tick(fullMode).catch(() => {});
+    startSpinnerTimer();
     scheduleNext();
   })();
 }
