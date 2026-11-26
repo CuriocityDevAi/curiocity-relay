@@ -6,7 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 //
 // !! ci-watch 를 바꾸는 모든 프롬프트는 CI_WATCH_VERSION 을 올릴 것.
-// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K
+// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A
 
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -29,9 +29,10 @@ import {
   filterFreshUnclaimed,
   buildRunnerRows,
   renderCompact,
+  renderLayout,
 } from './watch/ci-watch-render.mjs';
 
-const CI_WATCH_VERSION = '1.5';
+const CI_WATCH_VERSION = '1.6';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -779,6 +780,59 @@ function exitIfSelfChanged(tag = 'tick') {
   process.exit(0);
 }
 
+// --- M2-1126-A: 터미널 폭 · 차분 렌더 · 스피너 타이머 ---
+
+function detectTerminalWidth() {
+  return process.stdout.columns || 120;
+}
+
+// REQ 6: 차분 렌더 — 첫 렌더만 full clear, 이후는 변경된 줄만 갱신
+let _prevLines = [];
+
+export function renderDiff(lines) {
+  if (_prevLines.length === 0) {
+    // 첫 렌더: full clear
+    process.stdout.write('\x1b[2J\x1b[H');
+    process.stdout.write(lines.join('\n') + '\n');
+  } else {
+    const maxLen = Math.max(lines.length, _prevLines.length);
+    for (let i = 0; i < maxLen; i++) {
+      const nl = lines[i] || '';
+      const ol = _prevLines[i] || '';
+      if (nl !== ol) {
+        // Move to line i+1, clear line, write new content
+        process.stdout.write(`\x1b[${i + 1};1H\x1b[2K${nl}`);
+      }
+    }
+    // Move cursor past the last line
+    process.stdout.write(`\x1b[${lines.length + 1};1H`);
+  }
+  _prevLines = lines.slice();
+}
+
+// REQ 6: 스피너 — 120ms 간격으로 별도 업데이트
+let spinnerFrame = 0;
+let spinnerTimer = null;
+let _lastRenderData = null; // last data for spinner-only re-render
+
+function spinnerTickRender() {
+  if (!_lastRenderData || isRendering) return;
+  spinnerFrame = (spinnerFrame + 1) % 10;
+  try {
+    const lines = renderLayout({ ..._lastRenderData, spinnerFrame });
+    renderDiff(lines);
+  } catch {}
+}
+
+function startSpinnerTimer() {
+  if (spinnerTimer) return;
+  spinnerTimer = setInterval(spinnerTickRender, 120);
+}
+
+function stopSpinnerTimer() {
+  if (spinnerTimer) { clearInterval(spinnerTimer); spinnerTimer = null; }
+}
+
 // --- M2-1124-H: 카운트다운 + 키 입력 ---
 
 let nextGhRefreshMs = 0;        // GH 큐 다음 갱신 시각 (카운트다운 표시용)
@@ -807,6 +861,7 @@ function startCountdownTimer(fullMode, ghAgeStr, rateLimitWarn) {
 function cleanupTerminal() {
   if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
   if (refreshTimer) { clearTimeout(refreshTimer); refreshTimer = null; }
+  stopSpinnerTimer();
   try {
     if (process.stdin.isTTY && process.stdin.isRaw) process.stdin.setRawMode(false);
   } catch {}
@@ -962,7 +1017,22 @@ async function tick(fullMode) {
   isRendering = true;
   nextGhRefreshMs = ghDataFetchedAt + ghInterval;
 
-  const rawLines = renderCompact({
+  // 타이틀 줄: 버전 · 날짜 · 최신 아님 경고 · 파일 갱신 경고
+  const originInfo = await checkOriginVersion();
+  const fileChanged = runningCodeHash && getDiskFileHash() !== runningCodeHash;
+  let versionNote = '';
+  if (originInfo.version && isNewerVersion(originInfo.version, CI_WATCH_VERSION)) {
+    versionNote = `  \x1b[33m⚠ 최신 v${originInfo.version} 있음 — Ctrl+C 후 재시작\x1b[0m`;
+  } else if (originInfo.different) {
+    versionNote = `  \x1b[33m⚠ 최신 내용 다름 — Ctrl+C 후 재시작\x1b[0m`;
+  }
+  if (fileChanged) {
+    versionNote += `  \x1b[33m⚠ 파일 갱신됨 — 재시작 필요\x1b[0m`;
+  }
+
+  const termWidth = detectTerminalWidth();
+
+  const renderData = {
     allJson: renderAllJson,
     runState,
     cloudData,
@@ -977,24 +1047,27 @@ async function tick(fullMode) {
     lastCiByRepo,
     countdownSec: Math.round(ghInterval / 1000),
     hubReportStatus: computeHubReportStatus(allJson),
+    hubPending,
+    spinnerFrame,
+    terminalWidth: termWidth,
+    version: CI_WATCH_VERSION,
+    versionNote,
+    busyJobMap,
+    hubNotifs,
+  };
+
+  _lastRenderData = renderData;
+
+  const layoutLines = renderLayout(renderData);
+
+  // 타이틀/버전 경고는 첫 줄에 붙임
+  const titlePrefix = `\x1b[1mci-watch v${CI_WATCH_VERSION} (${fileCommitDate || '?'})\x1b[0m`;
+  const finalLines = layoutLines.map((l, i) => {
+    if (i === 0) return `${titlePrefix}  ${versionNote}  ${l}`;
+    return l;
   });
 
-  // 타이틀 줄: 버전 · 날짜 · 최신 아님 경고 · 파일 갱신 경고
-  const originInfo = await checkOriginVersion();
-  const fileChanged = runningCodeHash && getDiskFileHash() !== runningCodeHash;
-  let titleLine = `\x1b[1mRunner/CI Monitoring v${CI_WATCH_VERSION} (${fileCommitDate || '?'})\x1b[0m`;
-  if (originInfo.version && isNewerVersion(originInfo.version, CI_WATCH_VERSION)) {
-    titleLine += `  \x1b[33m⚠ 최신 v${originInfo.version} 있음 — Ctrl+C 후 재시작\x1b[0m`;
-  } else if (originInfo.different) {
-    titleLine += `  \x1b[33m⚠ 최신 내용 다름 — Ctrl+C 후 재시작\x1b[0m`;
-  }
-  if (fileChanged) {
-    titleLine += `  \x1b[33m⚠ 파일 갱신됨 — 재시작 필요\x1b[0m`;
-  }
-
-  const finalLines = [titleLine, ...appendHubPending(enhanceBusyLines(rawLines, busyJobMap), hubPending, hubNotifs)];
-  process.stdout.write('\x1b[2J\x1b[H');
-  process.stdout.write(finalLines.join('\n') + '\n');
+  renderDiff(finalLines);
 
   startCountdownTimer(fullMode, ghAgeStr, rateLimitWarn);
   isRendering = false;
@@ -1066,6 +1139,7 @@ if (_argv1 && (
     exitIfSelfChanged('boot');
     await initFileCommitDate();
     await tick(fullMode).catch(() => {});
+    startSpinnerTimer();
     scheduleNext();
   })();
 }
