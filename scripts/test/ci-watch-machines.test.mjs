@@ -1,4 +1,4 @@
-// scripts/test/ci-watch-machines.test.mjs  M2-1126-A — 기계 3칸 단위 테스트
+// scripts/test/ci-watch-machines.test.mjs  M2-1126-A/C — 기계 3칸 + v1.8 단위 테스트
 //
 // 커버:
 //   M-1: classifyMachine — 알려진 runner name → 올바른 machine type
@@ -6,8 +6,14 @@
 //   M-3: buildMachineState — MBP/iMAC/cloud 칸이 pool별로 생성됨
 //   M-4: renderLayout — CI 섹션에 3칸 등장 (fake 데이터)
 //   M-5: renderLayout — unknown runner name → 경고 줄 (빨간색)
-//   M-6: renderLayout — 폭 < 100 → cloud 칸 미등장
+//   M-6: renderLayout — 폭 < 100 에서도 테이블 헤더 존재
 //   M-7: renderLayout — 동일 데이터로 2번 렌더 시 첫 번째와 동일한 줄 배열
+//   P-1 (v1.8): truncateAnsiWidth — EAW 기준 절단
+//   P-2 (v1.8): buildMachineState — partial=true → partial 플래그
+//   P-3 (v1.8): renderLayout — partial=true offline → '?' 표시 (빨강 OFF 금지)
+//   P-4 (v1.8): fmtDuration — s/m 단위
+//   P-5 (v1.8): renderLayout — 열 제목 위치 = 데이터 행 열 위치 (정렬)
+//   P-6 (v1.8): renderLayout — 허브 avgWait '대기avg' 접두어 없음
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -16,7 +22,9 @@ import {
   classifyMachine,
   buildMachineState,
   renderLayout,
+  fmtDuration,
 } from '../watch/ci-watch-render.mjs';
+import { truncateAnsiWidth, displayWidth } from '../watch/text-width.mjs';
 
 // ─── M-1: classifyMachine — 알려진 runner name ─────────────────────────────
 
@@ -241,15 +249,12 @@ test('M-5: renderLayout — unknown runner name → 주의 줄 등장', () => {
   );
 });
 
-// ─── M-6: renderLayout — 폭 < 100 → cloud 칸 미등장 ─────────────────────
+// ─── M-6: renderLayout — 폭 무관하게 테이블 헤더 (v1.8 한 줄 표) ────────────
 
-test('M-6a: renderLayout — width < 100 → 클라우드 칼럼 타이틀 없음', () => {
+test('M-6a: renderLayout — width 90 에서도 CI 큐 섹션 존재', () => {
   const lines = renderLayout(makeLayoutData({ terminalWidth: 90 }));
-  // CI 섹션 헤더 줄만 추출
-  const ciHeaderLine = lines.find(l => l.replace(/\x1b\[[0-9;]*m/g, '').includes('CI 큐'));
-  assert.ok(ciHeaderLine, 'CI 큐 헤더 줄 존재');
-  const plain = ciHeaderLine.replace(/\x1b\[[0-9;]*m/g, '');
-  assert.ok(!plain.includes('클라우드') || plain.includes('+클라우드'), '클라우드 칼럼 타이틀 없음 (또는 +N클라우드 형식)');
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+  assert.ok(text.includes('CI 큐'), 'CI 큐 섹션 존재 (narrow)');
 });
 
 test('M-6b: renderLayout — width >= 100 → 클라우드 칼럼 타이틀 존재', () => {
@@ -274,15 +279,17 @@ test('M-7: renderLayout — 동일 데이터 2번 렌더 시 동일한 줄 수/�
   assert.equal(diffCount, 0, `동일 데이터에서 ${diffCount}줄이 다름 (차분 렌더 오류)`);
 });
 
-// ─── M-8: CI 풀 avg wait 표시 ────────────────────────────────────────────────
+// ─── M-8: CI 풀 avg wait 표시 (v1.8: 접두어 없이 s/m 단위) ──────────────────
 
-test('M-8: renderLayout — poolWaitStats → CI 풀 줄에 대기avg 등장', () => {
+test('M-8: renderLayout — poolWaitStats → CI 풀 평균대기 열에 값 등장', () => {
   const data = makeLayoutData({
     poolWaitStats: { 'storeport-heavy': { avgWait: 2.5 }, 'fork-light': { avgWait: 0.0 } },
   });
   const lines = renderLayout(data);
   const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
-  assert.ok(text.includes('대기avg2.5m'), `대기avg2.5m 없음\n${text}`);
+  // v1.8: '대기avg' 접두어 없이 '2.5m' 형태
+  assert.ok(!text.includes('대기avg'), `v1.8: 대기avg 접두어 금지\n${text}`);
+  assert.ok(text.includes('2.5m'), `2.5m 없음\n${text}`);
 });
 
 test('M-8b: renderLayout — poolWaitStats 없으면 "-" 등장', () => {
@@ -341,14 +348,192 @@ test('M-10: renderLayout — prompt ID 잘림 없음 (M2-1126-A 9자)', () => {
   assert.ok(!text.includes('M2-1126- '), `M2-1126- 로 끝남 — A 가 잘림\n${text}`);
 });
 
-// ─── M-11: 허브 avg wait 표시 ───────────────────────────────────────────────
+// ─── M-11: 허브 avg wait 표시 (v1.8: 접두어 없이 s/m) ──────────────────────
 
-test('M-11: renderLayout — hubWaitStats → 허브 줄에 대기avg 등장', () => {
+test('M-11: renderLayout — hubWaitStats → 허브 줄에 avg 등장 (대기avg 접두어 없음)', () => {
   const data = makeLayoutData({
     hubWaitStats: { m0: { avgMin: 0.1, count: 1 }, m2: { avgMin: 1.5, count: 2 } },
   });
   const lines = renderLayout(data);
   const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
-  assert.ok(text.includes('대기avg0.1m'), `m0 대기avg 없음\n${text}`);
-  assert.ok(text.includes('대기avg1.5m'), `m2 대기avg 없음\n${text}`);
+  // v1.8: '대기avg' 접두어 금지 (§3) → '0.1m' or '6s' 형태
+  assert.ok(!text.includes('대기avg'), `v1.8: 대기avg 접두어 등장 → 금지\n${text}`);
+  // 값은 존재해야 함
+  assert.ok(text.includes('1.5m') || text.includes('1m'), `m2 avg 값 없음\n${text}`);
+});
+
+// ─── P-1: truncateAnsiWidth — EAW 절단 ──────────────────────────────────────
+
+test('P-1a: truncateAnsiWidth — ASCII 절단', () => {
+  const result = truncateAnsiWidth('hello world', 5);
+  assert.equal(result, 'hello');
+});
+
+test('P-1b: truncateAnsiWidth — ANSI 코드 포함 절단', () => {
+  const result = truncateAnsiWidth('\x1b[31mhello world\x1b[0m', 5);
+  const plain = result.replace(/\x1b\[[0-9;]*m/g, '');
+  assert.equal(plain, 'hello', `plain: ${plain}`);
+  assert.ok(result.endsWith('\x1b[0m'), '열린 색상 코드 닫힘');
+});
+
+test('P-1c: truncateAnsiWidth — 한글 2칸 경계 절단', () => {
+  // '안녕' = 4 display cols (2+2)
+  const result = truncateAnsiWidth('안녕하세요', 4);
+  const plain = result.replace(/\x1b\[[0-9;]*m/g, '');
+  assert.equal(displayWidth(plain), 4, `폭: ${displayWidth(plain)}`);
+  assert.equal(plain, '안녕', `내용: ${plain}`);
+});
+
+test('P-1d: truncateAnsiWidth — 여러 폭에서 초과 없음', () => {
+  const testStr = '\x1b[33m[M2-1126-A 5m]\x1b[0m 대기중 some text 더보기';
+  for (const w of [10, 20, 30, 50, 100]) {
+    const result = truncateAnsiWidth(testStr, w);
+    const plain = result.replace(/\x1b\[[0-9;]*m/g, '');
+    const dw = displayWidth(plain);
+    assert.ok(dw <= w, `폭 ${w} 에서 ${dw} 초과: "${plain}"`);
+  }
+});
+
+// ─── P-2: buildMachineState — partial 플래그 ────────────────────────────────
+
+test('P-2a: buildMachineState — ci.data.partial=true → offline 러너 partial 플래그', () => {
+  const allJson = makeAllJson();
+  allJson.ci_runners = allJson.ci_runners.map(r =>
+    r.name === 'Youngkyus-MacBook-Pro-M1' ? { ...r, status: 'offline' } : r,
+  );
+  allJson.ci.data.partial = true;
+  const ms = buildMachineState(allJson, makeRunState());
+  const sh = ms.get('storeport-heavy');
+  assert.equal(sh.mbp.status, 'offline');
+  assert.equal(sh.mbp.partial, true, 'partial 플래그 true');
+});
+
+test('P-2b: buildMachineState — partial=false → partial 플래그 false', () => {
+  const allJson = makeAllJson();
+  allJson.ci_runners = allJson.ci_runners.map(r =>
+    r.name === 'Youngkyus-MacBook-Pro-M1' ? { ...r, status: 'offline' } : r,
+  );
+  // partial 미설정 (undefined → false)
+  const ms = buildMachineState(allJson, makeRunState());
+  const sh = ms.get('storeport-heavy');
+  assert.equal(sh.mbp.partial, false, 'partial 플래그 false');
+});
+
+test('P-2c: buildMachineState — repos_failed 에 fork repo → fork 풀 partial=true', () => {
+  const allJson = makeAllJson();
+  allJson.ci_runners = allJson.ci_runners.map(r =>
+    r.name === 'ci-box-fork-heavy-imac' ? { ...r, status: 'offline' } : r,
+  );
+  allJson.ci.data.repos_failed = ['CuriocityDevAi/agilo-medusa-pos-fork'];
+  const ms = buildMachineState(allJson, makeRunState());
+  const fh = ms.get('fork-heavy');
+  assert.equal(fh.imac.partial, true, 'fork-heavy imac partial=true');
+  // storeport 풀은 partial=false 여야 함
+  const sh = ms.get('storeport-heavy');
+  // storeport runners are online → not offline → partial irrelevant
+  assert.equal(sh.imac.status, 'idle');
+});
+
+// ─── P-3: renderLayout — partial=true offline → '?' 표시 ────────────────────
+
+test('P-3a: renderLayout — partial=true 且 offline → ? 표시 (빨강 OFF 금지)', () => {
+  const allJson = makeAllJson();
+  // 모든 MBP 러너를 offline 으로
+  allJson.ci_runners = allJson.ci_runners.map(r =>
+    classifyMachine(r.name) === 'mbp' ? { ...r, status: 'offline' } : r,
+  );
+  allJson.ci.data.partial = true;
+
+  const lines = renderLayout(makeLayoutData({ allJson }));
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+
+  // CI 큐 섹션에서 'OFF' 가 없어야 함 (partial 이면 '?' 로 대체)
+  const ciIdx = text.indexOf('CI 큐');
+  const ciSection = text.slice(ciIdx, ciIdx + 500);
+  assert.ok(ciSection.includes('?'), `partial=true 에서 ? 없음\n${ciSection}`);
+  assert.ok(!ciSection.includes('OFF'), `partial=true 에서 OFF 등장 → 금지\n${ciSection}`);
+});
+
+test('P-3b: renderLayout — partial=false 且 offline → 빨강 OFF 표시', () => {
+  const allJson = makeAllJson();
+  allJson.ci_runners = allJson.ci_runners.map(r =>
+    classifyMachine(r.name) === 'mbp' ? { ...r, status: 'offline' } : r,
+  );
+  // partial 미설정
+
+  const lines = renderLayout(makeLayoutData({ allJson }));
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+  const ciIdx = text.indexOf('CI 큐');
+  const ciSection = text.slice(ciIdx, ciIdx + 500);
+  assert.ok(ciSection.includes('OFF'), `partial=false 에서 OFF 없음\n${ciSection}`);
+});
+
+// ─── P-4: fmtDuration — s/m 단위 ────────────────────────────────────────────
+
+test('P-4a: fmtDuration — 0분 → 0s', () => {
+  assert.equal(fmtDuration(0), '0s');
+});
+
+test('P-4b: fmtDuration — 0.5분 → 30s', () => {
+  assert.equal(fmtDuration(0.5), '30s');
+});
+
+test('P-4c: fmtDuration — 1분 → 1m', () => {
+  assert.equal(fmtDuration(1), '1m');
+});
+
+test('P-4d: fmtDuration — 5분 → 5m (정수)', () => {
+  assert.equal(fmtDuration(5), '5m');
+});
+
+test('P-4e: fmtDuration — 4.5분 → 4.5m', () => {
+  assert.equal(fmtDuration(4.5), '4.5m');
+});
+
+test('P-4f: fmtDuration — null → -', () => {
+  assert.equal(fmtDuration(null), '-');
+  assert.equal(fmtDuration(undefined), '-');
+});
+
+// ─── P-5: 열 제목 위치 = 데이터 행 열 위치 (정렬) ──────────────────────────
+
+test('P-5: renderLayout — CI 열 제목 x 위치 = 데이터 행 첫 번째 열 x 위치', () => {
+  const lines = renderLayout(makeLayoutData({ terminalWidth: 140 }));
+  const plain = lines.map(l => l.replace(/\x1b\[[0-9;]*m/g, ''));
+
+  // 열 제목 행 찾기: MBP M1 · iMAC M1 · 클라우드 · 평균대기 가 모두 있는 줄
+  const hdrIdx = plain.findIndex(l => l.includes('MBP M1') && l.includes('iMAC M1'));
+  assert.ok(hdrIdx >= 0, '열 제목 행 없음');
+
+  // 데이터 행 찾기: 'storeport-heavy' 가 있는 줄
+  const dataIdx = plain.findIndex(l => l.includes('storeport-heavy'));
+  assert.ok(dataIdx >= 0, 'storeport-heavy 행 없음');
+
+  const hdrLine = plain[hdrIdx];
+  const dataLine = plain[dataIdx];
+
+  // 열 제목 'MBP M1' 의 x 위치
+  const mbpHdrX = hdrLine.indexOf('MBP M1');
+  assert.ok(mbpHdrX >= 0, 'MBP M1 위치 없음');
+
+  // 데이터 행에서 같은 x 위치에 무언가 있는지 확인 (공백 아닌 문자)
+  // 데이터 행의 MBP 열에는 '쉼', 'OFF', '?', 또는 스피너가 있어야 함
+  const mbpDataArea = dataLine.slice(mbpHdrX, mbpHdrX + 14);
+  assert.ok(mbpDataArea.trim().length > 0, `MBP 데이터 열(x=${mbpHdrX}) 비어있음: "${mbpDataArea}"`);
+});
+
+// ─── P-6: 허브 avgWait 접두어 없음 ─────────────────────────────────────────
+
+test('P-6: renderLayout — 허브 avgWait 에 "대기avg" 접두어 없음', () => {
+  const data = makeLayoutData({
+    hubWaitStats: {
+      m0: { avgMin: 2.5, count: 3 },
+      m1: { avgMin: 0.3, count: 1 },
+    },
+  });
+  const lines = renderLayout(data);
+  const text = lines.join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+  assert.ok(!text.includes('대기avg'), `대기avg 접두어 발견 → v1.8 에서 금지\n${text}`);
+  // 값은 있어야 함 (2.5m or similar)
+  assert.ok(text.includes('2.5m'), `2.5m 없음\n${text}`);
 });
