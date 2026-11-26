@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T18:19:01.241Z",
+  "at": "2026-11-26T18:22:27.765Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -39,11 +39,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.5,
-    "compressed_gb": 2.72,
+    "used_gb": 15.21,
+    "compressed_gb": 2.71,
     "swap_used_gb": 3.5,
     "pressure": "normal",
-    "at": "2026-11-26T18:18:29.159Z"
+    "at": "2026-11-26T18:21:55.727Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -51,21 +51,21 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T18:16:45.864Z",
+      "at": "2026-11-26T18:21:18.286Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 8,
+      "api_calls": 16,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
+        "queued": 3,
         "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
+        "oldest_queued_min": 2,
+        "oldest_queued_pr": "fork:feat/M3-1126-I",
         "in_progress": []
       },
       "light": {
@@ -77,17 +77,17 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 0,
+        "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 0,
+      "cloud_today": 5,
       "today": {
         "mac-heavy": {
-          "jobs": 52,
-          "avg_wait_min": 2.8,
-          "avg_run_min": 1.5,
-          "success_rate": 84.6,
-          "run_min_total": 78.69999999999999
+          "jobs": 58,
+          "avg_wait_min": 2.5,
+          "avg_run_min": 1.4,
+          "success_rate": 81,
+          "run_min_total": 79.79999999999997
         },
         "mac-light": {
           "jobs": 11,
@@ -97,27 +97,27 @@
           "run_min_total": 3.1
         },
         "cloud": {
-          "jobs": 6,
+          "jobs": 11,
           "avg_wait_min": 0,
-          "avg_run_min": 2.8,
+          "avg_run_min": 1.5,
           "success_rate": 0,
           "run_min_total": 16.7
         },
         "cloud_cost_est_usd": 0.136,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 16.900000000000002
+        "wasted_min": 17.100000000000005
       },
-      "jsonl_added": 0,
+      "jsonl_added": 11,
       "alerts": []
     },
-    "took_ms": 8690,
-    "at": "2026-11-26T18:16:52.718Z"
+    "took_ms": 14295,
+    "at": "2026-11-26T18:21:30.375Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 30,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T17:56:08.385Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:self-update 2026-11-26T18:01:21.004Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:02:27.371Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:m3 2026-11-26T18:02:58.134Z] [report-path] M3-1126-U: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T18:03:18.591Z] M3-1126-U → done · runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1126-U-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1126-U.json · {\"id\":\"M3-1126-U\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-26T18:03:18.689Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1126-U-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1126-U.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/2026-11-27.jsonl, status/pipeline/M3-1126-U.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:05:52.003Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:06:24.672Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:11:01.182Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:11:31.465Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:r0 2026-11-26T18:12:13.677Z] 복구 보류 · R0-1126-AT stale(옛 started) · pane title=\"R0 · ✓ R0-1126-AU\" (다른 ID: R0-1126-AU) · 칸 무접촉\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:16:11.605Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:16:44.130Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+  "err_tail": "[hub-runner-v8.3.2:heartbeat 2026-11-26T18:02:27.371Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:m3 2026-11-26T18:02:58.134Z] [report-path] M3-1126-U: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T18:03:18.591Z] M3-1126-U → done · runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1126-U-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1126-U.json · {\"id\":\"M3-1126-U\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-26T18:03:18.689Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1126-U-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1126-U.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/2026-11-27.jsonl, status/pipeline/M3-1126-U.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:05:52.003Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:06:24.672Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:11:01.182Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:11:31.465Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:r0 2026-11-26T18:12:13.677Z] 복구 보류 · R0-1126-AT stale(옛 started) · pane title=\"R0 · ✓ R0-1126-AU\" (다른 ID: R0-1126-AU) · 칸 무접촉\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:16:11.605Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:16:44.130Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:21:19.354Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:21:49.638Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:heartbeat 2026-11-26T18:21:53.268Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T18:22:25.950Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
   "git_state": {
     "ahead": 0,
     "behind": 1,
