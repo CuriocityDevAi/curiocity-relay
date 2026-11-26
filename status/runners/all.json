@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T13:27:29.702Z",
+  "at": "2026-11-26T13:28:41.376Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -17,7 +17,9 @@
       "last_activity": "2026-11-26T11:52:45.338Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1126-N",
+      "started_at": "2026-11-26T13:28:39.864Z",
+      "model": "sonnet",
       "last_activity": "2026-11-26T12:24:45.698Z"
     },
     "m3": {
@@ -60,11 +62,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.76,
-    "compressed_gb": 4.05,
+    "used_gb": 15.48,
+    "compressed_gb": 4.27,
     "swap_used_gb": 3.32,
     "pressure": "normal",
-    "at": "2026-11-26T13:26:57.371Z"
+    "at": "2026-11-26T13:28:07.570Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -139,7 +141,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 196,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-AH.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:self-update 2026-11-26T13:22:15.694Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:heartbeat 2026-11-26T13:22:51.761Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T13:23:22.068Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:24:04.834Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:24:05.510Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:24:05.540Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:26:21.921Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:r0 2026-11-26T13:27:09.258Z] [report-path] R0-1126-AH: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T13:27:13.740Z] R0-1126-AH → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AH-report.md · model=sonnet · 로그: /\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-AH.json · {\"id\":\"R0-1126-AH\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T13:27:13.848Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AH-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-AH.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-AH.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T13:27:28.263Z] pick · R0-1126-AI · model=sonnet · display=cmux-split",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:24:05.510Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:24:05.540Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T13:26:21.921Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:r0 2026-11-26T13:27:09.258Z] [report-path] R0-1126-AH: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T13:27:13.740Z] R0-1126-AH → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AH-report.md · model=sonnet · 로그: /\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-AH.json · {\"id\":\"R0-1126-AH\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T13:27:13.848Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AH-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-AH.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-AH.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-26T13:27:28.263Z] pick · R0-1126-AI · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T13:27:30.468Z] R0-1126-AI → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-AI.json · {\"id\":\"R0-1126-AI\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T13:27:30.576Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1126-AI.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-AI.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m2 2026-11-26T13:28:39.864Z] pick · M2-1126-N · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -157,7 +159,7 @@
     {
       "name": "ci-box-storeport-light-imac",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
