@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T11:44:43.898Z",
+  "at": "2026-11-26T11:50:54.643Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -60,11 +60,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.66,
-    "compressed_gb": 3.48,
-    "swap_used_gb": 3.85,
+    "used_gb": 15.26,
+    "compressed_gb": 3.25,
+    "swap_used_gb": 3.84,
     "pressure": "normal",
-    "at": "2026-11-26T11:44:41.969Z"
+    "at": "2026-11-26T11:50:22.959Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -72,23 +72,21 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T11:42:43.407Z",
+      "at": "2026-11-26T11:47:58.306Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 13,
+      "api_calls": 12,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 2,
-        "queued_prs": [
-          276
-        ],
-        "oldest_queued_min": 0,
-        "oldest_queued_pr": "fork:#276",
+        "queued": 0,
+        "queued_prs": [],
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
         "in_progress": [
           {
             "repo": "CuriocityDevAi/storeport",
@@ -96,8 +94,18 @@
             "pr_display": "storeport:#457",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 3,
+            "running_min": 9,
             "runner": "ci-box-storeport-heavy-imac",
+            "kind": "mac-heavy"
+          },
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "#276",
+            "pr_display": "fork:#276",
+            "job": "playwright",
+            "step": "Run Playwright harnesses",
+            "running_min": 2,
+            "runner": "ci-box-fork-heavy-imac",
             "kind": "mac-heavy"
           }
         ]
@@ -117,41 +125,42 @@
       "cloud_today": 1,
       "today": {
         "mac-heavy": {
-          "jobs": 148,
+          "jobs": 149,
           "avg_wait_min": 0.6,
-          "avg_run_min": 2.6,
+          "avg_run_min": 2.5,
           "success_rate": 87.2,
-          "run_min_total": 382.60000000000014
+          "run_min_total": 370.7000000000001
         },
         "mac-light": {
-          "jobs": 112,
-          "avg_wait_min": 2.3,
+          "jobs": 108,
+          "avg_wait_min": 2.4,
           "avg_run_min": 0.5,
           "success_rate": 99.1,
-          "run_min_total": 50.999999999999915
+          "run_min_total": 49.49999999999992
         },
         "cloud": {
           "jobs": 112,
           "avg_wait_min": 0,
           "avg_run_min": 1.3,
-          "success_rate": 58.9,
-          "run_min_total": 142.39999999999978
+          "success_rate": 59.8,
+          "run_min_total": 142.49999999999977
         },
-        "cloud_cost_est_usd": 1.584,
+        "cloud_cost_est_usd": 1.592,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 38.3
       },
-      "jsonl_added": 6,
-      "alerts": []
+      "jsonl_added": 3,
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 16049,
-    "at": "2026-11-26T11:42:57.706Z"
+    "took_ms": 17048,
+    "at": "2026-11-26T11:48:13.591Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 189,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:self-update 2026-11-26T11:38:43.054Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:38:44.620Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:39:16.929Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:39:53.158Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:40:25.577Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:41:02.348Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:41:34.868Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:42:13.112Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:42:45.587Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-26T11:43:18.679Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T11:43:51.223Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m1 2026-11-26T11:44:29.827Z] pick · M1-1126-Q · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:m3 2026-11-26T11:44:36.930Z] [report-path] M3-1126-M: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T11:44:39.115Z] M1-1126-Q → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1126-Q.json · {\"id\":\"M1-1126-Q\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-26T11:44:39.225Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1126-Q.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M1-1126-Q.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed",
+  "err_tail": "[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M1-1126-Q.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:claim 2026-11-26T11:44:43.946Z] M3-1126-M → done · runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1126-M-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1126-M.json · {\"id\":\"M3-1126-M\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-26T11:44:44.731Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1126-M-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1126-M.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M3-1126-M.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:48:36.588Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:48:36.629Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:48:37.507Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:48:37.540Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:self-update 2026-11-26T11:49:11.602Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:49:13.105Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:49:45.500Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-26T11:50:19.121Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T11:50:22.958Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T11:50:51.579Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
   "git_state": {
     "ahead": 0,
     "behind": 0,
@@ -184,7 +193,7 @@
     {
       "name": "ci-box-fork-heavy-imac",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "ci-box-fork-light-imac",
