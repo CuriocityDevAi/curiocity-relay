@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T09:17:32.088Z",
+  "at": "2026-11-26T09:21:35.291Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -60,11 +60,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.5,
-    "compressed_gb": 4.35,
+    "used_gb": 15.72,
+    "compressed_gb": 4.37,
     "swap_used_gb": 3.45,
     "pressure": "normal",
-    "at": "2026-11-26T09:17:00.380Z"
+    "at": "2026-11-26T09:21:03.593Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -72,14 +72,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T09:14:35.061Z",
+      "at": "2026-11-26T09:19:50.639Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 13,
+      "api_calls": 9,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -94,7 +94,7 @@
             "pr_display": "storeport:#454",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 7,
+            "running_min": 12,
             "runner": "ci-box-storeport-heavy-imac",
             "kind": "mac-heavy"
           }
@@ -112,14 +112,14 @@
         "heavy_busy": 1,
         "light_online": 1
       },
-      "cloud_today": 3,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 122,
+          "jobs": 116,
           "avg_wait_min": 0.4,
-          "avg_run_min": 2.5,
-          "success_rate": 89.3,
-          "run_min_total": 308.60000000000014
+          "avg_run_min": 2.6,
+          "success_rate": 88.8,
+          "run_min_total": 299.6000000000001
         },
         "mac-light": {
           "jobs": 91,
@@ -129,28 +129,27 @@
           "run_min_total": 40.899999999999956
         },
         "cloud": {
-          "jobs": 93,
+          "jobs": 90,
           "avg_wait_min": 0,
-          "avg_run_min": 1.2,
-          "success_rate": 58.1,
-          "run_min_total": 109.39999999999984
+          "avg_run_min": 1.1,
+          "success_rate": 57.8,
+          "run_min_total": 103.09999999999984
         },
-        "cloud_cost_est_usd": 1.24,
+        "cloud_cost_est_usd": 1.176,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 38.3
       },
-      "jsonl_added": 9,
-      "alerts": [],
-      "partial": true
+      "jsonl_added": 0,
+      "alerts": []
     },
-    "took_ms": 16338,
-    "at": "2026-11-26T09:14:49.575Z"
+    "took_ms": 10790,
+    "at": "2026-11-26T09:19:59.701Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 169,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] rebase + retry\n[claim] pull --rebase --autostash 실패 · rebase --abort · 다음 tick 재push: From https://github.com/CuriocityDevAi/curiocity-relay  * branch                main       -> FETCH_HEAD Rebasing (1/1)\rerror: could not apply 06b1002d6... claim(r0): R0-1126-X started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-defau\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:12:24.145Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:12:51.258Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:12:55.220Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:13:24.417Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:13:31.483Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:14:00.170Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:14:04.616Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:14:33.443Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:14:41.697Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:15:10.565Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:15:15.647Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:15:44.254Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:15:51.315Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:16:19.876Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:16:24.166Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:16:53.028Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:17:00.379Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:17:28.908Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:13:31.483Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:14:00.170Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:14:04.616Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:14:33.443Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:14:41.697Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:15:10.565Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:15:15.647Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:15:44.254Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:15:51.315Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:16:19.876Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:16:24.166Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:16:53.028Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:17:00.379Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-26T09:17:28.908Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:17:36.524Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:18:11.704Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:18:44.867Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:self-update 2026-11-26T09:19:18.786Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:19:20.410Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T09:19:54.632Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
   "git_state": {
     "ahead": 0,
     "behind": 0,
