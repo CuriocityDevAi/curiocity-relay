@@ -3,7 +3,9 @@
 범위: 로그인 · Sell 탭 · Cart 시트 · Checkout · Cash/Card/QRIS payment · 나눠결제 · Payment successful.
 Order 상세는 [pos-order-detail.md](./pos-order-detail.md), 손님 화면은 [customer-display.md](./customer-display.md) 참조.
 정본 리포: `agilo-medusa-pos-fork` (= "fork") · 현재 master = `05c4bac` (2026-11-26 10:28).
-진행 중 PR 꼬리표: fork #276 · storeport #457 · storeport #458. storeport #456 머지 완료(ce4f6ad). fork #274(8f092f5) · fork #271(2669fb0) 머지 완료.
+머지 완료: **fork #276 (6eb28bd · 2026-11-26)** — 6상태 + 버튼 3종 + Phone entry + 보존 테스트 1호 · **storeport #457·#458 (b22c2ed · 2026-11-26)** — 영수증 실제 결제수단·세액·머리·캐셔·로고 · 20초 무입력 · 지난 주문 재등장 차단 · storeport #456 (ce4f6ad) · fork #274 (8f092f5) · fork #271 (2669fb0).
+
+**주제별 도메인 규칙(정본)**: [../domain/order-number.md](../domain/order-number.md) · [../domain/loyalty-points.md](../domain/loyalty-points.md) · [../domain/tax-pb1.md](../domain/tax-pb1.md). 색인 → [../INDEX.md](../INDEX.md).
 
 ## 공용 요소 `POS-HDR-PHONE` — 우측 상단 손님 번호 상태 칸 (6 상태)
 
@@ -17,7 +19,7 @@ Order 상세는 [pos-order-detail.md](./pos-order-detail.md), 손님 화면은 [
 | Kyu 재확정 (V4-8) | 2026-11-26 15:53 "번호를 고객이 다 입력후 OK 를 누르고나서도, 잘못 입력했다고 할수 있으니, 캐시어가 고객화면에 번호입력 화면(phone entry) 를 보여줄수 있는 버튼도 만들어달라고 했었었어 … 결제도중에 언제든지 캐시어가 할수 있어야 … 우측상단에 그 버튼을 상시로" (출처 `ledger/decision-cd-pos-sync-v4-20261126.md:14`) |
 | 승인 원형 ≠ 계약서 | 계약서 §5 `plans/cd-sync-contract-20261125.md:78` 는 **4 상태 chip** 로 축약(entering/confirming/confirmed/not_confirmed) · 버튼 3종(Ask/Re-enter/Ask again) 미반영 — **"계약서 축약"** 꼬리표. M2-1126-J 감사 경로 1 그대로. `docs/contracts/cd-sync-contract-v1.4.md`(storeport) 는 §1 에 6상태 + `actions: ['ask'|'reenter'|'ask_again']` 를 복구함(2026-11-26 M0-1126-I) — v1.4 가 Kyu 원형과 1:1 일치, v1.3 relay 계약서는 축약본으로 **폐기 예정**. |
 | 현재 구현 | `fork/components/customer-display/CustomerPhoneStatus.tsx:72` (05c4bac) — **early-return `if (customerFlow !== null) return <CustomerFlowChip .../>`** 때문에 라인 85–185 의 6상태 분기가 dead code. 호출부 7화면 모두 `onAskPhone/onReenter/onAskAgain` prop 을 넘기지만 `CustomerFlowChip` (224-309) 는 **버튼 3종 미렌더** (Not confirmed 때 `onLinkCustomer` 만). 실시간 숫자 `partial…` 는 M3-1126-D 로 복구됨(라인 227-243). |
-| 일치 여부 | **진행 중 PR#276** (fork · M3-1126-K `feat/M3-1126-K-phone-status` 라운드가 V4-8 6상태 + `actions` 매핑 복구 · storeport #457·#458 은 서버 쪽 `actions`/`locked`/`cancel_entry`/`start_entry` 추가) · storeport #456 머지 완료(ce4f6ad · 계약 v1.4 §1 `actions`/`locked` 필드 추가) |
+| 일치 여부 | **일치** (fork #276 머지 완료 · 6eb28bd · 2026-11-26) — 6상태 + 버튼 3종(Ask/Re-enter/Ask again) + 보존 테스트 1호. storeport #456·#457·#458 머지 완료(서버 쪽 `actions`/`locked`/`cancel_entry`/`start_entry` + v1.4 §1 필드) |
 
 ### 상태/변형 표 (6 상태 — 정본)
 
@@ -84,8 +86,8 @@ Order 상세는 [pos-order-detail.md](./pos-order-detail.md), 손님 화면은 [
 |---|---|---|---|---|---|
 | `CART-CHECKOUT-BTN` | Cart 패널 하단 버튼 | 11-24 10:52 피드백 1 "View Cart 에 아래에 Clear와 Pay 버튼이 있는데, 실제 Pay 버튼을 누르면, Checkout 화면으로 넘어가고, 다시 Pay버튼을 눌러야해. 즉, Cart 에서 Pay버튼의 명칭이 잘못되었어 > 내 생각에는 **Checkout** 이라고 버튼명을 바꾸는게 맞아" (`decision-pos-phone-status-20261124.md:6` · 승인 11-24 11:03 "다 승인") | 버튼 레이블 `Checkout` (기존 `Pay` 폐기) | `fork/components/cart/CartPanel.tsx:664,746` `Checkout` | **일치** |
 | `CART-X-44PT` | Cart 시트 우측 상단 X 버튼 | 11-24 10:52 피드백 6 "View Cart 우측 상단에 있는 x 버튼이 있는데, 이 버튼이 좀 작은 느낌이야. 아이폰이나 아이패드 설정을 보면 … (좀더 커서 누르기 쉽고, 눌렀을때, 눌렸다는 느낌나도록)" (`decision-pos-phone-status-20261124.md:11`) | **44×44pt 원형 터치 영역** + 눌림 피드백(opacity/scale) · Apple HIG 최소 접근성 | `fork/components/cart/CartSheet.tsx:95-108` (M3-1124-O · PR #254) | **일치** |
-| `CART-ORDER-CHIP` | Cart 시트 헤더 `#N` 칩 | 11-24 10:52 피드백 7 "Customer 화면에서도 몇번 주문 고객을 위한 화면인지 칩 번호가 나와줬으면해. #[번호] 형태로 적당하게 … Order 번호를 칩번호로 쓰던지 해야할듯. 지금은 2중관리 되고있어" (`decision-pos-phone-status-20261124.md:12`) + 11-24 11:03 승인 "모든 POS 화면 · 손님 화면 구석 · 영수증 맨 위 = 칩 번호 #N 하나 · 긴 Order 번호는 영수증 아래·주문 상세에만 작게" (`decision-pos-ui-approval-20261124.md:10`) | 칩 `#N` 단일(긴 Order display_id 제거) | `fork/components/cart/CartSheet.tsx:113` `<OrderChips />` + M3-1125-C `8c8bc19` PR #255 로 긴 display_id 제거 | **일치** |
-| `CART-HDR-PHONE` | Cart 시트 headerRight | → 공용 `POS-HDR-PHONE` 참조 | ← | `fork/components/cart/CartSheet.tsx:85` | **진행 중 PR#276** (공용 요소 상태 따름) |
+| `CART-ORDER-CHIP` | Cart 시트 헤더 `#N` 칩 | 11-24 10:52 피드백 7 "Customer 화면에서도 몇번 주문 고객을 위한 화면인지 칩 번호가 나와줬으면해. #[번호] 형태로 적당하게 … Order 번호를 칩번호로 쓰던지 해야할듯. 지금은 2중관리 되고있어" (`decision-pos-phone-status-20261124.md:12`) + 11-24 11:03 승인 "모든 POS 화면 · 손님 화면 구석 · 영수증 맨 위 = 칩 번호 #N 하나 · 긴 Order 번호는 영수증 아래·주문 상세에만 작게" (`decision-pos-ui-approval-20261124.md:10`) **+ 11-26 22:13 Kyu "Square 처럼 1부터 99까지만" (`decision-kyu-4q-20261126.md:6`) — `#N` 은 매장별 1~99 순환** (주제별 정본 [../domain/order-number.md § 2](../domain/order-number.md)) | 칩 `#N` 단일(긴 Order display_id 제거) · N 은 매장별 1~99 순환(진행 중 M0-1126-Q) · 현재 코드는 세션 누적 카운터 | `fork/components/cart/CartSheet.tsx:113` `<OrderChips />` + M3-1125-C `8c8bc19` PR #255 로 긴 display_id 제거 · 현재 숫자 = `fork/api/hooks/draft-orders.tsx:157` `++_sessionOrderCounter` (= 세션 누적 · 1~99 교체 대상) | **일치**(위치·단일성) · **1~99 순환 진행 중 M0-1126-Q** |
+| `CART-HDR-PHONE` | Cart 시트 headerRight | → 공용 `POS-HDR-PHONE` 참조 | ← | `fork/components/cart/CartSheet.tsx:85` | **일치** (fork #276 머지 · 6eb28bd) (공용 요소 상태 따름) |
 
 ### 보존 테스트
 - `CART-CHECKOUT-BTN`: 없음 — 버튼 레이블 어설션 필요(다음 라운드).
@@ -99,10 +101,10 @@ Order 상세는 [pos-order-detail.md](./pos-order-detail.md), 손님 화면은 [
 | ID | 위치 | Kyu 원문 · 승인일 | 승인된 모습 | 현재 구현 | 일치 여부 |
 |---|---|---|---|---|---|
 | `CHECKOUT-TITLE` | 헤더 타이틀 | 11-24 11:03 승인 (제목·화면 이름) · `decision-pos-ui-approval-20261124.md:8` | 제목 `Checkout` · 긴 display_id 제거 (M3-1125-C) | `fork/app/checkout/[draftOrderId].tsx:361` `<Text className="text-2xl">Checkout</Text>` | **일치** |
-| `CHECKOUT-ORDER-CHIP` | 헤더 우측 (옆) `#N` 칩 | → `CART-ORDER-CHIP` 과 같은 승인 (모든 POS 화면 · 칩 번호 단일) | `#N` 단일 | `fork/app/checkout/[draftOrderId].tsx:334` headerRight 내 OrderChips | **일치** |
+| `CHECKOUT-ORDER-CHIP` | 헤더 우측 (옆) `#N` 칩 | → `CART-ORDER-CHIP` 과 같은 승인 (모든 POS 화면 · 칩 번호 단일 · 1~99 순환 — [../domain/order-number.md § 2](../domain/order-number.md)) | `#N` 단일 (1~99 순환 진행 중 M0-1126-Q) | `fork/app/checkout/[draftOrderId].tsx:334` headerRight 내 OrderChips | **일치** (단, 1~99 순환 M0-1126-Q 진행 중) |
 | `CHECKOUT-TENDER-B` | 합계 아래 결제수단 3 버튼 | 11-24 11:03 승인 "Checkout = **B안**(아래에 Cash/Card/QRIS 버튼 바로 · Pay in parts 작은 링크)" (`decision-pos-ui-approval-20261124.md:7`) | `[Cash] [Card] [QRIS]` 3 버튼 바로 노출 · 선택 시 tender 화면 이동 | `fork/app/checkout/[draftOrderId].tsx:368-425` (M3-1124-O · PR #254) | **일치** |
 | `CHECKOUT-PAY-IN-PARTS` | 결제수단 버튼 밑 작은 링크 | 11-24 11:03 승인 "Pay in parts 작은 링크" (`decision-pos-ui-approval-20261124.md:7`) | 작은 링크 `Pay in parts` → split-tender 흐름 · preorder 에서 비활성 | `fork/app/checkout/[draftOrderId].tsx:427-450` (preorder guard 325) | **일치** |
-| `CHECKOUT-HDR-PHONE` | 헤더 headerRight | → 공용 `POS-HDR-PHONE` | ← | `fork/app/checkout/[draftOrderId].tsx:334-346` | **진행 중 PR#276** |
+| `CHECKOUT-HDR-PHONE` | 헤더 headerRight | → 공용 `POS-HDR-PHONE` | ← | `fork/app/checkout/[draftOrderId].tsx:334-346` | **일치** (fork #276 머지 · 6eb28bd) |
 
 ### 보존 테스트
 - `CHECKOUT-TENDER-B`: `fork/e2e/flows/M3-1126-B-checkout-snapshot.spec.ts` (B안 레이아웃 스냅샷)
@@ -117,9 +119,9 @@ Order 상세는 [pos-order-detail.md](./pos-order-detail.md), 손님 화면은 [
 | `TENDER-CASH-TITLE` | 화면 타이틀 | 11-24 10:52 피드백 3 "Cash tender, Card tender 에서 tender 는 Payment 와 같은 의미야? 영어단어가 맞게 들어간건지 궁금해서" (`decision-pos-phone-status-20261124.md:8`) + 11-24 11:03 승인 "화면 제목 tender → **Cash payment / Card payment / QRIS payment**" (`decision-pos-ui-approval-20261124.md:9`) | 타이틀 `Cash payment` (단어 `tender` 금지) | `fork/app/checkout/tender-cash/[draftOrderId].tsx:340,398` `Cash payment` | **일치** |
 | `TENDER-CARD-TITLE` | 화면 타이틀 | 위와 동일 | `Card payment` | `fork/app/checkout/tender-cash/[draftOrderId].tsx:397` (단일 파일에서 method 분기 · title 395-398) | **일치** |
 | `TENDER-QRIS-TITLE` | 화면 타이틀 | 위와 동일 | `QRIS payment` | `fork/app/checkout/tender-cash/[draftOrderId].tsx:395` · `tender-qris/[draftOrderId].tsx` (QRIS 전용 화면) | **일치** |
-| `TENDER-CASH-HDR-PHONE` | 헤더 headerRight | → 공용 `POS-HDR-PHONE` | ← | `fork/app/checkout/tender-cash/[draftOrderId].tsx:402-415` | **진행 중 PR#276** |
-| `TENDER-QRIS-HDR-PHONE` | 헤더 headerRight | → 공용 `POS-HDR-PHONE` | ← | `fork/app/checkout/tender-qris/[draftOrderId].tsx:84` | **진행 중 PR#276** |
-| `TENDER-CARD-HDR-PHONE` | 헤더 headerRight | → 공용 `POS-HDR-PHONE` | ← | `fork/app/checkout/tender-cash/[draftOrderId].tsx:402-415` (Card 는 Cash 화면 재사용) | **진행 중 PR#276** |
+| `TENDER-CASH-HDR-PHONE` | 헤더 headerRight | → 공용 `POS-HDR-PHONE` | ← | `fork/app/checkout/tender-cash/[draftOrderId].tsx:402-415` | **일치** (fork #276 머지 · 6eb28bd) |
+| `TENDER-QRIS-HDR-PHONE` | 헤더 headerRight | → 공용 `POS-HDR-PHONE` | ← | `fork/app/checkout/tender-qris/[draftOrderId].tsx:84` | **일치** (fork #276 머지 · 6eb28bd) |
+| `TENDER-CARD-HDR-PHONE` | 헤더 headerRight | → 공용 `POS-HDR-PHONE` | ← | `fork/app/checkout/tender-cash/[draftOrderId].tsx:402-415` (Card 는 Cash 화면 재사용) | **일치** (fork #276 머지 · 6eb28bd) |
 
 ### 보존 테스트
 - Title: 없음 — 제목 단어 `payment` 어설션 필요.
@@ -132,7 +134,7 @@ Order 상세는 [pos-order-detail.md](./pos-order-detail.md), 손님 화면은 [
 | ID | 위치 | Kyu 원문 · 승인일 | 승인된 모습 | 현재 구현 | 일치 여부 |
 |---|---|---|---|---|---|
 | `SPLIT-TITLE` | 화면 타이틀 | 11-24 11:03 승인 범위 (`decision-pos-ui-approval-20261124.md:9` tender 대체) | 단어 `tender` 금지 · 분할 UI | `fork/app/checkout/split-tender/[draftOrderId].tsx` | **일치**(단, 경로명 `split-tender` 는 내부 URL — 사용자 눈 제목은 별도 확인 필요) |
-| `SPLIT-HDR-PHONE` | 헤더 headerRight | → 공용 `POS-HDR-PHONE` | ← | `fork/app/checkout/split-tender/[draftOrderId].tsx:32` | **진행 중 PR#276** |
+| `SPLIT-HDR-PHONE` | 헤더 headerRight | → 공용 `POS-HDR-PHONE` | ← | `fork/app/checkout/split-tender/[draftOrderId].tsx:32` | **일치** (fork #276 머지 · 6eb28bd) |
 
 ### 보존 테스트
 - 공용 참조.
@@ -148,16 +150,16 @@ Order 상세는 [pos-order-detail.md](./pos-order-detail.md), 손님 화면은 [
 | `SUCC-HAND-OVER` | SuccessReceiptAnim 내부 Hand over 버튼 | 11-24 11:03 승인 범위 · `queue/m3/M3-1126-D.md` POS-4 Hand over | Hand over 버튼 · fulfill 후 holder 로 돌아감 | `fork/app/checkout/success/[orderId].tsx:291-293,300` `onHandOver` | **일치** (M3-1126-D 로 Hand over 중 적립 완료 칩 보이는 UX 확정) |
 | `SUCC-NEXT-CUSTOMER` | SuccessReceiptAnim 내부 Next customer 버튼 | 11-18 16:49 입구 A 수반 · 11-24 11:03 승인 범위 | Next customer 버튼 · POS reset + CD reset | `fork/app/checkout/success/[orderId].tsx:305` `onNextCustomer` | **일치** |
 | `SUCC-ASK-PHONE-DEL` | **(삭제된) 영수증 아래 Ask phone on display 버튼** | 11-24 10:52 피드백 9 "현재, ask phone on display 라는 버튼은, 신규로 만드는 우측 상단의 고객 번호입력 상태 섹션이 생긴다면 영수증 아래에는 더이상 필요가 없을듯" (`decision-pos-phone-status-20261124.md:14`) + 11-24 11:03 승인 "영수증 아래 Ask phone on display 버튼 **삭제**" (`decision-pos-ui-approval-20261124.md:7`) | **버튼 없어야 함**. 역할은 `POS-HDR-PHONE` ① Ask phone + ⑤ Ask again 이 대신. | `fork/app/checkout/success/[orderId].tsx:84` 코멘트 "영수증 아래의 Ask phone 버튼은 삭제 (역할은 ① · ⑤ 가 대신)" · 삭제 완료 (`7236d88` PR #247) | **일치** (삭제됨) |
-| `SUCC-HDR-PHONE` | 헤더 headerRight | → 공용 `POS-HDR-PHONE` | ← | `fork/app/checkout/success/[orderId].tsx:274-287` | **진행 중 PR#276** |
-| `SUCC-LINK-CUSTOMER` | 영수증 옆 LinkCustomerCard (매니저 PIN 필수) | 11-18 16:58 "추후에 order을 찾아서 link 를 하는 경우는 매니저 4자리 비밀번호를 넣게 하자" (`decision-cd-ask-phone-20261118.md:5`) | 캐셔가 '적립 완료 뒤 번호 재입력' 할 진입점 · 매니저 PIN 사용 기록 | `fork/components/loyalty/LinkCustomerCard.tsx` — **POS-5 (`queue/m3/M3-1126-D.md`) 에 의해 `customer_flow.state ∈ {entering, first_visit, confirming, confirmed}` 이면 `null` 반환** (조건부 숨김) | **불일치** (충돌/미결 1 참조 — Kyu 결정 대기) |
-| `POS-SUCC-PHONEENTRY` | 상단 칩 (V4-7) · **새 요소** | 11-26 15:40 "Link Customer 오른쪽에 Phone Entry 라는 버튼을 넣는거야. 그러면 아직 새로운 주문이 들어오기전이라면 phone entry 의 버튼이 생기는거고 … 캐시어가 Link Customer 버튼을 눌러서 매니저의 비번을 받아서" + 15:53 "응 그렇게 하자" (`decision-cd-pos-sync-v4-20261126.md:12-13`) | Payment successful **상단 칩** + Order 상세 Link customer 오른쪽에 `Phone entry` 버튼. 조건 4가지(가장 최근 결제 주문 · 새 장바구니 전 · 번호 미확인 · 영업 마감 전) · **PIN 없음** · 누르면 CD 에 해당 주문 영수증(좌) + 키패드(우). 엔드포인트 `POST /admin/pos/orders/:id/phone-entry` (storeport v1.4 §4) | **미구현** — `fork/app/checkout/success/[orderId].tsx` 에 없음. storeport 측은 v1.4 §4 로 계약서화됨(`docs/contracts/cd-sync-contract-v1.4.md:89-144`) | **미구현** (V4-7 · M3 + M0 라운드 대기 `#454` 머지 후) |
+| `SUCC-HDR-PHONE` | 헤더 headerRight | → 공용 `POS-HDR-PHONE` | ← | `fork/app/checkout/success/[orderId].tsx:274-287` | **일치** (fork #276 머지 · 6eb28bd) |
+| `SUCC-LINK-CUSTOMER` | 영수증 옆 LinkCustomerCard (매니저 PIN 필수) | 11-18 16:58 "추후에 order을 찾아서 link 를 하는 경우는 매니저 4자리 비밀번호를 넣게 하자" (`decision-cd-ask-phone-20261118.md:5`) · **11-26 22:13 Kyu "A. 숨김 유지"** (`decision-kyu-4q-20261126.md:5`) — 손님이 번호 입력 중/완료면 카드 숨김 · 오른쪽 위 6상태 칸(Re-enter)이 대신. PIN 필수 진입점은 Order 상세(=`ORDER-LINK-CUSTOMER`)로 일원화. | Payment successful 화면 LinkCustomerCard = **`customer_flow.state ∈ {entering, first_visit, confirming, confirmed}` 이면 숨김** (= 상태 칸 ④ Done + Re-enter 가 대신) | `fork/components/loyalty/LinkCustomerCard.tsx` — POS-5 (`queue/m3/M3-1126-D.md`) 로 조건부 숨김 구현 | **일치** (Kyu 11-26 22:13 "A. 숨김 유지" 승인 — 옛 "충돌 1" 해결 · 주제별 정본 [../domain/loyalty-points.md § 5](../domain/loyalty-points.md)) |
+| `POS-SUCC-PHONEENTRY` | ~~상단 칩~~ 삭제됨 (V4-7 → 11-26 23:07 Kyu) | 11-26 15:40 "Link Customer 오른쪽에 Phone Entry 라는 버튼을 넣는거야. 그러면 아직 새로운 주문이 들어오기전이라면 phone entry 의 버튼이 생기는거고 … 캐시어가 Link Customer 버튼을 눌러서 매니저의 비번을 받아서" + 15:53 "응 그렇게 하자" (`decision-cd-pos-sync-v4-20261126.md:12-13`) **→ 11-26 23:07 Kyu "결제 완료 화면에서는 하나만. Ask phone 이라는 버튼이 그 전단계에서도 있던거라면 그냥 그걸남기는게 나아."** (`ledger/decision-success-single-phone-button-20261126.md:3`) | Payment successful **Phone entry 칩 삭제** (11-26 23:07) · 오른쪽 위 상태 칸(Ask phone / Ask again)이 대신. 조건 4가지 · 엔드포인트 `POST /admin/pos/orders/:id/phone-entry` (storeport v1.4 §4) 는 그대로 유지. **Order 상세 Link customer 오른쪽 `Phone entry` 버튼은 유지** (이번 결정 범위 밖 — `ledger/decision-success-single-phone-button-20261126.md:13`) | `fork/app/checkout/success/[orderId].tsx` — #276 에서 칩 추가됨(6eb28bd) · 23:07 Kyu 결정으로 **삭제 예정** · 구현 = M3 다음 라운드 | **불일치** — #276 에 칩 존재 · 23:07 Kyu 결정으로 삭제 예정 · M3 다음 라운드 적용 |
 
 ### 보존 테스트
 - `SUCC-ASK-PHONE-DEL`: `fork/e2e/flows/M0-1118-N-ask-phone-on-display.spec.ts` — **삭제 후 적절한 어설션 필요**(현재 버튼이 "없음" 을 검증하는지 점검 필요).
 - `SUCC-RECEIPT`: `storeport/apps/customer-display/e2e/receipt-same-as-pos.spec.ts` (CD 쪽) · POS 쪽 없음.
 - `SUCC-HAND-OVER` · `SUCC-NEXT-CUSTOMER`: `fork/e2e/flows/M3-1126-D-pos-fixes.spec.ts` 부분 커버.
 - `SUCC-LINK-CUSTOMER`: 없음 — 조건부 숨김 assert 필요(충돌 해소 뒤).
-- `POS-SUCC-PHONEENTRY`: 없음 — 미구현.
+- `POS-SUCC-PHONEENTRY`: 없음 — 11-26 23:07 Kyu 결정으로 Payment successful 칩 삭제 예정 · M3 적용 후 `Phone entry 없음` assert 필요.
 
 ---
 
@@ -165,11 +167,8 @@ Order 상세는 [pos-order-detail.md](./pos-order-detail.md), 손님 화면은 [
 
 > Kyu 답이 필요한 항목. **본 문서에서 답을 쓰지 말 것**. 발부 시점에 Kyu 질문 후보로.
 
-### 충돌 1 · `SUCC-LINK-CUSTOMER` 조건부 숨김 vs 기존 "진입점 B (PIN)"
-- 11-18 16:58 승인(`decision-cd-ask-phone-20261118.md:5`): **Order 상세/Payment successful 에서 Link customer 는 PIN 을 받고 번호를 다는 진입점**(= 항상 있어야 함).
-- 2026-11-26 `queue/m3/M3-1126-D.md:POS-5` 지시: "LinkCustomerCard: `customer_flow.state ∈ {entering, first_visit, confirming, confirmed}` 이면 `null` 반환(비노출)." → 이미 confirmed 된 주문이거나 번호 입력 중이면 캐셔가 번호를 바꿀 수 있는 PIN 진입점이 사라진다.
-- 현재 fork 는 M3-1126-D 지시대로 동작 중(`#270` · `b50b1be`). 그러나 Kyu 는 "결제도중에 언제든지 캐시어가" V4-8 재확정(11-26 15:53 · `decision-cd-pos-sync-v4-20261126.md:14`).
-- Kyu 질문 후보: "`SUCC-LINK-CUSTOMER` 는 `confirmed` 상태에서 **항상 보이되** V4-8 `POS-HDR-PHONE` ④ Done 의 Re-enter 가 PIN 없이 그 역할을 더 짧은 경로로 수행하므로 **숨기는 쪽**인가 · 또는 두 진입점(PIN 필수 vs PIN 없이) 을 **병존**시키는가?" — M2-1126-J 감사 발견 1.
+### ~~충돌 1~~ → Kyu 결정(11-26 22:13) · `SUCC-LINK-CUSTOMER` = **"A. 숨김 유지"**
+- 11-26 22:13 Kyu "A. 숨김 유지" — 손님이 번호 입력 중/완료면 LinkCustomerCard **숨김** · 오른쪽 위 6상태 칸(Re-enter)이 대신 역할 · Order 상세의 PIN 필수 Link customer 는 그대로 보존(= 입구 B). 출처 `ledger/decision-kyu-4q-20261126.md:5`. 정본 [../domain/loyalty-points.md § 5](../domain/loyalty-points.md).
 
 ### ~~충돌 2~~ → 오케 결정(11-26) · 계약서 v1.3 §5 축약(4상태) vs Kyu 11-24 11:03 승인(6상태+버튼 3종)
 - 승인(정본): `decision-pos-ui-approval-20261124.md:6` **6상태 + Re-enter + Ask again**.
@@ -177,8 +176,8 @@ Order 상세는 [pos-order-detail.md](./pos-order-detail.md), 손님 화면은 [
 - storeport v1.4 (`docs/contracts/cd-sync-contract-v1.4.md:12-33`): 6상태 + `actions` 복구(승인 원형과 일치).
 - **오케 결정(11-26)**: relay `plans/cd-sync-contract-20261125.md` 는 **폐기됨** — 정본 = storeport `docs/contracts/cd-sync-contract-v1.4.md`. 명세서는 **Kyu 승인 6상태**를 정본으로 계속 기록(계약서 축약 꼬리표 그대로). relay 계약서에 폐기 표시 추가됨.
 
-### 미결 1 · 긴 Order 번호 채번 체계
-- 11-24 11:03 "긴 Order 번호 채번 체계 — 오케 조사 후 Kyu 결정" (`decision-pos-ui-approval-20261124.md:14`). 현재 미결. 영수증 아래·주문 상세에 "작게" 노출하는 모습까지만 승인됨 — 번호 자체 룰은 Kyu 대기.
+### ~~미결 1~~ → 해결 · 긴 Order 번호 채번 체계
+- 11-24 11:03 "긴 Order 번호 채번 체계 — 오케 조사 후 Kyu 결정" (`decision-pos-ui-approval-20261124.md:14`) 은 **같은 날 11:15·11:31 Kyu 결정** (`decision-order-number-20261124.md`) 으로 해결 · 11-25 M1-1125-L 하이픈 추가 · 11-26 22:13 Kyu "지금 반영되어있는거 기준" 재확인(`decision-kyu-4q-20261126.md:6`). **정본 → [../domain/order-number.md § 1](../domain/order-number.md)**. 짧은 칩 `#N` 매장별 1~99 순환은 § 2 참조(진행 중 M0-1126-Q).
 
 ---
 
@@ -202,5 +201,5 @@ Order 상세는 [pos-order-detail.md](./pos-order-detail.md), 손님 화면은 [
 | `TENDER-*-TITLE` | 타이틀에 `payment` 포함 · `tender` 금지 | 없음 |
 | `SUCC-ASK-PHONE-DEL` | 영수증 아래 `[Ask phone on display]` 버튼 **없음** assert | 부분(`M0-1118-N-ask-phone-on-display.spec.ts` — 점검 필요) |
 | `SUCC-RECEIPT` | POS 영수증 = CD 영수증 (필드 1:1) | storeport `receipt-same-as-pos.spec.ts` (CD 쪽) · POS 쪽 없음 |
-| `SUCC-LINK-CUSTOMER` | 충돌 해소 뒤 작성 | 없음 |
-| `POS-SUCC-PHONEENTRY` | V4-7 구현 뒤 작성 | 없음 |
+| `SUCC-LINK-CUSTOMER` | `customer_flow.state ∈ {entering, first_visit, confirming, confirmed}` → 숨김 assert (Kyu "A. 숨김 유지") | 없음 — 다음 라운드 추가 |
+| `POS-SUCC-PHONEENTRY` | ~~Payment successful 칩 존재~~ → **삭제 예정 (11-26 23:07)** · M3 적용 후 `Phone entry 없음` assert. Order 상세 쪽 `POST /admin/pos/orders/:id/phone-entry` 는 유지. | storeport `M0-1126-M` 보존 테스트 (663e260) · fork 쪽 없음 |
