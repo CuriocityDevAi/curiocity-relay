@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T08:41:47.662Z",
+  "at": "2026-11-26T08:42:25.166Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -19,7 +19,9 @@
       "last_activity": "2026-11-26T08:23:21.470Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1126-H",
+      "started_at": "2026-11-26T08:42:23.697Z",
+      "model": "sonnet",
       "last_activity": "2026-11-26T08:38:45.305Z"
     },
     "m3": {
@@ -62,11 +64,11 @@
   },
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.74,
-    "compressed_gb": 3.1,
+    "used_gb": 15.56,
+    "compressed_gb": 3.3,
     "swap_used_gb": 3.78,
     "pressure": "normal",
-    "at": "2026-11-26T08:41:13.552Z"
+    "at": "2026-11-26T08:41:53.609Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -140,7 +142,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 162,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M2-1126-G.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m1 2026-11-26T08:41:10.462Z] pick · M1-1126-O · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:r0 2026-11-26T08:41:11.503Z] pick · R0-1126-V · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T08:41:13.999Z] R0-1126-V → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-V.json · {\"id\":\"R0-1126-V\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-26T08:41:14.125Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1126-V.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-V.jsonl, status/pipeline/M1-1126-O.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:claim 2026-11-26T08:41:16.918Z] M1-1126-O → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1126-O.json · {\"id\":\"M1-1126-O\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-26T08:41:17.039Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1126-O.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M1-1126-O.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m3 2026-11-26T08:41:46.258Z] pick · M3-1126-H · model=sonnet · display=cmux-split",
+  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-V.jsonl, status/pipeline/M1-1126-O.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:claim 2026-11-26T08:41:16.918Z] M1-1126-O → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1126-O.json · {\"id\":\"M1-1126-O\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-26T08:41:17.039Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1126-O.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M1-1126-O.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m3 2026-11-26T08:41:46.258Z] pick · M3-1126-H · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T08:41:51.091Z] M3-1126-H → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1126-H.json · {\"id\":\"M3-1126-H\",\"hub\":\"m3\",\"state\":\"started\",\"at\":\"2026-11-26T08:41:51.203Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m3/M3-1126-H.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M3-1126-H.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m2 2026-11-26T08:42:23.696Z] pick · M2-1126-H · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
