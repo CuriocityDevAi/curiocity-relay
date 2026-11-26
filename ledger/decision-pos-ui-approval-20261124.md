@@ -11,5 +11,5 @@
 - View Cart X 버튼 44pt 원형 · 눌림 피드백
 - 손님 번호 입력은 POS 화면 이동·결제 완료와 분리(손님이 OK/건너뛸 때까지 유지) · POS 영수증 = 손님 화면 영수증
 
-미결: **긴 Order 번호 채번 체계** — 오케 조사 후 Kyu 결정.
+미결: **긴 Order 번호 채번 체계** — 오케 조사 후 Kyu 결정. → 해결: decision-order-number-20261124 · specs/domain/order-number.md
 구현 발부: M1-1124-A(진단) 리포트 수신 후 파일 분할해 발부.

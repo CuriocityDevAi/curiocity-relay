@@ -5,6 +5,8 @@
 흐름 정본: `ledger/decision-cd-pos-sync-flow-20261125.md` · 디자인 정본: `ledger/decision-cd-pos-sync-design-20261125.md`.
 계약서: `plans/cd-sync-contract-20261125.md` v1.3 (**폐기됨 11-26**) + storeport `docs/contracts/cd-sync-contract-v1.4.md` **(정본)**.
 
+**주제별 도메인 규칙(정본)**: [../domain/order-number.md](../domain/order-number.md) · [../domain/loyalty-points.md](../domain/loyalty-points.md) · [../domain/tax-pb1.md](../domain/tax-pb1.md). 색인 → [../INDEX.md](../INDEX.md).
+
 ## 레이아웃 룰 (전역)
 
 11-25 17:58 Kyu "대부분 승인" + 17:45 결정(`decision-cd-pos-sync-design-20261125.md:7` · `decision-cd-pos-sync-flow-20261125.md:22-24`).
@@ -25,7 +27,7 @@
 
 | ID | 위치 | Kyu 원문 · 승인일 | 승인된 모습 | 현재 구현 | 일치 여부 |
 |---|---|---|---|---|---|
-| `CD-CHIP-ORDERNUM` | CD 화면 구석 `#N` 칩 | 11-24 10:52 피드백 7 "Customer 화면에서도 몇번 주문 고객을 위한 화면인지 **칩 번호**가 나와줬으면해. #[번호] 형태로 … Order 번호를 칩번호로 쓰던지 해야할듯" (`decision-pos-phone-status-20261124.md:12`) + 11-24 11:03 승인 "모든 POS 화면 · 손님 화면 구석 · 영수증 맨 위 = 칩 번호 #N 하나" (`decision-pos-ui-approval-20261124.md:10`) | `#N` 단일 칩 · 긴 Order display_id 2중 관리 금지 | `storeport/apps/customer-display/app/cd-sync.tsx` (OrderChip) + mini receipt header 에 `#N` | **일치** |
+| `CD-CHIP-ORDERNUM` | CD 화면 구석 `#N` 칩 | 11-24 10:52 피드백 7 "Customer 화면에서도 몇번 주문 고객을 위한 화면인지 **칩 번호**가 나와줬으면해. #[번호] 형태로 … Order 번호를 칩번호로 쓰던지 해야할듯" (`decision-pos-phone-status-20261124.md:12`) + 11-24 11:03 승인 "모든 POS 화면 · 손님 화면 구석 · 영수증 맨 위 = 칩 번호 #N 하나" (`decision-pos-ui-approval-20261124.md:10`) **+ 11-26 22:13 "Square 처럼 1~99 순환"** (`decision-kyu-4q-20261126.md:6`) — 정본 [../domain/order-number.md § 2](../domain/order-number.md) | `#N` 단일 칩 · 긴 Order display_id 2중 관리 금지 · N 은 매장별 1~99 순환(진행 중 M0-1126-Q) | `storeport/apps/customer-display/app/cd-sync.tsx` (OrderChip) + mini receipt header 에 `#N` | **일치**(위치·단일성) · **1~99 순환 진행 중 M0-1126-Q** |
 | `CD-ORDER-LIST` | 우 2/3 주문내역 패널 | 11-25 17:58 "기존에 결제내역이 나오는 고객화면이 있는데, 거기에 나오는 상품 리스트와 결제금액이 너무 작아서 고객식별하기에 부족함이 있었어. 그 내용도 반영해서 **더 크게** 키워줘야해" (`decision-cd-pos-sync-design-20261125.md:11`) | 품목 32px · 합계 64px (디자인 반영본) · 우측 1/3 에 적립 예정 + [Enter phone number] 영역 | `storeport/apps/customer-display/src/components/cd-sync/` (OrderList 컴포넌트) + `cd-screen-selector.ts:83-99` `kind: 'order-list'` 분기 | **일치** |
 | `CD-ENTER-PHONE-BTN` | CD 주문내역 우측 또는 QRIS 큰 QR 옆 | 11-25 17:45 결정 4 "QRIS: 번호 흐름 중 좌 1/3 에 QR, 결제 완료 시 그 자리가 영수증 — OK" · 11-26 15:40 V4-4 "QRIS 결제 중에도 번호 입력 버튼 활성" (`decision-cd-pos-sync-v4-20261126.md:9`) | 버튼 `Enter phone number` · 활성 조건 = `payment_phase = tendering` · method = qris 포함 (v4) · 누르면 `start_entry` → CD 는 키패드로 전환 | `storeport/apps/customer-display/src/lib/cd-screen-selector.ts:80,99,105-108` `enterPhoneEnabled` 분기 · qris-full + order-list 두 분기에서 각각 true | **일치** |
 | `CD-QRIS-QR` | tendering + method=qris + flow=none | 11-25 17:45 결정 4 · 11-26 V4-4 "QRIS 결제 중 CD 에 QR 미표시" 재확정 (`decision-cd-pos-sync-v4-20261126.md:V4-4`) | **큰 QR** + 금액 + 작은 장바구니 + [Enter phone number] (M0-1126-H · V4-4) · qr_string 없으면 placeholder `Preparing…` | `storeport/apps/customer-display/src/lib/cd-screen-selector.ts:66-78` `kind: 'qris-full'` 분기 + `LeftPaymentPanel.tsx:129-178` (left-qris · left-qris-amount) | **일치** |
@@ -38,7 +40,7 @@
 | `CD-PAYMENT-COMPLETE` | 우 2/3 · phase=paid 직후(일시) | 11-26 M0-1126-D · CD-2 (오케 제안 · Kyu 복합 승인) | "Payment complete" 패널 · 좌 1/3 영수증 유지 · 3초 뒤 keypad 로 sheet 밀림 | `storeport/apps/customer-display/src/components/cd-sync/PaymentCompletePanel.tsx:43,47,67` (testID: `payment-complete-panel` · `payment-complete-check` · `payment-complete-method`) | **일치** · 출처=오케(Kyu 직접 승인 문구 없음 · 디자인 범위 승인 11-25 17:58 의 "대부분 승인" 안에) |
 | `CD-RECEIPT-FULL` | 전체 화면 (phase=paid + flow=none) | 11-25 17:23 경우 1 "영수증 출력을 다 보여주고나서 3초 후에 > 영수증이 화면좌측으로 밀려나면서 ENTER PHONE 화면이 우측으로부터 밀려나옴. (영수증은 화면의 1/3 정도만 할애해서 보여주고 나머지 우측 2/3 영역을 전화번호 입력화면으로 배치)" (`decision-cd-pos-sync-flow-20261125.md:11`) | 영수증 전체 → 3초 → 좌 1/3 로 밀림 + 우 2/3 keypad | `cd-screen-selector.ts:82` `paid + none → receipt-full` + `receipt-then-keypad` 전환 | **일치** |
 | `CD-RECEIPT-MINI` | 좌 1/3 (paid + flow 활성) | 위 흐름 연장 · 11-24 10:52 피드백 9 "POS 영수증 = 손님 화면 영수증" (`decision-pos-phone-status-20261124.md:14`) + 11-24 11:03 승인 (`decision-pos-ui-approval-20261124.md:12`) | POS 영수증과 **같은 데이터·배치** · mini 레이아웃 · 로고 · 매장 이름 · 주소 · WA · 영수증 번호 · 일시 · Order# · 캐셔 · 품목+옵션 · 세금 · 결제 · Received · QR · Thank you | `storeport/apps/customer-display/src/components/cd-sync/LeftPaymentPanel.tsx:214,307-390` (testID: `left-receipt-mini` · `left-receipt-paper` · `mini-receipt-*` 다수) | **일치**(모양은 구현됨) · 다만 데이터 동기화 결함 = `CD-RECEIPT-FORMAT` (불일치) 참조 |
-| `CD-RECEIPT-FORMAT` | 좌 1/3 영수증 **내용** | 11-24 10:52 피드백 9 (위) + 11-26 14:19 "CD 영수증 머리 = 'Store' (매장 이름·로고·주소·영수증 번호·일시·캐셔 없음) → POS 영수증과 형태 다름" (`decision-cd-pos-sync-v3-20261126.md:17`) | POS 영수증과 **완전히 같은** 데이터(매장 이름 있음 · 로고 있음 · 주소 · 영수증 번호 · 일시 · 캐셔 · 품목 · 옵션 · 세금 · Received · QR · Thank you) | `storeport/apps/customer-display/src/components/cd-sync/LeftPaymentPanel.tsx:333` (mini-receipt-store-name) + 데이터 소스 — 매장명·주소 = storeport #454 머지 완료(f3161c8) · 나머지 필드 진행 중 | **진행 중 PR#457·#458** (매장명·주소 = storeport #454 머지 완료 · 결제수단·PB1·영수증번호·날짜 = #457 · 캐셔 이름·로고 = #458) |
+| `CD-RECEIPT-FORMAT` | 좌 1/3 영수증 **내용** | 11-24 10:52 피드백 9 (위) + 11-26 14:19 "CD 영수증 머리 = 'Store' (매장 이름·로고·주소·영수증 번호·일시·캐셔 없음) → POS 영수증과 형태 다름" (`decision-cd-pos-sync-v3-20261126.md:17`) | POS 영수증과 **완전히 같은** 데이터(매장 이름 있음 · 로고 있음 · 주소 · 영수증 번호 · 일시 · 캐셔 · 품목 · 옵션 · 세금 · Received · QR · Thank you). 영수증 하단 번호 = 긴 주문번호 ([../domain/order-number.md § 3](../domain/order-number.md)). | `storeport/apps/customer-display/src/components/cd-sync/LeftPaymentPanel.tsx:311-413` (mini-receipt-* testID 모음) + 데이터 소스 = 매장명·주소 (#454 f3161c8) · 결제수단·PB1·영수증번호·날짜 (#457) · 캐셔 이름·로고 (#458) — **모두 머지 완료 (b22c2ed · 2026-11-26)** | **일치** (storeport #457·#458 머지 완료 · b22c2ed) |
 | `CD-LEFT-SCREEN-NAME` | 좌 1/3 · tendering + flow 활성 · method=cash/card | 11-25 17:23 경우 2 "좌측은 **화면명 정도만 텍스트로 보여주고 대부분 흰색으로 비어둠**" (`decision-cd-pos-sync-flow-20261125.md:12`) | 작은 텍스트 "Cash payment" 또는 "Card payment" · 흰 공간 다수 | `storeport/apps/customer-display/src/components/cd-sync/LeftPaymentPanel.tsx:103` (testID: `left-screen-name`) · selector `cd-screen-selector.ts:74-76,79` | **일치** |
 | `CD-LEFT-REMAINING` | 좌 1/3 · tendering + flow 활성 + is_split=true | 11-25 17:45 결정 6 "나눠 결제 중엔 좌 1/3 에 남은 금액, 완납 시 영수증 — OK" (`decision-cd-pos-sync-flow-20261125.md:36`) | 남은 금액 노출 · 완납 시 영수증으로 전환 | `storeport/apps/customer-display/src/components/cd-sync/LeftPaymentPanel.tsx:179-199` (testID: `left-remaining` · `left-remaining-amount`) · selector `cd-screen-selector.ts:74` | **일치** |
 | `CD-STATE-FROM-SNAPSHOT` | 전역 — "CD 어떤 화면 보일지" 선택 | 11-25 17:23 매핑 테이블(위) · 11-26 15:40 V4-1 "Next customer 후 지난 주문 (#202 cart/draft) 스냅샷이 다시 CD 에 뜸" (`decision-cd-pos-sync-v4-20261126.md:V4-1`) | 서버 snapshot 에서 `payment_phase × customer_flow.state × tender` 3개로 **순수 함수 하나로 결정** · POS reset / Next customer / phone_entry_open 이면 `isPostSettlementStale` 로 과거 snapshot 거름 | `storeport/apps/customer-display/src/lib/cd-screen-selector.ts:88-122` `selectCdView` 순수 함수 · `apps/commerce-core/src/lib/customer-flow`·`register_session/lifecycle.ts` 의 `isPostSettlementStale` | **일치** (선택기 자체) · 단 **충돌/미결 2** 참조 — V4-1 결함은 미결 3 |
@@ -53,11 +55,11 @@
 - 현상태: `cd-screen-selector.ts` 는 순수 함수(검증 가능) · 그 입력을 derive 하는 서버 코드에 UI 영향이 집중.
 - **보존 테스트 항목(통합 테스트 필요)**: `POS-HDR-PHONE` — `customer_flow` 입력 항상 존재 조건(production 입력 조건) 통합 테스트 · `customer_flow` 입력 + ① 버튼 노출 + ④ Re-enter + ⑤ Ask again 한 번에 어설션하는 테스트. 다음 라운드에서 추가. _(Kyu 질문 아님 — 기술 판단으로 처리)_
 
-### ~~미결 1~~ → 진행 중 PR · `CD-RECEIPT-FORMAT` 매장 데이터 주입 (V3-2)
-- 매장명·주소: storeport #454 머지 완료(f3161c8). 결제수단·PB1·영수증번호·날짜: storeport #457 진행 중. 캐셔 이름·로고: storeport #458 진행 중. Kyu 승인 "**POS 영수증 = 손님 영수증**" 유지. _(Kyu 질문 아님)_
+### ~~미결 1~~ → 해결 · `CD-RECEIPT-FORMAT` 매장 데이터 주입 (V3-2)
+- 매장명·주소 (#454 f3161c8) · 결제수단·PB1·영수증번호·날짜 (#457) · 캐셔 이름·로고 (#458) — **모두 머지 완료 (b22c2ed · 2026-11-26)**. Kyu 승인 "**POS 영수증 = 손님 영수증**" 유지. _(Kyu 질문 아님)_
 
-### 미결 2 · PB1 세율 표시(11% vs 10%)
-- 11-25 17:58 (`decision-cd-pos-sync-design-20261125.md:21`) "PB1 세율: 앱 라벨 11% · 금액은 10% (120,000 → 12,000) — Kyu 확인 요청" · 현재까지 Kyu 명시 결정 없음(= **미결**).
+### ~~미결 2~~ → 해결 · PB1 세율 **10%**
+- 11-25 17:58 `decision-cd-pos-sync-design-20261125.md:21` 의 "앱 라벨 11% vs 금액 10% — Kyu 확인 요청" 는 **11-26 22:03 Kyu "10%야." 로 확정** (`decision-kyu-4q-20261126.md:7`). 손님 화면 폴백 11 제거 M0-1126-P 진행 중 (`queue/m0/M0-1126-P.md:11`). **정본 → [../domain/tax-pb1.md](../domain/tax-pb1.md)**.
 
 ### ~~미결 3~~ → 진행 중 PR · V4-1 lingering previous order snapshot
 - 11-26 15:40 "Next customer 를 눌렀어 … 기존매출 Order 상세내역이 고객화면에 떴어(불량)" (`decision-cd-pos-sync-v4-20261126.md:6`). storeport #457 (진행 중) 에서 수정 중. _(Kyu 질문 아님)_
@@ -79,7 +81,7 @@
 | `CD-PAYMENT-COMPLETE` | 결제 완료 직후 `payment-complete-panel` → 3초 뒤 keypad | `apps/customer-display/e2e/cd-pos-sync-v2.spec.ts` (CD-2) |
 | `CD-RECEIPT-FULL` | paid + flow=none → `receipt-full` · 3초 뒤 `receipt-then-keypad` | `apps/customer-display/e2e/receipt-done.spec.ts` 부분 |
 | `CD-RECEIPT-MINI` | paid + flow 활성 → `left-receipt-mini` + mini-receipt-* 필드 | `apps/customer-display/e2e/receipt-same-as-pos.spec.ts` |
-| `CD-RECEIPT-FORMAT` | mini-receipt-store-name ≠ "Store" (실제 매장 이름) · mini-receipt-store-logo 자산 존재 | **없음** (#457·#458 머지 뒤 추가) |
+| `CD-RECEIPT-FORMAT` | mini-receipt-store-name ≠ "Store" (실제 매장 이름) · mini-receipt-store-logo 자산 존재 | `storeport/apps/customer-display/e2e/receipt-same-as-pos.spec.ts` (#457/#458 머지 b22c2ed) |
 | `CD-LEFT-SCREEN-NAME` | tendering + flow + cash/card → `left-screen-name` | `apps/customer-display/e2e/cd-sync-flow.spec.ts` 부분 |
 | `CD-LEFT-REMAINING` | is_split + flow 활성 → `left-remaining` + `left-remaining-amount` | 없음 |
 | `CD-STATE-FROM-SNAPSHOT` | 선택기 순수 함수 + production 입력 조건 통합 어설션(= 서버 derive 변경이 UI 를 조용히 바꾸는 것을 막는 테스트) | **없음** (보존 테스트 항목 — 다음 라운드 추가 예정) |
