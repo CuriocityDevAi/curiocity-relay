@@ -1,13 +1,13 @@
 {
-  "ts": "2026-11-26T15:57:04Z",
+  "ts": "2026-11-26T16:02:10Z",
   "uptime": {
-    "uptime_secs": 80707,
-    "load_1": 11.08,
-    "load_5": 12.12,
-    "load_15": 9.74
+    "uptime_secs": 81014,
+    "load_1": 11.1,
+    "load_5": 10.31,
+    "load_15": 9.43
   },
   "memory": {
-    "free_pct": 54,
+    "free_pct": 48,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
@@ -21,7 +21,7 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 1,
+    "worker_count": 3,
     "current": [
       {
         "runner_name": "actions-runner-ci-box-sp-heavy",
@@ -32,11 +32,31 @@
         "event_name": "pull_request",
         "pr": "463",
         "started_at": "2026-11-26T15:53:47Z"
+      },
+      {
+        "runner_name": "actions-runner-ci-box-sp-light",
+        "job": "changes-filter",
+        "repo": "CuriocityDevAi/storeport",
+        "workflow": "ci",
+        "head_ref": "fix/M2-1126-R-ci-cloud-cut",
+        "event_name": "pull_request",
+        "pr": "464",
+        "started_at": "2026-11-26T16:02:03Z"
+      },
+      {
+        "runner_name": "actions-runner-ci-box-fork-light",
+        "job": "assertions",
+        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+        "workflow": "CI",
+        "head_ref": "fix/M2-1126-R-ci-cloud-cut",
+        "event_name": "pull_request",
+        "pr": "278",
+        "started_at": "2026-11-26T16:01:26Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 136,
+    "latency_ms": 108,
     "reachable": true
   },
   "netspeed": {
