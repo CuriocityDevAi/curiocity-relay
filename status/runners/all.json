@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T15:08:34.126Z",
+  "at": "2026-11-26T15:11:27.921Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -41,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.54,
-    "compressed_gb": 4.34,
+    "used_gb": 15.76,
+    "compressed_gb": 4.25,
     "swap_used_gb": 3.11,
     "pressure": "normal",
-    "at": "2026-11-26T15:08:02.026Z"
+    "at": "2026-11-26T15:10:55.917Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -53,14 +53,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T15:07:24.077Z",
+      "at": "2026-11-26T15:09:43.485Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 16,
+      "api_calls": 8,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -82,7 +82,7 @@
         "heavy_busy": 0,
         "light_online": 1
       },
-      "cloud_today": 16,
+      "cloud_today": 0,
       "today": {
         "mac-heavy": {
           "jobs": 175,
@@ -109,17 +109,17 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 58.199999999999996
       },
-      "jsonl_added": 20,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 19517,
-    "at": "2026-11-26T15:07:41.869Z"
+    "took_ms": 11196,
+    "at": "2026-11-26T15:09:52.860Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 6,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:claim 2026-11-26T15:05:12.527Z] M0-1126-P → started · runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1126-P.json · {\"id\":\"M0-1126-P\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-26T15:05:12.635Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1126-P.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m0/M0-1126-P.md, status/pipeline/M0-1126-P.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:05:45.103Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:05:45.802Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:05:45.832Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:m3 2026-11-26T15:06:09.213Z] [report-path] M3-1126-Q: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T15:06:24.440Z] M3-1126-Q → done · runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1126-Q-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1126-Q.json · {\"id\":\"M3-1126-Q\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-26T15:06:24.550Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1126-Q-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1126-Q.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/runner-restarts-2026-11-26.jsonl, status/pipeline/M3-1126-Q.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:self-update 2026-11-26T15:06:52.236Z] 보류 · busy=1 claimQueue=0 processing=false",
+  "err_tail": "[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m0/M0-1126-P.md, status/pipeline/M0-1126-P.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:05:45.103Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:05:45.802Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:05:45.832Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:m3 2026-11-26T15:06:09.213Z] [report-path] M3-1126-Q: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T15:06:24.440Z] M3-1126-Q → done · runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1126-Q-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1126-Q.json · {\"id\":\"M3-1126-Q\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-26T15:06:24.550Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1126-Q-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1126-Q.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/runner-restarts-2026-11-26.jsonl, status/pipeline/M3-1126-Q.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:self-update 2026-11-26T15:06:52.236Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:heartbeat 2026-11-26T15:10:53.087Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T15:11:25.628Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
   "git_state": {
     "ahead": 0,
     "behind": 1,
