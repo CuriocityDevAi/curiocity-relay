@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T07:20:50.777Z",
+  "at": "2026-11-26T07:23:41.947Z",
   "pid": 40164,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -23,7 +23,9 @@
       "last_activity": "2026-11-26T05:03:46.471Z"
     },
     "m3": {
-      "current": null,
+      "current": "M3-1126-G",
+      "started_at": "2026-11-26T07:23:40.547Z",
+      "model": "sonnet",
       "last_activity": "2026-11-26T05:40:23.423Z"
     },
     "r0": {
@@ -41,11 +43,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.77,
-    "compressed_gb": 2.66,
-    "swap_used_gb": 4.41,
+    "used_gb": 15.68,
+    "compressed_gb": 2.81,
+    "swap_used_gb": 4.38,
     "pressure": "normal",
-    "at": "2026-11-26T07:20:16.567Z"
+    "at": "2026-11-26T07:23:09.498Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -119,7 +121,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 151,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:12:57.259Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:13:31.143Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:13:31.143Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:13:31.865Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:13:31.865Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:14:03.411Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:14:03.411Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:14:04.144Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:14:04.144Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:14:37.725Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:14:37.725Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:14:38.337Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:14:38.337Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:15:13.275Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:15:13.275Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:15:14.051Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:15:14.051Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:heartbeat 2026-11-26T07:20:14.455Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T07:20:46.813Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m0 2026-11-26T07:20:49.296Z] pick · M0-1126-F · model=opus · display=cmux-split",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:14:04.144Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:14:37.725Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:14:37.725Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:14:38.337Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:14:38.337Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:15:13.275Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:15:13.275Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:15:14.051Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T07:15:14.051Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.2:heartbeat 2026-11-26T07:20:14.455Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-26T07:20:46.813Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:m0 2026-11-26T07:20:49.296Z] pick · M0-1126-F · model=opus · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T07:20:53.677Z] M0-1126-F → started · runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1126-F.json · {\"id\":\"M0-1126-F\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-26T07:20:53.791Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1126-F.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M0-1126-F.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m3 2026-11-26T07:23:40.547Z] pick · M3-1126-G · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 0,
