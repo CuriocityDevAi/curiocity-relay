@@ -1,3 +1,5 @@
+⚠️ 폐기(11-26) · v1.3 §5 는 Kyu 11-24 6상태 승인을 축약 — 정본은 storeport v1.4
+
 # 계약서: 손님화면(CD) ↔ POS 동기화 — v1.3 (2026-11-26 · 오케)
 
 정본 흐름: `ledger/decision-cd-pos-sync-flow-20261125.md` · 디자인: `ledger/decision-cd-pos-sync-design-20261125.md` · 캔버스 https://claude.ai/artifact/VFoyrbxnvgB7akmS3xHvVW

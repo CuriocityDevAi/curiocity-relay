@@ -3,7 +3,7 @@
 범위: 손님이 보는 iPad(또는 web) · 상태 조합(payment_phase × customer_flow.state × tender) 으로 패널을 선택.
 정본 리포: `storeport/apps/customer-display` · 현재 main(또는 운영 배포) 기준.
 흐름 정본: `ledger/decision-cd-pos-sync-flow-20261125.md` · 디자인 정본: `ledger/decision-cd-pos-sync-design-20261125.md`.
-계약서: `plans/cd-sync-contract-20261125.md` v1.3 + storeport `docs/contracts/cd-sync-contract-v1.4.md`.
+계약서: `plans/cd-sync-contract-20261125.md` v1.3 (**폐기됨 11-26**) + storeport `docs/contracts/cd-sync-contract-v1.4.md` **(정본)**.
 
 ## 레이아웃 룰 (전역)
 
@@ -38,29 +38,29 @@
 | `CD-PAYMENT-COMPLETE` | 우 2/3 · phase=paid 직후(일시) | 11-26 M0-1126-D · CD-2 (오케 제안 · Kyu 복합 승인) | "Payment complete" 패널 · 좌 1/3 영수증 유지 · 3초 뒤 keypad 로 sheet 밀림 | `storeport/apps/customer-display/src/components/cd-sync/PaymentCompletePanel.tsx:43,47,67` (testID: `payment-complete-panel` · `payment-complete-check` · `payment-complete-method`) | **일치** · 출처=오케(Kyu 직접 승인 문구 없음 · 디자인 범위 승인 11-25 17:58 의 "대부분 승인" 안에) |
 | `CD-RECEIPT-FULL` | 전체 화면 (phase=paid + flow=none) | 11-25 17:23 경우 1 "영수증 출력을 다 보여주고나서 3초 후에 > 영수증이 화면좌측으로 밀려나면서 ENTER PHONE 화면이 우측으로부터 밀려나옴. (영수증은 화면의 1/3 정도만 할애해서 보여주고 나머지 우측 2/3 영역을 전화번호 입력화면으로 배치)" (`decision-cd-pos-sync-flow-20261125.md:11`) | 영수증 전체 → 3초 → 좌 1/3 로 밀림 + 우 2/3 keypad | `cd-screen-selector.ts:82` `paid + none → receipt-full` + `receipt-then-keypad` 전환 | **일치** |
 | `CD-RECEIPT-MINI` | 좌 1/3 (paid + flow 활성) | 위 흐름 연장 · 11-24 10:52 피드백 9 "POS 영수증 = 손님 화면 영수증" (`decision-pos-phone-status-20261124.md:14`) + 11-24 11:03 승인 (`decision-pos-ui-approval-20261124.md:12`) | POS 영수증과 **같은 데이터·배치** · mini 레이아웃 · 로고 · 매장 이름 · 주소 · WA · 영수증 번호 · 일시 · Order# · 캐셔 · 품목+옵션 · 세금 · 결제 · Received · QR · Thank you | `storeport/apps/customer-display/src/components/cd-sync/LeftPaymentPanel.tsx:214,307-390` (testID: `left-receipt-mini` · `left-receipt-paper` · `mini-receipt-*` 다수) | **일치**(모양은 구현됨) · 다만 데이터 동기화 결함 = `CD-RECEIPT-FORMAT` (불일치) 참조 |
-| `CD-RECEIPT-FORMAT` | 좌 1/3 영수증 **내용** | 11-24 10:52 피드백 9 (위) + 11-26 14:19 "CD 영수증 머리 = 'Store' (매장 이름·로고·주소·영수증 번호·일시·캐셔 없음) → POS 영수증과 형태 다름" (`decision-cd-pos-sync-v3-20261126.md:17`) | POS 영수증과 **완전히 같은** 데이터(매장 이름 있음 · 로고 있음 · 주소 · 영수증 번호 · 일시 · 캐셔 · 품목 · 옵션 · 세금 · Received · QR · Thank you) | `storeport/apps/customer-display/src/components/cd-sync/LeftPaymentPanel.tsx:333` (mini-receipt-store-name) + 데이터 소스 — **운영 배포에서 "Store" 만 나옴** (매장 이름 데이터 미주입) · V3-2 결함 | **불일치** (V3-2 · storeport #454 머지 후 M0-1126-F) |
+| `CD-RECEIPT-FORMAT` | 좌 1/3 영수증 **내용** | 11-24 10:52 피드백 9 (위) + 11-26 14:19 "CD 영수증 머리 = 'Store' (매장 이름·로고·주소·영수증 번호·일시·캐셔 없음) → POS 영수증과 형태 다름" (`decision-cd-pos-sync-v3-20261126.md:17`) | POS 영수증과 **완전히 같은** 데이터(매장 이름 있음 · 로고 있음 · 주소 · 영수증 번호 · 일시 · 캐셔 · 품목 · 옵션 · 세금 · Received · QR · Thank you) | `storeport/apps/customer-display/src/components/cd-sync/LeftPaymentPanel.tsx:333` (mini-receipt-store-name) + 데이터 소스 — 매장명·주소 = storeport #454 머지 완료(f3161c8) · 나머지 필드 진행 중 | **진행 중 PR#457·#458** (매장명·주소 = storeport #454 머지 완료 · 결제수단·PB1·영수증번호·날짜 = #457 · 캐셔 이름·로고 = #458) |
 | `CD-LEFT-SCREEN-NAME` | 좌 1/3 · tendering + flow 활성 · method=cash/card | 11-25 17:23 경우 2 "좌측은 **화면명 정도만 텍스트로 보여주고 대부분 흰색으로 비어둠**" (`decision-cd-pos-sync-flow-20261125.md:12`) | 작은 텍스트 "Cash payment" 또는 "Card payment" · 흰 공간 다수 | `storeport/apps/customer-display/src/components/cd-sync/LeftPaymentPanel.tsx:103` (testID: `left-screen-name`) · selector `cd-screen-selector.ts:74-76,79` | **일치** |
 | `CD-LEFT-REMAINING` | 좌 1/3 · tendering + flow 활성 + is_split=true | 11-25 17:45 결정 6 "나눠 결제 중엔 좌 1/3 에 남은 금액, 완납 시 영수증 — OK" (`decision-cd-pos-sync-flow-20261125.md:36`) | 남은 금액 노출 · 완납 시 영수증으로 전환 | `storeport/apps/customer-display/src/components/cd-sync/LeftPaymentPanel.tsx:179-199` (testID: `left-remaining` · `left-remaining-amount`) · selector `cd-screen-selector.ts:74` | **일치** |
 | `CD-STATE-FROM-SNAPSHOT` | 전역 — "CD 어떤 화면 보일지" 선택 | 11-25 17:23 매핑 테이블(위) · 11-26 15:40 V4-1 "Next customer 후 지난 주문 (#202 cart/draft) 스냅샷이 다시 CD 에 뜸" (`decision-cd-pos-sync-v4-20261126.md:V4-1`) | 서버 snapshot 에서 `payment_phase × customer_flow.state × tender` 3개로 **순수 함수 하나로 결정** · POS reset / Next customer / phone_entry_open 이면 `isPostSettlementStale` 로 과거 snapshot 거름 | `storeport/apps/customer-display/src/lib/cd-screen-selector.ts:88-122` `selectCdView` 순수 함수 · `apps/commerce-core/src/lib/customer-flow`·`register_session/lifecycle.ts` 의 `isPostSettlementStale` | **일치** (선택기 자체) · 단 **충돌/미결 2** 참조 — V4-1 결함은 미결 3 |
 
 ## 충돌·미결 목록 (CD)
 
-### 충돌 1 (POS-HDR-PHONE 와 공유)
-- [pos-payment-flow.md](./pos-payment-flow.md) 충돌 2 와 같은 뿌리 — relay 계약서 v1.3 §5 축약(4상태) vs Kyu 승인 6상태 + 버튼 3종. **CD 쪽은 v1.3 정의를 그대로 따르지만 POS 쪽이 6상태로 돌아오면 CD 쪽 `actions`/`locked` 필드도 서버가 채워줘야 함** → storeport v1.4 §1 이 이미 정의 (`docs/contracts/cd-sync-contract-v1.4.md:12-33`). CD 앱 자체는 변화 없음(POS 가 사용).
+### ~~충돌 1~~ → 오케 결정(11-26) · relay 계약서 v1.3 폐기됨
+- [pos-payment-flow.md](./pos-payment-flow.md) ~~충돌 2~~ 오케 결정 반영 — relay `plans/cd-sync-contract-20261125.md` 폐기 · storeport v1.4 가 정본. **CD 쪽 `actions`/`locked` 필드는 storeport #456(머지 완료 · ce4f6ad) 에서 서버 측 추가됨** → storeport v1.4 §1 `docs/contracts/cd-sync-contract-v1.4.md:12-33`. CD 앱 자체는 변화 없음(POS 가 사용).
 
-### 충돌/미결 2 · **CD 상태가 서버 derive 한 줄에 좌우되는 구조** (M2-1126-J 감사 발견 2)
-- M2-1126-J 결론(`plans/phone-status-history-20261126.md` 섹션 4): "POS 칩의 단일 데이터 원천이 `customer_flow` 가 된 뒤, 서버 쪽 `deriveCustomerFlow` 한 줄 변경이 POS UI 를 조용히 바꾼다. `M0-1126-E` 가 `customer_flow.phone = phone_partial` 로 복구한 사건이 이미 발생" — 서버 변경 라운드의 영향 반경이 UI 로 확산되는 구조적 위험.
-- 현상태: `cd-screen-selector.ts` 는 순수 함수(검증 가능) · 그 입력(`PaymentPhase · CustomerFlowState · tender`) 을 derive 하는 서버 코드(`apps/commerce-core/src/lib/customer-flow`) 에 UI 영향이 집중.
-- Kyu 질문 후보: **CD 상태 결정 로직을 서버 derive 1줄(ex. `deriveCustomerFlow`)이 아닌, snapshot 필드 조합(payment_phase + customer_flow DTO) 로 "선택기 테스트 + production 입력 조건 어설션" 을 상시 유지하는 규칙** 을 추가할지. 본 명세서의 보존 테스트 1개가 그 역할을 할 수 있는지 Kyu 판단 필요.
+### ~~충돌/미결 2~~ → **보존 테스트 항목** · CD 상태가 서버 derive 한 줄에 좌우되는 구조 (M2-1126-J 감사 발견 2)
+- M2-1126-J 결론(`plans/phone-status-history-20261126.md` 섹션 4): 서버 쪽 `deriveCustomerFlow` 한 줄 변경이 POS UI 를 조용히 바꾼다 — 구조적 위험.
+- 현상태: `cd-screen-selector.ts` 는 순수 함수(검증 가능) · 그 입력을 derive 하는 서버 코드에 UI 영향이 집중.
+- **보존 테스트 항목(통합 테스트 필요)**: `POS-HDR-PHONE` — `customer_flow` 입력 항상 존재 조건(production 입력 조건) 통합 테스트 · `customer_flow` 입력 + ① 버튼 노출 + ④ Re-enter + ⑤ Ask again 한 번에 어설션하는 테스트. 다음 라운드에서 추가. _(Kyu 질문 아님 — 기술 판단으로 처리)_
 
-### 미결 1 · `CD-RECEIPT-FORMAT` 매장 데이터 주입 (V3-2)
-- 11-26 14:19 "CD 영수증 머리 = 'Store' … POS 영수증과 형태 다름" (`decision-cd-pos-sync-v3-20261126.md:17`) — 데이터 미주입. `storeport#454` 머지 후 M0-1126-F 가 수정 예정. Kyu 는 "**POS 영수증 = 손님 영수증**" 승인 유지. 지금은 **운영 배포에서 결함 노출 중**.
+### ~~미결 1~~ → 진행 중 PR · `CD-RECEIPT-FORMAT` 매장 데이터 주입 (V3-2)
+- 매장명·주소: storeport #454 머지 완료(f3161c8). 결제수단·PB1·영수증번호·날짜: storeport #457 진행 중. 캐셔 이름·로고: storeport #458 진행 중. Kyu 승인 "**POS 영수증 = 손님 영수증**" 유지. _(Kyu 질문 아님)_
 
 ### 미결 2 · PB1 세율 표시(11% vs 10%)
 - 11-25 17:58 (`decision-cd-pos-sync-design-20261125.md:21`) "PB1 세율: 앱 라벨 11% · 금액은 10% (120,000 → 12,000) — Kyu 확인 요청" · 현재까지 Kyu 명시 결정 없음(= **미결**).
 
-### 미결 3 · V4-1 lingering previous order snapshot
-- 11-26 15:40 "Next customer 을 눌렀어. > 고객쪽화면이 초기화면으로 돌아옴. (정상) 그런데, 잠시 시간이 흐르니, 첨부1처럼 기존매출 Order 상세내역이 고객화면에 떴어(불량)" (`decision-cd-pos-sync-v4-20261126.md:6`). 수정은 `storeport#454` (M0-1126-G) 이후 발부.
+### ~~미결 3~~ → 진행 중 PR · V4-1 lingering previous order snapshot
+- 11-26 15:40 "Next customer 를 눌렀어 … 기존매출 Order 상세내역이 고객화면에 떴어(불량)" (`decision-cd-pos-sync-v4-20261126.md:6`). storeport #457 (진행 중) 에서 수정 중. _(Kyu 질문 아님)_
 
 ## 보존 테스트 목록 (CD)
 
@@ -79,7 +79,7 @@
 | `CD-PAYMENT-COMPLETE` | 결제 완료 직후 `payment-complete-panel` → 3초 뒤 keypad | `apps/customer-display/e2e/cd-pos-sync-v2.spec.ts` (CD-2) |
 | `CD-RECEIPT-FULL` | paid + flow=none → `receipt-full` · 3초 뒤 `receipt-then-keypad` | `apps/customer-display/e2e/receipt-done.spec.ts` 부분 |
 | `CD-RECEIPT-MINI` | paid + flow 활성 → `left-receipt-mini` + mini-receipt-* 필드 | `apps/customer-display/e2e/receipt-same-as-pos.spec.ts` |
-| `CD-RECEIPT-FORMAT` | mini-receipt-store-name ≠ "Store" (실제 매장 이름) · mini-receipt-store-logo 자산 존재 | **없음** (V3-2 해소 뒤) |
+| `CD-RECEIPT-FORMAT` | mini-receipt-store-name ≠ "Store" (실제 매장 이름) · mini-receipt-store-logo 자산 존재 | **없음** (#457·#458 머지 뒤 추가) |
 | `CD-LEFT-SCREEN-NAME` | tendering + flow + cash/card → `left-screen-name` | `apps/customer-display/e2e/cd-sync-flow.spec.ts` 부분 |
 | `CD-LEFT-REMAINING` | is_split + flow 활성 → `left-remaining` + `left-remaining-amount` | 없음 |
-| `CD-STATE-FROM-SNAPSHOT` | 선택기 순수 함수 + production 입력 조건 통합 어설션(= 서버 derive 변경이 UI 를 조용히 바꾸는 것을 막는 테스트) | **없음** (M2-1126-J 감사 발견 2 — 충돌 해소 뒤) |
+| `CD-STATE-FROM-SNAPSHOT` | 선택기 순수 함수 + production 입력 조건 통합 어설션(= 서버 derive 변경이 UI 를 조용히 바꾸는 것을 막는 테스트) | **없음** (보존 테스트 항목 — 다음 라운드 추가 예정) |
