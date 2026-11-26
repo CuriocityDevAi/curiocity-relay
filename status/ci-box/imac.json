@@ -1,0 +1,48 @@
+{
+  "ts": "2026-11-26T03:29:45Z",
+  "uptime": {
+    "uptime_secs": 35868,
+    "load_1": 8.62,
+    "load_5": 15.35,
+    "load_15": 14.19
+  },
+  "memory": {
+    "free_pct": 2,
+    "swap_used_mb": 0.0,
+    "swap_free_mb": 0.0
+  },
+  "disk": {
+    "root_free_gb": 94,
+    "runner_work_free_gb": 94
+  },
+  "thermal": {
+    "throttled": true,
+    "cpu_speed_limit_pct": 100
+  },
+  "runners": {
+    "listener_count": 0,
+    "worker_count": 0
+  },
+  "github": {
+    "latency_ms": 104,
+    "reachable": true
+  },
+  "netspeed": {
+    "dl_mbps": 0,
+    "ul_mbps": 0,
+    "rpm": 0,
+    "cached": false
+  },
+  "postgres": {
+    "alive": true
+  },
+  "tailscale": {
+    "up": false,
+    "ip": ""
+  },
+  "health": "bad",
+  "reasons": [
+    "memory_free_2pct_lt_15",
+    "runners_0_lt_4"
+  ]
+}
