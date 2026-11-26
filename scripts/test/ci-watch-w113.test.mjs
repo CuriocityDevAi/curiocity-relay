@@ -173,15 +173,16 @@ test('W10-iMAC줄: PR · PT · 잡 값 포함', () => {
   assert.ok(foundLine.includes('잡 57'), `잡 57 없음: "${foundLine}"`);
 });
 
-test('W10-cloud줄: PR · PT · 잡 · 넘김 X/Y 포함', () => {
+test('W10-cloud줄(M2-1126-S): PR · PT · 잡 · 넘김 폐지 표시 (cloud>0 → 위반 경고)', () => {
   const lines = renderLayout(makeLayoutData({ cloudPR: 8, cloudPT: 6, cloudTodayCount: 3, cloudLimit: 5 }));
   const foundLine = lines.map(l => stripAnsi(l)).find(l => l.includes('클라우드 오늘'));
   assert.ok(foundLine, '클라우드 오늘 줄 없음');
   assert.ok(foundLine.includes('PR 8'),  `PR 8 없음: "${foundLine}"`);
   assert.ok(foundLine.includes('PT 6'),  `PT 6 없음: "${foundLine}"`);
   assert.ok(foundLine.includes('잡 24'), `잡 24 없음: "${foundLine}"`);
-  assert.ok(foundLine.includes('넘김'),  `넘김 없음: "${foundLine}"`);
-  assert.ok(foundLine.includes('3/5'),   `3/5 없음: "${foundLine}"`);
+  // M2-1126-S: "넘김 X/Y" 는 폐지. cloud>0 이면 "넘김 폐지 위반" 경고.
+  assert.ok(/넘김\s*폐지/.test(foundLine), `넘김 폐지 라벨 없음: "${foundLine}"`);
+  assert.ok(foundLine.includes('위반'), `cloud>0 인데 위반 라벨 없음: "${foundLine}"`);
 });
 
 test('W10-전체줄(v1.15): 세 줄 PR·PT·잡 단순 합 (summary* 는 고유 참고용)', () => {
@@ -199,20 +200,27 @@ test('W10-전체줄(v1.15): 세 줄 PR·PT·잡 단순 합 (summary* 는 고유 
     `(고유 PR 15) 참고 괄호 없음: "${foundLine}"`);
 });
 
-test('W10-넘김빨강: cloudTodayCount >= cloudLimit → 넘김 빨강 색상', () => {
-  const lines = renderLayout(makeLayoutData({ cloudTodayCount: 5, cloudLimit: 5 }));
+test('W10-넘김폐지위반(M2-1126-S): 클라우드 잡>0 → 빨강 위반 경고', () => {
+  // M2-1126-S 넘김 폐지: 한도 소진 개념 없음. 클라우드 잡이 생겼다는 것 자체가 위반.
+  const lines = renderLayout(makeLayoutData({
+    cloudData: { realCount: 3, limit: 5, totalMin: 2, last3: [] },
+    cloudTodayCount: 3, cloudLimit: 5,
+  }));
   const rawLine = lines.find(l => stripAnsi(l).includes('클라우드 오늘'));
   assert.ok(rawLine, '클라우드 오늘 줄 없음');
-  assert.ok(rawLine.includes('\x1b[31m'), `넘김 소진인데 빨강 없음: "${rawLine.slice(0, 120)}"`);
-  assert.ok(stripAnsi(rawLine).includes('5/5'), `5/5 없음`);
+  assert.ok(rawLine.includes('\x1b[31m'), `클라우드 잡>0 인데 빨강 없음: "${rawLine.slice(0, 160)}"`);
+  assert.ok(stripAnsi(rawLine).includes('위반'), `위반 라벨 없음`);
 });
 
-test('W10-넘김미소진: cloudTodayCount < cloudLimit → 넘김 빨강 없음', () => {
-  const lines = renderLayout(makeLayoutData({ cloudTodayCount: 2, cloudLimit: 5 }));
+test('W10-정상(M2-1126-S): 클라우드 잡 0 → 녹색 "넘김 폐지"', () => {
+  const lines = renderLayout(makeLayoutData({
+    cloudData: { realCount: 0, limit: 5, totalMin: 0, last3: [] },
+    cloudTodayCount: 0, cloudLimit: 5,
+  }));
   const rawLine = lines.find(l => stripAnsi(l).includes('클라우드 오늘'));
   assert.ok(rawLine, '클라우드 오늘 줄 없음');
-  assert.ok(stripAnsi(rawLine).includes('2/5'), `2/5 없음`);
-  assert.ok(!rawLine.includes('\x1b[31m'), `미소진인데 빨강 있음`);
+  assert.ok(!rawLine.includes('\x1b[31m'), `클라우드 잡=0 인데 빨강 있음: "${rawLine.slice(0, 160)}"`);
+  assert.ok(/넘김\s*폐지/.test(stripAnsi(rawLine)), `넘김 폐지 라벨 없음`);
 });
 
 // ─── W10 일관성: 오늘 처리(잡) 클라우드 칸 == 클라우드 오늘 잡 값 ────────────
