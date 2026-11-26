@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T15:05:44.127Z",
+  "at": "2026-11-26T15:06:24.392Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -23,10 +23,8 @@
       "last_activity": "2026-11-26T14:45:57.057Z"
     },
     "m3": {
-      "current": "M3-1126-Q",
-      "started_at": "2026-11-26T14:24:55.261Z",
-      "model": "sonnet",
-      "last_activity": null
+      "current": null,
+      "last_activity": "2026-11-26T15:06:23.309Z"
     },
     "r0": {
       "current": null,
@@ -43,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.63,
-    "compressed_gb": 4.36,
+    "used_gb": 15.9,
+    "compressed_gb": 4.35,
     "swap_used_gb": 3.13,
     "pressure": "normal",
-    "at": "2026-11-26T15:05:17.472Z"
+    "at": "2026-11-26T15:06:21.966Z"
   },
   "mem_peak_today": {
     "date": "2026-11-26",
@@ -119,9 +117,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 5,
+  "isolated_reports_collected": 6,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T14:58:45.122Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:r0 2026-11-26T15:01:14.710Z] [report-path] R0-1126-AM: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-26T15:01:25.682Z] R0-1126-AM → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AM-report.md · model=sonnet · 로그: /\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-AM.json · {\"id\":\"R0-1126-AM\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T15:01:25.787Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AM-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-AM.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-AM.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m0 2026-11-26T15:05:07.271Z] pick · M0-1126-P · model=opus · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T15:05:12.527Z] M0-1126-P → started · runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1126-P.json · {\"id\":\"M0-1126-P\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-26T15:05:12.635Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1126-P.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m0/M0-1126-P.md, status/pipeline/M0-1126-P.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)",
+  "err_tail": "[hub-runner-v8.3.2:claim 2026-11-26T15:01:25.682Z] R0-1126-AM → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AM-report.md · model=sonnet · 로그: /\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1126-AM.json · {\"id\":\"R0-1126-AM\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-26T15:01:25.787Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1126-AM-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1126-AM.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1126-AM.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:m0 2026-11-26T15:05:07.271Z] pick · M0-1126-P · model=opus · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-26T15:05:12.527Z] M0-1126-P → started · runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=cl\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1126-P.json · {\"id\":\"M0-1126-P\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-26T15:05:12.635Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=queue-line · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1126-P.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): queue/m0/M0-1126-P.md, status/pipeline/M0-1126-P.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:05:45.103Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:05:45.802Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T15:05:45.832Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:m3 2026-11-26T15:06:09.213Z] [report-path] M3-1126-Q: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 1,
