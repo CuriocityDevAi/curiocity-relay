@@ -77,3 +77,19 @@ clone 시 credential helper 를 `gh auth git-credential` 로 자동 설정.
 ## 로그
 
 `~/Library/Logs/ci-box-health.log`
+
+## 설치
+
+heartbeat 전용 clone 경로(`~/projects/curiocity-relay-heartbeat`)를 사용한다.
+기존 `~/projects/curiocity-relay` tarball 폴더는 건드리지 않는다.
+
+아이맥 SSH 접속 후 아래 명령을 한 줄씩 실행:
+
+```bash
+ssh KyuLee@100.82.115.70
+[ -d ~/projects/curiocity-relay-heartbeat/.git ] && git -C ~/projects/curiocity-relay-heartbeat pull --ff-only || git clone --depth=1 https://github.com/CuriocityDevAi/curiocity-relay.git ~/projects/curiocity-relay-heartbeat
+gh auth status || gh auth login
+bash ~/projects/curiocity-relay-heartbeat/scripts/ci-box/install-health.sh
+bash ~/projects/curiocity-relay-heartbeat/scripts/ci-box/health.sh --dry-run
+bash ~/projects/curiocity-relay-heartbeat/scripts/ci-box/install-health.sh --status
+```

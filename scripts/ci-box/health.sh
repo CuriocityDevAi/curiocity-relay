@@ -320,7 +320,7 @@ push_to_relay() {
         fi
         retry=$(( retry - 1 ))
         _log "push 실패 — rebase 재시도 (남은 횟수: $retry)"
-        git -C "$RELAY_CLONE_DIR" fetch --depth=5 origin main 2>/dev/null || break
+        git -C "$RELAY_CLONE_DIR" fetch origin main 2>/dev/null || break
         if ! git -C "$RELAY_CLONE_DIR" rebase origin/main 2>&1 | tee -a "$LOG_FILE"; then
             git -C "$RELAY_CLONE_DIR" rebase --abort 2>/dev/null || true
             break
