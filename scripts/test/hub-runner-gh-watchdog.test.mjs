@@ -26,6 +26,9 @@
 //   T22 sleepGapMs>0 · Runner.Worker alive → kickstart skip (busy 러너 보호).
 //   T23 data-partial + GH offline + in_progress=0 + no Worker → partial-but-safe restart.
 //   T24 data-partial + GH online → data-partial skip (기존 동작 유지).
+// M0-1127-D 추가 (REQ2):
+//   T25 checkLaunchdRegisteredFn → false → 모든 경로에서 skip(launchd-disabled) · exec/kickstart 0.
+//   T26 이전 false → 이번 true → warn "등록됨" 1회 · 감시 재개(exec 호출).
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -44,6 +47,7 @@ import {
   DEFAULT_STALE_CACHE_MS,
   DEFAULT_RUNNER_PATHS,
   _resetGhRunnerWatchdog,
+  defaultCheckLaunchdRegistered,
 } from '../lib/gh-runner-watchdog.mjs';
 
 function makeCiData(overrides = {}) {
@@ -616,6 +620,95 @@ test('T24: data-partial · fetchRunnerStatusesFn 미주입 → 기존 동작(전
     assert.equal(a.action, 'skip');
     assert.equal(a.reason, 'data-partial');
   }
+});
+
+// M0-1127-D: launchd 등록 여부 체크 (꺼진 맥북 러너 조용히 건너뜀)
+test('T25: checkLaunchdRegisteredFn → false → 모든 경로에서 skip(launchd-disabled) · exec 0', async () => {
+  _resetGhRunnerWatchdog();
+  const root = tmp();
+  const stateFile = join(root, '.cache', 'st.json');
+  const execCalls = [];
+  const kicked = [];
+  const ciData = makeCiData({
+    partial: true,
+    heavy: { queued: 2, oldest_queued_min: 20, in_progress: [] },
+    light: { queued: 0, in_progress: [] },
+  });
+  const res = await runOnce({
+    ciData,
+    repoRoot: root,
+    stateFile,
+    runnerPaths: { 'mac-heavy': '/svc-heavy', 'mac-light': '/svc-light' },
+    runnerLabels: { 'mac-heavy': 'label-heavy', 'mac-light': 'label-light' },
+    runnerGhNames: {
+      'mac-heavy': { repo: 'org/r', name: 'rn-heavy' },
+      'mac-light': { repo: 'org/r', name: 'rn-light' },
+    },
+    checkLaunchdRegisteredFn: async () => false,
+    fetchRunnerStatusesFn: async () => [
+      { name: 'rn-heavy', status: 'offline', busy: false },
+      { name: 'rn-light', status: 'offline', busy: false },
+    ],
+    execFn: async (svc) => { execCalls.push(svc); },
+    kickstartFn: async (lbl) => { kicked.push(lbl); },
+    workerCheckFn: async () => false,
+    recordFn: () => {},
+    now: 1_000_000,
+  });
+  assert.equal(execCalls.length, 0, 'exec 호출 없어야 함');
+  assert.equal(kicked.length, 0, 'kickstart 호출 없어야 함');
+  for (const a of res.actions) {
+    assert.equal(a.action, 'skip');
+    assert.equal(a.reason, 'launchd-disabled');
+  }
+});
+
+test('T26: 이전 false → 이번 true → warn "등록됨" 1회 · 감시 재개(exec 호출)', async () => {
+  _resetGhRunnerWatchdog();
+  const root = tmp();
+  const stateFile = join(root, '.cache', 'st.json');
+  const execCalls = [];
+  const warns = [];
+  const ciData = makeCiData({
+    heavy: { queued: 2, oldest_queued_min: 20, in_progress: [] },
+    light: { queued: 0, in_progress: [] },
+  });
+
+  // 1st tick: not registered → skip, log "미등록"
+  await runOnce({
+    ciData,
+    repoRoot: root,
+    stateFile,
+    runnerPaths: { 'mac-heavy': '/svc-heavy' },
+    runnerLabels: { 'mac-heavy': 'label-heavy' },
+    checkLaunchdRegisteredFn: async () => false,
+    execFn: async (svc) => { execCalls.push(svc); },
+    workerCheckFn: async () => false,
+    recordFn: () => {},
+    warn: (m) => { warns.push(m); },
+    now: 1_000_000,
+  });
+  assert.equal(execCalls.length, 0);
+  assert.ok(warns.some((w) => w.includes('미등록')), '첫 tick 미등록 로그 필요');
+
+  const warnsBefore = warns.length;
+
+  // 2nd tick (same stateFile): now registered
+  await runOnce({
+    ciData,
+    repoRoot: root,
+    stateFile,
+    runnerPaths: { 'mac-heavy': '/svc-heavy' },
+    runnerLabels: { 'mac-heavy': 'label-heavy' },
+    checkLaunchdRegisteredFn: async () => true,
+    execFn: async (svc) => { execCalls.push(svc); },
+    workerCheckFn: async () => false,
+    recordFn: () => {},
+    warn: (m) => { warns.push(m); },
+    now: 2_000_000,
+  });
+  assert.ok(warns.slice(warnsBefore).some((w) => w.includes('등록됨')), '재개 로그 필요');
+  assert.equal(execCalls.length, 1, '감시 재개 → exec 호출');
 });
 
 // ---- selftest 진입점 (hub-runner --selftest-watchdog-fork-wake 에서 호출) ----

@@ -184,6 +184,20 @@ export function judgeStuck(ciData, kind, opts = {}) {
   };
 }
 
+// launchctl print gui/<uid>/<label> — exit 0 = 등록됨, non-zero = 미등록.
+export async function defaultCheckLaunchdRegistered(label, uid, opts = {}) {
+  const timeoutMs = opts.timeoutMs ?? 5_000;
+  try {
+    await execFileAsync('launchctl', ['print', `gui/${uid}/${label}`], {
+      timeout: timeoutMs,
+      maxBuffer: 64 * 1024,
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function emptyState() {
   return {
     lastRestartAt: {},         // {kind: ms}
@@ -191,6 +205,7 @@ function emptyState() {
     consecutiveFailures: {},   // {kind: int}
     alerted: {},               // {kind: bool}
     alert: null,               // 최근 gh_runner_alert 전문 (없으면 null)
+    launchdRegistered: {},     // {kind: bool|undefined} — 이전 tick 등록 여부 (상태 변화 로그용)
   };
 }
 
@@ -204,6 +219,7 @@ function readState(stateFile) {
       consecutiveFailures: raw.consecutiveFailures || {},
       alerted: raw.alerted || {},
       alert: raw.alert || null,
+      launchdRegistered: raw.launchdRegistered || {},
     };
   } catch {
     return emptyState();
@@ -262,6 +278,8 @@ function defaultExec(svcPath, timeoutMs) {
 //   · workerCheckFn(runnerDir): injectable — returns true if Runner.Worker alive.
 //   · fetchRunnerStatusesFn(repo): injectable — GitHub API runner list (M1-1125-G).
 //   · kickstartFn(label, uid, opts): injectable — launchctl kickstart -k (M1-1125-G).
+//   · checkLaunchdRegisteredFn(label, uid, opts): injectable — launchd 등록 여부 확인 (M0-1127-D).
+//     null 이면 체크 생략 (기존 동작). hub-runner 가 명시적으로 주입 → 꺼진 맥북 러너 조용히 건너뜀.
 //   · uid: OS user UID for launchctl (M1-1125-G, default: os.userInfo().uid).
 //   · recordFn(record): injectable jsonl append.
 //   · staleCacheMs: ci.data.at 허용 최대 지연.
@@ -286,6 +304,8 @@ export async function runOnce(opts = {}) {
   // null 로 두면 sleep-wake · partial-but-safe 비활성. hub-runner 가 명시적으로 주입.
   const fetchRunnerStatusesFn = opts.fetchRunnerStatusesFn ?? null;
   const kickstartFn = opts.kickstartFn ?? null;
+  // null 이면 launchd 체크 생략 (기존 동작 유지). hub-runner 가 주입 시 꺼진 러너 건너뜀.
+  const checkLaunchdRegisteredFn = opts.checkLaunchdRegisteredFn ?? null;
   const uid = opts.uid ?? (() => { try { return userInfo().uid; } catch { return 502; } })();
   const recordFn = opts.recordFn || ((rec) => defaultRecord(repoRoot, rec));
   const now = opts.now ?? Date.now();
@@ -293,6 +313,31 @@ export async function runOnce(opts = {}) {
 
   const state = readState(stateFile);
   const actions = [];
+
+  // M0-1127-D: launchd 등록 여부 사전 체크 — 꺼진 맥북 러너는 조용히 건너뜀.
+  // checkLaunchdRegisteredFn 미주입 시 전부 활성으로 간주 (기존 동작 유지).
+  const launchdEnabled = new Set(Object.keys(runnerPaths));
+  if (checkLaunchdRegisteredFn) {
+    for (const kind of Object.keys(runnerPaths)) {
+      if (!runnerPaths[kind]) continue;
+      const label = runnerLabels[kind];
+      if (!label) continue;
+      let registered;
+      try {
+        registered = await checkLaunchdRegisteredFn(label, uid);
+      } catch {
+        registered = true;  // 안전측: 오류 시 활성으로 간주
+      }
+      const prev = state.launchdRegistered[kind];
+      if (!registered && prev !== false) {
+        warn(`[gh-runner-watchdog] ${kind} launchd 미등록 — 감시 중지 (등록 시 재개)`);
+      } else if (registered && prev === false) {
+        warn(`[gh-runner-watchdog] ${kind} launchd 등록됨 — 감시 재개`);
+      }
+      state.launchdRegistered[kind] = registered;
+      if (!registered) launchdEnabled.delete(kind);
+    }
+  }
 
   // GH API 결과 캐시 — 같은 repo 를 sleep-wake · partial-but-safe 에서 중복 호출 방지.
   const _repoCache = new Map();
@@ -319,6 +364,10 @@ export async function runOnce(opts = {}) {
     for (const kind of Object.keys(runnerPaths)) {
       const svc = runnerPaths[kind];
       if (!svc) continue;
+      if (!launchdEnabled.has(kind)) {
+        actions.push({ kind, action: 'skip', reason: 'launchd-disabled', event: 'wake' });
+        continue;
+      }
       const label = runnerLabels[kind];
       if (!label) continue;
 
@@ -378,6 +427,10 @@ export async function runOnce(opts = {}) {
       for (const kind of Object.keys(runnerPaths)) {
         const svc = runnerPaths[kind];
         if (!svc) continue;
+        if (!launchdEnabled.has(kind)) {
+          actions.push({ kind, action: 'skip', reason: 'launchd-disabled' });
+          continue;
+        }
 
         const ghStatus = await getGhStatusFor(kind);
         if (!ghStatus || ghStatus.status !== 'offline') {
@@ -474,6 +527,10 @@ export async function runOnce(opts = {}) {
   for (const kind of Object.keys(runnerPaths)) {
     const svc = runnerPaths[kind];
     if (!svc) continue;
+    if (!launchdEnabled.has(kind)) {
+      actions.push({ kind, action: 'skip', reason: 'launchd-disabled' });
+      continue;
+    }
 
     const judgment = judgeStuck(ciData, kind, { thresholdMin });
 

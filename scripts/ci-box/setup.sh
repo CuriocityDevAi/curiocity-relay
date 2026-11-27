@@ -60,11 +60,16 @@ echo "=============================="
 echo "  GitHub Actions 러너 등록"
 echo "=============================="
 echo ""
-echo "러너 4개를 등록합니다:"
+echo "러너 6개를 등록합니다 (M2-1126-T: heavy 워커 2개로 증설 — 메모리 실측 후 활성화):"
 echo "  1. storeport heavy  (label: curiocity-mac)"
-echo "  2. storeport light  (label: curiocity-mac-light)"
-echo "  3. fork heavy       (label: curiocity-mac-fork)"
-echo "  4. fork light       (label: curiocity-mac-fork-light)"
+echo "  2. storeport heavy2 (label: curiocity-mac)   ← heavy 2번째"
+echo "  3. storeport light  (label: curiocity-mac-light)"
+echo "  4. fork heavy       (label: curiocity-mac-fork)"
+echo "  5. fork heavy2      (label: curiocity-mac-fork)   ← heavy 2번째"
+echo "  6. fork light       (label: curiocity-mac-fork-light)"
+echo ""
+echo "  주의: Playwright 포트 충돌 (5173) — storeport#464·fork#278 머지 후"
+echo "        apps/commerce-core/playwright.config.ts 수정(CI_VITE_PORT 파라미터화) 필수."
 echo ""
 echo "토큰 얻는 방법 (각 저장소마다):"
 echo "  GitHub → 저장소 Settings → Actions → Runners → New self-hosted runner"
@@ -73,20 +78,24 @@ echo ""
 
 # 러너 이름 = <role>-<repo>-<heavy|light>-<shorthost>
 RUNNER_STOREPORT_HEAVY="${ROLE}-storeport-heavy-${SHORT_HOST}"
+RUNNER_STOREPORT_HEAVY2="${ROLE}-storeport-heavy2-${SHORT_HOST}"
 RUNNER_STOREPORT_LIGHT="${ROLE}-storeport-light-${SHORT_HOST}"
 RUNNER_FORK_HEAVY="${ROLE}-fork-heavy-${SHORT_HOST}"
+RUNNER_FORK_HEAVY2="${ROLE}-fork-heavy2-${SHORT_HOST}"
 RUNNER_FORK_LIGHT="${ROLE}-fork-light-${SHORT_HOST}"
 
 REPO_STOREPORT="CuriocityDevAi/storeport"
 REPO_FORK="CuriocityDevAi/agilo-medusa-pos-fork"
 
 if [ "$DRY_RUN" = "1" ]; then
-    echo "[DRY] storeport heavy runner: $RUNNER_STOREPORT_HEAVY  labels=self-hosted,macOS,ARM64,curiocity-mac"
-    echo "[DRY] storeport light runner: $RUNNER_STOREPORT_LIGHT  labels=self-hosted,macOS,ARM64,curiocity-mac-light"
-    echo "[DRY] fork heavy runner:      $RUNNER_FORK_HEAVY       labels=self-hosted,macOS,ARM64,curiocity-mac-fork"
-    echo "[DRY] fork light runner:      $RUNNER_FORK_LIGHT       labels=self-hosted,macOS,ARM64,curiocity-mac-fork-light"
-    echo "[DRY] ./svc.sh install x4  (runsvc.sh 복사 · plist 생성 · 로그 디렉토리)"
-    echo "[DRY] ./svc.sh start x4   (launchctl load)"
+    echo "[DRY] storeport heavy runner:  $RUNNER_STOREPORT_HEAVY   labels=self-hosted,macOS,ARM64,curiocity-mac"
+    echo "[DRY] storeport heavy2 runner: $RUNNER_STOREPORT_HEAVY2  labels=self-hosted,macOS,ARM64,curiocity-mac"
+    echo "[DRY] storeport light runner:  $RUNNER_STOREPORT_LIGHT   labels=self-hosted,macOS,ARM64,curiocity-mac-light"
+    echo "[DRY] fork heavy runner:       $RUNNER_FORK_HEAVY        labels=self-hosted,macOS,ARM64,curiocity-mac-fork"
+    echo "[DRY] fork heavy2 runner:      $RUNNER_FORK_HEAVY2       labels=self-hosted,macOS,ARM64,curiocity-mac-fork"
+    echo "[DRY] fork light runner:       $RUNNER_FORK_LIGHT        labels=self-hosted,macOS,ARM64,curiocity-mac-fork-light"
+    echo "[DRY] ./svc.sh install x6  (runsvc.sh 복사 · plist 생성 · 로그 디렉토리)"
+    echo "[DRY] ./svc.sh start x6   (launchctl load)"
 else
     echo "storeport 등록 토큰 입력 (echo 없음):"
     read -rs TOKEN_STOREPORT
@@ -96,10 +105,12 @@ else
     read -rs TOKEN_FORK
     echo ""
 
-    register_runner "sp-heavy" "$REPO_STOREPORT" "$RUNNER_STOREPORT_HEAVY" "curiocity-mac" "$TOKEN_STOREPORT"
-    register_runner "sp-light" "$REPO_STOREPORT" "$RUNNER_STOREPORT_LIGHT" "curiocity-mac-light" "$TOKEN_STOREPORT"
-    register_runner "fork-heavy" "$REPO_FORK" "$RUNNER_FORK_HEAVY" "curiocity-mac-fork" "$TOKEN_FORK"
-    register_runner "fork-light" "$REPO_FORK" "$RUNNER_FORK_LIGHT" "curiocity-mac-fork-light" "$TOKEN_FORK"
+    register_runner "sp-heavy"  "$REPO_STOREPORT" "$RUNNER_STOREPORT_HEAVY"  "curiocity-mac"            "$TOKEN_STOREPORT"
+    register_runner "sp-heavy2" "$REPO_STOREPORT" "$RUNNER_STOREPORT_HEAVY2" "curiocity-mac"            "$TOKEN_STOREPORT"
+    register_runner "sp-light"  "$REPO_STOREPORT" "$RUNNER_STOREPORT_LIGHT"  "curiocity-mac-light"      "$TOKEN_STOREPORT"
+    register_runner "fork-heavy"  "$REPO_FORK" "$RUNNER_FORK_HEAVY"  "curiocity-mac-fork"       "$TOKEN_FORK"
+    register_runner "fork-heavy2" "$REPO_FORK" "$RUNNER_FORK_HEAVY2" "curiocity-mac-fork"       "$TOKEN_FORK"
+    register_runner "fork-light"  "$REPO_FORK" "$RUNNER_FORK_LIGHT"  "curiocity-mac-fork-light" "$TOKEN_FORK"
 
     unset TOKEN_STOREPORT TOKEN_FORK
 fi
@@ -109,10 +120,12 @@ echo "=============================="
 echo "  러너 상태 검증 (launchd PID)"
 echo "=============================="
 _verify_all_ok=0
-verify_runner_pid "$REPO_STOREPORT" "$RUNNER_STOREPORT_HEAVY" || _verify_all_ok=1
-verify_runner_pid "$REPO_STOREPORT" "$RUNNER_STOREPORT_LIGHT" || _verify_all_ok=1
-verify_runner_pid "$REPO_FORK"      "$RUNNER_FORK_HEAVY"      || _verify_all_ok=1
-verify_runner_pid "$REPO_FORK"      "$RUNNER_FORK_LIGHT"      || _verify_all_ok=1
+verify_runner_pid "$REPO_STOREPORT" "$RUNNER_STOREPORT_HEAVY"  || _verify_all_ok=1
+verify_runner_pid "$REPO_STOREPORT" "$RUNNER_STOREPORT_HEAVY2" || _verify_all_ok=1
+verify_runner_pid "$REPO_STOREPORT" "$RUNNER_STOREPORT_LIGHT"  || _verify_all_ok=1
+verify_runner_pid "$REPO_FORK"      "$RUNNER_FORK_HEAVY"       || _verify_all_ok=1
+verify_runner_pid "$REPO_FORK"      "$RUNNER_FORK_HEAVY2"      || _verify_all_ok=1
+verify_runner_pid "$REPO_FORK"      "$RUNNER_FORK_LIGHT"       || _verify_all_ok=1
 if [ "$_verify_all_ok" != "0" ]; then
     echo ""
     printf '\033[31m[ci-box] 경고: 일부 러너가 시작되지 않았습니다. 위 stderr.log 를 확인하세요.\033[0m\n' >&2
@@ -124,10 +137,12 @@ echo "=============================="
 echo "  러너 라벨 검증 (GitHub API)"
 echo "=============================="
 _label_all_ok=0
-verify_runner_labels "$REPO_STOREPORT" "$RUNNER_STOREPORT_HEAVY" "curiocity-mac"            || _label_all_ok=1
-verify_runner_labels "$REPO_STOREPORT" "$RUNNER_STOREPORT_LIGHT" "curiocity-mac-light"      || _label_all_ok=1
-verify_runner_labels "$REPO_FORK"      "$RUNNER_FORK_HEAVY"      "curiocity-mac-fork"       || _label_all_ok=1
-verify_runner_labels "$REPO_FORK"      "$RUNNER_FORK_LIGHT"      "curiocity-mac-fork-light" || _label_all_ok=1
+verify_runner_labels "$REPO_STOREPORT" "$RUNNER_STOREPORT_HEAVY"  "curiocity-mac"            || _label_all_ok=1
+verify_runner_labels "$REPO_STOREPORT" "$RUNNER_STOREPORT_HEAVY2" "curiocity-mac"            || _label_all_ok=1
+verify_runner_labels "$REPO_STOREPORT" "$RUNNER_STOREPORT_LIGHT"  "curiocity-mac-light"      || _label_all_ok=1
+verify_runner_labels "$REPO_FORK"      "$RUNNER_FORK_HEAVY"       "curiocity-mac-fork"       || _label_all_ok=1
+verify_runner_labels "$REPO_FORK"      "$RUNNER_FORK_HEAVY2"      "curiocity-mac-fork"       || _label_all_ok=1
+verify_runner_labels "$REPO_FORK"      "$RUNNER_FORK_LIGHT"       "curiocity-mac-fork-light" || _label_all_ok=1
 if [ "$_label_all_ok" != "0" ]; then
     echo ""
     printf '\033[31m[ci-box] 경고: 라벨이 누락된 러너가 있습니다. 위 수동 추가 명령을 실행하세요.\033[0m\n' >&2

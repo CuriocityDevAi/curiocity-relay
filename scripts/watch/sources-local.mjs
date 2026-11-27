@@ -1,7 +1,8 @@
 // scripts/watch/sources-local.mjs  ci-watch v2.0 · 로컬 데이터 수집기
 // 원칙: 이 모듈은 GitHub 호출을 하지 않는다.
 // 출처:
-//   - relay clone (REPO_ROOT): queue/·m*/·r0/·status/claims/·status/runners/all.json·status/ci/<date>.jsonl
+//   - relay clone (REPO_ROOT): queue/·m*/·r0/·status/claims/·status/ci/<date>.jsonl
+//   - ~/.hub-runner/status-wt/all.json (M2-1126-T: status-wt 분리)
 //   - ~/.hub-runner/reports/<hub>/<id>/report.md (M1-1124-P 리포트 경로 형식)
 //   - status/pipeline/<id>.jsonl (R8 이후) — 없으면 빈 어댑터.
 //
@@ -35,7 +36,7 @@ export function resolvePaths(repoRoot) {
     repoRoot,
     queueRoot:   join(repoRoot, 'queue'),
     claimsDir:   join(repoRoot, 'status', 'claims'),
-    runnersAll:  join(repoRoot, 'status', 'runners', 'all.json'),
+    runnersAll:  join(homedir(), '.hub-runner', 'status-wt', 'all.json'), // M2-1126-T: moved to status-wt
     runnersDir:  join(repoRoot, 'status', 'runners'),
     ciJsonlDir:  join(repoRoot, 'status', 'ci'),
     pipelineDir: join(repoRoot, 'status', 'pipeline'),

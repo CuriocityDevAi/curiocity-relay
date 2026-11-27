@@ -100,17 +100,17 @@ export function readLocalOriginSha(repoRoot) {
 
 // ── 저수준 git 읽기 ──────────────────────────────────────────────────────
 
-export function gitShowText(repoRoot, relPath) {
+export function gitShowText(repoRoot, relPath, ref = 'origin/main') {
   try {
     return execFileSync(
-      'git', ['-C', repoRoot, 'show', `origin/main:${relPath}`],
+      'git', ['-C', repoRoot, 'show', `${ref}:${relPath}`],
       { timeout: 5_000, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] },
     );
   } catch { return null; }
 }
 
-export function gitShowJson(repoRoot, relPath) {
-  const txt = gitShowText(repoRoot, relPath);
+export function gitShowJson(repoRoot, relPath, ref = 'origin/main') {
+  const txt = gitShowText(repoRoot, relPath, ref);
   if (!txt) return null;
   try { return JSON.parse(txt); } catch { return null; }
 }
@@ -182,7 +182,9 @@ export function gitCatFileBatch(repoRoot, relPaths) {
 // ── 고수준 relay 데이터 접근 ─────────────────────────────────────────────
 
 export function readAllJsonGit(repoRoot) {
-  return gitShowJson(repoRoot, 'status/runners/all.json');
+  // M2-1126-T: all.json 가 runner-status branch 로 이동 → 그 branch 에서 먼저 읽기
+  return gitShowJson(repoRoot, 'all.json', 'runner-status')
+    ?? gitShowJson(repoRoot, 'status/runners/all.json');
 }
 
 export function readClaimGit(repoRoot, id) {
@@ -249,10 +251,10 @@ export function scanClaimsDirGit(repoRoot) {
 
 // ── 비동기 git 읽기 (이벤트 루프 비차단 — 스피너 freeze 방지) ──────────────
 
-export async function gitShowTextAsync(repoRoot, relPath) {
+export async function gitShowTextAsync(repoRoot, relPath, ref = 'origin/main') {
   try {
     const { stdout } = await _execFileAsync(
-      'git', ['-C', repoRoot, 'show', `origin/main:${relPath}`],
+      'git', ['-C', repoRoot, 'show', `${ref}:${relPath}`],
       { timeout: 5_000, maxBuffer: 4 * 1024 * 1024 },
     );
     return stdout;
@@ -300,7 +302,9 @@ export async function gitCatFileBatchAsync(repoRoot, relPaths) {
 }
 
 export async function readAllJsonGitAsync(repoRoot) {
-  const txt = await gitShowTextAsync(repoRoot, 'status/runners/all.json');
+  // M2-1126-T: all.json 가 runner-status branch 로 이동 → 그 branch 에서 먼저 읽기
+  const txt = await gitShowTextAsync(repoRoot, 'all.json', 'runner-status')
+    ?? await gitShowTextAsync(repoRoot, 'status/runners/all.json');
   if (!txt) return null;
   try { return JSON.parse(txt); } catch { return null; }
 }

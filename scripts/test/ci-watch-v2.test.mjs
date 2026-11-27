@@ -163,10 +163,9 @@ test('T-5b: buildPipelineView — claim started → queue 에서 밀려남', () 
   writeFileSync(join(root, 'queue', 'm1', 'M1-1124-Y.md'), '제목');
   writeFileSync(join(root, 'status', 'claims', 'M1-1124-Y.json'),
     JSON.stringify({ id: 'M1-1124-Y', hub: 'm1', state: 'started' }));
-  writeFileSync(join(root, 'status', 'runners', 'all.json'),
-    JSON.stringify({ hubs: { m1: { current: 'M1-1124-Y', started_at: new Date(NOW_MS - 10 * 60_000).toISOString() } } }));
+  const allJson5b = { hubs: { m1: { current: 'M1-1124-Y', started_at: new Date(NOW_MS - 10 * 60_000).toISOString() } } };
 
-  const view = buildPipelineView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const view = buildPipelineView({ repoRoot: root, now: NOW, nowMs: NOW_MS, allJson: allJson5b });
   assert.equal(view.cards.filter(c => c.column === 'queue').length, 0);
   const hub = view.cards.find(c => c.column === 'hub');
   assert.equal(hub.id, 'M1-1124-Y');
@@ -480,13 +479,12 @@ test('T-E2: buildExtendedView — inProgress = hub 카드, caution = red/yellow 
   writeFileSync(join(root, 'queue', 'm1', 'M1-1124-XC.md'), '제목');
   writeFileSync(join(root, 'status', 'claims', 'M1-1124-XC.json'),
     JSON.stringify({ id: 'M1-1124-XC', hub: 'm1', state: 'started' }));
-  writeFileSync(join(root, 'status', 'runners', 'all.json'),
-    JSON.stringify({ hubs: { m1: {
-      current: 'M1-1124-XC',
-      started_at: new Date(NOW_MS - 45 * 60_000).toISOString(), // 45분 → red
-    }}}));
+  const allJsonE2 = { hubs: { m1: {
+    current: 'M1-1124-XC',
+    started_at: new Date(NOW_MS - 45 * 60_000).toISOString(), // 45분 → red
+  }}};
 
-  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS, allJson: allJsonE2 });
   // 특정 카드 M1-1124-XC 가 inProgress 와 caution 에 있는지 확인
   // (실제 ~/.hub-runner/reports 에 1124 날짜 리포트가 있으면 추가 카드가 생길 수 있어 exact count 미확인)
   const hubCard = view.inProgress.find(c => c.id === 'M1-1124-XC');
@@ -499,17 +497,16 @@ test('T-E2: buildExtendedView — inProgress = hub 카드, caution = red/yellow 
 
 test('T-E3: buildExtendedView — CI 러너 풀 상태 집계', () => {
   const root = makeFullFixture();
-  writeFileSync(join(root, 'status', 'runners', 'all.json'),
-    JSON.stringify({
-      ci_runners: [
-        { name: 'curiocity-mac-light', status: 'online', busy: false },
-        { name: 'Youngkyus-MacBook-Pro-M1', status: 'online', busy: true },
-        { name: 'curiocity-mac-fork', status: 'offline', busy: false },
-        { name: 'curiocity-mac-fork-light', status: 'online', busy: false },
-      ],
-    }));
+  const allJsonE3 = {
+    ci_runners: [
+      { name: 'curiocity-mac-light', status: 'online', busy: false },
+      { name: 'Youngkyus-MacBook-Pro-M1', status: 'online', busy: true },
+      { name: 'curiocity-mac-fork', status: 'offline', busy: false },
+      { name: 'curiocity-mac-fork-light', status: 'online', busy: false },
+    ],
+  };
 
-  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS, allJson: allJsonE3 });
   assert.equal(view.ciRunnerPools.get('storeport-light')?.status, 'online');
   assert.equal(view.ciRunnerPools.get('storeport-heavy')?.status, 'busy');
   assert.equal(view.ciRunnerPools.get('fork-heavy')?.status, 'offline');
@@ -640,16 +637,15 @@ test('T-D1: renderDetailPanel — 카드 상세 창 출력', () => {
 
 test('T-9a: renderV2 새 섹션 — hub 카드 포함 시 진행 중 섹션 표시', () => {
   const root = makeFullFixture();
-  writeFileSync(join(root, 'status', 'runners', 'all.json'),
-    JSON.stringify({ hubs: { m1: {
-      current: 'M1-1124-QA',
-      started_at: new Date(NOW_MS - 5 * 60_000).toISOString(),
-    }}}));
+  const allJson9a = { hubs: { m1: {
+    current: 'M1-1124-QA',
+    started_at: new Date(NOW_MS - 5 * 60_000).toISOString(),
+  }}};
   writeFileSync(join(root, 'status', 'claims', 'M1-1124-QA.json'),
     JSON.stringify({ id: 'M1-1124-QA', hub: 'm1', state: 'started' }));
   writeFileSync(join(root, 'queue', 'm1', 'M1-1124-QA.md'), '원장 대사: "한글 제목 테스트"\n내용');
 
-  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS, allJson: allJson9a });
 
   const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
   const text  = lines.map(stripAnsi).join('\n');
@@ -733,16 +729,15 @@ test('T-Q1: 허브 큐 — 대기만 (실행 없음): └ 줄 없음', () => {
 
 test('T-Q2: 허브 큐 — 실행만 (대기 없음): └ 줄 있음, 칩 없음', () => {
   const root = makeJ1Fixture();
-  writeFileSync(join(root, 'status', 'runners', 'all.json'),
-    JSON.stringify({ hubs: { m1: {
-      current: 'M1-1124-QX',
-      started_at: new Date(NOW_MS - 5 * 60_000).toISOString(),
-    }}}));
+  const allJsonQ2 = { hubs: { m1: {
+    current: 'M1-1124-QX',
+    started_at: new Date(NOW_MS - 5 * 60_000).toISOString(),
+  }}};
   writeFileSync(join(root, 'status', 'claims', 'M1-1124-QX.json'),
     JSON.stringify({ id: 'M1-1124-QX', hub: 'm1', state: 'started' }));
   writeFileSync(join(root, 'queue', 'm1', 'M1-1124-QX.md'), '제목');
 
-  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS, allJson: allJsonQ2 });
   const lines = renderV2(view, { terminalWidth: 100, timeStr: 't' });
   const text  = lines.map(stripAnsi).join('\n');
   assert.ok(text.includes('└'), '└ 실행 줄 있음');
@@ -826,14 +821,13 @@ test('T-C3: CI 러너 busy 일 때 대기 3분 → 빨강 아님', () => {
 
 test('T-C4: CI 러너 offline → 즉시 빨강 경보', () => {
   const root = makeJ1Fixture();
-  writeFileSync(join(root, 'status', 'runners', 'all.json'),
-    JSON.stringify({
-      ci_runners: [
-        { name: 'Youngkyus-MacBook-Pro-M1', status: 'offline', busy: false },
-      ],
-    }));
+  const allJsonC4 = {
+    ci_runners: [
+      { name: 'Youngkyus-MacBook-Pro-M1', status: 'offline', busy: false },
+    ],
+  };
 
-  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS });
+  const view = buildExtendedView({ repoRoot: root, now: NOW, nowMs: NOW_MS, allJson: allJsonC4 });
   const alerts = view.congestionAlerts.filter(a => a.kind === 'ci_queue' && a.pool === 'storeport-heavy');
   assert.ok(alerts.length > 0, 'offline → 즉시 경보');
   assert.ok(alerts[0].reason.includes('OFF'), 'offline 이유 포함');
@@ -1041,11 +1035,10 @@ test('T-K3: 스냅샷 픽스처 — 머지된 카드가 inProgress 에 남지 �
   mkdirSync(join(root, 'm1'), { recursive: true });
   mkdirSync(join(root, 'm2'), { recursive: true });
   mkdirSync(join(root, 'r0'), { recursive: true });
-  writeFileSync(join(root, 'status', 'runners', 'all.json'),
-    JSON.stringify({ hubs: { m0: {
-      current: 'M0-1124-KA',
-      started_at: new Date(NOW_MS - 5 * 60_000).toISOString(),
-    }}}));
+  const allJsonK3 = { hubs: { m0: {
+    current: 'M0-1124-KA',
+    started_at: new Date(NOW_MS - 5 * 60_000).toISOString(),
+  }}};
   writeFileSync(join(root, 'status', 'claims', 'M0-1124-KA.json'),
     JSON.stringify({ id: 'M0-1124-KA', hub: 'm0', state: 'started' }));
   writeFileSync(join(root, 'queue', 'm0', 'M0-1124-KA.md'), '원장 대사: "진행 중 작업"\n');
@@ -1074,6 +1067,7 @@ test('T-K3: 스냅샷 픽스처 — 머지된 카드가 inProgress 에 남지 �
   const view = buildExtendedView({
     repoRoot: root, now: NOW, nowMs: NOW_MS,
     fetchPrState: mockFetch,
+    allJson: allJsonK3,
   });
 
   // 머지된 카드가 inProgress 에 남아있으면 안 됨
@@ -1395,7 +1389,7 @@ test('T-GH1: all.json in_progress → ci_pending 카드 ci_running 으로 승격
   const rptPath = join(root, 'm1', 'M1-1124-GA-report.md');
   writeFileSync(rptPath, 'PASS\nPR: https://github.com/CuriocityDevAi/storeport/pull/777\n');
   stamp(rptPath, NOW_MS - 5 * 60_000);
-  writeFileSync(join(root, 'status', 'runners', 'all.json'), JSON.stringify({
+  const allJsonGH1 = {
     ci: { data: {
       heavy: {
         queued: 0, queued_prs: [], oldest_queued_min: null,
@@ -1403,12 +1397,13 @@ test('T-GH1: all.json in_progress → ci_pending 카드 ci_running 으로 승격
       },
       light: { queued: 0, queued_prs: [], oldest_queued_min: null, in_progress: [] },
     }},
-  }));
+  };
 
   const view = buildExtendedView({
     repoRoot: root, now: NOW, nowMs: NOW_MS,
     fetchPrState: () => null,
     fetchForkRuns: () => ({ queued: [], inProgress: [] }),
+    allJson: allJsonGH1,
   });
 
   const card = view.inProgress.find(c => c.id === 'M1-1124-GA');
@@ -1537,7 +1532,7 @@ test('T-P1: Kyu 픽스처 — storeport light 잡 → storeport-light, fork 잡 
   writeFileSync(rpt2, 'PASS\nPR: https://github.com/narisolutions/agilo-medusa-pos-fork/pull/261\n');
   stamp(rpt2, L_NOW_MS - 2 * 60_000);
 
-  writeFileSync(join(root, 'status', 'runners', 'all.json'), JSON.stringify({
+  const allJsonP1 = {
     ci: { data: {
       // all.json 이 두 잡을 모두 heavy 에 넣는 버그 상황 재현
       heavy: {
@@ -1549,12 +1544,13 @@ test('T-P1: Kyu 픽스처 — storeport light 잡 → storeport-light, fork 잡 
       },
       light: { queued_prs: [], oldest_queued_min: null, in_progress: [] },
     }},
-  }));
+  };
 
   const view = buildExtendedView({
     repoRoot: root, now: L_NOW, nowMs: L_NOW_MS,
     fetchPrState: () => null,
     fetchForkRuns: () => ({ queued: [], inProgress: [] }),
+    allJson: allJsonP1,
   });
 
   // M1-1125-L (#433 mac-light) → storeport-light
@@ -1592,7 +1588,7 @@ test('T-P2: 같은 풀 2건 → "풀 배정 오류" congestionAlert 생성', () 
   writeFileSync(rpt2, 'PASS\nPR: https://github.com/CuriocityDevAi/storeport/pull/502\n');
   stamp(rpt2, L_NOW_MS - 2 * 60_000);
 
-  writeFileSync(join(root, 'status', 'runners', 'all.json'), JSON.stringify({
+  const allJsonP2 = {
     ci: { data: {
       heavy: {
         queued_prs: [], oldest_queued_min: null,
@@ -1603,12 +1599,13 @@ test('T-P2: 같은 풀 2건 → "풀 배정 오류" congestionAlert 생성', () 
       },
       light: { queued_prs: [], oldest_queued_min: null, in_progress: [] },
     }},
-  }));
+  };
 
   const view = buildExtendedView({
     repoRoot: root, now: L_NOW, nowMs: L_NOW_MS,
     fetchPrState: () => null,
     fetchForkRuns: () => ({ queued: [], inProgress: [] }),
+    allJson: allJsonP2,
   });
 
   const poolErrors = view.congestionAlerts.filter(a => a.kind === 'pool_assign_error');
@@ -1628,7 +1625,7 @@ test('T-P3: fork PR → storeport 풀에 배정되면 pool_assign_error (REQ-2 �
   writeFileSync(rpt, 'PASS\nPR: https://github.com/narisolutions/agilo-medusa-pos-fork/pull/261\n');
   stamp(rpt, L_NOW_MS - 2 * 60_000);
 
-  writeFileSync(join(root, 'status', 'runners', 'all.json'), JSON.stringify({
+  const allJsonP3 = {
     ci: { data: {
       heavy: {
         queued_prs: [], oldest_queued_min: null,
@@ -1637,12 +1634,13 @@ test('T-P3: fork PR → storeport 풀에 배정되면 pool_assign_error (REQ-2 �
       },
       light: { queued_prs: [], oldest_queued_min: null, in_progress: [] },
     }},
-  }));
+  };
 
   const view = buildExtendedView({
     repoRoot: root, now: L_NOW, nowMs: L_NOW_MS,
     fetchPrState: () => null,
     fetchForkRuns: () => ({ queued: [], inProgress: [] }),
+    allJson: allJsonP3,
   });
 
   // fork PR #261 는 fork-heavy 로 이동되어야 함 (storeport-heavy 에 없어야 함)
