@@ -9,13 +9,13 @@
 | 순서 | 일 | 허브 | 상태 | 이유 / 막힌 것 |
 |---|---|---|---|---|
 | 0.1 | 🔴🔴 손님 화면 흐름 storeport#474 — R0-1127-K CHANGES 필수 1(20초 Skip 이 흐름 상태를 안 바꿔 영수증으로 되돌아감) → **M0-1127-J(Opus)** · 머지 직후 fork e2e dispatch 로 case1 + case1b 실서버 확인 | M0 | 수정 | — |
-| 0.2 | 🔴 POS 시트 + 점 3개(fork#288) · 🟡 첫 상품 주문 칩 중복(fork#289) → **R0-1127-L** · ⚠ 두 PR 모두 ci-summary 아직 없음 → CI 시작 여부 먼저 확인 | R0 | 리뷰 | 同 |
+| 0.2 | 🔴 POS 시트·점 3개(fork#288) · 주문 칩 중복(#289) — R0-1127-L 코드 OK · **CI 안 돈 원인 = PR 충돌(dirty)** → M2-1127-K 충돌 해소 | M2 | 진행 | — |
 | 0.3 | 🟡 POS 첫 상품 담을 때 주문 칩 #1 두 개 깜빡임 → M3-1127-H(M3-G 뒤) · 🟡 POS 칩 #1 ↔ 손님 화면 #209 번호 불일치 → R0-1127-H 판정 뒤 · 🆕 키패드 카운트다운 = Kyu 확인 대기 | M3 · R0 · Kyu | 대기 | 同 |
-| 0.35 | 🔴 POS 번호 입력 입구 3곳 거절(Re-enter "not paid" · Order 상세 Phone entry "not paired" · Link customer 화면 입력 무반응) + 문구 "Ask customer on display" → "Phone entry" → **M3-1127-I(Opus)** | M3 | 진행 | Kyu 14:08 |
+| 0.35 | 🔴 번호 입력 입구 3곳 — POS 쪽 fork#290(Link customer → Phone entry · 칩 재사용) 착지 · 서버 쪽 거절(not_paid/no_snapshot) → **M0-1127-L(Opus · #474 뒤)** | M0 · R0 | 진행 | Kyu 14:08 |
 | 0.36 | 🔴 POS 손님 화면 미리보기 — 시안 확정(Kyu 14:30 "이대로 구현하자" · https://claude.ai/artifact/Y5ogGgGwp6QfxyYAPquVFL) → **M3-1127-K(M3-I 뒤)** | M3 | 대기 | Kyu 14:08~14:30 |
 | 0.37 | 보이는 `Order #211`(display_id) 전부 `#N` 으로(Kyu 14:13 질문2 ok · 명세 order-number §2.2 갱신) → 영수증 R3·R4 + 손님 화면 머리(카운트다운 라운드에 같이) | M0 · M2 | 대기 | 同 |
 | 0.4 | 🆕 키패드 카운트다운(Kyu 13:26 "이대로 가도 됨") + 결제 완료 → 키패드 **C안**(버튼 "N 포인트 받기" + 5초 자동 · Kyu 13:28) → M0-1127-G 머지 뒤 M0 | M0 | 대기 | decision-kyu-pos-test-20261127-1301 |
-| 0.5 | 🔴 영수증 단일 출처(4번째 요구) — 지도 진단 ✅(relay#67) · Kyu 13:46 Q1 `Rp 16.500` 전부 · Q2 영수증 라벨 영어 고정 → **R1 줄 목록 패키지 = M2-1127-J(Opus · M2-I 뒤)** → R2 프린터 → R5 보존 검사 → R3 POS · R4 손님 화면 → R6 관리자 | M2 | 대기(M2-I 뒤) | decision-receipt-single-source-20261127 |
+| 0.5 | 🔴 영수증 단일 출처 — R1 착지(storeport#475 · 패리티 차이 0) → **R0-1127-M 리뷰** → R2 프린터 | R0 | 리뷰 | decision-receipt-single-source-20261127 |
 | 1 | POS·손님 화면 실기 (A~D · #275 #279 #280 #463~#468) | Kyu | 아침 | handoff-20261127 §3-1 |
 | 2 | GitHub Actions 지출 한도 $73 → $0 | Kyu | 아침 | 클라우드 잡 0 확인됨 |
 | 3 | 짧은 번호 초기화 결정 (매일 #1 vs 매장별 1~99 이어감) → 필요 시 M0 수정 | Kyu → M0 | 결정 대기 | 11-23 vs 11-26 결정 충돌 · specs/domain/order-number.md §2.2 |
