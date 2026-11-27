@@ -5,3 +5,4 @@
 3. **관문 먼저** — 손님 화면·POS 번호 입력 흐름을 바꾸는 PR 은 리허설(case1·case1b…) 초록이어야 머지 · R4(시나리오 확대)는 그다음.
 발부: M1-1127-I (M1 큐 · R2 다음).
 - 20:52 Kyu "열쇠 넣음" — storeport Secrets `FORK_DISPATCH_TOKEN` 등록(fine-grained · fork 전용 · Contents RW 안내) → storeport 흐름 PR 도 리허설 자동 호출 가능 · 시크릿 설치 후에는 관문 엄격 적용(경고 → 차단).
+- 21:17 Kyu "A" — 리허설 관문 예외 불허: storeport#480 은 리허설 환경(FlashList hidden) 수정(M1-1127-L) 뒤 리허설 초록 + heavy-mac 초록이어야 머지. 오케 단독 예외 금지.
