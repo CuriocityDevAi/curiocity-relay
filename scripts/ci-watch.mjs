@@ -6,7 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 //
 // !! ci-watch 를 바꾸는 모든 프롬프트는 CI_WATCH_VERSION 을 올릴 것.
-// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입) · 1.10 M2-1126-F(W1~W4) · 1.11 M2-1126-G(W5~W9) · 1.12 M2-1126-I(W9경로·W2보완·W10) · 1.13 M2-1126-L(cancel-on-close마커·OFF표시·4줄기계별집계) · 1.14 M2-1126-N(heavy-cloud fork-only 마커) · 1.15 M2-1126-Q(전체=세줄합·클라우드 top/bottom 단일 소스·iMAC 쉼 판정·⚠집계불일치 가드) · 1.16 M2-1126-S(넘김 폐지 · 클라우드 >0 빨간 경고 · iMac heartbeat 끊김 상단 경보) · 1.17 번호는 예약만 되고 미사용 · 1.18 M0-1127-A(진행 중 9단계 띠 복구 · err_tail [build-hubs] 필터 · 주의 섹션을 countdown 위로) · 1.19 M0-1127-B(미등록 리포 거짓 경보 · 줄 제목 첫 줄 괄호 요지) · 1.20 M2-1126-T/M0-1127-D(all.json·mem-log → status-wt) · 1.21 M2-1127-F(iMac HB 문턱 12분·origin ts 보정·WIB 경보 시각) · 1.22 M3-1127-F(all.json 두 위치 폴백 · 최신 at 선택) · 1.23 M0-1127-F(리포별 main 최신 CI 실패·시작실패·미실행 경보 · 주 워크플로: storeport ci.yml · fork CI·Lint · 기존 GH 캐시 주기에 얹음)
+// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입) · 1.10 M2-1126-F(W1~W4) · 1.11 M2-1126-G(W5~W9) · 1.12 M2-1126-I(W9경로·W2보완·W10) · 1.13 M2-1126-L(cancel-on-close마커·OFF표시·4줄기계별집계) · 1.14 M2-1126-N(heavy-cloud fork-only 마커) · 1.15 M2-1126-Q(전체=세줄합·클라우드 top/bottom 단일 소스·iMAC 쉼 판정·⚠집계불일치 가드) · 1.16 M2-1126-S(넘김 폐지 · 클라우드 >0 빨간 경고 · iMac heartbeat 끊김 상단 경보) · 1.17 번호는 예약만 되고 미사용 · 1.18 M0-1127-A(진행 중 9단계 띠 복구 · err_tail [build-hubs] 필터 · 주의 섹션을 countdown 위로) · 1.19 M0-1127-B(미등록 리포 거짓 경보 · 줄 제목 첫 줄 괄호 요지) · 1.20 M2-1126-T/M0-1127-D(all.json·mem-log → status-wt) · 1.21 M2-1127-F(iMac HB 문턱 12분·origin ts 보정·WIB 경보 시각) · 1.22 M3-1127-F(all.json 두 위치 폴백 · 최신 at 선택) · 1.23 M0-1127-F(리포별 main 최신 CI 실패·시작실패·미실행 경보 · 주 워크플로: storeport ci.yml · fork CI·Lint · 기존 GH 캐시 주기에 얹음) · 1.24 M0-1127-H(fork 리포 owner CuriocityDevAi · 브랜치 master · runner-config.json 오버라이드 · docs-only paths_ignore 커밋 no_run 거짓 경보 억제)
 
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -38,7 +38,7 @@ import {
 // v1.18(M0-1127-A): 진행 중 구역 = buildExtendedView().inProgress (프롬프트 카드 · 9단계 띠)
 import { buildExtendedView } from './watch/collect-view.mjs';
 
-const CI_WATCH_VERSION = '1.23';
+const CI_WATCH_VERSION = '1.24';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -72,18 +72,76 @@ export const HB_STALE_MIN = 12;
 export const MAIN_CI_NO_RUN_MIN = 15;
 
 // 주 워크플로 매핑 — path(`.github/workflows/<file>`) 또는 name 으로 매칭.
-// - storeport: ci.yml (단일)
-// - fork(agilo-medusa-pos-fork): CI · Lint (둘 다 통과해야 머지 가능)
+// - storeport: ci.yml (단일) · 기본 브랜치 main · paths-ignore=(md·docs/)
+// - fork(agilo-medusa-pos-fork): CI · Lint (둘 다 통과해야 머지 가능) · 기본 브랜치 master
+// M0-1127-H 수정 (R0-1127-J 필수-1/2):
+//   - owner `narisolutions` → `CuriocityDevAi` (실제 fork 소유자)
+//   - branch 필드 추가 (fork 기본 브랜치는 master · main 이 아님)
+//   - paths_ignore 필드 추가 (storeport ci.yml paths-ignore 와 동일 — docs-only 커밋 no_run 거짓 경보 억제)
+//   - runner-config.json `ci_watch.main_ci_workflows` 로 오버라이드 가능 (loadMainCiWorkflows 참조)
 export const MAIN_CI_WORKFLOWS = {
   'CuriocityDevAi/storeport': {
+    branch: 'main',
     paths: ['.github/workflows/ci.yml'],
     names: [],
+    paths_ignore: ['**/*.md', 'docs/**'],
   },
-  'narisolutions/agilo-medusa-pos-fork': {
+  'CuriocityDevAi/agilo-medusa-pos-fork': {
+    branch: 'master',
     paths: ['.github/workflows/ci.yml', '.github/workflows/lint.yml'],
     names: ['CI', 'Lint'],
+    paths_ignore: [],
   },
 };
+
+// runner-config.json → ci_watch.main_ci_workflows 오버라이드 1회 로드 (캐시)
+let _mainCiWorkflowsCached = null;
+export function loadMainCiWorkflows({ force = false } = {}) {
+  if (_mainCiWorkflowsCached && !force) return _mainCiWorkflowsCached;
+  const base = { ...MAIN_CI_WORKFLOWS };
+  try {
+    const cfgPath = join(REPO_ROOT, 'status', 'runner-config.json');
+    if (existsSync(cfgPath)) {
+      const cfg = JSON.parse(readFileSync(cfgPath, 'utf8'));
+      const override = cfg?.ci_watch?.main_ci_workflows;
+      if (override && typeof override === 'object') {
+        // 리포별 merge — override 가 특정 리포만 지정하면 그 리포만 바뀌고 나머지는 기본값 유지.
+        for (const [repo, entry] of Object.entries(override)) {
+          base[repo] = { ...(base[repo] || {}), ...(entry || {}) };
+        }
+      }
+    }
+  } catch {
+    // config 읽기 실패 → 기본값 그대로
+  }
+  _mainCiWorkflowsCached = base;
+  return base;
+}
+
+/**
+ * 커밋의 변경 파일 전부가 paths_ignore 패턴에 해당하는지 판정 (pure 함수).
+ *   - 지원 패턴: `**​/*.md` · `docs/**` · 평문 접미사·접두사
+ *   - files 비어있거나 undefined 면 false (판정 보류)
+ *   - paths_ignore 비어있으면 false
+ * @param {string[]}  files        변경 파일 경로 배열
+ * @param {string[]}  pathsIgnore  paths_ignore 패턴
+ * @returns {boolean} 전부 무시 대상이면 true
+ */
+export function isCommitFullyPathsIgnored(files, pathsIgnore) {
+  if (!Array.isArray(files) || files.length === 0) return false;
+  if (!Array.isArray(pathsIgnore) || pathsIgnore.length === 0) return false;
+  const matchers = pathsIgnore.map(pat => {
+    // `**/*.ext` → endsWith `.ext`
+    const m1 = String(pat).match(/^\*\*\/\*(\.[A-Za-z0-9]+)$/);
+    if (m1) return (f) => f.toLowerCase().endsWith(m1[1].toLowerCase());
+    // `dir/**` → startsWith `dir/`
+    const m2 = String(pat).match(/^([^*?]+)\/\*\*$/);
+    if (m2) return (f) => f.toLowerCase().startsWith(m2[1].toLowerCase() + '/');
+    // 평문 (정확 일치)
+    return (f) => f === pat;
+  });
+  return files.every(f => matchers.some(m => m(f)));
+}
 
 // --- err_tail 오류 허용 목록 판정 (M2-1124-A) ---
 // 이 목록에 매칭되는 줄만 ⚠. 나머지는 정상 정보 줄.
@@ -379,7 +437,8 @@ async function fetchGhQueueAndCloud() {
  *   - storeport + fork = 2 리포 × 2 호출 = 4 회 / 30초 주기 (M0-1127-F REQ-3)
  */
 async function fetchMainCiStatusAll() {
-  const repos = Object.keys(MAIN_CI_WORKFLOWS);
+  const workflows = loadMainCiWorkflows();
+  const repos = Object.keys(workflows);
   const pairs = await Promise.all(
     repos.map(r => fetchMainCiStatusForRepo(r).catch(() => null).then(v => [r, v])),
   );
@@ -387,10 +446,12 @@ async function fetchMainCiStatusAll() {
 }
 
 async function fetchMainCiStatusForRepo(fullRepo) {
-  const cfg = MAIN_CI_WORKFLOWS[fullRepo];
+  const workflows = loadMainCiWorkflows();
+  const cfg = workflows[fullRepo];
   if (!cfg) return null;
 
-  const branch = await ghApi(`repos/${fullRepo}/branches/main`).catch(() => null);
+  const branchName = cfg.branch || 'main';
+  const branch = await ghApi(`repos/${fullRepo}/branches/${branchName}`).catch(() => null);
   if (!branch?.commit?.sha) return null;
   const commit = branch.commit.sha;
   const commitDateIso = branch.commit.commit?.committer?.date
@@ -398,8 +459,8 @@ async function fetchMainCiStatusForRepo(fullRepo) {
     || null;
   const commitAtMs = commitDateIso ? Date.parse(commitDateIso) : null;
 
-  // branch=main 의 최근 run 20건 중 ① head_sha === commit · ② cfg.paths/names 매칭
-  const runsData = await ghApi(`repos/${fullRepo}/actions/runs?branch=main&per_page=20`)
+  // branch 의 최근 run 20건 중 ① head_sha === commit · ② cfg.paths/names 매칭
+  const runsData = await ghApi(`repos/${fullRepo}/actions/runs?branch=${encodeURIComponent(branchName)}&per_page=20`)
     .catch(() => null);
   const runs = runsData?.workflow_runs || [];
 
@@ -417,10 +478,25 @@ async function fetchMainCiStatusForRepo(fullRepo) {
   const commitRuns = matches.filter(r => r.head_sha === commit);
   const chosen = chooseWorstRun(commitRuns);
 
+  // M0-1127-H 권고-1: run 없음 + paths_ignore 있을 때 "docs-only 커밋 여부" 확인.
+  // 커밋의 변경 파일 전부가 paths_ignore 에 해당하면 commitIsPathsIgnored=true →
+  // computeMainCiAlerts 가 no_run 경보를 억제한다 ("실행 없음" 거짓 경보 억제).
+  let commitIsPathsIgnored = false;
+  if (!chosen && Array.isArray(cfg.paths_ignore) && cfg.paths_ignore.length > 0) {
+    const commitData = await ghApi(`repos/${fullRepo}/commits/${commit}`).catch(() => null);
+    const files = Array.isArray(commitData?.files)
+      ? commitData.files.map(f => String(f.filename || ''))
+      : null;
+    if (files && files.length > 0) {
+      commitIsPathsIgnored = isCommitFullyPathsIgnored(files, cfg.paths_ignore);
+    }
+  }
+
   return {
     commit,
     commitAtMs,
     latestRun: chosen ? normalizeRun(chosen) : null,
+    commitIsPathsIgnored,
   };
 }
 
@@ -577,6 +653,9 @@ export function computeMainCiAlerts(statusMap, nowMs, {
     const ageText = commitAgeMin != null ? `${commitAgeMin}분 전` : '시각 모름';
 
     if (!latestRun) {
+      // M0-1127-H 권고-1: 커밋의 변경 파일 전부가 paths_ignore 에 해당하면
+      // 애초에 run 이 생성되지 않는 것이 정상 — "실행 없음" 거짓 경보 억제.
+      if (info.commitIsPathsIgnored === true) continue;
       if (commitAgeMin != null && commitAgeMin >= noRunThresholdMin) {
         alerts.push({
           type: 'main_ci_no_run',

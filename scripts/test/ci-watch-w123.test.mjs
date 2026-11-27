@@ -18,6 +18,9 @@ import assert from 'node:assert/strict';
 import {
   computeMainCiAlerts,
   MAIN_CI_NO_RUN_MIN,
+  MAIN_CI_WORKFLOWS,
+  loadMainCiWorkflows,
+  isCommitFullyPathsIgnored,
 } from '../ci-watch.mjs';
 
 const nowMs = Date.now();
@@ -226,4 +229,127 @@ test('W123-missing-latest-run-field: latestRun undefined (0 커밋 뒤) → 문�
 
 test('W123-threshold-boundary: MAIN_CI_NO_RUN_MIN 경계값 확인 (기본 15)', () => {
   assert.equal(MAIN_CI_NO_RUN_MIN, 15, '기본 문턱은 15분 (REQ-1)');
+});
+
+// ─── W123-fork-repo-owner (M0-1127-H 필수-1) ──────────────────────────────────
+// 검증의 검증: fork 리포 소유자가 CuriocityDevAi 로 맞춰져 있어야 한다.
+// 리뷰 뿌리(R0-1127-J 필수-1): 소유자가 `narisolutions` 이면 GitHub API 404 → fork CI 경보 영구 묵음.
+// 리포 이름을 다시 `narisolutions/...` 로 되돌리면 이 테스트가 빨강이 된다.
+
+test('W123-fork-repo-owner: fork 소유자 = CuriocityDevAi (narisolutions 아님)', () => {
+  const repos = Object.keys(MAIN_CI_WORKFLOWS);
+  const forkRepo = repos.find(r => r.endsWith('/agilo-medusa-pos-fork'));
+  assert.ok(forkRepo, 'fork 리포가 MAIN_CI_WORKFLOWS 에 있어야 함');
+  assert.equal(
+    forkRepo,
+    'CuriocityDevAi/agilo-medusa-pos-fork',
+    `fork 소유자는 CuriocityDevAi 이어야 함 (narisolutions 는 404 묵음 원인) · got: ${forkRepo}`,
+  );
+  // 명시적 negative check: narisolutions 로 재발 금지
+  assert.ok(
+    !repos.some(r => r.startsWith('narisolutions/')),
+    'narisolutions/* 가 MAIN_CI_WORKFLOWS 에 있으면 안 됨 (영구 묵음 원인)',
+  );
+});
+
+// ─── W123-fork-branch (M0-1127-H 필수-2) ──────────────────────────────────────
+// fork 의 기본 브랜치는 master — main 이 아님. 하드코딩 되돌리면 404 → 묵음.
+
+test('W123-fork-branch: fork 기본 브랜치 = master', () => {
+  const cfg = MAIN_CI_WORKFLOWS['CuriocityDevAi/agilo-medusa-pos-fork'];
+  assert.ok(cfg, 'fork 엔트리 존재');
+  assert.equal(cfg.branch, 'master', `fork 기본 브랜치는 master · got: ${cfg.branch}`);
+});
+
+test('W123-storeport-branch: storeport 기본 브랜치 = main', () => {
+  const cfg = MAIN_CI_WORKFLOWS['CuriocityDevAi/storeport'];
+  assert.ok(cfg, 'storeport 엔트리 존재');
+  assert.equal(cfg.branch, 'main', `storeport 기본 브랜치는 main · got: ${cfg.branch}`);
+});
+
+// ─── W123-fork-failure-alert (M0-1127-H 필수-2 간접 검증) ────────────────────
+// fork 픽스처(master 브랜치 가정) 실패 → 경보 — fullRepo 가 'agilo-medusa-pos-fork' 접미사이고
+// conclusion=failure 이면 computeMainCiAlerts 가 올바른 경보 1건 발사.
+
+test('W123-fork-failure-alert: fork(master) 실패 커밋 → main_ci_failure 경보', () => {
+  const statusMap = {
+    'CuriocityDevAi/agilo-medusa-pos-fork': {
+      ...mkCommit(30, 'forkbad1'),
+      latestRun: { status: 'completed', conclusion: 'failure', durationMs: 120_000 },
+      commitIsPathsIgnored: false,
+    },
+  };
+  const alerts = computeMainCiAlerts(statusMap, nowMs);
+  assert.equal(alerts.length, 1, `got: ${JSON.stringify(alerts)}`);
+  assert.equal(alerts[0].type, 'main_ci_failure');
+  assert.match(alerts[0].msg, /agilo-medusa-pos-fork main CI 실패/);
+  assert.match(alerts[0].msg, /forkbad/);
+});
+
+// ─── W123-docs-only-no-alert (M0-1127-H 권고-1) ──────────────────────────────
+// docs-only 커밋(paths_ignore 전부 매칭) 이면 run 이 생성되지 않는 것이 정상 → no_run 경보 억제.
+
+test('W123-docs-only-no-alert: commitIsPathsIgnored=true · 커밋 30분 전 · latestRun=null → 경보 없음', () => {
+  const statusMap = {
+    'CuriocityDevAi/storeport': {
+      ...mkCommit(30, 'docsonly'),
+      latestRun: null,
+      commitIsPathsIgnored: true,
+    },
+  };
+  const alerts = computeMainCiAlerts(statusMap, nowMs);
+  assert.equal(
+    alerts.length, 0,
+    `docs-only 커밋은 no_run 경보 없어야 함 · got: ${JSON.stringify(alerts)}`,
+  );
+});
+
+test('W123-non-docs-no-run-still-alerts: commitIsPathsIgnored=false · 커밋 30분 전 · null → main_ci_no_run', () => {
+  const statusMap = {
+    'CuriocityDevAi/storeport': {
+      ...mkCommit(30, 'realcode'),
+      latestRun: null,
+      commitIsPathsIgnored: false,
+    },
+  };
+  const alerts = computeMainCiAlerts(statusMap, nowMs);
+  assert.equal(alerts.length, 1);
+  assert.equal(alerts[0].type, 'main_ci_no_run',
+    `실코드 커밋 미실행은 여전히 경보 · got: ${JSON.stringify(alerts)}`);
+});
+
+// ─── W123-paths-ignore-matcher (isCommitFullyPathsIgnored pure) ──────────────
+
+test('W123-paths-ignore-matcher: **/*.md · docs/** 전부 매칭 → true', () => {
+  const files = ['README.md', 'docs/EPIC-STATE.md', 'docs/sub/x.md'];
+  assert.equal(
+    isCommitFullyPathsIgnored(files, ['**/*.md', 'docs/**']),
+    true,
+  );
+});
+
+test('W123-paths-ignore-matcher-mixed: 코드 파일 1개라도 포함 → false', () => {
+  const files = ['README.md', 'scripts/ci-watch.mjs'];
+  assert.equal(
+    isCommitFullyPathsIgnored(files, ['**/*.md', 'docs/**']),
+    false,
+  );
+});
+
+test('W123-paths-ignore-matcher-empty: 빈 리스트 → false (판정 보류)', () => {
+  assert.equal(isCommitFullyPathsIgnored([], ['**/*.md']), false);
+  assert.equal(isCommitFullyPathsIgnored(['README.md'], []), false);
+  assert.equal(isCommitFullyPathsIgnored(null, ['**/*.md']), false);
+});
+
+// ─── W123-load-main-ci-workflows (config 오버라이드) ────────────────────────
+// loadMainCiWorkflows() 는 MAIN_CI_WORKFLOWS 를 base 로 돌려주고, runner-config.json 의
+// ci_watch.main_ci_workflows 가 있으면 리포별 merge. (여기선 default 만 확인.)
+
+test('W123-load-main-ci-workflows: 두 리포 모두 존재 + branch 지정됨', () => {
+  const wf = loadMainCiWorkflows({ force: true });
+  assert.ok(wf['CuriocityDevAi/storeport'], 'storeport 엔트리 존재');
+  assert.ok(wf['CuriocityDevAi/agilo-medusa-pos-fork'], 'fork 엔트리 존재');
+  assert.equal(wf['CuriocityDevAi/storeport'].branch, 'main');
+  assert.equal(wf['CuriocityDevAi/agilo-medusa-pos-fork'].branch, 'master');
 });
