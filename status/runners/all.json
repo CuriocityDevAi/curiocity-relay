@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T05:16:49.642Z",
+  "at": "2026-11-27T05:19:22.030Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -41,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.71,
-    "compressed_gb": 4.56,
-    "swap_used_gb": 2.81,
+    "used_gb": 15.67,
+    "compressed_gb": 4.63,
+    "swap_used_gb": 2.8,
     "pressure": "normal",
-    "at": "2026-11-27T05:16:34.928Z"
+    "at": "2026-11-27T05:18:50.077Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -53,20 +53,20 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-27T05:16:33.437Z",
+      "at": "2026-11-27T05:18:48.983Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 11,
+      "api_calls": 10,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
         "queued": 1,
         "queued_prs": [],
-        "oldest_queued_min": 5,
+        "oldest_queued_min": 7,
         "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
@@ -75,7 +75,7 @@
             "pr_display": "fork:#281",
             "job": "playwright",
             "step": "Run Playwright harnesses",
-            "running_min": 2,
+            "running_min": 4,
             "runner": "ci-box-fork-heavy-imac",
             "kind": "mac-heavy"
           }
@@ -120,17 +120,17 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 50.5
       },
-      "jsonl_added": 1,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 9342,
-    "at": "2026-11-27T05:16:41.203Z"
+    "took_ms": 9006,
+    "at": "2026-11-27T05:18:56.123Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 50,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:claim 2026-11-27T05:13:11.743Z] M3-1127-D → done · runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1127-D-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1127-D.json · {\"id\":\"M3-1127-D\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-27T05:13:11.852Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1127-D-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1127-D.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M3-1127-D.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:13:43.521Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:14:16.654Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:r0 2026-11-27T05:14:48.122Z] pick · R0-1127-D · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-27T05:14:52.524Z] R0-1127-D → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-D.json · {\"id\":\"R0-1127-D\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-27T05:14:52.646Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1127-D.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): queue/r0/R0-1127-D.md, status/ci/2026-11-27.jsonl, status/pipeline/R0-1127-D.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:self-update 2026-11-27T05:15:24.933Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m1 2026-11-27T05:16:29.674Z] [report-path] M1-1127-E: REPORT_PATH 격리 리포트 수거·push",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:13:43.521Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:14:16.654Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:r0 2026-11-27T05:14:48.122Z] pick · R0-1127-D · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-27T05:14:52.524Z] R0-1127-D → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-D.json · {\"id\":\"R0-1127-D\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-27T05:14:52.646Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1127-D.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 4건 (건드리지 않음): queue/r0/R0-1127-D.md, status/ci/2026-11-27.jsonl, status/pipeline/R0-1127-D.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:self-update 2026-11-27T05:15:24.933Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m1 2026-11-27T05:16:29.674Z] [report-path] M1-1127-E: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-27T05:16:49.694Z] M1-1127-E → done · runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1127-E-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1127-E.json · {\"id\":\"M1-1127-E\",\"hub\":\"m1\",\"state\":\"done\",\"at\":\"2026-11-27T05:16:49.804Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m1/M1-1127-E-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1127-E.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/2026-11-27.jsonl, status/pipeline/M1-1127-E.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed",
   "git_state": {
     "ahead": 0,
     "behind": 1,
