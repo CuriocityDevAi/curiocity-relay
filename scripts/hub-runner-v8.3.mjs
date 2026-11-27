@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts/hub-runner-v8.3.mjs · M1-1125-G · v8.3.3 · M2-1126-T: all.json·mem-log status-wt 분리 (Kyu 폴더 git pull 보호).
+// scripts/hub-runner-v8.3.mjs · M1-1125-G · v8.3.4 · M2-1126-T: all.json·mem-log status-wt 분리 (Kyu 폴더 git pull 보호). · M2-1127-L: events/ 스코프 추가 · main-guard events 즉시 커밋+push
 //
 // v8.2 과의 차이 (M1-1125-B·C · 5건):
 //   ① **landing 오탐 수정**: land-detect-v2.mjs 에 isPaneIdle / headTouchesReport 콜백 주입.
@@ -182,7 +182,7 @@ const SIGKILL_GRACE_MS = 5 * 1000;
 const CMUX_WAIT_MS = 10 * 60 * 1000;
 const DEFAULT_CLAUDE_BIN = '/Users/kyu.lee/.local/bin/claude';
 // M1-1105-BA(d): all.json 러너 버전 표기 버그 — 한 곳에서만 관리.
-const RUNNER_VERSION = 'v8.3.3';
+const RUNNER_VERSION = 'v8.3.4';
 // M1-1124-H: 자기 업데이트 기본값 — runner-config.selfUpdate 로 덮어쓸 수 있다.
 // M1-1125-C: prev 부재 시 되돌릴 안전판 버전.
 const SELF_UPDATE_FALLBACK_RUNNER = 'hub-runner-v8.2.mjs';
@@ -413,6 +413,9 @@ const SELFTEST_FG_TIMEOUT_ISOLATED = argv.includes('--selftest-fg-timeout-isolat
 const SELFTEST_PIPELINE_LOG = argv.includes('--selftest-pipeline-log');
 // v8.3.2 신규 셀프테스트 (M1-1125-G)
 const SELFTEST_WATCHDOG_FORK_WAKE = argv.includes('--selftest-watchdog-fork-wake');
+// M2-1127-L REQ4: events 스코프 + scripts 차단 검증 셀프테스트
+const SELFTEST_EVENTS_NOT_BLOCKED = argv.includes('--selftest-events-not-blocked');
+const SELFTEST_SCRIPTS_BLOCKED = argv.includes('--selftest-scripts-blocked');
 const hubFlag = (() => {
   const i = argv.indexOf('--hub');
   return i >= 0 ? argv[i + 1] : null;
@@ -472,7 +475,9 @@ if (
   !SELFTEST_PREAMBLE_NEWLINE &&
   !SELFTEST_FG_TIMEOUT_ISOLATED &&
   !SELFTEST_PIPELINE_LOG &&
-  !SELFTEST_WATCHDOG_FORK_WAKE
+  !SELFTEST_WATCHDOG_FORK_WAKE &&
+  !SELFTEST_EVENTS_NOT_BLOCKED &&
+  !SELFTEST_SCRIPTS_BLOCKED
 ) {
   console.error(
     'Usage: node scripts/hub-runner-v8.3.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-* (see docs/hub-runner.md).',
@@ -742,7 +747,8 @@ function checkFolderGuardWithConfig(config) {
 // M0-1119-I: status/ci/ 추가 — jsonl 이 safePull 의 out-of-scope 로 오인되지 않게.
 // M1-1125-E: status/pipeline/ 추가 — pipeline-log jsonl 이 out-of-scope 오인 차단.
 // M2-1126-T: status/runners/ 삭제 — all.json·mem-log が STATUS_WT_PATH に移動したため REPO_ROOT では書かない.
-const RUNNER_SCOPE_PREFIXES = ['status/claims/', 'status/hubs.json', 'status/ci/', 'status/pipeline/'];
+// M2-1127-L: events/ 추가 — main-guard 가 쓴 events 파일이 out-of-scope 오인 차단.
+const RUNNER_SCOPE_PREFIXES = ['status/claims/', 'status/hubs.json', 'status/ci/', 'status/pipeline/', 'events/'];
 // M1-1123-E REQ2: 충돌 자동 해소 대상 — 자동 생성 파일만 여기 해당.
 const AUTO_RESOLVE_PREFIXES = ['status/', 'hubs.json', 'index'];
 // M1-1123-L REQ1: 허브가 쓰는 파일 — ahead 커밋에 있어도 'manual' 로 중단하지 않는다.
@@ -997,8 +1003,8 @@ function safePull() {
       const blockedKey = remaining.slice(0, 3).sort().join(',');
       if (blockedKey !== lastBlockedLogKey) {
         lastBlockedLogKey = blockedKey;
-        log('git', `blocked: runner-folder change pending Kyu install · files=${remaining.slice(0, 5).join(',')}${remaining.length > 5 ? '…' : ''}`);
-        lastError = `blocked: runner-folder change pending Kyu install (${remaining[0]})`;
+        log('git', `blocked: 러너 폴더에 정리 안 된 파일 · files=${remaining.slice(0, 5).join(',')}${remaining.length > 5 ? '…' : ''}`);
+        lastError = `blocked: 러너 폴더에 정리 안 된 파일 ${remaining[0]} — 커밋 또는 이동 필요`;
         lastErrorAt = ts(); // M1-1121-A REQ1
       }
       lastPullResult = { ok: false, at: ts(), err: `스코프 밖 변경: ${remaining.slice(0, 3).join(',')}` };
@@ -3407,6 +3413,18 @@ async function tick(hubs) {
       }
     } catch (e) {
       log('main-guard', `예외: ${e.message.split('\n')[0]}`);
+    }
+    // M2-1127-L REQ1: main-guard 가 쓴 events 파일 즉시 커밋+push. 실패 시 다음 루프 재시도.
+    try {
+      const untrackedEvents = getUntrackedPaths().filter(p => p.startsWith('events/'));
+      if (untrackedEvents.length > 0) {
+        for (const p of untrackedEvents) git(['add', '--', p]);
+        git(['commit', '-m', `events(runner-${RUNNER_VERSION}): main-guard events · ${untrackedEvents.length}건`]);
+        git(['push', 'origin', 'HEAD:main']);
+        log('main-guard', `events ${untrackedEvents.length}건 커밋+push 완료`);
+      }
+    } catch (ge) {
+      log('main-guard', `events 커밋+push 실패: ${ge.message.split('\n')[0]} · 다음 루프 재시도`);
     }
 
     // M1-1124-N REQ5: tick 간 벽시계 점프 = sleep 감지 → ndjson 기록. recoverStuckStartedClaims 가 참조.
@@ -6085,7 +6103,7 @@ process.stdin.resume();
     }
   })();
 
-} else if (SELFTEST_MAIN_GUARD_A || SELFTEST_MAIN_GUARD_B || SELFTEST_MAIN_GUARD_C || SELFTEST_MAIN_GUARD_D || SELFTEST_MAIN_GUARD_E || SELFTEST_SAFE_PUSH || SELFTEST_HUB_PREAMBLE || SELFTEST_SLEEP_TRACKER) {
+} else if (SELFTEST_MAIN_GUARD_A || SELFTEST_MAIN_GUARD_B || SELFTEST_MAIN_GUARD_C || SELFTEST_MAIN_GUARD_D || SELFTEST_MAIN_GUARD_E || SELFTEST_SAFE_PUSH || SELFTEST_HUB_PREAMBLE || SELFTEST_SLEEP_TRACKER || SELFTEST_EVENTS_NOT_BLOCKED || SELFTEST_SCRIPTS_BLOCKED) {
   // M1-1124-N: 러너 폴더 사고 A·B·C 재현 + main-guard 자동 복구 검증.
   // M1-1124-S: D·E (aborted·persistent-violation) 추가.
   //   테스트 하네스는 scripts/test/hub-runner-main-guard.test.mjs 에 분리.
@@ -6098,6 +6116,8 @@ process.stdin.resume();
       : SELFTEST_MAIN_GUARD_E ? 'E'
       : SELFTEST_SAFE_PUSH ? 'safe-push'
       : SELFTEST_HUB_PREAMBLE ? 'hub-preamble'
+      : SELFTEST_EVENTS_NOT_BLOCKED ? 'events-not-blocked'
+      : SELFTEST_SCRIPTS_BLOCKED ? 'scripts-blocked'
       : 'sleep-tracker';
     const ok = await mod.runSelftest(which);
     process.exit(ok ? 0 : 1);

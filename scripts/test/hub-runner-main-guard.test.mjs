@@ -384,6 +384,58 @@ export function caseE() {
   });
 }
 
+// --- Case: events-not-blocked (M2-1127-L REQ4) ---
+
+export function caseEventsNotBlocked() {
+  console.log('[selftest-events-not-blocked] events 파일 untracked → outOfScopeChanges 차단 안 됨 + 커밋됨');
+  return withTmp((tmp) => {
+    const { local } = initRemote(tmp);
+
+    // main-guard 가 쓴 것처럼 events 파일 생성 (untracked)
+    mkdirSync(join(local, 'events'), { recursive: true });
+    writeFileSync(join(local, 'events', 'runner-main-guard-20261127T000000.md'), '# main-guard event\n');
+
+    // M2-1127-L 이후 RUNNER_SCOPE_PREFIXES 는 'events/' 포함
+    const SCOPE_PREFIXES = ['status/claims/', 'status/hubs.json', 'status/ci/', 'status/pipeline/', 'events/'];
+    const porcelain = execFileSync('git', ['status', '--porcelain'], { cwd: local, stdio: 'pipe' }).toString();
+    const foreign = porcelain.split('\n')
+      .filter(l => l.length)
+      .map(l => l.length > 2 ? l.slice(2).trim() : '')
+      .filter(p => p && !SCOPE_PREFIXES.some(pre => p.startsWith(pre)));
+
+    assert(foreign.length === 0, 'events/ 파일은 out-of-scope 차단 안 됨');
+
+    // 커밋 시뮬레이션 (main-guard 이후 즉시 커밋 로직)
+    g(local, ['add', '--', 'events/runner-main-guard-20261127T000000.md']);
+    g(local, ['commit', '-m', 'events(runner-test): main-guard events · 1건']);
+    const committed = g(local, ['ls-tree', '-r', '--name-only', 'HEAD']).trim().split('\n');
+    assert(committed.includes('events/runner-main-guard-20261127T000000.md'), 'events 파일 커밋됨');
+  });
+}
+
+// --- Case: scripts-blocked (M2-1127-L REQ4) ---
+
+export function caseScriptsBlocked() {
+  console.log('[selftest-scripts-blocked] scripts/x.mjs untracked → outOfScopeChanges 여전히 차단 (검증의 검증)');
+  return withTmp((tmp) => {
+    const { local } = initRemote(tmp);
+
+    // 스코프 밖 scripts 파일 생성 (untracked)
+    mkdirSync(join(local, 'scripts'), { recursive: true });
+    writeFileSync(join(local, 'scripts', 'x.mjs'), '// out-of-scope stray file\n');
+
+    const SCOPE_PREFIXES = ['status/claims/', 'status/hubs.json', 'status/ci/', 'status/pipeline/', 'events/'];
+    const porcelain = execFileSync('git', ['status', '--porcelain'], { cwd: local, stdio: 'pipe' }).toString();
+    const foreign = porcelain.split('\n')
+      .filter(l => l.length)
+      .map(l => l.length > 2 ? l.slice(2).trim() : '')
+      .filter(p => p && !SCOPE_PREFIXES.some(pre => p.startsWith(pre)));
+
+    // git status --porcelain 은 미추적 디렉터리를 "scripts/" 로 반환할 수 있다.
+    assert(foreign.some(p => p === 'scripts/x.mjs' || p === 'scripts/'), 'scripts/x.mjs 는 여전히 out-of-scope 차단');
+  });
+}
+
 export async function runSelftest(which) {
   try {
     switch (which) {
@@ -392,6 +444,8 @@ export async function runSelftest(which) {
       case 'C': caseC(); break;
       case 'D': caseD(); break;
       case 'E': caseE(); break;
+      case 'events-not-blocked': caseEventsNotBlocked(); break;
+      case 'scripts-blocked': caseScriptsBlocked(); break;
       case 'safe-push': caseSafePush(); break;
       case 'hub-preamble': caseHubPreamble(); break;
       case 'sleep-tracker': caseSleepTracker(); break;
