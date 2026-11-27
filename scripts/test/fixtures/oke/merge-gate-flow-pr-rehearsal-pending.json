@@ -1,0 +1,27 @@
+{
+  "_note": "흐름 PR + 리허설 없음(pending) → FAIL rehearsal: pending",
+  "pr": {
+    "headRefOid": "bbb2222abc1234567890abcdef1234567890abcd",
+    "number": 301,
+    "title": "feat: cd welcome screen"
+  },
+  "headCommitTime": "2026-11-27T05:00:00Z",
+  "checkRuns": {
+    "check_runs": [
+      { "name": "CI", "status": "completed", "conclusion": "success" },
+      { "name": "lint", "status": "completed", "conclusion": "success" },
+      { "name": "heavy-cloud", "status": "completed", "conclusion": "skipped" }
+    ]
+  },
+  "workflowRuns": [
+    { "workflow_name": "CI", "path": ".github/workflows/ci.yml", "status": "completed", "conclusion": "success" }
+  ],
+  "changedFiles": [
+    { "filename": "components/customer-display/WelcomeScreen.tsx" }
+  ],
+  "reviews": [
+    { "state": "APPROVED", "submitted_at": "2026-11-27T06:00:00Z" }
+  ],
+  "comments": [],
+  "imacStats": null
+}

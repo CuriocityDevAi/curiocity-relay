@@ -1,15 +1,66 @@
 #!/usr/bin/env node
-// scripts/oke/merge-gate.mjs  M2-1127-I — 주 CI 워크플로 단위 판정 · skipped 허용 목록 순서 수정
+// scripts/oke/merge-gate.mjs  M1-1127-I — 리허설 관문 추가 · 흐름 PR 판정 · 아이맥 heavy 통계 출력
 
 import { execFileSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 // ---- 주 워크플로 목록 (리포 → .github/workflows 경로) ----
-// 이 경로가 head SHA에서 completed/success 로 실행됐는지 workflow runs API 로 확인
 const CI_WORKFLOWS = {
-  'CuriocityDevAi/storeport':            '.github/workflows/ci.yml',  // workflow name: "ci"
-  'narisolutions/medusa-pos':            '.github/workflows/ci.yml',  // workflow name: "CI"
+  'CuriocityDevAi/storeport':            '.github/workflows/ci.yml',
+  'narisolutions/medusa-pos':            '.github/workflows/ci.yml',
   'narisolutions/agilo-medusa-pos-fork': '.github/workflows/ci.yml',
+  'CuriocityDevAi/agilo-medusa-pos-fork': '.github/workflows/ci.yml',
+};
+
+// ---- 리허설 워크플로 경로 ----
+const REHEARSAL_WORKFLOW = '.github/workflows/e2e-cd-pos.yml';
+
+// ---- "흐름 PR" 경로 패턴 (repo → glob 목록) ----
+// 이 경로 중 하나라도 변경된 PR 은 아이맥 리허설 초록이어야 머지 가능
+// (decision-rehearsal-gate-20261127 · 3원칙 "관문 먼저")
+const FLOW_PATHS = {
+  'CuriocityDevAi/storeport': [
+    'apps/customer-display/**',
+    'apps/commerce-core/src/modules/register_session/**',
+    'apps/commerce-core/src/lib/customer-flow/**',
+    'apps/commerce-core/src/api/**/customer-display/**',
+    '**/phone-entry/**',
+  ],
+  'narisolutions/medusa-pos': [
+    'apps/customer-display/**',
+    'apps/commerce-core/src/modules/register_session/**',
+    'apps/commerce-core/src/lib/customer-flow/**',
+    'apps/commerce-core/src/api/**/customer-display/**',
+    '**/phone-entry/**',
+  ],
+  'narisolutions/agilo-medusa-pos-fork': [
+    'components/customer-display/**',
+    'components/cd-preview/**',
+    'components/order-chips/**',
+    'components/loyalty/**',
+    'app/checkout/**',
+    'app/customer-lookup*',
+    'api/hooks/ask-phone-on-display.ts',
+    'api/hooks/register-session.ts',
+    'lib/ask-phone-on-display.ts',
+    'lib/loyalty-snapshot.ts',
+    'lib/phone-id.ts',
+  ],
+  'CuriocityDevAi/agilo-medusa-pos-fork': [
+    'components/customer-display/**',
+    'components/cd-preview/**',
+    'components/order-chips/**',
+    'components/loyalty/**',
+    'app/checkout/**',
+    'app/customer-lookup*',
+    'api/hooks/ask-phone-on-display.ts',
+    'api/hooks/register-session.ts',
+    'lib/ask-phone-on-display.ts',
+    'lib/loyalty-snapshot.ts',
+    'lib/phone-id.ts',
+  ],
 };
 
 // ---- CLI 파싱 ----
@@ -17,13 +68,13 @@ const args = process.argv.slice(2);
 let repo = null;
 let prNum = null;
 let jsonOut = false;
-let fixtureFile = null; // 테스트 주입용
+let fixtureFile = null;
 
 for (let i = 0; i < args.length; i++) {
   if (args[i] === '--repo') repo = args[++i];
   else if (args[i] === '--pr') prNum = args[++i];
   else if (args[i] === '--json') jsonOut = true;
-  else if (args[i] === '--fixture') fixtureFile = args[++i]; // 테스트용
+  else if (args[i] === '--fixture') fixtureFile = args[++i];
 }
 
 if (!repo || !prNum) {
@@ -31,16 +82,9 @@ if (!repo || !prNum) {
   process.exit(1);
 }
 
-function gh(...ghArgs) {
-  if (fixtureFile) return null; // fixture 모드에서는 사용 안 함
-  const result = execFileSync('gh', ghArgs, { encoding: 'utf8' });
-  return result.trim();
-}
-
 function ghJson(...ghArgs) {
   if (fixtureFile) return null;
-  const result = execFileSync('gh', ghArgs, { encoding: 'utf8' });
-  return JSON.parse(result);
+  return JSON.parse(execFileSync('gh', ghArgs, { encoding: 'utf8' }));
 }
 
 // ---- 픽스처 주입 (테스트용) ----
@@ -75,41 +119,76 @@ function getPrComments(prN) {
   return ghJson('api', `repos/${repo}/issues/${prN}/comments`);
 }
 
+function getPrFiles(prN) {
+  if (fixtureData) return fixtureData.changedFiles ?? [];
+  const result = ghJson('api', `repos/${repo}/pulls/${prN}/files`);
+  return Array.isArray(result) ? result : [];
+}
+
+// ---- 아이맥 heavy 통계 (판정에 사용 안 함 · 오케 참고용) ----
+function getImacStats() {
+  if (fixtureData?.imacStats !== undefined) return fixtureData.imacStats;
+  try {
+    const __dir = dirname(fileURLToPath(import.meta.url));
+    const imacPath = join(__dir, '..', '..', 'status', 'ci-box', 'imac.json');
+    if (!existsSync(imacPath)) return null;
+    const data = JSON.parse(readFileSync(imacPath, 'utf8'));
+    return {
+      swap_used_mb: data.memory?.swap_used_mb ?? null,
+      load_15: data.uptime?.load_15 ?? null,
+      ts: data.ts ?? null,
+    };
+  } catch {
+    return null;
+  }
+}
+
+// ---- glob 매칭 ----
+function matchGlob(filename, pattern) {
+  const escaped = pattern
+    .replace(/[.+^${}()|[\]\\]/g, '\\$&')
+    .replace(/\*\*/g, '\x00')
+    .replace(/\*/g, '[^/]*')
+    .replace(/\x00/g, '.*');
+  return new RegExp(`^${escaped}$`).test(filename);
+}
+
+function isFlowPr(files) {
+  const patterns = FLOW_PATHS[repo] ?? [];
+  if (patterns.length === 0) return false;
+  return files.some(f => patterns.some(p => matchGlob(f.filename ?? f, p)));
+}
+
 // ---- 검사 ----
 const reasons = [];
 let pass = true;
 
-// PR head SHA
 const prData = getPrData();
 const sha = prData.headRefOid ?? prData.head?.sha ?? prData.sha;
 const sha7 = sha ? sha.slice(0, 7) : 'unknown';
 const isMerged = !!(prData.mergedAt || prData.state === 'MERGED');
 
-// check runs
 const runsData = getCheckRuns(sha);
 const runs = runsData?.check_runs ?? runsData ?? [];
 
-// CI 완료 여부 (개별 잡 단위)
 const ALLOWED_SKIPPED = ['heavy-cloud'];
 const incomplete = [];
 const failed = [];
 
 for (const run of runs) {
   const name = run.name ?? '';
-  const status = run.status ?? '';   // queued | in_progress | completed
-  const conclusion = run.conclusion ?? ''; // success | failure | skipped | null
+  const status = run.status ?? '';
+  const conclusion = run.conclusion ?? '';
 
   if (status !== 'completed') {
     incomplete.push(`${name}(${status})`);
   } else if (conclusion === 'failure') {
     failed.push(`${name}(failure)`);
   } else if (conclusion === 'skipped') {
-    // skipped 는 허용 목록에 있을 때만 통과
     if (!ALLOWED_SKIPPED.some(a => name.includes(a))) {
       failed.push(`${name}(skipped — 허용 목록 외)`);
     }
   } else if (conclusion !== 'success') {
-    // neutral, cancelled 등
     if (!ALLOWED_SKIPPED.some(a => name.includes(a))) {
       failed.push(`${name}(${conclusion})`);
     }
@@ -126,10 +205,10 @@ if (failed.length > 0) {
 }
 
 // 주 워크플로 판정 (workflow run 단위)
-// check run 이름이 아닌 실제 워크플로 run 으로 확인 — path filter 보조 워크플로는 필수 아님
 const primaryPath = CI_WORKFLOWS[repo];
+const workflowRuns = getWorkflowRuns(sha);
+
 if (primaryPath) {
-  const workflowRuns = getWorkflowRuns(sha);
   const primaryRun = workflowRuns.find(r => r.path === primaryPath);
   if (!primaryRun) {
     pass = false;
@@ -143,13 +222,30 @@ if (primaryPath) {
   }
 }
 
-// R0 APPROVE 코멘트가 head 커밋 이후에 있는지
-// 이미 머지된 PR 은 R0 승인 조건 면제 (머지 = 이미 승인 완료)
+// ---- 리허설 관문 (흐름 PR 한정) ----
+// 손님 화면·번호 입력 흐름 경로 변경 PR → 아이맥 리허설 초록 필수
+const prFiles = getPrFiles(prNum);
+const flowPr = isFlowPr(prFiles);
+
+if (flowPr) {
+  const rehearsalRun = workflowRuns.find(r => r.path === REHEARSAL_WORKFLOW);
+  if (!rehearsalRun) {
+    pass = false;
+    reasons.push(`rehearsal: pending — 흐름 PR 이지만 리허설(${REHEARSAL_WORKFLOW}) 실행 기록 없음 · 아이맥에서 e2e-cd-pos 초록 필요`);
+  } else if (rehearsalRun.status !== 'completed') {
+    pass = false;
+    reasons.push(`rehearsal: pending — 리허설(${rehearsalRun.workflow_name ?? REHEARSAL_WORKFLOW}) 진행 중: status=${rehearsalRun.status}`);
+  } else if (rehearsalRun.conclusion !== 'success') {
+    pass = false;
+    reasons.push(`rehearsal: fail — 리허설(${rehearsalRun.workflow_name ?? REHEARSAL_WORKFLOW}) 빨강: conclusion=${rehearsalRun.conclusion} · 흐름 PR 은 리허설 초록 없이 머지 불가`);
+  }
+}
+
+// R0 APPROVE 조건
 if (!isMerged) {
   const reviews = getPrReviews(prNum);
   const comments = getPrComments(prNum);
 
-  // PR 커밋 시각 얻기 (head commit)
   let headCommitTime = null;
   if (fixtureData?.headCommitTime) {
     headCommitTime = new Date(fixtureData.headCommitTime);
@@ -172,15 +268,28 @@ if (!isMerged) {
 // ---- 출력 ----
 const verdict = pass ? 'PASS' : 'FAIL';
 const firstLine = `MERGE-GATE ${verdict} ${repo}#${prNum} ${sha7}`;
+const imacStats = getImacStats();
 
 if (jsonOut) {
-  console.log(JSON.stringify({ verdict, repo, pr: prNum, sha: sha7, reasons }, null, 2));
+  console.log(JSON.stringify({
+    verdict,
+    repo,
+    pr: prNum,
+    sha: sha7,
+    flowPr,
+    reasons,
+    imacStats,  // 판정에 사용 안 함 · 오케 참고용
+  }, null, 2));
 } else {
   console.log(firstLine);
+  if (flowPr) console.log('  ℹ 흐름 PR — 리허설 관문 적용');
   if (reasons.length > 0) {
     for (const r of reasons) console.log(`  ✗ ${r}`);
   } else {
     console.log('  ✓ 모든 조건 충족');
+  }
+  if (imacStats) {
+    console.log(`  ℹ iMac swap=${imacStats.swap_used_mb ?? '?'}MB load15=${imacStats.load_15 ?? '?'}`);
   }
 }
 
