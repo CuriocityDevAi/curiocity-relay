@@ -1,13 +1,13 @@
 {
-  "ts": "2026-11-27T09:01:09Z",
+  "ts": "2026-11-27T09:06:16Z",
   "uptime": {
-    "uptime_secs": 142152,
-    "load_1": 6.23,
-    "load_5": 10.84,
-    "load_15": 11.06
+    "uptime_secs": 142459,
+    "load_1": 6.32,
+    "load_5": 7.41,
+    "load_15": 9.31
   },
   "memory": {
-    "free_pct": 57,
+    "free_pct": 59,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
@@ -21,7 +21,7 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 2,
+    "worker_count": 1,
     "current": [
       {
         "runner_name": "actions-runner-ci-box-sp-heavy",
@@ -32,21 +32,11 @@
         "event_name": "pull_request",
         "pr": "479",
         "started_at": "2026-11-27T08:57:29Z"
-      },
-      {
-        "runner_name": "actions-runner-ci-box-fork-heavy",
-        "job": "playwright",
-        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-        "workflow": "CI",
-        "head_ref": "fix/M3-1127-G-sheet-typing-dots",
-        "event_name": "pull_request",
-        "pr": "288",
-        "started_at": "2026-11-27T08:55:24Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 129,
+    "latency_ms": 124,
     "reachable": true
   },
   "netspeed": {
