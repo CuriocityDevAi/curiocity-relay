@@ -1,18 +1,18 @@
 {
-  "ts": "2026-11-27T08:24:52Z",
+  "ts": "2026-11-27T08:29:58Z",
   "uptime": {
-    "uptime_secs": 139975,
-    "load_1": 14.22,
-    "load_5": 8.15,
-    "load_15": 7.9
+    "uptime_secs": 140281,
+    "load_1": 13.4,
+    "load_5": 9.2,
+    "load_15": 8.24
   },
   "memory": {
-    "free_pct": 55,
+    "free_pct": 44,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 89,
+    "root_free_gb": 90,
     "runner_work_free_gb": 89
   },
   "thermal": {
@@ -21,7 +21,7 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 1,
+    "worker_count": 3,
     "current": [
       {
         "runner_name": "actions-runner-ci-box-sp-heavy",
@@ -32,11 +32,29 @@
         "event_name": "pull_request",
         "pr": "478",
         "started_at": "2026-11-27T08:23:08Z"
+      },
+      {
+        "runner_name": "actions-runner-ci-box-fork-heavy",
+        "job": "playwright",
+        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+        "workflow": "CI",
+        "head_ref": "",
+        "event_name": "push",
+        "started_at": "2026-11-27T08:29:25Z"
+      },
+      {
+        "runner_name": "actions-runner-ci-box-fork-light",
+        "job": "unit-tests",
+        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+        "workflow": "CI",
+        "head_ref": "",
+        "event_name": "push",
+        "started_at": "2026-11-27T08:29:28Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 124,
+    "latency_ms": 171,
     "reachable": true
   },
   "netspeed": {
