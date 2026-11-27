@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T03:32:56.192Z",
+  "at": "2026-11-27T03:35:25.307Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -45,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.72,
-    "compressed_gb": 4.65,
+    "used_gb": 15.66,
+    "compressed_gb": 4.55,
     "swap_used_gb": 2.84,
     "pressure": "normal",
-    "at": "2026-11-27T03:32:24.006Z"
+    "at": "2026-11-27T03:34:52.418Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -57,14 +57,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-27T03:32:17.041Z",
+      "at": "2026-11-27T03:34:47.303Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 8,
+      "api_calls": 9,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -72,7 +72,18 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "#282",
+            "pr_display": "fork:#282",
+            "job": "playwright",
+            "step": "Run Playwright harnesses",
+            "running_min": 2,
+            "runner": "ci-box-fork-heavy-imac",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -89,11 +100,11 @@
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 99,
-          "avg_wait_min": 1.8,
-          "avg_run_min": 1.2,
-          "success_rate": 76.8,
-          "run_min_total": 122.60000000000001
+          "jobs": 96,
+          "avg_wait_min": 1.9,
+          "avg_run_min": 1.3,
+          "success_rate": 76,
+          "run_min_total": 121.2
         },
         "mac-light": {
           "jobs": 13,
@@ -117,8 +128,8 @@
       "alerts": [],
       "partial": true
     },
-    "took_ms": 16997,
-    "at": "2026-11-27T03:32:31.901Z"
+    "took_ms": 16678,
+    "at": "2026-11-27T03:35:01.088Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
