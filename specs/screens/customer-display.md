@@ -91,4 +91,4 @@
 | 요소 | 상태 | 메모 |
 |---|---|---|
 | `CD-WAITING` (대기 화면 · `waiting-panel`) | 구현에 있음 · **명세에 없었음** | 페어링 전·주문 없을 때의 대기 Splash. 승인 기록 미확인 — Kyu 실기 때 모습 확인 후 요소로 등재 |
-| `CD-CHIP-ORDERNUM` | **어긋남 의심** | 명세 = 우측 상단 `#N`(1~99) 칩 · M2 보고 = `Order #{display_id}` 텍스트(예 1042). storeport#467(CD #N) 머지 뒤인데도 그런지 R0-1127-B 가 main 에서 확인 |
+| `CD-CHIP-ORDERNUM` | **어긋남 확정**(R0-1127-B) | 주문내역 화면(`OrderListScreen.tsx:46,65`)만 `Order #{display_id}` 텍스트 — Cart·Qris·Keypad 화면은 `#N` 칩. storeport#467 이 주문내역 화면을 빠뜨림. 수정 = M2-1127-D |
