@@ -1013,6 +1013,10 @@ export function renderLayout(data) {
       const reason = truncateWidth(c.reason, Math.max(4, W - 8));
       lines.push(`    ${colCode}└ ${reason}${C.reset}`);
     }
+    if (c.unregisteredRepo) {
+      const hint = truncateWidth(`미등록 리포 ${c.unregisteredRepo} — runner-config.json ci_watch 에 추가 필요`, Math.max(4, W - 8));
+      lines.push(`    ${C.yellow}└ ${hint}${C.reset}`);
+    }
   }
 
   if (totalInProgress === 0) {
@@ -1129,7 +1133,10 @@ export function renderLayout(data) {
   // ── 7. 주의 섹션 (맨 아래 · 0건이면 생략) ─────────────────────────────
   // v1.18: countdown 보다 위로. setInterval 이 \x1b[1A 로 "마지막 줄 -1" 을 덮어쓰므로
   // countdown 이 마지막이어야 주의 본문이 안 지워진다 (11-27 05:32 "주의 (1) 본문 안 보임" 뿌리).
-  if (allAlerts.length > 0 || (ciDimAlerts && ciDimAlerts.length > 0)) {
+  const unregisteredRepos = [...new Set(
+    pipelinePrompts.filter(c => c.unregisteredRepo).map(c => c.unregisteredRepo)
+  )];
+  if (allAlerts.length > 0 || (ciDimAlerts && ciDimAlerts.length > 0) || unregisteredRepos.length > 0) {
     const alertTitle2 = `─ 주의 (${allAlerts.length}) ` + '─'.repeat(Math.max(0, W - 2 - displayWidth(`─ 주의 (${allAlerts.length}) `)));
     lines.push(col(alertTitle2, C.bold));
     for (const a of allAlerts.slice(0, 5)) {
@@ -1138,6 +1145,9 @@ export function renderLayout(data) {
     }
     for (const a of (ciDimAlerts || [])) {
       lines.push(col(`  ⏭ ${a.msg}`, C.dim));
+    }
+    for (const repoName of unregisteredRepos) {
+      lines.push(col(`  ⚠ 미등록 리포 ${repoName} — runner-config.json ci_watch.search_repos 에 추가 필요`, C.yellow));
     }
   }
 

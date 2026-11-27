@@ -2,14 +2,14 @@
 
 `ci-watch.mjs` 는 runner/CI 상태를 터미널에 띄우는 감시 화면이다. 러너나 git 에는 쓰지 않는다 — 전부 **로컬 읽기**이고 GitHub 호출은 최소한만 한다.
 
-**v1.18 이 지금 기본값.** 화면 정본 = [`specs/screens/ci-watch.md`](../specs/screens/ci-watch.md) (CW-HEAD · CW-HUBQ · CW-CIQ · CW-PROG · CW-DONE · CW-ALERT · CW-RENDER · CW-VERSION). `--v2`(ci-watch-v2.mjs) 는 실험 화면 — 9단계 띠(CW-PROG)가 기본 화면에 흡수됨 (M0-1127-A, 2026-11-27). **다음 라운드에 `--v2` 제거 후보** (이번 PR 에서는 삭제하지 않음).
+**v1.19 이 지금 기본값.** 화면 정본 = [`specs/screens/ci-watch.md`](../specs/screens/ci-watch.md) (CW-HEAD · CW-HUBQ · CW-CIQ · CW-PROG · CW-DONE · CW-ALERT · CW-RENDER · CW-VERSION). `--v2`(ci-watch-v2.mjs) 는 실험 화면 — 9단계 띠(CW-PROG)가 기본 화면에 흡수됨 (M0-1127-A, 2026-11-27). **다음 라운드에 `--v2` 제거 후보** (이번 PR 에서는 삭제하지 않음).
 
 ---
 
 ## 실행
 
 ```bash
-~/.hub-runner/bin/ci-watch.sh            # 기본 (v1.18)
+~/.hub-runner/bin/ci-watch.sh            # 기본 (v1.19)
 ~/.hub-runner/bin/ci-watch.sh --v2       # 실험 · 기본 화면에 흡수됨 · 다음 라운드에 제거 후보
 ```
 
@@ -165,6 +165,12 @@ CI 섹션 하단에 오늘 처리 통계 행이 표시된다:
 | **v1.7** | M2-1126-B | CI 풀 행·허브 행 오른쪽 끝 `대기avgXm` · 오늘 처리 MBP/iMAC 분리 · ID 잘림 수정 (MCOL_W 12→14 · `m` 단위) |
 
 ---
+
+## 새 리포 추가하는 법
+
+`status/runner-config.json` 의 `ci_watch.search_repos` 에 `"Owner/repo-name"` 형식으로 추가한다.
+CI 가 없는 리포(예: relay, 방법론 리포)는 `ci_watch.no_ci_repos` 에 짧은 이름(`repo-name` 만)을 추가해 조용히 건너뛰게 한다.
+미등록 리포(둘 다 없음)가 감지되면 ci-watch 화면에서 노란 `└ 미등록 리포` 경고 + 하단 주의 구역에 1줄이 표시된다.
 
 ## 배포
 

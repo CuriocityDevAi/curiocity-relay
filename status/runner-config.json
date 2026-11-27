@@ -20,6 +20,14 @@
       "mac-light": "~/actions-runner-light/svc.sh"
     }
   },
+  "ci_watch": {
+    "search_repos": [
+      "CuriocityDevAi/storeport",
+      "CuriocityDevAi/curiocity-relay",
+      "narisolutions/agilo-medusa-pos-fork"
+    ],
+    "no_ci_repos": ["curiocity-relay", "curiocity-devai-method"]
+  },
   "hubs": {
     "m0": {
       "cwd": "/Users/kyu.lee/projects/storeport",
