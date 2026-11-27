@@ -15,9 +15,9 @@
 | 5 | 아이맥 heavy2 (메모리 실측 → 등록) · 대기열 줄이기 | Kyu → M2 | 실측 대기 | — |
 | 5.5 | **방법론 v2.0** — 뼈대 · HISTORY(시대 0~5) · 01~09 본문 · 10-sdd · 11-orchestrator-rules(오케 메모리 규칙 이전 · R8) · ROADMAP · MP-010~013 전부 ✅ (11-27 08:4x) · 남음: 04-artifacts/templates 나머지 · 07-incidents 11-19~23 · 주 1회 개정 | 오케 | ✅ 1차 완료 | Kyu 05:27 go |
 | 5.7 | 🔴 ci-watch 9단계 띠 — relay#61(v1.18) · relay#62(v1.19 · 거짓 경보·제목·리포 목록 설정화·미등록 리포 표시 · 39e07b4) **둘 다 머지 ✅** → **Kyu 실화면 확인 대기** | Kyu | 실기 | — |
-| 6 | spec-guard 보강 — ② 실서버 e2e: M1-1127-D 진행 ③ POS 대조: M3-1127-C 착지(fork#283 · Sell 탭 Hand over = **있었던 적 없음 · 명세 오기재** → 오케 명세 정정 ✅ · todo 8/9 채움) → **R0-1127-C 리뷰** | M1 · R0 | 진행 | — |
+| 6 | spec-guard 보강 — ② 실서버 e2e: M1-1127-D 부분(페어링·영수증·키패드·번호 실시간 반영까지 실서버 통과 · 마지막 어서션만 red = 키패드 `08` 가정) → **M1-1127-E 발부**(Confirm → 적립 + mutation) ③ POS 대조: fork#283 R0 CHANGES 1건(주문 상세 번호 버튼을 소스 글자로만 확인) → **M3-1127-D 발부** | M1 · M3 | 진행 | CD 키패드 `08` 선입력 = 명세에 없음 · Kyu 실기 때 확인 |
 | 6.4 | 손님 화면 spec drift check — storeport#470 R0 APPROVE 이나 **CI 30분째 미시작** + **`#N` 칩 어긋남 확정**(주문내역 화면만 `Order #1042` 긴 번호) → **M2-1127-D 발부**(CI 원인 해결 + #N 칩으로 교체 + 내용 형식 테스트) | M2 | 진행 | Kyu 11-24 승인 "#N 하나" · 대기 화면 등재는 Kyu 실기 때 |
-| 6.5 | relay#60 을 main 위로 다시 얹기(v1.20) + gh-watchdog 이 꺼 둔 맥북 CI 러너를 재시작하려는 것 정리 = **M0-1127-D 발부** · 머지는 허브 유휴 + Kyu 있을 때(러너 self-update) | M0 → 오케 + Kyu | 진행 | — |
+| 6.5 | relay#60(v1.20 · 상태 파일 분리 + watchdog 정리) — M0-1127-D 착지 · 498 테스트 통과 · **머지 대기: Kyu 가 자리에 있을 때**(러너 self-update) + Kyu 손 1개(`events/runner-main-guard-…md` 삭제) | 오케 + Kyu | Kyu 대기 | R0-1126-AQ APPROVE(어제) · rebase 분은 오케 확인 |
 | 6.6 | 오케 러너 로그 직접 접근(~/.hub-runner) — 연결 · 결정 파일 · 방법론(HISTORY · MP-013 · 06 · 09) 전부 ✅ | 오케 | ✅ 완료 | Kyu 05:59 |
 | 7 | POS fork 자체 #N 카운터 PATCH 제거 | M3 | 후순위 | 선택 |
 | 8 | feature-map cd-keypad planned → live | M0 | 후순위 | — |
