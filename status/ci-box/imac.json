@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-27T05:45:11Z",
+  "ts": "2026-11-27T05:55:55Z",
   "uptime": {
-    "uptime_secs": 130395,
-    "load_1": 11.15,
-    "load_5": 12.32,
-    "load_15": 10.6
+    "uptime_secs": 131038,
+    "load_1": 9.84,
+    "load_5": 10.39,
+    "load_15": 10.12
   },
   "memory": {
-    "free_pct": 57,
+    "free_pct": 58,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 95,
-    "runner_work_free_gb": 95
+    "root_free_gb": 94,
+    "runner_work_free_gb": 94
   },
   "thermal": {
     "throttled": false,
@@ -24,14 +24,14 @@
     "worker_count": 2,
     "current": [
       {
-        "runner_name": "actions-runner-ci-box-fork-heavy",
-        "job": "playwright",
-        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-        "workflow": "CI",
-        "head_ref": "ci/M3-1127-E-workflow-lint",
+        "runner_name": "actions-runner-ci-box-sp-heavy",
+        "job": "heavy-mac",
+        "repo": "CuriocityDevAi/storeport",
+        "workflow": "ci",
+        "head_ref": "feat/M0-1127-E-short-number-register-reset",
         "event_name": "pull_request",
-        "pr": "285",
-        "started_at": "2026-11-27T05:39:59Z"
+        "pr": "473",
+        "started_at": "2026-11-27T05:49:48Z"
       },
       {
         "runner_name": "actions-runner-ci-box-fork-light",
@@ -40,19 +40,19 @@
         "workflow": "CI",
         "head_ref": "",
         "event_name": "push",
-        "started_at": "2026-11-27T05:44:53Z"
+        "started_at": "2026-11-27T05:54:59Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 142,
+    "latency_ms": 111,
     "reachable": true
   },
   "netspeed": {
     "dl_mbps": 80.3,
     "ul_mbps": null,
     "rpm": null,
-    "cached": false
+    "cached": true
   },
   "postgres": {
     "alive": true
