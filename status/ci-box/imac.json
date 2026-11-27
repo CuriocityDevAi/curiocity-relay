@@ -1,13 +1,13 @@
 {
-  "ts": "2026-11-27T08:19:46Z",
+  "ts": "2026-11-27T08:24:52Z",
   "uptime": {
-    "uptime_secs": 139669,
-    "load_1": 3.84,
-    "load_5": 6.01,
-    "load_15": 7.78
+    "uptime_secs": 139975,
+    "load_1": 14.22,
+    "load_5": 8.15,
+    "load_15": 7.9
   },
   "memory": {
-    "free_pct": 63,
+    "free_pct": 55,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
@@ -24,18 +24,19 @@
     "worker_count": 1,
     "current": [
       {
-        "runner_name": "actions-runner-ci-box-sp-light",
-        "job": "post",
+        "runner_name": "actions-runner-ci-box-sp-heavy",
+        "job": "heavy-mac",
         "repo": "CuriocityDevAi/storeport",
-        "workflow": "ci-summary",
-        "head_ref": "",
-        "event_name": "workflow_run",
-        "started_at": "2026-11-27T08:19:43Z"
+        "workflow": "ci",
+        "head_ref": "fix/M0-1127-L-late-phone-entry",
+        "event_name": "pull_request",
+        "pr": "478",
+        "started_at": "2026-11-27T08:23:08Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 106,
+    "latency_ms": 124,
     "reachable": true
   },
   "netspeed": {
