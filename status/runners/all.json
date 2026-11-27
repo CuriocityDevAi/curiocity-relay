@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T12:34:22.444Z",
+  "at": "2026-11-27T12:36:44.302Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -41,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.45,
-    "compressed_gb": 7.18,
-    "swap_used_gb": 11.1,
+    "used_gb": 15.86,
+    "compressed_gb": 7.05,
+    "swap_used_gb": 11.11,
     "pressure": "normal",
-    "at": "2026-11-27T12:33:50.421Z"
+    "at": "2026-11-27T12:36:10.112Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -53,20 +53,23 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-27T12:32:36.969Z",
+      "at": "2026-11-27T12:34:56.704Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport"
+        "CuriocityDevAi/storeport",
+        "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 11,
+      "api_calls": 16,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
+        "queued": 5,
+        "queued_prs": [
+          293
+        ],
+        "oldest_queued_min": 9,
+        "oldest_queued_pr": "fork:master",
         "in_progress": [
           {
             "repo": "CuriocityDevAi/storeport",
@@ -74,8 +77,18 @@
             "pr_display": "storeport:#480",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 5,
+            "running_min": 7,
             "runner": "ci-box-storeport-heavy-imac",
+            "kind": "mac-heavy"
+          },
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "#293",
+            "pr_display": "fork:#293",
+            "job": "e2e · case 1 (실서버)",
+            "step": "Start test env (commerce-core · CD · POS)",
+            "running_min": 1,
+            "runner": "ci-box-fork-heavy-imac",
             "kind": "mac-heavy"
           }
         ]
@@ -88,8 +101,8 @@
       },
       "cloud_in_progress": [],
       "runners": {
-        "heavy_online": 1,
-        "heavy_busy": 1,
+        "heavy_online": 3,
+        "heavy_busy": 2,
         "light_online": 1
       },
       "cloud_today": 0,
@@ -119,18 +132,18 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 97.8
       },
-      "jsonl_added": 12,
+      "jsonl_added": 0,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 20093,
-    "at": "2026-11-27T12:32:54.625Z"
+    "took_ms": 21666,
+    "at": "2026-11-27T12:35:16.717Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 98,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:27:18.669Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:27:54.606Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:28:28.318Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:28:28.319Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:29:05.198Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:29:05.198Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:29:42.735Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:29:42.735Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:30:20.345Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:30:20.346Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:30:21.059Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:30:21.090Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:30:52.837Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:30:52.876Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:31:27.871Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:32:04.907Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:32:42.037Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:33:14.605Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:33:50.420Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:29:05.198Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:29:05.198Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:29:42.735Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:29:42.735Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:30:20.345Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:30:20.346Z] [gh-runner-watchdog] partial skip: mac-light in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:30:21.059Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:30:21.090Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:30:52.837Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:30:52.876Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:31:27.871Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:32:04.907Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:32:42.037Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:33:14.605Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:33:50.420Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:34:25.379Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:self-update 2026-11-27T12:35:00.534Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:35:00.986Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:35:35.172Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:36:10.111Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
   "git_state": {
     "ahead": 0,
     "behind": 1,
@@ -168,7 +181,7 @@
     {
       "name": "ci-box-fork-light-imac",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "curiocity-mac-fork",
