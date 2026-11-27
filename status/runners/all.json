@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T09:45:29.181Z",
+  "at": "2026-11-27T09:47:54.392Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -45,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.89,
-    "compressed_gb": 5.9,
-    "swap_used_gb": 18.79,
+    "used_gb": 15.3,
+    "compressed_gb": 6.82,
+    "swap_used_gb": 18.82,
     "pressure": "normal",
-    "at": "2026-11-27T09:44:56.840Z"
+    "at": "2026-11-27T09:47:22.055Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -57,7 +57,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-27T09:43:44.083Z",
+      "at": "2026-11-27T09:46:07.455Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -72,18 +72,7 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": [
-          {
-            "repo": "CuriocityDevAi/storeport",
-            "pr": "#479",
-            "pr_display": "storeport:#479",
-            "job": "heavy-mac",
-            "step": null,
-            "running_min": 15,
-            "runner": "ci-box-storeport-heavy-imac",
-            "kind": "mac-heavy"
-          }
-        ]
+        "in_progress": []
       },
       "light": {
         "queued": 0,
@@ -100,18 +89,18 @@
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 370,
+          "jobs": 371,
           "avg_wait_min": 2,
-          "avg_run_min": 1.6,
-          "success_rate": 78.1,
-          "run_min_total": 608.2999999999995
+          "avg_run_min": 1.7,
+          "success_rate": 78.2,
+          "run_min_total": 623.5999999999995
         },
         "mac-light": {
-          "jobs": 118,
+          "jobs": 123,
           "avg_wait_min": 0.5,
           "avg_run_min": 0.3,
-          "success_rate": 85.6,
-          "run_min_total": 32.80000000000002
+          "success_rate": 85.4,
+          "run_min_total": 34.10000000000001
         },
         "cloud": {
           "jobs": 6,
@@ -124,11 +113,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 88
       },
-      "jsonl_added": 1,
+      "jsonl_added": 6,
       "alerts": []
     },
-    "took_ms": 11248,
-    "at": "2026-11-27T09:43:53.842Z"
+    "took_ms": 12633,
+    "at": "2026-11-27T09:46:18.525Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
@@ -147,7 +136,7 @@
     {
       "name": "ci-box-storeport-heavy-imac",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "ci-box-storeport-light-imac",
@@ -167,7 +156,7 @@
     {
       "name": "ci-box-fork-heavy-imac",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "ci-box-fork-light-imac",
