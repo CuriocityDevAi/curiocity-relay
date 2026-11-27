@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# scripts/ci-box/cleanup-tmp.sh — $TMPDIR 하루 1회 임시 파일 정리 (M2-1127-M)
+# scripts/ci-box/cleanup-tmp.sh — $TMPDIR 하루 1회 임시 파일 정리 (M2-1127-M · M2-1127-R)
 #
 # 사용법:
 #   bash cleanup-tmp.sh              정리 실행 (하루 1회 제한)
@@ -13,7 +13,17 @@
 #   ~/.ci-box-cleanup-tmp-last.json  — 마지막 성공 정리 결과 캐시 (health.sh 도 읽음)
 #   ~/Library/Logs/ci-box-health.log — 로그 추가
 #
-# 의존: bash · python3 · du · find
+# 의존: bash · python3 · du · find · getconf(macOS)
+#
+# TMPDIR 결정 순서 (M2-1127-R):
+#   1. CLEANUP_TMP_DIR_OVERRIDE 환경변수 (테스트 전용 · 본 운영에서는 미설정)
+#   2. getconf DARWIN_USER_TEMP_DIR  — launchd 환경에서도 사용자 TMPDIR 을 정확히 반환
+#   3. getconf 실패 → skip_reason=getconf_failed (아무것도 안 지움)
+#   4. 결과가 /var/folders/ 하위인지 검증 — 아니면 skip_reason=unexpected_tmpdir
+#
+# 배경 (M2-1127-R): launchd 실행 환경의 $TMPDIR 이 로그인 셸과 달라
+#   health.sh 의 imac.json tmp.current_gb=0.0 으로 보고됐지만 실측 25GB.
+#   getconf DARWIN_USER_TEMP_DIR 은 launchd/login 양쪽에서 동일한 값을 반환.
 
 set -uo pipefail
 
@@ -38,24 +48,85 @@ done
 
 _log() { printf '[%s] cleanup-tmp: %s\n' "$(date -u +%H:%M:%S)" "$*" | tee -a "$LOG_FILE" >&2; }
 
-# ── TMPDIR 경로 검증 ──────────────────────────────────────────────────────────
+# ── TMPDIR 경로 결정 (M2-1127-R: getconf 우선) ───────────────────────────────
+#
+# launchd 환경에서 $TMPDIR 이 미설정이거나 로그인 셸과 다를 수 있음.
+# getconf DARWIN_USER_TEMP_DIR 은 launchd 에서도 동일한 사용자 TMPDIR 반환.
+#
+# CLEANUP_TMP_DIR_OVERRIDE 가 설정되어 있으면 getconf 를 우회하고 그 값을 사용
+# (테스트 전용 injection 경로 · 본 운영 launchd 에서는 미설정).
+#
+# 반환 형식:
+#   성공: stdout 에 normalized path
+#   실패: stdout 에 "SKIP:<reason>" 출력 후 exit 1
+#          reason = invalid_tmpdir | getconf_failed | unexpected_tmpdir
+#
+# 주의: 이 함수는 $(resolve_tmpdir) 로 호출되므로 subshell 에서 실행된다.
+#       _SKIP_REASON 같은 전역 변수를 직접 설정해도 부모 셸에 전파되지 않는다.
+#       따라서 skip_reason 은 stdout 의 "SKIP:" 접두사를 통해 전달한다.
 
-validate_tmpdir() {
-    local d="${TMPDIR:-}"
-    if [[ -z "$d" ]]; then
-        _log "WARN: TMPDIR 미설정 — 정리 건너뜀"
+resolve_tmpdir() {
+    # 진단: launchd 환경의 $TMPDIR 로그 (실패 원인 추적용)
+    local launchd_tmpdir="${TMPDIR:-<unset>}"
+    _log "launchd TMPDIR=$launchd_tmpdir"
+
+    # ── 테스트 override (${VAR+x} → VAR 가 set 되어 있으면 true, unset 이면 false) ──
+    if [[ -n "${CLEANUP_TMP_DIR_OVERRIDE+x}" ]]; then
+        local d="${CLEANUP_TMP_DIR_OVERRIDE}"
+        if [[ -z "$d" ]]; then
+            _log "WARN: CLEANUP_TMP_DIR_OVERRIDE 비어 있음 — 정리 건너뜀"
+            echo "SKIP:invalid_tmpdir"
+            return 1
+        fi
+        local norm_ov
+        norm_ov=$(python3 -c "import os,sys; print(os.path.realpath(sys.argv[1]))" "$d" 2>/dev/null || echo "$d")
+        if [[ "$norm_ov" == "/" ]] || [[ "$norm_ov" == "" ]]; then
+            _log "WARN: CLEANUP_TMP_DIR_OVERRIDE=/ 방어 — 정리 건너뜀"
+            echo "SKIP:invalid_tmpdir"
+            return 1
+        fi
+        if [[ ! -d "$d" ]]; then
+            _log "WARN: CLEANUP_TMP_DIR_OVERRIDE 디렉토리 없음: $d — 정리 건너뜀"
+            echo "SKIP:invalid_tmpdir"
+            return 1
+        fi
+        _log "TMPDIR 결정(override): $norm_ov"
+        echo "$norm_ov"
+        return 0
+    fi
+
+    # ── 운영 경로: getconf DARWIN_USER_TEMP_DIR ──────────────────────────────
+    local gc_out
+    if ! gc_out=$(getconf DARWIN_USER_TEMP_DIR 2>/dev/null) || [[ -z "$gc_out" ]]; then
+        _log "WARN: getconf DARWIN_USER_TEMP_DIR 실패 — 정리 건너뜀"
+        echo "SKIP:getconf_failed"
         return 1
     fi
+
     local normalized
-    normalized=$(python3 -c "import os,sys; print(os.path.realpath(sys.argv[1]))" "$d" 2>/dev/null || echo "$d")
+    normalized=$(python3 -c "import os,sys; print(os.path.realpath(sys.argv[1]))" "$gc_out" 2>/dev/null || echo "$gc_out")
+
+    # /var/folders/ 하위인지 검증.
+    # macOS 에서 /var 은 /private/var 의 심볼릭 링크이므로 realpath 후 양쪽 패턴 허용.
+    if [[ "$normalized" != /var/folders/* ]] && [[ "$normalized" != /private/var/folders/* ]]; then
+        _log "WARN: getconf 결과가 /var/folders/ 하위 아님: $normalized — 정리 건너뜀"
+        echo "SKIP:unexpected_tmpdir"
+        return 1
+    fi
+
     if [[ "$normalized" == "/" ]] || [[ "$normalized" == "" ]]; then
         _log "WARN: TMPDIR=/ 방어 — 정리 건너뜀"
+        echo "SKIP:invalid_tmpdir"
         return 1
     fi
-    if [[ ! -d "$d" ]]; then
-        _log "WARN: TMPDIR 디렉토리 없음: $d — 정리 건너뜀"
+
+    if [[ ! -d "$normalized" ]]; then
+        _log "WARN: TMPDIR 디렉토리 없음: $normalized — 정리 건너뜀"
+        echo "SKIP:invalid_tmpdir"
         return 1
     fi
+
+    _log "TMPDIR 결정: $normalized (launchd TMPDIR=$launchd_tmpdir)"
     echo "$normalized"
     return 0
 }
@@ -149,12 +220,16 @@ except Exception:
 # ── 메인 ──────────────────────────────────────────────────────────────────────
 
 main() {
-    local tmpdir
-    if ! tmpdir=$(validate_tmpdir); then
+    local tmpdir_or_skip
+    tmpdir_or_skip=$(resolve_tmpdir)
+    if [[ $? -ne 0 ]]; then
         # TMPDIR 무효 → 현재 크기도 측정 불가
-        printf '{"current_gb":null,"freed_gb":null,"cleanup_at":null,"ran_this_tick":false,"skip_reason":"invalid_tmpdir"}\n'
+        # resolve_tmpdir 는 실패 시 stdout 에 "SKIP:<reason>" 을 출력함
+        local skip_reason="${tmpdir_or_skip#SKIP:}"
+        printf '{"current_gb":null,"freed_gb":null,"cleanup_at":null,"ran_this_tick":false,"skip_reason":"%s"}\n' "$skip_reason"
         return 0
     fi
+    local tmpdir="$tmpdir_or_skip"
 
     local now_epoch now_iso
     now_epoch=$(date +%s)

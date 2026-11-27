@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# scripts/test/ci-box-health.test.sh — health.sh 단위 테스트 (M1-1126-G)
+# scripts/test/ci-box-health.test.sh — health.sh 단위 테스트 (M1-1126-G · M2-1127-R)
 #
 # 커버리지:
 #   A-1: collect_memory — inactive 포함 시 free_pct 가 (free+spec)/total 보다 큼
@@ -17,10 +17,12 @@
 #   C-6: judge_health — root_free_gb=40 이면 ok (기준 통과)
 #   D-1: --dry-run JSON 에 health 필드 있음 + _unknown 필드 없음
 #   D-2: --dry-run JSON 에 tmp 섹션 있음
-#   G-1: cleanup-tmp.sh — TMPDIR 비어 있으면(invalid) 아무것도 안 지움
+#   G-1: cleanup-tmp.sh — CLEANUP_TMP_DIR_OVERRIDE='' → skip_reason=invalid_tmpdir
 #   G-2: cleanup-tmp.sh — 하루 이미 실행 → skip_reason=already_ran_today
-#   G-3: cleanup-tmp.sh — 24h 넘은 항목 삭제 · 24h 미만 보존
-#   G-4: cleanup-tmp.sh — TMPDIR=/ 방어 → skip_reason=invalid_tmpdir
+#   G-3: cleanup-tmp.sh — 24h 넘은 항목 삭제 · 24h 미만 보존 (CLEANUP_TMP_DIR_OVERRIDE 주입)
+#   G-4: cleanup-tmp.sh — CLEANUP_TMP_DIR_OVERRIDE=/ 방어 → skip_reason=invalid_tmpdir
+#   G-5: cleanup-tmp.sh — getconf 실패(PATH 모킹) → skip_reason=getconf_failed (M2-1127-R)
+#   G-6: cleanup-tmp.sh — getconf 가 /var/folders/ 외 반환 → skip_reason=unexpected_tmpdir (M2-1127-R)
 # 실행: bash scripts/test/ci-box-health.test.sh
 
 set -uo pipefail
@@ -510,12 +512,12 @@ CLEANUP_SH="$SCRIPT_DIR/../ci-box/cleanup-tmp.sh"
 
 echo "--- G: cleanup-tmp.sh ---"
 
-# G-1: TMPDIR 비어 있으면 아무것도 안 지움 (invalid_tmpdir)
-G1_OUT=$(TMPDIR="" bash "$CLEANUP_SH" --force 2>/dev/null)
+# G-1: CLEANUP_TMP_DIR_OVERRIDE='' → skip_reason=invalid_tmpdir (M2-1127-R: TMPDIR 주입 → override 경로 사용)
+G1_OUT=$(CLEANUP_TMP_DIR_OVERRIDE="" bash "$CLEANUP_SH" --force 2>/dev/null)
 G1_SKIP=$(echo "$G1_OUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('skip_reason','none'))" 2>/dev/null || echo "parse_error")
-_assert_eq "G-1: TMPDIR='' → skip_reason=invalid_tmpdir" "invalid_tmpdir" "$G1_SKIP"
+_assert_eq "G-1: CLEANUP_TMP_DIR_OVERRIDE='' → skip_reason=invalid_tmpdir" "invalid_tmpdir" "$G1_SKIP"
 G1_CURRENT=$(echo "$G1_OUT" | python3 -c "import json,sys; print(json.load(sys.stdin).get('current_gb','NOT_NULL'))" 2>/dev/null || echo "parse_error")
-_assert_eq "G-1: TMPDIR='' → current_gb=null" "None" "$G1_CURRENT"
+_assert_eq "G-1: CLEANUP_TMP_DIR_OVERRIDE='' → current_gb=null" "None" "$G1_CURRENT"
 
 # G-2: 하루 이미 실행 → already_ran_today
 G2_STAMP=$(mktemp)
@@ -536,7 +538,7 @@ G2_SKIP=$(echo "$G2_OUT" | python3 -c "import json,sys; d=json.load(sys.stdin); 
 _assert_eq "G-2: 하루 이미 실행 → skip_reason=already_ran_today" "already_ran_today" "$G2_SKIP"
 rm -f "$G2_STAMP"
 
-# G-3: 24h 넘은 항목 삭제 · 24h 미만 보존 (--force · --dry-run)
+# G-3: 24h 넘은 항목 삭제 · 24h 미만 보존 (CLEANUP_TMP_DIR_OVERRIDE 주입 · M2-1127-R)
 G3_TMPDIR=$(mktemp -d)
 OLD_ITEM="$G3_TMPDIR/old_item_should_delete"
 NEW_ITEM="$G3_TMPDIR/new_item_keep"
@@ -548,7 +550,7 @@ import os, time
 t = time.time() - 48*3600
 os.utime('$OLD_ITEM', (t, t))
 "
-G3_OUT=$(TMPDIR="$G3_TMPDIR" bash "$CLEANUP_SH" --force --dry-run 2>/dev/null)
+G3_OUT=$(CLEANUP_TMP_DIR_OVERRIDE="$G3_TMPDIR" bash "$CLEANUP_SH" --force --dry-run 2>/dev/null)
 # dry-run 이므로 파일은 남아 있어야 함
 if [[ -d "$OLD_ITEM" ]]; then
     printf 'PASS: G-3: dry-run — old_item 보존 (실제 삭제 없음)\n'
@@ -558,7 +560,7 @@ else
     FAIL=$((FAIL+1))
 fi
 # 실제 삭제 (--force)
-G3_OUT2=$(TMPDIR="$G3_TMPDIR" bash "$CLEANUP_SH" --force 2>/dev/null)
+G3_OUT2=$(CLEANUP_TMP_DIR_OVERRIDE="$G3_TMPDIR" bash "$CLEANUP_SH" --force 2>/dev/null)
 if [[ ! -d "$OLD_ITEM" ]]; then
     printf 'PASS: G-3: --force — old_item(48h) 삭제됨\n'
     PASS=$((PASS+1))
@@ -575,10 +577,34 @@ else
 fi
 rm -rf "$G3_TMPDIR"
 
-# G-4: TMPDIR=/ 방어
-G4_OUT=$(TMPDIR="/" bash "$CLEANUP_SH" --force 2>/dev/null)
+# G-4: CLEANUP_TMP_DIR_OVERRIDE=/ 방어 (M2-1127-R)
+G4_OUT=$(CLEANUP_TMP_DIR_OVERRIDE="/" bash "$CLEANUP_SH" --force 2>/dev/null)
 G4_SKIP=$(echo "$G4_OUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('skip_reason','none'))" 2>/dev/null || echo "parse_error")
-_assert_eq "G-4: TMPDIR=/ → skip_reason=invalid_tmpdir" "invalid_tmpdir" "$G4_SKIP"
+_assert_eq "G-4: CLEANUP_TMP_DIR_OVERRIDE=/ → skip_reason=invalid_tmpdir" "invalid_tmpdir" "$G4_SKIP"
+
+# ── G-5~6: getconf 경로 테스트 (M2-1127-R) ──────────────────────────────────
+
+echo "--- G-5~6: cleanup-tmp.sh getconf 경로 (M2-1127-R) ---"
+
+# G-5: getconf 실패 → skip_reason=getconf_failed
+G5_FAKE_BIN=$(mktemp -d)
+printf '#!/bin/bash\nexit 1\n' > "$G5_FAKE_BIN/getconf"
+chmod +x "$G5_FAKE_BIN/getconf"
+G5_OUT=$(PATH="$G5_FAKE_BIN:$PATH" bash "$CLEANUP_SH" --force 2>/dev/null)
+G5_SKIP=$(echo "$G5_OUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('skip_reason','none'))" 2>/dev/null || echo "parse_error")
+_assert_eq "G-5: getconf 실패 → skip_reason=getconf_failed" "getconf_failed" "$G5_SKIP"
+G5_CURRENT=$(echo "$G5_OUT" | python3 -c "import json,sys; print(json.load(sys.stdin).get('current_gb','NOT_NULL'))" 2>/dev/null || echo "parse_error")
+_assert_eq "G-5: getconf 실패 → current_gb=null" "None" "$G5_CURRENT"
+rm -rf "$G5_FAKE_BIN"
+
+# G-6: getconf 가 /var/folders/ 외 경로 반환 → skip_reason=unexpected_tmpdir
+G6_FAKE_BIN=$(mktemp -d)
+printf '#!/bin/bash\necho /tmp/not-var-folders\n' > "$G6_FAKE_BIN/getconf"
+chmod +x "$G6_FAKE_BIN/getconf"
+G6_OUT=$(PATH="$G6_FAKE_BIN:$PATH" bash "$CLEANUP_SH" --force 2>/dev/null)
+G6_SKIP=$(echo "$G6_OUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('skip_reason','none'))" 2>/dev/null || echo "parse_error")
+_assert_eq "G-6: getconf 비-/var/folders/ 반환 → skip_reason=unexpected_tmpdir" "unexpected_tmpdir" "$G6_SKIP"
+rm -rf "$G6_FAKE_BIN"
 
 echo ""
 printf '=== 결과: PASS=%d FAIL=%d ===\n' "$PASS" "$FAIL"
