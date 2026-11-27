@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-27T04:20:12.257Z",
+  "built_at": "2026-11-27T05:28:43.116Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-27T04:20:11.842Z"
+      "fetched_at": "2026-11-27T05:28:42.616Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-27T04:20:11.977Z"
+      "fetched_at": "2026-11-27T05:28:42.796Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6618,6 +6618,20 @@
               "status": "live"
             },
             {
+              "id": "spec-guard-cd",
+              "name": "손님 화면 명세↔구현 대조 자동화 (M2-1127-C)",
+              "summary": "relay customer-display.md 의 승인 요소와 storeport CD 구현·testID·보존 테스트를 자동으로 대조한다. 명세에 있는데 testID·테스트 둘 다 없으면 CI FAIL.",
+              "files": [
+                "scripts/spec-guard-cd-audit.mjs",
+                "scripts/spec-guard-cd-map.json",
+                "docs/spec-guard/cd-element-inventory.md",
+                "apps/customer-display/src/screens/OrderListScreen.tsx",
+                "apps/customer-display/e2e/cd-sync-flow.spec.ts",
+                ".github/actions/heavy-steps/action.yml"
+              ],
+              "status": "live"
+            },
+            {
               "id": "ledger-scripts",
               "name": "원장 검사 스크립트",
               "summary": "원장 형식 검사와 상류 리포 신선도 검사를 자동으로 돌리는 검사 스크립트 묶음이다.",
@@ -6940,7 +6954,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-27T04:20:12.256Z"
+      "fetched_at": "2026-11-27T05:28:43.116Z"
     }
   ],
   "rollup": {
