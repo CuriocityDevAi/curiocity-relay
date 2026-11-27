@@ -17,10 +17,10 @@
 | 5.7 | 🔴 ci-watch 9단계 띠 — relay#61(v1.18) · relay#62(v1.19 · 거짓 경보·제목·리포 목록 설정화·미등록 리포 표시 · 39e07b4) **둘 다 머지 ✅** → **Kyu 실화면 확인 대기** | Kyu | 실기 | — |
 | 6 | spec-guard 보강 — fork#283 머지 ✅ · **통합 리허설 R1+R2 머지 ✅**(fork#281 2f60038 · storeport#469 012917d · R0-1127-E APPROVE 필수 0 · 권고 5) → 다음 = 리허설 R3~R6 · 키패드 `08` 자동 붙임 명세 반영 | M1 | 다음 | — |
 | 6.4 | 손님 화면 spec drift check + 주문내역 `#N` 칩 복구 + **storeport CI 11시간 공백 수정** — storeport#470 **머지 ✅**(d5248b4 · CI 17분 전체 초록) → Kyu 실기(주문내역 구석 `#N` 칩) | Kyu | 실기 | decision-storeport-ci-dead-20261127 |
-| 6.45 | storeport CI 공백 뒷정리 — **storeport#472 머지 ✅**(fcc008a · R0-1127-D APPROVE · actionlint) · #470 사후 확인 문제 없음 · fork 쪽 문법 검사 = **M3-1127-E 발부** · ci-watch "main CI 실패" 경보는 relay#60 머지 뒤 M0 · R0 권고: workflow-lint 필수 체크 등록(Rulesets "있을 때만 필수") = Kyu 결정 대기 | M3 → M0 | 진행 | — |
+| 6.45 | storeport CI 공백 뒷정리 — storeport#472 ✅ · **fork#285 머지 ✅**(88aed17 · 양쪽 리포 워크플로 문법 검사 완료) · 남음: ci-watch "main CI 실패" 경보(M0 · M0-1127-E 뒤) · 필수 체크 등록 = Kyu 결정 | M0 · Kyu | 대기 | — |
 | 6.7 | **짧은 주문번호 `#N` = 레지스터 열 때마다 #1**(Kyu 12:32 A안) — M0-1127-E 발부 | M0 | 진행 | decision-kyu-answers-20261127-1232 |
-| 6.8 | **ci-watch iMac heartbeat 거짓 경보**(Kyu 12:36 보고 · 문턱 3분 < 보고 주기 5분) — M2-1127-F 발부(가벼운 길 첫 적용) | M2 | 진행 | — |
-| 6.9 | **방법론 MP-014 규칙의 기계화**(채택 12:32) — M2-1127-F 뒤 M2 · MP-015 야간 청소 · MP-016 버전 고정+카나리아 = 대기 · MP-017 기준 확정 | M2 → 오케 | 대기 | — |
+| 6.8 | ci-watch iMac heartbeat 거짓 경보 — **relay#63 머지 ✅**(27b8e76 · v1.21 · 문턱 12분 · 가벼운 길 첫 적용: R0 생략, 테스트 489 pass/14 fail = main 과 같은 환경 실패) | — | ✅ | — |
+| 6.9 | 방법론 MP-014 규칙의 기계화 — **M2-1127-G 발부**(큐 검사기 · 머지 관문 · 리포트 검사기) · MP-015 야간 청소 · MP-016 버전 고정+카나리아 = 대기 | M2 | 진행 | — |
 | 6.5 | relay#60(v1.20 · 상태 파일 분리) — **머지 ✅**(3874cf3 · Kyu 12:32 자리) · 남은 Kyu 손: `events/runner-main-guard-…md` 삭제 | Kyu | 손 1개 | — |
 | 6.6 | 오케 러너 로그 직접 접근(~/.hub-runner) — 연결 · 결정 파일 · 방법론(HISTORY · MP-013 · 06 · 09) 전부 ✅ | 오케 | ✅ 완료 | Kyu 05:59 |
 | 7 | POS fork 자체 #N 카운터 PATCH 제거 | M3 | 후순위 | 선택 |
