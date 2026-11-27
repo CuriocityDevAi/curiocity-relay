@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-27T09:21:41Z",
+  "ts": "2026-11-27T09:26:47Z",
   "uptime": {
-    "uptime_secs": 143384,
-    "load_1": 4.8,
-    "load_5": 9.11,
-    "load_15": 10.2
+    "uptime_secs": 143690,
+    "load_1": 13.23,
+    "load_5": 9.6,
+    "load_15": 9.92
   },
   "memory": {
-    "free_pct": 52,
+    "free_pct": 47,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 86,
-    "runner_work_free_gb": 86
+    "root_free_gb": 87,
+    "runner_work_free_gb": 87
   },
   "thermal": {
     "throttled": false,
@@ -21,7 +21,7 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 2,
+    "worker_count": 3,
     "current": [
       {
         "runner_name": "actions-runner-ci-box-sp-heavy",
@@ -33,18 +33,29 @@
         "started_at": "2026-11-27T09:13:15Z"
       },
       {
+        "runner_name": "actions-runner-ci-box-sp-light",
+        "job": "changes-filter",
+        "repo": "CuriocityDevAi/storeport",
+        "workflow": "ci",
+        "head_ref": "feat/M0-1127-M-cd-keypad-countdown",
+        "event_name": "pull_request",
+        "pr": "479",
+        "started_at": "2026-11-27T09:26:47Z"
+      },
+      {
         "runner_name": "actions-runner-ci-box-fork-heavy",
         "job": "playwright",
         "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
         "workflow": "CI",
-        "head_ref": "",
-        "event_name": "push",
-        "started_at": "2026-11-27T09:15:38Z"
+        "head_ref": "feat/M3-1127-K-cd-preview-edge",
+        "event_name": "pull_request",
+        "pr": "291",
+        "started_at": "2026-11-27T09:26:15Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 124,
+    "latency_ms": 142,
     "reachable": true
   },
   "netspeed": {
