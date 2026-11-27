@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T07:20:12.174Z",
+  "at": "2026-11-27T07:20:34.755Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -19,10 +19,8 @@
       "last_activity": "2026-11-27T06:19:13.484Z"
     },
     "m2": {
-      "current": "M2-1127-J",
-      "started_at": "2026-11-27T06:55:07.439Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-27T06:54:40.326Z"
+      "current": null,
+      "last_activity": "2026-11-27T07:20:33.624Z"
     },
     "m3": {
       "current": "M3-1127-I",
@@ -47,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.79,
-    "compressed_gb": 6.09,
-    "swap_used_gb": 4.66,
+    "used_gb": 15.38,
+    "compressed_gb": 5.03,
+    "swap_used_gb": 4.93,
     "pressure": "normal",
-    "at": "2026-11-27T07:19:41.127Z"
+    "at": "2026-11-27T07:20:17.156Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -135,9 +133,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 70,
+  "isolated_reports_collected": 71,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:15:23.243Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:16:00.077Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-27T07:16:31.850Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:16:36.238Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T07:17:04.366Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261127T055527Z.md\n[hub-runner-v8.3.2:heartbeat 2026-11-27T07:17:10.033Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:17:14.314Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m0 2026-11-27T07:17:18.909Z] [report-path] M0-1127-I: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-27T07:17:37.127Z] M0-1127-I → done · runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1127-I-report.md · model=opus · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1127-I.json · {\"id\":\"M0-1127-I\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-27T07:17:38.411Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1127-I-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1127-I.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M0-1127-I.jsonl, events/runner-main-guard-20261127T055527Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:17:52.130Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:18:29.332Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:self-update 2026-11-27T07:19:03.106Z] 보류 · busy=4 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:19:04.721Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:19:41.125Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:16:36.238Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T07:17:04.366Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261127T055527Z.md\n[hub-runner-v8.3.2:heartbeat 2026-11-27T07:17:10.033Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:17:14.314Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m0 2026-11-27T07:17:18.909Z] [report-path] M0-1127-I: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-27T07:17:37.127Z] M0-1127-I → done · runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1127-I-report.md · model=opus · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1127-I.json · {\"id\":\"M0-1127-I\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-27T07:17:38.411Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1127-I-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1127-I.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M0-1127-I.jsonl, events/runner-main-guard-20261127T055527Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:17:52.130Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:18:29.332Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:self-update 2026-11-27T07:19:03.106Z] 보류 · busy=4 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:19:04.721Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:19:41.125Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-27T07:20:13.313Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:20:17.155Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m2 2026-11-27T07:20:28.867Z] [report-path] M2-1127-J: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 1,
