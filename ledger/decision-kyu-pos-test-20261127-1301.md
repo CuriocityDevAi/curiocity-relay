@@ -49,3 +49,5 @@
 | 14 | Order 상세 Phone entry | "Orders 로 들어가서 … 가장 최근 매출 … 아직 새로운 고객이 카트에 물건을 넣은적도 없으니. 그래서 Phone entry 를 눌러봤더니, Display not paired 라는 말도 안되는 거절이 있었음" (손님 화면은 페어링된 상태) | 🔴 버그 | M3-1127-I |
 | 15 | Link customer → 화면 입력 | "LInk Customer 을 눌러보았음 … 매니저 PIN … Next … Ask customer on display 랑, Cashier enters directly 두개의 메뉴 > 이름을 통일하자. Ask customer on display > Phone entry … 눌렀더니 다음화면이 그냥 Done 임. 아무일도 안일어남. 그러면 안되고, > 고객화면은 전화번호 입력화면으로 바뀌고, POS 의 우측화면은, 고객의 실시간 번호 입력을 보여주는 작은 칩(?) 이 나오도록 해줘. (이거는 다시만들면 안되고 재활용해서)" | 🔴 버그 + 문구 변경(Ask customer on display → **Phone entry**) · 6상태 칩 재사용 | M3-1127-I |
 | 16 | (오케 관찰) 번호 두 개 | 손님 화면·영수증 머리 `Order #211`(Medusa 내부 번호) + 구석 칩 `#1` 이 같이 보임 | ⚠ 11-24 "칩 번호 `#N` 하나 · 2중관리 금지" 와 충돌 — 보이는 `Order #211` 을 `#1` 로 | Kyu 확인 → 영수증 R1 + 손님 화면 |
+- 14:13 Kyu "질문1. a" → 미리보기 X = **아이폰 설정식으로 작게(지금의 약 절반 · 회색 원) + 누르면 닫힘** · 눈 버튼도 열고 닫기 유지.
+- 14:13 Kyu "질문2;ok" → 손님 화면·영수증·POS 에 **보이는 `Order #211`(Medusa display_id) 전부 `#N`(짧은 번호)로** · 영수증 번호 `No. R-…` · 긴 번호 `PIM-26B…` 는 그대로. 정본 `specs/domain/order-number.md §2.2` 표시 위치와 일치.
