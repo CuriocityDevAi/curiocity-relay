@@ -15,10 +15,13 @@
 | 5 | 아이맥 heavy2 (메모리 실측 → 등록) · 대기열 줄이기 | Kyu → M2 | 실측 대기 | — |
 | 5.5 | **방법론 v2.0** — 뼈대 · HISTORY(시대 0~5) · 01~09 본문 · 10-sdd · 11-orchestrator-rules(오케 메모리 규칙 이전 · R8) · ROADMAP · MP-010~013 전부 ✅ (11-27 08:4x) · 남음: 04-artifacts/templates 나머지 · 07-incidents 11-19~23 · 주 1회 개정 | 오케 | ✅ 1차 완료 | Kyu 05:27 go |
 | 5.7 | 🔴 ci-watch 9단계 띠 — relay#61(v1.18) · relay#62(v1.19 · 거짓 경보·제목·리포 목록 설정화·미등록 리포 표시 · 39e07b4) **둘 다 머지 ✅** → **Kyu 실화면 확인 대기** | Kyu | 실기 | — |
-| 6 | spec-guard 보강 — ③ POS 대조: **fork#283 머지 ✅**(efc9593 · CI 실제 초록 확인 · 48/48) ② 실서버 e2e: **M1-1127-E PASS**(Case 1 초록 · Confirm 생략 변형 빨강 = 기대 · 키패드 `08` 은 실제 값으로 자동 붙음) → **R0-1127-E 리뷰(Opus)**: fork#281 + storeport#469 | R0 | 리뷰 | 키패드 `08` 자동 붙임 = 명세 반영 필요(Kyu 실기 확인) |
+| 6 | spec-guard 보강 — fork#283 머지 ✅ · **통합 리허설 R1+R2 머지 ✅**(fork#281 2f60038 · storeport#469 012917d · R0-1127-E APPROVE 필수 0 · 권고 5) → 다음 = 리허설 R3~R6 · 키패드 `08` 자동 붙임 명세 반영 | M1 | 다음 | — |
 | 6.4 | 손님 화면 spec drift check + 주문내역 `#N` 칩 복구 + **storeport CI 11시간 공백 수정** — storeport#470 **머지 ✅**(d5248b4 · CI 17분 전체 초록) → Kyu 실기(주문내역 구석 `#N` 칩) | Kyu | 실기 | decision-storeport-ci-dead-20261127 |
 | 6.45 | storeport CI 공백 뒷정리 — **storeport#472 머지 ✅**(fcc008a · R0-1127-D APPROVE · actionlint) · #470 사후 확인 문제 없음 · fork 쪽 문법 검사 = **M3-1127-E 발부** · ci-watch "main CI 실패" 경보는 relay#60 머지 뒤 M0 · R0 권고: workflow-lint 필수 체크 등록(Rulesets "있을 때만 필수") = Kyu 결정 대기 | M3 → M0 | 진행 | — |
-| 6.5 | relay#60(v1.20 · 상태 파일 분리 + watchdog 정리) — M0-1127-D 착지 · 498 테스트 통과 · **머지 대기: Kyu 가 자리에 있을 때**(러너 self-update) + Kyu 손 1개(`events/runner-main-guard-…md` 삭제) | 오케 + Kyu | Kyu 대기 | R0-1126-AQ APPROVE(어제) · rebase 분은 오케 확인 |
+| 6.7 | **짧은 주문번호 `#N` = 레지스터 열 때마다 #1**(Kyu 12:32 A안) — M0-1127-E 발부 | M0 | 진행 | decision-kyu-answers-20261127-1232 |
+| 6.8 | **ci-watch iMac heartbeat 거짓 경보**(Kyu 12:36 보고 · 문턱 3분 < 보고 주기 5분) — M2-1127-F 발부(가벼운 길 첫 적용) | M2 | 진행 | — |
+| 6.9 | **방법론 MP-014 규칙의 기계화**(채택 12:32) — M2-1127-F 뒤 M2 · MP-015 야간 청소 · MP-016 버전 고정+카나리아 = 대기 · MP-017 기준 확정 | M2 → 오케 | 대기 | — |
+| 6.5 | relay#60(v1.20 · 상태 파일 분리) — **머지 ✅**(3874cf3 · Kyu 12:32 자리) · 남은 Kyu 손: `events/runner-main-guard-…md` 삭제 | Kyu | 손 1개 | — |
 | 6.6 | 오케 러너 로그 직접 접근(~/.hub-runner) — 연결 · 결정 파일 · 방법론(HISTORY · MP-013 · 06 · 09) 전부 ✅ | 오케 | ✅ 완료 | Kyu 05:59 |
 | 7 | POS fork 자체 #N 카운터 PATCH 제거 | M3 | 후순위 | 선택 |
 | 8 | feature-map cd-keypad planned → live | M0 | 후순위 | — |
@@ -175,7 +178,7 @@ Anchor 테스트 모드 결제 완성 → QRIS live(Xendit KYC · xenPlatform) �
 | 3 | 팔레트 D1 · accent 정리 | 2 | M3 | #47 #52 머지 ✓ | — |
 | 5 | 프린터 BT-58D · ESC/POS(로고 비트맵·세금·캐셔) | 2 | M2 | **#63 착지 → R0-1105-AG 리뷰 중** | BLE 실기는 프린터 도착·EAS 뒤 |
 | 5b | 앱 번들 안전(node: import 금지 · CI 가드 · R0 ⑦) | 2 | M2/R0 | #61 머지 · r0/README ⑦ | — |
-| 6 | spec-guard 보강 — ③ POS 대조: **fork#283 머지 ✅**(efc9593 · CI 실제 초록 확인 · 48/48) ② 실서버 e2e: **M1-1127-E PASS**(Case 1 초록 · Confirm 생략 변형 빨강 = 기대 · 키패드 `08` 은 실제 값으로 자동 붙음) → **R0-1127-E 리뷰(Opus)**: fork#281 + storeport#469 | R0 | 리뷰 | 키패드 `08` 자동 붙임 = 명세 반영 필요(Kyu 실기 확인) |
+| 6 | spec-guard 보강 — fork#283 머지 ✅ · **통합 리허설 R1+R2 머지 ✅**(fork#281 2f60038 · storeport#469 012917d · R0-1127-E APPROVE 필수 0 · 권고 5) → 다음 = 리허설 R3~R6 · 키패드 `08` 자동 붙임 명세 반영 | M1 | 다음 | — |
 | 7 | EAS dev build | 3 | M2 | Apple Pending | — |
 | 7e | 자동 투입 러너(hub-runner) | 2 | M1 | **v3 가동(M1-Y 완료 10:57 · R0·M2 Sonnet · 60분 상한 · heartbeat 30분) · M1-1105-Z(수동) = 착지 검증(exit 0 ≠ 완료) + cmux 탭 표시** | 러너 수정은 수동 투입만 · 교체는 허브 전부 idle 때 |
 | 8 | Admin 리브랜딩·Settings(세금·로고 URL) | 3 | M0 | 배포 ✓ · Kyu 설정 ✓ | — |

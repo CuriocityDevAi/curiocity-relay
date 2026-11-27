@@ -7,7 +7,7 @@
 | 주제 키워드 | 정본 파일 | 요약 |
 |---|---|---|
 | 주문번호 · 채번 · 긴 번호 · 매장 닉네임 · 시작번호 | [domain/order-number.md](./domain/order-number.md) | 긴 번호 `PIM-26B1001` (11-24 + 11-25 하이픈) · 짧은 칩 `#N` 매장별 1~99(진행 중 M0-1126-Q) · 영수증 하단 R-… |
-| 짧은 번호 · 칩 번호 · `#N` · `pos_order_num` · Square | [domain/order-number.md § 2](./domain/order-number.md) | 매장별 1→99→1 순환 (진행 중 M0-1126-Q) ⚠ Kyu 확인 대기(초기화 타이밍) — domain/order-number.md §2.2 |
+| 짧은 번호 · 칩 번호 · `#N` · `pos_order_num` · Square | [domain/order-number.md § 2](./domain/order-number.md) | 레지스터 열 때 #1 · 1→99→1 순환 (Kyu 11-27 · M0-1127-E 진행) — domain/order-number.md §2.2 |
 | 포인트 · 적립 · 회수 · 로열티 · store credit · 적립금 | [domain/loyalty-points.md](./domain/loyalty-points.md) | paid ∧ confirmed · 주문당 1회 · 환불 자동 회수 · Re-enter A→B 이동 |
 | Re-enter · 번호 교체 · A→B | [domain/loyalty-points.md § 3](./domain/loyalty-points.md) | A 회수 + B 적립 · 한 트랜잭션 · 멱등 · 취소/건너뜀 시 A 그대로 |
 | Link customer · 나중 연결 · 매니저 PIN | [domain/loyalty-points.md § 5](./domain/loyalty-points.md) | 입구 A(PIN 없음 · 결제완료) vs 입구 B(PIN 필수 · 주문 상세) · 서버 기록 → Admin 조회 |
