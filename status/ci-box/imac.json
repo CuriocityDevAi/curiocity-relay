@@ -1,10 +1,10 @@
 {
-  "ts": "2026-11-27T05:40:04Z",
+  "ts": "2026-11-27T05:45:11Z",
   "uptime": {
-    "uptime_secs": 130087,
-    "load_1": 24.49,
-    "load_5": 14.1,
-    "load_15": 10.12
+    "uptime_secs": 130395,
+    "load_1": 11.15,
+    "load_5": 12.32,
+    "load_15": 10.6
   },
   "memory": {
     "free_pct": 57,
@@ -12,7 +12,7 @@
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 94,
+    "root_free_gb": 95,
     "runner_work_free_gb": 95
   },
   "thermal": {
@@ -21,17 +21,8 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 3,
+    "worker_count": 2,
     "current": [
-      {
-        "runner_name": "actions-runner-ci-box-sp-heavy",
-        "job": "heavy-mac",
-        "repo": "CuriocityDevAi/storeport",
-        "workflow": "ci",
-        "head_ref": "",
-        "event_name": "push",
-        "started_at": "2026-11-27T05:38:48Z"
-      },
       {
         "runner_name": "actions-runner-ci-box-fork-heavy",
         "job": "playwright",
@@ -44,24 +35,24 @@
       },
       {
         "runner_name": "actions-runner-ci-box-fork-light",
-        "job": "route",
+        "job": "assertions",
         "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-        "workflow": "Lint",
+        "workflow": "CI",
         "head_ref": "",
         "event_name": "push",
-        "started_at": "2026-11-27T05:40:00Z"
+        "started_at": "2026-11-27T05:44:53Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 157,
+    "latency_ms": 142,
     "reachable": true
   },
   "netspeed": {
-    "dl_mbps": 69.7,
+    "dl_mbps": 80.3,
     "ul_mbps": null,
     "rpm": null,
-    "cached": true
+    "cached": false
   },
   "postgres": {
     "alive": true
