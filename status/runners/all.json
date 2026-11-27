@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T08:49:09.834Z",
+  "at": "2026-11-27T08:49:19.200Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -9,10 +9,8 @@
   "last_error_at": null,
   "hubs": {
     "m0": {
-      "current": "M0-1127-M",
-      "started_at": "2026-11-27T08:27:47.092Z",
-      "model": "opus",
-      "last_activity": "2026-11-27T08:22:02.880Z"
+      "current": null,
+      "last_activity": "2026-11-27T08:49:18.248Z"
     },
     "m1": {
       "current": null,
@@ -43,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.49,
-    "compressed_gb": 5.68,
-    "swap_used_gb": 8.43,
+    "used_gb": 15.71,
+    "compressed_gb": 6.31,
+    "swap_used_gb": 8.38,
     "pressure": "normal",
-    "at": "2026-11-27T08:48:38.313Z"
+    "at": "2026-11-27T08:49:16.580Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -154,9 +152,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 83,
+  "isolated_reports_collected": 84,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:git 2026-11-27T08:42:35.569Z] 자동 복구 완료 · ahead=2 · dropped=1 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:42:44.801Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:43:19.744Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:43:53.973Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:44:29.237Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:45:06.567Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m3 2026-11-27T08:45:18.130Z] [report-path] M3-1127-L: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-27T08:45:34.114Z] M3-1127-L → done · runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1127-L-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1127-L.json · {\"id\":\"M3-1127-L\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-27T08:45:34.222Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1127-L-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1127-L.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M3-1127-L.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:45:44.549Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:46:17.323Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:46:52.661Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:47:25.833Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:48:04.629Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:48:38.312Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:43:19.744Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:43:53.973Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:44:29.237Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:45:06.567Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m3 2026-11-27T08:45:18.130Z] [report-path] M3-1127-L: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-27T08:45:34.114Z] M3-1127-L → done · runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1127-L-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1127-L.json · {\"id\":\"M3-1127-L\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-27T08:45:34.222Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1127-L-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1127-L.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M3-1127-L.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:45:44.549Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:46:17.323Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:46:52.661Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:47:25.833Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:48:04.629Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:48:38.312Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m0 2026-11-27T08:49:15.787Z] [report-path] M0-1127-M: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:49:16.577Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
   "git_state": {
     "ahead": 0,
     "behind": 1,
