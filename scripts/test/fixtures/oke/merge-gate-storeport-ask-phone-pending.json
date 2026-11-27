@@ -1,0 +1,26 @@
+{
+  "_note": "storeport ask-phone-on-display 흐름 PR + fork 리허설 없음(pending) → FAIL",
+  "pr": {
+    "headRefOid": "45813a05b07f0f7f7f5d132a59027ec9ce3cbf9c",
+    "number": 480,
+    "title": "fix(cd): M0-1127-N — Correct→완료 화면"
+  },
+  "headCommitTime": "2026-11-27T05:00:00Z",
+  "checkRuns": {
+    "check_runs": [
+      { "name": "heavy-mac",  "status": "completed", "conclusion": "success" },
+      { "name": "heavy-cloud","status": "completed", "conclusion": "skipped" }
+    ]
+  },
+  "workflowRuns": [
+    { "workflow_name": "ci", "path": ".github/workflows/ci.yml", "status": "completed", "conclusion": "success" }
+  ],
+  "rehearsalForkRuns": [],
+  "changedFiles": [
+    { "filename": "apps/commerce-core/src/api/admin/pos/orders/[id]/ask-phone-on-display/route.ts" }
+  ],
+  "reviews": [
+    { "state": "APPROVED", "submitted_at": "2026-11-27T06:00:00Z" }
+  ],
+  "comments": []
+}

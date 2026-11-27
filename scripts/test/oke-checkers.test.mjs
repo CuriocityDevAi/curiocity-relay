@@ -176,6 +176,106 @@ test('MG-JSON: --json 옵션 출력 파싱 가능', () => {
   assert.equal(parsed.pr, '285');
 });
 
+test('MG-JSON: --json 에 flowPr·imacStats 필드 포함', () => {
+  const { stdout } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/agilo-medusa-pos-fork',
+    '--pr', '300',
+    '--fixture', join(FIX, 'merge-gate-flow-pr-rehearsal-pass.json'),
+    '--json',
+  ]);
+  const parsed = JSON.parse(stdout);
+  assert.ok('flowPr' in parsed, 'flowPr 필드 없음');
+  assert.ok('imacStats' in parsed, 'imacStats 필드 없음');
+  assert.equal(parsed.flowPr, true);
+});
+
+// ===== 리허설 관문 =====
+
+test('MG-R1: 흐름 PR + 리허설 초록 → PASS', () => {
+  const { exitCode, stdout } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/agilo-medusa-pos-fork',
+    '--pr', '300',
+    '--fixture', join(FIX, 'merge-gate-flow-pr-rehearsal-pass.json'),
+  ]);
+  assert.equal(exitCode, 0, `stdout: ${stdout}`);
+  assert.match(stdout, /^MERGE-GATE PASS/m);
+});
+
+test('MG-R2: 흐름 PR + 리허설 없음(pending) → FAIL rehearsal: pending', () => {
+  const { exitCode, stdout } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/agilo-medusa-pos-fork',
+    '--pr', '301',
+    '--fixture', join(FIX, 'merge-gate-flow-pr-rehearsal-pending.json'),
+  ]);
+  assert.equal(exitCode, 1);
+  assert.match(stdout, /^MERGE-GATE FAIL/m);
+  assert.match(stdout, /rehearsal.*pending/);
+});
+
+test('MG-R3: 흐름 PR + 리허설 빨강(failure) → FAIL rehearsal: fail', () => {
+  const { exitCode, stdout } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/agilo-medusa-pos-fork',
+    '--pr', '302',
+    '--fixture', join(FIX, 'merge-gate-flow-pr-rehearsal-fail.json'),
+  ]);
+  assert.equal(exitCode, 1);
+  assert.match(stdout, /^MERGE-GATE FAIL/m);
+  assert.match(stdout, /rehearsal.*fail/);
+});
+
+test('MG-R4: 비흐름 PR → 리허설 없어도 PASS', () => {
+  const { exitCode, stdout } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/agilo-medusa-pos-fork',
+    '--pr', '303',
+    '--fixture', join(FIX, 'merge-gate-nonflow-pr-pass.json'),
+  ]);
+  assert.equal(exitCode, 0, `stdout: ${stdout}`);
+  assert.match(stdout, /^MERGE-GATE PASS/m);
+});
+
+// 검증의 검증: 리허설 빨강인데 통과하면 빨강
+test('MG-리허설-검증: 흐름 PR 리허설 빨강이 PASS 되지 않음', () => {
+  const { exitCode } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/agilo-medusa-pos-fork',
+    '--pr', '302',
+    '--fixture', join(FIX, 'merge-gate-flow-pr-rehearsal-fail.json'),
+  ]);
+  assert.equal(exitCode, 1, '리허설 판정 로직이 제거되면 이 테스트가 실패함 — 검증의 검증');
+});
+
+// ===== storeport 흐름 PR · 포크 리허설 (갭 1·갭 2 — M1-1127-J) =====
+
+test('MG-R5: storeport ask-phone-on-display 경로 + fork 리허설 초록 → PASS', () => {
+  const { exitCode, stdout } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/storeport',
+    '--pr', '480',
+    '--fixture', join(FIX, 'merge-gate-storeport-ask-phone-pass.json'),
+  ]);
+  assert.equal(exitCode, 0, `stdout: ${stdout}`);
+  assert.match(stdout, /^MERGE-GATE PASS/m);
+});
+
+test('MG-R6: storeport ask-phone-on-display 경로 + fork 리허설 없음 → FAIL rehearsal: pending', () => {
+  const { exitCode, stdout } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/storeport',
+    '--pr', '480',
+    '--fixture', join(FIX, 'merge-gate-storeport-ask-phone-pending.json'),
+  ]);
+  assert.equal(exitCode, 1);
+  assert.match(stdout, /^MERGE-GATE FAIL/m);
+  assert.match(stdout, /rehearsal.*pending/);
+});
+
+// 검증의 검증: storeport 흐름 PR 에 fork 리허설 없으면 반드시 FAIL
+test('MG-R5-검증: storeport 흐름 PR fork 리허설 없으면 PASS 안 됨', () => {
+  const { exitCode } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/storeport',
+    '--pr', '480',
+    '--fixture', join(FIX, 'merge-gate-storeport-ask-phone-pending.json'),
+  ]);
+  assert.equal(exitCode, 1, 'storeport 포크 리허설 판정 로직이 제거되면 이 테스트가 실패함 — 검증의 검증');
+});
+
 // ===== check-report =====
 
 test('CR-1: 실제 R0-1127-F-report.md → PASS', () => {
