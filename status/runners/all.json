@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T11:30:40.207Z",
+  "at": "2026-11-27T11:33:13.357Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -47,11 +47,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.83,
-    "compressed_gb": 6.25,
-    "swap_used_gb": 11.89,
+    "used_gb": 15.8,
+    "compressed_gb": 6.74,
+    "swap_used_gb": 11.9,
     "pressure": "normal",
-    "at": "2026-11-27T11:30:00.284Z"
+    "at": "2026-11-27T11:32:40.897Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -59,14 +59,13 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-27T11:28:42.743Z",
+      "at": "2026-11-27T11:31:14.663Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport",
-        "CuriocityDevAi/agilo-medusa-pos-fork"
+        "CuriocityDevAi/storeport"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 8,
+      "api_calls": 5,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -84,7 +83,7 @@
       },
       "cloud_in_progress": [],
       "runners": {
-        "heavy_online": 3,
+        "heavy_online": 1,
         "heavy_busy": 0,
         "light_online": 1
       },
@@ -119,14 +118,14 @@
       "alerts": [],
       "partial": true
     },
-    "took_ms": 17904,
-    "at": "2026-11-27T11:28:58.598Z"
+    "took_ms": 13359,
+    "at": "2026-11-27T11:31:26.179Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 88,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:sleep-tracker 2026-11-27T11:28:40.694Z] sleep observed · gap=159s · threshold=120s\n[hub-runner-v8.3.2:m1 2026-11-27T11:28:43.812Z] 허브 멈춤 감지 · kind=api_error · id=M1-1127-H\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:28:50.751Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:28:50.783Z] [gh-runner-watchdog] wake: mac-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.Youngkyus-MacBook-Pro-M1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:28:50.811Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:28:51.542Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:28:51.578Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:28:51.633Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:28:51.719Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:28:51.762Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:28:51.802Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:28:51.907Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:28:51.932Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:28:51.932Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:29:24.929Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:29:24.969Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:29:25.662Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:29:25.698Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:m0 2026-11-27T11:30:34.852Z] pick · M0-1127-O · model=opus · display=cmux-split\n[hub-runner-v8.3.2:r0 2026-11-27T11:30:37.285Z] pick · R0-1127-S · model=sonnet · display=cmux-split",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:29:24.929Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:29:24.969Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:29:25.662Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T11:29:25.698Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:m0 2026-11-27T11:30:34.852Z] pick · M0-1127-O · model=opus · display=cmux-split\n[hub-runner-v8.3.2:r0 2026-11-27T11:30:37.285Z] pick · R0-1127-S · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-27T11:30:41.933Z] M0-1127-O → started · runner-v8.3.2 · cmux-split · model=opus · source=hub-default · pane foreground=c\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1127-O.json · {\"id\":\"M0-1127-O\",\"hub\":\"m0\",\"state\":\"started\",\"at\":\"2026-11-27T11:30:42.193Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=opus · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m0/M0-1127-O.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/runner-restarts-2026-11-27.jsonl, status/pipeline/M0-1127-O.jsonl, status/pipeline/R0-1127-S.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:claim 2026-11-27T11:30:45.692Z] R0-1127-S → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-S.json · {\"id\":\"R0-1127-S\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-27T11:30:45.805Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1127-S.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/R0-1127-S.jsonl\n[claim] committed\n[claim] pushed",
   "git_state": {
     "ahead": 0,
     "behind": 1,
