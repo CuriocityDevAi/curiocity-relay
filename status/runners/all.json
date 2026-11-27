@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T08:09:34.367Z",
+  "at": "2026-11-27T08:12:17.392Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -41,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.48,
-    "compressed_gb": 5.17,
-    "swap_used_gb": 4.96,
+    "used_gb": 15.78,
+    "compressed_gb": 4.99,
+    "swap_used_gb": 4.95,
     "pressure": "normal",
-    "at": "2026-11-27T08:09:32.315Z"
+    "at": "2026-11-27T08:11:45.327Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -53,7 +53,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-27T08:07:41.710Z",
+      "at": "2026-11-27T08:09:59.369Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -64,10 +64,12 @@
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
+        "queued": 1,
+        "queued_prs": [
+          287
+        ],
+        "oldest_queued_min": 1,
+        "oldest_queued_pr": "fork:#287",
         "in_progress": [
           {
             "repo": "CuriocityDevAi/storeport",
@@ -75,8 +77,18 @@
             "pr_display": "storeport:main",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 2,
+            "running_min": 4,
             "runner": "ci-box-storeport-heavy-imac",
+            "kind": "mac-heavy"
+          },
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "master",
+            "pr_display": "fork:master",
+            "job": "e2e · case 1 (실서버)",
+            "step": "Playwright · Case 1 (정상 경로)",
+            "running_min": 1,
+            "runner": "ci-box-fork-heavy-imac",
             "kind": "mac-heavy"
           }
         ]
@@ -90,7 +102,7 @@
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 1,
+        "heavy_busy": 2,
         "light_online": 1
       },
       "cloud_today": 0,
@@ -120,17 +132,17 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 88
       },
-      "jsonl_added": 2,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 14041,
-    "at": "2026-11-27T08:07:54.190Z"
+    "took_ms": 10057,
+    "at": "2026-11-27T08:10:07.934Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 80,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:06:36.107Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:r0 2026-11-27T08:07:12.885Z] [report-path] R0-1127-N: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:07:14.164Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:claim 2026-11-27T08:07:16.313Z] R0-1127-N → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1127-N-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-N.json · {\"id\":\"R0-1127-N\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-27T08:07:17.096Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1127-N-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1127-N.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1127-N.jsonl, events/runner-main-guard-20261127T055527Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-27T08:07:42.372Z] pick · R0-1127-O · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:07:43.903Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:claim 2026-11-27T08:07:44.467Z] R0-1127-O → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-O.json · {\"id\":\"R0-1127-O\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-27T08:07:44.590Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1127-O.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1127-O.jsonl, events/runner-main-guard-20261127T055527Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-27T08:09:30.847Z] [report-path] R0-1127-O: REPORT_PATH 격리 리포트 수거·push",
+  "err_tail": "[hub-runner-v8.3.2:r0 2026-11-27T08:07:42.372Z] pick · R0-1127-O · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:07:43.903Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:claim 2026-11-27T08:07:44.467Z] R0-1127-O → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-O.json · {\"id\":\"R0-1127-O\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-27T08:07:44.590Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1127-O.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1127-O.jsonl, events/runner-main-guard-20261127T055527Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-27T08:09:30.847Z] [report-path] R0-1127-O: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-27T08:09:34.417Z] R0-1127-O → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1127-O-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-O.json · {\"id\":\"R0-1127-O\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-27T08:09:34.525Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1127-O-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1127-O.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1127-O.jsonl, events/runner-main-guard-20261127T055527Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:self-update 2026-11-27T08:10:34.725Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:heartbeat 2026-11-27T08:11:42.303Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T08:12:15.098Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
   "git_state": {
     "ahead": 0,
     "behind": 1,
@@ -163,7 +175,7 @@
     {
       "name": "ci-box-fork-heavy-imac",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "ci-box-fork-light-imac",
