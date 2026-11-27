@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-27T05:29:50Z",
+  "ts": "2026-11-27T05:34:57Z",
   "uptime": {
-    "uptime_secs": 129473,
-    "load_1": 8.92,
-    "load_5": 4.92,
-    "load_15": 5.68
+    "uptime_secs": 129780,
+    "load_1": 7.28,
+    "load_5": 9.2,
+    "load_15": 7.93
   },
   "memory": {
-    "free_pct": 61,
+    "free_pct": 53,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 95,
-    "runner_work_free_gb": 95
+    "root_free_gb": 94,
+    "runner_work_free_gb": 94
   },
   "thermal": {
     "throttled": false,
@@ -21,39 +21,30 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 3,
+    "worker_count": 2,
     "current": [
       {
-        "runner_name": "actions-runner-ci-box-sp-heavy",
-        "job": "heavy-mac",
-        "repo": "CuriocityDevAi/storeport",
-        "workflow": "ci",
-        "head_ref": "",
-        "event_name": "push",
-        "started_at": "2026-11-27T05:29:25Z"
-      },
-      {
         "runner_name": "actions-runner-ci-box-fork-heavy",
-        "job": "post",
-        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-        "workflow": "ci-summary",
-        "head_ref": "",
-        "event_name": "workflow_run",
-        "started_at": "2026-11-27T05:29:45Z"
-      },
-      {
-        "runner_name": "actions-runner-ci-box-fork-light",
-        "job": "flow-tests",
+        "job": "playwright",
         "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
         "workflow": "CI",
         "head_ref": "",
         "event_name": "push",
-        "started_at": "2026-11-27T05:29:43Z"
+        "started_at": "2026-11-27T05:32:49Z"
+      },
+      {
+        "runner_name": "actions-runner-ci-box-fork-light",
+        "job": "broken",
+        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+        "workflow": "broken-test-delete-me",
+        "head_ref": "",
+        "event_name": "push",
+        "started_at": "2026-11-27T05:34:53Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 103,
+    "latency_ms": 123,
     "reachable": true
   },
   "netspeed": {
