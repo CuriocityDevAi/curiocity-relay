@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T08:39:37.722Z",
+  "at": "2026-11-27T08:42:39.011Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -29,7 +29,9 @@
       "last_activity": "2026-11-27T07:43:51.741Z"
     },
     "r0": {
-      "current": null,
+      "current": "R0-1127-Q",
+      "started_at": "2026-11-27T08:40:15.970Z",
+      "model": "sonnet",
       "last_activity": "2026-11-27T08:37:09.443Z"
     }
   },
@@ -43,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.86,
-    "compressed_gb": 6.31,
-    "swap_used_gb": 6.38,
+    "used_gb": 15.69,
+    "compressed_gb": 6.96,
+    "swap_used_gb": 6.77,
     "pressure": "normal",
-    "at": "2026-11-27T08:39:05.476Z"
+    "at": "2026-11-27T08:42:06.617Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -55,14 +57,13 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-27T08:37:53.814Z",
+      "at": "2026-11-27T08:40:14.394Z",
       "repos_scanned": [
-        "CuriocityDevAi/storeport",
-        "CuriocityDevAi/agilo-medusa-pos-fork"
+        "CuriocityDevAi/storeport"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 12,
+      "api_calls": 9,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -70,29 +71,29 @@
         "queued_prs": [],
         "oldest_queued_min": null,
         "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
         "in_progress": [
           {
             "repo": "CuriocityDevAi/storeport",
             "pr": "main",
             "pr_display": "storeport:main",
-            "job": "post",
-            "step": "Complete job",
+            "job": "mirror main → $HOME/ci-mirror/storeport",
+            "step": "Checkout (main 기준으로 미러)",
             "running_min": 0,
-            "runner": "ci-box-storeport-light-imac",
-            "kind": "mac-light"
+            "runner": "ci-box-storeport-heavy-imac",
+            "kind": "mac-heavy"
           }
         ]
       },
+      "light": {
+        "queued": 2,
+        "oldest_queued_min": 0,
+        "oldest_queued_pr": "storeport:feat/M3-1127-K-cd-preview-edge",
+        "in_progress": []
+      },
       "cloud_in_progress": [],
       "runners": {
-        "heavy_online": 3,
-        "heavy_busy": 0,
+        "heavy_online": 1,
+        "heavy_busy": 1,
         "light_online": 1
       },
       "cloud_today": 0,
@@ -105,11 +106,11 @@
           "run_min_total": 495.0000000000003
         },
         "mac-light": {
-          "jobs": 97,
+          "jobs": 98,
           "avg_wait_min": 0.6,
           "avg_run_min": 0.3,
-          "success_rate": 85.6,
-          "run_min_total": 27.10000000000002
+          "success_rate": 85.7,
+          "run_min_total": 27.40000000000002
         },
         "cloud": {
           "jobs": 6,
@@ -122,17 +123,18 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 88
       },
-      "jsonl_added": 12,
-      "alerts": []
+      "jsonl_added": 1,
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 11812,
-    "at": "2026-11-27T08:38:04.018Z"
+    "took_ms": 16157,
+    "at": "2026-11-27T08:40:28.592Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 82,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:31:29.470Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:32:03.001Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:32:40.573Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:33:15.697Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:33:52.593Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:34:25.333Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:35:02.273Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:35:38.497Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:36:15.016Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:36:48.067Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:r0 2026-11-27T08:37:06.431Z] [report-path] R0-1127-P: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-27T08:37:11.865Z] R0-1127-P → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1127-P-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-P.json · {\"id\":\"R0-1127-P\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-27T08:37:12.036Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1127-P-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1127-P.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/R0-1127-P.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:37:22.946Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:37:56.095Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
+  "err_tail": "[claim] committed\n[claim] rebase + retry\n[claim] 2nd push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n ! [rejected]            HEAD -> main (fetch first)\nerror: failed to push some refs to 'https://github.com/CuriocityDevAi/curiocity-relay.git'\nhint: Updates were rejected because the remote contains work that you do not\nhint: have locally. This is usually caused by another repository pushing to\nhint: the same ref. If you want to integrate the remote changes, use\nhint: 'git pull' before pushing again.\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\n[hub-runner-v8.3.2:claim 2026-11-27T08:40:22.588Z] claim.mjs 실패 (R0-1127-Q started): Command failed: /opt/homebrew/Cellar/node@22/22.23.4_2/bin/node /Users/kyu.lee/projects/curiocity-relay/scripts/claim.mjs R0-1127-Q started runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1127-Q.log\n[hub-runner-v8.3.2:git 2026-11-27T08:40:48.409Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:40:55.580Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T08:41:24.491Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:self-update 2026-11-27T08:41:28.024Z] 보류 · busy=3 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:41:30.376Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T08:41:58.339Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:heartbeat 2026-11-27T08:42:02.793Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:42:06.615Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T08:42:35.569Z] 자동 복구 완료 · ahead=2 · dropped=1 · reapplied=1",
   "git_state": {
     "ahead": 0,
     "behind": 1,
@@ -170,7 +172,7 @@
     {
       "name": "ci-box-fork-light-imac",
       "status": "online",
-      "busy": false
+      "busy": true
     },
     {
       "name": "curiocity-mac-fork",
