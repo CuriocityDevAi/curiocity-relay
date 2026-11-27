@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-27T06:26:32Z",
+  "ts": "2026-11-27T06:36:45Z",
   "uptime": {
-    "uptime_secs": 132875,
-    "load_1": 2.74,
-    "load_5": 4.31,
-    "load_15": 6.82
+    "uptime_secs": 133488,
+    "load_1": 5.75,
+    "load_5": 6.88,
+    "load_15": 6.87
   },
   "memory": {
-    "free_pct": 62,
+    "free_pct": 59,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 94,
-    "runner_work_free_gb": 94
+    "root_free_gb": 93,
+    "runner_work_free_gb": 93
   },
   "thermal": {
     "throttled": false,
@@ -24,19 +24,18 @@
     "worker_count": 1,
     "current": [
       {
-        "runner_name": "actions-runner-ci-box-fork-heavy",
-        "job": "playwright",
-        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-        "workflow": "CI",
-        "head_ref": "test/R0-1127-G-existing-customer-repro",
-        "event_name": "pull_request",
-        "pr": "287",
-        "started_at": "2026-11-27T06:20:31Z"
+        "runner_name": "actions-runner-ci-box-sp-heavy",
+        "job": "heavy-mac",
+        "repo": "CuriocityDevAi/storeport",
+        "workflow": "ci",
+        "head_ref": "",
+        "event_name": "push",
+        "started_at": "2026-11-27T06:31:51Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 127,
+    "latency_ms": 121,
     "reachable": true
   },
   "netspeed": {
