@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T09:07:26.336Z",
+  "at": "2026-11-27T09:09:49.749Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -41,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.86,
-    "compressed_gb": 5.99,
-    "swap_used_gb": 11.61,
+    "used_gb": 15.91,
+    "compressed_gb": 6.86,
+    "swap_used_gb": 11.59,
     "pressure": "normal",
-    "at": "2026-11-27T09:06:54.752Z"
+    "at": "2026-11-27T09:09:18.248Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -53,7 +53,7 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-27T09:05:44.840Z",
+      "at": "2026-11-27T09:08:04.004Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
@@ -75,7 +75,7 @@
             "pr_display": "storeport:#479",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 8,
+            "running_min": 11,
             "runner": "ci-box-storeport-heavy-imac",
             "kind": "mac-heavy"
           }
@@ -123,8 +123,8 @@
       "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 8627,
-    "at": "2026-11-27T09:05:51.809Z"
+    "took_ms": 11598,
+    "at": "2026-11-27T09:08:12.905Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
