@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T08:42:39.011Z",
+  "at": "2026-11-27T08:45:02.138Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -45,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.69,
-    "compressed_gb": 6.96,
-    "swap_used_gb": 6.77,
+    "used_gb": 15.76,
+    "compressed_gb": 6.42,
+    "swap_used_gb": 7.34,
     "pressure": "normal",
-    "at": "2026-11-27T08:42:06.617Z"
+    "at": "2026-11-27T08:44:29.238Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -57,13 +57,13 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-27T08:40:14.394Z",
+      "at": "2026-11-27T08:42:37.154Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 9,
+      "api_calls": 8,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -76,18 +76,18 @@
             "repo": "CuriocityDevAi/storeport",
             "pr": "main",
             "pr_display": "storeport:main",
-            "job": "mirror main → $HOME/ci-mirror/storeport",
-            "step": "Checkout (main 기준으로 미러)",
-            "running_min": 0,
+            "job": "heavy-mac",
+            "step": "Run ./.github/actions/heavy-steps",
+            "running_min": 1,
             "runner": "ci-box-storeport-heavy-imac",
             "kind": "mac-heavy"
           }
         ]
       },
       "light": {
-        "queued": 2,
-        "oldest_queued_min": 0,
-        "oldest_queued_pr": "storeport:feat/M3-1127-K-cd-preview-edge",
+        "queued": 0,
+        "oldest_queued_min": null,
+        "oldest_queued_pr": null,
         "in_progress": []
       },
       "cloud_in_progress": [],
@@ -99,18 +99,18 @@
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 304,
+          "jobs": 305,
           "avg_wait_min": 2,
           "avg_run_min": 1.6,
-          "success_rate": 77.6,
-          "run_min_total": 495.0000000000003
+          "success_rate": 77.7,
+          "run_min_total": 495.6000000000003
         },
         "mac-light": {
           "jobs": 98,
           "avg_wait_min": 0.6,
           "avg_run_min": 0.3,
           "success_rate": 85.7,
-          "run_min_total": 27.40000000000002
+          "run_min_total": 27.30000000000002
         },
         "cloud": {
           "jobs": 6,
@@ -123,18 +123,18 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 88
       },
-      "jsonl_added": 1,
+      "jsonl_added": 2,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 16157,
-    "at": "2026-11-27T08:40:28.592Z"
+    "took_ms": 15511,
+    "at": "2026-11-27T08:42:50.705Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 82,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] committed\n[claim] rebase + retry\n[claim] 2nd push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n ! [rejected]            HEAD -> main (fetch first)\nerror: failed to push some refs to 'https://github.com/CuriocityDevAi/curiocity-relay.git'\nhint: Updates were rejected because the remote contains work that you do not\nhint: have locally. This is usually caused by another repository pushing to\nhint: the same ref. If you want to integrate the remote changes, use\nhint: 'git pull' before pushing again.\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\n[hub-runner-v8.3.2:claim 2026-11-27T08:40:22.588Z] claim.mjs 실패 (R0-1127-Q started): Command failed: /opt/homebrew/Cellar/node@22/22.23.4_2/bin/node /Users/kyu.lee/projects/curiocity-relay/scripts/claim.mjs R0-1127-Q started runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1127-Q.log\n[hub-runner-v8.3.2:git 2026-11-27T08:40:48.409Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:40:55.580Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T08:41:24.491Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:self-update 2026-11-27T08:41:28.024Z] 보류 · busy=3 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:41:30.376Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T08:41:58.339Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:heartbeat 2026-11-27T08:42:02.793Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:42:06.615Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T08:42:35.569Z] 자동 복구 완료 · ahead=2 · dropped=1 · reapplied=1",
+  "err_tail": "error: failed to push some refs to 'https://github.com/CuriocityDevAi/curiocity-relay.git'\nhint: Updates were rejected because the remote contains work that you do not\nhint: have locally. This is usually caused by another repository pushing to\nhint: the same ref. If you want to integrate the remote changes, use\nhint: 'git pull' before pushing again.\nhint: See the 'Note about fast-forwards' in 'git push --help' for details.\n[hub-runner-v8.3.2:claim 2026-11-27T08:40:22.588Z] claim.mjs 실패 (R0-1127-Q started): Command failed: /opt/homebrew/Cellar/node@22/22.23.4_2/bin/node /Users/kyu.lee/projects/curiocity-relay/scripts/claim.mjs R0-1127-Q started runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1127-Q.log\n[hub-runner-v8.3.2:git 2026-11-27T08:40:48.409Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:40:55.580Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T08:41:24.491Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:self-update 2026-11-27T08:41:28.024Z] 보류 · busy=3 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:41:30.376Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T08:41:58.339Z] 자동 복구 완료 · ahead=1 · dropped=0 · reapplied=1\n[hub-runner-v8.3.2:heartbeat 2026-11-27T08:42:02.793Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:42:06.615Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T08:42:35.569Z] 자동 복구 완료 · ahead=2 · dropped=1 · reapplied=1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:42:44.801Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:43:19.744Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:43:53.973Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T08:44:29.237Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
   "git_state": {
     "ahead": 0,
     "behind": 1,
