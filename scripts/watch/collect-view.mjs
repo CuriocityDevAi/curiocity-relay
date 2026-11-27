@@ -404,6 +404,7 @@ export function buildExtendedView({
       card.column   = 'review';
       card.predicted = true;
       card.reason   = inNoCi ? 'CI 없음(리뷰 대기)' : '미등록 리포(CI 건너뜀)';
+      if (!inNoCi) card.unregisteredRepo = repo;
     }
   }
 
@@ -1077,6 +1078,7 @@ export async function buildExtendedViewAsync({
       card.column   = 'review';
       card.predicted = true;
       card.reason   = inNoCi ? 'CI 없음(리뷰 대기)' : '미등록 리포(CI 건너뜀)';
+      if (!inNoCi) card.unregisteredRepo = repo;
     }
   }
 

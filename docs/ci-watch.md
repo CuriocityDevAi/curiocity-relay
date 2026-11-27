@@ -166,6 +166,12 @@ CI 섹션 하단에 오늘 처리 통계 행이 표시된다:
 
 ---
 
+## 새 리포 추가하는 법
+
+`status/runner-config.json` 의 `ci_watch.search_repos` 에 `"Owner/repo-name"` 형식으로 추가한다.
+CI 가 없는 리포(예: relay, 방법론 리포)는 `ci_watch.no_ci_repos` 에 짧은 이름(`repo-name` 만)을 추가해 조용히 건너뛰게 한다.
+미등록 리포(둘 다 없음)가 감지되면 ci-watch 화면에서 노란 `└ 미등록 리포` 경고 + 하단 주의 구역에 1줄이 표시된다.
+
 ## 배포
 
 `scripts/hub-runner-install.sh` 가 다음을 심링크로 깐다:

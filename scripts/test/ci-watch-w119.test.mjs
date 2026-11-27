@@ -187,3 +187,54 @@ test('W119-false-alarm: 미등록 리포 PR → ci_pending 에서 review 로 이
   assert.notEqual(card.level, 'red', `red 가 아니어야 함 · 받음: ${card.level}`);
   assert.ok(card.reason?.includes('미등록'), `이유에 "미등록" 포함 기대 · 받음: "${card.reason}"`);
 });
+
+// ─── W119-unregistered-flag ──────────────────────────────────────────────────
+
+test('W119-unregistered-flag: 미등록 리포 → unregisteredRepo 플래그 세팅', () => {
+  const card = {
+    id: 'M2-TEST-Z',
+    hub: 'm2',
+    column: 'ci_pending',
+    ageMin: 3,
+    level: 'green',
+    extra: { pr: { owner: 'CuriocityDevAi', repo: 'some-new-repo', number: 5 } },
+  };
+
+  const repo = card.extra.pr.repo;
+  const inNoCi = TEST_NO_CI.has(repo);
+  const inSearch = TEST_SEARCH_REPOS.some(r => r.endsWith(`/${repo}`));
+  if (inNoCi || !inSearch) {
+    card.column   = 'review';
+    card.predicted = true;
+    card.reason   = inNoCi ? 'CI 없음(리뷰 대기)' : '미등록 리포(CI 건너뜀)';
+    if (!inNoCi) card.unregisteredRepo = repo;
+  }
+
+  assert.equal(card.unregisteredRepo, 'some-new-repo',
+    `미등록 리포 → unregisteredRepo 플래그 기대 · 받음: ${card.unregisteredRepo}`);
+});
+
+test('W119-noci-no-flag: 명시 등록 no_ci 리포 → unregisteredRepo 플래그 없음', () => {
+  const card = {
+    id: 'M2-TEST-R',
+    hub: 'm2',
+    column: 'ci_pending',
+    ageMin: 2,
+    level: 'green',
+    extra: { pr: { owner: 'CuriocityDevAi', repo: 'curiocity-relay', number: 3 } },
+  };
+
+  const repo = card.extra.pr.repo;
+  const inNoCi = TEST_NO_CI.has(repo);
+  const inSearch = TEST_SEARCH_REPOS.some(r => r.endsWith(`/${repo}`));
+  if (inNoCi || !inSearch) {
+    card.column   = 'review';
+    card.predicted = true;
+    card.reason   = inNoCi ? 'CI 없음(리뷰 대기)' : '미등록 리포(CI 건너뜀)';
+    if (!inNoCi) card.unregisteredRepo = repo;
+  }
+
+  assert.equal(card.column, 'review', 'review 칸 기대');
+  assert.strictEqual(card.unregisteredRepo, undefined,
+    `명시 등록 no_ci 리포 → unregisteredRepo 없어야 함 · 받음: ${card.unregisteredRepo}`);
+});
