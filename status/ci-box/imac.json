@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-27T08:40:15Z",
+  "ts": "2026-11-27T08:45:21Z",
   "uptime": {
-    "uptime_secs": 140898,
-    "load_1": 3.28,
-    "load_5": 5.47,
-    "load_15": 7.04
+    "uptime_secs": 141204,
+    "load_1": 14.35,
+    "load_5": 11.84,
+    "load_15": 9.58
   },
   "memory": {
-    "free_pct": 62,
+    "free_pct": 49,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 89,
-    "runner_work_free_gb": 89
+    "root_free_gb": 88,
+    "runner_work_free_gb": 88
   },
   "thermal": {
     "throttled": false,
@@ -21,30 +21,41 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 2,
+    "worker_count": 3,
     "current": [
       {
         "runner_name": "actions-runner-ci-box-sp-heavy",
-        "job": "mirror main \u2192 $HOME/ci-mirror/storeport",
-        "repo": "CuriocityDevAi/storeport",
-        "workflow": "ci-mirror-main",
-        "head_ref": "",
-        "event_name": "push",
-        "started_at": "2026-11-27T08:40:12Z"
-      },
-      {
-        "runner_name": "actions-runner-ci-box-sp-light",
-        "job": "route",
+        "job": "heavy-mac",
         "repo": "CuriocityDevAi/storeport",
         "workflow": "ci",
         "head_ref": "",
         "event_name": "push",
-        "started_at": "2026-11-27T08:40:13Z"
+        "started_at": "2026-11-27T08:41:23Z"
+      },
+      {
+        "runner_name": "actions-runner-ci-box-fork-heavy",
+        "job": "playwright",
+        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+        "workflow": "CI",
+        "head_ref": "fix/M3-1127-H-draft-duplicate",
+        "event_name": "pull_request",
+        "pr": "289",
+        "started_at": "2026-11-27T08:44:19Z"
+      },
+      {
+        "runner_name": "actions-runner-ci-box-fork-light",
+        "job": "lint",
+        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+        "workflow": "Lint",
+        "head_ref": "fix/M3-1127-H-draft-duplicate",
+        "event_name": "pull_request",
+        "pr": "289",
+        "started_at": "2026-11-27T08:45:19Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 117,
+    "latency_ms": 125,
     "reachable": true
   },
   "netspeed": {
