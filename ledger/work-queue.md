@@ -8,7 +8,7 @@
 
 | 순서 | 일 | 허브 | 상태 | 이유 / 막힌 것 |
 |---|---|---|---|---|
-| 0.1 | 🔴🔴 손님 화면 흐름 2건 + 키패드 40% — M0-1127-G 착지(**storeport#474** · 서버 가드 + 120초 유기 가드 + spring ×1.4 · heavy-mac queued · 재현 테스트 실행 미첨부) → **R0-1127-K(Opus) 리뷰 + 이 브랜치로 재현 테스트 실제 실행** | R0 | 리뷰 | decision-kyu-pos-test-20261127-1301 |
+| 0.1 | 🔴🔴 손님 화면 흐름 storeport#474 — R0-1127-K CHANGES 필수 1(20초 Skip 이 흐름 상태를 안 바꿔 영수증으로 되돌아감) → **M0-1127-J(Opus)** · 머지 직후 fork e2e dispatch 로 case1 + case1b 실서버 확인 | M0 | 수정 | — |
 | 0.2 | 🔴 POS 시트 + 점 3개(fork#288) · 🟡 첫 상품 주문 칩 중복(fork#289) → **R0-1127-L** · ⚠ 두 PR 모두 ci-summary 아직 없음 → CI 시작 여부 먼저 확인 | R0 | 리뷰 | 同 |
 | 0.3 | 🟡 POS 첫 상품 담을 때 주문 칩 #1 두 개 깜빡임 → M3-1127-H(M3-G 뒤) · 🟡 POS 칩 #1 ↔ 손님 화면 #209 번호 불일치 → R0-1127-H 판정 뒤 · 🆕 키패드 카운트다운 = Kyu 확인 대기 | M3 · R0 · Kyu | 대기 | 同 |
 | 0.35 | 🔴 POS 번호 입력 입구 3곳 거절(Re-enter "not paid" · Order 상세 Phone entry "not paired" · Link customer 화면 입력 무반응) + 문구 "Ask customer on display" → "Phone entry" → **M3-1127-I(Opus)** | M3 | 진행 | Kyu 14:08 |
