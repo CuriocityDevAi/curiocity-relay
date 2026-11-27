@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T03:15:09.939Z",
+  "at": "2026-11-27T03:15:22.504Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -15,10 +15,8 @@
       "last_activity": "2026-11-26T23:59:32.679Z"
     },
     "m1": {
-      "current": "M1-1127-C",
-      "started_at": "2026-11-26T23:32:44.831Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-26T23:15:25.768Z"
+      "current": null,
+      "last_activity": "2026-11-27T03:15:21.418Z"
     },
     "m2": {
       "current": "M2-1127-C",
@@ -47,11 +45,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.84,
-    "compressed_gb": 4.98,
+    "used_gb": 15.71,
+    "compressed_gb": 4.76,
     "swap_used_gb": 2.89,
     "pressure": "normal",
-    "at": "2026-11-27T03:14:38.265Z"
+    "at": "2026-11-27T03:15:20.410Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -137,9 +135,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 36,
+  "isolated_reports_collected": 37,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:09.522Z] [gh-runner-watchdog] partial skip: mac-light gh_status=unknown\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:09.523Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.221Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.240Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.253Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.253Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.272Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.273Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:heartbeat 2026-11-27T03:06:27.253Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T03:07:02.822Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:09:09.609Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:09:47.686Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m3 2026-11-27T03:10:18.928Z] 허브 멈춤 감지 · kind=api_error · id=M3-1127-B\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:10:23.159Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:self-update 2026-11-27T03:10:56.549Z] 보류 · busy=4 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:10:59.010Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-27T03:12:08.967Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T03:12:39.251Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:14:01.327Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:14:38.265Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.221Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.240Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.253Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.253Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.272Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.273Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:heartbeat 2026-11-27T03:06:27.253Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T03:07:02.822Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:09:09.609Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:09:47.686Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m3 2026-11-27T03:10:18.928Z] 허브 멈춤 감지 · kind=api_error · id=M3-1127-B\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:10:23.159Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:self-update 2026-11-27T03:10:56.549Z] 보류 · busy=4 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:10:59.010Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-27T03:12:08.967Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T03:12:39.251Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:14:01.327Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:14:38.265Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m1 2026-11-27T03:15:18.048Z] [report-path] M1-1127-C: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:15:20.226Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
   "git_state": {
     "ahead": 0,
     "behind": 1,
