@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts/hub-runner-v8.3.mjs · M1-1125-G · v8.3.4 · M2-1126-T: all.json·mem-log status-wt 분리 (Kyu 폴더 git pull 보호). · M2-1127-L: events/ 스코프 추가 · main-guard events 즉시 커밋+push
+// scripts/hub-runner-v8.3.mjs · M1-1125-G · v8.3.5 · M2-1126-T: all.json·mem-log status-wt 분리 (Kyu 폴더 git pull 보호). · M2-1127-L: events/ 스코프 추가 · main-guard events 즉시 커밋+push · M2-1127-O: 자기 파일 판정(status/runners/ 복구) · ci-health push 재시도
 //
 // v8.2 과의 차이 (M1-1125-B·C · 5건):
 //   ① **landing 오탐 수정**: land-detect-v2.mjs 에 isPaneIdle / headTouchesReport 콜백 주입.
@@ -182,7 +182,7 @@ const SIGKILL_GRACE_MS = 5 * 1000;
 const CMUX_WAIT_MS = 10 * 60 * 1000;
 const DEFAULT_CLAUDE_BIN = '/Users/kyu.lee/.local/bin/claude';
 // M1-1105-BA(d): all.json 러너 버전 표기 버그 — 한 곳에서만 관리.
-const RUNNER_VERSION = 'v8.3.4';
+const RUNNER_VERSION = 'v8.3.5';
 // M1-1124-H: 자기 업데이트 기본값 — runner-config.selfUpdate 로 덮어쓸 수 있다.
 // M1-1125-C: prev 부재 시 되돌릴 안전판 버전.
 const SELF_UPDATE_FALLBACK_RUNNER = 'hub-runner-v8.2.mjs';
@@ -416,6 +416,8 @@ const SELFTEST_WATCHDOG_FORK_WAKE = argv.includes('--selftest-watchdog-fork-wake
 // M2-1127-L REQ4: events 스코프 + scripts 차단 검증 셀프테스트
 const SELFTEST_EVENTS_NOT_BLOCKED = argv.includes('--selftest-events-not-blocked');
 const SELFTEST_SCRIPTS_BLOCKED = argv.includes('--selftest-scripts-blocked');
+// M2-1127-O REQ4: ci-health 커밋 2개 + origin 진행 → 자동 해소 (실 사고 재현)
+const SELFTEST_CI_HEALTH_RECOVER = argv.includes('--selftest-ci-health-recover');
 const hubFlag = (() => {
   const i = argv.indexOf('--hub');
   return i >= 0 ? argv[i + 1] : null;
@@ -477,7 +479,8 @@ if (
   !SELFTEST_PIPELINE_LOG &&
   !SELFTEST_WATCHDOG_FORK_WAKE &&
   !SELFTEST_EVENTS_NOT_BLOCKED &&
-  !SELFTEST_SCRIPTS_BLOCKED
+  !SELFTEST_SCRIPTS_BLOCKED &&
+  !SELFTEST_CI_HEALTH_RECOVER
 ) {
   console.error(
     'Usage: node scripts/hub-runner-v8.3.mjs --all [--once] [--dry-run] | --hub <id> | --status | --init-split | --selftest-* (see docs/hub-runner.md).',
@@ -748,7 +751,7 @@ function checkFolderGuardWithConfig(config) {
 // M1-1125-E: status/pipeline/ 추가 — pipeline-log jsonl 이 out-of-scope 오인 차단.
 // M2-1126-T: status/runners/ 삭제 — all.json·mem-log が STATUS_WT_PATH に移動したため REPO_ROOT では書かない.
 // M2-1127-L: events/ 추가 — main-guard 가 쓴 events 파일이 out-of-scope 오인 차단.
-const RUNNER_SCOPE_PREFIXES = ['status/claims/', 'status/hubs.json', 'status/ci/', 'status/pipeline/', 'events/'];
+const RUNNER_SCOPE_PREFIXES = ['status/claims/', 'status/runners/', 'status/hubs.json', 'status/ci/', 'status/pipeline/', 'events/'];
 // M1-1123-E REQ2: 충돌 자동 해소 대상 — 자동 생성 파일만 여기 해당.
 const AUTO_RESOLVE_PREFIXES = ['status/', 'hubs.json', 'index'];
 // M1-1123-L REQ1: 허브가 쓰는 파일 — ahead 커밋에 있어도 'manual' 로 중단하지 않는다.
@@ -3326,13 +3329,34 @@ function pushHeartbeatIfDue() {
   }
   // status/ci/ → main branch (기존과 동일, REPO_ROOT)
   try {
+    // M2-1127-O REQ2-①: 이전 버전이 남긴 staged status/runners/ 정리 — ci-health 커밋 혼입 차단.
+    try { git(['restore', '--staged', '--', 'status/runners/']); } catch { /* noop · staged 없어도 OK */ }
+    // M2-1127-O REQ2-②: runner-scope-only ahead 커밋이 쌓여 있으면 squash → 최신 staged 와 합쳐 push.
+    try {
+      const ahead = parseInt(execFileSync('git', ['rev-list', '--count', 'HEAD', '^origin/main'],
+        { cwd: REPO_ROOT, stdio: ['ignore', 'pipe', 'pipe'] }).toString(), 10) || 0;
+      if (ahead > 0) {
+        const aheadFiles = execFileSync('git', ['diff', '--name-only', 'origin/main', 'HEAD'],
+          { cwd: REPO_ROOT, stdio: ['ignore', 'pipe', 'pipe'] }).toString().trim().split('\n').filter(Boolean);
+        if (aheadFiles.length > 0 && aheadFiles.every((f) => RUNNER_SCOPE_PREFIXES.some((p) => f.startsWith(p)))) {
+          git(['reset', '--soft', 'origin/main']);
+        }
+      }
+    } catch { /* noop */ }
     const staged = execFileSync(
       'git', ['diff', '--cached', '--name-only', '--', 'status/ci'],
       { cwd: REPO_ROOT, stdio: ['ignore', 'pipe', 'pipe'] },
     ).toString().trim();
     if (staged) {
       git(['commit', '-m', `chore(runner-${RUNNER_VERSION}): ci-health`]);
-      git(['push', 'origin', 'HEAD:main']);
+      try {
+        git(['push', 'origin', 'HEAD:main']);
+      } catch (pe) {
+        // M2-1127-O REQ2: push 실패 → uncommit, 다음 루프에서 재시도 · 커밋 쌓임 방지.
+        const msg = (pe.stderr?.toString() || pe.message).trim().split('\n')[0];
+        log('heartbeat', `ci-health push 실패: ${msg}`);
+        try { git(['reset', '--soft', 'HEAD~1']); } catch { /* noop */ }
+      }
     }
   } catch (e) {
     const msg = (e.stderr?.toString() || e.message).trim().split('\n')[0];
@@ -6125,6 +6149,56 @@ process.stdin.resume();
     console.error(`[selftest-main-guard] FAIL · ${e.message}`);
     process.exit(1);
   });
+
+} else if (SELFTEST_CI_HEALTH_RECOVER) {
+  // M2-1127-O REQ4: ci-health 커밋 2개(status/runners/all.json + status/ci/) → 자동 해소 (실 사고 재현).
+  (async () => {
+    const originMain = git(['rev-parse', 'origin/main']);
+    const fakeStatusCiDir = join(REPO_ROOT, 'status', 'ci');
+    const fakeStatusCiFile = join(fakeStatusCiDir, 'selftest-ci-health-recover.json');
+    const fakeRunnersFile = join(REPO_ROOT, 'status', 'runners', 'all.json');
+    try {
+      mkdirSync(join(REPO_ROOT, 'status', 'runners'), { recursive: true });
+      mkdirSync(fakeStatusCiDir, { recursive: true });
+      for (let i = 1; i <= 2; i++) {
+        writeFileSync(fakeRunnersFile, JSON.stringify({ at: ts(), fake: true, test: i }, null, 2) + '\n', 'utf8');
+        writeFileSync(fakeStatusCiFile, JSON.stringify({ at: ts(), test: i }, null, 2) + '\n', 'utf8');
+        git(['add', 'status/runners/all.json', 'status/ci/selftest-ci-health-recover.json']);
+        git(['commit', '-m', `chore(runner-${RUNNER_VERSION}): ci-health`]);
+      }
+      const aheadNow = parseInt(git(['rev-list', '--count', 'HEAD', '^origin/main']), 10);
+      if (aheadNow !== 2) {
+        console.error(`[selftest-ci-health-recover] FAIL · 사전 조건 ahead=${aheadNow} != 2`);
+        process.exit(1);
+      }
+      console.log(`[selftest-ci-health-recover] 사전 준비 완료 · 2 ahead · ci-health ×2 (runners+ci)`);
+      const result = autoRecoverDivergence();
+      console.log(`[selftest-ci-health-recover] autoRecoverDivergence 결과: ${JSON.stringify(result)}`);
+      if (result.status !== 'recovered') {
+        console.error(`[selftest-ci-health-recover] FAIL · status=${result.status} != recovered`);
+        process.exit(1);
+      }
+      if (result.dropped !== 2) {
+        console.error(`[selftest-ci-health-recover] FAIL · dropped=${result.dropped} != 2`);
+        process.exit(1);
+      }
+      const headAfter = git(['rev-parse', 'HEAD']);
+      if (headAfter !== originMain) {
+        console.error(`[selftest-ci-health-recover] FAIL · HEAD=${headAfter.slice(0,8)} != origin/main=${originMain.slice(0,8)}`);
+        process.exit(1);
+      }
+      console.log(`[selftest-ci-health-recover] OK · ci-health 2개 커밋 자동 해소 · HEAD=origin/main`);
+    } finally {
+      try {
+        git(['reset', '--hard', originMain]);
+        try { rmSync(fakeStatusCiFile, { force: true }); } catch { /* noop */ }
+        writeFileSync(ALL_HEARTBEAT, JSON.stringify({ at: ts(), pid: process.pid, runner: RUNNER_VERSION, restored: true }, null, 2) + '\n', 'utf8');
+      } catch (e) {
+        console.error(`[selftest-ci-health-recover] 정리 실패: ${e.message}`);
+      }
+    }
+    process.exit(0);
+  })().catch((e) => { console.error(`[selftest-ci-health-recover] 예외: ${e.message}`); process.exit(1); });
 
 } else {
   loop().catch((e) => {
