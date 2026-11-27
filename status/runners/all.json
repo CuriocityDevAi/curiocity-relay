@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T12:16:55.867Z",
+  "at": "2026-11-27T12:17:23.299Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -25,10 +25,8 @@
       "last_activity": "2026-11-27T10:33:12.924Z"
     },
     "m3": {
-      "current": "M3-1127-N",
-      "started_at": "2026-11-27T11:53:38.766Z",
-      "model": "sonnet",
-      "last_activity": "2026-11-27T11:49:28.360Z"
+      "current": null,
+      "last_activity": "2026-11-27T12:17:22.318Z"
     },
     "r0": {
       "current": null,
@@ -45,11 +43,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.61,
-    "compressed_gb": 6.27,
-    "swap_used_gb": 8.47,
+    "used_gb": 15.91,
+    "compressed_gb": 6.12,
+    "swap_used_gb": 8.43,
     "pressure": "normal",
-    "at": "2026-11-27T12:16:24.749Z"
+    "at": "2026-11-27T12:17:00.638Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -146,9 +144,9 @@
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
-  "isolated_reports_collected": 96,
+  "isolated_reports_collected": 97,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:m2 2026-11-27T12:15:37.823Z] 복구 보류 · M2-1127-M started 62m · pane claude 작업 중 · 미개입\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:15:43.858Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m2 2026-11-27T12:16:16.610Z] 복구 보류 · M2-1127-M started 62m · pane claude 작업 중 · 미개입\n[hub-runner-v8.3.2:m1 2026-11-27T12:16:17.287Z] pick · M1-1127-J · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:m2 2026-11-27T12:16:18.350Z] pick · M2-1127-N · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:16:21.642Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:claim 2026-11-27T12:16:21.871Z] M1-1127-J → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1127-J.json · {\"id\":\"M1-1127-J\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-27T12:16:22.109Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1127-J.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/2026-11-27.jsonl, status/pipeline/M1-1127-J.jsonl, status/pipeline/M2-1127-N.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:claim 2026-11-27T12:16:26.052Z] M2-1127-N → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1127-N.json · {\"id\":\"M2-1127-N\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-27T12:16:26.166Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1127-N.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M2-1127-N.jsonl\n[claim] committed\n[claim] pushed",
+  "err_tail": "[hub-runner-v8.3.2:m2 2026-11-27T12:16:16.610Z] 복구 보류 · M2-1127-M started 62m · pane claude 작업 중 · 미개입\n[hub-runner-v8.3.2:m1 2026-11-27T12:16:17.287Z] pick · M1-1127-J · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:m2 2026-11-27T12:16:18.350Z] pick · M2-1127-N · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:16:21.642Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:claim 2026-11-27T12:16:21.871Z] M1-1127-J → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M1-1127-J.json · {\"id\":\"M1-1127-J\",\"hub\":\"m1\",\"state\":\"started\",\"at\":\"2026-11-27T12:16:22.109Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1127-J.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/ci/2026-11-27.jsonl, status/pipeline/M1-1127-J.jsonl, status/pipeline/M2-1127-N.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:claim 2026-11-27T12:16:26.052Z] M2-1127-N → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M2-1127-N.json · {\"id\":\"M2-1127-N\",\"hub\":\"m2\",\"state\":\"started\",\"at\":\"2026-11-27T12:16:26.166Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m2/M2-1127-N.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 1건 (건드리지 않음): status/pipeline/M2-1127-N.jsonl\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T12:17:00.638Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m3 2026-11-27T12:17:18.490Z] [report-path] M3-1127-N: REPORT_PATH 격리 리포트 수거·push",
   "git_state": {
     "ahead": 0,
     "behind": 1,
