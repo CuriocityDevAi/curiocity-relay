@@ -1,13 +1,13 @@
 {
-  "ts": "2026-11-27T12:42:16Z",
+  "ts": "2026-11-27T12:47:22Z",
   "uptime": {
-    "uptime_secs": 155419,
-    "load_1": 7.17,
-    "load_5": 9.68,
-    "load_15": 11.7
+    "uptime_secs": 155725,
+    "load_1": 12.96,
+    "load_5": 12.1,
+    "load_15": 12.05
   },
   "memory": {
-    "free_pct": 60,
+    "free_pct": 55,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
@@ -21,32 +21,21 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 2,
+    "worker_count": 1,
     "current": [
       {
-        "runner_name": "actions-runner-ci-box-sp-heavy",
-        "job": "heavy-mac",
-        "repo": "CuriocityDevAi/storeport",
-        "workflow": "ci",
-        "head_ref": "feat/M0-1127-N-cd-correct-welcome",
-        "event_name": "pull_request",
-        "pr": "480",
-        "started_at": "2026-11-27T12:28:07Z"
-      },
-      {
         "runner_name": "actions-runner-ci-box-fork-heavy",
-        "job": "playwright",
+        "job": "e2e \u00b7 case 1 (\uc2e4\uc11c\ubc84)",
         "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-        "workflow": "CI",
-        "head_ref": "feat/M1-1127-I-rehearsal-gate",
-        "event_name": "pull_request",
-        "pr": "293",
-        "started_at": "2026-11-27T12:38:11Z"
+        "workflow": "e2e-cd-pos",
+        "head_ref": "",
+        "event_name": "workflow_dispatch",
+        "started_at": "2026-11-27T12:46:01Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 145,
+    "latency_ms": 126,
     "reachable": true
   },
   "netspeed": {
