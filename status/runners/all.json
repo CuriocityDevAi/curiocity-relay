@@ -1,12 +1,12 @@
 {
-  "at": "2026-11-27T07:16:30.833Z",
+  "at": "2026-11-27T07:17:09.046Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
   "heartbeat_ms": 1800000,
   "run_timeout_ms": 3600000,
-  "last_error": "blocked: runner-folder change pending Kyu install (queue/m3/M3-1127-J.md)",
-  "last_error_at": "2026-11-27T07:15:14.072Z",
+  "last_error": "blocked: runner-folder change pending Kyu install (events/runner-main-guard-20261127T055527Z.md)",
+  "last_error_at": "2026-11-27T07:17:04.366Z",
   "hubs": {
     "m0": {
       "current": "M0-1127-I",
@@ -49,11 +49,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.91,
-    "compressed_gb": 5.42,
+    "used_gb": 15.05,
+    "compressed_gb": 5.9,
     "swap_used_gb": 4.8,
     "pressure": "normal",
-    "at": "2026-11-27T07:16:00.079Z"
+    "at": "2026-11-27T07:16:36.240Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -138,7 +138,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 69,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-K.json · {\"id\":\"R0-1127-K\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-27T07:13:41.586Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1127-K-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1127-K.log · report_src=legacy-root\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1127-K.jsonl, events/runner-main-guard-20261127T055527Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-27T07:14:04.441Z] pick · R0-1127-L · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-27T07:14:10.262Z] R0-1127-L → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-L.json · {\"id\":\"R0-1127-L\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-27T07:14:10.374Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1127-L.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1127-L.jsonl, events/runner-main-guard-20261127T055527Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:14:12.981Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:14:48.496Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T07:15:14.072Z] 러너 폴더 침범 감지 · files=queue/m3/M3-1127-J.md · guess_hub=m3\n[hub-runner-v8.3.2:git 2026-11-27T07:15:14.072Z] blocked: runner-folder change pending Kyu install · files=queue/m3/M3-1127-J.md,events/runner-main-guard-20261127T055527Z.md\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:15:23.243Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:16:00.077Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
+  "err_tail": "[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1127-K.jsonl, events/runner-main-guard-20261127T055527Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:r0 2026-11-27T07:14:04.441Z] pick · R0-1127-L · model=sonnet · display=cmux-split\n[hub-runner-v8.3.2:claim 2026-11-27T07:14:10.262Z] R0-1127-L → started · runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-L.json · {\"id\":\"R0-1127-L\",\"hub\":\"r0\",\"state\":\"started\",\"at\":\"2026-11-27T07:14:10.374Z\",\"note\":\"runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/r0/R0-1127-L.log\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1127-L.jsonl, events/runner-main-guard-20261127T055527Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:14:12.981Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:14:48.496Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T07:15:14.072Z] 러너 폴더 침범 감지 · files=queue/m3/M3-1127-J.md · guess_hub=m3\n[hub-runner-v8.3.2:git 2026-11-27T07:15:14.072Z] blocked: runner-folder change pending Kyu install · files=queue/m3/M3-1127-J.md,events/runner-main-guard-20261127T055527Z.md\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:15:23.243Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:16:00.077Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-27T07:16:31.850Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T07:16:36.238Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:git 2026-11-27T07:17:04.366Z] blocked: runner-folder change pending Kyu install · files=events/runner-main-guard-20261127T055527Z.md",
   "git_state": {
     "ahead": 0,
     "behind": 1,
