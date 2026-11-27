@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-26T23:59:55.757Z",
+  "at": "2026-11-27T00:10:58.497Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -37,33 +37,33 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 509017,
-    "totalMs": 509017,
+    "lastMs": 80417,
+    "totalMs": 1650638,
     "phase": "await-landing",
-    "at": "2026-11-26T23:59:37.738Z"
+    "at": "2026-11-27T00:10:41.544Z"
   },
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.52,
-    "compressed_gb": 4.3,
+    "used_gb": 15.65,
+    "compressed_gb": 4.45,
     "swap_used_gb": 3.18,
     "pressure": "normal",
-    "at": "2026-11-26T23:50:38.108Z"
+    "at": "2026-11-27T00:09:06.491Z"
   },
   "mem_peak_today": {
-    "date": "2026-11-26",
-    "used_gb": 15.94
+    "date": "2026-11-27",
+    "used_gb": 15.81
   },
   "ci": {
     "data": {
-      "at": "2026-11-26T23:50:59.949Z",
+      "at": "2026-11-27T00:08:51.320Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 1,
+      "api_calls": 4,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -80,7 +80,11 @@
         "in_progress": []
       },
       "cloud_in_progress": [],
-      "runners": null,
+      "runners": {
+        "heavy_online": 1,
+        "heavy_busy": 0,
+        "light_online": 1
+      },
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
@@ -112,14 +116,14 @@
       "alerts": [],
       "partial": true
     },
-    "took_ms": 522045,
-    "at": "2026-11-26T23:59:37.736Z"
+    "took_ms": 28272,
+    "at": "2026-11-27T00:09:12.747Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 36,
   "branch_reports_recovered": null,
-  "err_tail": "[claim] 경고: 스코프 밖 변경 3건 (건드리지 않음): status/pipeline/M3-1127-B.jsonl, events/runner-main-guard-20261126T085622Z.md, status/pipeline/M0-1127-B.jsonl\n[claim] committed\n[claim] rebase + retry\n[claim] pushed (after rebase)\n[hub-runner-v8.3.2:m1 2026-11-26T23:50:36.186Z] sleep gap 감지 519s · 예산 보정 · 누적 519s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:50:38.109Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:50:40.194Z] [gh-runner-watchdog] wake: mac-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.Youngkyus-MacBook-Pro-M1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:50:40.241Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:50:40.241Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:50:40.286Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:50:40.287Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:50:44.851Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:50:44.920Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-26T23:50:44.921Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T23:50:55.690Z] sleep observed · gap=540s · threshold=120s\n[hub-runner-v8.3.2:m1 2026-11-26T23:59:25.254Z] sleep gap 감지 507s · 예산 보정 · 누적 1027s · phase=await-landing\n[hub-runner-v8.3.2:m0 2026-11-26T23:59:33.873Z] claude-foreground-timeout (1st) · workspace 재생성 + 다음 tick 1회 재시도 예약 · M0-1127-B\n[hub-runner-v8.3.2:m3 2026-11-26T23:59:37.738Z] sleep gap 감지 509s · 예산 보정 · 누적 509s · phase=await-landing\n[hub-runner-v8.3.2:sleep-tracker 2026-11-26T23:59:46.037Z] sleep observed · gap=530s · threshold=120s\n[hub-runner-v8.3.2:m0 2026-11-26T23:59:52.034Z] pick · M0-1127-B · model=opus · display=cmux-split",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:06.553Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:06.607Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:06.608Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:06.608Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:07.322Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:07.406Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:07.435Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:07.533Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:07.535Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:07.662Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:07.665Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:07.832Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:07.836Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:12.747Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:12.750Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:09:12.827Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:m0 2026-11-27T00:10:38.734Z] sleep gap 감지 81s · 예산 보정 · 누적 104s · phase=await-landing\n[hub-runner-v8.3.2:m3 2026-11-27T00:10:39.955Z] sleep gap 감지 80s · 예산 보정 · 누적 1134s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-27T00:10:41.544Z] sleep gap 감지 80s · 예산 보정 · 누적 1651s · phase=await-landing\n[hub-runner-v8.3.2:sleep-tracker 2026-11-27T00:10:45.788Z] sleep observed · gap=121s · threshold=120s",
   "git_state": {
     "ahead": 0,
     "behind": 1,
