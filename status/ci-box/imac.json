@@ -1,13 +1,13 @@
 {
-  "ts": "2026-11-27T08:45:21Z",
+  "ts": "2026-11-27T08:50:28Z",
   "uptime": {
-    "uptime_secs": 141204,
-    "load_1": 14.35,
-    "load_5": 11.84,
-    "load_15": 9.58
+    "uptime_secs": 141511,
+    "load_1": 12.91,
+    "load_5": 13.05,
+    "load_15": 10.91
   },
   "memory": {
-    "free_pct": 49,
+    "free_pct": 53,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
@@ -44,25 +44,25 @@
       },
       {
         "runner_name": "actions-runner-ci-box-fork-light",
-        "job": "lint",
+        "job": "flow-tests",
         "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-        "workflow": "Lint",
-        "head_ref": "fix/M3-1127-H-draft-duplicate",
+        "workflow": "CI",
+        "head_ref": "feat/M3-1127-K-cd-preview-edge",
         "event_name": "pull_request",
-        "pr": "289",
-        "started_at": "2026-11-27T08:45:19Z"
+        "pr": "291",
+        "started_at": "2026-11-27T08:50:46Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 125,
+    "latency_ms": 102,
     "reachable": true
   },
   "netspeed": {
-    "dl_mbps": 80.0,
+    "dl_mbps": 79.9,
     "ul_mbps": null,
     "rpm": null,
-    "cached": true
+    "cached": false
   },
   "postgres": {
     "alive": true
