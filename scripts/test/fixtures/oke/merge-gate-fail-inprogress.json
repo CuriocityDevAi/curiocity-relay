@@ -1,0 +1,21 @@
+{
+  "pr": {
+    "headRefOid": "abc1234def5678901234567890abcdef12345678",
+    "number": 286,
+    "title": "feat: in-progress test"
+  },
+  "headCommitTime": "2026-11-27T05:00:00Z",
+  "checkRuns": {
+    "check_runs": [
+      { "name": "CI", "status": "completed", "conclusion": "success" },
+      { "name": "lint", "status": "in_progress", "conclusion": null },
+      { "name": "unit-tests", "status": "completed", "conclusion": "success" },
+      { "name": "heavy-cloud", "status": "completed", "conclusion": "skipped" }
+    ]
+  },
+  "workflowRuns": [],
+  "reviews": [
+    { "state": "APPROVED", "submitted_at": "2026-11-27T06:00:00Z" }
+  ],
+  "comments": []
+}

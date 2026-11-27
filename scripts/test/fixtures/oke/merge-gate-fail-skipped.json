@@ -1,0 +1,23 @@
+{
+  "_note": "허용 목록 밖 skipped — flakey-integration 은 ALLOWED_SKIPPED 에 없음 → FAIL",
+  "pr": {
+    "headRefOid": "face1234cafe5678901234567890abcdef123456",
+    "number": 290,
+    "title": "feat: skipped-not-allowed test"
+  },
+  "headCommitTime": "2026-11-27T05:00:00Z",
+  "checkRuns": {
+    "check_runs": [
+      { "name": "heavy-mac",          "status": "completed", "conclusion": "success" },
+      { "name": "heavy-cloud",        "status": "completed", "conclusion": "skipped" },
+      { "name": "flakey-integration", "status": "completed", "conclusion": "skipped" }
+    ]
+  },
+  "workflowRuns": [
+    { "workflow_name": "ci", "path": ".github/workflows/ci.yml", "status": "completed", "conclusion": "success" }
+  ],
+  "reviews": [
+    { "state": "APPROVED", "submitted_at": "2026-11-27T06:00:00Z" }
+  ],
+  "comments": []
+}
