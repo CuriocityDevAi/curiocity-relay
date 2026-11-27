@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T00:56:43.651Z",
+  "at": "2026-11-27T01:24:05.171Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -37,93 +37,33 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 71340,
-    "totalMs": 2621629,
+    "lastMs": 1234722,
+    "totalMs": 5769518,
     "phase": "await-landing",
-    "at": "2026-11-27T00:56:31.295Z"
+    "at": "2026-11-27T01:23:34.885Z"
   },
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
     "used_gb": 15.68,
-    "compressed_gb": 4.11,
-    "swap_used_gb": 3.16,
+    "compressed_gb": 4.04,
+    "swap_used_gb": 3.15,
     "pressure": "normal",
-    "at": "2026-11-27T00:54:59.930Z"
+    "at": "2026-11-27T01:23:38.995Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
     "used_gb": 15.83
   },
   "ci": {
-    "data": {
-      "at": "2026-11-27T00:54:45.061Z",
-      "repos_scanned": [
-        "CuriocityDevAi/storeport"
-      ],
-      "repos_failed": [],
-      "repos_skipped": [],
-      "api_calls": 7,
-      "api_budget": 40,
-      "api_overflow": false,
-      "heavy": {
-        "queued": 0,
-        "queued_prs": [],
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
-        "in_progress": []
-      },
-      "cloud_in_progress": [],
-      "runners": {
-        "heavy_online": 1,
-        "heavy_busy": 0,
-        "light_online": 1
-      },
-      "cloud_today": 0,
-      "today": {
-        "mac-heavy": {
-          "jobs": 93,
-          "avg_wait_min": 2,
-          "avg_run_min": 1.3,
-          "success_rate": 79.6,
-          "run_min_total": 124.6
-        },
-        "mac-light": {
-          "jobs": 13,
-          "avg_wait_min": 0.2,
-          "avg_run_min": 0.3,
-          "success_rate": 92.3,
-          "run_min_total": 3.7
-        },
-        "cloud": {
-          "jobs": 6,
-          "avg_wait_min": 0,
-          "avg_run_min": 2.8,
-          "success_rate": 0,
-          "run_min_total": 16.7
-        },
-        "cloud_cost_est_usd": 0.136,
-        "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 20.900000000000002
-      },
-      "jsonl_added": 6,
-      "alerts": [],
-      "partial": true
-    },
-    "took_ms": 22377,
-    "at": "2026-11-27T00:55:05.072Z"
+    "error": "deadline 30000ms",
+    "at": "2026-11-27T01:23:38.994Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 36,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:45:57.478Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:git 2026-11-27T00:46:24.898Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:46:26.018Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:m1 2026-11-27T00:46:39.940Z] sleep gap 감지 16s · 예산 보정 · 누적 3620s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-27T00:54:31.167Z] sleep gap 감지 456s · 예산 보정 · 누적 4076s · phase=await-landing\n[hub-runner-v8.3.2:m0 2026-11-27T00:54:36.401Z] sleep gap 감지 461s · 예산 보정 · 누적 2533s · phase=await-landing\n[hub-runner-v8.3.2:m3 2026-11-27T00:54:40.441Z] sleep gap 감지 464s · 예산 보정 · 누적 3570s · phase=await-landing\n[hub-runner-v8.3.2:sleep-tracker 2026-11-27T00:54:42.694Z] sleep observed · gap=498s · threshold=120s\n[hub-runner-v8.3.2:heartbeat 2026-11-27T00:54:54.940Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:m1 2026-11-27T00:54:57.713Z] sleep gap 감지 22s · 예산 보정 · 누적 4098s · phase=await-landing\n[hub-runner-v8.3.2:m0 2026-11-27T00:54:58.530Z] sleep gap 감지 17s · 예산 보정 · 누적 2550s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:54:59.996Z] [gh-runner-watchdog] wake: mac-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.Youngkyus-MacBook-Pro-M1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:55:00.068Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:55:00.904Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:55:00.964Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:55:00.965Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:m3 2026-11-27T00:56:25.359Z] sleep gap 감지 71s · 예산 보정 · 누적 3641s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-27T00:56:29.635Z] sleep gap 감지 72s · 예산 보정 · 누적 4170s · phase=await-landing\n[hub-runner-v8.3.2:m0 2026-11-27T00:56:31.295Z] sleep gap 감지 71s · 예산 보정 · 누적 2622s · phase=await-landing\n[hub-runner-v8.3.2:git 2026-11-27T00:56:33.531Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:56:52.671Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:56:53.478Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T00:56:53.533Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:m0 2026-11-27T01:02:31.110Z] sleep gap 감지 330s · 예산 보정 · 누적 2951s · phase=await-landing\n[hub-runner-v8.3.2:m3 2026-11-27T01:02:44.452Z] sleep gap 감지 340s · 예산 보정 · 누적 4000s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-27T01:02:55.164Z] sleep gap 감지 350s · 예산 보정 · 누적 4535s · phase=await-landing\n[hub-runner-v8.3.2:sleep-tracker 2026-11-27T01:02:56.260Z] sleep observed · gap=383s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-27T01:16:45.342Z] queue checkout 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Resolving timed out after 811159 milliseconds\n[hub-runner-v8.3.2:heartbeat 2026-11-27T01:19:11.602Z] standalone push 실패: fatal: unable to access 'https://github.com/CuriocityDevAi/curiocity-relay.git/': Could not resolve host: github.com\n[hub-runner-v8.3.2:state 2026-11-27T01:23:26.632Z] state.json push 실패: Command failed: git -C /Users/kyu.lee/.hub-runner/status-wt push --force origin runner-status:runner-status\n[hub-runner-v8.3.2:self-update 2026-11-27T01:23:26.676Z] 보류 · busy=3 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m0 2026-11-27T01:23:26.696Z] sleep gap 감지 1251s · 예산 보정 · 누적 4202s · phase=await-landing\n[hub-runner-v8.3.2:m3 2026-11-27T01:23:30.729Z] sleep gap 감지 1241s · 예산 보정 · 누적 5241s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-27T01:23:34.885Z] sleep gap 감지 1235s · 예산 보정 · 누적 5770s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:23:38.995Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/storeport): Command failed: gh api repos/CuriocityDevAi/storeport/actions/runners\nerror connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:23:58.314Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:sleep-tracker 2026-11-27T01:24:00.982Z] sleep observed · gap=1265s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-27T01:24:01.100Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
   "git_state": {
     "ahead": 0,
     "behind": 1,
