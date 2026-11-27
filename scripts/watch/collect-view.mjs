@@ -14,6 +14,7 @@ import {
   scanClaimsDir, getWibDateStr,
   QUEUE_HUBS,
   findReportFile, extractPrUrl, readPipelineEvents, readReportFirstLine,
+  readCiWatchConfig,
 } from './sources-local.mjs';
 import {
   maybeGitFetch, getDataOrigin,
@@ -93,12 +94,13 @@ export function stageLabel(col) {
 const _prMergeCache = new Map();
 
 /**
- * PR 상태 조회. fullRepo 가 없으면 storeport 기본값 사용.
+ * PR 상태 조회. fullRepo 가 없으면 null 반환 (거짓 경보 방지 — 미등록 리포 추측 금지).
  * @param {number} prNumber
  * @param {string} [fullRepo]  'owner/repo' 형식
  */
 export function defaultFetchPrState(prNumber, fullRepo) {
-  const repo = fullRepo || 'CuriocityDevAi/storeport';
+  if (!fullRepo) return null;
+  const repo = fullRepo;
   const cacheKey = `${repo}#${prNumber}`;
   const now = Date.now();
   const cached = _prMergeCache.get(cacheKey);
@@ -163,7 +165,7 @@ export function fetchGhForkRuns(nowMs = Date.now()) {
   return result;
 }
 
-// ── ID → PR 검색 (gh pr list --search, 30초 캐시, 3개 리포) ───────────────
+// ── ID → PR 검색 (gh pr list --search, 30초 캐시, 설정 리포) ─────────────
 const _prSearchCache = new Map();
 const _SEARCH_REPOS = [
   'CuriocityDevAi/storeport',
@@ -171,12 +173,16 @@ const _SEARCH_REPOS = [
   'narisolutions/agilo-medusa-pos-fork',
 ];
 
-function fetchPrBySearch(id) {
+/**
+ * @param {string} id  프롬프트 ID
+ * @param {string[]} [searchRepos]  조회할 리포 목록 (기본: _SEARCH_REPOS)
+ */
+function fetchPrBySearch(id, searchRepos = _SEARCH_REPOS) {
   const now = Date.now();
   const cached = _prSearchCache.get(id);
   if (cached && now - cached.cachedAt < 30_000) return cached.result;
 
-  for (const fullRepo of _SEARCH_REPOS) {
+  for (const fullRepo of searchRepos) {
     try {
       const out = execSync(
         `gh pr list --repo ${fullRepo} --state all --search "${id}" --json number,state,mergedAt,url,headRefName --limit 10 2>/dev/null`,
@@ -317,6 +323,11 @@ export function buildExtendedView({
   // 0.5) 오늘/어제 MMDD 집합 — claims 날짜 필터에 사용
   const mmddSet = getRecentMmddSet(now, 1);
 
+  // ci_watch 설정 로드 (search_repos · no_ci_repos)
+  const _ciWatchCfg = readCiWatchConfig(repoRoot);
+  const searchRepos = _ciWatchCfg?.search_repos || _SEARCH_REPOS;
+  const noCiRepos   = new Set(_ciWatchCfg?.no_ci_repos || ['curiocity-relay']);
+
   // 1) 기본 파이프라인 뷰
   const base = buildPipelineView({ repoRoot, now, nowMs, allJson });
 
@@ -348,7 +359,7 @@ export function buildExtendedView({
     }
 
     if (!skipGh) {
-      const ghPr = fetchPrBySearch(card.id);
+      const ghPr = fetchPrBySearch(card.id, searchRepos);
       if (ghPr?.number) {
         card.extra = { ...(card.extra || {}), pr: ghPr };
       }
@@ -380,15 +391,19 @@ export function buildExtendedView({
   }
 
   // 2.1) CI 없는 레포 PR → ci_pending 건너뛰고 review 로 승격
+  // 미등록 리포(search_repos 목록 밖) → no CI 로 간주 (거짓 경보 방지)
   for (const card of base.cards) {
     if (card.column !== 'ci_pending') continue;
     const pr = card.extra?.pr;
     if (!pr) continue;
     const repo = pr.repo || (pr.url ? pr.url.split('/').slice(-3)[0] : null);
-    if (repo && NO_CI_REPOS.has(repo)) {
+    if (!repo) continue;
+    const inNoCi = noCiRepos.has(repo);
+    const inSearch = searchRepos.some(r => r.endsWith(`/${repo}`));
+    if (inNoCi || !inSearch) {
       card.column   = 'review';
       card.predicted = true;
-      card.reason   = 'CI 없음(리뷰 대기)';
+      card.reason   = inNoCi ? 'CI 없음(리뷰 대기)' : '미등록 리포(CI 건너뜀)';
     }
   }
 
@@ -593,7 +608,7 @@ export function buildExtendedView({
     if (inAnyPool) continue;
     const owner = card.extra?.pr?.owner;
     const repo  = card.extra?.pr?.repo;
-    if (repo && NO_CI_REPOS.has(repo)) continue;
+    if (repo && (noCiRepos.has(repo) || !searchRepos.some(r => r.endsWith(`/${repo}`)))) continue;
     const isFork = owner === 'narisolutions' || (repo || '').includes('fork');
     const targetPool = isFork ? 'fork-heavy' : 'storeport-heavy';
     const td = ciPools.get(targetPool);
@@ -862,7 +877,8 @@ export function buildExtendedView({
 // ── 비동기 gh 래퍼 ────────────────────────────────────────────────────────
 
 async function defaultFetchPrStateAsync(prNumber, fullRepo) {
-  const repo = fullRepo || 'CuriocityDevAi/storeport';
+  if (!fullRepo) return null;
+  const repo = fullRepo;
   const cacheKey = `${repo}#${prNumber}`;
   const now = Date.now();
   const cached = _prMergeCache.get(cacheKey);
@@ -949,6 +965,11 @@ export async function buildExtendedViewAsync({
 
   const paths = resolvePaths(repoRoot);
   const mmddSet = getRecentMmddSet(now, 1);
+
+  // ci_watch 설정 로드
+  const _ciWatchCfgAsync = readCiWatchConfig(repoRoot);
+  const searchReposAsync = _ciWatchCfgAsync?.search_repos || _SEARCH_REPOS;
+  const noCiReposAsync   = new Set(_ciWatchCfgAsync?.no_ci_repos || ['curiocity-relay']);
 
   // git 읽기: all.json + claims 를 비동기 병렬로 미리 적재
   const allJson = allJsonOverride
@@ -1043,15 +1064,19 @@ export async function buildExtendedViewAsync({
   }
 
   // 2.1) CI 없는 레포 PR → ci_pending 건너뛰고 review 로 승격
+  // 미등록 리포(search_repos 목록 밖) → no CI 로 간주 (거짓 경보 방지)
   for (const card of base.cards) {
     if (card.column !== 'ci_pending') continue;
     const pr = card.extra?.pr;
     if (!pr) continue;
     const repo = pr.repo || (pr.url ? pr.url.split('/').slice(-3)[0] : null);
-    if (repo && NO_CI_REPOS.has(repo)) {
+    if (!repo) continue;
+    const inNoCi = noCiReposAsync.has(repo);
+    const inSearch = searchReposAsync.some(r => r.endsWith(`/${repo}`));
+    if (inNoCi || !inSearch) {
       card.column   = 'review';
       card.predicted = true;
-      card.reason   = 'CI 없음(리뷰 대기)';
+      card.reason   = inNoCi ? 'CI 없음(리뷰 대기)' : '미등록 리포(CI 건너뜀)';
     }
   }
 
@@ -1237,7 +1262,7 @@ export async function buildExtendedViewAsync({
     if (inAnyPool) continue;
     const owner = card.extra?.pr?.owner;
     const repo  = card.extra?.pr?.repo;
-    if (repo && NO_CI_REPOS.has(repo)) continue;
+    if (repo && (noCiReposAsync.has(repo) || !searchReposAsync.some(r => r.endsWith(`/${repo}`)))) continue;
     const isFork = owner === 'narisolutions' || (repo || '').includes('fork');
     const targetPool = isFork ? 'fork-heavy' : 'storeport-heavy';
     const td = ciPools.get(targetPool);
@@ -1487,6 +1512,18 @@ export async function buildExtendedViewAsync({
     congestionAlerts,
     dataOrigin: _dOriginAsync ? { ..._dOriginAsync, builtAt: Date.now() } : null,
   };
+}
+
+/**
+ * 리포가 CI 를 건너뛰어야 하는지 판정 (테스트용 단위 함수).
+ * @param {string|null} repo  리포 이름 (owner 제외)
+ * @param {Set<string>} noCiRepos  CI 없는 리포 집합
+ * @param {string[]} searchRepos  조회 대상 리포 목록 ('owner/repo' 형식)
+ */
+export function shouldSkipCi(repo, noCiRepos, searchRepos) {
+  if (!repo) return false;
+  if (noCiRepos.has(repo)) return true;
+  return !searchRepos.some(r => r.endsWith(`/${repo}`));
 }
 
 export { POOL_ORDER as _POOL_ORDER, IN_PROGRESS_STAGES, QUEUE_HUBS, getRepoAbbr, NO_CI_REPOS };

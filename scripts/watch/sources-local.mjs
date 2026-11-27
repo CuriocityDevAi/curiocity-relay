@@ -188,14 +188,21 @@ const _ID_RE = /^[MRTNK]\d-\d{4}-[A-Z]+$/;
 
 /**
  * 큐 파일 1줄 제목.
- * 우선순위: ① 원장 대사: 줄 ② [REQ] 첫 문장 ③ 첫 비-ID 비공란 줄.
+ * 우선순위: ① 첫 줄 괄호 안 요지 (<ID> (<요지>)) ② 원장 대사: 줄 ③ [REQ] 첫 문장 ④ 첫 비-ID 비공란 줄.
  */
 export function readQueueTitle(filePath) {
   if (!filePath || !existsSync(filePath)) return null;
   try {
     const body = readFileSync(filePath, 'utf8');
     const lines = body.split('\n');
-    // ① 원장 대사: (첫 10 줄)
+    // ① 첫 줄 괄호 안 요지: "<ID> (<요지>)" 형식
+    const firstLine = lines[0]?.trim() || '';
+    const bracketMatch = firstLine.match(/^[MRTNK]\d-\d{4}-[A-Z]+\s+\((.+)\)\s*$/);
+    if (bracketMatch) {
+      const inner = bracketMatch[1].trim();
+      if (inner.length >= 4) return inner.slice(0, 80);
+    }
+    // ② 원장 대사: (첫 10 줄)
     for (const l of lines.slice(0, 10)) {
       const s = l.trim();
       if (s.startsWith('원장 대사:')) {
@@ -326,6 +333,20 @@ export function getWibDateStr(now = new Date()) {
   const m = String(wib.getUTCMonth() + 1).padStart(2, '0');
   const d = String(wib.getUTCDate()).padStart(2, '0');
   return `${y}-${m}-${d}`;
+}
+
+/**
+ * status/runner-config.json 의 ci_watch 섹션 반환.
+ * 없으면 null — 호출부가 기본값으로 폴백.
+ */
+export function readCiWatchConfig(repoRoot) {
+  if (!repoRoot) return null;
+  try {
+    const p = join(repoRoot, 'status', 'runner-config.json');
+    if (!existsSync(p)) return null;
+    const cfg = JSON.parse(readFileSync(p, 'utf8'));
+    return cfg.ci_watch || null;
+  } catch { return null; }
 }
 
 export { QUEUE_HUBS, PROMPT_ID_RE };

@@ -2,14 +2,14 @@
 
 `ci-watch.mjs` 는 runner/CI 상태를 터미널에 띄우는 감시 화면이다. 러너나 git 에는 쓰지 않는다 — 전부 **로컬 읽기**이고 GitHub 호출은 최소한만 한다.
 
-**v1.18 이 지금 기본값.** 화면 정본 = [`specs/screens/ci-watch.md`](../specs/screens/ci-watch.md) (CW-HEAD · CW-HUBQ · CW-CIQ · CW-PROG · CW-DONE · CW-ALERT · CW-RENDER · CW-VERSION). `--v2`(ci-watch-v2.mjs) 는 실험 화면 — 9단계 띠(CW-PROG)가 기본 화면에 흡수됨 (M0-1127-A, 2026-11-27). **다음 라운드에 `--v2` 제거 후보** (이번 PR 에서는 삭제하지 않음).
+**v1.19 이 지금 기본값.** 화면 정본 = [`specs/screens/ci-watch.md`](../specs/screens/ci-watch.md) (CW-HEAD · CW-HUBQ · CW-CIQ · CW-PROG · CW-DONE · CW-ALERT · CW-RENDER · CW-VERSION). `--v2`(ci-watch-v2.mjs) 는 실험 화면 — 9단계 띠(CW-PROG)가 기본 화면에 흡수됨 (M0-1127-A, 2026-11-27). **다음 라운드에 `--v2` 제거 후보** (이번 PR 에서는 삭제하지 않음).
 
 ---
 
 ## 실행
 
 ```bash
-~/.hub-runner/bin/ci-watch.sh            # 기본 (v1.18)
+~/.hub-runner/bin/ci-watch.sh            # 기본 (v1.19)
 ~/.hub-runner/bin/ci-watch.sh --v2       # 실험 · 기본 화면에 흡수됨 · 다음 라운드에 제거 후보
 ```
 

@@ -84,7 +84,7 @@ function makeLayoutData(overrides = {}) {
     hubPending: { m0: [], m1: [], m2: [], m3: [], r0: [] },
     spinnerFrame: 0,
     terminalWidth: 140,
-    version: '1.18',
+    version: '1.19',
     versionNote: '',
     fileCommitDate: '2026-11-27',
     poolWaitStats: {},
@@ -103,7 +103,7 @@ test('G-SECT: 머리줄→허브 큐→CI 큐→진행 중→오늘 완료→주
   const data = makeLayoutData({ runnerAlerts: [{ msg: 'iMac heartbeat 끊김' }] });
   const text = renderLayout(data).map(stripAnsi).join('\n');
   const indexes = {
-    head:    text.indexOf('ci-watch v1.18'),
+    head:    text.indexOf('ci-watch v1.19'),
     hubq:    text.indexOf('─ 허브 큐 ('),
     ciq:     text.indexOf('─ CI 큐 ('),
     prog:    text.indexOf('─ 진행 중 ('),
