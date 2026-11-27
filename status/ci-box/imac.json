@@ -1,13 +1,13 @@
 {
-  "ts": "2026-11-27T11:50:38Z",
+  "ts": "2026-11-27T11:55:45Z",
   "uptime": {
-    "uptime_secs": 152321,
-    "load_1": 14.62,
-    "load_5": 13.26,
-    "load_15": 7.78
+    "uptime_secs": 152628,
+    "load_1": 16.65,
+    "load_5": 13.46,
+    "load_15": 9.43
   },
   "memory": {
-    "free_pct": 63,
+    "free_pct": 59,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
@@ -35,23 +35,22 @@
       },
       {
         "runner_name": "actions-runner-ci-box-fork-heavy",
-        "job": "e2e \u00b7 case 1 (\uc2e4\uc11c\ubc84)",
-        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-        "workflow": "e2e-cd-pos",
-        "head_ref": "feat/M1-1127-I-rehearsal-gate",
-        "event_name": "pull_request",
-        "pr": "293",
-        "started_at": "2026-11-27T11:46:22Z"
-      },
-      {
-        "runner_name": "actions-runner-ci-box-fork-light",
-        "job": "assertions",
+        "job": "playwright",
         "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
         "workflow": "CI",
         "head_ref": "feat/M1-1127-I-rehearsal-gate",
         "event_name": "pull_request",
         "pr": "293",
-        "started_at": "2026-11-27T11:50:31Z"
+        "started_at": "2026-11-27T11:51:46Z"
+      },
+      {
+        "runner_name": "actions-runner-ci-box-fork-light",
+        "job": "unit-tests",
+        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+        "workflow": "CI",
+        "head_ref": "",
+        "event_name": "push",
+        "started_at": "2026-11-27T11:55:40Z"
       }
     ]
   },
@@ -60,10 +59,10 @@
     "reachable": true
   },
   "netspeed": {
-    "dl_mbps": 77.2,
+    "dl_mbps": 79.5,
     "ul_mbps": null,
     "rpm": null,
-    "cached": true
+    "cached": false
   },
   "postgres": {
     "alive": true
