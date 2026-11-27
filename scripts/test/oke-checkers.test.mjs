@@ -243,6 +243,39 @@ test('MG-리허설-검증: 흐름 PR 리허설 빨강이 PASS 되지 않음', ()
   assert.equal(exitCode, 1, '리허설 판정 로직이 제거되면 이 테스트가 실패함 — 검증의 검증');
 });
 
+// ===== storeport 흐름 PR · 포크 리허설 (갭 1·갭 2 — M1-1127-J) =====
+
+test('MG-R5: storeport ask-phone-on-display 경로 + fork 리허설 초록 → PASS', () => {
+  const { exitCode, stdout } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/storeport',
+    '--pr', '480',
+    '--fixture', join(FIX, 'merge-gate-storeport-ask-phone-pass.json'),
+  ]);
+  assert.equal(exitCode, 0, `stdout: ${stdout}`);
+  assert.match(stdout, /^MERGE-GATE PASS/m);
+});
+
+test('MG-R6: storeport ask-phone-on-display 경로 + fork 리허설 없음 → FAIL rehearsal: pending', () => {
+  const { exitCode, stdout } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/storeport',
+    '--pr', '480',
+    '--fixture', join(FIX, 'merge-gate-storeport-ask-phone-pending.json'),
+  ]);
+  assert.equal(exitCode, 1);
+  assert.match(stdout, /^MERGE-GATE FAIL/m);
+  assert.match(stdout, /rehearsal.*pending/);
+});
+
+// 검증의 검증: storeport 흐름 PR 에 fork 리허설 없으면 반드시 FAIL
+test('MG-R5-검증: storeport 흐름 PR fork 리허설 없으면 PASS 안 됨', () => {
+  const { exitCode } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/storeport',
+    '--pr', '480',
+    '--fixture', join(FIX, 'merge-gate-storeport-ask-phone-pending.json'),
+  ]);
+  assert.equal(exitCode, 1, 'storeport 포크 리허설 판정 로직이 제거되면 이 테스트가 실패함 — 검증의 검증');
+});
+
 // ===== check-report =====
 
 test('CR-1: 실제 R0-1127-F-report.md → PASS', () => {

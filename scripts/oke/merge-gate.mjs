@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts/oke/merge-gate.mjs  M1-1127-I — 리허설 관문 추가 · 흐름 PR 판정 · 아이맥 heavy 통계 출력
+// scripts/oke/merge-gate.mjs  M1-1127-J — storeport FLOW_PATHS ask-phone 추가 · 포크 리허설 조회
 
 import { execFileSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
@@ -17,6 +17,12 @@ const CI_WORKFLOWS = {
 // ---- 리허설 워크플로 경로 ----
 const REHEARSAL_WORKFLOW = '.github/workflows/e2e-cd-pos.yml';
 
+// ---- storeport 리허설은 포크 리포에서 sha 로 조회 (갭 2 — M1-1127-J) ----
+// storeport PR 흐름 체크 시 포크의 e2e-cd-pos.yml 런 목록에서 run-name 에 storeport sha 포함된 런을 찾음
+const REHEARSAL_FORK = {
+  'CuriocityDevAi/storeport': 'CuriocityDevAi/agilo-medusa-pos-fork',
+};
+
 // ---- "흐름 PR" 경로 패턴 (repo → glob 목록) ----
 // 이 경로 중 하나라도 변경된 PR 은 아이맥 리허설 초록이어야 머지 가능
 // (decision-rehearsal-gate-20261127 · 3원칙 "관문 먼저")
@@ -27,6 +33,10 @@ const FLOW_PATHS = {
     'apps/commerce-core/src/lib/customer-flow/**',
     'apps/commerce-core/src/api/**/customer-display/**',
     '**/phone-entry/**',
+    // 번호 입력 흐름 admin API 라우트 (갭 1 — M1-1127-J)
+    'apps/commerce-core/src/api/admin/pos/orders/**/ask-phone-on-display/**',
+    'apps/commerce-core/src/api/admin/pos/orders/**/phone-entry/**',
+    'apps/commerce-core/src/api/admin/pos/orders/**/customer-flow/**',
   ],
   'narisolutions/medusa-pos': [
     'apps/customer-display/**',
@@ -34,6 +44,9 @@ const FLOW_PATHS = {
     'apps/commerce-core/src/lib/customer-flow/**',
     'apps/commerce-core/src/api/**/customer-display/**',
     '**/phone-entry/**',
+    'apps/commerce-core/src/api/admin/pos/orders/**/ask-phone-on-display/**',
+    'apps/commerce-core/src/api/admin/pos/orders/**/phone-entry/**',
+    'apps/commerce-core/src/api/admin/pos/orders/**/customer-flow/**',
   ],
   'narisolutions/agilo-medusa-pos-fork': [
     'components/customer-display/**',
@@ -123,6 +136,12 @@ function getPrFiles(prN) {
   if (fixtureData) return fixtureData.changedFiles ?? [];
   const result = ghJson('api', `repos/${repo}/pulls/${prN}/files`);
   return Array.isArray(result) ? result : [];
+}
+
+function getRehearsalForkRuns(forkRepo) {
+  if (fixtureData) return fixtureData.rehearsalForkRuns ?? [];
+  const result = ghJson('api', `repos/${forkRepo}/actions/workflows/e2e-cd-pos.yml/runs?per_page=20`);
+  return result?.workflow_runs ?? [];
 }
 
 // ---- 아이맥 heavy 통계 (판정에 사용 안 함 · 오케 참고용) ----
@@ -224,20 +243,43 @@ if (primaryPath) {
 
 // ---- 리허설 관문 (흐름 PR 한정) ----
 // 손님 화면·번호 입력 흐름 경로 변경 PR → 아이맥 리허설 초록 필수
+// storeport PR: 리허설은 포크(agilo-medusa-pos-fork)의 e2e-cd-pos.yml 런에서 sha 로 찾음
 const prFiles = getPrFiles(prNum);
 const flowPr = isFlowPr(prFiles);
 
 if (flowPr) {
-  const rehearsalRun = workflowRuns.find(r => r.path === REHEARSAL_WORKFLOW);
-  if (!rehearsalRun) {
-    pass = false;
-    reasons.push(`rehearsal: pending — 흐름 PR 이지만 리허설(${REHEARSAL_WORKFLOW}) 실행 기록 없음 · 아이맥에서 e2e-cd-pos 초록 필요`);
-  } else if (rehearsalRun.status !== 'completed') {
-    pass = false;
-    reasons.push(`rehearsal: pending — 리허설(${rehearsalRun.workflow_name ?? REHEARSAL_WORKFLOW}) 진행 중: status=${rehearsalRun.status}`);
-  } else if (rehearsalRun.conclusion !== 'success') {
-    pass = false;
-    reasons.push(`rehearsal: fail — 리허설(${rehearsalRun.workflow_name ?? REHEARSAL_WORKFLOW}) 빨강: conclusion=${rehearsalRun.conclusion} · 흐름 PR 은 리허설 초록 없이 머지 불가`);
+  const forkRepo = REHEARSAL_FORK[repo];
+  let rehearsalRun;
+
+  if (forkRepo) {
+    // storeport → 포크 e2e-cd-pos.yml 런 목록에서 run-name 에 storeport sha 포함된 런 조회
+    const forkRuns = getRehearsalForkRuns(forkRepo);
+    rehearsalRun = forkRuns.find(r => {
+      const name = r.name ?? r.display_title ?? '';
+      return name.includes(sha7) || name.includes(sha);
+    });
+    if (!rehearsalRun) {
+      pass = false;
+      reasons.push(`rehearsal: pending — 흐름 PR 이지만 fork(${forkRepo}) e2e-cd-pos 에 storeport/${sha7} 포함 run 없음 · rehearsal-dispatch 또는 workflow_dispatch 로 트리거 필요`);
+    } else if (rehearsalRun.status !== 'completed') {
+      pass = false;
+      reasons.push(`rehearsal: pending — fork e2e-cd-pos 진행 중: status=${rehearsalRun.status}`);
+    } else if (rehearsalRun.conclusion !== 'success') {
+      pass = false;
+      reasons.push(`rehearsal: fail — fork e2e-cd-pos 빨강: conclusion=${rehearsalRun.conclusion} · 흐름 PR 은 리허설 초록 없이 머지 불가`);
+    }
+  } else {
+    rehearsalRun = workflowRuns.find(r => r.path === REHEARSAL_WORKFLOW);
+    if (!rehearsalRun) {
+      pass = false;
+      reasons.push(`rehearsal: pending — 흐름 PR 이지만 리허설(${REHEARSAL_WORKFLOW}) 실행 기록 없음 · 아이맥에서 e2e-cd-pos 초록 필요`);
+    } else if (rehearsalRun.status !== 'completed') {
+      pass = false;
+      reasons.push(`rehearsal: pending — 리허설(${rehearsalRun.workflow_name ?? REHEARSAL_WORKFLOW}) 진행 중: status=${rehearsalRun.status}`);
+    } else if (rehearsalRun.conclusion !== 'success') {
+      pass = false;
+      reasons.push(`rehearsal: fail — 리허설(${rehearsalRun.workflow_name ?? REHEARSAL_WORKFLOW}) 빨강: conclusion=${rehearsalRun.conclusion} · 흐름 PR 은 리허설 초록 없이 머지 불가`);
+    }
   }
 }
 
