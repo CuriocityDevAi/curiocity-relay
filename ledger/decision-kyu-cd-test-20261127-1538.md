@@ -10,3 +10,7 @@
 | C | 주문 번호 | "Close register, Open 을 연이어 하고, 매출을 만들었는데, 아직 215로 찍힘.." | `Order #215` = Medusa display_id(내부 번호) · #1 은 POS 칩 번호 · 14:13 결정으로 보이는 곳 전부 `#N` — 손님 화면 = M0-1127-M 진행 중 · 영수증(POS·프린터) = 영수증 R2/R3 | M0-1127-M · 영수증 R2 |
 | obs1 | (오케 관찰) POS 빨간 토스트 "Unexpected text node" 매 화면 | — | 신규 버그 | R0-1127-Q 출처 확인 → M3 |
 | obs2 | (오케 관찰) QRIS 영수증(첨부4) PB1 줄 없음 · 품목 16,500 (Cash 영수증은 PB1 줄 있음) | — | 영수증 단일 출처 R2/R3 범위 | 영수증 라운드 |
+
+## 15:41 Kyu 회신
+- B-re Re-enter: 오케 조건 (가) 새 번호로 바꾸면 이전 번호 적립 취소 + 새 번호 적립 한 번에 (나) 변경 기록(시각·이전→새 번호) 남김 → Kyu **"너의 의견에 동의. ㅇㅋ"** → M0 발부 대상(M0-1127-M 뒤 · R0-1127-Q 진단 반영).
+- obs1 "Unexpected text node": Kyu "이거 없에고싶어" (POS 왼쪽 아래 빨간 ! · 클릭 시 Expo Console Error · CssInteropComponent 안 View 에 "." 텍스트) → R0-1127-Q 5번이 출처 지목 → M3 수정. 오케 메모: 웹 개발 모드에서는 경고지만 iPad/Android 실기기(네이티브)에서는 같은 원인이 화면 오류(빨간 화면)로 앱을 멈출 수 있음 → Go-live 전 필수.
