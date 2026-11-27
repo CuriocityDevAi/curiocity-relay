@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-27T07:48:43Z",
+  "ts": "2026-11-27T07:54:14Z",
   "uptime": {
-    "uptime_secs": 137806,
-    "load_1": 16.96,
-    "load_5": 15.11,
-    "load_15": 11.22
+    "uptime_secs": 138137,
+    "load_1": 6.66,
+    "load_5": 12.16,
+    "load_15": 11.35
   },
   "memory": {
-    "free_pct": 48,
+    "free_pct": 51,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 91,
-    "runner_work_free_gb": 91
+    "root_free_gb": 90,
+    "runner_work_free_gb": 90
   },
   "thermal": {
     "throttled": false,
@@ -21,38 +21,39 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 4,
+    "worker_count": 2,
     "current": [
       {
         "runner_name": "actions-runner-ci-box-sp-heavy",
-        "job": "mirror main \u2192 $HOME/ci-mirror/storeport",
+        "job": "heavy-mac",
         "repo": "CuriocityDevAi/storeport",
-        "workflow": "ci-mirror-main",
-        "head_ref": "",
-        "event_name": "push",
-        "started_at": "2026-11-27T07:48:30Z"
+        "workflow": "ci",
+        "head_ref": "feat/M3-1127-K-cd-preview-edge",
+        "event_name": "pull_request",
+        "pr": "476",
+        "started_at": "2026-11-27T07:49:46Z"
       },
       {
         "runner_name": "actions-runner-ci-box-fork-heavy",
         "job": "playwright",
         "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
         "workflow": "CI",
-        "head_ref": "fix/M3-1127-G-sheet-typing-dots",
+        "head_ref": "fix/M3-1127-H-draft-duplicate",
         "event_name": "pull_request",
-        "pr": "288",
-        "started_at": "2026-11-27T07:44:00Z"
+        "pr": "289",
+        "started_at": "2026-11-27T07:51:13Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 127,
+    "latency_ms": 119,
     "reachable": true
   },
   "netspeed": {
     "dl_mbps": 80.0,
     "ul_mbps": null,
     "rpm": null,
-    "cached": false
+    "cached": true
   },
   "postgres": {
     "alive": true
