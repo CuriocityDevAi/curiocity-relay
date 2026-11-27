@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-27T13:28:40Z",
+  "ts": "2026-11-27T13:39:20Z",
   "uptime": {
-    "uptime_secs": 158203,
+    "uptime_secs": 158843,
     "load_1": 2.31,
-    "load_5": 2.38,
-    "load_15": 2.93
+    "load_5": 2.76,
+    "load_15": 2.99
   },
   "memory": {
-    "free_pct": 63,
+    "free_pct": 62,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 82,
-    "runner_work_free_gb": 82
+    "root_free_gb": 91,
+    "runner_work_free_gb": 91
   },
   "thermal": {
     "throttled": false,
@@ -25,7 +25,7 @@
     "current": []
   },
   "github": {
-    "latency_ms": 113,
+    "latency_ms": 139,
     "reachable": true
   },
   "netspeed": {
@@ -45,7 +45,7 @@
   "reasons": [],
   "tmp": {
     "current_gb": 0.0,
-    "freed_gb": 0.0,
+    "freed_gb": 0,
     "cleanup_at": "2026-11-27T13:28:42Z"
   }
 }
