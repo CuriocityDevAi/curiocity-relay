@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T05:37:03.455Z",
+  "at": "2026-11-27T05:38:17.845Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -9,7 +9,9 @@
   "last_error_at": "2026-11-26T16:49:18.143Z",
   "hubs": {
     "m0": {
-      "current": null,
+      "current": "M0-1127-E",
+      "started_at": "2026-11-27T05:38:15.104Z",
+      "model": "opus",
       "last_activity": "2026-11-27T04:17:26.751Z"
     },
     "m1": {
@@ -17,7 +19,9 @@
       "last_activity": "2026-11-27T05:16:48.654Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1127-F",
+      "started_at": "2026-11-27T05:38:16.099Z",
+      "model": "sonnet",
       "last_activity": "2026-11-27T05:09:30.315Z"
     },
     "m3": {
@@ -39,11 +43,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.72,
-    "compressed_gb": 4.79,
+    "used_gb": 15.63,
+    "compressed_gb": 4.66,
     "swap_used_gb": 2.75,
     "pressure": "normal",
-    "at": "2026-11-27T05:36:37.196Z"
+    "at": "2026-11-27T05:37:43.041Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -51,32 +55,41 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-27T05:34:51.015Z",
+      "at": "2026-11-27T05:37:08.520Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 15,
+      "api_calls": 23,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 5,
+        "queued": 6,
         "queued_prs": [
-          285,
-          284
+          285
         ],
-        "oldest_queued_min": 2,
+        "oldest_queued_min": 4,
         "oldest_queued_pr": "fork:#285",
         "in_progress": [
           {
-            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-            "pr": "#284",
-            "pr_display": "fork:#284",
-            "job": "broken",
-            "step": "Complete job",
+            "repo": "CuriocityDevAi/storeport",
+            "pr": "main",
+            "pr_display": "storeport:main",
+            "job": "mirror main → $HOME/ci-mirror/storeport",
+            "step": "Checkout (main 기준으로 미러)",
             "running_min": 0,
+            "runner": "ci-box-storeport-heavy-imac",
+            "kind": "mac-heavy"
+          },
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "ci/M3-1127-E-verify-broken-wf",
+            "pr_display": "fork:ci/M3-1127-E-verify-broken-wf",
+            "job": "lint",
+            "step": null,
+            "running_min": 1,
             "runner": "ci-box-fork-light-imac",
             "kind": "mac-heavy"
           },
@@ -85,33 +98,33 @@
             "pr": "master",
             "pr_display": "fork:master",
             "job": "playwright",
-            "step": "Run Playwright harnesses",
-            "running_min": 2,
+            "step": "Post Run actions/checkout@v4",
+            "running_min": 5,
             "runner": "ci-box-fork-heavy-imac",
             "kind": "mac-heavy"
           }
         ]
       },
       "light": {
-        "queued": 0,
-        "oldest_queued_min": null,
-        "oldest_queued_pr": null,
+        "queued": 3,
+        "oldest_queued_min": 0,
+        "oldest_queued_pr": "storeport:main",
         "in_progress": []
       },
       "cloud_in_progress": [],
       "runners": {
         "heavy_online": 3,
-        "heavy_busy": 2,
+        "heavy_busy": 3,
         "light_online": 1
       },
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 200,
+          "jobs": 203,
           "avg_wait_min": 1.9,
           "avg_run_min": 1.3,
-          "success_rate": 76,
-          "run_min_total": 264.6000000000002
+          "success_rate": 75.9,
+          "run_min_total": 265.50000000000017
         },
         "mac-light": {
           "jobs": 32,
@@ -131,18 +144,18 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 50.5
       },
-      "jsonl_added": 0,
+      "jsonl_added": 3,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 15432,
-    "at": "2026-11-27T05:35:04.892Z"
+    "took_ms": 16019,
+    "at": "2026-11-27T05:37:22.921Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 53,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:33:09.392Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:33:09.436Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:33:10.032Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:33:10.067Z] [gh-runner-watchdog] partial-but-safe exec 실패: fork-light Command failed: sh -c \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" stop && \"/Users/kyu.lee/actions-runner-fork-light/svc.sh\" start\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:33:43.104Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:34:20.197Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:34:54.036Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:35:28.527Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:self-update 2026-11-27T05:36:01.085Z] 보류 · busy=2 claimQueue=0 processing=false\n[hub-runner-v8.3.2:r0 2026-11-27T05:36:04.585Z] [report-path] R0-1127-E: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:36:06.068Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:claim 2026-11-27T05:36:09.432Z] R0-1127-E → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1127-E-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-E.json · {\"id\":\"R0-1127-E\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-27T05:36:10.214Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1127-E-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1127-E.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1127-E.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:36:37.195Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m3 2026-11-27T05:37:00.309Z] [report-path] M3-1127-E: REPORT_PATH 격리 리포트 수거·push",
+  "err_tail": "[hub-runner-v8.3.2:claim 2026-11-27T05:36:09.432Z] R0-1127-E → done · runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1127-E-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/R0-1127-E.json · {\"id\":\"R0-1127-E\",\"hub\":\"r0\",\"state\":\"done\",\"at\":\"2026-11-27T05:36:10.214Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 r0/R0-1127-E-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/r0/R0-1127-E.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/R0-1127-E.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:36:37.195Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m3 2026-11-27T05:37:00.309Z] [report-path] M3-1127-E: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-27T05:37:03.506Z] M3-1127-E → done · runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1127-E-report.md · model=sonnet · 로그: /U\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M3-1127-E.json · {\"id\":\"M3-1127-E\",\"hub\":\"m3\",\"state\":\"done\",\"at\":\"2026-11-27T05:37:04.144Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m3/M3-1127-E-report.md · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m3/M3-1127-E.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M3-1127-E.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:37:08.677Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T05:37:43.040Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m0 2026-11-27T05:38:15.103Z] pick · M0-1127-E · model=opus · display=cmux-split\n[hub-runner-v8.3.2:m2 2026-11-27T05:38:16.099Z] pick · M2-1127-F · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 1,
