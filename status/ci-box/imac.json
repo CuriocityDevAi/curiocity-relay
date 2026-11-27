@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-27T07:28:16Z",
+  "ts": "2026-11-27T07:38:30Z",
   "uptime": {
-    "uptime_secs": 136580,
-    "load_1": 3.73,
-    "load_5": 7.17,
-    "load_15": 7.08
+    "uptime_secs": 137193,
+    "load_1": 4.64,
+    "load_5": 6.16,
+    "load_15": 6.44
   },
   "memory": {
-    "free_pct": 55,
+    "free_pct": 54,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 92,
-    "runner_work_free_gb": 92
+    "root_free_gb": 91,
+    "runner_work_free_gb": 91
   },
   "thermal": {
     "throttled": false,
@@ -24,19 +24,19 @@
     "worker_count": 1,
     "current": [
       {
-        "runner_name": "actions-runner-ci-box-fork-heavy",
-        "job": "playwright",
-        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-        "workflow": "CI",
-        "head_ref": "fix/M3-1127-I-phone-entry-entrances",
+        "runner_name": "actions-runner-ci-box-sp-heavy",
+        "job": "heavy-mac",
+        "repo": "CuriocityDevAi/storeport",
+        "workflow": "ci",
+        "head_ref": "fix/M0-1127-G-cd-active-snapshot",
         "event_name": "pull_request",
-        "pr": "290",
-        "started_at": "2026-11-27T07:23:03Z"
+        "pr": "474",
+        "started_at": "2026-11-27T07:33:03Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 117,
+    "latency_ms": 115,
     "reachable": true
   },
   "netspeed": {
