@@ -1,18 +1,18 @@
 {
-  "ts": "2026-11-27T08:29:58Z",
+  "ts": "2026-11-27T08:35:08Z",
   "uptime": {
-    "uptime_secs": 140281,
-    "load_1": 13.4,
-    "load_5": 9.2,
-    "load_15": 8.24
+    "uptime_secs": 140591,
+    "load_1": 6.85,
+    "load_5": 8.57,
+    "load_15": 8.42
   },
   "memory": {
-    "free_pct": 44,
+    "free_pct": 58,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 90,
+    "root_free_gb": 89,
     "runner_work_free_gb": 89
   },
   "thermal": {
@@ -21,7 +21,7 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 3,
+    "worker_count": 2,
     "current": [
       {
         "runner_name": "actions-runner-ci-box-sp-heavy",
@@ -41,20 +41,11 @@
         "head_ref": "",
         "event_name": "push",
         "started_at": "2026-11-27T08:29:25Z"
-      },
-      {
-        "runner_name": "actions-runner-ci-box-fork-light",
-        "job": "unit-tests",
-        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-        "workflow": "CI",
-        "head_ref": "",
-        "event_name": "push",
-        "started_at": "2026-11-27T08:29:28Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 171,
+    "latency_ms": 110,
     "reachable": true
   },
   "netspeed": {
