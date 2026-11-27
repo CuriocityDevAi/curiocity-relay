@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "built_at": "2026-11-27T09:40:46.041Z",
+  "built_at": "2026-11-27T23:04:19.087Z",
   "prompts": [],
   "reports": [
     {
@@ -4586,7 +4586,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-27T09:40:45.655Z"
+      "fetched_at": "2026-11-27T23:04:18.496Z"
     },
     {
       "repo": "CuriocityDevAi/todoboss",
@@ -5818,7 +5818,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-27T09:40:45.809Z"
+      "fetched_at": "2026-11-27T23:04:18.648Z"
     },
     {
       "repo": "CuriocityDevAi/storeport",
@@ -6861,18 +6861,24 @@
             {
               "id": "cd-keypad",
               "name": "번호 입력 화면 (3·3')",
-              "summary": "결제 전/후 고객이 전화번호를 입력하는 키패드 화면과 번호 정규화·마스킹 라이브러리.",
+              "summary": "결제 전/후 고객이 전화번호를 입력하는 키패드 화면과 번호 정규화·마스킹 라이브러리. M0-1127-M — 결제 후 키패드-after 카운트다운(입력 전 20초 · 마지막 5초 warn · 0 → 서버 skip · 숫자 입력 중 숨김 · 마지막 입력 뒤 30초 idle 이면 마지막 5초 재등장) + 결제 완료 C안 \"N 포인트 받기 →\" CTA (ReceiptScreen 은 cd-checkout 에 공유 등록) + 손님 화면 머리 `#N`(pos_order_num) 하나.",
               "files": [
                 "apps/customer-display/app/keypad.tsx",
                 "apps/customer-display/app/keypad-after.tsx",
                 "apps/customer-display/src/screens/KeypadScreen.tsx",
                 "apps/customer-display/src/screens/KeypadAfterScreen.tsx",
+                "apps/customer-display/src/lib/keypad-countdown.ts",
+                "apps/customer-display/src/lib/__tests__/keypad-countdown.test.ts",
+                "apps/customer-display/src/lib/receipt-earned-points.ts",
+                "apps/customer-display/src/lib/__tests__/receipt-earned-points.test.ts",
                 "apps/customer-display/src/lib/phone-id.ts",
                 "apps/customer-display/src/lib/__tests__/phone-id.test.ts",
                 "apps/customer-display/src/lib/snapshot-api.ts",
-                "apps/customer-display/src/lib/__tests__/skip-patch.test.ts"
+                "apps/customer-display/src/lib/__tests__/skip-patch.test.ts",
+                "apps/customer-display/e2e/m0-1127-m-countdown-cta.spec.ts",
+                "apps/customer-display/e2e/m0-1127-m-screenshots.spec.ts"
               ],
-              "status": "planned"
+              "status": "live"
             },
             {
               "id": "cd-sync-flow",
@@ -6957,7 +6963,7 @@
           ]
         }
       ],
-      "fetched_at": "2026-11-27T09:40:46.041Z"
+      "fetched_at": "2026-11-27T23:04:19.086Z"
     }
   ],
   "rollup": {
