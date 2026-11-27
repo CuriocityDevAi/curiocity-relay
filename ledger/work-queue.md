@@ -16,6 +16,7 @@
 | 5.5 | **방법론 v2.0** — 뼈대 ✅ · HISTORY ✅(method#1) · 01~09 본문 ✅(M2-1127-B · method#2 머지 06:1x) · MP-013 06·09 반영 ✅ · 남음: 6~10월 기록 보충 · 오케 메모리 규칙 이전(R8) · 04-artifacts/templates 나머지 | 오케 | 대부분 완료 | Kyu 05:27 go |
 | 5.7 | 🔴 ci-watch 진행 중 9단계 띠 복구 — relay#61 **머지 ✅**(R0 APPROVE · v1.18 · db875de) → **Kyu 실화면 확인** · 후속 = **M0-1127-B 발부**(머지된 PR 거짓 빨강 · 줄 제목 출처 · 리포 목록 설정화 · v1.19) | Kyu · M0 | 실기 + 진행 | — |
 | 6 | spec-guard 보강 — ② 실서버 e2e: M1-1127-B 부분 착지(아이맥 하네스 전부 초록 · storeport#469 ci-mirror · Case 1 은 셀렉터 불일치로 red) → **M1-1127-C 발부**(Case 1 초록 + mutation 빨강) ③ 자동 대조: fork#282 R0 APPROVE 이나 **Lint ❌** → **M3-1127-B 발부** | M1 · M3 | 진행 | storeport#469 리뷰는 #281 초록 뒤 묶어서 |
+| 6.4 | 손님 화면(CD) spec drift check 자동화(재고표 + 자동 대조) = **M2-1127-C 발부** — POS 쪽(M3-1127-A)의 CD 판 | M2 | 진행 | Kyu 08:28 "계속 자동 작업" · decision-watch-until-off-20261127 |
 | 6.5 | 러너 gh-watchdog 이 꺼 둔 맥북 CI 러너 3개를 35초마다 재시작 시도(실패 로그 반복) → 설정에서 맥북 러너 제외 · 러너 heartbeat push 연속 실패 8분(05:45~05:53 · 경쟁 push) = relay#60 로 완화 | 오케 → M2 | 허브 착지 뒤 | 11-27 러너 로그 직접 확인 |
 | 6.6 | 오케 러너 로그 직접 접근(~/.hub-runner) — 연결 · 결정 파일 · 방법론(HISTORY · MP-013 · 06 · 09) 전부 ✅ | 오케 | ✅ 완료 | Kyu 05:59 |
 | 7 | POS fork 자체 #N 카운터 PATCH 제거 | M3 | 후순위 | 선택 |
