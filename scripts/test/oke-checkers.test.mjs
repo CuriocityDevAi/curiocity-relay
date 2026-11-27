@@ -1,4 +1,4 @@
-// scripts/test/oke-checkers.test.mjs  M2-1127-G — check-queue-prompt · merge-gate · check-report 단위 테스트
+// scripts/test/oke-checkers.test.mjs  M2-1127-I — check-queue-prompt · merge-gate · check-report 단위 테스트
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -95,19 +95,65 @@ test('MG-2: fixture FAIL — in_progress 1개', () => {
   assert.match(stdout, /진행 중/);
 });
 
-test('MG-3: fixture FAIL — ci.yml 미실행', () => {
+test('MG-3: fixture FAIL — 주 워크플로 run 없음', () => {
+  // CI_WORKFLOWS 에 등록된 storeport 리포 사용 — workflowRuns 비어있으면 FAIL
   const { exitCode, stdout } = runScript(MG, [
-    '--repo', 'owner/repo',
+    '--repo', 'CuriocityDevAi/storeport',
     '--pr', '287',
     '--fixture', join(FIX, 'merge-gate-fail-no-ci.json'),
   ]);
   assert.equal(exitCode, 1);
   assert.match(stdout, /^MERGE-GATE FAIL/m);
-  assert.match(stdout, /ci\.yml|주 워크플로/);
+  assert.match(stdout, /주 워크플로/);
 });
 
-// 검증의 검증: in_progress 판정 로직을 제거하면 FAIL 케이스가 통과해야 함
-// (이 테스트는 in_progress 로직이 살아있어야만 MG-2가 FAIL임을 확인)
+test('MG-4: storeport#472 구조 — 잡 이름 ci/ci.yml 없이 workflowRun 으로 PASS', () => {
+  // 핵심: check runs 에 "ci"/"ci.yml" 이름 없어도 workflowRuns 에 ci.yml success 있으면 PASS
+  const { exitCode, stdout } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/storeport',
+    '--pr', '472',
+    '--fixture', join(FIX, 'merge-gate-pass-storeport.json'),
+  ]);
+  assert.equal(exitCode, 0, `stdout: ${stdout}`);
+  assert.match(stdout, /^MERGE-GATE PASS/m);
+});
+
+test('MG-5: 허용 목록 밖 skipped → FAIL', () => {
+  // flakey-integration 은 ALLOWED_SKIPPED 에 없으므로 skipped → FAIL
+  const { exitCode, stdout } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/storeport',
+    '--pr', '290',
+    '--fixture', join(FIX, 'merge-gate-fail-skipped.json'),
+  ]);
+  assert.equal(exitCode, 1);
+  assert.match(stdout, /^MERGE-GATE FAIL/m);
+  assert.match(stdout, /허용 목록 외|skipped/);
+});
+
+test('MG-6: check run 0 개 → FAIL', () => {
+  // CI 한 번도 실행 안 된 상태 — workflowRuns 도 없음
+  const { exitCode, stdout } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/storeport',
+    '--pr', '291',
+    '--fixture', join(FIX, 'merge-gate-fail-no-runs.json'),
+  ]);
+  assert.equal(exitCode, 1);
+  assert.match(stdout, /^MERGE-GATE FAIL/m);
+});
+
+// 검증의 검증: MG-5 의 skipped 판정 로직(Issue 2 수정)이 살아있어야만 MG-5 가 FAIL
+// 이 수정을 되돌리면(skipped → conclusion !== 'success' && conclusion !== 'skipped' 로 돌림)
+// flakey-integration(skipped) 이 ALLOWED_SKIPPED 검사를 통과해 MG-5 가 PASS 되어버림
+test('MG-skipped-검증: 허용 목록 밖 skipped 판정 로직 필수 확인', () => {
+  const { exitCode } = runScript(MG, [
+    '--repo', 'CuriocityDevAi/storeport',
+    '--pr', '290',
+    '--fixture', join(FIX, 'merge-gate-fail-skipped.json'),
+  ]);
+  // skipped 판정이 올바르면 exitCode=1; 로직 되돌리면 PASS 되어 이 테스트가 빨강
+  assert.equal(exitCode, 1, 'skipped 허용 목록 판정 로직이 제거되면 이 테스트가 실패함 — 검증의 검증');
+});
+
 test('MG-검증: in_progress fixture 가 PASS 되지 않음(로직 필수 확인)', () => {
   const { exitCode } = runScript(MG, [
     '--repo', 'owner/repo',
