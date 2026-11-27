@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T03:12:43.295Z",
+  "at": "2026-11-27T03:15:09.939Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -47,11 +47,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 14.95,
+    "used_gb": 15.84,
     "compressed_gb": 4.98,
     "swap_used_gb": 2.89,
     "pressure": "normal",
-    "at": "2026-11-27T03:12:11.535Z"
+    "at": "2026-11-27T03:14:38.265Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -59,24 +59,35 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-27T03:10:54.063Z",
+      "at": "2026-11-27T03:13:20.461Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 12,
+      "api_calls": 14,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
-        "queued": 1,
+        "queued": 2,
         "queued_prs": [
           281
         ],
-        "oldest_queued_min": 2,
+        "oldest_queued_min": 1,
         "oldest_queued_pr": "fork:#281",
-        "in_progress": []
+        "in_progress": [
+          {
+            "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+            "pr": "master",
+            "pr_display": "fork:master",
+            "job": "post",
+            "step": "Find PR number",
+            "running_min": 0,
+            "runner": "ci-box-fork-heavy-imac",
+            "kind": "mac-heavy"
+          }
+        ]
       },
       "light": {
         "queued": 0,
@@ -93,11 +104,11 @@
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 91,
-          "avg_wait_min": 2,
+          "jobs": 96,
+          "avg_wait_min": 1.9,
           "avg_run_min": 1.3,
-          "success_rate": 79.1,
-          "run_min_total": 117.89999999999999
+          "success_rate": 76,
+          "run_min_total": 121.2
         },
         "mac-light": {
           "jobs": 13,
@@ -115,20 +126,20 @@
         },
         "cloud_cost_est_usd": 0.136,
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
-        "wasted_min": 20.900000000000002
+        "wasted_min": 23.3
       },
-      "jsonl_added": 4,
+      "jsonl_added": 9,
       "alerts": [],
       "partial": true
     },
-    "took_ms": 17278,
-    "at": "2026-11-27T03:11:09.675Z"
+    "took_ms": 16681,
+    "at": "2026-11-27T03:13:35.414Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 36,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:09.521Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:09.522Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=unknown\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:09.522Z] [gh-runner-watchdog] partial skip: mac-light gh_status=unknown\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:09.523Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.221Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.240Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.253Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.253Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.272Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.273Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:heartbeat 2026-11-27T03:06:27.253Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T03:07:02.822Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:09:09.609Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:09:47.686Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m3 2026-11-27T03:10:18.928Z] 허브 멈춤 감지 · kind=api_error · id=M3-1127-B\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:10:23.159Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:self-update 2026-11-27T03:10:56.549Z] 보류 · busy=4 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:10:59.010Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-27T03:12:08.967Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T03:12:39.251Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+  "err_tail": "[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:09.522Z] [gh-runner-watchdog] partial skip: mac-light gh_status=unknown\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:09.523Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.221Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.240Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.253Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.253Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.272Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:04:10.273Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:heartbeat 2026-11-27T03:06:27.253Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T03:07:02.822Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:09:09.609Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:09:47.686Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m3 2026-11-27T03:10:18.928Z] 허브 멈춤 감지 · kind=api_error · id=M3-1127-B\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:10:23.159Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:self-update 2026-11-27T03:10:56.549Z] 보류 · busy=4 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:10:59.010Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-27T03:12:08.967Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T03:12:39.251Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:14:01.327Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:14:38.265Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty",
   "git_state": {
     "ahead": 0,
     "behind": 1,
