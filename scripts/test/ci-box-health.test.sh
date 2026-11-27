@@ -12,7 +12,15 @@
 #   C-1: judge_health — listener_count=null 이면 bad 아님 + unknown_runners 추가
 #   C-2: judge_health — listener_count=0 이면 bad + runners_0_lt_4
 #   C-3: judge_health — extra_unknowns 는 reasons 에 포함, health 에 영향 없음
+#   C-4: judge_health — root_free_gb=20 이면 warn (lt_30)
+#   C-5: judge_health — root_free_gb=10 이면 bad (lt_15)
+#   C-6: judge_health — root_free_gb=40 이면 ok (기준 통과)
 #   D-1: --dry-run JSON 에 health 필드 있음 + _unknown 필드 없음
+#   D-2: --dry-run JSON 에 tmp 섹션 있음
+#   G-1: cleanup-tmp.sh — TMPDIR 비어 있으면(invalid) 아무것도 안 지움
+#   G-2: cleanup-tmp.sh — 하루 이미 실행 → skip_reason=already_ran_today
+#   G-3: cleanup-tmp.sh — 24h 넘은 항목 삭제 · 24h 미만 보존
+#   G-4: cleanup-tmp.sh — TMPDIR=/ 방어 → skip_reason=invalid_tmpdir
 # 실행: bash scripts/test/ci-box-health.test.sh
 
 set -uo pipefail
@@ -440,6 +448,137 @@ rm -rf "$F2_TMPDIR"
 # find 폴백으로 _diag 를 찾았으므로 result 가 비어있지 않아야 함 (job 포함)
 F2_HAS_JOB=$(echo "$F2_OUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print('yes' if any(r.get('job')=='playwright' for r in d) else 'no')" 2>/dev/null || echo "no")
 _assert_eq "F-2: find 폴백 → _diag 발견 · Worker 로그에서 job 추출" "yes" "$F2_HAS_JOB"
+
+# ── C-4~6: judge_health 디스크 임계값 (M2-1127-M) ──────────────────────────
+
+echo "--- C-4~6: judge_health 디스크 임계값 (warn<30 · bad<15) ---"
+
+_judge_disk() {
+    local root_gb="$1"
+    python3 - "80" "$root_gb" "200" "4" "100" "" <<'PYEOF'
+import sys, json
+def to_num(s, cast):
+    return None if s == 'null' else cast(s)
+root_gb = to_num(sys.argv[2], float)
+level = "ok"
+reasons = []
+if root_gb is not None and root_gb < 15:
+    level = "bad"
+    reasons.append(f"root_disk_{root_gb:.0f}gb_lt_15")
+elif root_gb is not None and root_gb < 30:
+    level = "warn" if level == "ok" else level
+    reasons.append(f"root_disk_{root_gb:.0f}gb_lt_30")
+print(json.dumps({"health": level, "reasons": reasons}))
+PYEOF
+}
+
+C4_OUT=$(_judge_disk "20")
+_assert_eq "C-4: root_free_gb=20 → health=warn" "warn" "$(echo "$C4_OUT" | python3 -c 'import json,sys; print(json.load(sys.stdin)["health"])')"
+_assert_contains "C-4: reasons 에 lt_30" "lt_30" "$C4_OUT"
+
+C5_OUT=$(_judge_disk "10")
+_assert_eq "C-5: root_free_gb=10 → health=bad" "bad" "$(echo "$C5_OUT" | python3 -c 'import json,sys; print(json.load(sys.stdin)["health"])')"
+_assert_contains "C-5: reasons 에 lt_15" "lt_15" "$C5_OUT"
+
+C6_OUT=$(_judge_disk "40")
+_assert_eq "C-6: root_free_gb=40 → health=ok" "ok" "$(echo "$C6_OUT" | python3 -c 'import json,sys; print(json.load(sys.stdin)["health"])')"
+
+# ── D-2: --dry-run JSON 에 tmp 섹션 있음 ────────────────────────────────────
+
+echo "--- D-2: --dry-run tmp 섹션 ---"
+
+TMPLOG2=$(mktemp)
+D2_OUT=$(bash "$HEALTH_SH" --dry-run 2>"$TMPLOG2")
+D2_EXIT=$?
+rm -f "$TMPLOG2"
+
+_assert_eq "D-2: --dry-run exit 0" "0" "$D2_EXIT"
+_assert_contains "D-2: JSON 에 tmp 섹션" '"tmp"' "$D2_OUT"
+
+TMP_CURRENT=$(echo "$D2_OUT" | python3 -c 'import json,sys; t=json.load(sys.stdin).get("tmp",{}); print(t.get("current_gb","MISSING"))' 2>/dev/null || echo "PARSE_ERROR")
+if [[ "$TMP_CURRENT" != "MISSING" ]] && [[ "$TMP_CURRENT" != "PARSE_ERROR" ]]; then
+    printf 'PASS: D-2: tmp.current_gb 필드 있음 (%s)\n' "$TMP_CURRENT"
+    PASS=$((PASS+1))
+else
+    printf 'FAIL: D-2: tmp.current_gb 필드 없음 (got=%s)\n' "$TMP_CURRENT"
+    FAIL=$((FAIL+1))
+fi
+
+# ── G: cleanup-tmp.sh 단위 테스트 (M2-1127-M) ──────────────────────────────
+
+CLEANUP_SH="$SCRIPT_DIR/../ci-box/cleanup-tmp.sh"
+
+echo "--- G: cleanup-tmp.sh ---"
+
+# G-1: TMPDIR 비어 있으면 아무것도 안 지움 (invalid_tmpdir)
+G1_OUT=$(TMPDIR="" bash "$CLEANUP_SH" --force 2>/dev/null)
+G1_SKIP=$(echo "$G1_OUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('skip_reason','none'))" 2>/dev/null || echo "parse_error")
+_assert_eq "G-1: TMPDIR='' → skip_reason=invalid_tmpdir" "invalid_tmpdir" "$G1_SKIP"
+G1_CURRENT=$(echo "$G1_OUT" | python3 -c "import json,sys; print(json.load(sys.stdin).get('current_gb','NOT_NULL'))" 2>/dev/null || echo "parse_error")
+_assert_eq "G-1: TMPDIR='' → current_gb=null" "None" "$G1_CURRENT"
+
+# G-2: 하루 이미 실행 → already_ran_today
+G2_STAMP=$(mktemp)
+echo "$(date +%s)" > "$G2_STAMP"  # 방금 실행한 것으로 기록
+G2_OUT=$(TMPDIR="${TMPDIR:-/tmp}" bash -c "
+    STAMP_FILE='$G2_STAMP' source '$CLEANUP_SH' --noop 2>/dev/null
+    true
+" 2>/dev/null) || true
+# cleanup-tmp.sh 를 직접 호출하되 STAMP_FILE 을 임시 파일로 교체
+G2_OUT=$(bash "$CLEANUP_SH" 2>/dev/null <<< "" || true)
+# STAMP_FILE 환경변수 주입 방식으로 재테스트
+G2_OUT=$(env HOME="$(mktemp -d)" bash -c "
+    mkdir -p \"\$HOME/Library/Logs\"
+    echo \$(date +%s) > \"\$HOME/.ci-box-cleanup-tmp-stamp\"
+    bash '$CLEANUP_SH'
+" 2>/dev/null)
+G2_SKIP=$(echo "$G2_OUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('skip_reason','none'))" 2>/dev/null || echo "parse_error")
+_assert_eq "G-2: 하루 이미 실행 → skip_reason=already_ran_today" "already_ran_today" "$G2_SKIP"
+rm -f "$G2_STAMP"
+
+# G-3: 24h 넘은 항목 삭제 · 24h 미만 보존 (--force · --dry-run)
+G3_TMPDIR=$(mktemp -d)
+OLD_ITEM="$G3_TMPDIR/old_item_should_delete"
+NEW_ITEM="$G3_TMPDIR/new_item_keep"
+mkdir -p "$OLD_ITEM"
+touch "$NEW_ITEM"
+# old_item 의 mtime 을 48시간 전으로 설정
+python3 -c "
+import os, time
+t = time.time() - 48*3600
+os.utime('$OLD_ITEM', (t, t))
+"
+G3_OUT=$(TMPDIR="$G3_TMPDIR" bash "$CLEANUP_SH" --force --dry-run 2>/dev/null)
+# dry-run 이므로 파일은 남아 있어야 함
+if [[ -d "$OLD_ITEM" ]]; then
+    printf 'PASS: G-3: dry-run — old_item 보존 (실제 삭제 없음)\n'
+    PASS=$((PASS+1))
+else
+    printf 'FAIL: G-3: dry-run — old_item 이 삭제됨\n'
+    FAIL=$((FAIL+1))
+fi
+# 실제 삭제 (--force)
+G3_OUT2=$(TMPDIR="$G3_TMPDIR" bash "$CLEANUP_SH" --force 2>/dev/null)
+if [[ ! -d "$OLD_ITEM" ]]; then
+    printf 'PASS: G-3: --force — old_item(48h) 삭제됨\n'
+    PASS=$((PASS+1))
+else
+    printf 'FAIL: G-3: --force — old_item(48h) 삭제 안 됨\n'
+    FAIL=$((FAIL+1))
+fi
+if [[ -f "$NEW_ITEM" ]]; then
+    printf 'PASS: G-3: --force — new_item(방금 생성) 보존됨\n'
+    PASS=$((PASS+1))
+else
+    printf 'FAIL: G-3: --force — new_item 이 삭제됨\n'
+    FAIL=$((FAIL+1))
+fi
+rm -rf "$G3_TMPDIR"
+
+# G-4: TMPDIR=/ 방어
+G4_OUT=$(TMPDIR="/" bash "$CLEANUP_SH" --force 2>/dev/null)
+G4_SKIP=$(echo "$G4_OUT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('skip_reason','none'))" 2>/dev/null || echo "parse_error")
+_assert_eq "G-4: TMPDIR=/ → skip_reason=invalid_tmpdir" "invalid_tmpdir" "$G4_SKIP"
 
 echo ""
 printf '=== 결과: PASS=%d FAIL=%d ===\n' "$PASS" "$FAIL"

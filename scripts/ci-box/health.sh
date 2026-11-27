@@ -364,6 +364,23 @@ print(json.dumps(result))
 PYEOF
 }
 
+# ── W10: TMPDIR 정리 (하루 1회 · M2-1127-M) ──────────────────────────────────
+
+collect_tmp() {
+    local cleanup_sh
+    cleanup_sh="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/cleanup-tmp.sh"
+
+    if [[ ! -f "$cleanup_sh" ]]; then
+        _log "WARN: cleanup-tmp.sh 없음: $cleanup_sh"
+        printf '{"current_gb":null,"freed_gb":null,"cleanup_at":null,"ran_this_tick":false}'
+        return
+    fi
+
+    local result
+    result=$(bash "$cleanup_sh" 2>/dev/null) || result='{"current_gb":null,"freed_gb":null,"cleanup_at":null,"ran_this_tick":false}'
+    echo "$result"
+}
+
 # ── 판정 ──────────────────────────────────────────────────────────────────────
 
 judge_health() {
@@ -394,10 +411,13 @@ if mem_pct is not None and mem_pct < 15:
     level = "warn" if level == "ok" else level
     reasons.append(f"memory_free_{int(mem_pct)}pct_lt_15")
 
-# 디스크 / <10GB → bad
-if root_gb is not None and root_gb < 10:
+# 디스크 / <15GB → bad, <30GB → warn (M2-1127-M 임계값 강화)
+if root_gb is not None and root_gb < 15:
     level = "bad"
-    reasons.append(f"root_disk_{root_gb:.0f}gb_lt_10")
+    reasons.append(f"root_disk_{root_gb:.0f}gb_lt_15")
+elif root_gb is not None and root_gb < 30:
+    level = "warn" if level == "ok" else level
+    reasons.append(f"root_disk_{root_gb:.0f}gb_lt_30")
 
 # 러너 _work 디스크 <10GB → bad
 if runner_gb is not None and runner_gb < 10:
@@ -495,7 +515,7 @@ push_to_relay() {
 main() {
     _log "=== ci-box health 수집 시작 (dry_run=$DRY_RUN) ==="
 
-    local ts uptime_j memory_j disk_j thermal_j runners_j github_j netspeed_j postgres_j tailscale_j health_j
+    local ts uptime_j memory_j disk_j thermal_j runners_j github_j netspeed_j postgres_j tailscale_j health_j tmp_j
     ts=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
     _log "uptime/load..."
@@ -518,6 +538,8 @@ main() {
     tailscale_j=$(collect_tailscale)
     _log "running jobs (Worker 로그)..."
     running_jobs_j=$(collect_running_jobs)
+    _log "tmp cleanup (하루 1회)..."
+    tmp_j=$(collect_tmp)
 
     # 판정용 값 추출 (null 이면 "null" 문자열)
     local mem_free_pct root_free_gb runner_free_gb listener_count github_latency_ms extra_unknowns
@@ -550,7 +572,7 @@ PYEOF
     json=$(python3 - \
         "$ts" "$uptime_j" "$memory_j" "$disk_j" "$thermal_j" \
         "$runners_j" "$github_j" "$netspeed_j" "$postgres_j" "$tailscale_j" "$health_j" \
-        "$running_jobs_j" <<'PYEOF'
+        "$running_jobs_j" "$tmp_j" <<'PYEOF'
 import json, sys
 def clean(d):
     if isinstance(d, dict):
@@ -574,6 +596,16 @@ try:
     out["runners"]["current"] = json.loads(sys.argv[12])
 except Exception:
     out["runners"]["current"] = []
+# W10: tmp — TMPDIR 정리 통계
+try:
+    tmp_raw = json.loads(sys.argv[13])
+    out["tmp"] = {
+        "current_gb":  tmp_raw.get("current_gb"),
+        "freed_gb":    tmp_raw.get("freed_gb"),
+        "cleanup_at":  tmp_raw.get("cleanup_at"),
+    }
+except Exception:
+    out["tmp"] = {"current_gb": None, "freed_gb": None, "cleanup_at": None}
 print(json.dumps(out, indent=2))
 PYEOF
     )
