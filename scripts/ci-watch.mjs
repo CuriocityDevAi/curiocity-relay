@@ -6,7 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 //
 // !! ci-watch 를 바꾸는 모든 프롬프트는 CI_WATCH_VERSION 을 올릴 것.
-// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입) · 1.10 M2-1126-F(W1~W4) · 1.11 M2-1126-G(W5~W9) · 1.12 M2-1126-I(W9경로·W2보완·W10) · 1.13 M2-1126-L(cancel-on-close마커·OFF표시·4줄기계별집계) · 1.14 M2-1126-N(heavy-cloud fork-only 마커) · 1.15 M2-1126-Q(전체=세줄합·클라우드 top/bottom 단일 소스·iMAC 쉼 판정·⚠집계불일치 가드) · 1.16 M2-1126-S(넘김 폐지 · 클라우드 >0 빨간 경고 · iMac heartbeat 끊김 상단 경보) · 1.17 번호는 예약만 되고 미사용 · 1.18 M0-1127-A(진행 중 9단계 띠 복구 · err_tail [build-hubs] 필터 · 주의 섹션을 countdown 위로) · 1.19 M0-1127-B(미등록 리포 거짓 경보 · 줄 제목 첫 줄 괄호 요지) · 1.20 M2-1126-T/M0-1127-D(all.json·mem-log → status-wt) · 1.21 M2-1127-F(iMac HB 문턱 12분·origin ts 보정·WIB 경보 시각) · 1.22 M3-1127-F(all.json 두 위치 폴백 · 최신 at 선택) · 1.23 M0-1127-F(리포별 main 최신 CI 실패·시작실패·미실행 경보 · 주 워크플로: storeport ci.yml · fork CI·Lint · 기존 GH 캐시 주기에 얹음) · 1.24 M0-1127-H(fork 리포 owner CuriocityDevAi · 브랜치 master · runner-config.json 오버라이드 · docs-only paths_ignore 커밋 no_run 거짓 경보 억제) · 1.25 M0-1127-I(본체 readAllJson 도 sources-local 의 두 위치 폴백 재사용 — 러너 v8.2 legacy / v8.3 status-wt 혼재 대응 · 머리 runner·heartbeat / 허브 큐 / CI 큐 복구)
+// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입) · 1.10 M2-1126-F(W1~W4) · 1.11 M2-1126-G(W5~W9) · 1.12 M2-1126-I(W9경로·W2보완·W10) · 1.13 M2-1126-L(cancel-on-close마커·OFF표시·4줄기계별집계) · 1.14 M2-1126-N(heavy-cloud fork-only 마커) · 1.15 M2-1126-Q(전체=세줄합·클라우드 top/bottom 단일 소스·iMAC 쉼 판정·⚠집계불일치 가드) · 1.16 M2-1126-S(넘김 폐지 · 클라우드 >0 빨간 경고 · iMac heartbeat 끊김 상단 경보) · 1.17 번호는 예약만 되고 미사용 · 1.18 M0-1127-A(진행 중 9단계 띠 복구 · err_tail [build-hubs] 필터 · 주의 섹션을 countdown 위로) · 1.19 M0-1127-B(미등록 리포 거짓 경보 · 줄 제목 첫 줄 괄호 요지) · 1.20 M2-1126-T/M0-1127-D(all.json·mem-log → status-wt) · 1.21 M2-1127-F(iMac HB 문턱 12분·origin ts 보정·WIB 경보 시각) · 1.22 M3-1127-F(all.json 두 위치 폴백 · 최신 at 선택) · 1.23 M0-1127-F(리포별 main 최신 CI 실패·시작실패·미실행 경보 · 주 워크플로: storeport ci.yml · fork CI·Lint · 기존 GH 캐시 주기에 얹음) · 1.24 M0-1127-H(fork 리포 owner CuriocityDevAi · 브랜치 master · runner-config.json 오버라이드 · docs-only paths_ignore 커밋 no_run 거짓 경보 억제) · 1.25 M0-1127-I(본체 readAllJson 도 sources-local 의 두 위치 폴백 재사용 — 러너 v8.2 legacy / v8.3 status-wt 혼재 대응 · 머리 runner·heartbeat / 허브 큐 / CI 큐 복구) · 1.26 M0-1127-K(CW-HEAD 진행/주의/오늘 세 숫자가 대응 섹션과 같은 출처임을 보존 테스트로 못박음 · 코드 변경 없음 · ci-watch-w126.test.mjs)
 
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -40,7 +40,7 @@ import { buildExtendedView } from './watch/collect-view.mjs';
 // v1.25(M0-1127-I): 본체 readAllJson 도 sources-local 의 두 위치 폴백을 그대로 재사용.
 import { readAllJson as readAllJsonFromSources } from './watch/sources-local.mjs';
 
-const CI_WATCH_VERSION = '1.25';
+const CI_WATCH_VERSION = '1.26';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
