@@ -1,10 +1,10 @@
 {
-  "ts": "2026-11-27T03:05:38Z",
+  "ts": "2026-11-27T03:10:44Z",
   "uptime": {
-    "uptime_secs": 120821,
-    "load_1": 2.24,
-    "load_5": 2.38,
-    "load_15": 2.4
+    "uptime_secs": 121127,
+    "load_1": 6.42,
+    "load_5": 4.07,
+    "load_15": 3.07
   },
   "memory": {
     "free_pct": 57,
@@ -21,11 +21,22 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 0,
-    "current": []
+    "worker_count": 1,
+    "current": [
+      {
+        "runner_name": "actions-runner-ci-box-fork-light",
+        "job": "unit-tests",
+        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+        "workflow": "CI",
+        "head_ref": "feat/M1-1127-A-e2e-cd-pos-rehearsal",
+        "event_name": "pull_request",
+        "pr": "281",
+        "started_at": "2026-11-27T03:10:13Z"
+      }
+    ]
   },
   "github": {
-    "latency_ms": 121,
+    "latency_ms": 117,
     "reachable": true
   },
   "netspeed": {
