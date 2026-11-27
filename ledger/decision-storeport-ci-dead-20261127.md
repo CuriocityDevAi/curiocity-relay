@@ -17,7 +17,7 @@
 - [x] 원인 수정 머지(storeport#470).
 - [ ] 00:27 이후 CI 없이 머지된 storeport PR 이 있었는지 · main 최신이 전체 초록인지 확인(M2-1127-E).
 - [ ] 워크플로 문법 검사(actionlint)를 `.github/**` 를 건드리는 PR 에 별도 워크플로로(M2-1127-E) — ci.yml 이 깨져도 이 검사는 돌게.
-- [ ] ci-watch 주의 구역: 리포별 "main 최신 CI 실행이 실패·시작 실패" 경보(M0 · relay#60 머지 뒤).
+- [x] ci-watch 주의 구역: 리포별 "main 최신 CI 실행이 실패·시작 실패" 경보 — **M0-1127-F · v1.23 · `computeMainCiAlerts` + `fetchMainCiStatusAll` (storeport `ci.yml` · fork `CI`·`Lint` · 기존 GH 캐시 주기에 얹음 · 문턱 15분 · 메시지 `<리포> main CI 실패 · <commit7> · <N분 전> — 다음 PR 머지 금지` · 시작실패는 "워크플로 파일 오류 의심" 추가) · 테스트 `ci-watch-w123.test.mjs` 12건 통과**.
 - [ ] R0 규칙: "CI 미시작(not started)·pending 은 초록이 아니다 — APPROVE 하지 않는다"(다음 R0 프롬프트부터 상시).
 - [ ] 방법론 HISTORY 등재.
 
