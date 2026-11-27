@@ -34,13 +34,14 @@ export function extractHubFromId(id) {
 export function resolvePaths(repoRoot) {
   return {
     repoRoot,
-    queueRoot:   join(repoRoot, 'queue'),
-    claimsDir:   join(repoRoot, 'status', 'claims'),
-    runnersAll:  join(homedir(), '.hub-runner', 'status-wt', 'all.json'), // M2-1126-T: moved to status-wt
-    runnersDir:  join(repoRoot, 'status', 'runners'),
-    ciJsonlDir:  join(repoRoot, 'status', 'ci'),
-    pipelineDir: join(repoRoot, 'status', 'pipeline'),
-    reportsHome: join(homedir(), '.hub-runner', 'reports'),
+    queueRoot:        join(repoRoot, 'queue'),
+    claimsDir:        join(repoRoot, 'status', 'claims'),
+    runnersAll:       join(homedir(), '.hub-runner', 'status-wt', 'all.json'), // M2-1126-T: moved to status-wt
+    runnersAllLegacy: join(repoRoot, 'status', 'runners', 'all.json'),       // M3-1127-F: 구버전 러너 폴백
+    runnersDir:       join(repoRoot, 'status', 'runners'),
+    ciJsonlDir:       join(repoRoot, 'status', 'ci'),
+    pipelineDir:      join(repoRoot, 'status', 'pipeline'),
+    reportsHome:      join(homedir(), '.hub-runner', 'reports'),
   };
 }
 
@@ -61,7 +62,15 @@ function readJsonlSafe(path) {
 }
 
 export function readAllJson(paths) {
-  return safeReadJson(paths.runnersAll);
+  const a = safeReadJson(paths.runnersAll);
+  const b = safeReadJson(paths.runnersAllLegacy);
+  if (!a && !b) return null;
+  if (!a) return { ...b, _source: 'repo' };
+  if (!b) return { ...a, _source: 'status-wt' };
+  const atA = a.at ? new Date(a.at).getTime() : 0;
+  const atB = b.at ? new Date(b.at).getTime() : 0;
+  if (atB > atA) return { ...b, _source: 'repo' };
+  return { ...a, _source: 'status-wt' };
 }
 
 /**
