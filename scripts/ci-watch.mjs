@@ -6,7 +6,7 @@
 // 로컬 캐시는 ~/.hub-runner/ci-watch/ 에만 쓴다.
 //
 // !! ci-watch 를 바꾸는 모든 프롬프트는 CI_WATCH_VERSION 을 올릴 것.
-// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입) · 1.10 M2-1126-F(W1~W4) · 1.11 M2-1126-G(W5~W9) · 1.12 M2-1126-I(W9경로·W2보완·W10) · 1.13 M2-1126-L(cancel-on-close마커·OFF표시·4줄기계별집계) · 1.14 M2-1126-N(heavy-cloud fork-only 마커) · 1.15 M2-1126-Q(전체=세줄합·클라우드 top/bottom 단일 소스·iMAC 쉼 판정·⚠집계불일치 가드) · 1.16 M2-1126-S(넘김 폐지 · 클라우드 >0 빨간 경고 · iMac heartbeat 끊김 상단 경보) · 1.17 번호는 예약만 되고 미사용 · 1.18 M0-1127-A(진행 중 9단계 띠 복구 · err_tail [build-hubs] 필터 · 주의 섹션을 countdown 위로) · 1.19 M0-1127-B(미등록 리포 거짓 경보 · 줄 제목 첫 줄 괄호 요지) · 1.20 M2-1126-T/M0-1127-D(all.json·mem-log → status-wt) · 1.21 M2-1127-F(iMac HB 문턱 12분·origin ts 보정·WIB 경보 시각) · 1.22 M3-1127-F(all.json 두 위치 폴백 · 최신 at 선택)
+// 버전 이력: 1.0 최초 · 1.1 M2-1124-A · 1.2 M2-1124-C~F · 1.3 M2-1124-H+I · 1.4 M2-1124-K · 1.5 M2-1125-S · 1.6 M2-1126-A · 1.7 M2-1126-A(machines) · 1.8 M2-1126-C(table+ghost) · 1.9 M1-1126-K(renderDiff write 주입) · 1.10 M2-1126-F(W1~W4) · 1.11 M2-1126-G(W5~W9) · 1.12 M2-1126-I(W9경로·W2보완·W10) · 1.13 M2-1126-L(cancel-on-close마커·OFF표시·4줄기계별집계) · 1.14 M2-1126-N(heavy-cloud fork-only 마커) · 1.15 M2-1126-Q(전체=세줄합·클라우드 top/bottom 단일 소스·iMAC 쉼 판정·⚠집계불일치 가드) · 1.16 M2-1126-S(넘김 폐지 · 클라우드 >0 빨간 경고 · iMac heartbeat 끊김 상단 경보) · 1.17 번호는 예약만 되고 미사용 · 1.18 M0-1127-A(진행 중 9단계 띠 복구 · err_tail [build-hubs] 필터 · 주의 섹션을 countdown 위로) · 1.19 M0-1127-B(미등록 리포 거짓 경보 · 줄 제목 첫 줄 괄호 요지) · 1.20 M2-1126-T/M0-1127-D(all.json·mem-log → status-wt) · 1.21 M2-1127-F(iMac HB 문턱 12분·origin ts 보정·WIB 경보 시각) · 1.22 M3-1127-F(all.json 두 위치 폴백 · 최신 at 선택) · 1.23 M0-1127-F(리포별 main 최신 CI 실패·시작실패·미실행 경보 · 주 워크플로: storeport ci.yml · fork CI·Lint · 기존 GH 캐시 주기에 얹음)
 
 import { execFile } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -38,7 +38,7 @@ import {
 // v1.18(M0-1127-A): 진행 중 구역 = buildExtendedView().inProgress (프롬프트 카드 · 9단계 띠)
 import { buildExtendedView } from './watch/collect-view.mjs';
 
-const CI_WATCH_VERSION = '1.22';
+const CI_WATCH_VERSION = '1.23';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -66,6 +66,24 @@ const CLOUD_DAILY_LIMIT = 5;
 const CI_LAST_CACHE_MS = 120_000;             // gh run list 2분 캐시
 // heartbeat 주기 ~5분의 2배 + git pull 지연 여유 → 12분
 export const HB_STALE_MIN = 12;
+
+// 리포별 main 최신 push 뒤 CI 미실행 경보 문턱 (분)
+// 뿌리: storeport#468 이 ci.yml 0초 실패 중에 머지됨 — 아무 화면에도 안 보였음.
+export const MAIN_CI_NO_RUN_MIN = 15;
+
+// 주 워크플로 매핑 — path(`.github/workflows/<file>`) 또는 name 으로 매칭.
+// - storeport: ci.yml (단일)
+// - fork(agilo-medusa-pos-fork): CI · Lint (둘 다 통과해야 머지 가능)
+export const MAIN_CI_WORKFLOWS = {
+  'CuriocityDevAi/storeport': {
+    paths: ['.github/workflows/ci.yml'],
+    names: [],
+  },
+  'narisolutions/agilo-medusa-pos-fork': {
+    paths: ['.github/workflows/ci.yml', '.github/workflows/lint.yml'],
+    names: ['CI', 'Lint'],
+  },
+};
 
 // --- err_tail 오류 허용 목록 판정 (M2-1124-A) ---
 // 이 목록에 매칭되는 줄만 ⚠. 나머지는 정상 정보 줄.
@@ -347,7 +365,107 @@ async function fetchGhQueueAndCloud() {
 
   heavy.queued.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
   light.queued.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-  return { heavy, light, cloudInProgress };
+
+  // M0-1127-F: 리포별 main 최신 CI 상태 (실패·시작실패·미실행 경보용) — 같은 주기에 얹음
+  const mainCiStatus = await fetchMainCiStatusAll().catch(() => ({}));
+  return { heavy, light, cloudInProgress, mainCiStatus };
+}
+
+/**
+ * MAIN_CI_WORKFLOWS 에 정의된 각 리포에 대해 main 최신 커밋 + 그 커밋의 주 워크플로 run 을 반환.
+ * 반환: { [fullRepo]: { commit, commitAtMs, latestRun | null } | null }
+ *
+ * API 호출: 리포당 2회 (branches/main + actions/runs?branch=main)
+ *   - storeport + fork = 2 리포 × 2 호출 = 4 회 / 30초 주기 (M0-1127-F REQ-3)
+ */
+async function fetchMainCiStatusAll() {
+  const repos = Object.keys(MAIN_CI_WORKFLOWS);
+  const pairs = await Promise.all(
+    repos.map(r => fetchMainCiStatusForRepo(r).catch(() => null).then(v => [r, v])),
+  );
+  return Object.fromEntries(pairs);
+}
+
+async function fetchMainCiStatusForRepo(fullRepo) {
+  const cfg = MAIN_CI_WORKFLOWS[fullRepo];
+  if (!cfg) return null;
+
+  const branch = await ghApi(`repos/${fullRepo}/branches/main`).catch(() => null);
+  if (!branch?.commit?.sha) return null;
+  const commit = branch.commit.sha;
+  const commitDateIso = branch.commit.commit?.committer?.date
+    || branch.commit.commit?.author?.date
+    || null;
+  const commitAtMs = commitDateIso ? Date.parse(commitDateIso) : null;
+
+  // branch=main 의 최근 run 20건 중 ① head_sha === commit · ② cfg.paths/names 매칭
+  const runsData = await ghApi(`repos/${fullRepo}/actions/runs?branch=main&per_page=20`)
+    .catch(() => null);
+  const runs = runsData?.workflow_runs || [];
+
+  // 주 워크플로 run 필터
+  const wfPathSet = new Set((cfg.paths || []).map(p => p.toLowerCase()));
+  const wfNameSet = new Set((cfg.names || []).map(n => n.toLowerCase()));
+  const matches = runs.filter(r => {
+    const p = String(r.path || '').toLowerCase();
+    const n = String(r.name || '').toLowerCase();
+    return (p && wfPathSet.has(p)) || (n && wfNameSet.has(n));
+  });
+
+  // commit 매칭 run 선택 — 없으면 null (= 미실행 · N분 문턱으로 경보 판정)
+  // fork 처럼 복수 워크플로가 있을 때는 그중 "가장 나쁜" run 하나로 대표.
+  const commitRuns = matches.filter(r => r.head_sha === commit);
+  const chosen = chooseWorstRun(commitRuns);
+
+  return {
+    commit,
+    commitAtMs,
+    latestRun: chosen ? normalizeRun(chosen) : null,
+  };
+}
+
+function chooseWorstRun(runs) {
+  if (!runs?.length) return null;
+  // 우선순위: startup_failure > failure > timed_out > cancelled > in_progress/queued > success > neutral/skipped
+  const rank = {
+    startup_failure: 100,
+    action_required: 95,
+    failure: 90,
+    timed_out: 85,
+    cancelled: 80,
+    '': 50,
+    success: 10,
+    neutral: 5,
+    skipped: 1,
+    stale: 1,
+  };
+  let best = runs[0];
+  for (const r of runs) {
+    const rc = (r.conclusion || '').toLowerCase();
+    const bc = (best.conclusion || '').toLowerCase();
+    if ((rank[rc] ?? 50) > (rank[bc] ?? 50)) best = r;
+  }
+  return best;
+}
+
+function normalizeRun(run) {
+  const createdAtMs = run.created_at ? Date.parse(run.created_at) : null;
+  const startedAtMs = run.run_started_at ? Date.parse(run.run_started_at) : createdAtMs;
+  const updatedAtMs = run.updated_at ? Date.parse(run.updated_at) : null;
+  const durationMs = (updatedAtMs && startedAtMs) ? Math.max(0, updatedAtMs - startedAtMs) : null;
+  return {
+    name: run.name || '',
+    path: run.path || '',
+    status: run.status || '',
+    conclusion: run.conclusion || '',
+    createdAtMs,
+    startedAtMs,
+    updatedAtMs,
+    durationMs,
+    // jobs_count 는 /actions/runs 응답에 없음 — 사이즈가 0초/0잡 판단은 duration 으로 대체.
+    jobsCount: null,
+    runId: run.id || null,
+  };
 }
 
 // rate_limit 잔여량 확인 (1분 캐시)
@@ -417,6 +535,94 @@ export function computeImacHbAlerts(imacJson, nowMs, { thresholdMin = HB_STALE_M
     }];
   }
   return [];
+}
+
+/**
+ * 리포별 main 최신 push 커밋의 주 워크플로 상태 → 경보 판정 (pure 함수).
+ *
+ * 입력 statusMap: { [fullRepo]: { commit, commitAtMs, latestRun | null } }
+ *   latestRun: { conclusion, status, createdAtMs, startedAtMs, updatedAtMs, durationMs, jobsCount }
+ *
+ * 경보 조건 (M0-1127-F · ledger/decision-storeport-ci-dead-20261127.md):
+ *   1) 실패              — conclusion ∈ {failure, cancelled, timed_out}
+ *   2) 시작 실패          — conclusion === 'startup_failure' OR
+ *                          (conclusion === 'failure' AND (jobs_count === 0 OR duration < 5s))
+ *                          → "워크플로 파일 오류 의심"
+ *   3) 미실행             — latestRun === null AND push 뒤 noRunThresholdMin 경과
+ *
+ * 성공(success · neutral · skipped) · 현재 실행 중(status === 'in_progress'/'queued') → 경보 없음.
+ *
+ * @param {Object}  statusMap            리포별 상태
+ * @param {number}  nowMs                판정 기준 시각 (Date.now())
+ * @param {Object}  opts
+ * @param {number}  [opts.noRunThresholdMin]  push 뒤 CI 미실행 경보 문턱 (기본 15분)
+ * @param {boolean} [opts.detectStartFailure] 시작 실패 감지 on/off (기본 true · 테스트 검증의 검증용)
+ * @returns {Array<{type:string, msg:string}>}
+ */
+export function computeMainCiAlerts(statusMap, nowMs, {
+  noRunThresholdMin = MAIN_CI_NO_RUN_MIN,
+  detectStartFailure = true,
+} = {}) {
+  const alerts = [];
+  const entries = Object.entries(statusMap || {});
+  for (const [fullRepo, info] of entries) {
+    if (!info) continue;
+    const { commit, commitAtMs, latestRun } = info;
+    if (!commit) continue;
+    const commit7 = String(commit).slice(0, 7);
+    const repoShortName = String(fullRepo).split('/').pop();
+    const commitAgeMin = commitAtMs != null
+      ? Math.max(0, Math.round((nowMs - commitAtMs) / 60_000))
+      : null;
+    const ageText = commitAgeMin != null ? `${commitAgeMin}분 전` : '시각 모름';
+
+    if (!latestRun) {
+      if (commitAgeMin != null && commitAgeMin >= noRunThresholdMin) {
+        alerts.push({
+          type: 'main_ci_no_run',
+          msg: `${repoShortName} main CI 실행 없음 · ${commit7} · ${ageText} — 다음 PR 머지 금지`,
+        });
+      }
+      continue;
+    }
+
+    const status = String(latestRun.status || '').toLowerCase();
+    if (status === 'in_progress' || status === 'queued' || status === 'waiting' || status === 'pending') {
+      // 아직 실행 중 → 판정 보류
+      continue;
+    }
+
+    const conclusion = String(latestRun.conclusion || '').toLowerCase();
+    const durationMs = latestRun.durationMs != null ? Number(latestRun.durationMs) : null;
+    const jobsCount = latestRun.jobsCount != null ? Number(latestRun.jobsCount) : null;
+
+    const isStartFailure = detectStartFailure && (
+      conclusion === 'startup_failure'
+      || conclusion === 'action_required'
+      || (conclusion === 'failure' && (
+        jobsCount === 0
+        || (durationMs != null && durationMs >= 0 && durationMs < 5000)
+      ))
+    );
+
+    if (isStartFailure) {
+      alerts.push({
+        type: 'main_ci_start_failure',
+        msg: `${repoShortName} main CI 실패 · ${commit7} · ${ageText} · 워크플로 파일 오류 의심 — 다음 PR 머지 금지`,
+      });
+      continue;
+    }
+
+    if (conclusion === 'failure' || conclusion === 'cancelled' || conclusion === 'timed_out') {
+      alerts.push({
+        type: 'main_ci_failure',
+        msg: `${repoShortName} main CI 실패 · ${commit7} · ${ageText} — 다음 PR 머지 금지`,
+      });
+      continue;
+    }
+    // success · neutral · skipped · stale · '' → 경보 없음
+  }
+  return alerts;
 }
 
 // W9: actions-runner dir basename → { repo, role }
@@ -1308,7 +1514,10 @@ async function tick(fullMode) {
     : (localHbTs || imacOriginTs || null);
   const imacHbAlerts = computeImacHbAlerts(imacJsonForHb, Date.now(), { bestTsIso: bestHbTs });
 
-  const runnerAlerts = [...imacHbAlerts, ...rawRunnerAlerts, ...errAlerts.filter(a => !a.resolved)];
+  // M0-1127-F: 리포별 main 최신 CI 실패·시작실패·미실행 경보
+  const mainCiAlerts = computeMainCiAlerts(cachedGhData.mainCiStatus || {}, Date.now());
+
+  const runnerAlerts = [...mainCiAlerts, ...imacHbAlerts, ...rawRunnerAlerts, ...errAlerts.filter(a => !a.resolved)];
   updateRunnerAlertNotifications(runnerAlerts);
 
   // === 3. 로컬 inProgress → runState (로컬 우선) ===
