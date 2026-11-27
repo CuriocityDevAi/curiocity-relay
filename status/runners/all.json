@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T08:55:59.429Z",
+  "at": "2026-11-27T08:58:15.608Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -41,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.91,
-    "compressed_gb": 6.65,
-    "swap_used_gb": 8.86,
+    "used_gb": 15.9,
+    "compressed_gb": 6.95,
+    "swap_used_gb": 9.16,
     "pressure": "normal",
-    "at": "2026-11-27T08:55:28.185Z"
+    "at": "2026-11-27T08:57:44.347Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -53,14 +53,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-27T08:54:19.234Z",
+      "at": "2026-11-27T08:56:35.623Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 16,
+      "api_calls": 11,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -68,7 +68,7 @@
         "queued_prs": [
           479
         ],
-        "oldest_queued_min": 4,
+        "oldest_queued_min": 6,
         "oldest_queued_pr": "storeport:#479",
         "in_progress": [
           {
@@ -77,7 +77,7 @@
             "pr_display": "storeport:main",
             "job": "heavy-mac",
             "step": "Run ./.github/actions/heavy-steps",
-            "running_min": 13,
+            "running_min": 15,
             "runner": "ci-box-storeport-heavy-imac",
             "kind": "mac-heavy"
           },
@@ -85,10 +85,10 @@
             "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
             "pr": "#288",
             "pr_display": "fork:#288",
-            "job": "assertions",
-            "step": "Run actions/checkout@v4",
-            "running_min": 0,
-            "runner": "ci-box-fork-light-imac",
+            "job": "playwright",
+            "step": "Run Playwright harnesses",
+            "running_min": 1,
+            "runner": "ci-box-fork-heavy-imac",
             "kind": "mac-heavy"
           }
         ]
@@ -132,11 +132,11 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 88
       },
-      "jsonl_added": 6,
+      "jsonl_added": 0,
       "alerts": []
     },
-    "took_ms": 13825,
-    "at": "2026-11-27T08:54:31.374Z"
+    "took_ms": 9726,
+    "at": "2026-11-27T08:56:43.779Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
@@ -179,8 +179,8 @@
     },
     {
       "name": "ci-box-fork-light-imac",
-      "status": "online",
-      "busy": true
+      "status": "offline",
+      "busy": false
     },
     {
       "name": "curiocity-mac-fork",
