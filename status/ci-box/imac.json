@@ -1,13 +1,13 @@
 {
-  "ts": "2026-11-27T14:03:38Z",
+  "ts": "2026-11-27T14:10:09Z",
   "uptime": {
-    "uptime_secs": 160301,
-    "load_1": 5.07,
-    "load_5": 7.5,
-    "load_15": 7.51
+    "uptime_secs": 160692,
+    "load_1": 3.77,
+    "load_5": 7.41,
+    "load_15": 7.7
   },
   "memory": {
-    "free_pct": 58,
+    "free_pct": 61,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
@@ -24,26 +24,26 @@
     "worker_count": 1,
     "current": [
       {
-        "runner_name": "actions-runner-ci-box-sp-heavy",
-        "job": "heavy-mac",
+        "runner_name": "actions-runner-ci-box-sp-light",
+        "job": "markers-and-forbidden",
         "repo": "CuriocityDevAi/storeport",
         "workflow": "ci",
-        "head_ref": "feat/M0-1127-N-cd-correct-welcome",
+        "head_ref": "feat/M2-1127-P-receipt-printer-parity",
         "event_name": "pull_request",
-        "pr": "480",
-        "started_at": "2026-11-27T13:50:10Z"
+        "pr": "484",
+        "started_at": "2026-11-27T14:09:52Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 124,
+    "latency_ms": 154,
     "reachable": true
   },
   "netspeed": {
     "dl_mbps": 71.8,
     "ul_mbps": null,
     "rpm": null,
-    "cached": false
+    "cached": true
   },
   "postgres": {
     "alive": true
