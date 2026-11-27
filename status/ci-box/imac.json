@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-27T09:26:47Z",
+  "ts": "2026-11-27T09:31:54Z",
   "uptime": {
-    "uptime_secs": 143690,
-    "load_1": 13.23,
-    "load_5": 9.6,
-    "load_15": 9.92
+    "uptime_secs": 143997,
+    "load_1": 17.36,
+    "load_5": 18.64,
+    "load_15": 14.26
   },
   "memory": {
-    "free_pct": 47,
+    "free_pct": 58,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 87,
-    "runner_work_free_gb": 87
+    "root_free_gb": 86,
+    "runner_work_free_gb": 86
   },
   "thermal": {
     "throttled": false,
@@ -21,26 +21,17 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 3,
+    "worker_count": 2,
     "current": [
       {
         "runner_name": "actions-runner-ci-box-sp-heavy",
         "job": "heavy-mac",
         "repo": "CuriocityDevAi/storeport",
         "workflow": "ci",
-        "head_ref": "",
-        "event_name": "push",
-        "started_at": "2026-11-27T09:13:15Z"
-      },
-      {
-        "runner_name": "actions-runner-ci-box-sp-light",
-        "job": "changes-filter",
-        "repo": "CuriocityDevAi/storeport",
-        "workflow": "ci",
         "head_ref": "feat/M0-1127-M-cd-keypad-countdown",
         "event_name": "pull_request",
         "pr": "479",
-        "started_at": "2026-11-27T09:26:47Z"
+        "started_at": "2026-11-27T09:28:31Z"
       },
       {
         "runner_name": "actions-runner-ci-box-fork-heavy",
@@ -55,7 +46,7 @@
     ]
   },
   "github": {
-    "latency_ms": 142,
+    "latency_ms": 114,
     "reachable": true
   },
   "netspeed": {
