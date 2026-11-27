@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T01:29:28.646Z",
+  "at": "2026-11-27T01:30:28.956Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -21,7 +21,9 @@
       "last_activity": "2026-11-26T23:15:25.768Z"
     },
     "m2": {
-      "current": null,
+      "current": "M2-1127-C",
+      "started_at": "2026-11-27T01:30:26.072Z",
+      "model": "sonnet",
       "last_activity": "2026-11-26T22:57:22.019Z"
     },
     "m3": {
@@ -37,19 +39,19 @@
   },
   "pane_close_failures": {},
   "last_sleep_gap": {
-    "lastMs": 1234722,
-    "totalMs": 5769518,
+    "lastMs": 22255,
+    "totalMs": 5791773,
     "phase": "await-landing",
-    "at": "2026-11-27T01:23:34.885Z"
+    "at": "2026-11-27T01:30:16.873Z"
   },
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
     "used_gb": 15.84,
-    "compressed_gb": 5.02,
+    "compressed_gb": 5.42,
     "swap_used_gb": 2.95,
     "pressure": "normal",
-    "at": "2026-11-27T01:28:55.316Z"
+    "at": "2026-11-27T01:29:34.161Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -137,7 +139,7 @@
   "misplaced_reports": null,
   "isolated_reports_collected": 36,
   "branch_reports_recovered": null,
-  "err_tail": "[hub-runner-v8.3.2:self-update 2026-11-27T01:23:26.676Z] 보류 · busy=3 claimQueue=0 processing=false\n[hub-runner-v8.3.2:m0 2026-11-27T01:23:26.696Z] sleep gap 감지 1251s · 예산 보정 · 누적 4202s · phase=await-landing\n[hub-runner-v8.3.2:m3 2026-11-27T01:23:30.729Z] sleep gap 감지 1241s · 예산 보정 · 누적 5241s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-27T01:23:34.885Z] sleep gap 감지 1235s · 예산 보정 · 누적 5770s · phase=await-landing\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:23:38.995Z] [gh-runner-watchdog] GH API 실패 (CuriocityDevAi/storeport): Command failed: gh api repos/CuriocityDevAi/storeport/actions/runners\nerror connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:23:58.314Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:sleep-tracker 2026-11-27T01:24:00.982Z] sleep observed · gap=1265s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-27T01:24:01.100Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:13.432Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:13.433Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=unknown\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:13.433Z] [gh-runner-watchdog] partial skip: mac-light gh_status=unknown\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:13.466Z] [gh-runner-watchdog] wake: mac-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.Youngkyus-MacBook-Pro-M1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:13.493Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:14.114Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:14.139Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:14.139Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:heartbeat 2026-11-27T01:28:51.696Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T01:29:24.239Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+  "err_tail": "error connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:23:58.314Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:sleep-tracker 2026-11-27T01:24:00.982Z] sleep observed · gap=1265s · threshold=120s\n[hub-runner-v8.3.2:git 2026-11-27T01:24:01.100Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:13.432Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:13.433Z] [gh-runner-watchdog] partial skip: mac-heavy gh_status=unknown\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:13.433Z] [gh-runner-watchdog] partial skip: mac-light gh_status=unknown\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:13.466Z] [gh-runner-watchdog] wake: mac-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.Youngkyus-MacBook-Pro-M1\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:13.493Z] [gh-runner-watchdog] wake: mac-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-storeport.curiocity-mac-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:14.114Z] [gh-runner-watchdog] wake: fork-heavy kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:14.139Z] [gh-runner-watchdog] wake: fork-light kickstart 실패: Command failed: launchctl kickstart -k gui/502/actions.runner.CuriocityDevAi-agilo-medusa-pos-fork.curiocity-mac-fork-light\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:24:14.139Z] [gh-runner-watchdog] skip restart: no-ci-data\n[hub-runner-v8.3.2:heartbeat 2026-11-27T01:28:51.696Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T01:29:24.239Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T01:29:34.159Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m0 2026-11-27T01:30:15.749Z] sleep gap 감지 24s · 예산 보정 · 누적 4226s · phase=await-landing\n[hub-runner-v8.3.2:m3 2026-11-27T01:30:16.394Z] sleep gap 감지 23s · 예산 보정 · 누적 5264s · phase=await-landing\n[hub-runner-v8.3.2:m1 2026-11-27T01:30:16.873Z] sleep gap 감지 22s · 예산 보정 · 누적 5792s · phase=await-landing\n[hub-runner-v8.3.2:m2 2026-11-27T01:30:26.072Z] pick · M2-1127-C · model=sonnet · display=cmux-split",
   "git_state": {
     "ahead": 0,
     "behind": 1,
