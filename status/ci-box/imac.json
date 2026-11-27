@@ -1,13 +1,13 @@
 {
-  "ts": "2026-11-27T06:41:51Z",
+  "ts": "2026-11-27T06:46:57Z",
   "uptime": {
-    "uptime_secs": 133794,
-    "load_1": 6.26,
-    "load_5": 6.16,
-    "load_15": 6.47
+    "uptime_secs": 134100,
+    "load_1": 16.69,
+    "load_5": 10.43,
+    "load_15": 8.08
   },
   "memory": {
-    "free_pct": 56,
+    "free_pct": 49,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
@@ -28,21 +28,22 @@
         "job": "heavy-mac",
         "repo": "CuriocityDevAi/storeport",
         "workflow": "ci",
-        "head_ref": "",
-        "event_name": "push",
-        "started_at": "2026-11-27T06:31:51Z"
+        "head_ref": "fix/M0-1127-G-cd-active-snapshot",
+        "event_name": "pull_request",
+        "pr": "474",
+        "started_at": "2026-11-27T06:45:12Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 120,
+    "latency_ms": 126,
     "reachable": true
   },
   "netspeed": {
-    "dl_mbps": 80.3,
+    "dl_mbps": 69.1,
     "ul_mbps": null,
     "rpm": null,
-    "cached": true
+    "cached": false
   },
   "postgres": {
     "alive": true
