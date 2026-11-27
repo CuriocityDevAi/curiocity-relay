@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-27T03:24:00.029Z",
+  "at": "2026-11-27T03:26:54.513Z",
   "pid": 38979,
   "runner": "v8.3.2",
   "poll_ms": 30000,
@@ -41,11 +41,11 @@
   "kyu_folder_intrusion": null,
   "mem": {
     "total_gb": 16,
-    "used_gb": 15.21,
-    "compressed_gb": 4.45,
-    "swap_used_gb": 2.88,
+    "used_gb": 15.64,
+    "compressed_gb": 4.25,
+    "swap_used_gb": 2.86,
     "pressure": "normal",
-    "at": "2026-11-27T03:23:28.401Z"
+    "at": "2026-11-27T03:26:21.757Z"
   },
   "mem_peak_today": {
     "date": "2026-11-27",
@@ -53,14 +53,14 @@
   },
   "ci": {
     "data": {
-      "at": "2026-11-27T03:22:50.428Z",
+      "at": "2026-11-27T03:25:09.333Z",
       "repos_scanned": [
         "CuriocityDevAi/storeport",
         "CuriocityDevAi/agilo-medusa-pos-fork"
       ],
       "repos_failed": [],
       "repos_skipped": [],
-      "api_calls": 11,
+      "api_calls": 8,
       "api_budget": 40,
       "api_overflow": false,
       "heavy": {
@@ -85,18 +85,18 @@
       "cloud_today": 0,
       "today": {
         "mac-heavy": {
-          "jobs": 103,
-          "avg_wait_min": 1.8,
+          "jobs": 96,
+          "avg_wait_min": 1.9,
           "avg_run_min": 1.3,
-          "success_rate": 76.7,
-          "run_min_total": 131.5
+          "success_rate": 76,
+          "run_min_total": 121.2
         },
         "mac-light": {
-          "jobs": 15,
+          "jobs": 13,
           "avg_wait_min": 0.2,
           "avg_run_min": 0.3,
-          "success_rate": 93.3,
-          "run_min_total": 4.4
+          "success_rate": 92.3,
+          "run_min_total": 3.7
         },
         "cloud": {
           "jobs": 6,
@@ -109,17 +109,18 @@
         "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
         "wasted_min": 23.3
       },
-      "jsonl_added": 8,
-      "alerts": []
+      "jsonl_added": 0,
+      "alerts": [],
+      "partial": true
     },
-    "took_ms": 16444,
-    "at": "2026-11-27T03:23:05.088Z"
+    "took_ms": 15267,
+    "at": "2026-11-27T03:25:22.826Z"
   },
   "gh_runner_alert": null,
   "misplaced_reports": null,
   "isolated_reports_collected": 39,
   "branch_reports_recovered": null,
-  "err_tail": "[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M2-1127-C.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:20:37.211Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m0 2026-11-27T03:20:44.580Z] [report-path] M0-1127-B: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-27T03:20:49.229Z] M0-1127-B → done · runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1127-B-report.md · model=opus · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1127-B.json · {\"id\":\"M0-1127-B\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-27T03:20:50.240Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1127-B-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1127-B.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M0-1127-B.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:self-update 2026-11-27T03:21:11.438Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:21:12.667Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:21:44.225Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:22:19.896Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:22:51.393Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-27T03:23:24.693Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T03:23:57.340Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
+  "err_tail": "[claim] pushed\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:20:37.211Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:m0 2026-11-27T03:20:44.580Z] [report-path] M0-1127-B: REPORT_PATH 격리 리포트 수거·push\n[hub-runner-v8.3.2:claim 2026-11-27T03:20:49.229Z] M0-1127-B → done · runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1127-B-report.md · model=opus · 로그: /Use\n[claim] wrote /Users/kyu.lee/projects/curiocity-relay/status/claims/M0-1127-B.json · {\"id\":\"M0-1127-B\",\"hub\":\"m0\",\"state\":\"done\",\"at\":\"2026-11-27T03:20:50.240Z\",\"note\":\"runner-v8.3.2 cmux-split · 리포트 확인 m0/M0-1127-B-report.md · model=opus · 로그: /Users/kyu.lee/.hub-runner/m0/M0-1127-B.log · report_src=isolated\"}\n[build-hubs] scanned hubs (10): k0, k1, k2, m0, m1, m2, m3, n0, r0, t0\n[build-hubs] status/hubs.json rewritten (10 hubs)\n[claim] 경고: 스코프 밖 변경 2건 (건드리지 않음): status/pipeline/M0-1127-B.jsonl, events/runner-main-guard-20261126T085622Z.md\n[claim] committed\n[claim] pushed\n[hub-runner-v8.3.2:self-update 2026-11-27T03:21:11.438Z] 보류 · busy=1 claimQueue=0 processing=false\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:21:12.667Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:21:44.225Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:22:19.896Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:22:51.393Z] [gh-runner-watchdog] partial skip: mac-heavy in_progress not empty\n[hub-runner-v8.3.2:heartbeat 2026-11-27T03:23:24.693Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T03:23:57.340Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0\n[hub-runner-v8.3.2:gh-watchdog 2026-11-27T03:25:47.590Z] [gh-runner-watchdog] partial-but-safe exec 실패: mac-heavy Command failed: sh -c \"/Users/kyu.lee/actions-runner/svc.sh\" stop && \"/Users/kyu.lee/actions-runner/svc.sh\" start\n[hub-runner-v8.3.2:heartbeat 2026-11-27T03:26:21.258Z] standalone push 실패: To https://github.com/CuriocityDevAi/curiocity-relay.git\n[hub-runner-v8.3.2:git 2026-11-27T03:26:51.529Z] 자동 복구 완료 · ahead=1 · dropped=1 · reapplied=0",
   "git_state": {
     "ahead": 0,
     "behind": 1,
@@ -137,7 +138,7 @@
     {
       "name": "ci-box-storeport-light-imac",
       "status": "online",
-      "busy": true
+      "busy": false
     },
     {
       "name": "Youngkyus-MacBook-Pro-M1",
@@ -151,12 +152,12 @@
     },
     {
       "name": "ci-box-fork-heavy-imac",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
       "name": "ci-box-fork-light-imac",
-      "status": "offline",
+      "status": "online",
       "busy": false
     },
     {
