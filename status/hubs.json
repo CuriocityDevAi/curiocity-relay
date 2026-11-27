@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-27T07:31:36.420Z",
+  "built_at": "2026-11-27T07:32:21.064Z",
   "hubs": {
     "k0": {
       "state": "idle",
@@ -50,9 +50,9 @@
       "last_activity": null,
       "updated_at": "2026-11-27T07:03:57.390Z",
       "current_round": "M1-1127-G",
-      "current_state": "started",
-      "current_at": "2026-11-27T06:31:25.039Z",
-      "current_note": "runner-v8.3.2 · cmux-split · model=sonnet · source=hub-default · pane foreground=claude 확인 뒤 started · 로그 /Users/kyu.lee/.hub-runner/m1/M1-1127-G.log"
+      "current_state": "blocked",
+      "current_at": "2026-11-27T07:32:21.004Z",
+      "current_note": "timeout 60m · runner-v8.3.2 cmux-split · pane 유지 (C-c + /exit 전송) · model=sonnet · 로그: /Users/kyu.lee/.hub-runner/m1/M1-1127-G.log"
     },
     "m2": {
       "last_round": "M2-1127-J",
