@@ -28,7 +28,7 @@
 | ID | 위치 | Kyu 원문 · 승인일 | 승인된 모습 | 현재 구현 | 일치 여부 |
 |---|---|---|---|---|---|
 | `CD-CHIP-ORDERNUM` | CD 화면 구석 `#N` 칩 | 11-24 10:52 피드백 7 "Customer 화면에서도 몇번 주문 고객을 위한 화면인지 **칩 번호**가 나와줬으면해. #[번호] 형태로 … Order 번호를 칩번호로 쓰던지 해야할듯" (`decision-pos-phone-status-20261124.md:12`) + 11-24 11:03 승인 "모든 POS 화면 · 손님 화면 구석 · 영수증 맨 위 = 칩 번호 #N 하나" (`decision-pos-ui-approval-20261124.md:10`) **+ 11-26 22:13 "Square 처럼 1~99 순환"** (`decision-kyu-4q-20261126.md:6`) — 정본 [../domain/order-number.md § 2](../domain/order-number.md) | `#N` 단일 칩 · 긴 Order display_id 2중 관리 금지 · N 은 매장별 1~99 순환(진행 중 M0-1126-Q) | `storeport/apps/customer-display/app/cd-sync.tsx` (OrderChip) + mini receipt header 에 `#N` | **일치**(위치·단일성) · **1~99 순환 진행 중 M0-1126-Q** |
-| `CD-ORDER-LIST` | 우 2/3 주문내역 패널 | 11-25 17:58 "기존에 결제내역이 나오는 고객화면이 있는데, 거기에 나오는 상품 리스트와 결제금액이 너무 작아서 고객식별하기에 부족함이 있었어. 그 내용도 반영해서 **더 크게** 키워줘야해" (`decision-cd-pos-sync-design-20261125.md:11`) | 품목 32px · 합계 64px (디자인 반영본) · 우측 1/3 에 적립 예정 + [Enter phone number] 영역 | `storeport/apps/customer-display/src/components/cd-sync/` (OrderList 컴포넌트) + `cd-screen-selector.ts:83-99` `kind: 'order-list'` 분기 | **일치** |
+| `CD-ORDER-LIST` | 우 2/3 주문내역 패널 | 11-25 17:58 "기존에 결제내역이 나오는 고객화면이 있는데, 거기에 나오는 상품 리스트와 결제금액이 너무 작아서 고객식별하기에 부족함이 있었어. 그 내용도 반영해서 **더 크게** 키워줘야해" (`decision-cd-pos-sync-design-20261125.md:11`) | 품목 22px · 합계 45px (11-25 "더 크게" 반영본 32/64px 에서 **Kyu 11-26 09:00 실기 요구로 약 70% 로 조정** · M1-1126-B · 명세 갱신 11-27 — M2-1127-C 대조에서 발견) · 우측 1/3 에 적립 예정 + [Enter phone number] 영역 | `storeport/apps/customer-display/src/components/cd-sync/` (OrderList 컴포넌트) + `cd-screen-selector.ts:83-99` `kind: 'order-list'` 분기 | **일치** |
 | `CD-ENTER-PHONE-BTN` | CD 주문내역 우측 또는 QRIS 큰 QR 옆 | 11-25 17:45 결정 4 "QRIS: 번호 흐름 중 좌 1/3 에 QR, 결제 완료 시 그 자리가 영수증 — OK" · 11-26 15:40 V4-4 "QRIS 결제 중에도 번호 입력 버튼 활성" (`decision-cd-pos-sync-v4-20261126.md:9`) | 버튼 `Enter phone number` · 활성 조건 = `payment_phase = tendering` · method = qris 포함 (v4) · 누르면 `start_entry` → CD 는 키패드로 전환 | `storeport/apps/customer-display/src/lib/cd-screen-selector.ts:80,99,105-108` `enterPhoneEnabled` 분기 · qris-full + order-list 두 분기에서 각각 true | **일치** |
 | `CD-QRIS-QR` | tendering + method=qris + flow=none | 11-25 17:45 결정 4 · 11-26 V4-4 "QRIS 결제 중 CD 에 QR 미표시" 재확정 (`decision-cd-pos-sync-v4-20261126.md:V4-4`) | **큰 QR** + 금액 + 작은 장바구니 + [Enter phone number] (M0-1126-H · V4-4) · qr_string 없으면 placeholder `Preparing…` | `storeport/apps/customer-display/src/lib/cd-screen-selector.ts:66-78` `kind: 'qris-full'` 분기 + `LeftPaymentPanel.tsx:129-178` (left-qris · left-qris-amount) | **일치** |
 | `CD-KEYPAD` | 우 2/3 · state=entering | 11-25 17:23 핵심 화면 "2. 전화번호 입력화면" (`decision-cd-pos-sync-flow-20261125.md:10`) + flow table | 10 키 + Del + OK + Skip 버튼 · 실시간 phone_partial 서버 전송(계약서 §1 v1.3) | `storeport/apps/customer-display/src/components/cd-sync/KeypadPanel.tsx:92,101,126,140,154,167,191` (testID: `keypad-panel` · `phone-display` · `key-N` · `del-button` · `ok-button` · `skip-button`) | **일치** |
@@ -85,3 +85,10 @@
 | `CD-LEFT-SCREEN-NAME` | tendering + flow + cash/card → `left-screen-name` | `apps/customer-display/e2e/cd-sync-flow.spec.ts` 부분 |
 | `CD-LEFT-REMAINING` | is_split + flow 활성 → `left-remaining` + `left-remaining-amount` | 없음 |
 | `CD-STATE-FROM-SNAPSHOT` | 선택기 순수 함수 + production 입력 조건 통합 어설션(= 서버 derive 변경이 UI 를 조용히 바꾸는 것을 막는 테스트) | **없음** (보존 테스트 항목 — 다음 라운드 추가 예정) |
+
+## 대조에서 나온 것 (11-27 · M2-1127-C · storeport#470)
+
+| 요소 | 상태 | 메모 |
+|---|---|---|
+| `CD-WAITING` (대기 화면 · `waiting-panel`) | 구현에 있음 · **명세에 없었음** | 페어링 전·주문 없을 때의 대기 Splash. 승인 기록 미확인 — Kyu 실기 때 모습 확인 후 요소로 등재 |
+| `CD-CHIP-ORDERNUM` | **어긋남 의심** | 명세 = 우측 상단 `#N`(1~99) 칩 · M2 보고 = `Order #{display_id}` 텍스트(예 1042). storeport#467(CD #N) 머지 뒤인데도 그런지 R0-1127-B 가 main 에서 확인 |
