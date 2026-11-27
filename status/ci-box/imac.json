@@ -1,13 +1,13 @@
 {
-  "ts": "2026-11-27T08:35:08Z",
+  "ts": "2026-11-27T08:40:15Z",
   "uptime": {
-    "uptime_secs": 140591,
-    "load_1": 6.85,
-    "load_5": 8.57,
-    "load_15": 8.42
+    "uptime_secs": 140898,
+    "load_1": 3.28,
+    "load_5": 5.47,
+    "load_15": 7.04
   },
   "memory": {
-    "free_pct": 58,
+    "free_pct": 62,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
@@ -25,27 +25,26 @@
     "current": [
       {
         "runner_name": "actions-runner-ci-box-sp-heavy",
-        "job": "heavy-mac",
+        "job": "mirror main \u2192 $HOME/ci-mirror/storeport",
         "repo": "CuriocityDevAi/storeport",
-        "workflow": "ci",
-        "head_ref": "fix/M0-1127-L-late-phone-entry",
-        "event_name": "pull_request",
-        "pr": "478",
-        "started_at": "2026-11-27T08:23:08Z"
-      },
-      {
-        "runner_name": "actions-runner-ci-box-fork-heavy",
-        "job": "playwright",
-        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-        "workflow": "CI",
+        "workflow": "ci-mirror-main",
         "head_ref": "",
         "event_name": "push",
-        "started_at": "2026-11-27T08:29:25Z"
+        "started_at": "2026-11-27T08:40:12Z"
+      },
+      {
+        "runner_name": "actions-runner-ci-box-sp-light",
+        "job": "route",
+        "repo": "CuriocityDevAi/storeport",
+        "workflow": "ci",
+        "head_ref": "",
+        "event_name": "push",
+        "started_at": "2026-11-27T08:40:13Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 110,
+    "latency_ms": 117,
     "reachable": true
   },
   "netspeed": {
