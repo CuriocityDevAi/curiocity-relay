@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts/hub-runner-v8.3.mjs · M1-1125-G · v8.3.6 · M2-1126-T: all.json·mem-log status-wt 분리 (Kyu 폴더 git pull 보호). · M2-1127-L: events/ 스코프 추가 · main-guard events 즉시 커밋+push · M2-1127-O: 자기 파일 판정(status/runners/ 복구) · ci-health push 재시도 · M1-1128-E: 사용량 한도 화면 즉시 감지 → blocked + runner-pause.json
+// scripts/hub-runner-v8.3.mjs · M1-1125-G · v8.3.7 · M2-1126-T: all.json·mem-log status-wt 분리 (Kyu 폴더 git pull 보호). · M2-1127-L: events/ 스코프 추가 · main-guard events 즉시 커밋+push · M2-1127-O: 자기 파일 판정(status/runners/ 복구) · ci-health push 재시도 · M1-1128-E: 사용량 한도 화면 즉시 감지 → blocked + runner-pause.json · M1-1128-F: resets_at ISO 변환 · AND 감지
 //
 // v8.2 과의 차이 (M1-1125-B·C · 5건):
 //   ① **landing 오탐 수정**: land-detect-v2.mjs 에 isPaneIdle / headTouchesReport 콜백 주입.
@@ -183,7 +183,7 @@ const SIGKILL_GRACE_MS = 5 * 1000;
 const CMUX_WAIT_MS = 10 * 60 * 1000;
 const DEFAULT_CLAUDE_BIN = '/Users/kyu.lee/.local/bin/claude';
 // M1-1105-BA(d): all.json 러너 버전 표기 버그 — 한 곳에서만 관리.
-const RUNNER_VERSION = 'v8.3.6';
+const RUNNER_VERSION = 'v8.3.7';
 // M1-1124-H: 자기 업데이트 기본값 — runner-config.selfUpdate 로 덮어쓸 수 있다.
 // M1-1125-C: prev 부재 시 되돌릴 안전판 버전.
 const SELF_UPDATE_FALLBACK_RUNNER = 'hub-runner-v8.2.mjs';
@@ -2640,6 +2640,7 @@ function clearClaudeFgRetry(id) {
 }
 
 // M1-1128-E: 사용량 한도 화면 감지 함수는 lib/usage-limit.mjs 에서 import.
+// M1-1128-F: resets_at → ISO, resets_text → 원문 보존.
 
 function writeRunnerPauseFile({ resetsText, resetsAt }) {
   // resets_at: ISO string (자동 해제용) · resets_text: 원문 보존
