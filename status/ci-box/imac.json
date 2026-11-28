@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-28T00:47:23Z",
+  "ts": "2026-11-28T00:53:32Z",
   "uptime": {
-    "uptime_secs": 198926,
-    "load_1": 2.26,
-    "load_5": 2.4,
-    "load_15": 2.01
+    "uptime_secs": 199295,
+    "load_1": 3.08,
+    "load_5": 2.71,
+    "load_15": 2.26
   },
   "memory": {
-    "free_pct": 59,
+    "free_pct": 48,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 88,
-    "runner_work_free_gb": 88
+    "root_free_gb": 89,
+    "runner_work_free_gb": 89
   },
   "thermal": {
     "throttled": false,
@@ -21,11 +21,31 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 0,
-    "current": []
+    "worker_count": 2,
+    "current": [
+      {
+        "runner_name": "actions-runner-ci-box-fork-heavy",
+        "job": "playwright",
+        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+        "workflow": "CI",
+        "head_ref": "fix/M3-1128-C-order-refunded-toast",
+        "event_name": "pull_request",
+        "pr": "298",
+        "started_at": "2026-11-28T00:51:02Z"
+      },
+      {
+        "runner_name": "actions-runner-ci-box-fork-light",
+        "job": "route",
+        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+        "workflow": "Lint",
+        "head_ref": "",
+        "event_name": "push",
+        "started_at": "2026-11-28T00:53:27Z"
+      }
+    ]
   },
   "github": {
-    "latency_ms": 163,
+    "latency_ms": 118,
     "reachable": true
   },
   "netspeed": {
