@@ -2641,12 +2641,13 @@ function clearClaudeFgRetry(id) {
 
 // M1-1128-E: 사용량 한도 화면 감지 함수는 lib/usage-limit.mjs 에서 import.
 
-function writeRunnerPauseFile(resetsText) {
-  const obj = { reason: 'usage-limit', resets_at: resetsText, since: new Date().toISOString() };
+function writeRunnerPauseFile({ resetsText, resetsAt }) {
+  // resets_at: ISO string (자동 해제용) · resets_text: 원문 보존
+  const obj = { reason: 'usage-limit', resets_at: resetsAt ?? null, resets_text: resetsText, since: new Date().toISOString() };
   try { writeFileSync(RUNNER_PAUSE_PATH, JSON.stringify(obj, null, 2) + '\n', 'utf8'); } catch { /* noop */ }
   try {
     git(['add', 'status/runner-pause.json']);
-    git(['commit', '-m', `chore(runner-${RUNNER_VERSION}): usage-limit pause · resets=${resetsText}`]);
+    git(['commit', '-m', `chore(runner-${RUNNER_VERSION}): usage-limit pause · resets=${resetsAt || resetsText}`]);
     safeRunnerPush({ git: safePushCreateGit(REPO_ROOT), timeoutMs: 15_000 });
   } catch { /* noop */ }
 }
@@ -2993,8 +2994,8 @@ async function spawnClaudeForItem(item, cwd, config) {
             const paneScreenPoll = readPaneScreen(config.cmux_bin, layout, item.hub);
             const usageLimit = detectUsageLimitInScreen(paneScreenPoll || '');
             if (usageLimit && !existsSync(RUNNER_PAUSE_PATH)) {
-              appendLine(logFile, `[usage-limit] hub=${item.hub} · 화면 감지 · resets=${usageLimit.resetsText}`);
-              writeRunnerPauseFile(usageLimit.resetsText);
+              appendLine(logFile, `[usage-limit] hub=${item.hub} · 화면 감지 · resets=${usageLimit.resetsAt || usageLimit.resetsText}`);
+              writeRunnerPauseFile(usageLimit);
               try {
                 execFileSync(process.execPath, [
                   join(HERE, 'claim.mjs'), item.id, 'blocked',
@@ -3035,8 +3036,8 @@ async function spawnClaudeForItem(item, cwd, config) {
           // M1-1128-E: 최종 캡처에서도 usage-limit 감지 (timeout 직후 발생 케이스 보완).
           const ulPost = detectUsageLimitInScreen(screen);
           if (ulPost && !existsSync(RUNNER_PAUSE_PATH)) {
-            appendLine(logFile, `[usage-limit] hub=${item.hub} · post-landing 화면 감지 · resets=${ulPost.resetsText}`);
-            writeRunnerPauseFile(ulPost.resetsText);
+            appendLine(logFile, `[usage-limit] hub=${item.hub} · post-landing 화면 감지 · resets=${ulPost.resetsAt || ulPost.resetsText}`);
+            writeRunnerPauseFile(ulPost);
           }
         }
         // ② 완료 뒤 정리: pane claude → /exit → shell 복귀 (M1-1105-BC).
@@ -3123,8 +3124,8 @@ async function spawnClaudeForItem(item, cwd, config) {
         // M1-1128-E: 최종 캡처에서도 usage-limit 감지.
         const ulPost = detectUsageLimitInScreen(screen);
         if (ulPost && !existsSync(RUNNER_PAUSE_PATH)) {
-          appendLine(logFile, `[usage-limit] hub=${item.hub} · post-landing cmux-tab 화면 감지 · resets=${ulPost.resetsText}`);
-          writeRunnerPauseFile(ulPost.resetsText);
+          appendLine(logFile, `[usage-limit] hub=${item.hub} · post-landing cmux-tab 화면 감지 · resets=${ulPost.resetsAt || ulPost.resetsText}`);
+          writeRunnerPauseFile(ulPost);
         }
       }
       return { mode: 'cmux-tab', landingReason: landing.reason, timedOut: landing.timedOut, detectLatencyS: landing.detectLatencyS ?? null, workspaceRef, startedClaimed: true };
