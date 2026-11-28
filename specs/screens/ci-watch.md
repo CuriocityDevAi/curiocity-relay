@@ -22,6 +22,23 @@
 | `CW-RENDER` | 전체 | 줄바꿈 금지(터미널 폭으로 자름 · 한글 2칸) · 글자 위치 고정 · 바뀐 줄만 갱신 · 러너 로그 줄(`[claim]` · `[build-hubs]` 등)이 본 화면에 섞이면 안 됨 | Kyu 11-26 08:48 "글자 위치는 그대로 있고, 숫자만 갱신되면" · `decision-ci-watch-machines-20261126.md §6` | `ci-watch-render.mjs:1094~1102`(v1.18 M0-1127-A: `ERR_TAIL_SCREEN_FILTERS` 에 `/^\[build-hubs\]/` 추가) · err_tail 소스 = `hub-runner-v8.*.mjs collectErrTail()` 가 `~/.hub-runner/launchd.err.log` 꼬리를 읽어 `allJson.err_tail` 로 올림 → ci-watch 가 필터 미매칭 줄 2개를 회색으로 렌더 | 일치 (`[build-hubs]` 2줄 노출 뿌리 = 필터 누락 — 수정됨) |
 | `CW-VERSION` | 머리줄 | 화면을 바꾸는 모든 PR 은 버전을 올린다 — 머리줄 버전 = 실제 코드 | `scripts/ci-watch.mjs:8` 주석 규칙 | `CI_WATCH_VERSION = '1.23'` · 이력 주석 `1.18 M0-1127-A` · `1.19 M0-1127-B` · `1.20 M2-1126-T/M0-1127-D` · `1.21 M2-1127-F` · `1.22 M3-1127-F` · `1.23 M0-1127-F` | 일치 |
 
+## 웹 화면 (M2-1128-B)
+
+구현 = `scripts/ci-watch-web/server.mjs` + `scripts/ci-watch-web/index.html` · 데이터 수집 = `collectData()` (ci-watch.mjs에서 export) · 서버 = Node 내장 `http` · 바인드 = 아이맥 Tailscale IP `100.82.115.70:7700` 전용 (0.0.0.0 금지).
+
+| 항목 | 값 |
+|---|---|
+| 접속 주소 | `http://100.82.115.70:7700` |
+| 갱신 주기 | 브라우저 5초 fetch |
+| 상태 스냅샷 | `~/.ci-watch-web/state.json` |
+| launchd 서비스 | `com.curiocity.ci-watch-web` |
+| 설치 | `bash ~/projects/curiocity-relay/scripts/ci-watch-web/install.sh` |
+| 제거 | `bash ~/projects/curiocity-relay/scripts/ci-watch-web/install.sh --uninstall` |
+
+**구역 순서** = 터미널과 동일: 머리줄 → 허브 큐 → CI 큐 → 진행 중 → 오늘 완료 → 주의.
+**9단계 띠 색**: ● 완료 단계(초록) · ◐ 현재 단계(파랑) · ○ 남은 단계(회색). CSS 변수(`--stage-done` · `--stage-cur` · `--stage-todo`)로 정의.
+**폰 가로 스크롤 없음**: `max-width: 480px` 미디어 쿼리로 대응.
+
 ## 이력
 
 - 11-24 14:13 9칸 파이프라인 확정 → 11-25 M2-1125-I·J(#34) 가 **`ci-watch-v2.mjs`(`--v2`)에만** 구현.
