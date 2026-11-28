@@ -48,9 +48,9 @@ echo "  plist       : $PLIST_DST"
 # 로그 디렉토리 확인
 mkdir -p "$LOG_DIR"
 
-# plist 생성 (WEB_DIR / HOME_DIR / NODE_BIN 치환)
+# plist 생성 (RELAY_WEB_DIR / HOME_DIR / NODE_BIN 치환)
 sed \
-  -e "s|WEB_DIR|${WEB_DIR}|g" \
+  -e "s|RELAY_WEB_DIR|${WEB_DIR}|g" \
   -e "s|HOME_DIR|${HOME}|g" \
   -e "s|/usr/local/bin/node|${NODE_BIN}|g" \
   "$PLIST_SRC" > "$PLIST_DST"
