@@ -28,15 +28,13 @@ const GIT_REFRESH_MS = 30_000;
 
 async function gitRefresh() {
   if (!RELAY_DIR) return;
+  // runner-status 브랜치의 all.json(MacBook 러너 데이터)을 가져와 status-wt에 씀.
+  // git pull 불필요 — heartbeat clone 데이터 파일은 iMac 러너가 직접 씀.
   try {
-    await execFileAsync('git', ['pull', '--ff-only', '--quiet'], { cwd: RELAY_DIR, timeout: 20_000 });
-  } catch (e) {
-    console.error('[ci-watch-web] git pull 실패:', e.message);
-  }
-  try {
-    await execFileAsync('git', ['fetch', 'origin', 'runner-status:refs/remotes/origin/runner-status', '--quiet'],
+    // FETCH_HEAD 방식: ref 충돌 없이 runner-status 최신 커밋만 가져옴.
+    await execFileAsync('git', ['fetch', 'origin', 'runner-status', '--quiet'],
       { cwd: RELAY_DIR, timeout: 20_000 });
-    const { stdout } = await execFileAsync('git', ['show', 'origin/runner-status:all.json'],
+    const { stdout } = await execFileAsync('git', ['show', 'FETCH_HEAD:all.json'],
       { cwd: RELAY_DIR, timeout: 10_000, maxBuffer: 2 * 1024 * 1024 });
     if (stdout && stdout.trim()) {
       if (!existsSync(STATUS_WT_DIR)) mkdirSync(STATUS_WT_DIR, { recursive: true });
