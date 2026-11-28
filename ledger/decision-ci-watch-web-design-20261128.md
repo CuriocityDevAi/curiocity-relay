@@ -11,3 +11,8 @@
 - 오케 캔버스 https://claude.ai/artifact/D3zcojjvd4UW82dYQAgBL6 (데스크톱 관제 화면 · 폰 축소판 → 눌러서 상세)
 - 구현 명세 정본 = queue/m2/M2-1128-D.md [화면 명세] → 착지 뒤 specs/screens/ci-watch.md CW-WEB-*
 - 같은 ui.js 로 Tailscale 웹 + 핀 artifact(relay `ci-watch-state` 브랜치 state.json 읽기 · GitHub 커넥터) 둘 다
+
+## 추가 요구 (Kyu 10:17 · 보류 — M2-1128-D 회신 뒤 발부)
+- Kyu 원문: "기존 디자인인 ci-watch의 터미널용 디자인으로도 바꿀수 있게 기존 웹에서 옵션을 넣어줘. 즉 기존 디자인을 웹이랑 아티펙트에서도 버리지 말고 전환 가능하도록 해달라는말"
+- 범위: Tailscale 웹 + 핀 artifact 둘 다 · 새 디자인 ↔ 터미널(텍스트) 디자인 전환 옵션 · 선택 기억(브라우저 저장 · 실패해도 동작)
+- 상태: 미발부 — M2-1128-D(웹 개편) 회신 받은 뒤 M2 다음 라운드에 포함
