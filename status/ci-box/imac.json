@@ -1,19 +1,19 @@
 {
-  "ts": "2026-11-28T06:28:24Z",
+  "ts": "2026-11-28T06:34:31Z",
   "uptime": {
-    "uptime_secs": 219387,
-    "load_1": 1.96,
-    "load_5": 2.84,
-    "load_15": 3.04
+    "uptime_secs": 219754,
+    "load_1": 1.93,
+    "load_5": 2.58,
+    "load_15": 2.84
   },
   "memory": {
-    "free_pct": 62,
+    "free_pct": 60,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
   "disk": {
-    "root_free_gb": 88,
-    "runner_work_free_gb": 88
+    "root_free_gb": 87,
+    "runner_work_free_gb": 87
   },
   "thermal": {
     "throttled": false,
@@ -22,28 +22,17 @@
   "runners": {
     "listener_count": 4,
     "worker_count": 1,
-    "current": [
-      {
-        "runner_name": "actions-runner-ci-box-fork-heavy",
-        "job": "playwright",
-        "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
-        "workflow": "CI",
-        "head_ref": "test/M2-1128-F-existing-customer-green",
-        "event_name": "pull_request",
-        "pr": "302",
-        "started_at": "2026-11-28T06:22:06Z"
-      }
-    ]
+    "current": []
   },
   "github": {
-    "latency_ms": 117,
+    "latency_ms": 105,
     "reachable": true
   },
   "netspeed": {
-    "dl_mbps": 20.6,
+    "dl_mbps": 74.1,
     "ul_mbps": null,
     "rpm": null,
-    "cached": true
+    "cached": false
   },
   "postgres": {
     "alive": true
