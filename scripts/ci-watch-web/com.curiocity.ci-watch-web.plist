@@ -9,11 +9,11 @@
   <key>ProgramArguments</key>
   <array>
     <string>/usr/local/bin/node</string>
-    <string>RELAY_DIR/scripts/ci-watch-web/server.mjs</string>
+    <string>HEARTBEAT_DIR/scripts/ci-watch-web/server.mjs</string>
   </array>
 
   <key>WorkingDirectory</key>
-  <string>RELAY_DIR</string>
+  <string>HEARTBEAT_DIR</string>
 
   <key>RunAtLoad</key>
   <true/>
@@ -33,6 +33,8 @@
     <string>HOME_DIR</string>
     <key>PATH</key>
     <string>/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin</string>
+    <key>CI_WATCH_RELAY_DIR</key>
+    <string>HEARTBEAT_DIR</string>
   </dict>
 </dict>
 </plist>

@@ -1,11 +1,16 @@
 #!/bin/bash
-# scripts/ci-watch-web/install.sh  M2-1128-B
+# scripts/ci-watch-web/install.sh  M2-1128-C
 # ci-watch 웹 서버를 launchd 로 등록 · 아이맥 재부팅 뒤 자동 시작 (FileVault 로그인 후)
-# Usage: bash ~/projects/curiocity-relay/scripts/ci-watch-web/install.sh [--uninstall]
+# Usage: bash ~/projects/curiocity-relay-heartbeat/scripts/ci-watch-web/install.sh [--uninstall]
+# M2-1128-C: 서버는 heartbeat clone 에서 실행 · CI_WATCH_RELAY_DIR = heartbeat clone
 
 set -euo pipefail
 
-RELAY_DIR="$HOME/projects/curiocity-relay"
+# 이 스크립트가 위치한 디렉토리 기준으로 relay 루트 자동 감지
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+RELAY_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+# heartbeat clone: 고정 경로 (ci-watch 웹 서버의 REPO_ROOT)
+HEARTBEAT_DIR="$HOME/projects/curiocity-relay-heartbeat"
 LABEL="com.curiocity.ci-watch-web"
 PLIST_SRC="$RELAY_DIR/scripts/ci-watch-web/${LABEL}.plist"
 PLIST_DST="$HOME/Library/LaunchAgents/${LABEL}.plist"
@@ -24,17 +29,24 @@ if [[ "${1:-}" == "--uninstall" ]]; then
   exit 0
 fi
 
+if [[ ! -d "$HEARTBEAT_DIR/.git" ]]; then
+  echo "[ci-watch-web] ERROR: heartbeat clone 없음 → $HEARTBEAT_DIR"
+  echo "  git clone https://github.com/CuriocityDevAi/curiocity-relay.git $HEARTBEAT_DIR 를 먼저 실행하세요"
+  exit 1
+fi
+
 echo "[ci-watch-web] 설치 중…"
-echo "  relay dir : $RELAY_DIR"
-echo "  node      : $NODE_BIN"
-echo "  plist     : $PLIST_DST"
+echo "  script from : $RELAY_DIR"
+echo "  server dir  : $HEARTBEAT_DIR (CI_WATCH_RELAY_DIR)"
+echo "  node        : $NODE_BIN"
+echo "  plist       : $PLIST_DST"
 
 # 로그 디렉토리 확인
 mkdir -p "$LOG_DIR"
 
-# plist 생성 (RELAY_DIR / HOME_DIR / NODE_BIN 치환)
+# plist 생성 (HEARTBEAT_DIR / HOME_DIR / NODE_BIN 치환)
 sed \
-  -e "s|RELAY_DIR|${RELAY_DIR}|g" \
+  -e "s|HEARTBEAT_DIR|${HEARTBEAT_DIR}|g" \
   -e "s|HOME_DIR|${HOME}|g" \
   -e "s|/usr/local/bin/node|${NODE_BIN}|g" \
   "$PLIST_SRC" > "$PLIST_DST"
@@ -52,3 +64,5 @@ echo "  로그 파일 : $LOG_DIR/ci-watch-web.log"
 echo "  오류 로그 : $LOG_DIR/ci-watch-web.err.log"
 echo ""
 echo "  제거: bash $RELAY_DIR/scripts/ci-watch-web/install.sh --uninstall"
+echo ""
+echo "  서버 소스 : $HEARTBEAT_DIR (heartbeat clone · 30초 자동 pull)"

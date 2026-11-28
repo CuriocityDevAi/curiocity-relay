@@ -40,7 +40,7 @@ import { buildExtendedView } from './watch/collect-view.mjs';
 // v1.25(M0-1127-I): 본체 readAllJson 도 sources-local 의 두 위치 폴백을 그대로 재사용.
 import { readAllJson as readAllJsonFromSources } from './watch/sources-local.mjs';
 
-const CI_WATCH_VERSION = '1.27';
+const CI_WATCH_VERSION = '1.28';
 
 const execFileAsync = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -53,9 +53,13 @@ const CI_WATCH_DEPLOY_HOME_BIN = join(homedir(), '.hub-runner', 'bin');
 const CI_WATCH_IS_DEPLOYED = process.argv[1]
   ? dirname(resolve(process.argv[1])) === CI_WATCH_DEPLOY_HOME_BIN
   : false;
-const REPO_ROOT = CI_WATCH_IS_DEPLOYED
-  ? join(homedir(), 'projects', 'curiocity-relay')
-  : resolve(HERE, '..');
+// M2-1128-C: CI_WATCH_RELAY_DIR 환경변수가 설정되면 그것을 REPO_ROOT로 사용.
+// 아이맥 웹 서버가 heartbeat clone(~/projects/curiocity-relay-heartbeat)을 가리키도록.
+const REPO_ROOT = process.env.CI_WATCH_RELAY_DIR
+  ? resolve(process.env.CI_WATCH_RELAY_DIR)
+  : CI_WATCH_IS_DEPLOYED
+    ? join(homedir(), 'projects', 'curiocity-relay')
+    : resolve(HERE, '..');
 const THIS_FILE = fileURLToPath(import.meta.url);
 // M1-1126-A: 해시 기준을 realpath 로 통일 — 심링크 경로/실제 경로 혼재 시 불일치 방지.
 const THIS_FILE_REAL = (() => { try { return realpathSync(THIS_FILE); } catch { return THIS_FILE; } })();
