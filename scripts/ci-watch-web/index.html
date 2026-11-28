@@ -5,409 +5,370 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ci-watch</title>
 <style>
+/* ── CSS 변수 ── */
 :root {
-  --bg: #0d1117;
-  --fg: #c9d1d9;
-  --dim: #6e7681;
-  --bold: #f0f6fc;
-  --green: #3fb950;
-  --yellow: #d29922;
-  --red: #f85149;
-  --cyan: #58a6ff;
-  --stage-done: #3fb950;
-  --stage-cur: #58a6ff;
-  --stage-todo: #6e7681;
-  --border: #21262d;
-  --row-hover: #161b22;
+  /* Surfaces */
+  --bg:       #0d1117;
+  --surface:  #161b22;
+  --surface-2:#21262d;
+  --border:   #30363d;
+
+  /* Text */
+  --fg:       #e6edf3;
+  --dim:      #768390;
+  --bold:     #cdd9e5;
+
+  /* Status */
+  --ok:       #3fb950;
+  --accent:   #58a6ff;
+  --warn:     #d29922;
+  --bad:      #f85149;
+
+  /* Data colors (원색 허용 · 코딩/리뷰/진단/실패) */
+  --color-coding:  #58a6ff;
+  --color-review:  #bc8cff;
+  --color-diag:    #ffa657;
+  --color-fail:    #f85149;
+  --color-idle:    #30363d;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--fg); font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 13px; line-height: 1.5; padding: 8px 12px; }
-h2 { font-size: 13px; font-weight: bold; color: var(--bold); padding: 6px 0 4px; border-bottom: 1px solid var(--border); margin-bottom: 6px; }
-.head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding: 4px 0 8px; border-bottom: 2px solid var(--border); margin-bottom: 8px; }
-.head .version { color: var(--bold); font-weight: bold; }
-.head .time { color: var(--dim); }
-.badge { padding: 1px 6px; border-radius: 3px; font-size: 12px; }
-.badge-prog { background: #1f6feb22; color: var(--cyan); border: 1px solid #1f6feb55; }
-.badge-alert { background: #f8514922; color: var(--red); border: 1px solid #f8514955; }
-.badge-done { background: #3fb95022; color: var(--green); border: 1px solid #3fb95055; }
-.badge-delay { background: #d2992222; color: var(--yellow); border: 1px solid #d2992255; }
-.section { margin-bottom: 12px; }
-/* hub queue */
-.hub-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; padding: 2px 0; }
-.hub-name { color: var(--bold); font-weight: bold; min-width: 2.5em; }
-.hub-active { color: var(--yellow); }
-.hub-idle { color: var(--green); }
-.hub-chip { color: var(--dim); font-size: 11px; }
-.hub-sub { padding-left: 2.5em; color: var(--cyan); font-size: 12px; }
-/* CI table */
-table { border-collapse: collapse; width: 100%; max-width: 900px; }
-th { text-align: left; padding: 3px 8px; color: var(--dim); font-weight: normal; font-size: 12px; border-bottom: 1px solid var(--border); }
-td { padding: 3px 8px; vertical-align: top; white-space: nowrap; }
-tr:hover td { background: var(--row-hover); }
-.td-num { text-align: right; }
-.ci-busy { color: var(--yellow); }
-.ci-idle { color: var(--dim); }
-.ci-off { color: var(--red); }
-.ci-queue { color: var(--cyan); }
-/* pipeline strips */
-.prog-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; padding: 3px 0; border-bottom: 1px solid #161b22; }
-.prog-mark-green { color: var(--green); }
-.prog-mark-yellow { color: var(--yellow); }
-.prog-mark-red { color: var(--red); }
-.prog-id { color: var(--bold); font-weight: bold; min-width: 10em; }
-.prog-hub { color: var(--dim); min-width: 2.5em; }
-.prog-strip { letter-spacing: 1px; }
-.strip-done { color: var(--stage-done); }
-.strip-cur { color: var(--stage-cur); }
-.strip-todo { color: var(--stage-todo); }
-.prog-stage { color: var(--dim); font-size: 12px; min-width: 5em; }
-.prog-time { color: var(--dim); font-size: 12px; }
-.prog-pr { color: var(--cyan); }
-.prog-title { color: var(--fg); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 280px; }
-.prog-reason { padding-left: 2em; color: var(--red); font-size: 12px; }
-.prog-unreg { padding-left: 2em; color: var(--yellow); font-size: 12px; }
-/* today stats */
-.stat-row { display: flex; flex-wrap: wrap; gap: 4px 20px; padding: 2px 0; color: var(--dim); }
-.stat-label { color: var(--bold); }
-/* alerts */
-.alert-row { padding: 3px 0; color: var(--red); }
-.alert-row::before { content: "⚠ "; }
-.no-data { color: var(--dim); font-style: italic; }
-/* refresh indicator — spinner 항상 회전, 갱신 시각 별도 표시 */
-#status { position: fixed; top: 6px; right: 10px; color: var(--dim); font-size: 11px; display: flex; align-items: center; gap: 4px; }
+
+/* ── reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  min-height: 100dvh;
+}
+a { color: var(--accent); text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
+
+/* ── header ── */
+.cw-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  padding: 8px 14px;
+  border-bottom: 2px solid var(--border);
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.cw-head-delayed { border-bottom-color: var(--warn); }
+.cw-title { font-weight: bold; color: var(--bold); }
+.cw-ver   { color: var(--dim); font-size: 11px; }
+.cw-time  { color: var(--dim); font-size: 11px; }
+.cw-spin  { display: inline-block; color: var(--dim); animation: spin 1s linear infinite; }
+.cw-age   { color: var(--dim); font-size: 11px; }
 @keyframes spin { to { transform: rotate(360deg); } }
-#spin { display: inline-block; animation: spin 1s linear infinite; }
-#status.delay #spin { color: var(--yellow); }
-#status.delay #age { color: var(--yellow); }
-/* responsive */
-@media (max-width: 480px) {
-  body { font-size: 12px; padding: 6px 8px; }
-  .prog-title { max-width: 150px; }
-  table { font-size: 11px; }
+
+/* ── badges / pills ── */
+.cw-badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  user-select: none;
+  white-space: nowrap;
+}
+.cw-badge-prog { background: #1f6feb22; color: var(--accent); border: 1px solid #1f6feb55; }
+.cw-badge-bad  { background: #f8514922; color: var(--bad);    border: 1px solid #f8514955; }
+.cw-badge-ok   { background: #3fb95022; color: var(--ok);     border: 1px solid #3fb95055; }
+.cw-badge-warn { background: #d2992222; color: var(--warn);   border: 1px solid #d2992255; }
+.cw-badge-dim  { background: var(--surface-2); color: var(--dim); border: 1px solid var(--border); }
+
+/* ── alerts panel ── */
+.cw-alerts-panel {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 14px;
+}
+.cw-alert-row { color: var(--bad); padding: 2px 0; font-size: 12px; }
+
+/* ── hub cards (desktop 5칸) ── */
+.cw-hub-cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.cw-hub-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  min-height: 90px;
+  transition: border-color 0.2s;
+}
+.cw-hub-card-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px #1f6feb44;
+}
+.cw-hub-card-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.cw-hub-name    { font-weight: bold; color: var(--bold); }
+.cw-hub-model   { font-size: 10px; color: var(--dim); background: var(--surface-2); padding: 1px 4px; border-radius: 3px; }
+.cw-hub-spinner { color: var(--accent); animation: spin 1s linear infinite; }
+.cw-hub-id      { color: var(--accent); font-size: 11px; margin-bottom: 2px; }
+.cw-hub-title   { color: var(--fg); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 4px; }
+.cw-hub-idle    { color: var(--dim); }
+.cw-hub-last    { color: var(--dim); font-size: 10px; }
+.cw-hub-bar-wrap {
+  height: 4px;
+  background: var(--surface-2);
+  border-radius: 2px;
+  margin-bottom: 2px;
+  overflow: hidden;
+}
+.cw-hub-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.5s;
+}
+.cw-hub-bar-over { background: var(--warn); }
+.cw-hub-progress { font-size: 10px; color: var(--dim); }
+.cw-hub-over     { color: var(--warn); }
+
+/* ── 9-stage board ── */
+.cw-board-wrap { overflow-x: auto; border-bottom: 1px solid var(--border); }
+.cw-board {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(110px, 1fr));
+  gap: 0;
+  padding: 10px 14px;
+  min-width: 990px;
+}
+.cw-board-col {
+  border-right: 1px solid var(--border);
+  padding: 0 8px;
+  min-height: 60px;
+}
+.cw-board-col:last-child { border-right: none; }
+.cw-board-col-head {
+  font-size: 11px;
+  color: var(--dim);
+  font-weight: bold;
+  margin-bottom: 6px;
+  text-align: center;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+.cw-board-empty { color: var(--dim); font-size: 11px; text-align: center; padding: 4px 0; }
+.cw-board-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 5px 6px;
+  margin-bottom: 4px;
+  font-size: 11px;
+  transition: border-color 0.2s;
+}
+.cw-board-card:hover { background: var(--surface-2); }
+.cw-board-card-green  { border-color: var(--border); }
+.cw-board-card-yellow { border-color: var(--warn); }
+.cw-board-card-red    { border-color: var(--bad); }
+.cw-board-card-id     { color: var(--accent); font-weight: bold; }
+.cw-board-card-title  { color: var(--fg); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100px; }
+.cw-board-card-age    { color: var(--dim); }
+
+/* ── sections (timeline, CI) ── */
+.cw-section { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.cw-section-head { font-size: 12px; color: var(--dim); font-weight: bold; margin-bottom: 8px; }
+
+/* ── today timeline ── */
+.cw-tl-grid { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+.cw-tl-row  { display: flex; align-items: center; gap: 8px; height: 20px; }
+.cw-tl-hub  { color: var(--bold); font-weight: bold; min-width: 2.5em; font-size: 11px; }
+.cw-tl-bar  { flex: 1; height: 14px; background: var(--surface-2); border-radius: 3px; position: relative; overflow: hidden; }
+.cw-tl-seg  { position: absolute; top: 0; height: 100%; border-radius: 2px; }
+.cw-tl-seg-coding { background: var(--color-coding); }
+.cw-tl-seg-review { background: var(--color-review); }
+.cw-tl-seg-diag   { background: var(--color-diag); }
+.cw-tl-seg-fail   { background: var(--color-fail); }
+.cw-tl-legend     { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cw-tl-legend-chip { width: 16px; height: 10px; display: inline-block; border-radius: 2px; vertical-align: middle; }
+
+/* ── CI machines ── */
+.cw-ci-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.cw-ci-col { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; }
+.cw-ci-col-head { font-weight: bold; color: var(--bold); font-size: 12px; margin-bottom: 6px; }
+.cw-ci-slots { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 6px; }
+.cw-ci-slot {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 3px 5px;
+  font-size: 10px;
+  color: var(--dim);
+  min-height: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.cw-ci-slot-busy { border-color: var(--accent); background: #1f6feb11; }
+.cw-ci-slot-name { color: var(--accent); font-weight: bold; }
+.cw-ci-job  { color: var(--accent); font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cw-ci-today  { font-size: 11px; color: var(--dim); margin-bottom: 2px; }
+.cw-ci-tokens { font-size: 10px; color: var(--dim); }
+
+/* ── phone hub mini ── */
+.cw-hub-mini {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.cw-hub-mini-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 6px 4px;
+  text-align: center;
+  cursor: pointer;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.cw-hub-mini-item:active { background: var(--surface-2); }
+.cw-hub-mini-active { border-color: var(--accent); }
+.cw-hub-mini-name  { font-weight: bold; color: var(--bold); font-size: 11px; }
+.cw-hub-mini-spin  { color: var(--accent); animation: spin 1s linear infinite; font-size: 10px; }
+.cw-hub-mini-stage { font-size: 10px; color: var(--dim); }
+.cw-hub-mini-bar   { width: 100%; height: 3px; background: var(--surface-2); border-radius: 1px; overflow: hidden; }
+.cw-hub-mini-fill  { height: 100%; background: var(--accent); }
+
+/* ── phone board mini ── */
+.cw-board-mini {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 2px;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  overflow-x: auto;
+}
+.cw-board-mini-cell {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 3px 2px;
+  text-align: center;
+  min-width: 32px;
+}
+.cw-board-mini-active { border-color: var(--accent); }
+.cw-board-mini-stage { font-size: 9px; color: var(--dim); }
+.cw-board-mini-cnt   { font-size: 11px; color: var(--bold); font-weight: bold; }
+
+/* ── phone timeline mini ── */
+.cw-tl-mini {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.cw-tl-mini-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 10px;
+}
+.cw-tl-mini-hub  { font-size: 9px; color: var(--dim); min-width: 2em; }
+.cw-tl-mini-bar  { flex: 1; height: 8px; background: var(--surface-2); border-radius: 2px; position: relative; overflow: hidden; }
+.cw-tl-mini-seg  { position: absolute; top: 0; height: 100%; border-radius: 1px; }
+.cw-tl-mini-seg-active { background: var(--accent); }
+.cw-tl-mini-seg-done   { background: var(--ok); }
+
+/* ── phone CI mini ── */
+.cw-ci-mini {
+  display: flex;
+  gap: 8px;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.cw-ci-mini-col { flex: 1; }
+.cw-ci-mini-label { font-size: 10px; color: var(--dim); font-weight: bold; margin-bottom: 3px; }
+.cw-ci-mini-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 3px; }
+.cw-ci-chip      { height: 10px; border-radius: 2px; background: var(--surface-2); border: 1px solid var(--border); }
+.cw-ci-chip-busy { background: var(--accent); border-color: var(--accent); }
+.cw-ci-mini-cnt  { font-size: 10px; color: var(--dim); }
+
+/* ── detail panels ── */
+.cw-detail-panel {
+  min-height: calc(100dvh - 50px);
+  background: var(--bg);
+  padding: 10px 14px;
+}
+.cw-back-btn {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  color: var(--accent);
+  font-size: 14px;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.cw-detail-section { }
+.cw-detail-head    { font-size: 14px; color: var(--bold); margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.cw-detail-subhead { font-size: 12px; color: var(--dim); margin: 8px 0 4px; }
+.cw-detail-id      { color: var(--accent); font-weight: bold; font-size: 13px; margin-bottom: 2px; }
+.cw-detail-title   { color: var(--fg); margin-bottom: 4px; }
+.cw-detail-time    { color: var(--dim); font-size: 11px; margin-bottom: 4px; }
+.cw-detail-link    { color: var(--accent); font-size: 12px; margin-bottom: 6px; display: inline-block; }
+.cw-detail-item    { padding: 4px 0; border-bottom: 1px solid var(--surface-2); font-size: 12px; }
+.cw-detail-item-tappable { cursor: pointer; }
+.cw-detail-item-tappable:active { background: var(--surface); }
+
+/* ── stage strip ── */
+.cw-stage-strip { font-size: 10px; margin: 4px 0; display: flex; flex-wrap: wrap; gap: 2px 4px; }
+.cw-stage-dot.done { color: var(--ok); }
+.cw-stage-dot.cur  { color: var(--accent); }
+.cw-stage-dot.todo { color: var(--dim); }
+
+/* ── utilities ── */
+.cw-dim { color: var(--dim); }
+
+/* ── desktop only ── */
+@media (min-width: 900px) {
+  .cw-hub-mini, .cw-board-mini, .cw-tl-mini, .cw-ci-mini { display: none !important; }
+}
+
+/* ── mobile only ── */
+@media (max-width: 899px) {
+  .cw-hub-cards, .cw-board-wrap, .cw-section { display: none !important; }
+  body { font-size: 12px; }
+}
+
+/* Touch targets on mobile */
+@media (max-width: 899px) {
+  .cw-hub-mini-item { min-height: 44px; }
+  .cw-board-mini-cell { min-height: 44px; }
 }
 </style>
 </head>
 <body>
-<div id="status"><span id="spin">⟳</span><span id="age"> 갱신 대기…</span></div>
 <div id="app">
-  <div class="no-data">데이터 로딩 중…</div>
+  <div id="loading" style="color:var(--dim);padding:20px 14px;font-style:italic;">데이터 로딩 중…</div>
 </div>
-
-<script>
-const STAGES = ['큐','작업','리포트','PR','CI대기','CI실행','CI결과','리뷰','머지'];
-
-function stageIndex(column) {
-  const map = {
-    hub: 0, work: 1, report: 2, pr: 3,
-    ci_pending: 4, ci_running: 5, ci_result: 6,
-    review: 7, merge: 8,
-  };
-  return map[column] ?? 0;
-}
-
-function strip(si) {
-  return STAGES.map((_, i) => {
-    if (i < si) return { ch: '●', cls: 'strip-done' };
-    if (i === si) return { ch: '◐', cls: 'strip-cur' };
-    return { ch: '○', cls: 'strip-todo' };
-  });
-}
-
-function h(tag, attrs, ...children) {
-  const el = document.createElement(tag);
-  if (attrs) for (const [k, v] of Object.entries(attrs)) {
-    if (k === 'className') el.className = v;
-    else if (k === 'textContent') el.textContent = v;
-    else el.setAttribute(k, v);
-  }
-  for (const c of children.flat()) {
-    if (c == null) continue;
-    el.append(typeof c === 'string' ? document.createTextNode(c) : c);
-  }
-  return el;
-}
-
-function esc(s) {
-  if (!s) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
-}
-
-let lastFetchAt = 0;
-
-// 1초마다 "마지막 갱신 N초 전" 갱신 · 30초 초과시 데이터 지연 경고
-setInterval(() => {
-  if (lastFetchAt === 0) return;
-  const ageEl = document.getElementById('age');
-  const statusEl = document.getElementById('status');
-  if (!ageEl || !statusEl) return;
-  const secs = Math.round((Date.now() - lastFetchAt) / 1000);
-  ageEl.textContent = ` 마지막 갱신 ${secs}초 전`;
-  if (secs > 30) statusEl.classList.add('delay');
-  else statusEl.classList.remove('delay');
-}, 1000);
-
-function renderHead(d) {
-  const prog = Array.isArray(d.pipelinePrompts) ? d.pipelinePrompts.length : 0;
-  const alertCount = Array.isArray(d.runnerAlerts) ? d.runnerAlerts.length : 0;
-  const todayJobs = d.summaryJobs ?? 0;
-  const isDelayed = lastFetchAt > 0 && (Date.now() - lastFetchAt) > 30_000;
-  const div = h('div', { className: 'head' },
-    h('span', { className: 'version' }, `ci-watch v${d.version || '?'}`),
-    h('span', { className: 'time' }, d.timeStr || ''),
-    h('span', { className: 'badge badge-prog' }, `●진행 ${prog}`),
-    alertCount > 0 ? h('span', { className: 'badge badge-alert' }, `■주의 ${alertCount}`) : null,
-    h('span', { className: 'badge badge-done' }, `✔오늘 ${todayJobs}`),
-    isDelayed ? h('span', { className: 'badge badge-delay' }, '⚠ 데이터 지연') : null,
-  );
-  return div;
-}
-
-function renderHubQ(d) {
-  const hubs = ['m0','m1','m2','m3','r0'];
-  const allJson = d.allJson || {};
-  const hubPending = d.hubPending || {};
-  const counts = hubs.map(h => (hubPending[h] || []).length);
-  const summary = hubs.map((h,i) => `${h} ${counts[i]}`).join(' · ');
-
-  const sec = h('div', { className: 'section' },
-    h('h2', {}, `─ 허브 큐 (${summary}) ─`),
-  );
-  for (const hub of hubs) {
-    const info = allJson.hubs?.[hub];
-    const pending = (hubPending[hub] || []).slice(0,5);
-    const chips = pending.map(item => {
-      const id = typeof item === 'string' ? item : item.id;
-      const age = typeof item === 'object' && item.ageMin != null ? ` ${item.ageMin}분` : '';
-      return `[${id}${age}]`;
-    }).join(' ');
-    const row = h('div', { className: 'hub-row' },
-      h('span', { className: 'hub-name' }, hub),
-      info?.current
-        ? h('span', { className: 'hub-active' }, info.current)
-        : h('span', { className: 'hub-idle' }, '—'),
-      chips ? h('span', { className: 'hub-chip' }, chips) : null,
-    );
-    sec.append(row);
-    if (info?.current) {
-      const startMs = info.started_at ? Date.now() - new Date(info.started_at).getTime() : null;
-      const elapMin = startMs != null ? Math.round(startMs / 60000) : null;
-      const sub = h('div', { className: 'hub-sub' },
-        `└ ⠹ ${info.current} 작업 중${elapMin != null ? ` (${elapMin}분)` : ''}`);
-      sec.append(sub);
-    }
-  }
-  return sec;
-}
-
-function renderCIQ(d) {
-  const runState = d.runState || {};
-  const allJson = d.allJson || {};
-  const ciRunners = allJson.ci_runners || [];
-
-  function machineKind(name) {
-    if (!name) return 'unknown';
-    const n = name.toLowerCase();
-    if (n.includes('imac') || n.includes('ci-box')) return 'imac';
-    if (n.includes('macbook') || n.includes('mbp')) return 'mbp';
-    return 'cloud';
-  }
-  function runnerRole(name) {
-    const n = (name||'').toLowerCase();
-    return n.includes('light') || n.includes('feature-map') ? 'light' : 'heavy';
-  }
-  function runnerRepo(name) {
-    const n = (name||'').toLowerCase();
-    return n.includes('fork') ? 'fork' : 'storeport';
-  }
-
-  const pools = [
-    { key: 'storeport-heavy', label: 'storeport heavy' },
-    { key: 'storeport-light', label: 'storeport light' },
-    { key: 'fork-heavy',      label: 'fork heavy' },
-    { key: 'fork-light',      label: 'fork light' },
-  ];
-
-  function findRunner(repo, role, kind) {
-    return ciRunners.find(r => {
-      const k = machineKind(r.name);
-      const rl = runnerRole(r.name);
-      const rp = runnerRepo(r.name);
-      return k === kind && rl === role && rp === repo;
-    });
-  }
-
-  function cellContent(runner, inProgressList, queuedList, kind) {
-    if (!runner) return h('td', { className: 'ci-idle' }, '?');
-    if (runner.status !== 'online') return h('td', { className: 'ci-off' }, 'OFF');
-    if (runner.busy) {
-      const job = inProgressList?.find(j => j.runner === runner.name);
-      const info = job ? (job.prompt_id || job.pr || '') : '';
-      return h('td', { className: 'ci-busy' }, `⠹${info ? ' '+info : ''}`);
-    }
-    // Check cloud in-progress
-    if (kind === 'cloud') {
-      const job = inProgressList?.find(j => j.runner === runner.name || (!j.runner && j.source !== 'local'));
-      if (job) return h('td', { className: 'ci-busy' }, `⠹ ${job.prompt_id || job.pr || ''}`);
-    }
-    return h('td', { className: 'ci-idle' }, '쉼');
-  }
-
-  const thead = h('tr', {},
-    h('th', {}, '풀'),
-    h('th', {}, '대기'),
-    h('th', {}, 'MBP M1'),
-    h('th', {}, 'iMAC M1'),
-    h('th', {}, '클라우드'),
-    h('th', { className: 'td-num' }, '평균대기'),
-  );
-  const tbody = document.createElement('tbody');
-
-  const allQueued = [...(runState.heavy?.queued||[]), ...(runState.light?.queued||[])];
-  const allInProgress = [...(runState.heavy?.inProgress||[]), ...(runState.light?.inProgress||[])];
-  const poolWait = d.poolWaitStats || {};
-
-  for (const pool of pools) {
-    const [repo, role] = pool.key.split('-');
-    const queued = (role === 'heavy' ? runState.heavy : runState.light)?.queued
-      ?.filter(j => j.repo?.includes(repo === 'fork' ? 'fork' : 'storeport')).length ?? 0;
-    const mbpRunner = findRunner(repo, role, 'mbp');
-    const imacRunner = findRunner(repo, role, 'imac');
-    const inProg = (role === 'heavy' ? runState.heavy : runState.light)?.inProgress || [];
-    const cloudJobs = inProg.filter(j => j.source !== 'local' && j.source !== 'imac' && !j.runner?.includes('imac') && !j.runner?.includes('MacBook'));
-    const avgWait = poolWait[pool.key]?.avgWait;
-    const avgStr = avgWait != null ? `${Math.round(avgWait)}분` : '—';
-
-    const tr = h('tr', {},
-      h('td', {}, pool.label),
-      h('td', { className: 'ci-queue td-num' }, queued > 0 ? String(queued) : '—'),
-      cellContent(mbpRunner, inProg, null, 'mbp'),
-      cellContent(imacRunner, inProg, null, 'imac'),
-      cloudJobs.length > 0
-        ? h('td', { className: 'ci-busy' }, `⠹${cloudJobs[0].prompt_id ? ' '+cloudJobs[0].prompt_id : ''}`)
-        : h('td', { className: 'ci-idle' }, '—'),
-      h('td', { className: 'td-num' }, avgStr),
-    );
-    tbody.append(tr);
-  }
-
-  const table = h('table', {}, thead, tbody);
-  return h('div', { className: 'section' },
-    h('h2', {}, `─ CI 큐 (heavy ${(runState.heavy?.queued||[]).length}대기 / light ${(runState.light?.queued||[]).length}대기) ─`),
-    table,
-  );
-}
-
-function renderProg(d) {
-  const prompts = Array.isArray(d.pipelinePrompts) ? d.pipelinePrompts : [];
-  const sec = h('div', { className: 'section' },
-    h('h2', {}, `─ 진행 중 (${prompts.length}) ─`),
-  );
-  if (!prompts.length) {
-    sec.append(h('div', { className: 'no-data' }, '—'));
-    return sec;
-  }
-  for (const p of prompts) {
-    const si = stageIndex(p.column);
-    const markCls = p.level === 'red' ? 'prog-mark-red' : p.level === 'yellow' ? 'prog-mark-yellow' : 'prog-mark-green';
-    const stripSpans = strip(si).map(s => h('span', { className: `prog-strip ${s.cls}` }, s.ch));
-    const prNum = p.extra?.pr?.number ? `#${p.extra.pr.number}` : '';
-    const row = h('div', { className: 'prog-row' },
-      h('span', { className: markCls }, p.mark || '●'),
-      h('span', { className: 'prog-id' }, p.id || ''),
-      h('span', { className: 'prog-hub' }, p.hub || ''),
-      h('span', {}, ...stripSpans),
-      h('span', { className: 'prog-stage' }, STAGES[si] || ''),
-      h('span', { className: 'prog-time' }, `${p.ageMin ?? '?'}분`),
-      prNum ? h('span', { className: 'prog-pr' }, prNum) : null,
-      h('span', { className: 'prog-title' }, p.title || ''),
-    );
-    sec.append(row);
-    if (p.reason) sec.append(h('div', { className: 'prog-reason' }, `└ ${p.reason}`));
-    if (p.unregisteredRepo) sec.append(h('div', { className: 'prog-unreg' }, `└ 미등록 리포 ${p.unregisteredRepo}`));
-  }
-  return sec;
-}
-
-function renderDone(d) {
-  const sec = h('div', { className: 'section' },
-    h('h2', {}, `─ 오늘 완료 ─`),
-  );
-  const rows = [
-    ['MBP',    d.mbpPR,  d.mbpPT,  d.todayMachineStats?.mbp?.jobs],
-    ['iMAC',   d.imacPR, d.imacPT, d.todayMachineStats?.imac?.jobs],
-    ['클라우드', d.cloudPR, d.cloudPT, d.cloudData?.realCount],
-    ['전체',   d.summaryPR, d.summaryPT, d.summaryJobs],
-  ];
-  for (const [label, pr, pt, jobs] of rows) {
-    sec.append(h('div', { className: 'stat-row' },
-      h('span', { className: 'stat-label' }, label),
-      h('span', {}, `PR ${pr??0}`),
-      h('span', {}, `PT ${pt??0}`),
-      h('span', {}, `잡 ${jobs??0}`),
-    ));
-  }
-  const lastCi = d.lastCiByRepo;
-  if (Array.isArray(lastCi) && lastCi.length) {
-    for (const r of lastCi) {
-      if (!r.completed_at) continue;
-      const ago = Math.round((Date.now() - new Date(r.completed_at).getTime()) / 60000);
-      const repo = (r.repo||'').split('/').pop();
-      const cls = r.conclusion === 'success' ? 'prog-mark-green' : r.conclusion === 'failure' ? 'prog-mark-red' : '';
-      sec.append(h('div', { className: 'stat-row' },
-        h('span', { className: 'stat-label' }, repo),
-        h('span', { className: cls }, r.conclusion || '?'),
-        h('span', {}, `${ago}분 전`),
-      ));
-    }
-  }
-  return sec;
-}
-
-function renderAlerts(d) {
-  const alerts = Array.isArray(d.runnerAlerts) ? d.runnerAlerts : [];
-  if (!alerts.length) return null;
-  const sec = h('div', { className: 'section' },
-    h('h2', {}, `─ 주의 (${alerts.length}) ─`),
-  );
-  for (const a of alerts) {
-    sec.append(h('div', { className: 'alert-row' }, a.msg || String(a)));
-  }
-  return sec;
-}
-
-function render(data) {
-  const app = document.getElementById('app');
-  const frag = document.createDocumentFragment();
-  frag.append(renderHead(data));
-  frag.append(renderHubQ(data));
-  frag.append(renderCIQ(data));
-  frag.append(renderProg(data));
-  frag.append(renderDone(data));
-  const alertSec = renderAlerts(data);
-  if (alertSec) frag.append(alertSec);
-  app.replaceChildren(frag);
-}
-
-let fetchTimer = null;
-
-async function refresh() {
-  const ageEl = document.getElementById('age');
-  const statusEl = document.getElementById('status');
-  try {
-    const resp = await fetch('/api/state');
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const data = await resp.json();
-    lastFetchAt = Date.now();
-    render(data);
-    if (ageEl) ageEl.textContent = ' 마지막 갱신 0초 전';
-    if (statusEl) statusEl.classList.remove('delay');
-  } catch (e) {
-    if (ageEl) ageEl.textContent = ` 오류: ${e.message}`;
-  }
-  fetchTimer = setTimeout(refresh, 5000);
-}
-
-document.addEventListener('DOMContentLoaded', () => { refresh(); });
-</script>
+<script src="/ui.js"></script>
 </body>
 </html>

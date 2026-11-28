@@ -19,6 +19,8 @@ LOG_DIR="$HOME/.hub-runner"
 NODE_BIN="$(which node 2>/dev/null || \
   ls "$HOME/.nvm/versions/node/"*/bin/node 2>/dev/null | sort -V | tail -1 || \
   echo /usr/local/bin/node)"
+# --branch <name>: gitRefresh 가 추적할 브랜치 (기본 main · 머지 전 테스트 시 PR 브랜치명)
+GIT_BRANCH="main"
 
 # 제거 모드
 if [[ "${1:-}" == "--uninstall" ]]; then
@@ -27,6 +29,12 @@ if [[ "${1:-}" == "--uninstall" ]]; then
   rm -f "$PLIST_DST"
   echo "[ci-watch-web] 제거 완료. launchd 에서 ${LABEL} 삭제됨."
   exit 0
+fi
+
+# --branch 플래그 처리
+if [[ "${1:-}" == "--branch" && -n "${2:-}" ]]; then
+  GIT_BRANCH="$2"
+  shift 2
 fi
 
 # 웹 전용 clone 없으면 자동 생성 (커밋 불가 설정 포함)
@@ -48,11 +56,12 @@ echo "  plist       : $PLIST_DST"
 # 로그 디렉토리 확인
 mkdir -p "$LOG_DIR"
 
-# plist 생성 (RELAY_WEB_DIR / HOME_DIR / NODE_BIN 치환)
+# plist 생성 (RELAY_WEB_DIR / HOME_DIR / NODE_BIN / GIT_BRANCH_PLACEHOLDER 치환)
 sed \
   -e "s|RELAY_WEB_DIR|${WEB_DIR}|g" \
   -e "s|HOME_DIR|${HOME}|g" \
   -e "s|/usr/local/bin/node|${NODE_BIN}|g" \
+  -e "s|GIT_BRANCH_PLACEHOLDER|${GIT_BRANCH}|g" \
   "$PLIST_SRC" > "$PLIST_DST"
 
 echo "[ci-watch-web] plist 설치 완료: $PLIST_DST"
@@ -64,6 +73,7 @@ launchctl load "$PLIST_DST"
 echo "[ci-watch-web] launchd 로드 완료."
 echo ""
 echo "  접속 주소 : http://100.82.115.70:7700"
+echo "  추적 브랜치: ${GIT_BRANCH}"
 echo "  로그 파일 : $LOG_DIR/ci-watch-web.log"
 echo "  오류 로그 : $LOG_DIR/ci-watch-web.err.log"
 echo ""

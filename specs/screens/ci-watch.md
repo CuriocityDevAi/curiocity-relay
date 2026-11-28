@@ -22,22 +22,36 @@
 | `CW-RENDER` | 전체 | 줄바꿈 금지(터미널 폭으로 자름 · 한글 2칸) · 글자 위치 고정 · 바뀐 줄만 갱신 · 러너 로그 줄(`[claim]` · `[build-hubs]` 등)이 본 화면에 섞이면 안 됨 | Kyu 11-26 08:48 "글자 위치는 그대로 있고, 숫자만 갱신되면" · `decision-ci-watch-machines-20261126.md §6` | `ci-watch-render.mjs:1094~1102`(v1.18 M0-1127-A: `ERR_TAIL_SCREEN_FILTERS` 에 `/^\[build-hubs\]/` 추가) · err_tail 소스 = `hub-runner-v8.*.mjs collectErrTail()` 가 `~/.hub-runner/launchd.err.log` 꼬리를 읽어 `allJson.err_tail` 로 올림 → ci-watch 가 필터 미매칭 줄 2개를 회색으로 렌더 | 일치 (`[build-hubs]` 2줄 노출 뿌리 = 필터 누락 — 수정됨) |
 | `CW-VERSION` | 머리줄 | 화면을 바꾸는 모든 PR 은 버전을 올린다 — 머리줄 버전 = 실제 코드 | `scripts/ci-watch.mjs:8` 주석 규칙 | `CI_WATCH_VERSION = '1.23'` · 이력 주석 `1.18 M0-1127-A` · `1.19 M0-1127-B` · `1.20 M2-1126-T/M0-1127-D` · `1.21 M2-1127-F` · `1.22 M3-1127-F` · `1.23 M0-1127-F` | 일치 |
 
-## 웹 화면 (M2-1128-B)
+## 웹 화면 (M2-1128-D)
 
-구현 = `scripts/ci-watch-web/server.mjs` + `scripts/ci-watch-web/index.html` · 데이터 수집 = `collectData()` (ci-watch.mjs에서 export) · 서버 = Node 내장 `http` · 바인드 = 아이맥 Tailscale IP `100.82.115.70:7700` 전용 (0.0.0.0 금지).
+구현 = `scripts/ci-watch-web/server.mjs` + `scripts/ci-watch-web/index.html` + `scripts/ci-watch-web/ui.js` · 데이터 수집 = `collectData()` (ci-watch.mjs에서 export) · 서버 = Node 내장 `http` · 바인드 = 아이맥 Tailscale IP `100.82.115.70:7700` 전용 (0.0.0.0 금지).
 
 | 항목 | 값 |
 |---|---|
 | 접속 주소 | `http://100.82.115.70:7700` |
 | 갱신 주기 | 브라우저 5초 fetch |
-| 상태 스냅샷 | `~/.ci-watch-web/state.json` |
+| 상태 스냅샷(로컬) | `~/.ci-watch-web/state.json` |
+| 스냅샷 브랜치 | `ci-watch-state` (force-push · 커밋 1개 · main 오염 금지) · 60초 주기 |
 | launchd 서비스 | `com.curiocity.ci-watch-web` |
 | 설치 | `bash ~/projects/curiocity-relay/scripts/ci-watch-web/install.sh` |
 | 제거 | `bash ~/projects/curiocity-relay/scripts/ci-watch-web/install.sh --uninstall` |
 
-**구역 순서** = 터미널과 동일: 머리줄 → 허브 큐 → CI 큐 → 진행 중 → 오늘 완료 → 주의.
-**9단계 띠 색**: ● 완료 단계(초록) · ◐ 현재 단계(파랑) · ○ 남은 단계(회색). CSS 변수(`--stage-done` · `--stage-cur` · `--stage-todo`)로 정의.
-**폰 가로 스크롤 없음**: `max-width: 480px` 미디어 쿼리로 대응.
+### 화면 요소 (CW-WEB-*)
+
+| ID | 구역 | 명세 | 반응형 |
+|---|---|---|---|
+| `CW-WEB-HEAD` | 머리줄 | ci-watch · 버전 · 시각(데스크톱만) · CSS 스피너 · 마지막 갱신 N초 전 · 알약 4개(데스크톱): ●진행 N · ■주의 N(클릭→펼침) · ✔머지 N · 러너 버전. 폰: 알약 3개(진행·주의·러너). 30초 데이터 없으면 헤더 노랑 "데이터 지연". 진행 N ≠ relay claims started 수이면 회색 "데이터 불일치" | 공통 |
+| `CW-WEB-HUBS` | 허브 카드 | 허브 5장 가로 나열. 각 카드: 허브명 · 모델 · CSS 스피너 + 파란 테두리(작업 중) · 프롬프트 ID · 제목(큐 파일 첫 줄 괄호 요지) · 진행 막대(경과/상한 — "N분 상한" 파싱, 없으면 60) · 경과/상한 텍스트. 쉴 때: "쉼" + 마지막 활동 시각 | 데스크톱만 |
+| `CW-WEB-BOARD` | 9단계 보드 | 9칸(큐·작업·리포트·PR·CI대기·CI실행·CI결과·리뷰·머지). 카드: ID · 제목 · 단계 머문 시간. 느림(≥20분)=노랑 테두리, 비정상(≥45분)=빨강. 카드 클릭 = PR https 링크. 가로 스크롤 허용 | 데스크톱(전체), 폰(건수만 · 클릭→상세) |
+| `CW-WEB-TIMELINE` | 오늘 타임라인 | 허브별 가로줄. 1 프롬프트 = 막대(claims started→done). 색: 코딩=파랑 · 리뷰(r0)=보라 · 진단(제목에 "진단")=주황 · 실패=빨강. 빈 칸=쉬는 시간. 범례 아래 | 데스크톱(전체), 폰(얇은 5줄 · 클릭→시간순 목록) |
+| `CW-WEB-CI` | CI 기계 | MacBook·iMac·클라우드 3칸. 각 기계 4슬롯(SP-H·SP-L·FK-H·FK-L). 실행=파랑+잡 ID. 오늘 잡 수 · 토큰 행 | 데스크톱(전체), 폰(색 칩 4개+잡 수 · 클릭→상세) |
+| `CW-WEB-ALERTS` | 주의 | 데스크톱: 머리줄 ■주의 N 알약 클릭 → 헤더 아래 펼침 패널. 폰: 주의 알약 → 상세 화면 | 공통 |
+| `CW-WEB-DETAIL` | 폰 상세 화면 | 같은 페이지 안 화면 전환. 왼쪽 위 뒤로 버튼 ≥44px. 허브 카드 → 허브 상세(ID·제목·9단계 띠·경과/상한·PR링크·오늘 한 일 목록). 9단계/진행 → 카드 목록. 타임라인 → 프롬프트 시간순 목록. CI → 기계·풀 상세. 주의 → 경보 목록 | 폰만 |
+
+**공통 규칙**: CSS 스피너 = 데이터와 무관하게 CSS animation. 터치 목표 ≥44px. 가로 스크롤 없음(9단계 보드 데스크톱 overflow-x 허용).  
+**색 체계**: CSS 변수 전용(`--surface · --accent · --warn · --bad · --ok · --dim · --border`). 데이터 색만 원색 허용.  
+**ui.js 분리**: DOM 그리기 = `ui.js` 단독(순수 JS · 의존성 없음 · textContent 전용). 오케의 핀 artifact 가 같은 `ui.js` 재사용.  
+**스냅샷**: 아이맥 서버가 60초마다 `/api/state` 와 같은 JSON 을 `ci-watch-state` 브랜치에 `state.json` force-push. git plumbing(`hash-object`→`mktree`→`commit-tree`→`push --force`) 사용, 로컬 브랜치 전환 없음. 실패해도 웹 서빙 계속.
 
 ## 이력
 
@@ -48,4 +62,6 @@
 - 11-27 M0-1127-B (v1.19): 미등록 리포 거짓 경보 수정 — `shouldSkipCi` 로 CI 없는/미등록 리포 `ci_pending` → `review` 직행 · `defaultFetchPrState(X, undefined)` → null(storeport 추측 금지) · 줄 제목 = 큐 파일 첫 줄 괄호 요지 우선 · 리포 목록 `runner-config.json` ci_watch 섹션으로 config-driven · 테스트 `ci-watch-w119.test.mjs` 추가.
 - 11-27 M0-1127-C (v1.19 same PR): 미등록 리포 표시 추가 — 명시 `no_ci_repos` ↔ 미등록 구분 · 미등록 카드 아래 노랑 `└ 미등록 리포 <이름>` 서브행 · 주의 구역 `⚠ 미등록 리포` 1줄(리포별 1회) · `curiocity-devai-method` → `no_ci_repos` 명시 등록 · 테스트 2건 추가(`W119-unregistered-flag` · `W119-noci-no-flag`).
 - 11-27 M2-1127-F (v1.21): iMac heartbeat 거짓 경보 수정 — 문턱 `3분→12분`(주기 5분의 2배) · origin/main ts 보정(pull 지연 대응) · 경보 메시지에 마지막 WIB 시각 추가 · `computeImacHbAlerts` pure 함수 export · 테스트 `ci-watch-w121.test.mjs` 추가(5건).
+- 11-28 M2-1128-D: 웹 화면 개편 — `ui.js` 분리(순수 JS · textContent 전용) · 데스크톱 허브 카드 5장 + 9단계 보드 + 오늘 타임라인 + CI 기계 3칸 · 폰 축소판 + 클릭 상세 화면(허브·보드·타임라인·CI·주의) · CSS 변수 전용 · 스냅샷 push(`ci-watch-state` 브랜치 · git plumbing · 60초). `install.sh` 웹 전용 clone + launchd 자동설치.
+- 11-28 M2-1128-E: 코드 결함 수정 — `gitRefresh` 가 항상 `origin/main` 으로 reset 해서 PR 브랜치 파일을 덮어쓰는 문제 → `CI_WATCH_GIT_BRANCH` 환경변수(기본 `main`) 추가 · `install.sh --branch <name>` 플래그 추가(plist 에 `CI_WATCH_GIT_BRANCH` 치환). 머지 전 테스트 가능. 머지 후 `install.sh` (--branch 없음) 으로 main 추적 복원.
 - 11-27 M0-1127-F (v1.23): 리포별 main 최신 CI 경보 추가 — `computeMainCiAlerts` pure 함수(ci-watch.mjs) · `MAIN_CI_WORKFLOWS` (storeport `ci.yml` · fork `CI`·`Lint`) · 경보 조건 3종(실패 · 시작실패=`startup_failure` OR 0초 failure · 미실행 `MAIN_CI_NO_RUN_MIN=15`) · 메시지 `<리포> main CI 실패 · <commit7> · <N분 전> — 다음 PR 머지 금지` (start 는 "워크플로 파일 오류 의심" 추가) · 기존 GH 캐시 주기(30초/5분)에 얹음 — `fetchMainCiStatusAll()` 을 `fetchGhQueueAndCloud` 안에서 호출 (호출 수 증가 없음 · 리포당 2회 API · 2 리포 = 4회) · 테스트 `ci-watch-w123.test.mjs` 추가(12건 · 검증의 검증 = `detectStartFailure=false` 면 분류 소실 확인). 뿌리: storeport#468 이 ci.yml 0초 실패 중 머지 — 어떤 화면에도 안 떠서 11시간 조용함(ledger `decision-storeport-ci-dead-20261127.md:20`).
