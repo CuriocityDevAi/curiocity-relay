@@ -1,0 +1,518 @@
+{
+  "allJson": {
+    "at": "2026-11-28T11:18:47.384Z",
+    "pid": 64966,
+    "runner": "v8.3.7",
+    "poll_ms": 30000,
+    "heartbeat_ms": 1800000,
+    "run_timeout_ms": 3600000,
+    "last_error": null,
+    "last_error_at": null,
+    "hubs": {
+      "m0": {
+        "current": "M0-1128-G",
+        "started_at": "2026-11-28T07:42:37.541Z",
+        "model": "opus",
+        "last_activity": null
+      },
+      "m1": {
+        "current": "M1-1128-I",
+        "started_at": "2026-11-28T08:01:31.188Z",
+        "model": "sonnet",
+        "last_activity": null
+      },
+      "m2": {
+        "current": "M2-1128-H",
+        "started_at": "2026-11-28T08:01:32.543Z",
+        "model": "sonnet",
+        "last_activity": null
+      },
+      "m3": {
+        "current": "M3-1128-L",
+        "started_at": "2026-11-28T08:05:41.886Z",
+        "model": "sonnet",
+        "last_activity": null
+      },
+      "r0": {
+        "current": "R0-1128-I",
+        "started_at": "2026-11-28T08:01:33.520Z",
+        "model": "sonnet",
+        "last_activity": null
+      }
+    },
+    "pane_close_failures": {},
+    "last_sleep_gap": {
+      "lastMs": 828524,
+      "totalMs": 10521272,
+      "phase": "await-landing",
+      "at": "2026-11-28T11:18:39.659Z"
+    },
+    "kyu_folder_intrusion": null,
+    "mem": {
+      "total_gb": 16,
+      "used_gb": 15.55,
+      "compressed_gb": 4.05,
+      "swap_used_gb": 3.74,
+      "pressure": "normal",
+      "at": "2026-11-28T11:04:30.072Z"
+    },
+    "mem_peak_today": {
+      "date": "2026-11-28",
+      "used_gb": 15.92
+    },
+    "ci": {
+      "data": {
+        "at": "2026-11-28T11:04:12.994Z",
+        "repos_scanned": [
+          "CuriocityDevAi/storeport"
+        ],
+        "repos_failed": [],
+        "repos_skipped": [],
+        "api_calls": 3,
+        "api_budget": 40,
+        "api_overflow": false,
+        "heavy": {
+          "queued": 0,
+          "queued_prs": [],
+          "oldest_queued_min": null,
+          "oldest_queued_pr": null,
+          "in_progress": []
+        },
+        "light": {
+          "queued": 0,
+          "oldest_queued_min": null,
+          "oldest_queued_pr": null,
+          "in_progress": []
+        },
+        "cloud_in_progress": [],
+        "runners": {
+          "heavy_online": 1,
+          "heavy_busy": 0,
+          "light_online": 2
+        },
+        "cloud_today": 0,
+        "today": {
+          "mac-heavy": {
+            "jobs": 342,
+            "avg_wait_min": 0.6,
+            "avg_run_min": 1.2,
+            "success_rate": 77.8,
+            "run_min_total": 425.3000000000003
+          },
+          "mac-light": {
+            "jobs": 57,
+            "avg_wait_min": 0.1,
+            "avg_run_min": 0.3,
+            "success_rate": 75.4,
+            "run_min_total": 15.500000000000007
+          },
+          "cloud": {
+            "jobs": 0,
+            "avg_wait_min": 0,
+            "avg_run_min": 0,
+            "success_rate": null,
+            "run_min_total": 0
+          },
+          "cloud_cost_est_usd": 0,
+          "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
+          "wasted_min": 17
+        },
+        "jsonl_added": 0,
+        "alerts": [],
+        "partial": true
+      },
+      "took_ms": 22252,
+      "at": "2026-11-28T11:04:33.049Z"
+    },
+    "gh_runner_alert": null,
+    "misplaced_reports": null,
+    "isolated_reports_collected": null,
+    "branch_reports_recovered": null,
+    "err_tail": "[hub-runner-v8.3.7:m0 2026-11-28T11:04:03.311Z] sleep gap 감지 381s · 예산 보정 · 누적 9674s · phase=await-landing\n[hub-runner-v8.3.7:m1 2026-11-28T11:04:07.388Z] sleep gap 감지 385s · 예산 보정 · 누적 9671s · phase=await-landing\n[hub-runner-v8.3.7:m3 2026-11-28T11:04:09.444Z] sleep gap 감지 386s · 예산 보정 · 누적 9675s · phase=await-landing\n[hub-runner-v8.3.7:m2 2026-11-28T11:04:10.013Z] sleep gap 감지 384s · 예산 보정 · 누적 9666s · phase=await-landing\n[hub-runner-v8.3.7:sleep-tracker 2026-11-28T11:04:10.796Z] sleep observed · gap=423s · threshold=120s\n[hub-runner-v8.3.7:m0 2026-11-28T11:04:13.554Z] 허브 멈춤 감지 · kind=api_error · id=M0-1128-G\n[hub-runner-v8.3.7:m1 2026-11-28T11:04:14.159Z] 허브 멈춤 감지 · kind=api_error · id=M1-1128-I\n[hub-runner-v8.3.7:m2 2026-11-28T11:04:14.743Z] 허브 멈춤 감지 · kind=api_error · id=M2-1128-H\n[hub-runner-v8.3.7:r0 2026-11-28T11:04:15.925Z] 허브 멈춤 감지 · kind=api_error · id=R0-1128-I\n[hub-runner-v8.3.7:r0 2026-11-28T11:04:25.314Z] sleep gap 감지 18s · 예산 보정 · 누적 9693s · phase=await-landing\n[hub-runner-v8.3.7:m0 2026-11-28T11:04:25.897Z] sleep gap 감지 18s · 예산 보정 · 누적 9692s · phase=await-landing\n[hub-runner-v8.3.7:gh-watchdog 2026-11-28T11:04:31.789Z] [gh-runner-watchdog] partial skip: mac-light gh_status=online\n[hub-runner-v8.3.7:gh-watchdog 2026-11-28T11:04:31.789Z] [gh-runner-watchdog] partial skip: fork-heavy gh_status=online\n[hub-runner-v8.3.7:gh-watchdog 2026-11-28T11:04:31.789Z] [gh-runner-watchdog] partial skip: fork-light gh_status=online\n[hub-runner-v8.3.7:m0 2026-11-28T11:18:32.224Z] sleep gap 감지 824s · 예산 보정 · 누적 10516s · phase=await-landing\n[hub-runner-v8.3.7:m1 2026-11-28T11:18:33.986Z] sleep gap 감지 826s · 예산 보정 · 누적 10497s · phase=await-landing\n[hub-runner-v8.3.7:m3 2026-11-28T11:18:34.650Z] sleep gap 감지 825s · 예산 보정 · 누적 10499s · phase=await-landing\n[hub-runner-v8.3.7:m2 2026-11-28T11:18:35.846Z] sleep gap 감지 825s · 예산 보정 · 누적 10492s · phase=await-landing\n[hub-runner-v8.3.7:r0 2026-11-28T11:18:39.659Z] sleep gap 감지 829s · 예산 보정 · 누적 10521s · phase=await-landing\n[hub-runner-v8.3.7:sleep-tracker 2026-11-28T11:18:42.269Z] sleep observed · gap=871s · threshold=120s",
+    "git_state": {
+      "ahead": 0,
+      "behind": 0,
+      "rebase_in_progress": false,
+      "merge_in_progress": false,
+      "conflicted": [],
+      "needs_human": false
+    },
+    "ci_runners": [
+      {
+        "name": "ci-box-storeport-heavy-imac",
+        "status": "online",
+        "busy": false
+      },
+      {
+        "name": "ci-box-storeport-light-imac",
+        "status": "online",
+        "busy": false
+      },
+      {
+        "name": "Youngkyus-MacBook-Pro-M1",
+        "status": "offline",
+        "busy": false
+      },
+      {
+        "name": "curiocity-mac-light",
+        "status": "offline",
+        "busy": false
+      },
+      {
+        "name": "ci-box-fork-heavy-imac",
+        "status": "online",
+        "busy": false
+      },
+      {
+        "name": "ci-box-fork-light-imac",
+        "status": "online",
+        "busy": false
+      },
+      {
+        "name": "curiocity-mac-fork",
+        "status": "offline",
+        "busy": false
+      },
+      {
+        "name": "curiocity-mac-fork-light",
+        "status": "offline",
+        "busy": false
+      }
+    ]
+  },
+  "runState": {
+    "heavy": {
+      "inProgress": [],
+      "queued": []
+    },
+    "light": {
+      "inProgress": [],
+      "queued": []
+    }
+  },
+  "pipelinePrompts": [],
+  "cloudData": {
+    "realCount": 0,
+    "limit": 5,
+    "totalMin": 0,
+    "last3": []
+  },
+  "runnerAlerts": [
+    {
+      "type": "imac_heartbeat_stale",
+      "msg": "iMac CI 러너 heartbeat 끊김 · 394분 · 마지막 12:26 WIB (모든 CI 가 iMac 전용 — 즉시 복구 필요)"
+    },
+    {
+      "type": "heartbeat_timeout",
+      "msg": "러너 응답 없음(Mac 잠자기?) · 42분"
+    }
+  ],
+  "ciAlerts": [],
+  "ciDimAlerts": [],
+  "timeStr": "11/28/2026 19:00:47",
+  "fullMode": false,
+  "todayStats": {
+    "mac-heavy": {
+      "jobs": 342,
+      "avg_wait_min": 0.6,
+      "avg_run_min": 1.2,
+      "success_rate": 77.8,
+      "run_min_total": 425.3000000000003
+    },
+    "mac-light": {
+      "jobs": 57,
+      "avg_wait_min": 0.1,
+      "avg_run_min": 0.3,
+      "success_rate": 75.4,
+      "run_min_total": 15.500000000000007
+    },
+    "cloud": {
+      "jobs": 0,
+      "avg_wait_min": 0,
+      "avg_run_min": 0,
+      "success_rate": null,
+      "run_min_total": 0
+    },
+    "cloud_cost_est_usd": 0,
+    "cloud_cost_note": "estimate (GitHub Linux 2-core default · 무료분/저장소 설정 미반영)",
+    "wasted_min": 17
+  },
+  "cloudTodayCount": 0,
+  "cloudLimit": 5,
+  "lastCiByRepo": [
+    {
+      "repo": "CuriocityDevAi/storeport",
+      "completed_at": "2026-11-28T01:13:39Z",
+      "conclusion": "success",
+      "workflow": "ci-summary",
+      "job": "post",
+      "pr": null
+    },
+    {
+      "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
+      "completed_at": "2026-11-28T03:14:05Z",
+      "conclusion": "success",
+      "workflow": "ci-summary",
+      "job": "post",
+      "pr": null
+    }
+  ],
+  "countdownSec": 300,
+  "hubReportStatus": {},
+  "hubPending": {
+    "m0": [],
+    "m1": [],
+    "m2": [],
+    "m3": [],
+    "r0": []
+  },
+  "terminalWidth": 120,
+  "version": "1.28",
+  "versionNote": "",
+  "fileCommitDate": "",
+  "busyJobMap": {},
+  "hubNotifs": {},
+  "poolWaitStats": {
+    "storeport-heavy": {
+      "avgWait": 0.16279069767441862
+    },
+    "fork-heavy": {
+      "avgWait": 0.7363636363636363
+    },
+    "storeport-light": {
+      "avgWait": 0.5
+    }
+  },
+  "hubWaitStats": {
+    "m0": {
+      "avgMin": 0.09585833333333332,
+      "count": 4
+    },
+    "m1": {
+      "avgMin": 0.10717499999999999,
+      "count": 4
+    },
+    "m2": {
+      "avgMin": 0.12059166666666665,
+      "count": 4
+    },
+    "m3": {
+      "avgMin": 0.11017857142857143,
+      "count": 7
+    },
+    "r0": {
+      "avgMin": 0.15083666666666667,
+      "count": 5
+    }
+  },
+  "todayMachineStats": {
+    "mbp": {
+      "jobs": 78,
+      "avgRun": 1.52051282051282
+    },
+    "imac": {
+      "jobs": 93,
+      "avgRun": 1.3623655913978492
+    }
+  },
+  "todayPoolMachineStats": {
+    "storeport-heavy": {
+      "mbp": 3,
+      "imac": 7,
+      "cloud": 0
+    },
+    "storeport-light": {
+      "mbp": 4,
+      "imac": 7,
+      "cloud": 0
+    },
+    "fork-heavy": {
+      "mbp": 36,
+      "imac": 37,
+      "cloud": 0
+    },
+    "fork-light": {
+      "mbp": 35,
+      "imac": 42,
+      "cloud": 0
+    }
+  },
+  "machineRecentStats": {
+    "storeport-light-imac": 647,
+    "fork-heavy-mbp": 527,
+    "storeport-light-mbp": 674,
+    "fork-heavy-imac": 527,
+    "storeport-heavy-imac": 648,
+    "fork-light-imac": 534,
+    "storeport-heavy-mbp": 677,
+    "fork-light-mbp": 535
+  },
+  "summaryPR": 9,
+  "summaryPT": 24,
+  "summaryJobs": 171,
+  "cloudPR": 0,
+  "cloudPT": 0,
+  "mbpPR": 8,
+  "mbpPT": 4,
+  "imacPR": 9,
+  "imacPT": 5,
+  "_fetchedAt": "2026-11-28T12:00:47.704Z",
+  "todayTimeline": {
+    "m0": [
+      {
+        "id": "M0-1128-A",
+        "startMs": 1795820978433,
+        "endMs": 1795822355311,
+        "model": "opus"
+      },
+      {
+        "id": "M0-1128-B",
+        "startMs": 1795822747657,
+        "endMs": 1795824773376,
+        "model": "opus"
+      },
+      {
+        "id": "M0-1128-C",
+        "startMs": 1795832307819,
+        "endMs": 1795833304600,
+        "model": "opus"
+      },
+      {
+        "id": "M0-1128-D",
+        "startMs": 1795835773640,
+        "endMs": null,
+        "model": "opus"
+      }
+    ],
+    "m1": [
+      {
+        "id": "M1-1128-A",
+        "startMs": 1795821440346,
+        "endMs": 1795821590511,
+        "model": "sonnet"
+      },
+      {
+        "id": "M1-1128-B",
+        "startMs": 1795822750394,
+        "endMs": 1795823752996,
+        "model": "sonnet"
+      },
+      {
+        "id": "M1-1128-C",
+        "startMs": 1795826681684,
+        "endMs": 1795828653231,
+        "model": "sonnet"
+      },
+      {
+        "id": "M1-1128-D",
+        "startMs": 1795833534573,
+        "endMs": 1795834552378,
+        "model": "sonnet"
+      }
+    ],
+    "m2": [
+      {
+        "id": "M2-1128-A",
+        "startMs": 1795820981285,
+        "endMs": 1795821892856,
+        "model": "sonnet"
+      },
+      {
+        "id": "M2-1128-B",
+        "startMs": 1795823000903,
+        "endMs": 1795824482671,
+        "model": "sonnet"
+      },
+      {
+        "id": "M2-1128-C",
+        "startMs": 1795827435814,
+        "endMs": 1795828737625,
+        "model": "sonnet"
+      },
+      {
+        "id": "M2-1128-D",
+        "startMs": 1795835275519,
+        "endMs": null,
+        "model": "sonnet"
+      }
+    ],
+    "m3": [
+      {
+        "id": "M3-1128-A",
+        "startMs": 1795821443061,
+        "endMs": 1795821611842,
+        "model": "sonnet"
+      },
+      {
+        "id": "M3-1128-B",
+        "startMs": 1795822753121,
+        "endMs": 1795823414078,
+        "model": "sonnet"
+      },
+      {
+        "id": "M3-1128-C",
+        "startMs": 1795826684823,
+        "endMs": 1795826933941,
+        "model": "sonnet"
+      },
+      {
+        "id": "M3-1128-D",
+        "startMs": 1795828260202,
+        "endMs": 1795829948673,
+        "model": "sonnet"
+      },
+      {
+        "id": "M3-1128-E",
+        "startMs": 1795832310822,
+        "endMs": 1795833017370,
+        "model": "sonnet"
+      },
+      {
+        "id": "M3-1128-F",
+        "startMs": 1795833537515,
+        "endMs": 1795834759944,
+        "model": "sonnet"
+      },
+      {
+        "id": "M3-1128-G",
+        "startMs": 1795835097740,
+        "endMs": null,
+        "model": "sonnet"
+      }
+    ],
+    "r0": [
+      {
+        "id": "R0-1128-A",
+        "startMs": 1795820984045,
+        "endMs": 1795821564221,
+        "model": "sonnet"
+      },
+      {
+        "id": "R0-1128-B",
+        "startMs": 1795823003550,
+        "endMs": 1795823427613,
+        "model": "sonnet"
+      },
+      {
+        "id": "R0-1128-C",
+        "startMs": 1795826688563,
+        "endMs": 1795828038348,
+        "model": "sonnet"
+      },
+      {
+        "id": "R0-1128-D",
+        "startMs": 1795828047914,
+        "endMs": 1795828191917,
+        "model": "sonnet"
+      },
+      {
+        "id": "R0-1128-E",
+        "startMs": 1795828945593,
+        "endMs": 1795829591150,
+        "model": "sonnet"
+      }
+    ]
+  },
+  "claimStartedCount": 52,
+  "queueLimits": {}
+}
