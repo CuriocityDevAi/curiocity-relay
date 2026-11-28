@@ -9,11 +9,11 @@
   <key>ProgramArguments</key>
   <array>
     <string>/usr/local/bin/node</string>
-    <string>WEB_DIR/scripts/ci-watch-web/server.mjs</string>
+    <string>RELAY_WEB_DIR/scripts/ci-watch-web/server.mjs</string>
   </array>
 
   <key>WorkingDirectory</key>
-  <string>WEB_DIR</string>
+  <string>RELAY_WEB_DIR</string>
 
   <key>RunAtLoad</key>
   <true/>
@@ -33,8 +33,8 @@
     <string>HOME_DIR</string>
     <key>PATH</key>
     <string>/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin</string>
-    <key>CI_WATCH_WEB_DIR</key>
-    <string>WEB_DIR</string>
+    <key>CI_WATCH_RELAY_WEB_DIR</key>
+    <string>RELAY_WEB_DIR</string>
   </dict>
 </dict>
 </plist>
