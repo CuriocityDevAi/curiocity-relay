@@ -10,7 +10,10 @@ LABEL="com.curiocity.ci-watch-web"
 PLIST_SRC="$RELAY_DIR/scripts/ci-watch-web/${LABEL}.plist"
 PLIST_DST="$HOME/Library/LaunchAgents/${LABEL}.plist"
 LOG_DIR="$HOME/.hub-runner"
-NODE_BIN="$(which node 2>/dev/null || echo /usr/local/bin/node)"
+# nvm / homebrew / system 순으로 node 탐색
+NODE_BIN="$(which node 2>/dev/null || \
+  ls "$HOME/.nvm/versions/node/"*/bin/node 2>/dev/null | sort -V | tail -1 || \
+  echo /usr/local/bin/node)"
 
 # 제거 모드
 if [[ "${1:-}" == "--uninstall" ]]; then
