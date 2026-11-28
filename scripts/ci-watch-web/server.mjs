@@ -7,7 +7,7 @@
 
 import { createServer } from 'node:http';
 import { readFileSync, mkdirSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
-import { execFile } from 'node:child_process';
+import { execFile, exec } from 'node:child_process';
 import { promisify } from 'node:util';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,8 +21,11 @@ const STATE_FILE = join(STATE_DIR, 'state.json');
 const SNAPSHOT_MS = 60_000;
 
 const execFileAsync = promisify(execFile);
+const execAsync    = promisify(exec);
 // M1-1128-D: 읽기 전용 clone 전용 경로 (heartbeat clone 과 완전 분리)
 const RELAY_DIR = process.env.CI_WATCH_WEB_DIR || null;
+// CI_WATCH_GIT_BRANCH: 추적할 브랜치 (기본 main · 머지 전 테스트 시 PR 브랜치명 지정)
+const GIT_BRANCH = process.env.CI_WATCH_GIT_BRANCH || 'main';
 // all.json 을 runner-status 브랜치에서 읽어 status-wt 로 동기화 (MacBook 러너 데이터)
 const STATUS_WT_DIR = join(homedir(), '.hub-runner', 'status-wt');
 const ALL_JSON_WT_PATH = join(STATUS_WT_DIR, 'all.json');
@@ -30,14 +33,14 @@ const GIT_REFRESH_MS = 30_000;
 
 async function gitRefresh() {
   if (!RELAY_DIR) return;
-  // main 브랜치를 origin/main 으로 강제 동기화 (read-only clone: 커밋 절대 안 함)
+  // GIT_BRANCH 를 origin 으로 강제 동기화 (read-only clone: 커밋 절대 안 함)
   try {
-    await execFileAsync('git', ['fetch', 'origin', 'main', '--quiet'],
+    await execFileAsync('git', ['fetch', 'origin', GIT_BRANCH, '--quiet'],
       { cwd: RELAY_DIR, timeout: 20_000 });
-    await execFileAsync('git', ['reset', '--hard', 'origin/main'],
+    await execFileAsync('git', ['reset', '--hard', `origin/${GIT_BRANCH}`],
       { cwd: RELAY_DIR, timeout: 10_000 });
   } catch (e) {
-    console.error('[ci-watch-web] main 갱신 실패:', e.message);
+    console.error(`[ci-watch-web] ${GIT_BRANCH} 갱신 실패:`, e.message);
   }
   // runner-status 브랜치의 all.json(MacBook 러너 데이터)을 가져와 status-wt에 씀.
   try {
@@ -202,23 +205,28 @@ function buildQueueLimits(relayDir, pipelinePrompts) {
 
 // ── 스냅샷 push (ci-watch-state 브랜치 · git plumbing · main 오염 금지) ─────────
 // RELAY_DIR 의 git 오브젝트 DB 를 사용하되 로컬 브랜치 전환 없음.
+const SNAP_TMP   = '/tmp/ci-watch-snap-state.json';
+const TREE_TMP   = '/tmp/ci-watch-snap-tree.txt';
+
 async function pushSnapshot(state) {
   if (!RELAY_DIR) return;
   try {
     const content = JSON.stringify(state, null, 2);
 
-    // 1) blob 생성
+    // 1) blob 생성 (temp file 경유 — SSH 환경에서 stdin pipe 불안정)
+    writeFileSync(SNAP_TMP, content);
     const { stdout: blobOut } = await execFileAsync(
-      'git', ['hash-object', '-w', '--stdin'],
-      { cwd: RELAY_DIR, input: content, timeout: 10_000 },
+      'git', ['hash-object', '-w', SNAP_TMP],
+      { cwd: RELAY_DIR, timeout: 10_000 },
     );
     const blobSha = blobOut.trim();
 
-    // 2) tree 생성 (state.json 단 하나)
+    // 2) tree 생성 (temp file 경유)
     const treeInput = `100644 blob ${blobSha}\tstate.json`;
-    const { stdout: treeOut } = await execFileAsync(
-      'git', ['mktree'],
-      { cwd: RELAY_DIR, input: treeInput, timeout: 10_000 },
+    writeFileSync(TREE_TMP, treeInput);
+    const { stdout: treeOut } = await execAsync(
+      `git mktree < ${TREE_TMP}`,
+      { cwd: RELAY_DIR, timeout: 10_000 },
     );
     const treeSha = treeOut.trim();
 
