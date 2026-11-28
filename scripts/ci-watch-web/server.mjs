@@ -161,7 +161,7 @@ function buildTodayTimeline(relayDir) {
   return result;
 }
 
-// 현재 started(미완료) claim 수 — 진행 중 N 정합성 검증용
+// 오늘 started(미완료) claim 수 — WIB 날짜 기준 · 오늘 ID(MMDD)만 집계
 function countStartedClaims(relayDir) {
   if (!relayDir) return null;
   const claimsDir = join(relayDir, 'status', 'claims');
@@ -169,11 +169,16 @@ function countStartedClaims(relayDir) {
   let files;
   try { files = readdirSync(claimsDir).filter(f => f.endsWith('.json')); }
   catch { return null; }
+  const mmdd = todayMmdd();
   let count = 0;
   for (const file of files) {
     try {
       const claim = JSON.parse(readFileSync(join(claimsDir, file), 'utf8'));
-      if (claim.state === 'started') count++;
+      if (claim.state !== 'started') continue;
+      const id = claim.id || file.replace('.json', '');
+      const m = id.match(/^[A-Za-z]\d+-(\d{4})-/);
+      if (!m || m[1] !== mmdd) continue;
+      count++;
     } catch {}
   }
   return count;
