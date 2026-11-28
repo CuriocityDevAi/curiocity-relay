@@ -30,6 +30,7 @@ h2 { font-size: 13px; font-weight: bold; color: var(--bold); padding: 6px 0 4px;
 .badge-prog { background: #1f6feb22; color: var(--cyan); border: 1px solid #1f6feb55; }
 .badge-alert { background: #f8514922; color: var(--red); border: 1px solid #f8514955; }
 .badge-done { background: #3fb95022; color: var(--green); border: 1px solid #3fb95055; }
+.badge-delay { background: #d2992222; color: var(--yellow); border: 1px solid #d2992255; }
 .section { margin-bottom: 12px; }
 /* hub queue */
 .hub-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; padding: 2px 0; }
@@ -72,8 +73,12 @@ tr:hover td { background: var(--row-hover); }
 .alert-row { padding: 3px 0; color: var(--red); }
 .alert-row::before { content: "⚠ "; }
 .no-data { color: var(--dim); font-style: italic; }
-/* refresh indicator */
-#status { position: fixed; top: 6px; right: 10px; color: var(--dim); font-size: 11px; }
+/* refresh indicator — spinner 항상 회전, 갱신 시각 별도 표시 */
+#status { position: fixed; top: 6px; right: 10px; color: var(--dim); font-size: 11px; display: flex; align-items: center; gap: 4px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+#spin { display: inline-block; animation: spin 1s linear infinite; }
+#status.delay #spin { color: var(--yellow); }
+#status.delay #age { color: var(--yellow); }
 /* responsive */
 @media (max-width: 480px) {
   body { font-size: 12px; padding: 6px 8px; }
@@ -83,7 +88,7 @@ tr:hover td { background: var(--row-hover); }
 </style>
 </head>
 <body>
-<div id="status">갱신 중…</div>
+<div id="status"><span id="spin">⟳</span><span id="age"> 갱신 대기…</span></div>
 <div id="app">
   <div class="no-data">데이터 로딩 중…</div>
 </div>
@@ -127,16 +132,32 @@ function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
 }
 
+let lastFetchAt = 0;
+
+// 1초마다 "마지막 갱신 N초 전" 갱신 · 30초 초과시 데이터 지연 경고
+setInterval(() => {
+  if (lastFetchAt === 0) return;
+  const ageEl = document.getElementById('age');
+  const statusEl = document.getElementById('status');
+  if (!ageEl || !statusEl) return;
+  const secs = Math.round((Date.now() - lastFetchAt) / 1000);
+  ageEl.textContent = ` 마지막 갱신 ${secs}초 전`;
+  if (secs > 30) statusEl.classList.add('delay');
+  else statusEl.classList.remove('delay');
+}, 1000);
+
 function renderHead(d) {
   const prog = Array.isArray(d.pipelinePrompts) ? d.pipelinePrompts.length : 0;
   const alertCount = Array.isArray(d.runnerAlerts) ? d.runnerAlerts.length : 0;
   const todayJobs = d.summaryJobs ?? 0;
+  const isDelayed = lastFetchAt > 0 && (Date.now() - lastFetchAt) > 30_000;
   const div = h('div', { className: 'head' },
     h('span', { className: 'version' }, `ci-watch v${d.version || '?'}`),
     h('span', { className: 'time' }, d.timeStr || ''),
     h('span', { className: 'badge badge-prog' }, `●진행 ${prog}`),
     alertCount > 0 ? h('span', { className: 'badge badge-alert' }, `■주의 ${alertCount}`) : null,
     h('span', { className: 'badge badge-done' }, `✔오늘 ${todayJobs}`),
+    isDelayed ? h('span', { className: 'badge badge-delay' }, '⚠ 데이터 지연') : null,
   );
   return div;
 }
@@ -370,16 +391,18 @@ function render(data) {
 let fetchTimer = null;
 
 async function refresh() {
+  const ageEl = document.getElementById('age');
   const statusEl = document.getElementById('status');
   try {
-    statusEl.textContent = '갱신 중…';
     const resp = await fetch('/api/state');
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const data = await resp.json();
+    lastFetchAt = Date.now();
     render(data);
-    statusEl.textContent = `${new Date().toLocaleTimeString('ko')} 갱신`;
+    if (ageEl) ageEl.textContent = ' 마지막 갱신 0초 전';
+    if (statusEl) statusEl.classList.remove('delay');
   } catch (e) {
-    statusEl.textContent = `오류: ${e.message}`;
+    if (ageEl) ageEl.textContent = ` 오류: ${e.message}`;
   }
   fetchTimer = setTimeout(refresh, 5000);
 }

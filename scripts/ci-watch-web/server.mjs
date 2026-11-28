@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// scripts/ci-watch-web/server.mjs  M2-1128-C — ci-watch 웹 서버 (Tailscale 전용)
-// Usage: node ~/projects/curiocity-relay-heartbeat/scripts/ci-watch-web/server.mjs
+// scripts/ci-watch-web/server.mjs  M1-1128-D — ci-watch 웹 서버 (Tailscale 전용)
+// Usage: node ~/projects/curiocity-relay-web/scripts/ci-watch-web/server.mjs
 // Bind: 100.82.115.70:7700 (Tailscale IP 전용 — 0.0.0.0 금지)
-// M2-1128-C: CI_WATCH_RELAY_DIR = heartbeat clone → 30초 pull + runner-status fetch
+// M1-1128-D: CI_WATCH_WEB_DIR = 읽기 전용 clone — git fetch+reset 만 · 커밋 금지
 
 import { createServer } from 'node:http';
 import { readFileSync, mkdirSync, writeFileSync, existsSync } from 'node:fs';
@@ -19,8 +19,8 @@ const STATE_DIR = join(homedir(), '.ci-watch-web');
 const STATE_FILE = join(STATE_DIR, 'state.json');
 
 const execFileAsync = promisify(execFile);
-// M2-1128-C: heartbeat clone 경로 (CI_WATCH_RELAY_DIR 로 전달됨)
-const RELAY_DIR = process.env.CI_WATCH_RELAY_DIR || null;
+// M1-1128-D: 읽기 전용 clone 전용 경로 (heartbeat clone 과 완전 분리)
+const RELAY_DIR = process.env.CI_WATCH_WEB_DIR || null;
 // all.json 을 runner-status 브랜치에서 읽어 status-wt 로 동기화 (MacBook 러너 데이터)
 const STATUS_WT_DIR = join(homedir(), '.hub-runner', 'status-wt');
 const ALL_JSON_WT_PATH = join(STATUS_WT_DIR, 'all.json');
@@ -28,10 +28,17 @@ const GIT_REFRESH_MS = 30_000;
 
 async function gitRefresh() {
   if (!RELAY_DIR) return;
-  // runner-status 브랜치의 all.json(MacBook 러너 데이터)을 가져와 status-wt에 씀.
-  // git pull 불필요 — heartbeat clone 데이터 파일은 iMac 러너가 직접 씀.
+  // main 브랜치를 origin/main 으로 강제 동기화 (read-only clone: 커밋 절대 안 함)
   try {
-    // FETCH_HEAD 방식: ref 충돌 없이 runner-status 최신 커밋만 가져옴.
+    await execFileAsync('git', ['fetch', 'origin', 'main', '--quiet'],
+      { cwd: RELAY_DIR, timeout: 20_000 });
+    await execFileAsync('git', ['reset', '--hard', 'origin/main'],
+      { cwd: RELAY_DIR, timeout: 10_000 });
+  } catch (e) {
+    console.error('[ci-watch-web] main 갱신 실패:', e.message);
+  }
+  // runner-status 브랜치의 all.json(MacBook 러너 데이터)을 가져와 status-wt에 씀.
+  try {
     await execFileAsync('git', ['fetch', 'origin', 'runner-status', '--quiet'],
       { cwd: RELAY_DIR, timeout: 20_000 });
     const { stdout } = await execFileAsync('git', ['show', 'FETCH_HEAD:all.json'],
@@ -95,10 +102,6 @@ async function getState() {
 }
 
 const HTML_PATH = join(HERE, 'index.html');
-let HTML = '';
-try { HTML = readFileSync(HTML_PATH, 'utf8'); } catch (e) {
-  console.error('[ci-watch-web] index.html 로드 실패:', e.message);
-}
 
 const server = createServer(async (req, res) => {
   if (req.method !== 'GET') { res.writeHead(405); res.end('Method Not Allowed'); return; }
@@ -119,8 +122,13 @@ const server = createServer(async (req, res) => {
   }
 
   if (req.url === '/' || req.url === '/index.html') {
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end(HTML);
+    try {
+      const html = readFileSync(HTML_PATH, 'utf8');
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(html);
+    } catch (e) {
+      res.writeHead(500); res.end('index.html 로드 실패');
+    }
     return;
   }
 
