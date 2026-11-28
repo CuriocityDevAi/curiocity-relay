@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// scripts/hub-runner-v8.3.mjs · M1-1125-G · v8.3.5 · M2-1126-T: all.json·mem-log status-wt 분리 (Kyu 폴더 git pull 보호). · M2-1127-L: events/ 스코프 추가 · main-guard events 즉시 커밋+push · M2-1127-O: 자기 파일 판정(status/runners/ 복구) · ci-health push 재시도
+// scripts/hub-runner-v8.3.mjs · M1-1125-G · v8.3.7 · M2-1126-T: all.json·mem-log status-wt 분리 (Kyu 폴더 git pull 보호). · M2-1127-L: events/ 스코프 추가 · main-guard events 즉시 커밋+push · M2-1127-O: 자기 파일 판정(status/runners/ 복구) · ci-health push 재시도 · M1-1128-E: 사용량 한도 화면 즉시 감지 → blocked + runner-pause.json · M1-1128-F: resets_at ISO 변환 · AND 감지
 //
 // v8.2 과의 차이 (M1-1125-B·C · 5건):
 //   ① **landing 오탐 수정**: land-detect-v2.mjs 에 isPaneIdle / headTouchesReport 콜백 주입.
@@ -137,6 +137,7 @@ import {
   createDefaultImpl as mainGuardImpl,
 } from './lib/main-guard.mjs';
 import { safeRunnerPush, createGit as safePushCreateGit } from './lib/safe-push.mjs';
+import { detectUsageLimitInScreen } from './lib/usage-limit.mjs';
 import {
   buildHubPreamble,
   DEFAULT_REPORT_PATH_PREFIX as PREAMBLE_REPORT_PREFIX,
@@ -182,7 +183,7 @@ const SIGKILL_GRACE_MS = 5 * 1000;
 const CMUX_WAIT_MS = 10 * 60 * 1000;
 const DEFAULT_CLAUDE_BIN = '/Users/kyu.lee/.local/bin/claude';
 // M1-1105-BA(d): all.json 러너 버전 표기 버그 — 한 곳에서만 관리.
-const RUNNER_VERSION = 'v8.3.5';
+const RUNNER_VERSION = 'v8.3.7';
 // M1-1124-H: 자기 업데이트 기본값 — runner-config.selfUpdate 로 덮어쓸 수 있다.
 // M1-1125-C: prev 부재 시 되돌릴 안전판 버전.
 const SELF_UPDATE_FALLBACK_RUNNER = 'hub-runner-v8.2.mjs';
@@ -266,6 +267,7 @@ const CONFIG_FILE = join(REPO_ROOT, 'status', 'runner-config.json');
 const QUEUE_DIR = join(REPO_ROOT, 'queue');
 const CLAIMS_DIR = join(REPO_ROOT, 'status', 'claims');
 const RUNNERS_DIR = join(REPO_ROOT, 'status', 'runners');
+const RUNNER_PAUSE_PATH = join(REPO_ROOT, 'status', 'runner-pause.json');
 const MEM_LOG_MS = 60 * 60 * 1000;
 const LOCK_FILE = join(RUNNER_HOME, 'all.lock');
 const HUBS_LAYOUT_FILE = join(RUNNER_HOME, 'hubs-layout.json');
@@ -2637,6 +2639,47 @@ function clearClaudeFgRetry(id) {
   try { rmSync(claudeFgRetryFile(id), { force: true }); } catch { /* noop */ }
 }
 
+// M1-1128-E: 사용량 한도 화면 감지 함수는 lib/usage-limit.mjs 에서 import.
+// M1-1128-F: resets_at → ISO, resets_text → 원문 보존.
+
+function writeRunnerPauseFile({ resetsText, resetsAt }) {
+  // resets_at: ISO string (자동 해제용) · resets_text: 원문 보존
+  const obj = { reason: 'usage-limit', resets_at: resetsAt ?? null, resets_text: resetsText, since: new Date().toISOString() };
+  try { writeFileSync(RUNNER_PAUSE_PATH, JSON.stringify(obj, null, 2) + '\n', 'utf8'); } catch { /* noop */ }
+  try {
+    git(['add', 'status/runner-pause.json']);
+    git(['commit', '-m', `chore(runner-${RUNNER_VERSION}): usage-limit pause · resets=${resetsAt || resetsText}`]);
+    safeRunnerPush({ git: safePushCreateGit(REPO_ROOT), timeoutMs: 15_000 });
+  } catch { /* noop */ }
+}
+
+function readRunnerPauseFile() {
+  try { return JSON.parse(readFileSync(RUNNER_PAUSE_PATH, 'utf8')); } catch { return null; }
+}
+
+function clearRunnerPauseFile(reason) {
+  try { rmSync(RUNNER_PAUSE_PATH, { force: true }); } catch { /* noop */ }
+  try {
+    git(['add', 'status/runner-pause.json']);
+    git(['rm', '--cached', '--ignore-unmatch', 'status/runner-pause.json']);
+    git(['commit', '-m', `chore(runner-${RUNNER_VERSION}): usage-limit pause 해제 · ${reason}`]);
+    safeRunnerPush({ git: safePushCreateGit(REPO_ROOT), timeoutMs: 15_000 });
+  } catch { /* noop */ }
+}
+
+function checkRunnerPauseExpiry() {
+  const p = readRunnerPauseFile();
+  if (!p) return false;
+  if (p.resets_at) {
+    const ms = Date.parse(p.resets_at);
+    if (!isNaN(ms) && Date.now() >= ms) {
+      clearRunnerPauseFile(`resets_at ${p.resets_at} 경과`);
+      return false;
+    }
+  }
+  return true;
+}
+
 // v6.8 REQ1: 허브 멈춤 감지 — started claim 보유 허브의 pane 텍스트를 주기적으로 검사.
 const API_ERROR_RE = /api.?error|exceeded|rate.?limit/i;
 const ASKING_USER_RE = /[?？]\s*$|승인|진행하면|하시겠습니까/m;
@@ -2948,8 +2991,25 @@ async function spawnClaudeForItem(item, cwd, config) {
             setTimeout(() => sendPaneKey(config.cmux_bin, layout, item.hub, 'ctrl-c'), 300);
           },
           onPoll: (now) => {
+            // M1-1128-E: 사용량 한도 화면 즉시 감지 → blocked + runner-pause.json.
+            const paneScreenPoll = readPaneScreen(config.cmux_bin, layout, item.hub);
+            const usageLimit = detectUsageLimitInScreen(paneScreenPoll || '');
+            if (usageLimit && !existsSync(RUNNER_PAUSE_PATH)) {
+              appendLine(logFile, `[usage-limit] hub=${item.hub} · 화면 감지 · resets=${usageLimit.resetsAt || usageLimit.resetsText}`);
+              writeRunnerPauseFile(usageLimit);
+              try {
+                execFileSync(process.execPath, [
+                  join(HERE, 'claim.mjs'), item.id, 'blocked',
+                  '--blocked-by', 'kyu',
+                  `usage-limit · resets ${usageLimit.resetsText} · runner-${RUNNER_VERSION} · 로그: ${logFile}`,
+                ], { cwd: REPO_ROOT, stdio: 'inherit' });
+              } catch (e) {
+                appendLine(logFile, `[usage-limit] claim.mjs 실패: ${(e.message || '').slice(0, 80)}`);
+              }
+              return;
+            }
             if (apiErrRetriesSent >= API_ERROR_RETRY_MAX) return;
-            const paneScreen = readPaneScreen(config.cmux_bin, layout, item.hub);
+            const paneScreen = paneScreenPoll;
             const errInTail = hasApiErrorInTail(paneScreen || '');
             if (!errInTail) { return; }
             if (apiErrFirstSeen === null) {
@@ -2974,6 +3034,12 @@ async function spawnClaudeForItem(item, cwd, config) {
         if (screen) {
           const tail = screen.split('\n').slice(-50).join('\n');
           appendLine(logFile, `[screen-capture] (pane ${item.hub} 마지막 ~50줄)\n${tail}\n[/screen-capture]`);
+          // M1-1128-E: 최종 캡처에서도 usage-limit 감지 (timeout 직후 발생 케이스 보완).
+          const ulPost = detectUsageLimitInScreen(screen);
+          if (ulPost && !existsSync(RUNNER_PAUSE_PATH)) {
+            appendLine(logFile, `[usage-limit] hub=${item.hub} · post-landing 화면 감지 · resets=${ulPost.resetsAt || ulPost.resetsText}`);
+            writeRunnerPauseFile(ulPost);
+          }
         }
         // ② 완료 뒤 정리: pane claude → /exit → shell 복귀 (M1-1105-BC).
         //    이전 실패 흔적은 clear — 실제 실패 시 exitPaneClaude 내부에서 다시 기록.
@@ -3056,6 +3122,12 @@ async function spawnClaudeForItem(item, cwd, config) {
       if (screen) {
         const tail = screen.split('\n').slice(-50).join('\n');
         appendLine(logFile, `[screen-capture] (last ~50 lines of cmux tab)\n${tail}\n[/screen-capture]`);
+        // M1-1128-E: 최종 캡처에서도 usage-limit 감지.
+        const ulPost = detectUsageLimitInScreen(screen);
+        if (ulPost && !existsSync(RUNNER_PAUSE_PATH)) {
+          appendLine(logFile, `[usage-limit] hub=${item.hub} · post-landing cmux-tab 화면 감지 · resets=${ulPost.resetsAt || ulPost.resetsText}`);
+          writeRunnerPauseFile(ulPost);
+        }
       }
       return { mode: 'cmux-tab', landingReason: landing.reason, timedOut: landing.timedOut, detectLatencyS: landing.detectLatencyS ?? null, workspaceRef, startedClaimed: true };
     }
@@ -3483,11 +3555,20 @@ async function tick(hubs) {
     // v6.6 REQ1: 허브 멈춤 감지 (1분 주기는 state.json 쓰기 간격으로 자연 조절).
     checkAllHubStuck(hubs, config);
 
+    // M1-1128-E: usage-limit 일시정지 — resets_at 경과 시 자동 해제.
+    const runnerPaused = checkRunnerPauseExpiry();
+
     for (const hub of hubs) {
       if (busy.has(hub)) continue;
       if (mainGuardBlocked) {
         log(hub, `main-guard blocked · 다음 tick 재시도`);
         setHubDecision(hub, 'skip:main-guard-blocked');
+        continue;
+      }
+      if (runnerPaused) {
+        const p = readRunnerPauseFile();
+        log(hub, `runner-pause 중 · reason=${p?.reason || '?'} · resets_at=${p?.resets_at || '?'} · skip`);
+        setHubDecision(hub, 'skip:runner-paused');
         continue;
       }
       const cfg = config.hubs[hub];
