@@ -1,13 +1,13 @@
 {
-  "ts": "2026-11-28T05:57:31Z",
+  "ts": "2026-11-28T06:03:40Z",
   "uptime": {
-    "uptime_secs": 217534,
-    "load_1": 4.01,
-    "load_5": 3.37,
-    "load_15": 2.69
+    "uptime_secs": 217903,
+    "load_1": 1.08,
+    "load_5": 2.07,
+    "load_15": 2.31
   },
   "memory": {
-    "free_pct": 45,
+    "free_pct": 59,
     "swap_used_mb": 0.75,
     "swap_free_mb": 1023.25
   },
@@ -21,31 +21,22 @@
   },
   "runners": {
     "listener_count": 4,
-    "worker_count": 2,
+    "worker_count": 1,
     "current": [
       {
-        "runner_name": "actions-runner-ci-box-sp-heavy",
-        "job": "heavy-mac",
-        "repo": "CuriocityDevAi/storeport",
-        "workflow": "ci",
-        "head_ref": "feat/M0-1128-D-receipt-printer-baseline",
-        "event_name": "pull_request",
-        "pr": "487",
-        "started_at": "2026-11-28T05:55:15Z"
-      },
-      {
-        "runner_name": "actions-runner-ci-box-fork-heavy",
-        "job": "playwright",
+        "runner_name": "actions-runner-ci-box-fork-light",
+        "job": "route",
         "repo": "CuriocityDevAi/agilo-medusa-pos-fork",
         "workflow": "CI",
-        "head_ref": "",
-        "event_name": "push",
-        "started_at": "2026-11-28T05:52:53Z"
+        "head_ref": "fix/M3-1128-J-text-node-cd-preview",
+        "event_name": "pull_request",
+        "pr": "300",
+        "started_at": "2026-11-28T06:03:38Z"
       }
     ]
   },
   "github": {
-    "latency_ms": 136,
+    "latency_ms": 128,
     "reachable": true
   },
   "netspeed": {
